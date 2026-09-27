@@ -1,103 +1,144 @@
-# Physics-Grounded 4D World Model Framework
+<h1 align="center">Physics-Grounded<br>4D World Model Framework</h1>
+<p align="center"><strong>Explicit geometry. Physical simulation. Evolving worlds.</strong><br>A Levistone project.</p>
 
-**A Levistone project.**
+<p align="center">
+  <a href="https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/"><img src="https://img.shields.io/badge/Website-explore%20scenes-287D8E" alt="Website: explore scenes"></a>
+  <a href="https://acse-yl222.github.io/urban-world-model-models/"><img src="https://img.shields.io/badge/Resources-browse%20assets-363634" alt="Resources: browse assets"></a>
+  <a href="docs/framework/protocol-v1.md"><img src="https://img.shields.io/badge/Protocol-integration%20guide-363634" alt="Protocol: integration guide"></a>
+  <a href="https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json"><img src="https://img.shields.io/badge/Viewer-try%20the%20example-363634" alt="Viewer: try the protocol example"></a>
+</p>
 
-A framework for representing, simulating and exploring evolving 3D environments through explicit geometry and physics. The fourth dimension is time: geometry, physical fields and agent trajectories share a scene context for simulation and visualization.
+<p align="center">
+  Yueyan Li, Zhongkai Yuan, Bohan Ye, Akira Eisenbeiss, Xinyang Miao, Dingyu Xuan,<br>
+  Chenxu Li, Hongyu Liu, Yiqi Zhu, Yuhang Dai, Xinran Kai<br>
+  <em>Imperial College London, London, United Kingdom</em>
+</p>
 
-[Explore the scenes](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/) · [Browse resources](https://acse-yl222.github.io/urban-world-model-models/) · [Resource repository](https://github.com/acse-yl222/urban-world-model-models) · [Integration protocol](docs/framework/protocol-v1.md)
+A framework for connecting 3D geometry, physical fields and moving agents in a shared, time-dependent world. Bring together scene assets and simulation outputs, preserve their spatial and temporal meaning, and explore them through interactive visualization.
 
-**Authors:** Yueyan Li, Zhongkai Yuan, Bohan Ye, Akira Eisenbeiss, Xinyang Miao, Dingyu Xuan, Chenxu Li, Hongyu Liu, Yiqi Zhu, Yuhang Dai, Xinran Kai
+Current applications span urban environments, wind farms and rotor experiments. The same integration protocol is designed to support other settings and scales, including indoor scenes. The fourth dimension is **time**.
 
-**Affiliation:** Imperial College London, London, United Kingdom
+<table align="center" width="100%">
+  <tr>
+    <td width="50%">
+      <a href="https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/3d/?scene=south_kensington"><img src="docs/media/hero_south_kensington_uav.jpg" width="100%" alt="South Kensington geometry with UAV routes and stations"></a><br>
+      <strong>South Kensington</strong> · Geometry, UAV routes and urban activity
+    </td>
+    <td width="50%">
+      <a href="https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/3d/?scene=white_city"><img src="docs/media/hero_white_city_wind.jpg" width="100%" alt="White City geometry overlaid with a wind field"></a><br>
+      <strong>White City</strong> · Urban geometry and wind fields
+    </td>
+  </tr>
+</table>
 
-## Overview
+<p align="center">
+  <strong><a href="https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/">Explore the interactive scenes →</a></strong><br>
+  <a href="https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/3d/?scene=south_kensington">South Kensington</a> ·
+  <a href="https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/3d/?scene=white_city">White City</a> ·
+  <a href="https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/windfarm-movie/">Wind farm</a>
+</p>
 
-The framework connects scene geometry, domain-specific solvers and visualization through a common data contract. Geometry and physical assumptions are represented explicitly; adapters expose simulation results to reusable visualization widgets.
+## How to use
 
-Current applications include urban environments, wind farms and rotor experiments. The architecture is intended to accommodate other settings, including indoor environments, through the same integration protocol. Supported data include GLB geometry, NPY fields and frame sequences, JSON metadata and sparse recorded trajectories.
+1. **Explore a scene.** Open the [website](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/) to view the published city and wind-farm demonstrations.
+2. **Try the shared contract.** The [synthetic example](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json) demonstrates geometry, fields and trajectories in the unified viewer.
+3. **Work locally.** Install the framework to inspect scene configurations, serve available data and run a configured simulation pipeline.
+4. **Add your own simulation.** Export results through the [integration protocol](docs/framework/protocol-v1.md) and connect them to visualization widgets.
 
-The framework is under active development. Published scenes retain their existing specialized viewers, while the unified viewer supports protocol-based layers and local scene views. See the [implementation status](docs/framework/implementation-status.md) for migration progress and verification scope.
+Published scenes currently use their existing specialized viewers. The unified viewer supports protocol-based layers and local scene views; migration progress and validation scope are tracked in the [implementation status](docs/framework/implementation-status.md).
 
-## Explore online
+## Requirements
 
-The [scene homepage](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/) brings together the published demonstrations:
+- **Python 3.11+** for the framework CLI, validation and local server.
+- **A modern browser** for interactive visualization.
+- **Scene inputs and solver dependencies** for real simulation runs. GPU and Blender environments are configured separately where needed.
+- **Node.js** for the JavaScript development checks.
 
-| Scene | Focus | Open |
-| --- | --- | --- |
-| South Kensington | Urban geometry, environmental fields, traffic and flight replays | [Scene viewer](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/3d/?scene=south_kensington) |
-| White City | A 9 km² urban scene with environmental fields and traffic information | [Scene viewer](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/3d/?scene=white_city) |
-| Wind farm | Terrain, turbines, time-varying wind fields and wake-model comparisons | [Scene viewer](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/windfarm-movie/) |
+A source checkout includes small protocol examples. Large scene datasets and simulation environments are managed separately.
 
-The separate [unified protocol example](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json) uses synthetic data to demonstrate the common visualization contract.
-
-## Project organization
-
-Reusable code belongs in `src/`, scene-specific inputs and retained results in `project/`, and reproducible intermediate files in `cache/`.
-
-```text
-src/
-  urban_geometry/       # Geometry processing, voxelization and 3D agents
-  urban_flow/           # Physical models, solvers and flow experiments
-  traffic/              # Traffic training, prediction and replay integration
-  visualization/        # Unified viewer, widgets, adapters and legacy viewers
-  common/               # Storage, contracts, pipelines and local HTTP serving
-project/
-  south_ken/            # South Kensington scene configuration and assets
-  white_city/           # White City scene configuration and assets
-  windfarm/             # Wind-farm scenes and retained experiment runs
-  actuator_lab/         # Rotor experiments
-cache/                  # Disposable intermediates and local dependency environments
-schemas/                # Run, scene and view contracts
-examples/               # Small, self-contained protocol examples
-docs/                   # Integration, resource management and implementation notes
-```
-
-Scene IDs and existing domain module names remain stable as the framework expands beyond urban applications. Visualization widgets consume declared data layers; simulation solvers remain in their domain modules.
-
-## Run locally
-
-Use Python 3.11 or later. From the repository root, create an environment and install the framework:
+## Install
 
 ```sh
+git clone https://github.com/acse-yl222/physics-grounded-4d-world-model-framework.git
+cd physics-grounded-4d-world-model-framework
 python3 -m venv cache/framework/venv
 source cache/framework/venv/bin/activate
 python -m pip install -e .
+```
+
+Inspect the registered scenes and start the viewer:
+
+```sh
 p4d scenes
 p4d paths south_ken
 p4d serve --port 8769
 ```
 
-Open [the local scene homepage](http://127.0.0.1:8769/). When local scene runs are absent, the scene links open the published website. The [local unified viewer](http://127.0.0.1:8769/src/visualization/viewer/) exposes available protocol scenes and views; the [synthetic example](http://127.0.0.1:8769/src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json) can be opened independently.
+Open [localhost:8769](http://127.0.0.1:8769/). When local scene runs are absent, the homepage links open the published scenes. You can also open the [local synthetic example](http://127.0.0.1:8769/src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json) directly.
 
-The local server supports HTTP Range requests for reading NPY data on demand. Use `p4d serve` for scene exploration, since a generic static server may not support these requests. Cloning and installing the framework provides the code and small examples; running real simulations also requires the relevant inputs, solver dependencies and compute resources. GPU and Blender environments are configured separately.
+## Run a simulation
 
-## Run simulations and retain results
-
-Inspect a scene pipeline before running it:
+Inspect a scene pipeline first:
 
 ```sh
 p4d run white_city --dry-run
 ```
 
-With the required scene data and solver environment available:
+With the scene data and solver environment available, run and retain its outputs:
 
 ```sh
 p4d run --python /path/to/solver/environment/bin/python white_city --run-id my_trial --retain
+```
+
+Intermediate results go to `cache/<scene>/pipeline/<run_id>/`. Retention validates completed outputs, copies them into `project/<scene>/runs/` and refuses to overwrite an existing run. The city pipeline can export a protocol bundle and register it as a scene view.
+
+You can also validate and retain an existing export:
+
+```sh
 p4d validate /path/to/trial/manifest.json
 p4d retain /path/to/completed/trial
 ```
 
-Runs use isolated workspaces under `cache/<scene>/pipeline/<run_id>/`. Retention validates a completed run or protocol bundle, copies it into `project/<scene>/runs/` and refuses to overwrite an existing run. The city pipeline's visualization stage can export a protocol bundle; `--retain` also registers its scene view.
+## See the results
 
-Preserve recorded coordinates, units, time samples and data masks when integrating results. The viewer marks unavailable time ranges as missing data. For example, the retained South Kensington traffic replay covers seconds 1–300; metadata describing a longer simulation does not imply that all frames are available.
+Open the [local unified viewer](http://127.0.0.1:8769/src/visualization/viewer/) to select available protocol scenes and views. It supports **GLB geometry, NPY fields and frame sequences, JSON metadata, and sparse recorded trajectories**.
 
-## Add a scene, simulation or widget
+Use `p4d serve` to load scene data: its HTTP Range support allows NPY data to be read on demand. Layers retain their declared coordinates, units, masks and time samples; unavailable time ranges appear as missing data. The retained South Kensington traffic replay, for example, covers seconds **1–300**.
 
-Start with the [integration protocol](docs/framework/protocol-v1.md). It defines the scene and run manifests, layer metadata and responsibilities of visualization adapters. Place reusable implementation code in `src/`, add scene configuration under `project/<scene>/`, and use `cache/` for experiments before retaining validated outputs.
+## Resources
 
-For agent-assisted development, [AGENTS.md](AGENTS.md) points to the repository's [simulation integration skill](.agents/skills/urban-simulation-contract/SKILL.md). These instructions keep future integrations consistent with the same structure and contract.
+The [resource catalogue](https://acse-yl222.github.io/urban-world-model-models/) provides selected published geometry and simulation assets. Its companion [repository](https://github.com/acse-yl222/urban-world-model-models) organizes them by scene, type and version:
 
-Validate a protocol example and run the core checks with:
+```text
+project/<scene>/<resource-type>/<version>/
+```
+
+Each registered resource includes file sizes, SHA-256 hashes and provenance. Some city fields and auxiliary assets remain on the framework's `pages` branch for compatibility. See [resource management](docs/framework/resources.md) for the publication layout and compatibility paths.
+
+## Development
+
+The repository separates reusable implementation, retained scene data and disposable workspaces:
+
+```text
+src/
+  urban_geometry/       # Geometry processing and 3D agents
+  urban_flow/           # Physical models, solvers and flow experiments
+  traffic/              # Traffic training, prediction and replay
+  visualization/        # Viewers, widgets and data adapters
+  common/               # Storage, contracts, pipelines and HTTP serving
+project/
+  south_ken/            # Scene inputs, configuration and retained results
+  white_city/
+  windfarm/
+  actuator_lab/
+cache/                  # Reproducible intermediates and local environments
+schemas/                # Run, scene and view contracts
+examples/               # Small protocol examples
+```
+
+For new scenes, solvers or widgets, follow the [integration protocol](docs/framework/protocol-v1.md). Widgets consume declared data layers; solvers stay in their domain modules. [AGENTS.md](AGENTS.md) and the [simulation integration skill](.agents/skills/urban-simulation-contract/SKILL.md) provide the corresponding agent workflow.
+
+Core checks:
 
 ```sh
 p4d validate examples/contract-v1/manifest.json
@@ -105,22 +146,10 @@ python -m unittest discover -s tests -v
 node --test tests/test_viewer.mjs
 ```
 
-The JavaScript checks require Node.js. Browser and domain-specific validation evidence is recorded in the implementation documentation.
+Keep separate backups of unpublished scene data and external originals. The local `.history/` directory contains migration recovery material and must not be treated as disposable cache. The `main` branch holds source and small examples; `pages` hosts the public site and previously published assets.
 
-## Resources and publication
+## About
 
-The framework repository owns code, schemas, scene configuration and small examples. The companion [resource repository](https://github.com/acse-yl222/urban-world-model-models) stores selected published geometry and simulation assets, organized as:
+**A Levistone project.** Developed by the authors listed above, affiliated with **Imperial College London**. Module contributions are recorded in [Contribution.md](Contribution.md).
 
-```text
-project/<scene>/<resource-type>/<version>/
-```
-
-The [resource catalogue](https://acse-yl222.github.io/urban-world-model-models/) records asset versions, file sizes, SHA-256 hashes and provenance. Its historical repository address is retained for compatibility. Some existing city fields and auxiliary assets remain on the framework's `pages` branch; see [resource management](docs/framework/resources.md) for ownership and compatibility details.
-
-The `main` branch contains the framework source, while `pages` hosts the public website and previously published scene assets. Large local datasets are excluded from normal source publication. Keep separate backups of unpublished `project/` data, external data originals and `.history/`, which holds local migration recovery material and must not be treated as disposable cache.
-
-## Project history
-
-This project began as UrbanWorldModel. Its scope now covers geometry- and physics-grounded environments across scales. The package and repository are named `physics-grounded-4d-world-model-framework`; `p4d` is the primary command, with `uwm` and `UWM_ROOT` retained for compatibility.
-
-The [original project overview](docs/history/README-before-framework.md) and [contribution record](Contribution.md) preserve the earlier context and credits.
+The framework began as UrbanWorldModel and now targets geometry- and physics-grounded environments across scales. `p4d` is the primary command; `uwm` and `UWM_ROOT` remain available for compatibility. The [original project overview](docs/history/README-before-framework.md) preserves the earlier context.
