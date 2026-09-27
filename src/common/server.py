@@ -29,6 +29,8 @@ class ViewerHandler(BaseHTTPRequestHandler):
                     data=json.loads(path.read_text())
                     result.append({'scene_id':data['scene_id'],'title':data['title'],'views':sorted(p.stem for p in (path.parent/'views').glob('*.json'))})
                 return self.json_response(result,head)
+            if not parts and not urlsplit(self.path).query:
+                parts=('index.html',)
             if not parts:
                 query=urlsplit(self.path).query
                 self.send_response(HTTPStatus.FOUND)
@@ -45,6 +47,8 @@ class ViewerHandler(BaseHTTPRequestHandler):
                 path=within(self.storage.assets('south_ken','geometry')/'legacy_visualizer',*parts[4:])
             elif parts[:6]==legacy+('agents','demo_rev02','data'):
                 path=within(self.storage.run('south_ken','legacy_agents')/'data',*parts[6:])
+            elif parts==('index.html',):
+                path=self.storage.root/'index.html'
             elif parts[:2]==('src','visualization') or parts[0] in ('examples','schemas'):
                 path=within(self.storage.root,*parts)
             elif parts==('project','index.json'):

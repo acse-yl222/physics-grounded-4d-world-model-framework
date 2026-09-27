@@ -7,7 +7,8 @@
 框架与统一查看器已落地，支持 South Kensington、White City、风电场与转子实验。
 [协议](docs/framework/protocol-v1.md)与 [skill](.agents/skills/urban-simulation-contract/SKILL.md)
 约定后续接入方式；[实施记录](docs/framework/implementation-status.md)列出验证范围。
-[公开示例](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/)使用合成数据，
+[场景首页](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/)提供 South Kensington、White City 和 windfarm 入口；
+[统一协议示例](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json)使用合成数据。
 [原城市演示](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/3d/)保留已发布资源。
 
 ## 目录
@@ -45,7 +46,8 @@ p4d paths south_ken
 p4d serve --port 8769
 ```
 
-浏览器打开 `http://127.0.0.1:8769/`，可选择场景与视图。GLB 和完整 NPY 帧由同一查看器加载；
+浏览器打开 `http://127.0.0.1:8769/` 进入场景首页；
+`http://127.0.0.1:8769/src/visualization/viewer/` 可选择本地协议场景与视图。GLB 和完整 NPY 帧由同一查看器加载；
 NPY 使用 HTTP Range 按需读取，箭头只稀疏绘制，源数组不会被降采样覆盖。
 直接用普通静态服务器时，NPY 服务端范围读取可能不可用，应使用 `p4d serve`。
 
@@ -92,3 +94,6 @@ p4d validate examples/contract-v1/manifest.json
 
 原项目名为 UrbanWorldModel。Python 包名与仓库名现为 `physics-grounded-4d-world-model-framework`；
 推荐使用 `p4d` 命令，`uwm` 和 `UWM_ROOT` 保留兼容。领域模块名及历史数据标识保持稳定。
+
+公开资源见 [资源目录](https://acse-yl222.github.io/urban-world-model-models/)；
+资源所有权、版本和兼容路径约定见 [资源管理](docs/framework/resources.md)。

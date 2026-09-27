@@ -36,9 +36,13 @@ async function load(){
   const catalogURL=new URL('../../../project/index.json',location.href);
   let catalog={scenes:[]};try{catalog=await json(catalogURL);}catch{}
   for(const item of catalog.scenes){const option=document.createElement('option');option.value=item.scene_id;option.textContent=item.title;$('scene').append(option);}
+  const siteRoot=new URL('../../../',location.href);
+  try{const published=await json(new URL('src/visualization/public-scenes.json',siteRoot));const group=document.createElement('optgroup');group.label='Published scene viewers';
+    for(const item of published.scenes){const option=document.createElement('option');option.value='published:'+item.scene_id;option.textContent=item.title;option.dataset.viewer=new URL(item.viewer_url,siteRoot).href;group.append(option);}$('scene').append(group);
+  }catch{}
   let chosen=params.get('scene')||(!requested?catalog.default:'');
   $('scene').value=chosen||'';
-  $('scene').addEventListener('change',()=>{const next=new URL(location.href);next.search='';if($('scene').value)next.searchParams.set('scene',$('scene').value);else next.searchParams.set('manifest','../../../examples/contract-v1/manifest.json');location.href=next;});
+  $('scene').addEventListener('change',()=>{const published=$('scene').selectedOptions[0]?.dataset.viewer;if(published){location.href=published;return;}const next=new URL(location.href);next.search='';if($('scene').value)next.searchParams.set('scene',$('scene').value);else next.searchParams.set('manifest','../../../examples/contract-v1/manifest.json');location.href=next;});
   const runs=[];let selections=null,metadata=null,timeMode='relative';
   if(chosen){
     if(!/^[a-z][a-z0-9_]*$/.test(chosen))throw new Error('Invalid scene ID');

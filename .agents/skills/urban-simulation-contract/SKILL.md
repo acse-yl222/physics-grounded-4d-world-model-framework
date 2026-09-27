@@ -56,3 +56,11 @@ incompatible changes; reject unknown major versions in readers.
 - `pages` is the static deployment branch. `tools/build_public_site.py <site-checkout>`
   overlays public viewer assets onto the previously published site. Never upload local
   project datasets, sources.local.json, storage.local.json, cache, or .history by default.
+
+## Public resources
+
+Read `docs/framework/resources.md` before publishing or relocating an asset. The companion
+resource catalogue separates scene/category/version ownership from the simulation run
+contract. Preserve hashes, provenance and compatibility manifests; update the public scene
+catalogue and run the resource repository's checksum checker. Keep real scene entrypoints
+visible on the homepage and separate them from the synthetic protocol example.

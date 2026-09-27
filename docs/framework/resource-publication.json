@@ -1,0 +1,16 @@
+{
+  "resource_repository": "acse-yl222/urban-world-model-models",
+  "resource_revision": "934c63dcedfdac6cd82c22b931a2a15829c5b4c0",
+  "resource_versions": 4,
+  "indexed_files": 21,
+  "checks": [
+    "All indexed SHA-256 and file sizes verified",
+    "Canonical and compatibility chunk manifests verified",
+    "Compatibility manifest and all six chunk HEAD requests returned HTTP 200 with expected lengths and CORS",
+    "Homepage has south_ken, white_city and windfarm links",
+    "Unified viewer exposes three published-scene links",
+    "South Kensington and White City browser checks: lite geometry with real published fields",
+    "Windfarm browser check: 151 frames loaded from resource hosting"
+  ],
+  "publication_scope": "Existing public assets only; other city fields and auxiliary assets remain on framework Pages."
+}
