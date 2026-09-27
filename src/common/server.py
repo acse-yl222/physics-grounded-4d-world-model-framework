@@ -47,6 +47,12 @@ class ViewerHandler(BaseHTTPRequestHandler):
                 path=within(self.storage.assets('south_ken','geometry')/'legacy_visualizer',*parts[4:])
             elif parts[:6]==legacy+('agents','demo_rev02','data'):
                 path=within(self.storage.run('south_ken','legacy_agents')/'data',*parts[6:])
+            elif parts==('src','visualization','public-scenes.json'):
+                catalog=json.loads((self.storage.root/'src/visualization/public-scenes.json').read_text())
+                for item in catalog['scenes']:
+                    if not self.storage.assets(item['scene_id'],'runs').is_dir():
+                        item['viewer_url']=catalog['published_site'].rstrip('/')+'/'+item['viewer_url'].removeprefix('src/visualization/legacy/')
+                return self.json_response(catalog,head)
             elif parts==('index.html',):
                 path=self.storage.root/'index.html'
             elif parts[:2]==('src','visualization') or parts[0] in ('examples','schemas'):

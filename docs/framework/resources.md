@@ -45,3 +45,6 @@ viewer's selector also links to those published scene viewers.
 `tools/build_public_site.py` maps local legacy viewer routes to published routes and writes
 canonical resource URLs. Windfarm loads its configurable data/model URLs from resources.json
 next to its viewer. Old site asset routes remain available for compatibility.
+
+For code-only clones with no local run directories, `p4d serve` resolves homepage scene
+links to the published site. Local protocol scenes remain selectable in the unified viewer.
