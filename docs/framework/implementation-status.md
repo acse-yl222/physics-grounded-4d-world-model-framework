@@ -61,7 +61,7 @@
   验证覆盖路径、模块导入、代表性构建、现有完整数据和求解器数值回归。
 - 老实验未记录原运行 Git 版本，导入 manifest 明确标记 legacy-unrecorded，不声称可严格重现。
   风电场和转子实验未提供地理原点，使用 georeferenced=false 的局部工程坐标。
-- GitHub 凭据没有 workflow 写权限，线上 Actions 尚未启用；仅保留
+- GitHub 凭据没有 workflow 写权限，协议测试的 Actions CI 尚未启用（Pages 自带部署任务正常启用）；仅保留
   contract-workflow.example.yml。上述检查已在本地实际运行。
 - `cache/framework/browser` 保存本地浏览器报告和截图，可在查看后删除；不会公开提交。
   公开部署由 tools/build_public_site.py 选择静态资产，不复制 project 数据或本地配置。
