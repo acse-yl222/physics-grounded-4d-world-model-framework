@@ -1,0 +1,12 @@
+{
+  "source": "pipelines/physics/run_core008_scaled_latent.py",
+  "sha256": "b2718d815eb1fa0b59b3971c6172beb31920176f0ae58104f64200225031bedd",
+  "functions": [
+    "decode_domain",
+    "encode_domain",
+    "latent_step",
+    "load_models",
+    "wake_diagnostic"
+  ],
+  "change": "Functions copied unchanged; tile sizes are cell counts."
+}

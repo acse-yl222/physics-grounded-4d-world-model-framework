@@ -1,0 +1,15 @@
+# Core numerical stack
+numpy
+scipy
+
+# Deep learning
+# On HPC/GPU, install the PyTorch build matching the CUDA environment.
+torch
+
+# Plotting, animations, and notebook display
+matplotlib
+pillow
+ipython
+
+# Notebook server, optional if JupyterLab is already provided by HPC
+jupyterlab

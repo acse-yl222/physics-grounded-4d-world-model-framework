@@ -1,1 +1,0 @@
-Batch14 delivered38 distinct assets. Six ring04 candidates added after root checked current source hashes, direct anchors and exclusions; curated46/pending8 includes2deferred. Continue plan_next_expansion then prepare nextbatch from exact source context. No active Blender process. Current GLB4c05f756; master6ee53a03;72meshes6102tri; allchecks and16views passed.

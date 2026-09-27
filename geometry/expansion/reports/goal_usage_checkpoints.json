@@ -1,9 +1,0 @@
-[
-  {
-    "checkpoint": "batch17 delivered",
-    "completed_refinement_ids": 47,
-    "goal_tokens_used": 4178703,
-    "goal_elapsed_seconds": 17917,
-    "scope": "Cumulative goal usage, including shared investigation/coordination/rework and staged work; not exact per-building or billing ledger"
-  }
-]

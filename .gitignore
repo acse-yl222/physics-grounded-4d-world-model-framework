@@ -1,60 +1,22 @@
-# ---- large binaries stay out of git (GitHub: 100 MB per file, ~1 GB per repo / Pages site)
-*.glb
-*.blend
-*.blend1
-*.npy
-*.pt
-*.f32
-*.jsonl
-geometry/completion/.deps/
-geometry/expansion/output/**/*.png
-geometry/expansion/output/**/source_snapshots/
-geometry/expansion/*/reports/*context*.json
-geometry/expansion/**/references/**/*.jpg
-geometry/expansion/**/references/**/*.jpeg
-scenes/*/physics/figures/*.gif
-assets/buildings/
-assets/ground/
-assets/roads/
-assets/vegetation/
-assets/street_furniture/
-assets/parked_vehicles/
-assets/simulation_layers/
-tools/migration_log.json
-.DS_Store
-server.log
-server.pid
+# Local storage configuration and disposable work
+/storage.local.json
+/cache/
 __pycache__/
-# ---- kept: what the published viewer needs
-!scenes/south_kensington/models/buildings_supplement.glb
-!geometry/expansion/output/*/replacement.glb
-!geometry/expansion/output/*/retained_*.glb
-!agents/demo_rev02/data/traffic/replay/*.f32
-!agents/demo_rev02/data/traffic/replay/*.jsonl
-!scenes/*/traffic/replay/*.f32
-!scenes/*/traffic/replay/*.jsonl
-# SUMO inputs that can be rebuilt (OSM extract, trips, raw TraCI recording); the net and the viewer files are kept
-scenes/*/traffic/osm/
-scenes/*/traffic/sim/
-scenes/*/traffic/sim_run.log
-!agents/demo_rev02/assets/hexacopter_cargo.glb
-!agents/demo_rev02/actors/pigeon.glb
-!assets/actors/**/*.glb
-!docs/media/**
-!assets/index.json
-# symlinks (GitHub Pages cannot build them); the viewer uses vendor/ and scenes/*/models/ directly
-agents/demo_rev02/vendor
-agents/demo_rev02/assets/city.glb
-# the masks the viewer reads by Range request (small); the field arrays themselves stay out (the PNG frames in physics/web are in)
-!scenes/south_kensington/physics/masks/building_footprint_yx.npy
-!scenes/south_kensington/physics/masks/solid_4m_zyx.npy
-!scenes/south_kensington/physics/masks/roof_height_m_yx.npy
-!scenes/south_kensington/physics/temperature2d/study_area_mask_yx.npy
-!scenes/white_city/physics/masks/building_footprint_2m_yx.npy
-!scenes/white_city/physics/masks/building_footprint_8m_yx.npy
-!scenes/white_city/physics/masks/roof_height_m_2m_yx.npy
-!scenes/white_city/physics/masks/solid_8m_zyx.npy
-!agents/demo_rev02/actors/sedan_4p5m.glb
+*.py[cod]
+*.egg-info/
+.venv/
+# Scene data is stored separately from code and configuration.
+/project/*/input/
+/project/*/geometry/
+/project/*/runs/
+# Build output and local browser checks
+node_modules/
+dist/
+build/
 
-# Published windfarm geometry (22 MB)
-!scenes/region/models/region.glb
+# Original repository histories are local recovery material.
+/.history/
+/sources.local.json
+# Vendored browser runtime is source, not generated build output.
+!src/visualization/vendor/three/build/
+!src/visualization/legacy/vendor/three/build/

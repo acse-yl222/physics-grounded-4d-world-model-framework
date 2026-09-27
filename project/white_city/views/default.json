@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "white_city",
+  "title": "Geometry and wind",
+  "time_alignment": "relative",
+  "runs": [
+    "legacy_web"
+  ],
+  "layers": [
+    {
+      "run_id": "legacy_web",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "legacy_web",
+      "layer_id": "wind",
+      "visible": true
+    }
+  ]
+}

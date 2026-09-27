@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "urban-world-model"
+version = "0.1.0"
+description = "Urban scene simulation and visualization framework"
+requires-python = ">=3.11"
+dependencies = ["jsonschema>=4.18,<5", "numpy>=1.24"]
+
+[project.scripts]
+uwm = "common.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["common*", "urban_geometry*", "urban_flow*", "traffic*", "visualization.adapters*"]

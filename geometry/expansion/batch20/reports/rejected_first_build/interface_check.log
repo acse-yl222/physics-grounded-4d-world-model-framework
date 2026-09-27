@@ -1,9 +1,0 @@
-00:00.535  blend            | Read blend: "/Users/yl222/Desktop/UrbanWorldModelVisualizer/geometry_expansion/output/batch20_v1/master.blend"
-Traceback (most recent call last):
-  File "/Users/yl222/Desktop/UrbanWorldModelVisualizer/geometry_expansion/scripts/check_expansion_batch.py", line 55, in <module>
-    assert heights and -.012<=max(heights)-c.z<=.008,(f['id'],'unsupported entry',lateral,heights)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-AssertionError: ('way-851362839', 'unsupported entry', -0.42, [])
-Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:31:22)
-
-Blender quit

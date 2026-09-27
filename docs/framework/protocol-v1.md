@@ -1,7 +1,7 @@
 # UrbanWorldModel 仿真与可视化协议 v1
 
-状态：新接入模块的规范与可校验示例；不是已完成的代码迁移或查看器实现。
-协议版本 `1.0.0`。本文件优先于旧文档中的目录规划；旧程序仍按原路径运行，直到逐项迁移。
+状态：已实现的接入规范。路径解析、运行保留、场景/视图注册及统一查看器已接通，验证范围见 [实施记录](implementation-status.md)。
+协议版本 `1.1.0`（兼容 `1.0.0` JSON 示例）。本文件优先于历史文档。旧根目录已迁入 src/project；历史笔记本的外部依赖与数据需显式提供。
 
 ## 1. 目录与责任
 
@@ -42,7 +42,7 @@ docs/framework/
 Git 保存代码、协议、场景配置、视图配置和小型合成示例。大型模型、真实场景结果、
 权重和环境不自动进入 Git。目录名称不能代替数据来源和发布许可检查。
 
-本地可选 `storage.local.json`（应在采用新结构时加入 Git ignore）：
+本地可选 `storage.local.json`（已加入 Git ignore）：
 
 ```json
 {"data_root": "/absolute/path/to/urban-data", "cache_root": "/absolute/path/to/scratch"}
@@ -52,7 +52,7 @@ Git 保存代码、协议、场景配置、视图配置和小型合成示例。�
 配置后，大数据位于 `<data_root>/project/<scene>/{input,geometry,runs}`，
 缓存位于 `<cache_root>/<scene>/<simulation>/<run_id>`。
 小型 `project.json`、configs 和 views 始终在仓库内。运行入口必须打印解析后的路径，
-不能因缺少外部数据静默切换到另一份数据。此解析器尚待模块接入时实现。
+不能因缺少外部数据静默切换到另一份数据。解析器位于 `src/common/storage.py`；使用 `uwm paths <scene>` 检查解析结果。
 
 `cache` 必须可删除、可重算。人工修正、唯一原始数据、选定正式结果不应只放在 cache。
 清理器只能移除已结束且未被保留的工作目录，不跟随符号链接，不清理活动运行。
@@ -68,7 +68,7 @@ Git 保存代码、协议、场景配置、视图配置和小型合成示例。�
 views 文件包含 `schema_version`、`scene_id`、`runs`（run ID 列表）、`layers`
 （每项指定 run_id、layer_id、visible）及可选 camera（position、target，均为场景坐标）。
 跨 run 图层的完整身份是 `(run_id, layer_id)`。不要用“最新修改的目录”隐式选择结果。
-project/views 的自动 schema 校验不属于当前 v1 校验器范围，接入时需要增加对应校验。
+project/views 分别由 `project-v1.schema.json`、`view-v1.schema.json` 校验；`common.catalog.view` 同时检查图层引用、场景坐标和绝对时间对齐所需的 epoch。
 
 ## 4. 运行 manifest
 
@@ -100,7 +100,7 @@ v1 最小编码是 UTF-8 JSON，`kind` 决定 payload：
 
 这里 N 是点/实体/通道数；T 必须等于 time.samples 长度。静态层使用 sampling=static；
 动态层使用 step 或 linear；mesh 在此版本仅支持 static。轨迹必须是动态层。
-无效或缺失值在这个最小编码中禁止；需要缺失值掩码时先扩展协议。
+无效或缺失值在 JSON 最小编码中禁止；v1.1 NPY 仅在显式无效掩码覆盖的位置允许非有限值。
 静态 run 的 samples 为空；包含动态层的 run 必须提供非空 samples。
 动态层在共享时间轴上按自身采样规则显示，超出时间范围时隐藏并标明“无数据”，不能循环补帧。
 没有 epoch 的不同 run，只有明确选择相同相对起点才允许同步。
@@ -109,13 +109,13 @@ v1 最小编码是 UTF-8 JSON，`kind` 决定 payload：
 速度例如使用 `m/s`。轨迹坐标使用空间定义中的米。所有数值必须有限。
 
 JSON 示例用于互操作基线，不要求大型生产数组使用 JSON。GLB、分块二进制、纹理或其他
-编码可以通过以后版本的 schema 与解码器扩展接入：必须同时定义 dtype、shape、轴顺序、
+编码在 v1.1 已实现，详见第 9 节；进一步扩展必须同时定义 dtype、shape、轴顺序、
 字节序、网格原点/间距/采样中心约定、压缩和分块索引（适用时）。仅填写文件扩展名不够。
 未知版本、kind 或 format 要明确报错，不能静默按另一种格式解释。
 
 ## 5. 统一 widget 接口
 
-以下为需要实现的接口约定，并非已提供的运行时 API：
+接口约定如下。JSON、GLB、NPY、分帧 NPY 与稀疏轨迹已实现；场景注册与多运行对时由统一查看器管理：
 
 ```ts
 interface Widget {
@@ -154,16 +154,99 @@ python3 tools/check_contract.py examples/contract-v1/manifest.json
 
 迁移顺序：先 south_ken 几何 + 一种流场；接上统一查看器；再接 traffic 和 white_city。
 每次迁移记录原路径、新路径、调用方更新和可复现的检查。旧目录与嵌套仓库在验证完成前保留。
-当前 `output` 和 `input/region` 外部链接已解除，旧运行入口可能缺失数据；不要自动重建链接。
+当前 `output` 和 `input/region` 外部链接已解除，不要自动重建链接。外部只读输入通过忽略的 `sources.local.json` 显式配置。
 
 兼容性：不兼容字段/语义改变升级 major；增加编码或可选能力升级 minor；文字修正升级 patch。
-当前 schema 接受且只接受 1.0.0，扩展需要显式更新 schema、读写端和例子。
+当前 schema 接受 1.0.0 和 1.1.0，扩展需要显式更新 schema、读写端和例子。
 
 ## 7. Git 与本地职责
 
 公开仓库保存可复用规范和实现，并不代替本地工作目录、未提交工作或大型数据备份。
-当前公开仓库仍是旧查看器布局；本规范描述目标布局，未批量搬动旧源文件。
-后续整合根仓库时需单独决定嵌套仓库如何保留历史以及 Pages 的部署入口。
+根仓库保存统一源码，原三个仓库的历史和未提交补丁保留在本地 `.history/repositories`。
+Pages 使用独立 `pages` 分支，以已发布站点为基础加上统一查看器，保留旧演示资源。
 本次发布不意味着以后自动允许上传任何新数据。
 
 自动检查配置见 [GitHub Actions 示例](contract-workflow.example.yml)。当前未启用线上 CI；拥有 workflow 写入权限时，可将该文件复制到 `.github/workflows/contract.yml` 并提交。
+
+## 8. 当前可执行入口
+
+从仓库根目录运行（框架开发安装使用 editable 模式）：
+
+```sh
+python3 -m pip install -e .
+uwm paths south_ken
+uwm validate examples/contract-v1/manifest.json
+uwm retain /absolute/path/to/completed/trial
+uwm serve --port 8769
+```
+
+查看器地址 `/src/visualization/viewer/`，本地默认显示已注册且有数据的场景；没有场景数据时显示明确标注的合成数据。
+使用 `?manifest=/project/<scene>/runs/<run_id>/manifest.json` 选择服务器可访问的结果。
+`uwm serve` 显式映射配置中的 data_root，支持单段 HTTP Range；不通过前端文件路径直接读取磁盘。
+`retain` 校验后复制 manifest 及声明的资产到正式 runs，保留试跑目录，拒绝覆盖同名运行。
+单运行 retain 不自动注册视图；bundle retain 同时保留多个运行并注册一个有名字的视图。日志/检查点必须通过 artifacts 显式登记才会复制。
+
+验证入口：
+
+```sh
+python3 -m unittest discover -s tests -v
+node --test tests/test_viewer.mjs
+# 另一个终端运行上面的 HTTP 服务后：
+# 需要 puppeteer-core，可用 PUPPETEER_MODULE 指向已有安装的 ESM 入口。
+# CHROME_PATH 可指定 Chrome 可执行文件。
+node tests/browser_contract.cjs
+```
+
+## 9. v1.1 生产数据编码
+
+- **glb / mesh**：资产是自包含 glTF 2.0 二进制容器。encoding.coordinate_frame 为
+  `glTF-y-up`，即渲染坐标 `(x, up, -north)`；与场景 ENU 的转换由公共层统一处理。
+  glTF 缓冲区/纹理必须内嵌，不接受未声明的外部依赖。支持 Meshopt 与 Draco 解码。
+- **npy / scalar_field 或 vector_field**：C-order、小端 `<f2`/`<f4`/`<f8`。
+  encoding 明确给出 dtype、shape、axes（YX/CYX/TYX/TCYX）、ENU origin_m、
+  spacing_m（dx,dy）、sample_location=cell_center、byte_order=little、compression=none。
+  origin 是网格西南角、z 为实际采样层高；位置为 `(x0+(col+.5)*dx,y0+(row+.5)*dy,z)`。
+  向量 C 轴固定为 east/north/up。时间维度必须等于 manifest time.samples。
+  查看器保留完整数组按帧读取，只对绘制的箭头/点稀疏采样；选择结果报告 display_stride。
+- **trajectory_frames / trajectories**：UTF-8 JSON `{frames:[{ids:[...],positions:[[x,y,z],...]}]}`。
+  每帧实体数量可变化，ids 是帧内唯一字符串，positions 是 ENU 米。
+  帧数与 samples 一致；线性插值按实体 ID 匹配，仅在两帧均存在的实体之间插值。
+  离开的实体在下一帧消失，新实体在其首个记录帧出现，禁止补造缺失时间段。
+
+`project/<scene>/views/*.json` 的 time_alignment 必填：relative 表示用户显式选择
+共用相对起点；absolute 表示将各动态运行的 epoch 转到同一个 UTC 起点。一个 widget
+始终收到该运行自身的相对秒数，图层的完整身份是 run_id + layer_id。
+
+- **npy_frames**：与 NPY 网格同一布局，encoding.shape 给出逻辑完整 T 维度，
+  encoding.frame_assets 按 samples 顺序列出文件，每个文件保留形如 `[1,C,Y,X]` 或 `[1,Y,X]`。
+  主 asset 为保留的索引/原始元数据 JSON；所有依赖必须在同一运行目录内。
+- **地形跟随高度**：可选 height_asset 是 `[Y,X]` 小端浮点 NPY，height_dtype 明确数据类型。
+  最终采样高度是 origin_m[2] + height[row,col]，高度与速度均保持原始数据。
+- **缺失值掩码**：可选 mask_asset 是 `[Y,X]`、`|u1` NPY；只允许 0/1，
+  mask_semantics=`invalid_nonzero`。1 表示无效/固体位置，不绘制或查询；0 的数据必须有限。
+  掩码不等于流速零，不能把缺失值填成零后冒充计算结果。
+- **非地理实验**：spatial.georeferenced=false 显式表示局部工程坐标；origin 经纬度的 0
+  仅为未记录值的占位，不表示真实位于经纬零点，禁止据此叠加地理底图。省略时为 true。
+- **附加资产**：artifacts 列出 id、asset、sha256、media_type。dirty=true 且 complete 的运行
+  必须含 `source_snapshot`，校验器核对路径和哈希；retain 一并复制。
+  导入的历史记录若无法恢复原始运行代码，必须在 provenance 中明确标记不可复现，不能
+  把当前适配器的 Git 版本冒充原求解器版本。现有导入器使用 `legacy-unrecorded`。
+
+## 10. 新模块接入流程
+
+1. 在 src 对应领域实现求解器。用 `Storage.scratch` / `trial_root` 分配试跑目录；
+   用 `Storage.assets` 获取场景输入，禁止写入源码目录或原始输入目录。
+2. 导出 schema 对应的 manifest 与所有资产，记录代码、参数、输入哈希和时空约定。
+   先复用五类 widget；若需要新格式，同时实现 schema、校验器、解码器与有效/无效样例。
+3. 在 cache 内校验和检查物理结果，选择要保留的运行后 `uwm retain <trial或bundle>`。
+   城市管线 visualize 阶段已自动生成 protocol bundle；`uwm run <scene> --retain` 自动保留它。
+4. 在 project/<scene>/views 中显式选择运行和图层。bundle 会自动注册新视图；
+   不覆盖已有默认视图，不用目录修改时间隐式选择结果。
+5. 通过 `uwm serve` 检查坐标、单位、时间、掩码、显隐和选择。公开发布另选可发布资产；
+   本地新数据不会因为源码公开就自动上传。
+
+`sources.local.json` 可设置 `legacy_output` 与 `region_input` 的外部绝对路径；
+仅用于读取已存在数据，不恢复目录链接。`uwm experiment --python <env/python> <simulation>`
+运行 actuator_lab、windfarm_2m、windfarm_crop、windfarm_neural 的迁移入口，结果位于 cache。
+实验记录导入见 `src/visualization/adapters/import_experiments.py`；完成标志与数组校验均通过
+才注册，原实验文件及专用查看器保持可用。

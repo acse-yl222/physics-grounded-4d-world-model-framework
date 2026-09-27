@@ -36,3 +36,23 @@ For each integration:
 For a new data representation, extend the protocol/schema and add a valid example plus
 an invalid case that exercises the changed invariant. Increment the major version for
 incompatible changes; reject unknown major versions in readers.
+
+## Implemented entrypoints and validation
+
+- `uwm run <scene> --dry-run` inspects a pipeline without computation. Actual runs write
+  `cache/<scene>/pipeline/<run_id>`; visualize packages protocol runs, and `--retain`
+  copies the bundle into retained runs and registers its named view.
+- Use `Storage.load().assets(scene, category)` for data and `Storage.scratch`/`trial_root`
+  for intermediates. Local storage/source configuration is ignored by Git. Never restore
+  the removed output or input/region symlinks.
+- V1.1 supports GLB, NPY, per-frame NPY, terrain heights, explicit invalid masks and sparse
+  recorded trajectories. Preserve absent data and original timestamps. Follow protocol
+  section 9 and examples/contract-v1.1; do not invent missing geography or replay frames.
+- Declare any retained logs/checkpoints/source snapshots in artifacts. Dirty complete runs
+  require a source_snapshot with SHA-256. Unknown historical provenance must remain unknown.
+- Run `python3 -m unittest discover -s tests -v` and `node --test tests/test_viewer.mjs`.
+  Browser tests are `tests/browser_contract.cjs`, `browser_city.cjs`, and
+  `browser_experiments.cjs`; real-data tests require the local datasets.
+- `pages` is the static deployment branch. `tools/build_public_site.py <site-checkout>`
+  overlays public viewer assets onto the previously published site. Never upload local
+  project datasets, sources.local.json, storage.local.json, cache, or .history by default.

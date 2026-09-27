@@ -1,0 +1,459 @@
+{
+  "removed": [
+    {
+      "path": "cache/south_kensington/.venv",
+      "bytes": 425350898,
+      "reason": "rebuildable old environment; requirements retained"
+    },
+    {
+      "path": "cache/viewer/core007_light.glb.gz",
+      "bytes": 54183671,
+      "reason": "gzip decompresses to identical retained GLB",
+      "sha256_uncompressed": "828e206d114478448212fd79a3d37b1223a307a6ab6409e56ff1eef16d7b3503"
+    },
+    {
+      "path": "cache/viewer/core008_light.glb.gz",
+      "bytes": 54319781,
+      "reason": "gzip decompresses to identical retained GLB",
+      "sha256_uncompressed": "3f184589b57553e6c4d55598c50f9119ed8773993dc113860a4af4342d70db2f"
+    },
+    {
+      "path": "cache/viewer/node_modules",
+      "bytes": 23173137,
+      "reason": "reinstallable npm dependencies; lockfile retained"
+    },
+    {
+      "path": "cache/tools/node_modules",
+      "bytes": 33962495,
+      "reason": "reinstallable npm dependencies; lockfile retained"
+    },
+    {
+      "path": "src/common/__pycache__",
+      "bytes": 111288,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/common/pipeline/__pycache__",
+      "bytes": 178409,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/traffic/__pycache__",
+      "bytes": 63659,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/traffic/configs/__pycache__",
+      "bytes": 1268,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/traffic/data/__pycache__",
+      "bytes": 56478,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/traffic/models/__pycache__",
+      "bytes": 7726,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/traffic/verification/__pycache__",
+      "bytes": 68677,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/traffic/visualization/__pycache__",
+      "bytes": 19136,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/__pycache__",
+      "bytes": 367,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/__pycache__",
+      "bytes": 482492,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/physical_model/__pycache__",
+      "bytes": 198675,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/rollout_surrogate/__pycache__",
+      "bytes": 95125,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/surrogate_modelling/__pycache__",
+      "bytes": 232812,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/velocity_calculation/__pycache__",
+      "bytes": 79133,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/flood/__pycache__",
+      "bytes": 17595,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/solar/__pycache__",
+      "bytes": 17960,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind/__pycache__",
+      "bytes": 16453,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/__pycache__",
+      "bytes": 29204,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/__pycache__",
+      "bytes": 42398,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/dataset/__pycache__",
+      "bytes": 16291,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/model/__pycache__",
+      "bytes": 303528,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/model/autoencoders/__pycache__",
+      "bytes": 128570,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/model/transformers/__pycache__",
+      "bytes": 46768,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/model/transformers/cvt/__pycache__",
+      "bytes": 42928,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/model/unets/__pycache__",
+      "bytes": 341495,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/model/wnets/__pycache__",
+      "bytes": 2111,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/pipelines/__pycache__",
+      "bytes": 15816,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/runner/__pycache__",
+      "bytes": 203199,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/runner/fpc_runner/__pycache__",
+      "bytes": 195,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/utils/__pycache__",
+      "bytes": 28273,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/scaled/validation/__pycache__",
+      "bytes": 45724,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/scaled/tools/__pycache__",
+      "bytes": 29438,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/yuhang/__pycache__",
+      "bytes": 15448,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_pollution_code/code/vendor/yuhang/data_generation/__pycache__",
+      "bytes": 51276,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/__pycache__",
+      "bytes": 106972,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/original/__pycache__",
+      "bytes": 111961,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/dataset/__pycache__",
+      "bytes": 16306,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/model/__pycache__",
+      "bytes": 303563,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/model/autoencoders/__pycache__",
+      "bytes": 128595,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/model/transformers/__pycache__",
+      "bytes": 46778,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/model/transformers/cvt/__pycache__",
+      "bytes": 42938,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/model/unets/__pycache__",
+      "bytes": 341525,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/model/wnets/__pycache__",
+      "bytes": 2116,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/pipelines/__pycache__",
+      "bytes": 15826,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/runner/__pycache__",
+      "bytes": 203254,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/runner/fpc_runner/__pycache__",
+      "bytes": 200,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/utils/__pycache__",
+      "bytes": 28278,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/scaled/validation/__pycache__",
+      "bytes": 45739,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/physics/wind_temperature_teacher/code/vendor/scaled/tools/__pycache__",
+      "bytes": 29443,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/scenarios/actuator_lab/__pycache__",
+      "bytes": 18391,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/scenarios/region/__pycache__",
+      "bytes": 15198,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/scenarios/windfarm_2m/__pycache__",
+      "bytes": 39717,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/scenarios/windfarm_crop/__pycache__",
+      "bytes": 47100,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/scenarios/windfarm_neural/__pycache__",
+      "bytes": 67663,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_flow/solvers/__pycache__",
+      "bytes": 70995,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/__pycache__",
+      "bytes": 26109,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/agent/__pycache__",
+      "bytes": 417253,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/agent/buildings/__pycache__",
+      "bytes": 3338805,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/birds/scripts/__pycache__",
+      "bytes": 29272,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/birds/sim/__pycache__",
+      "bytes": 170761,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/core008/__pycache__",
+      "bytes": 80679,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/bounded_studies/__pycache__",
+      "bytes": 172,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/bounded_studies/r3_global_mu_v3r4_batch_judge_v3/__pycache__",
+      "bytes": 279983,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/bounded_studies/r3_guidance_inner_v3r4_q10000_v1/__pycache__",
+      "bytes": 26576,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/examples/__pycache__",
+      "bytes": 1115,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/experiments/__pycache__",
+      "bytes": 96355,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/mfmu_scheduler/__pycache__",
+      "bytes": 28364,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/src/__pycache__",
+      "bytes": 160,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/src/ai4pde/__pycache__",
+      "bytes": 24292,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/src/core/__pycache__",
+      "bytes": 13351,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/src/engines/__pycache__",
+      "bytes": 29532,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/src/validation/__pycache__",
+      "bytes": 5190,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/mfmu-uwm-integration-preview/tests/__pycache__",
+      "bytes": 6453,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/uav/__pycache__",
+      "bytes": 18346,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/urban_geometry/voxelization/__pycache__",
+      "bytes": 176978,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/visualization/adapters/__pycache__",
+      "bytes": 17826,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/visualization/adapters/legacy/shared/__pycache__",
+      "bytes": 8872,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "src/visualization/adapters/legacy/white_city/__pycache__",
+      "bytes": 77571,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "tests/__pycache__",
+      "bytes": 43902,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "tools/__pycache__",
+      "bytes": 731,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": ".history/local-workspaces/south_kensington/src/__pycache__",
+      "bytes": 29325,
+      "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": ".history/local-workspaces/south_kensington/src/buildings/__pycache__",
+      "bytes": 209278,
+      "reason": "rebuildable Python bytecode"
+    }
+  ],
+  "preserved": [
+    {
+      "from": "cache/south_kensington",
+      "to": ".history/local-workspaces/south_kensington",
+      "reason": "contains original inputs or unique authoring code"
+    },
+    {
+      "from": "cache/viewer",
+      "to": ".history/local-workspaces/viewer",
+      "reason": "contains original inputs or unique authoring code"
+    },
+    {
+      "from": "cache/tools",
+      "to": ".history/local-workspaces/tools",
+      "reason": "contains original inputs or unique authoring code"
+    }
+  ],
+  "bytes_freed": 600819706
+}

@@ -1,0 +1,46 @@
+{
+  "default": "south_ken",
+  "scenes": [
+    {
+      "scene_id": "actuator_lab",
+      "title": "Actuator laboratory",
+      "views": [
+        "default",
+        "imported_fullgradient_control_0p5m",
+        "imported_fullgradient_disk_0p5m",
+        "imported_fullgradient_disk_1p0m",
+        "imported_halfgradient_control_0p5m",
+        "imported_halfgradient_disk_0p5m",
+        "imported_halfgradient_disk_1p0m"
+      ]
+    },
+    {
+      "scene_id": "south_ken",
+      "title": "South Kensington core008",
+      "views": [
+        "default",
+        "traffic"
+      ]
+    },
+    {
+      "scene_id": "white_city",
+      "title": "White City 9 km\u00b2",
+      "views": [
+        "default"
+      ]
+    },
+    {
+      "scene_id": "windfarm",
+      "title": "Wind farm",
+      "views": [
+        "default",
+        "imported_mac_2m",
+        "imported_np4m_legacy",
+        "imported_np4m_legacy_lid",
+        "imported_np4m_paper",
+        "imported_np4m_paper_lid",
+        "imported_np4m_paper_opentop"
+      ]
+    }
+  ]
+}

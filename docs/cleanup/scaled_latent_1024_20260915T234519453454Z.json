@@ -1,0 +1,817 @@
+{
+  "authorized_patterns": [
+    "/home/yl222/workspace/UrbanWorldModel/physics_model_result/scaled_latent_1024/wind/wind*m_*.npy",
+    "/home/yl222/workspace/UrbanWorldModel/physics_model_result/scaled_latent_1024/pollution/concentration*.npy"
+  ],
+  "time_utc": "2026-09-15T23:45:19.453384+00:00",
+  "files": [
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_000.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_001.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_002.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_003.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_004.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_005.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_006.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_007.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_008.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_009.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_010.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_011.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_012.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_013.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_014.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_015.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_016.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_017.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_018.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_019.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_020.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_021.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_022.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_023.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_024.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_025.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_026.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_027.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_028.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_029.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_030.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_031.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_032.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_033.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_034.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_035.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_036.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_037.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_038.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_039.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_040.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_041.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_042.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_043.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_044.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_045.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_046.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_047.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_048.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_049.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_050.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_051.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_052.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_053.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_054.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_055.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_056.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_057.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_058.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_059.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_060.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_061.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_062.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_063.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_064.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_065.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_066.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_067.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_068.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_069.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_070.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_071.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_072.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_073.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_074.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_075.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_076.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_077.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_078.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_079.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_080.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_081.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_082.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_083.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_084.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_085.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_086.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_087.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_088.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_089.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_090.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_091.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_092.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_093.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_094.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_095.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_096.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_097.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_098.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_099.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/wind/wind4m_100.npy",
+      "bytes": 201326720
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_001_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_002_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_003_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_004_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_005_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_006_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_007_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_008_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_009_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_010_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_011_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_012_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_013_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_014_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_015_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_016_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_017_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_018_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_019_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_020_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_021_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_022_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_023_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_024_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_025_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_026_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_027_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_028_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_029_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_030_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_031_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_032_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_033_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_034_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_035_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_036_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_037_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_038_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_039_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_040_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_041_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_042_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_043_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_044_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_045_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_046_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_047_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_048_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_049_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_050_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_051_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_052_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_053_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_054_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_055_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_056_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_057_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_058_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_059_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_060_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_061_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_062_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_063_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_064_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_065_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_066_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_067_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_068_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_069_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_070_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_071_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_072_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_073_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_074_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_075_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_076_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_077_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_078_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_079_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_080_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_081_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_082_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_083_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_084_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_085_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_086_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_087_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_088_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_089_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_090_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_091_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_092_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_093_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_094_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_095_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_096_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_097_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_098_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_099_float16.npy",
+      "bytes": 134217856
+    },
+    {
+      "path": "physics_model_result/scaled_latent_1024/pollution/concentration_100_float16.npy",
+      "bytes": 134217856
+    }
+  ],
+  "deleted_files": 201,
+  "free_before_bytes": 10272817152,
+  "free_after_bytes": 44029677568,
+  "deleted_logical_bytes": 33755784320
+}

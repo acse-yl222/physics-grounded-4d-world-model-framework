@@ -1,1 +1,0 @@
-Revision27 delivered; count35 unchanged. See docs/STATUS.md. Continue batch14 preflight for12/16 Queen's Gate Place Mews and2 Princes Gate Mews. No active Blender process for revision. Historical exports remain immutable.

@@ -1,0 +1,47 @@
+[
+  {
+    "old": "src/traffic/train/best_model_09-10_core008.pt",
+    "new": "project/south_ken/input/traffic/models/best_model_09-10_core008.pt",
+    "sha256": "50f5d8da87c78a87160a6112d8e8a93f8a1b5644c3299b4b7defb53a1b98ec09"
+  },
+  {
+    "old": "src/traffic/train/train_log_09-10_core008.txt",
+    "new": "project/south_ken/input/traffic/models/train_log_09-10_core008.txt",
+    "sha256": "d1d79823b006e2affbed7e1649c66cbc2d0f10621a2478d009b0f210c2cc49b9"
+  },
+  {
+    "old": "src/traffic/verification/roads.geojson",
+    "new": "project/south_ken/input/traffic/roads.geojson",
+    "sha256": "f1586657a48d2cc855e4abc50ec1273ce07e62119b76748d92ec2bd6303f0ac3"
+  },
+  {
+    "old": "src/traffic/verification/london_roads.json",
+    "new": "project/south_ken/input/traffic/london_roads.json",
+    "sha256": "3e4505e33c98a89581d216bf1a3d38c6f62fc6f3def9281b855444515a6c7aba"
+  },
+  {
+    "old": "src/urban_geometry/birds/data/geometry.npz",
+    "new": "project/south_ken/input/birds/geometry.npz",
+    "sha256": "e2d4a0256c500fdde28b1233ac6ff147f77c1287fb2883926fec6bc6f661ebe1"
+  },
+  {
+    "old": "src/urban_flow/physics/wind_temperature_teacher/weights/temperature_one_step.pt",
+    "new": "project/south_ken/input/models/temperature_one_step.pt",
+    "sha256": "9387c738c3bb4ab89283ee64771b5448e7827a76f134c8c9f48a71431a7516a5"
+  },
+  {
+    "old": "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/velocity_calculation/assets/digit.pth",
+    "new": "project/south_ken/input/models/digit.pth",
+    "sha256": "01818400b21609735bbbeffe04f9dc6629a536df1554f2a41e24dca0203278ae"
+  },
+  {
+    "old": "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/surrogate_modelling/output/temperature/best_temperature_3d_unet_surrogate.pt",
+    "new": "project/south_ken/input/models/best_temperature_3d_unet_surrogate.pt",
+    "sha256": "36642afa230395334fd55bb92762cb738ad8c9ff7fae80b9039009106101aaa9"
+  },
+  {
+    "old": "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/rollout_surrogate/outputs/best_temperature_3d_unet_surrogate_rollout.pt",
+    "new": "project/south_ken/input/models/best_temperature_3d_unet_surrogate_rollout.pt",
+    "sha256": "b6bb417a0f04906bbd4cb19be3d7fe8fa2467b028c3b3a1f4ecb5cb11aef73b1"
+  }
+]

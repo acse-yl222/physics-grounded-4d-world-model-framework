@@ -1,0 +1,40 @@
+{
+  "scene": "white_city",
+  "geometry": "output/white_city/geometry/voxel_2m",
+  "output": "output/white_city/physics",
+  "cell_m": 2,
+  "experimental_assumptions_confirmed": true,
+  "assumptions": {
+    "latitude_deg": 51.5145,
+    "longitude_deg": -0.22405,
+    "north": "local +y assumed north; local +x assumed east",
+    "terrain": "GLB ground mesh, near planar and not surveyed elevation; uncovered cells at local zero"
+  },
+  "solar": {
+    "dates": [
+      "2026-06-21",
+      "2026-12-21"
+    ],
+    "minutes": 10,
+    "canopy_transmittance": 0.3,
+    "albedo": 0.2
+  },
+  "flood": {
+    "duration_seconds": 10800,
+    "frame_seconds": 300,
+    "dt_max_seconds": 0.3,
+    "rain_mm_h_15min": [
+      14.8,
+      29.6,
+      74.0,
+      44.4,
+      22.2,
+      14.8
+    ],
+    "sewer_mm_h": 12,
+    "green_infiltration_mm_h": 20,
+    "manning_paved": 0.02,
+    "manning_green": 0.05
+  },
+  "confirmation_note": "User confirmed experimental assumptions in conversation on 2026-09-16."
+}

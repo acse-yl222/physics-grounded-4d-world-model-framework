@@ -1,0 +1,264 @@
+{
+  "base": "b218fa0",
+  "upstream": "aea37d64cff1854f21b5f4b9da61fe4cecab44c3",
+  "files": [
+    {
+      "upstream": "output/paper_rotor/comparison.json",
+      "local": "project/windfarm/runs/published_paper_rotor/comparison.json",
+      "sha256": "3b34111dfedb66a070b31b8925d132ebc65185f376dc116cda76b049d2459e25",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/comparison.png",
+      "local": "project/windfarm/runs/published_paper_rotor/comparison.png",
+      "sha256": "fe9bbfa3739a1bd9163396233a30d040573b52221a2daae3bd5169558cbd8ab3",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/index.html",
+      "local": "project/windfarm/runs/published_paper_rotor/index.html",
+      "sha256": "3899daedc608a9d397562254f9a1e2e0b77af47667b2f5612434a2b4110fe8c5",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/metrics.json",
+      "local": "project/windfarm/runs/published_paper_rotor/metrics.json",
+      "sha256": "a32c68f9fb657ee3626c51c24d3af090eb99d557d24c05524d92bbed1c4b5436",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/refined/comparison.json",
+      "local": "project/windfarm/runs/published_paper_rotor/refined/comparison.json",
+      "sha256": "ae8d7510f63790ea0729d511bf8cab9d4e20d6b4930742d43f9e0fa786fd7446",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/refined/torch_paper.npz",
+      "local": "project/windfarm/runs/published_paper_rotor/refined/torch_paper.npz",
+      "sha256": "8bab522cfecebe30dfb97f06a0d641e8c56a66799d61f357f58224bbe38aabfe",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/relative_inflow.png",
+      "local": "project/windfarm/runs/published_paper_rotor/relative_inflow.png",
+      "sha256": "b89d5167fecca462e8f64d7d5d4acaffd6ad74450c63e22962348c429ab45b9a",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/torch_legacy.npz",
+      "local": "project/windfarm/runs/published_paper_rotor/torch_legacy.npz",
+      "sha256": "c36b56afd929a12964c16e3a1c7956085bab13f97aa41b83263c8d172ae25d58",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/torch_paper.npz",
+      "local": "project/windfarm/runs/published_paper_rotor/torch_paper.npz",
+      "sha256": "e56635079dbe5633481686521db1189fce2a264136da87f4ac97923ce80b2739",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/triton_paper.npz",
+      "local": "project/windfarm/runs/published_paper_rotor/triton_paper.npz",
+      "sha256": "a1bf01fff5e55a48b08644a406b74939c2a752aee9f446836274d87540f56478",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/verification_cpu.json",
+      "local": "project/windfarm/runs/published_paper_rotor/verification_cpu.json",
+      "sha256": "9836e9eded8f52426d1eec259d4e59f850f1e7fe4cbd5c0058822245531f13ed",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/verification_gpu.json",
+      "local": "project/windfarm/runs/published_paper_rotor/verification_gpu.json",
+      "sha256": "737f51d205d3844d169928c969b695778744208118e75ebc6019f28b7ee47ef5",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/wake.gif",
+      "local": "project/windfarm/runs/published_paper_rotor/wake.gif",
+      "sha256": "b7e6de43e361bdd7970214629837c7abb591e4b0daaec393202d399f1c474963",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/paper_rotor/wake.mp4",
+      "local": "project/windfarm/runs/published_paper_rotor/wake.mp4",
+      "sha256": "ee2938dc52c9237c459c8307854600e6ce8fb814d7da75ab6dcaab5f7d24eeb5",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/videos/windfarm_2m_geometry.mp4",
+      "local": "project/windfarm/runs/published_videos/windfarm_2m_geometry.mp4",
+      "sha256": "d8c46d3ccf5a4aa26d3c13aef15809fb437553aa36550ec411c37ae6b09904fa",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/windfarm_compare/comparison.json",
+      "local": "project/windfarm/runs/published_windfarm_compare/comparison.json",
+      "sha256": "acf3dbc722af3965a80afee9d9f6d44f344886eb6571b72f9d6c9521374b709f",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/windfarm_compare/index.html",
+      "local": "project/windfarm/runs/published_windfarm_compare/index.html",
+      "sha256": "848a0689636446858039bf67ac852567c102224f46dc34b489246606df6261ae",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/windfarm_compare/report.md",
+      "local": "project/windfarm/runs/published_windfarm_compare/report.md",
+      "sha256": "a050cf0bcf886a78738dcb32853eb088ba5aa7a9e564803ef7b202647bcc2030",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/windfarm_compare/turbines_power.png",
+      "local": "project/windfarm/runs/published_windfarm_compare/turbines_power.png",
+      "sha256": "be8b18f0027874f655b5bbcda751b485ae5ab04d3cc8904611687757bbdf9d27",
+      "state": "imported"
+    },
+    {
+      "upstream": "output/windfarm_compare/wind_fields.png",
+      "local": "project/windfarm/runs/published_windfarm_compare/wind_fields.png",
+      "sha256": "0b44e4a436bc2600eb33690084bcb97bf816d5c1aee3c18f55dde875cb09520b",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/region/models/region.glb",
+      "local": "project/windfarm/runs/region/models/region.glb",
+      "sha256": "b457fe574a94ca85b4b6a4c5431981982af6af6a125e214cd5ba12da713b7812",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/README.md",
+      "local": "project/windfarm/runs/movie/README.md",
+      "sha256": "6682ea1e84252da0c12820f565f32e7f4df6752b0decdddf40730f03d3b5498c",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/comparison/gaussian.bin",
+      "local": "project/windfarm/runs/movie/comparison/gaussian.bin",
+      "sha256": "25b8734150c91123e7dfa960f9f79f989d70b7cfed84c1d76cb08662c996f44e",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/comparison/jensen04.bin",
+      "local": "project/windfarm/runs/movie/comparison/jensen04.bin",
+      "sha256": "c92c75642f74d44b4e6d4b08dd1364a0610e3521790a1a16ddad488f70ef2d2d",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/comparison/jensen10.bin",
+      "local": "project/windfarm/runs/movie/comparison/jensen10.bin",
+      "sha256": "212ff8b67474a6d09e2401551c7b0c2e2e631e3ab89986077173631c29f8dc44",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/comparison/mac_mean.bin",
+      "local": "project/windfarm/runs/movie/comparison/mac_mean.bin",
+      "sha256": "20971e5f676acf0b971eea7dbdf483a46babc510612ebc35f4b10157458070ec",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/ground.bin",
+      "local": "project/windfarm/runs/movie/ground.bin",
+      "sha256": "7c17774dad3aef15c7f8cffddc76f733c3a75068ef5ee0b36ca9def344474645",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/metadata.json",
+      "local": "project/windfarm/runs/movie/metadata.json",
+      "sha256": "dda5186c02e7af8576c8d9dd932fe7c32e6ac9a139fbe67df1a4ca7c4e33a338",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/rotor-speeds.json",
+      "local": "project/windfarm/runs/movie/rotor-speeds.json",
+      "sha256": "5a786d00dff552de4a57fae6ff9cee8f09df032c2dcefaf1bbeae8b891ae4627",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/u-0.bin",
+      "local": "project/windfarm/runs/movie/u-0.bin",
+      "sha256": "21a119734a31fdcf8df1545defc5e7954b521ce8e534c1bb95765b21189cd2a2",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/u-1.bin",
+      "local": "project/windfarm/runs/movie/u-1.bin",
+      "sha256": "1299121ae61f6ab4be3353660734552a805bfdda765e68f75e079b429caeb27c",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/u-2.bin",
+      "local": "project/windfarm/runs/movie/u-2.bin",
+      "sha256": "77c9c1fb1a6c83f9c1e4d357ee12a65679410a068d31c83abbef004e042ea47d",
+      "state": "imported"
+    },
+    {
+      "upstream": "scenes/windfarm_movie/u-3.bin",
+      "local": "project/windfarm/runs/movie/u-3.bin",
+      "sha256": "ee9287dcc0dc57a6be219a4c9d0043936e9b4c80d496de6cde5615c278c6e0cf",
+      "state": "imported"
+    },
+    {
+      "upstream": "tools/paper_rotor/README.md",
+      "local": "src/urban_flow/paper_rotor/README.md",
+      "sha256": "a57b79f3564d5df63690946bb865441593a7ca58d0c9793358eea72958118d0b",
+      "state": "imported"
+    },
+    {
+      "upstream": "tools/paper_rotor/compare.py",
+      "local": "src/urban_flow/paper_rotor/compare.py",
+      "sha256": "263a2f02deaef067bc7ccd9a96f0de5a2ff22fde3e34b59c82c2b3dfd0be7dbe",
+      "state": "imported"
+    },
+    {
+      "upstream": "tools/paper_rotor/render.py",
+      "local": "src/urban_flow/paper_rotor/render.py",
+      "sha256": "f421bc0976e832cadb6140eed1f79307eaffb0b52a9866775cd3ecedf4a8d39d",
+      "state": "imported"
+    },
+    {
+      "upstream": "tools/paper_rotor/rotor.py",
+      "local": "src/urban_flow/paper_rotor/rotor.py",
+      "sha256": "269aebd60668a50e6f51a8bdf749c19bd1a27647b6c907af1f0c39909ca33ae4",
+      "state": "imported"
+    },
+    {
+      "upstream": "tools/paper_rotor/verify.py",
+      "local": "src/urban_flow/paper_rotor/verify.py",
+      "sha256": "eddb32cd31389202be358a1ff8b87bb26e6e5281158e0394e82d3f92ea8ed207",
+      "state": "imported"
+    },
+    {
+      "upstream": "tools/windfarm_2m/mac.py",
+      "local": "src/urban_flow/solvers/mac_triton.py",
+      "sha256": "520ba90e3e7c1efbf65646c92110e49c70a16bf19fce0124d9fcf60f26bd06ad",
+      "state": "imported"
+    },
+    {
+      "upstream": "tools/windfarm_2m/mac_torch.py",
+      "local": "src/urban_flow/reference_public/mac_torch.py",
+      "sha256": "c1d52ddaccfff4493bf7116c25e066d7bf2b7f3601d929075f9c11c5b4904950",
+      "state": "imported"
+    },
+    {
+      "upstream": "viewer/windfarm-movie/index.html",
+      "local": "src/visualization/legacy/viewer/windfarm-movie/index.html",
+      "sha256": "b40a7fd8867e08d66daaacae83143ad72c6a99a2816be7ced3a110531660a1dc",
+      "state": "imported"
+    },
+    {
+      "upstream": "viewer/windfarm-movie/main.js",
+      "local": "src/visualization/legacy/viewer/windfarm-movie/main.js",
+      "sha256": "e00e4701140002d9ac757ca134dd38d8ce01afc0afa1c1c7818a1b04c79cc543",
+      "state": "imported"
+    },
+    {
+      "upstream": "viewer/windfarm-movie/rotors.js",
+      "local": "src/visualization/legacy/viewer/windfarm-movie/rotors.js",
+      "sha256": "a42ce10502cf21ef74b440418b20b14f52e74fa3bb69f995d413a97828fcf384",
+      "state": "imported"
+    }
+  ]
+}

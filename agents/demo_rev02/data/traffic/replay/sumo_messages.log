@@ -1,8 +1,0 @@
-Loading net-file from '/tmp/claude-0/-home-claude/ac1cefa9-c151-5b6b-9cc1-a64a346498f7/scratchpad/traffic/v2/net_v2_f2/repair/derived_v2_repaired.net.xml' ... done (1407ms).
-Loading route-files from 'netF2_3600/flow_v2.rou.xml' ... done (109ms).
-Loading done.
-Simulation version 1.27.1 started via libsumo with time: 0.00.
-Simulation ended at time: 3600.00.
-Reason: Libsumo requested termination.
-DijkstraRouter answered 80348 queries and explored 489.47 edges on average.
-DijkstraRouter spent 27.63s answering queries (0.34ms on average).

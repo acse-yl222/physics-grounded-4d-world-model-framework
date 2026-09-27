@@ -1,4 +1,0 @@
-Batch22freshdecode638primitives29IDsallpresent; normalize2/3/3knownshared/protected74exclusions. Full7/10/4pointtargets. Ground22QGM Site-.05androad0at.8/1.2 afteradditional73699probe; rootprofileknots(.2,base-.006),(.8,0),(1.2,0),allothers-.05standardapproach. Manifest59priorIDs;5PGMroof_tier2.1/.65estimatedfromofficialAMRcompletedmansard. Threeagentsmodulesactive. NoBlenderstarted; current59delivered64curated5pending.
-Allmodulesfrozen module_freeze.json. Buildbatch22_v1active89478. Expect16PNGs; root5PGMfive+overview, jay4QGPMfive, exhibition22QGMfive. Ring08audit concurrentlyexhibition. No deliveredcountadvance beforeallchecks.
-
-USER REQUESTED STOP. All three agents interrupted; build89478 confirmedterminal. Do not resume automatically. Batch22 has unaccepted output; no numerical/current-image fullreview/viewer/finalizer. Delivered59 remains authoritative. Resume only upon user instruction.

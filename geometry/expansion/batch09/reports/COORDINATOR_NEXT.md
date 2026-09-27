@@ -1,1 +1,0 @@
-Batch09 delivered after latest build57002, current16-view inspection, numeric interface checks, actual Three.js23-ID load/toggle and HTTP/hash finalization. Next: build prepared batch10; continue batch11 per-building authoring. Do not rebuild this delivered run.

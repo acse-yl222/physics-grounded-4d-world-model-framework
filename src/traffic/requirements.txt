@@ -1,0 +1,4 @@
+numpy>=1.26
+torch>=2.1
+matplotlib>=3.7
+bayesian-optimization>=1.4

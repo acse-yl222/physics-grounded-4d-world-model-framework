@@ -1,0 +1,38 @@
+[
+  {
+    "file": "quadcopter.glb",
+    "bytes": 306588,
+    "mesh_objects": 36,
+    "triangles": 11096,
+    "dimensions_blender_xyz_m": [
+      0.69,
+      0.69,
+      0.405
+    ],
+    "reimport_verified": true
+  },
+  {
+    "file": "hexacopter_cargo.glb",
+    "bytes": 448256,
+    "mesh_objects": 53,
+    "triangles": 16792,
+    "dimensions_blender_xyz_m": [
+      1.358,
+      1.228,
+      0.517
+    ],
+    "reimport_verified": true
+  },
+  {
+    "file": "fixed_wing.glb",
+    "bytes": 121860,
+    "mesh_objects": 22,
+    "triangles": 3952,
+    "dimensions_blender_xyz_m": [
+      2.36,
+      1.542,
+      0.719
+    ],
+    "reimport_verified": true
+  }
+]

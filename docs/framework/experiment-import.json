@@ -1,0 +1,66 @@
+[
+  {
+    "source": "project/windfarm/runs/np4m_legacy_opentop/manifest.json",
+    "status": "incomplete; preserved, not registered"
+  },
+  {
+    "scene": "windfarm",
+    "run_id": "imported_mac_2m",
+    "status": "validated"
+  },
+  {
+    "scene": "windfarm",
+    "run_id": "imported_np4m_legacy",
+    "status": "validated"
+  },
+  {
+    "scene": "windfarm",
+    "run_id": "imported_np4m_legacy_lid",
+    "status": "validated"
+  },
+  {
+    "scene": "windfarm",
+    "run_id": "imported_np4m_paper",
+    "status": "validated"
+  },
+  {
+    "scene": "windfarm",
+    "run_id": "imported_np4m_paper_lid",
+    "status": "validated"
+  },
+  {
+    "scene": "windfarm",
+    "run_id": "imported_np4m_paper_opentop",
+    "status": "validated"
+  },
+  {
+    "scene": "actuator_lab",
+    "run_id": "imported_fullgradient_control_0p5m",
+    "status": "validated"
+  },
+  {
+    "scene": "actuator_lab",
+    "run_id": "imported_fullgradient_disk_0p5m",
+    "status": "validated"
+  },
+  {
+    "scene": "actuator_lab",
+    "run_id": "imported_fullgradient_disk_1p0m",
+    "status": "validated"
+  },
+  {
+    "scene": "actuator_lab",
+    "run_id": "imported_halfgradient_control_0p5m",
+    "status": "validated"
+  },
+  {
+    "scene": "actuator_lab",
+    "run_id": "imported_halfgradient_disk_0p5m",
+    "status": "validated"
+  },
+  {
+    "scene": "actuator_lab",
+    "run_id": "imported_halfgradient_disk_1p0m",
+    "status": "validated"
+  }
+]

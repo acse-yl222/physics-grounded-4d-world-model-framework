@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "south_ken",
+  "title": "South Kensington core008",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.176896,
+      "latitude": 51.498354,
+      "height_m": 0,
+      "vertical_datum": "Inherited estimated flat ground; not surveyed elevation"
+    },
+    "bounds_m": {
+      "min": [
+        -1636.0,
+        -1484.0,
+        0
+      ],
+      "max": [
+        1436.0,
+        1332.0,
+        128
+      ]
+    }
+  },
+  "inputs": [
+    {
+      "id": "city_glb",
+      "path": "runs/legacy_web/models/south_kensington_core008_web.glb",
+      "source": "Preserved local scene export",
+      "sha256": "b50716ff233ee6bd929dc23ac7e10360495fd484d5c32ee5180a6f54933034bd",
+      "license": "Local inherited asset; public redistribution not determined by this import."
+    }
+  ],
+  "default_view": "default"
+}

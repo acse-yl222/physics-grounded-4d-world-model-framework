@@ -1,0 +1,21 @@
+{
+  "moves": [
+    {
+      "old": "visualizer/.git",
+      "new": ".history/repositories/visualizer/original.git"
+    },
+    {
+      "old": "visualizer/geometry",
+      "new": "project/south_ken/geometry/legacy_visualizer"
+    },
+    {
+      "old": "visualizer/agents/demo_rev02/data",
+      "new": "project/south_ken/runs/legacy_agents/data"
+    },
+    {
+      "old": "visualizer",
+      "new": "src/visualization/legacy"
+    }
+  ],
+  "note": "Original Git metadata and bundled history preserved under .history; scene assets owned by project."
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "actuator_lab",
+  "title": "Actuator laboratory",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "georeferenced": false,
+    "origin": {
+      "longitude": 0,
+      "latitude": 0,
+      "height_m": 0,
+      "vertical_datum": "local engineering coordinates; geographic origin unrecorded"
+    },
+    "bounds_m": {
+      "min": [
+        0,
+        0,
+        0
+      ],
+      "max": [
+        128,
+        64,
+        64
+      ]
+    }
+  },
+  "inputs": [],
+  "default_view": "default"
+}

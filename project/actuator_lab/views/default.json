@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "actuator_lab",
+  "title": "fullgradient disk 1p0m",
+  "time_alignment": "relative",
+  "runs": [
+    "imported_fullgradient_disk_1p0m"
+  ],
+  "layers": [
+    {
+      "run_id": "imported_fullgradient_disk_1p0m",
+      "layer_id": "velocity",
+      "visible": true
+    }
+  ]
+}

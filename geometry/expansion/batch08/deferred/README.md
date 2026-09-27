@@ -1,1 +1,0 @@
-way-24436429 is pending current-site evidence. Feature preserved byte-for-byte; old asset unchanged. Historical 2015 butterfly tent evidence contradicts four-storey baseline but is not a current model. See ../docs/temporary_exhibit_24436429.md.

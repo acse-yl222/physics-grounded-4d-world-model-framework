@@ -1,1 +1,0 @@
-Firstbuild failed numeric unsupportedentry4a: rootmanifest omitted primary_entry_ground_z for allthree, so no coordinatorapproachesgenerated. Corrected config to audited-.05forall3, preserving modulegeometry and originalthreshold. Rebuildsameundeliveredrun; allPNGreviewandchecksrequiredagain. No deliveredcountadvanced.

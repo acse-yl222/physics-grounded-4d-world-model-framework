@@ -3,7 +3,10 @@
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": "1.0.0"
+      "enum": [
+        "1.0.0",
+        "1.1.0"
+      ]
     },
     "scene_id": {
       "type": "string",
@@ -135,6 +138,9 @@
             "min",
             "max"
           ]
+        },
+        "georeferenced": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -187,7 +193,13 @@
             ]
           },
           "format": {
-            "const": "json"
+            "enum": [
+              "json",
+              "glb",
+              "npy",
+              "trajectory_frames",
+              "npy_frames"
+            ]
           },
           "asset": {
             "type": "string",
@@ -255,6 +267,124 @@
               "widget",
               "capabilities"
             ]
+          },
+          "encoding": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "coordinate_frame": {
+                "enum": [
+                  "ENU",
+                  "glTF-y-up"
+                ]
+              },
+              "dtype": {
+                "enum": [
+                  "<f2",
+                  "<f4",
+                  "<f8"
+                ]
+              },
+              "shape": {
+                "type": "array",
+                "items": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "minItems": 2,
+                "maxItems": 4
+              },
+              "axes": {
+                "enum": [
+                  "YX",
+                  "CYX",
+                  "TYX",
+                  "TCYX"
+                ]
+              },
+              "origin_m": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 3,
+                "maxItems": 3
+              },
+              "spacing_m": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "minItems": 2,
+                "maxItems": 2
+              },
+              "sample_location": {
+                "const": "cell_center"
+              },
+              "byte_order": {
+                "const": "little"
+              },
+              "compression": {
+                "const": "none"
+              },
+              "frame_assets": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "height_asset": {
+                "type": "string",
+                "minLength": 1
+              },
+              "height_dtype": {
+                "enum": [
+                  "<f2",
+                  "<f4",
+                  "<f8"
+                ]
+              },
+              "mask_asset": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mask_dtype": {
+                "const": "|u1"
+              },
+              "mask_semantics": {
+                "const": "invalid_nonzero"
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "required": [
+                    "height_asset"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "height_dtype"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "required": [
+                    "mask_asset"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "mask_dtype",
+                    "mask_semantics"
+                  ]
+                }
+              }
+            ]
           }
         },
         "required": [
@@ -318,8 +448,151 @@
                 }
               }
             }
+          },
+          {
+            "if": {
+              "properties": {
+                "format": {
+                  "const": "glb"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "mesh"
+                },
+                "encoding": {
+                  "required": [
+                    "coordinate_frame"
+                  ],
+                  "properties": {
+                    "coordinate_frame": {
+                      "const": "glTF-y-up"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "encoding"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "format": {
+                  "enum": [
+                    "npy",
+                    "npy_frames"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "scalar_field",
+                    "vector_field"
+                  ]
+                },
+                "encoding": {
+                  "required": [
+                    "coordinate_frame",
+                    "dtype",
+                    "shape",
+                    "axes",
+                    "origin_m",
+                    "spacing_m",
+                    "sample_location",
+                    "byte_order",
+                    "compression"
+                  ],
+                  "properties": {
+                    "coordinate_frame": {
+                      "const": "ENU"
+                    }
+                  }
+                }
+              },
+              "required": [
+                "encoding"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "format": {
+                  "const": "trajectory_frames"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "kind": {
+                  "const": "trajectories"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "format": {
+                  "const": "npy_frames"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "encoding": {
+                  "required": [
+                    "frame_assets"
+                  ]
+                },
+                "sampling": {
+                  "enum": [
+                    "step",
+                    "linear"
+                  ]
+                }
+              }
+            }
           }
         ]
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "asset",
+          "sha256",
+          "media_type"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "asset": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "media_type": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
       }
     }
   },
@@ -336,7 +609,7 @@
     "layers"
   ],
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "UrbanWorldModel run manifest v1.0.0",
+  "title": "UrbanWorldModel run manifest v1.0 / v1.1",
   "allOf": [
     {
       "if": {
@@ -350,6 +623,33 @@
         "properties": {
           "layers": {
             "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": "1.0.0"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "layers": {
+            "items": {
+              "properties": {
+                "format": {
+                  "const": "json"
+                }
+              },
+              "not": {
+                "required": [
+                  "encoding"
+                ]
+              }
+            }
           }
         }
       }

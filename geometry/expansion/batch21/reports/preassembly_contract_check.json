@@ -1,8 +1,0 @@
-{
-  "passed": true,
-  "primary_ground_entries": 3,
-  "additional_ground_entries": 2,
-  "original_entries_preserved": true,
-  "unknown_neighbor_height_retained": true,
-  "scope": "Configuration completeness only; actual geometry and render checks pending"
-}

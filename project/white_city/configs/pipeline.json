@@ -1,0 +1,16 @@
+{
+  "scene": "white_city",
+  "source": "white_city_9km2_compressed_162MB.glb",
+  "domain": { "cell_m": 2, "crop_local_m": null, "wind_layers": 64 },
+  "georeference": {
+    "confirmed": true,
+    "latitude_deg": 51.5145,
+    "longitude_deg": -0.22405,
+    "north": "local +y assumed north; local +x assumed east",
+    "terrain": "GLB ground mesh, near planar and not surveyed elevation; uncovered cells at local zero",
+    "note": "User confirmed experimental assumptions in conversation on 2026-09-16."
+  },
+  "stages": ["geometry", "wind", "temperature", "temperature3d", "pollution", "solar", "flood", "plot", "verify", "visualize"],
+  "wind": { "steps": 100, "step_seconds": 50 },
+  "visualize": { "layer": 1, "title": "White City 9 km²" }
+}

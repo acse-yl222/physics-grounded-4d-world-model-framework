@@ -1,0 +1,22 @@
+{
+  "moves": [
+    {
+      "old": "input/windfarm_2m/mac.py",
+      "new": "src/urban_flow/solvers/mac_triton.py",
+      "sha256_before_and_after": "520ba90e3e7c1efbf65646c92110e49c70a16bf19fce0124d9fcf60f26bd06ad",
+      "compatibility": "old file imports the relocated implementation"
+    },
+    {
+      "old": "input/windfarm_neural/mac_torch.py",
+      "new": "src/urban_flow/solvers/mac_torch.py",
+      "sha256_before_and_after": "8979bfd56ff25d78c48d921a7c35df6c100398484ec223a06dba4f0097f349ca",
+      "compatibility": "old file imports the relocated implementation"
+    },
+    {
+      "old": "input/windfarm_neural/rotor.py",
+      "new": "src/urban_flow/solvers/rotor.py",
+      "sha256_before_and_after": "269aebd60668a50e6f51a8bdf749c19bd1a27647b6c907af1f0c39909ca33ae4",
+      "compatibility": "old file imports the relocated implementation"
+    }
+  ]
+}

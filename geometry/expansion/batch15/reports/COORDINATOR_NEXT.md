@@ -1,1 +1,0 @@
-Batch15 delivered41 distinct refinements. Current GLBb5b51ad4/master0975e769.113meshes40382tri,17actualviews andnumerics/ThreeJS/HTTP passed. Next:batch16 10/18QueensGatePlaceMews and3PrincesGateMews. Source context14 contains these; recompute fresh latest-neighbour overlays and original ground. No active Blender. Remaining5includes2deferred. Allsource/exports preserved.

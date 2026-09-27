@@ -1,1 +1,0 @@
-Batch13 delivered35total after22677build,30880numeric,16currentactualimages,Node35+HTTPfinalization. Preserve deliveredrun. Revision27 build65578 currentlyrunning; nextnumeric+6views/currentneighbors. Need retainbatch12only47+14GLB plusrevision27 toavoidduplicate27scene IDs, Node35toggletest and revisionfinalizer (new0revised1).

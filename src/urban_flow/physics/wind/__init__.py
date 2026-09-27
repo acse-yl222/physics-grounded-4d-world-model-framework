@@ -1,0 +1,1 @@
+"""Wind model implementations."""

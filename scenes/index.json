@@ -1,7 +1,0 @@
-{
-  "default": "south_kensington",
-  "scenes": [
-    { "id": "south_kensington", "title": "South Kensington core008", "short": "South Kensington" },
-    { "id": "white_city", "title": "White City 9 km²", "short": "White City" }
-  ]
-}

@@ -1,0 +1,12 @@
+{
+  "output": "output/core008/physics/solar",
+  "dates": ["2026-06-21", "2026-12-21"],
+  "minutes": 10,
+  "hourly_1m": 1,
+  "required_inputs": [
+    "output/core008/physics/scaled_latent/flood/terrain/bed_block_1m_yx.npy",
+    "output/core008/physics/scaled_latent/flood/terrain/footprint_1m_yx.npy",
+    "output/core008/physics/scaled_latent/flood/terrain/footprint_4m_yx.npy",
+    "output/core008/geometry/south_kensington_core008_landcover_4m/canopy_4m_yx.npy"
+  ]
+}

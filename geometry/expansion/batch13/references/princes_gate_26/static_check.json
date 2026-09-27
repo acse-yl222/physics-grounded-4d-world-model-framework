@@ -1,8 +1,0 @@
-{
-  "python_syntax_passed": true,
-  "roof_outline_valid": true,
-  "rim_quad_positive_area_overlap": 0.0,
-  "roof_outside_mapped_area": 0.0,
-  "spandrel_min_triangle_area_m2": 0.00026064799835682335,
-  "scope": "Math-only geometry check; not Blender execution or full mesh validation."
-}

@@ -1,5 +1,0 @@
-00:00.341  blend            | Read blend: "/Users/yl222/Desktop/UrbanWorldModelVisualizer/geometry_expansion/output/batch06_v1/master.blend"
-{"passed": true, "replacement_sha256": "0a4b19e6042e3ac4c6fac3b717212ecf54d300468dc2f2c0ea2b0245d09265e3", "buildings": [{"id": "way-1154608372", "vertices_checked": 160, "maximum_outside_mapped_ring_m": 1.0800806098151264e-05}, {"id": "way-788306098", "vertices_checked": 152, "maximum_outside_mapped_ring_m": 1.193063338862173e-05}], "interpretation": "No authored ancillary vertex extends more than 2 mm beyond its inherited footprint. Existing 0.05571 m2 Huxley footprint sliver is retained. This bounds new outward projection, not a claim of zero mesh intersections or surveyed contact."}
-Blender 5.2.0 LTS (hash fbe6228777e7 built 2026-07-14 01:31:22)
-
-Blender quit

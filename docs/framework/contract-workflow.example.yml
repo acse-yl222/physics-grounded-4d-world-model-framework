@@ -6,7 +6,9 @@ on:
       - 'examples/contract-v1/**'
       - 'tools/check_contract.py'
       - 'tools/requirements-contract.txt'
-      - 'tests/test_contract.py'
+      - 'tests/**'
+      - 'src/**'
+      - 'pyproject.toml'
       - '.github/workflows/contract.yml'
   pull_request:
     paths:
@@ -14,7 +16,9 @@ on:
       - 'examples/contract-v1/**'
       - 'tools/check_contract.py'
       - 'tools/requirements-contract.txt'
-      - 'tests/test_contract.py'
+      - 'tests/**'
+      - 'src/**'
+      - 'pyproject.toml'
       - '.github/workflows/contract.yml'
 permissions:
   contents: read
@@ -28,4 +32,5 @@ jobs:
           python-version: '3.11'
       - run: python -m pip install -r tools/requirements-contract.txt
       - run: python tools/check_contract.py examples/contract-v1/manifest.json
-      - run: python -m unittest discover -s tests -p test_contract.py -v
+      - run: python -m unittest discover -s tests -v
+      - run: node --test tests/test_viewer.mjs

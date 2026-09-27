@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "windfarm",
+  "title": "Wind farm",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "georeferenced": false,
+    "origin": {
+      "longitude": 0,
+      "latitude": 0,
+      "height_m": 0,
+      "vertical_datum": "local engineering coordinates; geographic origin unrecorded"
+    },
+    "bounds_m": {
+      "min": [
+        -1776.0,
+        -992.0,
+        0
+      ],
+      "max": [
+        2320.0,
+        1056.0,
+        512.0
+      ]
+    }
+  },
+  "inputs": [],
+  "default_view": "default"
+}

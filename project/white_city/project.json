@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "white_city",
+  "title": "White City 9 km\u00b2",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.22405,
+      "latitude": 51.5145,
+      "height_m": 0,
+      "vertical_datum": "GLB ground mesh, near planar and not surveyed elevation; uncovered cells at local zero"
+    },
+    "bounds_m": {
+      "min": [
+        -1492.0,
+        -2548.0,
+        0
+      ],
+      "max": [
+        2092.0,
+        1036.0,
+        128
+      ]
+    }
+  },
+  "inputs": [
+    {
+      "id": "city_glb",
+      "path": "runs/legacy_web/models/white_city_9km2.glb",
+      "source": "Preserved local scene export",
+      "sha256": "dd47083f7e14e674b83ee1d5e63565254a412a8387122916c889a4a73c092cbe",
+      "license": "Local inherited asset; public redistribution not determined by this import."
+    }
+  ],
+  "default_view": "default"
+}

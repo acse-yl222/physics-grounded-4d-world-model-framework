@@ -10,10 +10,13 @@ Target ownership: reusable code in `src/`, scene-specific inputs/configuration/r
 adapters; simulation solvers do not belong in widgets. Use `south_ken` and `white_city` as
 canonical scene IDs; translate legacy IDs at adapter boundaries.
 
-The current tree is transitional. Existing `pipelines/`, `input/`, `configs/`, `expansion/`
-and viewer assets remain legacy until individually migrated and verified. Do not assume
-that the new unified viewer or simulation runner already exists. Preserve nested Git
-repositories, uncommitted work, coordinate transforms and input provenance when migrating.
+Main source directories have moved into `src/`; scene assets are under `project/`.
+The legacy `pipelines/`, `input/`, `configs/`, `expansion/`, and `visualizer/` roots no
+longer exist. Read `docs/framework/implementation-status.md` for remaining migrations.
+Original repository histories, status records and patches are retained under `.history/`;
+this is recovery material, not disposable cache. Do not publish it or discard it.
+The canonical viewer supports GLB, NPY, JSON and sparse recorded trajectories.
+Preserve coordinate transforms and provenance; never invent missing traffic frames.
 
 Validate protocol examples with `python3 tools/check_contract.py examples/contract-v1/manifest.json`.
 Install its dependencies from `tools/requirements-contract.txt` if needed. Additional
