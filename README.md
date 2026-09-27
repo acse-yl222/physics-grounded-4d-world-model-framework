@@ -1,5 +1,7 @@
 # Physics-Grounded 4D World Model Framework
 
+**A Levistone project.**
+
 A framework for representing, simulating and exploring evolving 3D environments through explicit geometry and physics. The fourth dimension is time: geometry, physical fields and agent trajectories share a scene context for simulation and visualization.
 
 [Explore the scenes](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/) · [Browse resources](https://acse-yl222.github.io/urban-world-model-models/) · [Resource repository](https://github.com/acse-yl222/urban-world-model-models) · [Integration protocol](docs/framework/protocol-v1.md)
