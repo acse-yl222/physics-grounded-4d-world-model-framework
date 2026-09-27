@@ -80,3 +80,21 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0f1216; fon
 .hint.limits div { margin: 2px 0; }
 .sw.rail { background: #DC241F; } .sw.bus { background: #E32017; opacity: .6; } .sw.disruption { background: #ff8c1a; } .sw.cam { background: #ffd34d; }
 #tr-arrivals { max-height: 150px; overflow-y: auto; }
+
+/* Reserve separate rows for navigation and tabs, and space above playback controls. */
+.top-left { z-index: 6; }
+.title-row { display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.scene-select { min-height: 32px; text-decoration: none; }
+.top-tabs { top: 104px; }
+.panel { max-height: calc(100dvh - 110px); }
+.timebar input[type=range] { min-width: 0; }
+@media (max-width: 820px) {
+  .top-left { max-width: calc(100vw - 90px); }
+  .top-left .title { font-size: 13px; }
+  .top-left .sub { display: none; }
+  .scene-select { max-width: calc(100vw - 155px); }
+  .top-tabs { top: 100px; }
+  .panel { top: 148px; max-height: calc(100dvh - 270px); }
+  .timebar { flex-wrap: wrap; gap: 6px; }
+  .timebar .time { order: 4; flex-basis: 100%; }
+}

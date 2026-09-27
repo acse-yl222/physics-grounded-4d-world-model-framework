@@ -14,6 +14,10 @@ const ctx=canvas.getContext('2d');canvas.width=innerWidth;canvas.height=innerHei
 const scene=new THREE.Scene();scene.background=new THREE.Color('#101923');
 scene.add(new THREE.HemisphereLight(0xd7edff,0x817c64,2.4));const sun=new THREE.DirectionalLight(0xffefd4,3);sun.position.set(-1800,4000,1800);scene.add(sun);
 const camera=new THREE.PerspectiveCamera(43,innerWidth/innerHeight,5,24000);camera.position.set(2600,3000,3400);const controls=new OrbitControls(camera,canvas);controls.target.set(200,210,0);controls.update();
+addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);canvas.width=innerWidth;canvas.height=innerHeight;
+});
 try{
 const [meta,ground,frames,model]=await Promise.all([fetch(base+'metadata.json').then(r=>r.json()),bytes('ground.bin').then(b=>new Float32Array(b)),wind(),new GLTFLoader().loadAsync(modelURL)]);
 scene.add(model.scene);model.scene.traverse(o=>{if(o.isMesh&&o.name.startsWith('Surface_study'))o.visible=false;});
