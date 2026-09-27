@@ -436,6 +436,16 @@
       "path": ".history/local-workspaces/south_kensington/src/buildings/__pycache__",
       "bytes": 209278,
       "reason": "rebuildable Python bytecode"
+    },
+    {
+      "path": "cache/framework/public-site",
+      "bytes": 539180891,
+      "reason": "temporary deployment/clean-check worktree; commits pushed and tests passed"
+    },
+    {
+      "path": "cache/framework/clean-check",
+      "bytes": 45833121,
+      "reason": "temporary deployment/clean-check worktree; commits pushed and tests passed"
     }
   ],
   "preserved": [
@@ -455,5 +465,5 @@
       "reason": "contains original inputs or unique authoring code"
     }
   ],
-  "bytes_freed": 600819706
+  "bytes_freed": 1185833718
 }
