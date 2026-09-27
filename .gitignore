@@ -58,3 +58,6 @@ agents/demo_rev02/assets/city.glb
 
 # Published windfarm geometry (22 MB)
 !scenes/region/models/region.glb
+
+# Tiny public protocol fixtures
+!examples/contract-v1.1/*.npy
