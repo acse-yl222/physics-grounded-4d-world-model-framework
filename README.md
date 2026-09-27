@@ -1,5 +1,9 @@
 # Physics-Grounded 4D World Model Framework
 
+[打开场景网页](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/) ·
+[浏览资源目录](https://acse-yl222.github.io/urban-world-model-models/) ·
+[资源仓库](https://github.com/acse-yl222/urban-world-model-models)
+
 基于显式几何与物理的世界模型框架，用于表示、模拟与研究不同尺度场景的演化。
 已有城市与风电场应用；室内等其他场景可通过相同协议接入。代码按领域归入 `src/`，场景数据归入
 `project/`，可重算的中间结果归入 `cache/`。
@@ -86,7 +90,7 @@ p4d validate examples/contract-v1/manifest.json
 ## 本地与 GitHub
 
 `main` 保存源码、协议、配置和小样例，`pages` 保存静态示例及已经公开的旧网页资源。
-新克隆没有本地场景数据时，`p4d serve` 默认打开合成示例。真实仿真还需要输入模型、权重、
+新克隆没有本地场景数据时，`p4d serve` 打开场景首页，场景入口自动指向公开网页；合成协议示例也可单独打开。真实仿真还需要输入模型、权重、
 领域依赖和相应算力。GPU、Blender 与历史笔记本环境不会由基础框架安装自动提供。
 
 本地源码提交并推送后可重新克隆，但 project 中未发布的数据、/data 原件、.history 中的
