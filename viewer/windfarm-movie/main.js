@@ -2,7 +2,8 @@ import {buildRotors} from './rotors.js';
 import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
-const base='../../scenes/windfarm_movie/';
+const configResponse=await fetch(new URL('resources.json',import.meta.url));if(!configResponse.ok)throw Error('Resource configuration unavailable');
+const resourceConfig=await configResponse.json(),base=new URL(resourceConfig.data_base,import.meta.url).href,modelURL=new URL(resourceConfig.model,import.meta.url).href;
 async function bytes(name){const r=await fetch(base+name);if(!r.ok)throw Error('Unable to load '+name+': '+r.status);return r.arrayBuffer();}
 function f16(a){const out=new Float32Array(a.length);for(let i=0;i<a.length;i++){const h=a[i],s=h&32768?-1:1,e=(h>>10)&31,f=h&1023;out[i]=e===31?(f?NaN:s*Infinity):e===0?s*f*2**-24:s*(1+f/1024)*2**(e-15);}return out;}
 async function wind(){const chunks=await Promise.all(["u-0.bin", "u-1.bin", "u-2.bin", "u-3.bin"].map(bytes));const a=new Uint16Array(chunks.reduce((n,b)=>n+b.byteLength/2,0));let at=0;for(const b of chunks){a.set(new Uint16Array(b),at);at+=b.byteLength/2;}return f16(a);}
@@ -14,13 +15,13 @@ const scene=new THREE.Scene();scene.background=new THREE.Color('#101923');
 scene.add(new THREE.HemisphereLight(0xd7edff,0x817c64,2.4));const sun=new THREE.DirectionalLight(0xffefd4,3);sun.position.set(-1800,4000,1800);scene.add(sun);
 const camera=new THREE.PerspectiveCamera(43,innerWidth/innerHeight,5,24000);camera.position.set(2600,3000,3400);const controls=new OrbitControls(camera,canvas);controls.target.set(200,210,0);controls.update();
 try{
-const [meta,ground,frames,model]=await Promise.all([fetch('../../scenes/windfarm_movie/metadata.json').then(r=>r.json()),bytes('ground.bin').then(b=>new Float32Array(b)),wind(),new GLTFLoader().loadAsync('../../scenes/region/models/region.glb')]);
+const [meta,ground,frames,model]=await Promise.all([fetch(base+'metadata.json').then(r=>r.json()),bytes('ground.bin').then(b=>new Float32Array(b)),wind(),new GLTFLoader().loadAsync(modelURL)]);
 scene.add(model.scene);model.scene.traverse(o=>{if(o.isMesh&&o.name.startsWith('Surface_study'))o.visible=false;});
 const [ny,nx]=meta.display_shape,N=nx*ny,geo=new THREE.PlaneGeometry((nx-1)*8,(ny-1)*8,nx-1,ny-1),pos=geo.attributes.position;
 for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const k=j*nx+i;pos.setXYZ(k,meta.origin_xyz_m[0]+5+i*8,ground[k]+80,-(meta.origin_xyz_m[1]+5+j*8));geo.attributes.uv.setXY(k,i/(nx-1),j/(ny-1));}
 geo.computeVertexNormals();const pixels=new Uint8Array(N*4),texture=new THREE.DataTexture(pixels,nx,ny,THREE.RGBAFormat);texture.colorSpace=THREE.SRGBColorSpace;texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearFilter;
 const mat=new THREE.MeshBasicMaterial({map:texture,side:THREE.DoubleSide,transparent:true,opacity:.72,depthWrite:false});const field=new THREE.Mesh(geo,mat);scene.add(field);
-const history=await fetch('../../scenes/windfarm_movie/rotor-speeds.json').then(r=>r.json());const rotorSystem=buildRotors(model.scene,scene,meta,history);
+const history=await fetch(base+'rotor-speeds.json').then(r=>r.json());const rotorSystem=buildRotors(model.scene,scene,meta,history);
 const comparison={};for(const key of ['mac_mean','jensen04','jensen10','gaussian'])comparison[key]=f16(new Uint16Array(await bytes('comparison/'+key+'.bin')));
 const labels={mac_live:'OUR MAC / TIME EVOLUTION',mac_mean:'OUR MAC / MEAN 200–300 s',jensen04:'PYWAKE / JENSEN k=0.04',jensen10:'PYWAKE / JENSEN k=0.10',gaussian:'PYWAKE / GAUSSIAN k=0.04'};
 const select=document.querySelector('#model');function selectModel(key){select.value=key;const live=key==='mac_live';document.querySelector('#time').disabled=!live;document.querySelector('#play').disabled=!live;document.querySelector('#spin').disabled=!live;}select.onchange=()=>selectModel(select.value);selectModel('mac_mean');

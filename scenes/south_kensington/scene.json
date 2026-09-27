@@ -1,7 +1,7 @@
 {
   "id": "south_kensington",
   "title": "South Kensington core008",
-  "description": "South Kensington core008: the 4 m physics grid (768 × 704 cells), the packed city model with the OSM supplement and the building refinements, and the traffic / UAV / bird replay from agents/demo_rev02.",
+  "description": "South Kensington core008: the 4 m physics grid (768 \u00d7 704 cells), the packed city model with the OSM supplement and the building refinements, and the traffic / UAV / bird replay from agents/demo_rev02.",
   "grid": {
     "cell_m": 4,
     "cols": 768,
@@ -13,16 +13,16 @@
       480,
       640
     ],
-    "size_note": "3072 × 2816 m"
+    "size_note": "3072 \u00d7 2816 m"
   },
   "model": {
     "url": "models/south_kensington_core008_web.glb",
     "bytes": 254723368,
     "compression": "meshopt",
-    "parts_manifest": "https://acse-yl222.github.io/urban-world-model-models/core008/manifest.json",
+    "parts_manifest": "https://acse-yl222.github.io/urban-world-model-models/project/south_ken/geometry/models_v1/manifest.json",
     "supplement": {
       "url": "models/buildings_supplement.glb",
-      "label": "Added buildings · 306",
+      "label": "Added buildings \u00b7 306",
       "title": "306 OSM footprints; estimated heights and facades. Existing physics fields have not been recomputed."
     },
     "tile": "models/south_kensington_current.glb",
@@ -88,13 +88,13 @@
         2.5
       ],
       "y": 10,
-      "label": "Wind speed · 8–12 m",
+      "label": "Wind speed \u00b7 8\u201312 m",
       "legend": [
         "0",
         "|V| m/s",
         "1.6"
       ],
-      "title": "Wind speed · 8–12 m"
+      "title": "Wind speed \u00b7 8\u201312 m"
     },
     "temp": {
       "file": "temperature2d/temperature_tyx.npy",
@@ -116,14 +116,14 @@
         "step": 0.1,
         "n": 11
       },
-      "iso_label": "Isotherms (every 0.1 °C)",
-      "label": "Temperature · 2-D model (12–16 m)",
+      "iso_label": "Isotherms (every 0.1 \u00b0C)",
+      "label": "Temperature \u00b7 2-D model (12\u201316 m)",
       "legend": [
         "31.2",
-        "°C",
+        "\u00b0C",
         "32.2"
       ],
-      "title": "Temperature · 2-D model (12–16 m)"
+      "title": "Temperature \u00b7 2-D model (12\u201316 m)"
     },
     "solar": {
       "cell_m": 4,
@@ -143,10 +143,10 @@
           "shadow": "solar/shadow_1m_20261221_tyx.npy"
         }
       },
-      "label": "Sunlight · clear-sky shadows and irradiance",
-      "title": "Sunlight · clear-sky irradiance (1 m shadow model, 4 m block means)",
-      "ghi_label": "Irradiance · 4 m, every 10 min",
-      "shadow_label": "Shadows · 1 m, on the hour"
+      "label": "Sunlight \u00b7 clear-sky shadows and irradiance",
+      "title": "Sunlight \u00b7 clear-sky irradiance (1 m shadow model, 4 m block means)",
+      "ghi_label": "Irradiance \u00b7 4 m, every 10 min",
+      "shadow_label": "Shadows \u00b7 1 m, on the hour"
     },
     "diurnal": {
       "cell_m": 4,
@@ -166,8 +166,8 @@
         5,
         45
       ],
-      "label": "Day cycle · solar-coupled 3-D temperature, 21 June",
-      "title": "Day cycle · solar-coupled 3-D temperature model, 21 June",
+      "label": "Day cycle \u00b7 solar-coupled 3-D temperature, 21 June",
+      "title": "Day cycle \u00b7 solar-coupled 3-D temperature model, 21 June",
       "own_clock": true
     },
     "poll": {
@@ -177,13 +177,13 @@
       "t0_s": 25,
       "step_s": 25,
       "y": 14,
-      "label": "Pollution · 12–16 m concentration layer",
+      "label": "Pollution \u00b7 12\u201316 m concentration layer",
       "legend": [
         "0.1",
         "concentration (log)",
         "1000"
       ],
-      "title": "Pollutant concentration · 12–16 m"
+      "title": "Pollutant concentration \u00b7 12\u201316 m"
     },
     "flood": {
       "file": "flood/depth_4m_tyx.npy",
@@ -201,13 +201,13 @@
         2
       ],
       "y": 0.8,
-      "label": "Flooding · surface water depth (3 h cloudburst)",
+      "label": "Flooding \u00b7 surface water depth (3 h cloudburst)",
       "legend": [
         "0.02",
         "depth m",
-        "≥ 0.6"
+        "\u2265 0.6"
       ],
-      "title": "Flooding · surface water depth (3 h cloudburst, 1 m shallow-water model)"
+      "title": "Flooding \u00b7 surface water depth (3 h cloudburst, 1 m shallow-water model)"
     }
   }
 }

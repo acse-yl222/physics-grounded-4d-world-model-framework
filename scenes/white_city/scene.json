@@ -1,7 +1,7 @@
 {
   "id": "white_city",
-  "title": "White City 9 km²",
-  "description": "3 × 3 km around Television Centre, Westfield and the Imperial College White City campus. 2 m voxel geometry from the uploaded GLB; wind from the SCALED latent surrogate (8 m coarse frames), temperature from the 3-D physical solver, pollution from the upwind transport solver, sunlight and flooding from the fixed-operator surface models; TfL tube, rail and bus network, road disruptions and traffic cameras from the TfL Unified API.",
+  "title": "White City 9 km\u00b2",
+  "description": "3 \u00d7 3 km around Television Centre, Westfield and the Imperial College White City campus. 2 m voxel geometry from the uploaded GLB; wind from the SCALED latent surrogate (8 m coarse frames), temperature from the 3-D physical solver, pollution from the upwind transport solver, sunlight and flooding from the fixed-operator surface models; TfL tube, rail and bus network, road disruptions and traffic cameras from the TfL Unified API.",
   "grid": {
     "cell_m": 2,
     "cols": 1792,
@@ -13,13 +13,13 @@
       -1492,
       -2548
     ],
-    "size_note": "3584 × 3584 m"
+    "size_note": "3584 \u00d7 3584 m"
   },
   "model": {
     "url": "models/white_city_9km2.glb",
     "bytes": 186290580,
     "compression": "meshopt",
-    "parts_manifest": "https://acse-yl222.github.io/urban-world-model-models/white_city/manifest.json",
+    "parts_manifest": "https://acse-yl222.github.io/urban-world-model-models/project/white_city/geometry/white_city_v2/manifest.json",
     "recolor": [
       {
         "match": "park grass|garden grass|living grass|planting approximate extent|planted roof substrate",
@@ -96,13 +96,13 @@
         2.5
       ],
       "y": 12,
-      "label": "Wind speed · 8–16 m",
+      "label": "Wind speed \u00b7 8\u201316 m",
       "legend": [
         "0",
         "|V| m/s",
         "1.8"
       ],
-      "title": "Wind speed · 8–16 m (SCALED, 8 m frames)"
+      "title": "Wind speed \u00b7 8\u201316 m (SCALED, 8 m frames)"
     },
     "temp": {
       "file": "temperature/temperature_8m_z8-16m_tyx.npy",
@@ -124,14 +124,14 @@
         "step": 0.25,
         "n": 17
       },
-      "iso_label": "Isotherms (every 0.25 °C)",
-      "label": "Temperature · 3-D physical model, 8–16 m",
+      "iso_label": "Isotherms (every 0.25 \u00b0C)",
+      "label": "Temperature \u00b7 3-D physical model, 8\u201316 m",
       "legend": [
         "26",
-        "°C",
+        "\u00b0C",
         "30"
       ],
-      "title": "Temperature · 3-D physical solver (8–16 m)"
+      "title": "Temperature \u00b7 3-D physical solver (8\u201316 m)"
     },
     "solar": {
       "cell_m": 8,
@@ -151,10 +151,10 @@
           "shadow": "solar/shadow_2m_20261221_packed_tyx.npy"
         }
       },
-      "label": "Sunlight · clear-sky shadows and irradiance",
-      "title": "Sunlight · clear-sky shadows and irradiance (assumed north = local +y)",
-      "ghi_label": "Irradiance · 8 m, every 10 min",
-      "shadow_label": "Shadows · 2 m, every 10 min"
+      "label": "Sunlight \u00b7 clear-sky shadows and irradiance",
+      "title": "Sunlight \u00b7 clear-sky shadows and irradiance (assumed north = local +y)",
+      "ghi_label": "Irradiance \u00b7 8 m, every 10 min",
+      "shadow_label": "Shadows \u00b7 2 m, every 10 min"
     },
     "poll": {
       "file": "pollution/concentration_8m_z8-16m_tyx.npy",
@@ -163,13 +163,13 @@
       "t0_s": 50,
       "step_s": 50,
       "y": 14,
-      "label": "Pollution · 8–16 m tracer layer (assumed line source)",
+      "label": "Pollution \u00b7 8\u201316 m tracer layer (assumed line source)",
       "legend": [
         "0.1",
         "concentration (log)",
         "1000"
       ],
-      "title": "Pollution · 8–16 m tracer concentration (assumed upstream line source)"
+      "title": "Pollution \u00b7 8\u201316 m tracer concentration (assumed upstream line source)"
     },
     "flood": {
       "file": "flood/depth_2m_tyx.npy",
@@ -187,19 +187,19 @@
         2.5
       ],
       "y": 0.8,
-      "label": "Flooding · surface water depth (3 h cloudburst)",
+      "label": "Flooding \u00b7 surface water depth (3 h cloudburst)",
       "legend": [
         "0.02",
         "depth m",
-        "≥ 0.25"
+        "\u2265 0.25"
       ],
-      "title": "Flooding · surface water depth (3 h cloudburst, 2 m shallow-water model on the GLB ground)"
+      "title": "Flooding \u00b7 surface water depth (3 h cloudburst, 2 m shallow-water model on the GLB ground)"
     }
   },
   "limits": [
-    "Georeferenced by fitting 939 named OSM buildings to the GLB (median residual 1.6 m): local +y points 2.2° east of true north (UTM grid north). The sun model assumed local +y = north, a 2° azimuth error.",
+    "Georeferenced by fitting 939 named OSM buildings to the GLB (median residual 1.6 m): local +y points 2.2\u00b0 east of true north (UTM grid north). The sun model assumed local +y = north, a 2\u00b0 azimuth error.",
     "Wind: SCALED surrogate transferred to new geometry, no CFD or measured validation; 50 s per step is a grid-scaled interpretation.",
-    "Temperature: controlled scenario (26 °C air, 30 °C surfaces), not measured White City temperatures.",
+    "Temperature: controlled scenario (26 \u00b0C air, 30 \u00b0C surfaces), not measured White City temperatures.",
     "Pollution: assumed upstream line source, not measured concentrations.",
     "Flooding: the GLB ground mesh stands in for terrain; no surveyed elevation.",
     "Transport: a TfL Unified API snapshot (routes, stops, road disruptions, JamCams); arrivals refresh live while online."
@@ -207,12 +207,12 @@
   "transport": {
     "file": "transport/transport.json",
     "label": "TfL transport",
-    "attribution": "Powered by TfL Open Data · contains OS data © Crown copyright and database rights"
+    "attribution": "Powered by TfL Open Data \u00b7 contains OS data \u00a9 Crown copyright and database rights"
   },
   "georeference": "georef.json",
   "traffic": {
     "dir": "traffic/",
-    "label": "Traffic · SUMO replay",
+    "label": "Traffic \u00b7 SUMO replay",
     "note": "one-hour SUMO run on the OSM road network with guessed, actuated signals; synthetic demand"
   }
 }

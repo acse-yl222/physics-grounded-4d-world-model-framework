@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "resources_url": "https://acse-yl222.github.io/urban-world-model-models/",
+  "scenes": [
+    {
+      "scene_id": "south_ken",
+      "title": "South Kensington",
+      "tag": "Urban environment",
+      "description": "\u57ce\u5e02\u51e0\u4f55\u3001\u98ce\u4e0e\u70ed\u3001\u6c61\u67d3\u3001\u65e5\u7167\u548c\u6d2a\u6c34\uff0c\u4ee5\u53ca\u4ea4\u901a\u4e0e\u98de\u884c\u56de\u653e\u3002",
+      "viewer_url": "viewer/3d/?scene=south_kensington",
+      "resource_ids": [
+        "south_ken_geometry_models_v1"
+      ]
+    },
+    {
+      "scene_id": "white_city",
+      "title": "White City",
+      "tag": "Urban environment",
+      "description": "White City 9 km\u00b2 \u573a\u666f\uff1a\u57ce\u5e02\u6a21\u578b\u3001\u73af\u5883\u573a\u4e0e\u4ea4\u901a\u4fe1\u606f\u3002",
+      "viewer_url": "viewer/3d/?scene=white_city",
+      "resource_ids": [
+        "white_city_geometry_white_city_v2"
+      ]
+    },
+    {
+      "scene_id": "windfarm",
+      "title": "Wind farm",
+      "tag": "Energy & flow",
+      "description": "\u4e09\u7ef4\u5730\u5f62\u4e0e\u98ce\u673a\u3001151 \u5e27\u98ce\u573a\u3001\u5c3e\u6d41\u6a21\u578b\u5bf9\u6bd4\u548c\u53f6\u8f6e\u56de\u653e\u3002",
+      "viewer_url": "viewer/windfarm-movie/",
+      "resource_ids": [
+        "windfarm_geometry_published_v1",
+        "windfarm_runs_published_movie_v1"
+      ]
+    }
+  ]
+}
