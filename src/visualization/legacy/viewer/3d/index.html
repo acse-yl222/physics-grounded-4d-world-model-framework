@@ -12,12 +12,13 @@
   "three/addons/lines/": "../../vendor/three/examples/jsm/lines/"
 } }
 </script>
+<script type="module" src="../scene-navigation.js"></script>
 </head>
 <body>
 <canvas id="gl"></canvas>
 
 <div class="hud top-left">
-  <div class="title-row"><select id="scene-select" class="scene-select" title="Scene"></select></div>
+  <div class="title-row"><a id="scene-home" class="scene-select" href="../../">Home</a> <select id="scene-select" class="scene-select" title="Scene" aria-label="Scene" disabled><option>Loading scenes…</option></select></div>
   <div class="title" id="title">Urban World Model</div>
   <div class="sub" id="stage">Loading the 3D model…</div>
   <div class="sub info" id="info"></div>

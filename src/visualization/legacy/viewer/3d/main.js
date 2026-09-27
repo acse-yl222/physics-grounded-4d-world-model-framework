@@ -88,9 +88,6 @@ const ui = {
 function setupSceneUI() {
   $('title').textContent = SCENE.title; $('title').title = SCENE.description ?? '';
   $('loading-title').textContent = `Loading the ${SCENE.title} 3D model`;
-  const sel = $('scene-select');
-  sel.replaceChildren(...SCENE.index.scenes.map(s => { const o = document.createElement('option'); o.value = s.id; o.textContent = s.short ?? s.title; return o; }));
-  sel.value = SCENE.id; sel.addEventListener('change', () => { location.href = sceneLink(sel.value); });
   const tabs = $('tabs'), auto = $('auto').closest('label'), mk = (cls, data, key, text) => { const b = document.createElement('button'); b.className = 'tab ' + cls; b.dataset[data] = key; b.textContent = text; return b; };
   const shots = HAS_REPLAY ? [['overview', 'Campus'], ['junction', 'Junction'], ['traffic', 'Traffic'], ['uavs', 'UAVs'], ['birds', 'Birds']] : [['overview', 'Overview'], ...(SCENE.traffic ? [['trafficMap', 'Traffic map']] : [])];   // the close-up traffic and transport orbits stay reachable by ?shot=traffic|transport
   tabs.replaceChildren(...shots.map(([k, t]) => mk('shot', 'shot', k, t)), ...PHASE_ORDER.map(k => mk('field', 'field', k, TAB_NAME[k] ?? k)), auto);
@@ -567,10 +564,13 @@ ui.rate.addEventListener('change', () => { if (section === 'campus' && replayLay
 ui.step.addEventListener('input', () => { if (section === 'campus' && replayLayer) { replayLayer.t = +ui.step.value; replayLayer.update(replayLayer.t); } else if (section === 'campus' && traffic) { traffic.t = +ui.step.value; traffic.update(traffic.t); } else if (section !== 'campus') setStep(+ui.step.value); });
 ui.mode.addEventListener('change', () => { if (seqMode()) setPhase(state.phase); else { ui.stage.textContent = OVERLAY_LABEL; applyLayers(); setStep(state.step); } });
 document.addEventListener('keydown', e => {
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
-  if (e.key === ' ') { e.preventDefault(); setPlaying(!state.playing); }
-  else if (e.key === 'ArrowLeft') setStep(state.step - 1);
-  else if (e.key === 'ArrowRight') setStep(state.step + 1);
+  if (['INPUT', 'SELECT', 'BUTTON', 'A', 'TEXTAREA'].includes(e.target.tagName) || e.target.isContentEditable) return;
+  if (e.key === ' ') { e.preventDefault(); ui.play.click(); }
+  else if (['ArrowLeft', 'ArrowRight'].includes(e.key) && !ui.step.disabled) {
+    e.preventDefault();
+    if (e.key === 'ArrowLeft') ui.step.stepDown(); else ui.step.stepUp();
+    ui.step.dispatchEvent(new Event('input', {bubbles: true}));
+  }
 });
 
 // ------------------------------------------------------------------ layer controls (with per-layer fades)
@@ -815,13 +815,13 @@ function runFields(phase = PHASE_ORDER[0]) {
   ui.stage.textContent = `Climbing to the overhead view · aligned with the ${CELL} m simulation grid (${G.size_note ?? `${SPAN_X} × ${SPAN_Z} m`})`; ui.info.textContent = '';
   ui.step.disabled = false; ui.rate.disabled = false;
   setSectionUI();
-  flyTo(overheadPose(), 3800, () => {
-    state.introDone = true;
-    ui.lGround.checked = false; ui.lTrees.checked = false;
-    replayLayer?.setVisible(false); applyTransportLayers(); applyTrafficLayers();
-    setRateOptions('fields', 12); ui.step.step = 1;
-    setPhase(seqMode() ? phase : state.phase); setPlaying(true);
-  });
+  // Apply the selection immediately; camera movement must not defer or overwrite it.
+  state.introDone = true;
+  ui.lGround.checked = false; ui.lTrees.checked = false;
+  replayLayer?.setVisible(false); applyTransportLayers(); applyTrafficLayers();
+  setRateOptions('fields', 12); ui.step.step = 1;
+  setPhase(seqMode() ? phase : state.phase); setPlaying(true);
+  flyTo(overheadPose(), 800);
 }
 function playIntro() {
   state.introDone = false; for (const L of Object.values(planes)) L.fade = 0; placeSun();

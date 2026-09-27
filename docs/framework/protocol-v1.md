@@ -3,6 +3,23 @@
 状态：已实现的接入规范。路径解析、运行保留、场景/视图注册及统一查看器已接通，验证范围见 [实施记录](implementation-status.md)。
 协议版本 `1.1.0`（兼容 `1.0.0` JSON 示例）。本文件优先于历史文档。旧根目录已迁入 src/project；历史笔记本的外部依赖与数据需显式提供。
 
+## 阅读说明
+
+本文使用中文说明规则，代码字段、接口名称和路径保留英文，以便与实现对应。
+
+| 术语 | 中文含义 |
+| --- | --- |
+| scene | 场景：共享空间坐标的一组几何、配置和运行结果 |
+| run | 一次仿真运行及其输出 |
+| manifest | 运行清单：声明数据、来源、坐标、时间和图层的 JSON 文件 |
+| layer | 图层：可单独加载、显示和查询的一组数据 |
+| widget | 可视化组件：把图层数据转为几何、箭头、曲线等展示 |
+| asset / artifact | 资产文件 / 附加产物，如模型、数组、日志和源码快照 |
+| provenance | 来源与复现信息：代码版本、参数、输入和文件校验值 |
+| schema | 结构规范：机器可执行的 JSON 校验规则 |
+| sampling | 时间采样方式：静态、阶梯取样或线性插值 |
+| bundle | 运行集合：一起保留并注册为一个视图的多个运行 |
+
 ## 1. 目录与责任
 
 ```text
@@ -52,7 +69,7 @@ Git 保存代码、协议、场景配置、视图配置和小型合成示例。�
 配置后，大数据位于 `<data_root>/project/<scene>/{input,geometry,runs}`，
 缓存位于 `<cache_root>/<scene>/<simulation>/<run_id>`。
 小型 `project.json`、configs 和 views 始终在仓库内。运行入口必须打印解析后的路径，
-不能因缺少外部数据静默切换到另一份数据。解析器位于 `src/common/storage.py`；使用 `uwm paths <scene>` 检查解析结果。
+不能因缺少外部数据静默切换到另一份数据。解析器位于 `src/common/storage.py`；使用 `p4d paths <scene>` 检查解析结果。
 
 `cache` 必须可删除、可重算。人工修正、唯一原始数据、选定正式结果不应只放在 cache。
 清理器只能移除已结束且未被保留的工作目录，不跟随符号链接，不清理活动运行。
@@ -70,7 +87,7 @@ views 文件包含 `schema_version`、`scene_id`、`runs`（run ID 列表）、`
 跨 run 图层的完整身份是 `(run_id, layer_id)`。不要用“最新修改的目录”隐式选择结果。
 project/views 分别由 `project-v1.schema.json`、`view-v1.schema.json` 校验；`common.catalog.view` 同时检查图层引用、场景坐标和绝对时间对齐所需的 epoch。
 
-## 4. 运行 manifest
+## 4. 运行清单（manifest）
 
 机器定义见 [JSON Schema](../../schemas/run-manifest-v1.schema.json)，可执行的小型示例见
 [manifest](../../examples/contract-v1/manifest.json)。每个运行记录：
@@ -108,12 +125,12 @@ v1 最小编码是 UTF-8 JSON，`kind` 决定 payload：
 标量/向量图层通过 field 给出名称和物理单位；无量纲使用 `1`。向量分量沿 ENU，
 速度例如使用 `m/s`。轨迹坐标使用空间定义中的米。所有数值必须有限。
 
-JSON 示例用于互操作基线，不要求大型生产数组使用 JSON。GLB、分块二进制、纹理或其他
-编码在 v1.1 已实现，详见第 9 节；进一步扩展必须同时定义 dtype、shape、轴顺序、
+JSON 示例用于互操作基线，不要求大型生产数组使用 JSON。v1.1 已实现 GLB、NPY、
+分帧 NPY 和稀疏轨迹编码，详见第 9 节；其他编码扩展必须同时定义 dtype、shape、轴顺序、
 字节序、网格原点/间距/采样中心约定、压缩和分块索引（适用时）。仅填写文件扩展名不够。
 未知版本、kind 或 format 要明确报错，不能静默按另一种格式解释。
 
-## 5. 统一 widget 接口
+## 5. 统一可视化组件（widget）接口
 
 接口约定如下。JSON、GLB、NPY、分帧 NPY 与稀疏轨迹已实现；场景注册与多运行对时由统一查看器管理：
 
@@ -174,15 +191,19 @@ Pages 使用独立 `pages` 分支，以已发布站点为基础加上统一查�
 
 ```sh
 python3 -m pip install -e .
-uwm paths south_ken
-uwm validate examples/contract-v1/manifest.json
-uwm retain /absolute/path/to/completed/trial
-uwm serve --port 8769
+p4d paths south_ken
+p4d validate examples/contract-v1/manifest.json
+p4d retain /absolute/path/to/completed/trial
+p4d serve --port 8769
 ```
 
-查看器地址 `/src/visualization/viewer/`，本地默认显示已注册且有数据的场景；没有场景数据时显示明确标注的合成数据。
+首页地址为 `/`，提供 South Kensington、White City 和风电场入口。本地缺少场景运行目录时，
+入口指向对应的公开网页。公开真实场景目前仍使用原专用查看器；它们与统一协议查看器并存。
+统一查看器地址为 `/src/visualization/viewer/`，可选择已注册且有数据的本地视图，
+也可跳转到公开场景。合成协议示例单独提供，不代表真实场景已全部迁入统一组件。
+`p4d` 是推荐命令，原 `uwm` 命令保留兼容。
 使用 `?manifest=/project/<scene>/runs/<run_id>/manifest.json` 选择服务器可访问的结果。
-`uwm serve` 显式映射配置中的 data_root，支持单段 HTTP Range；不通过前端文件路径直接读取磁盘。
+`p4d serve` 显式映射配置中的 data_root，支持单段 HTTP Range；不通过前端文件路径直接读取磁盘。
 `retain` 校验后复制 manifest 及声明的资产到正式 runs，保留试跑目录，拒绝覆盖同名运行。
 单运行 retain 不自动注册视图；bundle retain 同时保留多个运行并注册一个有名字的视图。日志/检查点必须通过 artifacts 显式登记才会复制。
 
@@ -238,15 +259,15 @@ node tests/browser_contract.cjs
    用 `Storage.assets` 获取场景输入，禁止写入源码目录或原始输入目录。
 2. 导出 schema 对应的 manifest 与所有资产，记录代码、参数、输入哈希和时空约定。
    先复用五类 widget；若需要新格式，同时实现 schema、校验器、解码器与有效/无效样例。
-3. 在 cache 内校验和检查物理结果，选择要保留的运行后 `uwm retain <trial或bundle>`。
-   城市管线 visualize 阶段已自动生成 protocol bundle；`uwm run <scene> --retain` 自动保留它。
+3. 在 cache 内校验和检查物理结果，选择要保留的运行后 `p4d retain <trial或bundle>`。
+   城市管线 visualize 阶段已自动生成 protocol bundle；`p4d run <scene> --retain` 自动保留它。
 4. 在 project/<scene>/views 中显式选择运行和图层。bundle 会自动注册新视图；
    不覆盖已有默认视图，不用目录修改时间隐式选择结果。
-5. 通过 `uwm serve` 检查坐标、单位、时间、掩码、显隐和选择。公开发布另选可发布资产；
+5. 通过 `p4d serve` 检查坐标、单位、时间、掩码、显隐和选择。公开发布另选可发布资产；
    本地新数据不会因为源码公开就自动上传。
 
 `sources.local.json` 可设置 `legacy_output` 与 `region_input` 的外部绝对路径；
-仅用于读取已存在数据，不恢复目录链接。`uwm experiment --python <env/python> <simulation>`
+仅用于读取已存在数据，不恢复目录链接。`p4d experiment --python <env/python> <simulation>`
 运行 actuator_lab、windfarm_2m、windfarm_crop、windfarm_neural 的迁移入口，结果位于 cache。
 实验记录导入见 `src/visualization/adapters/import_experiments.py`；完成标志与数组校验均通过
 才注册，原实验文件及专用查看器保持可用。

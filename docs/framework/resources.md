@@ -40,7 +40,8 @@ The homepage is a scene chooser, with South Kensington, White City and windfarm 
 a separate synthetic protocol example. These published scene entries use the existing
 specialized viewers; the example exercises the new unified protocol widget implementation.
 `src/visualization/public-scenes.json` declares entrypoints and resource IDs. The unified
-viewer's selector also links to those published scene viewers.
+viewer's selector also links to those published scene viewers. The city and windfarm
+viewers use the same catalogue for their scene switchers and include a homepage link.
 
 `tools/build_public_site.py` maps local legacy viewer routes to published routes and writes
 canonical resource URLs. Windfarm loads its configurable data/model URLs from resources.json
