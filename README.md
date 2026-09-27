@@ -4,6 +4,10 @@ A framework for representing, simulating and exploring evolving 3D environments 
 
 [Explore the scenes](https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/) · [Browse resources](https://acse-yl222.github.io/urban-world-model-models/) · [Resource repository](https://github.com/acse-yl222/urban-world-model-models) · [Integration protocol](docs/framework/protocol-v1.md)
 
+**Authors:** Yueyan Li, Zhongkai Yuan, Bohan Ye, Akira Eisenbeiss, Xinyang Miao, Dingyu Xuan, Chenxu Li, Hongyu Liu, Yiqi Zhu, Yuhang Dai, Xinran Kai
+
+**Affiliation:** Imperial College London, London, United Kingdom
+
 ## Overview
 
 The framework connects scene geometry, domain-specific solvers and visualization through a common data contract. Geometry and physical assumptions are represented explicitly; adapters expose simulation results to reusable visualization widgets.
