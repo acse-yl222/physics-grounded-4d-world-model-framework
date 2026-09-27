@@ -10,7 +10,7 @@
 
 <p align="center">
   Yueyan Li, Zhongkai Yuan, Bohan Ye, Akira Eisenbeiss, Xinyang Miao, Dingyu Xuan,<br>
-  Chenxu Li, Hongyu Liu, Yiqi Zhu, Yuhang Dai, Xinran Kai<br>
+  Chenxu Li, Hongyu Liu, Yiqi Zhu, Yuhang Dai, Xinran Kai, Chris Pain<br>
   <em>Imperial College London, London, United Kingdom</em>
 </p>
 

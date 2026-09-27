@@ -1,6 +1,6 @@
 # Authors and contributions
 
-Yueyan Li, Zhongkai Yuan, Bohan Ye, Akira Eisenbeiss, Xinyang Miao, Dingyu Xuan, Chenxu Li, Hongyu Liu, Yiqi Zhu, Yuhang Dai, Xinran Kai
+Yueyan Li, Zhongkai Yuan, Bohan Ye, Akira Eisenbeiss, Xinyang Miao, Dingyu Xuan, Chenxu Li, Hongyu Liu, Yiqi Zhu, Yuhang Dai, Xinran Kai, Chris Pain
 
 **Affiliation:** Imperial College London, London, United Kingdom
 
