@@ -1,0 +1,14 @@
+{
+  "removed_directory": "UrbanWorldModelVisualizer_old_layout",
+  "files": 2315,
+  "bytes_removed": 406009320,
+  "files_recoverable_from_git_history": 2311,
+  "unique_files_preserved": [
+    "scenes/white_city/export.log",
+    "scenes/white_city/scene.json",
+    "server.log",
+    "server.pid"
+  ],
+  "backup": ".history/deleted-layout-unique",
+  "recovery_revision": "110f4ccf784c8ea07c761263b07617b555279118"
+}

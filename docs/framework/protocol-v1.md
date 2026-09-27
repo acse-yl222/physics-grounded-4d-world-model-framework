@@ -1,4 +1,4 @@
-# UrbanWorldModel 仿真与可视化协议 v1
+# Physics-Grounded 4D World Model Framework 仿真与可视化协议 v1
 
 状态：已实现的接入规范。路径解析、运行保留、场景/视图注册及统一查看器已接通，验证范围见 [实施记录](implementation-status.md)。
 协议版本 `1.1.0`（兼容 `1.0.0` JSON 示例）。本文件优先于历史文档。旧根目录已迁入 src/project；历史笔记本的外部依赖与数据需显式提供。

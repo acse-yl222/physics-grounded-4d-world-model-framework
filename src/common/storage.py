@@ -37,7 +37,7 @@ class Storage:
     def load(cls, root=None):
         root = Path(root or os.environ.get('UWM_ROOT') or Path(__file__).resolve().parents[2]).resolve()
         if not (root / 'AGENTS.md').is_file() or not (root / 'schemas/run-manifest-v1.schema.json').is_file():
-            raise ValueError(f'Not an UrbanWorldModel root: {root}')
+            raise ValueError(f'Not an Physics-Grounded 4D World Model Framework root: {root}')
         config_path = root / 'storage.local.json'
         config = json.loads(config_path.read_text()) if config_path.exists() else {}
         if not isinstance(config, dict) or set(config) - {'data_root', 'cache_root'}:

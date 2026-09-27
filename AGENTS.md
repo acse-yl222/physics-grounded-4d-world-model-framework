@@ -1,4 +1,4 @@
-# UrbanWorldModel project instructions
+# Physics-Grounded 4D World Model Framework project instructions
 
 For new simulations, scene onboarding, geometry/traffic/flow integration, visualization
 widgets, or structural migration, read `.agents/skills/urban-simulation-contract/SKILL.md`

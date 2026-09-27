@@ -10,7 +10,7 @@ from .storage import Storage
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(prog='uwm')
+    parser = argparse.ArgumentParser(prog='p4d')
     parser.add_argument('--root', type=Path, help='Repository root (or UWM_ROOT)')
     commands = parser.add_subparsers(dest='command', required=True)
     paths = commands.add_parser('paths', help='Show resolved scene paths without creating data')

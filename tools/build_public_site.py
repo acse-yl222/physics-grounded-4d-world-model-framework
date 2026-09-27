@@ -23,7 +23,7 @@ def main():
     exception='!examples/contract-v1.1/*.npy'
     if exception not in rules:ignore.write_text(rules+'\n# Tiny public protocol fixtures\n'+exception+'\n')
     # The former demo routes remain available, with their already-public assets.
-    redirect='<!doctype html><meta charset="utf-8"><title>UrbanWorldModel</title><meta http-equiv="refresh" content="0; url=src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json"><a href="src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json">Open unified viewer</a> · <a href="viewer/3d/">Previous city demo</a>\n'
+    redirect='<!doctype html><meta charset="utf-8"><title>Physics-Grounded 4D World Model Framework</title><meta http-equiv="refresh" content="0; url=src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json"><a href="src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json">Open unified viewer</a> · <a href="viewer/3d/">Previous city demo</a>\n'
     (target/'index.html').write_text(redirect)
     print(f'Built public viewer at {target}; existing legacy routes preserved.')
 

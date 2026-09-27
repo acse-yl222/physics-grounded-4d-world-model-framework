@@ -1,6 +1,6 @@
 ---
 name: urban-simulation-contract
-description: Integrate UrbanWorldModel simulations, scenes and visualization widgets using the repository's src/project/cache layout and versioned result contract. Use for new geometry, urban flow or traffic modules, scene onboarding, and migrations into this framework.
+description: Integrate Physics-Grounded 4D World Model Framework simulations, scenes and visualization widgets using the repository's src/project/cache layout and versioned result contract. Use for new geometry, urban flow or traffic modules, scene onboarding, and migrations into this framework.
 ---
 
 # Urban simulation integration

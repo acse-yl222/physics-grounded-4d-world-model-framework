@@ -3,13 +3,14 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "urban-world-model"
+name = "physics-grounded-4d-world-model-framework"
 version = "0.1.0"
-description = "Urban scene simulation and visualization framework"
+description = "A geometry- and physics-grounded framework for evolving 3D worlds across scales"
 requires-python = ">=3.11"
 dependencies = ["jsonschema>=4.18,<5", "numpy>=1.24"]
 
 [project.scripts]
+p4d = "common.cli:main"
 uwm = "common.cli:main"
 
 [tool.setuptools.packages.find]

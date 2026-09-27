@@ -6,7 +6,8 @@ import subprocess
 import sys
 import time
 
-root = Path('/home/yl222/workspace/UrbanWorldModel')
+from common.layout import repo_root
+root = repo_root()
 out = root / 'output/region'
 out.mkdir(parents=True, exist_ok=True)
 with (out / 'run.lock').open('w') as lock:

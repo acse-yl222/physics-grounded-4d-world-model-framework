@@ -3,7 +3,8 @@ import json
 from pathlib import Path
 import shutil
 
-root = Path('/home/yl222/workspace/UrbanWorldModel')
+from common.layout import repo_root
+root = repo_root()
 env = Path('/data/yl222/workspace/UrbanWorldModel/.venv-region')
 # Python 3.10 environment contains the existing CUDA 12.8 torch build. The
 # pipeline's only Python 3.11-only API is hashlib.file_digest.

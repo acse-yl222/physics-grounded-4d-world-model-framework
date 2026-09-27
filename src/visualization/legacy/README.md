@@ -36,9 +36,9 @@ reads; see `.gitignore` and `scenes/README.md` (the `scene.json` schema and how 
 
 ## Online
 
-- **Live viewer**: https://acse-yl222.github.io/urban-world-model/viewer/3d/ (GitHub Pages; the 254 MB South Kensington model and the 191 MB White City model are fetched in parts from the companion repository https://github.com/acse-yl222/urban-world-model-models, whose Pages site allows cross-origin reads; the `models-v1` release holds the South Kensington file for download). White City: https://acse-yl222.github.io/urban-world-model/viewer/3d/?scene=white_city
-- **Project page**: https://acse-yl222.github.io/urban-world-model/docs/
-- Repository: https://github.com/acse-yl222/urban-world-model
+- **Live viewer**: https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/3d/ (GitHub Pages; the 254 MB South Kensington model and the 191 MB White City model are fetched in parts from the companion repository https://github.com/acse-yl222/urban-world-model-models, whose Pages site allows cross-origin reads; the `models-v1` release holds the South Kensington file for download). White City: https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/viewer/3d/?scene=white_city
+- **Project page**: https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/docs/
+- Repository: https://github.com/acse-yl222/physics-grounded-4d-world-model-framework
 
 Phones, tablets and machines that report 4 GB or less get **lite mode** automatically: the buildings are 4 m voxel columns
 extruded from the physics masks (2 MB, loads in a few seconds) instead of the 254 MB model, everything else (fields, traffic,

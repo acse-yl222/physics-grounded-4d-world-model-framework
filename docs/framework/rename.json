@@ -1,0 +1,10 @@
+{
+  "display_name": "Physics-Grounded 4D World Model Framework",
+  "repository": "acse-yl222/physics-grounded-4d-world-model-framework",
+  "directory_name": "physics-grounded-4d-world-model-framework",
+  "previous_directory_name": "UrbanWorldModel",
+  "cli": "p4d",
+  "compatibility_alias": "uwm",
+  "external_data": "Original /data paths unchanged",
+  "old_layout_cleanup": "old-layout-cleanup.json"
+}
