@@ -1,5 +1,8 @@
 ## Geometry expansion (2026-09-13)
 
+> **新模块接入规范（v1）**：[目录与仿真/可视化协议](docs/framework/protocol-v1.md) · [Agent skill](.agents/skills/urban-simulation-contract/SKILL.md)。目标结构为 `src/`、`project/`、`cache/`；旧代码尚未整体迁移。
+
+
 35 refined building assets are integrated locally with reversible **Building refinements** comparison. [Current status and artifacts](geometry/expansion/docs/STATUS.md). A user-authorized continuous Codex goal is extending the adjacent frontier; no independent local daemon is installed. Facades without confirmed target references remain artistic estimates.
 
 # Urban World Model Visualiser

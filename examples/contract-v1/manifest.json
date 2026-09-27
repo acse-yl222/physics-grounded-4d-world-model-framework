@@ -1,0 +1,124 @@
+{
+  "schema_version": "1.0.0",
+  "scene_id": "south_ken",
+  "simulation": "contract_demo",
+  "run_id": "synthetic_v1",
+  "status": "complete",
+  "created_at": "2026-09-27T00:00:00Z",
+  "provenance": {
+    "code_revision": "synthetic-fixture-v1",
+    "dirty": false,
+    "parameters": {
+      "synthetic": true
+    },
+    "inputs": []
+  },
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": 0,
+      "latitude": 0,
+      "height_m": 0,
+      "vertical_datum": "synthetic"
+    },
+    "bounds_m": {
+      "min": [
+        0,
+        0,
+        0
+      ],
+      "max": [
+        10,
+        10,
+        10
+      ]
+    }
+  },
+  "time": {
+    "unit": "s",
+    "samples": [
+      0,
+      1
+    ]
+  },
+  "layers": [
+    {
+      "id": "mesh",
+      "kind": "mesh",
+      "format": "json",
+      "asset": "data/mesh.json",
+      "sampling": "static",
+      "display": {
+        "widget": "mesh",
+        "capabilities": [
+          "pick"
+        ]
+      }
+    },
+    {
+      "id": "scalar_field",
+      "kind": "scalar_field",
+      "format": "json",
+      "asset": "data/scalar_field.json",
+      "sampling": "linear",
+      "display": {
+        "widget": "scalar_field",
+        "capabilities": [
+          "pick"
+        ]
+      },
+      "field": {
+        "name": "temperature",
+        "unit": "K"
+      }
+    },
+    {
+      "id": "vector_field",
+      "kind": "vector_field",
+      "format": "json",
+      "asset": "data/vector_field.json",
+      "sampling": "linear",
+      "display": {
+        "widget": "vector_field",
+        "capabilities": [
+          "pick"
+        ]
+      },
+      "field": {
+        "name": "velocity",
+        "unit": "m/s"
+      }
+    },
+    {
+      "id": "trajectories",
+      "kind": "trajectories",
+      "format": "json",
+      "asset": "data/trajectories.json",
+      "sampling": "linear",
+      "display": {
+        "widget": "trajectories",
+        "capabilities": [
+          "pick"
+        ]
+      }
+    },
+    {
+      "id": "time_series",
+      "kind": "time_series",
+      "format": "json",
+      "asset": "data/time_series.json",
+      "sampling": "linear",
+      "display": {
+        "widget": "time_series",
+        "capabilities": [
+          "pick"
+        ]
+      },
+      "field": {
+        "name": "temperature",
+        "unit": "K"
+      }
+    }
+  ]
+}

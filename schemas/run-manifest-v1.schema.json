@@ -1,0 +1,358 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "scene_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "simulation": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
+    },
+    "status": {
+      "enum": [
+        "running",
+        "complete",
+        "failed"
+      ]
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "code_revision": {
+          "type": "string",
+          "minLength": 1
+        },
+        "dirty": {
+          "type": "boolean"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "required": [
+              "id",
+              "sha256"
+            ]
+          }
+        }
+      },
+      "required": [
+        "code_revision",
+        "dirty",
+        "parameters",
+        "inputs"
+      ]
+    },
+    "spatial": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "frame": {
+          "const": "ENU"
+        },
+        "units": {
+          "const": "m"
+        },
+        "origin": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "longitude": {
+              "type": "number",
+              "minimum": -180,
+              "maximum": 180
+            },
+            "latitude": {
+              "type": "number",
+              "minimum": -90,
+              "maximum": 90
+            },
+            "height_m": {
+              "type": "number"
+            },
+            "vertical_datum": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "longitude",
+            "latitude",
+            "height_m",
+            "vertical_datum"
+          ]
+        },
+        "bounds_m": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "min": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "max": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "required": [
+            "min",
+            "max"
+          ]
+        }
+      },
+      "required": [
+        "frame",
+        "units",
+        "origin",
+        "bounds_m"
+      ]
+    },
+    "time": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "unit": {
+          "const": "s"
+        },
+        "samples": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "epoch": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "unit",
+        "samples"
+      ]
+    },
+    "layers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "kind": {
+            "enum": [
+              "mesh",
+              "scalar_field",
+              "vector_field",
+              "trajectories",
+              "time_series"
+            ]
+          },
+          "format": {
+            "const": "json"
+          },
+          "asset": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sampling": {
+            "enum": [
+              "static",
+              "step",
+              "linear"
+            ]
+          },
+          "field": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "unit": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "name",
+              "unit"
+            ]
+          },
+          "display": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "widget": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9_]*$"
+              },
+              "capabilities": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "pick",
+                    "legend",
+                    "slice",
+                    "opacity"
+                  ]
+                }
+              },
+              "color_map": {
+                "type": "string",
+                "minLength": 1
+              },
+              "range": {
+                "type": "array",
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "maxItems": 2
+              }
+            },
+            "required": [
+              "widget",
+              "capabilities"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "format",
+          "asset",
+          "sampling",
+          "display"
+        ],
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "scalar_field",
+                    "vector_field",
+                    "time_series"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "field"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "mesh"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "sampling": {
+                  "const": "static"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "kind": {
+                  "const": "trajectories"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "sampling": {
+                  "enum": [
+                    "step",
+                    "linear"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "scene_id",
+    "simulation",
+    "run_id",
+    "status",
+    "created_at",
+    "provenance",
+    "spatial",
+    "time",
+    "layers"
+  ],
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UrbanWorldModel run manifest v1.0.0",
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "complete"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "layers": {
+            "minItems": 1
+          }
+        }
+      }
+    }
+  ]
+}

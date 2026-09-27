@@ -1,0 +1,31 @@
+name: Simulation contract
+on:
+  push:
+    paths:
+      - 'schemas/**'
+      - 'examples/contract-v1/**'
+      - 'tools/check_contract.py'
+      - 'tools/requirements-contract.txt'
+      - 'tests/test_contract.py'
+      - '.github/workflows/contract.yml'
+  pull_request:
+    paths:
+      - 'schemas/**'
+      - 'examples/contract-v1/**'
+      - 'tools/check_contract.py'
+      - 'tools/requirements-contract.txt'
+      - 'tests/test_contract.py'
+      - '.github/workflows/contract.yml'
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r tools/requirements-contract.txt
+      - run: python tools/check_contract.py examples/contract-v1/manifest.json
+      - run: python -m unittest discover -s tests -p test_contract.py -v
