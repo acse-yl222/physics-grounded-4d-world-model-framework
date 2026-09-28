@@ -98,3 +98,16 @@ html, body { margin: 0; height: 100%; overflow: hidden; background: #0f1216; fon
   .timebar { flex-wrap: wrap; gap: 6px; }
   .timebar .time { order: 4; flex-basis: 100%; }
 }
+
+/* Readable controls and a visible keyboard focus, without covering the scene. */
+.quality-note { font-size: 11px; color: #aebdc7; margin: 2px 0 12px; }
+.btn, .scene-select, .layer select, .row.head select { min-height: 32px; }
+.panel { background: rgba(18, 29, 39, .94); border-color: #344957; }
+:focus-visible { outline: 2px solid #85e1d2; outline-offset: 3px; }
+.layer { gap: 8px; margin-top: 10px; }
+input[type=range] { accent-color: #6ccfc3; }
+@media (max-width: 820px) { .btn, .scene-select, .layer select, .row.head select { min-height: 36px; } }
+
+button:disabled { opacity: .5; cursor: not-allowed; }
+.info { position: fixed; left: 16px; bottom: 82px; max-width: min(420px, calc(100vw - 360px)); background: rgba(18,29,39,.9); border-radius: 8px; padding: 8px 10px; }
+.info:empty { display: none; }

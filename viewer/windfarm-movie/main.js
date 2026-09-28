@@ -9,6 +9,7 @@ function f16(a){const out=new Float32Array(a.length);for(let i=0;i<a.length;i++)
 async function wind(){const chunks=await Promise.all(["u-0.bin", "u-1.bin", "u-2.bin", "u-3.bin"].map(bytes));const a=new Uint16Array(chunks.reduce((n,b)=>n+b.byteLength/2,0));let at=0;for(const b of chunks){a.set(new Uint16Array(b),at);at+=b.byteLength/2;}return f16(a);}
 
 const canvas=document.querySelector('canvas'),renderer=new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
+renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();window.dispatchEvent(new Event('viewer-context-lost'));});
 renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(1);renderer.outputColorSpace=THREE.SRGBColorSpace;
 const ctx=canvas.getContext('2d');canvas.width=innerWidth;canvas.height=innerHeight;
 const scene=new THREE.Scene();scene.background=new THREE.Color('#101923');
@@ -45,4 +46,4 @@ document.querySelector('#clock').textContent=live?t.toFixed(1)+' s':'静态对�
 }
 window.movie={ready:true,meta,rotorSystem,comparison,selectModel,frame(f,n){const k=f/(n-1),p=Math.max(0,Math.min(1,(k-.12)/.76)),t=300*p;const angle=.18+Math.sin(k*Math.PI)*.20,dist=4500-k*600;camera.position.set(200+Math.sin(angle)*dist,2600-k*550,Math.cos(angle)*dist);controls.target.set(200,230,0);controls.update();render(t,Math.min(.72,Math.max(0,(k-.08)*12)),k<.12?'TERRAIN + TURBINE GEOMETRY':'SIMULATED WIND + GEOMETRY');return canvas.toDataURL('image/jpeg',.94).split(',')[1];},render};
 function animate(now){const dt=last?(now-last)/1000:0;last=now;if(playing&&select.value==='mac_live')time=(time+dt*12.5)%300;controls.update();render(time);requestAnimationFrame(animate);}if(!new URLSearchParams(location.search).has('capture'))requestAnimationFrame(animate);else render(0);
-}catch(e){console.error(e);const el=document.querySelector('#loading');if(el)el.textContent=e.message;}
+}catch(e){throw e;}

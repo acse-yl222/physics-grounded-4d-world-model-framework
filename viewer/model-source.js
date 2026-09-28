@@ -1,22 +1,36 @@
-/* City model in parts. On the GitHub Pages copy a large model lives in the companion repository acse-yl222/urban-world-model-models,
-   split into parts under GitHub's 100 MB limit and served by that repository's Pages site (which sends Access-Control-Allow-Origin: *;
-   release assets do not, which is why the model is not fetched from a release). scene.json names the parts manifest
-   (model.parts_manifest); the parts are fetched in parallel and concatenated here. */
-
-/** Fetch a model described by a parts manifest as one ArrayBuffer, reporting {loaded, total} like GLTFLoader's progress. */
+/** Assemble the published GLB directly into one buffer, without duplicate part buffers. */
 export async function fetchCityModel(manifestUrl, onProgress = () => {}) {
-  const man = await (await fetch(manifestUrl, { cache: 'no-cache' })).json();   // always revalidated: a stale manifest with old part sizes made the load fail after a model update
-  const base = new URL('./', manifestUrl).href;
-  const parts = man.parts, total = man.total_bytes, got = parts.map(() => 0);
-  const report = () => onProgress({ loaded: got.reduce((a, b) => a + b, 0), total });
-  const buffers = await Promise.all(parts.map(async (p, i) => {
-    const r = await fetch(base + p.file + (p.sha256 ? '?v=' + p.sha256.slice(0, 12) : '')); if (!r.ok) throw new Error(`model part ${p.file}: HTTP ${r.status}`);
-    const reader = r.body.getReader(), chunks = [];
-    for (;;) { const { done, value } = await reader.read(); if (done) break; chunks.push(value); got[i] += value.byteLength; report(); }
-    const out = new Uint8Array(p.bytes); let o = 0; for (const c of chunks) { out.set(c, o); o += c.byteLength; }
-    if (o !== p.bytes) throw new Error(`model part ${p.file}: got ${o} of ${p.bytes} bytes`);
-    return out;
-  }));
-  const all = new Uint8Array(total); let o = 0; for (const b of buffers) { all.set(b, o); o += b.byteLength; }
-  return all.buffer;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(new Error('Model download timed out. Please retry.')), 180000);
+  try {
+    const response = await fetch(manifestUrl, {cache: 'no-cache', signal: controller.signal});
+    if (!response.ok) throw new Error(`Model manifest: HTTP ${response.status}`);
+    const man = await response.json(), parts = man.parts, total = man.total_bytes;
+    if (!Number.isSafeInteger(total) || total <= 0 || !Array.isArray(parts) || !parts.length ||
+        parts.some(p => !Number.isSafeInteger(p.bytes) || p.bytes <= 0 || typeof p.file !== 'string') ||
+        parts.reduce((n,p) => n+p.bytes,0) !== total) throw new Error('Invalid model chunk sizes');
+    const all = new Uint8Array(total), received = parts.map(() => 0);
+    let offset = 0;
+    await Promise.all(parts.map(async (part, index) => {
+      const start = offset; offset += part.bytes;
+      const url = new URL(part.file, new URL('./', manifestUrl));
+      if (part.sha256) url.searchParams.set('v', part.sha256.slice(0,12));
+      const r = await fetch(url, {signal: controller.signal});
+      if (!r.ok) throw new Error(`Model part ${part.file}: HTTP ${r.status}`);
+      const reader = r.body.getReader();
+      try {
+        for (;;) {
+          const {done,value} = await reader.read(); if (done) break;
+          if (received[index]+value.byteLength > part.bytes) throw new Error(`Model part ${part.file} is larger than declared`);
+          all.set(value,start+received[index]);received[index]+=value.byteLength;
+          onProgress({loaded:received.reduce((a,b)=>a+b,0),total});
+        }
+        if (received[index] !== part.bytes) throw new Error(`Model part ${part.file}: got ${received[index]} of ${part.bytes} bytes`);
+      } finally { reader.releaseLock(); }
+    }));
+    return all.buffer;
+  } catch(error) {
+    controller.abort(); // Stop sibling downloads if a part fails.
+    throw error;
+  } finally { clearTimeout(timeout); }
 }

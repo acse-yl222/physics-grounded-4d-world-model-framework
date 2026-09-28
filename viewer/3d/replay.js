@@ -350,9 +350,10 @@ ${stateText(f.counts)}`;
     }
   }
   function nextShot() {
-    const i = R.shot ? SHOT_ORDER.indexOf(R.shot) : -1;
-    if (i === SHOT_ORDER.length - 1) { R.cycleDone = true; return; }
-    startShot(SHOT_ORDER[i + 1]);
+    const available = SHOT_ORDER.filter(id => id !== 'birds' || birdLayer);
+    const i = R.shot ? available.indexOf(R.shot) : -1;
+    if (i === available.length - 1) { R.cycleDone = true; return; }
+    startShot(available[i + 1]);
   }
   /** Advance the replay clock and camera tracking. Returns true when a shot boundary was crossed. */
   function tick(now, dt) {
