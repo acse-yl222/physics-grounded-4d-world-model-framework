@@ -881,7 +881,9 @@ renderer.domElement.addEventListener('pointerleave', () => { ui.readout.hidden =
 let last = performance.now();
 function animate(now) {
   requestAnimationFrame(animate);
-  const dt = Math.min(0.05, (now - last) / 1000); last = now;
+  const elapsed = Math.max(0, now - last);
+  const dt = Math.min(0.05, elapsed / 1000); last = now;
+  if (flight && section === 'campus' && replayLayer && !replayLayer.playing) flight.t0 += elapsed;
   if (replayLayer && section === 'campus') {
     const boundary = replayLayer.tick(now, dt);
     ui.stage.textContent = replayLayer.label; ui.info.textContent = replayLayer.info; ui.stats.textContent = replayLayer.stats;
