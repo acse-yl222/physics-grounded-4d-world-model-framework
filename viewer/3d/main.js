@@ -1141,7 +1141,7 @@ async function boot() {
     ui.stage.textContent = pose === 'overhead' ? 'Overhead view · ' + PHASE_ORDER.map(k => (TAB_NAME[k] ?? k).toLowerCase()).join(' / ') : (FOCUS.label ?? SCENE.title);
     return;
   }
-  setTimeout(playIntro, 400);
+  playIntro(); // Do not let a delayed startup override the first user interaction.
 }
 window.viewer = { THREE, scene, camera, controls, model, state, renderer, planes, SCENE, LAYERS, PHASES, LG, get replay() { return replayLayer; }, get transport() { return transport; }, get traffic() { return traffic; }, get tile() { return tileGroup; }, get tileBatches() { return tileBatches; } };   // console / debugging access
 
