@@ -52,15 +52,19 @@ class GridWidget extends DataWidget {
   }
   extract(frame){return this.indices.map(i=>this.vector?[frame[i],frame[this.plane+i],frame[2*this.plane+i]]:frame[i]);}
   async setTime(seconds){
-    if(this.disposed||!this.source)return;const serial=++this.sequence,times=this.context.manifest.time.samples;this.seconds=seconds;
-    if(this.sourceLayer.sampling!=='static'&&(seconds<times[0]||seconds>times.at(-1))){this.available=false;this.group.visible=false;this.context.availability(this.layer.id,false);return;}
-    let low=0;while(low<times.length-1&&times[low+1]<=seconds)low++;const high=this.sourceLayer.sampling==='linear'?Math.min(low+1,times.length-1):low;
+    if(this.disposed||!this.source)return;const times=this.context.manifest.time.samples;this.seconds=seconds;
+    if(this.sourceLayer.sampling!=='static'&&(seconds<times[0]||seconds>times.at(-1))){this.sequence++;this.pendingKey=null;this.renderedKey=null;this.available=false;this.group.visible=false;this.context.availability(this.layer.id,false);return;}
+    let low=0;while(this.sourceLayer.sampling!=='static'&&low<times.length-1&&times[low+1]<=seconds)low++;const high=this.sourceLayer.sampling==='linear'?Math.min(low+1,times.length-1):low;
+    const key=high===low?String(low):`${low}:${high}:${seconds}`;
+    if(this.renderedKey===key){this.sequence++;this.pendingKey=null;return;}
+    if(this.pendingKey===key)return;
+    const serial=++this.sequence;this.pendingKey=key;
     try{
       const [a,b]=await Promise.all([this.source.frame(low),this.source.frame(high)]);if(this.disposed||serial!==this.sequence)return;
       const weight=high===low?0:(seconds-times[low])/(times[high]-times[low]);const first=this.extract(a),last=this.extract(b);
       this.data[this.vector?'vectors':'values']=first.map((v,i)=>this.vector?v.map((x,j)=>x+(last[i][j]-x)*weight):v+(last[i]-v)*weight);
-      const layer=this.layer;this.layer={...layer,sampling:'static'};DataWidget.prototype.setTime.call(this,seconds);this.layer=layer;this.loadedTime=seconds;
-    }catch(error){if(!this.disposed&&serial===this.sequence){this.available=false;this.group.visible=false;this.context.availability(this.layer.id,false,error.message);}}
+      const layer=this.layer;this.layer={...layer,sampling:'static'};DataWidget.prototype.setTime.call(this,seconds);this.layer=layer;this.loadedTime=seconds;this.renderedKey=key;
+    }catch(error){if(!this.disposed&&serial===this.sequence){this.available=false;this.group.visible=false;this.context.availability(this.layer.id,false,error.message);}}finally{if(serial===this.sequence)this.pendingKey=null;}
   }
   pick(query){const hit=super.pick(query);if(hit)hit.display_stride=this.displayStep;return hit;}
   dispose(){this.source?.dispose();super.dispose();}

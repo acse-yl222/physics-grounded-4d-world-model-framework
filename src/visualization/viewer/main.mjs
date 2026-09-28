@@ -12,11 +12,15 @@ const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamp
 scene.add(new THREE.HemisphereLight(0xdff5ff,0x38514e,2.5));const sun=new THREE.DirectionalLight(0xffffff,3);sun.position.set(300,500,150);scene.add(sun);
 const raycaster=new THREE.Raycaster();const widgets=[],rows=new Map();let manifest,playing=false,previous=performance.now(),disposed=false;
 const abort=new AbortController();
-const resize=new ResizeObserver(()=>{const {width,height}=viewport.getBoundingClientRect();camera.aspect=width/height;camera.updateProjectionMatrix();renderer.setSize(width,height);});resize.observe(viewport);
+let animationId=0,dirty=true;
+const performanceStats={renders:0};
+function invalidate(){dirty=true;if(!disposed&&!document.hidden&&!animationId)animationId=requestAnimationFrame(animate);}
+controls.addEventListener('change',invalidate);
+const resize=new ResizeObserver(()=>{const {width,height}=viewport.getBoundingClientRect();camera.aspect=width/height;camera.updateProjectionMatrix();renderer.setSize(width,height);invalidate();});resize.observe(viewport);
 function fit(){if(!manifest)return;const {min,max}=manifest.spatial.bounds_m;const center=min.map((v,i)=>(v+max[i])/2),span=Math.max(...max.map((v,i)=>v-min[i]),1);controls.target.set(...enuToWorld(center));const radius=Math.hypot(...max.map((v,i)=>v-min[i]))/2||1;const halfFov=Math.min(camera.fov*Math.PI/360,Math.atan(Math.tan(camera.fov*Math.PI/360)*camera.aspect));const distance=radius/Math.sin(halfFov)*1.15;camera.position.copy(controls.target).add(new THREE.Vector3(1,.85,1).normalize().multiplyScalar(distance));camera.near=Math.max(span/10000,.001);camera.far=span*100;camera.updateProjectionMatrix();controls.update();}
-function setTime(value){$('time').value=value;$('clock').textContent=`${Number(value).toFixed(2)} s`;widgets.forEach(w=>w.setTime(Number(value)-(w.timeOffset||0)));}
+function setTime(value){$('time').value=value;$('clock').textContent=`${Number(value).toFixed(2)} s`;widgets.forEach(w=>{if(w.layer.sampling!=='static'||w.layer.kind==='time_series')w.setTime(Number(value)-(w.timeOffset||0));});invalidate();}
 $('time').addEventListener('input',()=>setTime($('time').value));
-$('play').addEventListener('click',()=>{if(!playing&&Number($('time').value)>=Number($('time').max))setTime($('time').min);playing=!playing;$('play').textContent=playing?'Pause':'Play';});
+$('play').addEventListener('click',()=>{if(!playing&&Number($('time').value)>=Number($('time').max))setTime($('time').min);playing=!playing;$('play').textContent=playing?'Pause':'Play';invalidate();});
 $('fit').addEventListener('click',fit);
 function showSelection(selection){$('selection').textContent=selection?JSON.stringify(selection,null,2):'No object selected.';}
 renderer.domElement.addEventListener('click',event=>{const rect=renderer.domElement.getBoundingClientRect();raycaster.setFromCamera(new THREE.Vector2((event.clientX-rect.left)/rect.width*2-1,-(event.clientY-rect.top)/rect.height*2+1),camera);showSelection(widgets.map(w=>w.pick({raycaster})).filter(Boolean).sort((a,b)=>a.distance-b.distance)[0]);});
@@ -77,21 +81,29 @@ async function load(){
       const selected=selections?.find(s=>s.run_id===run.manifest.run_id&&s.layer_id===layer.id);if(selections&&!selected)continue;
       total++;const key=`${run.manifest.run_id}:${layer.id}`;
       const context={scene,camera,manifest:run.manifest,boundsSize,baseURL:run.url,charts:$('charts'),
-        availability(id,available,error){const row=rows.get(key);if(row)row.querySelector('small').textContent=error?`Unavailable: ${error}`:available?'':'No data at this time';},
+        availability(id,available,error){invalidate();const row=rows.get(key);if(row)row.querySelector('small').textContent=error?`Unavailable: ${error}`:available?'':'No data at this time';},
         addLegend(layer,text){const p=document.createElement('p');p.textContent=`${layer.id}: ${text}`;$('legends').append(p);return()=>p.remove();}};
       const row=document.createElement('div');row.className='layer';const label=document.createElement('label');const checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.checked=selected?.visible??true;checkbox.disabled=true;label.append(checkbox,document.createTextNode(runs.length>1?`${run.manifest.run_id} / ${layer.id}`:layer.id));const status=document.createElement('small');status.textContent='Loading…';row.append(label,status);$('layers').append(row);rows.set(key,row);
       let widget;
-      try{widget=createWidget(layer);await widget.load(context,layer,abort.signal);widget.timeOffset=run.offset;widgets.push(widget);widget.setVisible(checkbox.checked);checkbox.disabled=false;checkbox.addEventListener('change',()=>widget.setVisible(checkbox.checked));
-        if(layer.display.capabilities.includes('opacity')){const opacity=document.createElement('input');opacity.type='range';opacity.min=0;opacity.max=1;opacity.step=.05;opacity.value=1;opacity.setAttribute('aria-label',`${layer.id} opacity`);opacity.addEventListener('input',()=>widget.setOpacity(Number(opacity.value)));row.append(opacity);}status.textContent='';
+      try{widget=createWidget(layer);await widget.load(context,layer,abort.signal);widget.timeOffset=run.offset;widgets.push(widget);widget.setVisible(checkbox.checked);checkbox.disabled=false;checkbox.addEventListener('change',()=>{widget.setVisible(checkbox.checked);invalidate();});
+        if(layer.display.capabilities.includes('opacity')){const opacity=document.createElement('input');opacity.type='range';opacity.min=0;opacity.max=1;opacity.step=.05;opacity.value=1;opacity.setAttribute('aria-label',`${layer.id} opacity`);opacity.addEventListener('input',()=>{widget.setOpacity(Number(opacity.value));invalidate();});row.append(opacity);}status.textContent='';
       }catch(error){widget?.dispose();status.textContent=`Unavailable: ${error.message}`;checkbox.checked=false;}
     }
   }
   if(selections&&total!==selections.length)throw new Error('View references a missing layer');
   $('status').textContent=`${widgets.length} / ${total} layers ready`;
   $('time').min=times[0]||0;$('time').max=times.at(-1)||0;$('time').disabled=times.length<2;$('play').disabled=times.length<2;setTime(times[0]||0);fit();
-  window.urbanViewer={get manifest(){return manifest;},get widgets(){return widgets;},setTime,fit,dispose};
+  window.urbanViewer={performanceStats,get manifest(){return manifest;},get widgets(){return widgets;},setTime,fit,dispose};
 }
-function animate(now){if(disposed)return;const dt=Math.min((now-previous)/1000,.1);previous=now;if(playing){const next=Math.min(Number($('time').max),Number($('time').value)+dt);setTime(next);if(next>=Number($('time').max)){playing=false;$('play').textContent='Play';}}controls.update();renderer.render(scene,camera);requestAnimationFrame(animate);}
-function dispose(){if(disposed)return;disposed=true;abort.abort();widgets.forEach(w=>w.dispose());controls.dispose();resize.disconnect();renderer.dispose();}
+function animate(now){
+  animationId=0;if(disposed||document.hidden){previous=0;return;}
+  const dt=previous?(now-previous)/1000:0;previous=now;
+  if(playing){const next=Math.min(Number($('time').max),Number($('time').value)+dt);setTime(next);if(next>=Number($('time').max)){playing=false;$('play').textContent='Play';}}
+  controls.update();
+  if(dirty){dirty=false;renderer.render(scene,camera);performanceStats.renders++;}
+  if(playing&&!animationId)animationId=requestAnimationFrame(animate);else if(!animationId)previous=0;
+}
+document.addEventListener('visibilitychange',()=>{if(animationId)cancelAnimationFrame(animationId);animationId=0;previous=0;if(!document.hidden)invalidate();});
+function dispose(){if(disposed)return;disposed=true;if(animationId)cancelAnimationFrame(animationId);abort.abort();widgets.forEach(w=>w.dispose());controls.dispose();resize.disconnect();renderer.dispose();}
 window.addEventListener('pagehide',dispose,{once:true});
-load().catch(error=>{$('error').hidden=false;$('error').textContent=error.message;$('status').textContent='Unable to load this run';});requestAnimationFrame(animate);
+load().catch(error=>{$('error').hidden=false;$('error').textContent=error.message;$('status').textContent='Unable to load this run';});invalidate();

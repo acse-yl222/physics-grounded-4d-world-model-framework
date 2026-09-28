@@ -132,6 +132,10 @@ const DIURNAL_LUT = lut(['#313695', '#4575b4', '#74add1', '#abd9e9', '#e0f3f8', 
 const PURPLES = lut(['#efedf5', '#dadaeb', '#bcbddc', '#9e9ac8', '#807dba', '#6a51a3', '#54278f', '#3f007d', '#2c0060']);
 
 // ------------------------------------------------------------------ renderer / scene
+let renderDirty=true;
+const performanceStats={renders:0};
+function invalidate(){renderDirty=true;}
+for(const event of ['input','change','click'])document.addEventListener(event,invalidate);
 const renderer = new THREE.WebGLRenderer({ canvas: $('gl'), antialias: true, powerPreference: 'high-performance', logarithmicDepthBuffer: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -144,6 +148,7 @@ const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x1a2029);
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 5, 30000);
 const controls = new OrbitControls(camera, renderer.domElement);
+controls.addEventListener('change', invalidate);
 controls.enableDamping = true; controls.dampingFactor = 0.08;
 controls.maxPolarAngle = Math.PI / 2 - 0.02;
 controls.enabled = false;
@@ -466,6 +471,7 @@ function activeLayers() {
   return act;
 }
 function repaint() {
+  invalidate();
   const f = state.fields, act = activeLayers();
   if (has('wind') && !f.wind) return;
   if (has('wind') && (act.wind || windPlane.fade > 0)) paintWind(f.wind);
@@ -555,7 +561,7 @@ function setPlaying(p) {
   state.playing = p; if (section !== 'campus') ui.play.textContent = p ? '❚❚' : '▶';
   clearInterval(state.timer); state.timer = null;
   const rate = section === 'campus' ? 12 : (seqMode() && PHASES[state.phase].rate) || +ui.rate.value;
-  if (p) state.timer = setInterval(tick, 1000 / rate);
+  if (p && !document.hidden) state.timer = setInterval(tick, 1000 / rate);
 }
 const RATES = { replay: [[0.5, '0.5×'], [1, '1×'], [2, '2×'], [4, '4×'], [10, '10×']], fields: [[2, '2 steps/s'], [4, '4 steps/s'], [8, '8 steps/s'], [12, '12 steps/s'], [20, '20 steps/s']] };
 function setRateOptions(kind, value) {
@@ -606,6 +612,7 @@ $('l-expansion').checked = new URLSearchParams(location.search).get('expansion')
 $('l-expansion').addEventListener('input', applyLayers);
 const FADE_SEC = 0.6;
 function applyLayers() {
+  invalidate();
   const on = state.introDone, act = activeLayers();
   if (windPlane) windPlane.target = on && act.wind ? 1 : 0;
   if (tempPlane) tempPlane.target = on && act.temp ? 1 : 0;
@@ -787,6 +794,7 @@ function runCampus(shot = 'overview') {
 // ---- SUMO traffic replay controls (panel)
 const tfUI = { box: $('traffic-ctl'), on: $('l-traffic'), cars: $('l-tf-cars'), signals: $('l-tf-signals'), roads: $('l-tf-roads'), paths: $('l-tf-paths'), map: $('l-tf-map'), stats: $('traffic-stats') };
 function applyTrafficLayers() {
+  invalidate();
   if (!traffic) return;
   traffic.setVisible(tfUI.on.checked && section !== 'fields');
   traffic.applyLayers({ cars: tfUI.cars.checked, signals: tfUI.signals.checked, roads: tfUI.roads.checked, paths: tfUI.paths.checked && tour.shot === 'traffic', map: tfUI.map.checked || (section === 'campus' && tour.active && tour.shot === 'trafficMap') });
@@ -800,12 +808,14 @@ function setupTrafficUI() {
 // ---- transport layer controls (panel): sub-layer toggles, snapshot summary, live arrivals at a chosen station
 const trUI = { box: $('transport-ctl'), on: $('l-transport'), rail: $('l-tr-rail'), bus: $('l-tr-bus'), stations: $('l-tr-stations'), stops: $('l-tr-stops'), disruptions: $('l-tr-disruptions'), cams: $('l-tr-cams'), stats: $('transport-stats'), station: $('tr-station'), live: $('tr-live'), arrivals: $('tr-arrivals') };
 function applyTransportLayers() {
+  invalidate();
   if (!transport) return;
   transport.setVisible(trUI.on.checked && section !== 'fields' && !(section === 'campus' && tour.active && tour.shot === 'trafficMap'));   // the traffic map keeps only the dots and lanes
   transport.setLayers({ rail: trUI.rail.checked, bus: trUI.bus.checked, stations: trUI.stations.checked, stops: trUI.stops.checked, disruptions: trUI.disruptions.checked, cams: trUI.cams.checked });
 }
 let arrivalsTimer = null;
 async function refreshArrivals() {
+  if(document.hidden)return;
   if (!transport || !trUI.station.value) return;
   const id = trUI.station.value, r = await transport.arrivals(id);
   if (trUI.station.value !== id) return;
@@ -857,6 +867,7 @@ ui.replay.addEventListener('click', playIntro);
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0), hit = new THREE.Vector3();
 const cellOf = g => { const c = Math.floor((hit.x - X0) / g.cell), r = Math.floor((ZS - hit.z) / g.cell); return c < 0 || c >= g.w || r < 0 || r >= g.h ? -1 : r * g.w + c; };
 renderer.domElement.addEventListener('pointermove', e => {
+  if(transport)invalidate();
   ndc.set((e.clientX / window.innerWidth) * 2 - 1, -(e.clientY / window.innerHeight) * 2 + 1);
   const tInfo = transport?.hover(ndc, camera);   // TfL markers: stations, bus stops, road disruptions, JamCams
   if (!state.introDone) { ui.readout.hidden = !tInfo; if (tInfo) ui.readout.textContent = tInfo; return; }
@@ -881,11 +892,13 @@ renderer.domElement.addEventListener('pointerleave', () => { ui.readout.hidden =
 let last = performance.now();
 function animate(now) {
   requestAnimationFrame(animate);
+  if(document.hidden){last=now;return;}
   const elapsed = Math.max(0, now - last);
   const dt = Math.min(0.05, elapsed / 1000); last = now;
   if (flight && section === 'campus' && replayLayer && !replayLayer.playing) flight.t0 += elapsed;
+  const moving=Boolean(flight||(section==='campus'&&(replayLayer?replayLayer.playing:tour.active&&!tour.paused))||(traffic&&!replayLayer&&section!=='fields'&&traffic.group.visible&&traffic.playing));
   if (replayLayer && section === 'campus') {
-    const boundary = replayLayer.tick(now, dt);
+    const boundary = replayLayer.tick(now, elapsed/1000);
     ui.stage.textContent = replayLayer.label; ui.info.textContent = replayLayer.info; ui.stats.textContent = replayLayer.stats;
     birdUI.readout.textContent = replayLayer.birdInfo || '';
     if (replayLayer.shot === 'birds' && replayLayer.shotUntil !== Infinity && replayLayer.birdTarget === 'flock' && birdUI.target.value !== 'flock') { birdUI.target.value = 'flock'; }   // the tour's own flock shot
@@ -894,16 +907,20 @@ function animate(now) {
     if (ui.rate.value !== String(replayLayer.speed)) ui.rate.value = String(replayLayer.speed);
     if (boundary) { setSectionUI(); if (replayLayer.cycleDone) { if (ui.auto.checked) runFields(); else replayLayer.startShot('overview'); } }
   } else if (section === 'campus') updateTour(now, dt);
-  if (traffic && !replayLayer && section !== 'fields' && traffic.group.visible) { traffic.tick(now, dt); if ((now | 0) % 500 < 20) tfUI.stats.textContent = traffic.stats; }
+  if (traffic && !replayLayer && section !== 'fields' && traffic.group.visible) { traffic.tick(now, elapsed/1000); if ((now | 0) % 500 < 20) tfUI.stats.textContent = traffic.stats; }
   updateFlight(now);
   if (controls.enabled) controls.update();
-  updateFades(dt);
-  if (state.introDone && wind.lines.visible) stepParticles(dt);
-  // The opaque loading overlay hides the scene; avoid drawing unbatched geometry.
-  if (ui.loading.classList.contains('hide')) renderer.render(scene, camera);
+  const fading=updateFades(dt);
+  const particles=state.introDone&&wind.lines.visible;
+  if(particles)stepParticles(dt);
+  // Draw only when the visible result changes; preserve full source data and geometry.
+  if(ui.loading.classList.contains('hide')&&(renderDirty||moving||fading||particles)){
+    renderer.render(scene,camera);performanceStats.renders++;renderDirty=false;
+  }
 }
 renderer.domElement.addEventListener('pointerdown', () => { if (section === 'campus') { if (flight) { flight = null; controls.enabled = true; } replayLayer?.cancelCamera(); if (tour.active) { tour.active = false; controls.enabled = true; setSectionUI(); } } });
 window.addEventListener('resize', () => {
+  invalidate();
   camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
   iso.material.resolution.set(window.innerWidth, window.innerHeight);
@@ -1145,6 +1162,17 @@ async function boot() {
   }
   playIntro(); // Do not let a delayed startup override the first user interaction.
 }
-window.viewer = { THREE, scene, camera, controls, model, state, renderer, planes, SCENE, LAYERS, PHASES, LG, get replay() { return replayLayer; }, get transport() { return transport; }, get traffic() { return traffic; }, get tile() { return tileGroup; }, get tileBatches() { return tileBatches; } };   // console / debugging access
+window.viewer = { performanceStats, THREE, scene, camera, controls, model, state, renderer, planes, SCENE, LAYERS, PHASES, LG, get replay() { return replayLayer; }, get transport() { return transport; }, get traffic() { return traffic; }, get tile() { return tileGroup; }, get tileBatches() { return tileBatches; } };   // console / debugging access
 
+let hiddenAt=null;
+document.addEventListener('visibilitychange',()=>{
+  const now=performance.now();
+  if(document.hidden){hiddenAt=now;clearInterval(state.timer);state.timer=null;return;}
+  const elapsed=hiddenAt===null?0:now-hiddenAt;hiddenAt=null;last=now;
+  if(flight)flight.t0+=elapsed;
+  if(tour.active)tour.t0+=elapsed;
+  replayLayer?.shiftClock(elapsed,now);
+  if(state.playing)setPlaying(true);
+  invalidate();
+});
 await boot();
