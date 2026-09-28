@@ -356,21 +356,28 @@ ${stateText(f.counts)}`;
     startShot(available[i + 1]);
   }
   /** Advance the replay clock and camera tracking. Returns true when a shot boundary was crossed. */
+  let previousTick = null;
   function tick(now, dt) {
+    const elapsed = previousTick === null ? 0 : Math.max(0, now - previousTick);
+    previousTick = now;
+    if (!R.playing) {
+      if (Number.isFinite(R.shotUntil)) R.shotUntil += elapsed;
+      if (R.orbit) R.orbit.t0 += elapsed;
+    }
     if (R.playing) {
       R.t += dt * R.speed;
       const end = R.duration || 3600;
       if (R.t >= end) R.t = traffic ? traffic.firstTime + 10 : 0;   // full-hour loop (UAV schedule); the traffic sample loops on its own inside carStates
     }
     if ((R.playing && now - R.lastDraw >= 35) || R.lastDraw === -Infinity) { update(R.t); R.lastDraw = now; }
-    updateBirdTracking(dt);
-    if (R.orbit) {
+    if (R.playing) updateBirdTracking(dt);
+    if (R.playing && R.orbit) {
       const k = Math.min(1, (now - R.orbit.t0) / R.orbit.dur), p = orbitPose(R.orbit, k);
       camera.position.copy(p.pos); controls.target.copy(p.target); camera.lookAt(p.target);
       if (k >= 1) cancelCamera();
     }
     for (const sprite of stationLayer.labels.children) { const mpp = 2 * camera.position.distanceTo(sprite.position) * Math.tan(camera.fov * Math.PI / 360) / window.innerHeight; sprite.scale.set(48 * mpp, 48 / (sprite.userData.aspect ?? (48 / 22)) * mpp, 1); }
-    if (R.shot && now >= R.shotUntil) { nextShot(); return true; }
+    if (R.playing && R.shot && now >= R.shotUntil) { nextShot(); return true; }
     return false;
   }
   function applyLayers({ cars = true, uavs = true, signals = true, stations = true, roads = true, trafficMap = false, birds = true } = {}) {

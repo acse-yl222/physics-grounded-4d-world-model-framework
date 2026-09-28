@@ -24,6 +24,10 @@
     const previous = await page.$eval('#play', e => e.textContent);
     await page.keyboard.press('Space');
     assert.notEqual(await page.$eval('#play', e => e.textContent), previous);
+    const pausedShot = await page.evaluate(() => { viewer.replay.shotUntil = performance.now()+50; return viewer.replay.shot; });
+    await new Promise(resolve => setTimeout(resolve,250));
+    assert.equal(await page.evaluate(() => viewer.replay.playing), false, 'Paused replay must not auto-resume at a tour boundary');
+    assert.equal(await page.evaluate(() => viewer.replay.shot), pausedShot);
     const replayTime = await page.$eval('#step', e => e.value);
     await page.keyboard.press('ArrowRight');
     assert.notEqual(await page.$eval('#step', e => e.value), replayTime, 'Replay keyboard seek must target replay time');
