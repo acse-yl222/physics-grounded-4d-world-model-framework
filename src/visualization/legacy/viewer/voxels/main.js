@@ -23,7 +23,7 @@ function options(){return {xcut:+$('x-cut').value,zcut:+$('z-cut').value,padding
 const wind=createNeuralWind(scene,options);
 function rebuild(){
  $('x-value').textContent=Math.round(+$('x-cut').value/768*100)+'%';$('z-value').textContent=(+$('z-cut').value*8)+' m';
- pending={id:++revision,options:options()};status.textContent='正在提取剖切后的体素表面…';dispatch();
+ pending={id:++revision,options:options()};status.textContent='Extracting the sliced voxel surface…';dispatch();
  wind.refresh();
 }
 function dispatch(){if(busy||!pending||!worker)return;busy=true;worker.postMessage(pending);pending=null;}
@@ -39,9 +39,9 @@ try{
  const fetchOK=async name=>{const r=await fetch(base+name);if(!r.ok)throw Error(`${name}: HTTP ${r.status}`);return r;};
  const [meta,bits,study,terrain]=await Promise.all([(await fetchOK('metadata.json')).json(),(await fetchOK('solid.bits')).arrayBuffer(),(await fetchOK('study.bits')).arrayBuffer(),(await fetchOK('terrain.f32')).arrayBuffer()]);
  const [nz,ny,nx]=meta.shape_zyx,[ox,oy]=meta.source_region_origin_xyz_m;
- if(bits.byteLength!==Math.ceil(nx*ny*nz/8)||terrain.byteLength!==nx*ny*4||study.byteLength!==Math.ceil(nx*ny/8))throw Error('网格数据尺寸不匹配');
+ if(bits.byteLength!==Math.ceil(nx*ny*nz/8)||terrain.byteLength!==nx*ny*4||study.byteLength!==Math.ceil(nx*ny/8))throw Error('Grid data dimensions do not match');
  worker=new Worker('./worker.js',{type:'module'});
- worker.onerror=e=>{status.textContent='网格生成失败：'+e.message;};
+ worker.onerror=e=>{status.textContent='Grid generation failed: '+e.message;};
  worker.onmessage=({data:r})=>{
   busy=false;
   if(r.error){status.textContent=r.error;dispatch();return;}
@@ -50,8 +50,8 @@ try{
    for(const [name,size] of [['position',3],['uv',2],['kind',1],['light',1]])geometry.setAttribute(name,new THREE.BufferAttribute(r[name],size));
    geometry.setIndex(new THREE.BufferAttribute(r.index,1));geometry.computeBoundingSphere();
    if(mesh){scene.remove(mesh);mesh.geometry.dispose();}mesh=new THREE.Mesh(geometry,material);scene.add(mesh);
-   status.textContent=`当前范围：${r.occupied.toLocaleString()} 个固体单元 · ${r.faces.toLocaleString()} 个暴露网格面`;
+   status.textContent=`Current extent: ${r.occupied.toLocaleString()} solid cells · ${r.faces.toLocaleString()} exposed cell faces`;
   }dispatch();
  };
  busy=true;worker.postMessage({id:revision,data:{bits:new Uint8Array(bits),study:new Uint8Array(study),terrain:new Float32Array(terrain),nx,ny,nz,cell:8,ox,oy},options:options()},[bits,study,terrain]);
-}catch(error){status.textContent='加载失败：'+error.message;console.error(error);}
+}catch(error){status.textContent='Loading failed: '+error.message;console.error(error);}

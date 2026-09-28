@@ -3,7 +3,7 @@ import {setDataBase,npy,getFrame,f16,loadMask} from '../npy.js';
 const $=id=>document.getElementById(id),canvas=$('map'),ctx=canvas.getContext('2d'),raster=document.createElement('canvas'),rc=raster.getContext('2d');
 let scene,manifest,fields=[],field,values,mask,foot,w,h,cell,uvw,ready=false,playing=false,generation=0,turbines=[];
 let scale=1,px=0,py=0,drag=null,request=null,playback=0;
-function stop(){playing=false;playback++;clearTimeout(request);$('play').textContent='播放';}
+function stop(){playing=false;playback++;clearTimeout(request);$('play').textContent='Play';}
 const palette=[[38,63,131],[22,139,166],[103,200,164],[243,220,105],[237,116,69]];
 function fit(){scale=Math.min(canvas.width/(w||768),canvas.height/(h||704))*.91;px=(canvas.width-(w||768)*scale)/2;py=(canvas.height-(h||704)*scale)/2;draw();}
 function resize(){const r=$('plot').getBoundingClientRect();canvas.width=Math.round(r.width);canvas.height=Math.round(r.height);fit();}addEventListener('resize',resize);
@@ -31,7 +31,7 @@ function draw(){
 }
 function paint(){
  if(!values)return;const lo=+$('lo').value,hi=+$('hi').value;
- if(!(hi>lo)){ $('status').textContent='颜色上限必须大于下限。';return; }
+ if(!(hi>lo)){ $('status').textContent='The upper colour limit must exceed the lower limit.';return; }
  raster.width=w;raster.height=h;const image=rc.createImageData(w,h);
  for(let row=0;row<h;row++)for(let col=0;col<w;col++){
   const i=row*w+col,o=((h-1-row)*w+col)*4;let rgb;
@@ -43,14 +43,14 @@ function paint(){
  rc.putImageData(image,0,0);$('min').textContent=field.log?`10^${lo}`:lo;$('max').textContent=field.log?`10^${hi}`:hi;$('unit').textContent=field.unit;draw();
 }
 async function show(index){
- const token=++generation;ready=false;$('status').textContent='读取数值帧…';
+ const token=++generation;ready=false;$('status').textContent='Reading data frame…';
  try{
   const selected=fields[+$('layer').value],path=selected.files?.[index]??selected.file,header=await npy(path).header();
   const count=selected.files?.length??header.shape[0];
   const data=f16(await getFrame(path,selected.files?0:index));if(token!==generation)return;
   field=selected;[h,w]=header.shape.slice(-2);cell=field.cell;uvw=field.key==='wind'?data:null;
   const n=w*h;values=uvw?Float32Array.from({length:n},(_,i)=>Math.hypot(data[i],data[n+i],data[n*2+i])):data;
-  if(values.length!==n)throw Error('数组维度不匹配');
+  if(values.length!==n)throw Error('Array dimensions do not match');
   const fp=field.mask?null:scene.masks.footprint[String(cell)];foot=fp?await loadMask(fp):null;
   if(token!==generation)return;
   mask=new Uint8Array(n);
@@ -59,16 +59,16 @@ async function show(index){
   if(field.key==='temp'&&scene.masks.study_area){const study=await loadMask(scene.masks.study_area);if(study.length===n)for(let i=0;i<n;i++)if(!study[i])mask[i]=2;}
   if(token!==generation)return;
   const info=manifest.arrays?.[field.file],time=field.times?.[index]??info?.time_local?.[index]??info?.time_s?.[index]??((field.t0??0)+index*(field.dt??0));
-  $('time').textContent=typeof time==='string'?`时间：${time}`:`模拟时间：${Number(time).toFixed(0)} s`;
-  $('frame-label').textContent=`${index+1} / ${count}${field.steps?' · 第 '+field.steps[index]+' 步':''}`;$('description').textContent=field.label;
+  $('time').textContent=typeof time==='string'?`Time: ${time}`:`Simulation time: ${Number(time).toFixed(0)} s`;
+  $('frame-label').textContent=`${index+1} / ${count}${field.steps?' · Step '+field.steps[index]+'':''}`;$('description').textContent=field.label;
   $('frame').max=count-1;$('frame').value=index;$('frame').disabled=count===1;$('play').disabled=count===1;
-  $('geometry-label').textContent=field.solver==='AI4Urban'?'23 台风机位置（白点）':'建筑轮廓';ready=true;paint();
-  $('status').textContent=`${w} × ${h} 网格 · ${cell} m / 格 · 数值数组`;
- }catch(e){if(token===generation)$('status').textContent='加载失败：'+e.message;}
+  $('geometry-label').textContent=field.solver==='AI4Urban'?'23 turbine locations (white dots)':'Building footprints';ready=true;paint();
+  $('status').textContent=`${w} × ${h} grid · ${cell} m / cell · Numerical arrays`;
+ }catch(e){if(token===generation)$('status').textContent='Loading failed: '+e.message;}
 }
 async function change(){stop();const selected=fields[+$('layer').value];$('lo').value=selected.range[0];$('hi').value=selected.range[1];$('arrows').disabled=selected.key!=='wind';const h=await npy(selected.file).header();await show(selected.files?selected.files.length-1:Math.min(59,h.shape[0]-1));fit();}
 $('layer').onchange=change;$('frame').oninput=()=>{stop();show(+$('frame').value);};
-$('play').onclick=()=>{if(playing){stop();return;}playing=true;$('play').textContent='暂停';tick(++playback);};
+$('play').onclick=()=>{if(playing){stop();return;}playing=true;$('play').textContent='Pause';tick(++playback);};
 async function tick(epoch){if(!playing||epoch!==playback)return;await show((+$('frame').value+1)%(+$('frame').max+1));if(playing&&epoch===playback)request=setTimeout(()=>tick(epoch),150);}
 $('reset').onclick=fit;for(const id of ['lo','hi','buildings'])$(id).oninput=paint;$('arrows').onchange=draw;
 canvas.addEventListener('wheel',e=>{e.preventDefault();const f=Math.exp(-e.deltaY*.001),next=Math.max(.1,Math.min(30,scale*f)),ratio=next/scale;px=e.offsetX-(e.offsetX-px)*ratio;py=e.offsetY-(e.offsetY-py)*ratio;scale=next;draw();},{passive:false});
@@ -77,23 +77,23 @@ canvas.onpointermove=e=>{
  if(drag){px=drag[2]+e.clientX-drag[0];py=drag[3]+e.clientY-drag[1];draw();return;}
  if(!ready)return;const col=Math.floor((e.offsetX-px)/scale),row=h-1-Math.floor((e.offsetY-py)/scale);if(col<0||col>=w||row<0||row>=h)return;
  const i=row*w+col,origin=scene.grid.domain_origin_xy_m??[0,0];
- const value=mask[i]===2?'无数据':mask[i]===1||foot?.[i]?'建筑 / 固体':`${values[i].toFixed(field.key==='poll'?3:4)} ${field.unit}`;
- $('readout').textContent=`${value}\n网格 (${col}, ${row}) · x ${(origin[0]+(col+.5)*cell).toFixed(0)} m / y ${(origin[1]+(row+.5)*cell).toFixed(0)} m`;
+ const value=mask[i]===2?'No data':mask[i]===1||foot?.[i]?'Building / solid':`${values[i].toFixed(field.key==='poll'?3:4)} ${field.unit}`;
+ $('readout').textContent=`${value}\nGrid (${col}, ${row}) · x ${(origin[0]+(col+.5)*cell).toFixed(0)} m / y ${(origin[1]+(row+.5)*cell).toFixed(0)} m`;
 };
 try{
- scene=await loadScene();setDataBase(scene.physics);$('title').textContent=scene.title+' · 二维物理场';document.title=$('title').textContent;$('three').href='../3d/?scene='+scene.id;
- const r=await fetch(scene.physics+'manifest.json');if(!r.ok)throw Error('缺少数据清单');manifest=await r.json();
- const names={wind:'风速与风向',temp:'温度',poll:'污染物浓度',flood:'积水深度'};
- for(const key of ['wind','temp','poll','flood']){const l=scene.layers[key];if(l)fields.push({key,file:l.file,cell:l.cell_m,range:key==='poll'?[-1,3]:l.range,log:key==='poll',unit:{wind:'m/s',temp:'°C',poll:'示踪浓度',flood:'m'}[key],name:names[key],label:l.label,t0:l.t0_s,dt:l.step_s});}
- if(scene.layers.solar){const s=scene.layers.solar;for(const [date,d] of Object.entries(s.dates))fields.push({key:'solar',file:d.ghi,cell:s.cell_m,range:[0,1000],unit:'W/m²',name:'日照 · '+d.label,label:'地表总水平辐照度 · '+date});}
+ scene=await loadScene();setDataBase(scene.physics);$('title').textContent=scene.title+' · 2D physical fields';document.title=$('title').textContent;$('three').href='../3d/?scene='+scene.id;
+ const r=await fetch(scene.physics+'manifest.json');if(!r.ok)throw Error('Data manifest is missing');manifest=await r.json();
+ const names={wind:'Wind speed and direction',temp:'Temperature',poll:'Pollutant concentration',flood:'Water depth'};
+ for(const key of ['wind','temp','poll','flood']){const l=scene.layers[key];if(l)fields.push({key,file:l.file,cell:l.cell_m,range:key==='poll'?[-1,3]:l.range,log:key==='poll',unit:{wind:'m/s',temp:'°C',poll:'Tracer concentration',flood:'m'}[key],name:names[key],label:l.label,t0:l.t0_s,dt:l.step_s});}
+ if(scene.layers.solar){const s=scene.layers.solar;for(const [date,d] of Object.entries(s.dates))fields.push({key:'solar',file:d.ghi,cell:s.cell_m,range:[0,1000],unit:'W/m²',name:'Sunlight · '+d.label,label:'Global horizontal irradiance · '+date});}
  if(scene.id==='region'){
   const r=await fetch(scene.physics+'ai4urban/manifest.json',{cache:'no-cache'});
-  if(!r.ok)throw Error('缺少 windfarm 的 AI4Urban 二维结果');
+  if(!r.ok)throw Error('AI4Urban 2D wind-farm results are unavailable');
   const ai=await r.json();turbines=ai.turbines;
-  for(const f of fields)f.name=f.key==='wind'?'SCALED · 风场（固定高程）':`已有${names[f.key]??f.name}（SCALED 风场驱动）`;
+  for(const f of fields)f.name=f.key==='wind'?'SCALED · Wind field(fixed elevation)':`Existing ${names[f.key]??f.name}(driven by the SCALED wind field)`;
   fields=[...ai.fields,...fields];
-  $('title').textContent='Windfarm · 二维风场';document.title=$('title').textContent;
-  if(!document.getElementById('crop-link')){const link=document.createElement('a');link.id='crop-link';link.href='../windfarm-crop/';link.textContent='23 台风机 · 4 m 裁剪试验 ↗';document.querySelector('header').append(link);}
+  $('title').textContent='Windfarm · 2D wind field';document.title=$('title').textContent;
+  if(!document.getElementById('crop-link')){const link=document.createElement('a');link.id='crop-link';link.href='../windfarm-crop/';link.textContent='23 turbines · 4 m cropped-domain test ↗';document.querySelector('header').append(link);}
  }
  $('layer').replaceChildren(...fields.map((f,i)=>Object.assign(document.createElement('option'),{value:i,textContent:f.name})));
  if(scene.id==='region')$('layer').value=fields.findIndex(f=>f.solver==='AI4Urban'&&f.agl_m===80);
@@ -103,6 +103,6 @@ try{
    const selected=fields[+$('layer').value],oldCount=selected.files?.length??1,atEnd=+$('frame').value===oldCount-1;
    for(const f of latest.fields){const existing=fields.find(v=>v.solver==='AI4Urban'&&v.agl_m===f.agl_m);if(existing)Object.assign(existing,f);}
    if(selected.solver==='AI4Urban'&&selected.files?.length>oldCount){$('frame').max=selected.files.length-1;$('frame').disabled=false;$('play').disabled=false;if(atEnd&&!playing)await show(selected.files.length-1);}
-  }catch(e){console.warn('等待下一批结果',e);}
+  }catch(e){console.warn('Waiting for the next results',e);}
  },20000);
-}catch(e){$('status').textContent='初始化失败：'+e.message;console.error(e);}
+}catch(e){$('status').textContent='Initialization failed: '+e.message;console.error(e);}

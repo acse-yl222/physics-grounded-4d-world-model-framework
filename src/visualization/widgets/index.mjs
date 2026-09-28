@@ -73,8 +73,11 @@ export class DataWidget {
     const [low,high]=this.range;
     if(kind==='scalar_field'||kind==='trajectories') {
       const positions=kind==='scalar_field'?data.positions:this.current;
-      positions.forEach((position,i)=>{this.instances.setMatrixAt(i,new THREE.Matrix4().makeTranslation(...enuToWorld(position)));this.instances.setColorAt(i,kind==='scalar_field'?color(this.current[i],low,high):new THREE.Color(0xffbc62));});
-      this.instances.instanceMatrix.needsUpdate=true;this.instances.instanceColor.needsUpdate=true;this.instances.computeBoundingSphere();
+      const updatePositions=kind==='trajectories'||!this.positionsInitialized;
+      this.matrix ||= new THREE.Matrix4();
+      positions.forEach((position,i)=>{if(updatePositions)this.instances.setMatrixAt(i,this.matrix.makeTranslation(...enuToWorld(position)));this.instances.setColorAt(i,kind==='scalar_field'?color(this.current[i],low,high):new THREE.Color(0xffbc62));});
+      if(updatePositions){this.instances.instanceMatrix.needsUpdate=true;this.instances.computeBoundingSphere();this.positionsInitialized=true;}
+      this.instances.instanceColor.needsUpdate=true;
     } else if(kind==='vector_field') {
       this.current.forEach((v,i)=>{const direction=new THREE.Vector3(...enuToWorld(v)),magnitude=direction.length();const arrow=this.objects[i];arrow.visible=magnitude>0;if(magnitude>0){arrow.setDirection(direction.normalize());arrow.setLength(this.scale*8*Math.min(2,magnitude/(high||1)));arrow.setColor(color(magnitude,low,high));}});
     } else if(kind==='time_series') this.drawChart();

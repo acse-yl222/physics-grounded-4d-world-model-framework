@@ -1,29 +1,29 @@
 <!doctype html>
-<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Region · 仿真体素网格</title>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Region · Simulation voxel grid</title>
 <script type="importmap">{"imports":{"three":"../../vendor/three/build/three.module.js","three/addons/":"../../vendor/three/examples/jsm/"}}</script>
 <style>
 body{margin:0;background:#101b27;color:#e4edf5;font:14px system-ui}canvas{display:block;width:100vw;height:100vh}aside{position:absolute;top:20px;left:20px;width:300px;padding:20px;background:#152331ed;border:1px solid #395064;border-radius:14px;max-height:85vh;overflow:auto}h1{font-size:21px;margin:6px 0 12px}p{line-height:1.65;color:#b9cbd9}a{color:#81d8ed}label{display:block;margin:18px 0}input[type=range]{width:100%;accent-color:#63d7dc}button{background:#29465c;border:1px solid #4c6c83;color:white;padding:9px;border-radius:7px;cursor:pointer}small{color:#a0b3c4;line-height:1.6;display:block}#status{color:#8ce2cf} .sw{display:inline-block;width:10px;height:10px;margin-right:5px;background:#61b8ac}.orange{background:#f7b760}@media(max-width:600px){aside{top:8px;left:8px;width:240px;padding:12px;max-height:45vh}}
 </style></head><body><canvas id="view"></canvas><aside>
-<a href="../3d/?scene=region&lite=0">← 返回物理场查看器</a>
-<h1>实际仿真体素网格</h1><p>Region · 山地风电场<br><b>8 × 8 × 8 米 / 单元</b><br>768 × 512 × 64 · 固定网格</p>
-<div id="status">正在加载工作站的 solid.npy 网格…</div>
+<a href="../3d/?scene=region&lite=0">← Back to field viewer</a>
+<h1>Simulation voxel grid</h1><p>Region · Mountain wind farm<br><b>8 × 8 × 8 m per cell</b><br>768 × 512 × 64 · Fixed grid</p>
+<div id="status">Loading the workstation solid.npy grid…</div>
 <section style="margin-top:15px;border-top:1px solid #395064;border-bottom:1px solid #395064;padding-bottom:12px">
-<label><input id="wind-on" type="checkbox"> 显示计算风场</label>
-<label>求解器 <select id="wind-source"><option value="ai4urban">AI4Urban · 固定算子 Neural Physics</option><option value="scaled">SCALED · 训练的代理模型</option></select></label>
-<label>目标离地高度 <select id="wind-height"><option value="40">40 m</option><option value="80" selected>80 m</option><option value="120">120 m</option></select></label>
-<label>计算步 <output id="wind-step-value">100 / 100</output><input id="wind-step" type="range" min="1" max="100" value="100"></label>
-<button id="wind-play" disabled>播放计算过程</button> <button id="wind-refresh">载入最新结果</button>
-<p id="wind-status">SCALED 神经网络 · 已完成的 100 步结果</p>
+<label><input id="wind-on" type="checkbox"> Show simulated wind</label>
+<label>Solver <select id="wind-source"><option value="ai4urban">AI4Urban · Neural Physics with fixed operators</option><option value="scaled">SCALED · Trained surrogate</option></select></label>
+<label>Target height above ground <select id="wind-height"><option value="40">40 m</option><option value="80" selected>80 m</option><option value="120">120 m</option></select></label>
+<label>Simulation step <output id="wind-step-value">100 / 100</output><input id="wind-step" type="range" min="1" max="100" value="100"></label>
+<button id="wind-play" disabled>Play simulation</button> <button id="wind-refresh">Load latest results</button>
+<p id="wind-status">SCALED neural network · Completed 100-step results</p>
 <div style="height:8px;background:linear-gradient(90deg,#417ee8,#44d8d0,#fae95a,#f07748);border-radius:4px"></div>
-<small style="display:flex;justify-content:space-between"><span>0</span><span>风速 m/s</span><span>≥ 2.5</span></small>
-<small id="wind-detail">箭头表示三维风向。正在等待选择的计算结果。</small>
+<small style="display:flex;justify-content:space-between"><span>0</span><span>Wind speed m/s</span><span>≥ 2.5</span></small>
+<small id="wind-detail">Arrows indicate 3D wind direction. Waiting for the selected simulation results.</small>
 </section>
-<label>东西方向剖切 <output id="x-value">100%</output><input id="x-cut" type="range" min="1" max="768" value="768"></label>
-<label>高度剖切 <output id="z-value">512 m</output><input id="z-cut" type="range" min="1" max="64" value="64"></label>
-<label><input id="padding" type="checkbox"> 显示计算域补齐区域</label>
-<label><input id="edges" type="checkbox" checked> 显示 8 米网格边线</label>
-<button id="overview">全景</button> <button id="closeup">风机网格近景</button> <button id="section">地形剖面</button>
-<p><span class="sw"></span>地形固体 <span class="sw orange"></span>地面以上静态结构</p>
-<small>拖动旋转 · 滚轮缩放 · 右键平移。仅隐藏内部相邻面，不降低网格分辨率。剖切暴露的面也按实际单元绘制。<br><br>高度以原模型高程减去 480 m 为基准。细塔筒与叶片受 8 m 网格限制；这不是原始精细模型，也不包含风机旋转。</small>
+<label>East–west slice <output id="x-value">100%</output><input id="x-cut" type="range" min="1" max="768" value="768"></label>
+<label>Height slice <output id="z-value">512 m</output><input id="z-cut" type="range" min="1" max="64" value="64"></label>
+<label><input id="padding" type="checkbox"> Show domain padding</label>
+<label><input id="edges" type="checkbox" checked> Show 8 m grid edges</label>
+<button id="overview">Overview</button> <button id="closeup">Turbine grid close-up</button> <button id="section">Terrain section</button>
+<p><span class="sw"></span>Terrain solids <span class="sw orange"></span>Static above-ground structures</p>
+<small>Drag to rotate; scroll to zoom; right-drag to pan. Only internal adjacent faces are hidden; grid resolution is preserved. Sliced faces also represent the actual cells.<br><br>Heights use the original model elevation minus 480 m. Thin towers and blades are limited by the 8 m grid; this is neither the original detailed geometry nor a turbine-rotation simulation.</small>
 </aside><script type="module" src="main.js"></script></body></html>

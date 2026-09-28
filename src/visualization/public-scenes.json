@@ -6,7 +6,7 @@
       "scene_id": "south_ken",
       "title": "South Kensington",
       "tag": "Urban environment",
-      "description": "城市几何、风与热、污染、日照和洪水，以及交通与飞行回放。",
+      "description": "Urban geometry, wind and heat, pollution, sunlight and flooding, with traffic and flight replays.",
       "viewer_url": "src/visualization/legacy/viewer/3d/?scene=south_kensington",
       "resource_ids": [
         "south_ken_geometry_models_v1"
@@ -16,7 +16,7 @@
       "scene_id": "white_city",
       "title": "White City",
       "tag": "Urban environment",
-      "description": "White City 9 km² 场景：城市模型、环境场与交通信息。",
+      "description": "A 9 km\u00b2 White City scene with urban models, environmental fields and traffic information.",
       "viewer_url": "src/visualization/legacy/viewer/3d/?scene=white_city",
       "resource_ids": [
         "white_city_geometry_white_city_v2"
@@ -26,7 +26,7 @@
       "scene_id": "windfarm",
       "title": "Wind farm",
       "tag": "Energy & flow",
-      "description": "三维地形与风机、151 帧风场、尾流模型对比和叶轮回放。",
+      "description": "Terrain and turbines, 151 wind-field frames, wake-model comparisons and rotor animation.",
       "viewer_url": "src/visualization/legacy/viewer/windfarm-movie/",
       "resource_ids": [
         "windfarm_geometry_published_v1",

@@ -23,6 +23,7 @@ def main():
     ignore=target/'.gitignore';rules=ignore.read_text() if ignore.exists() else ''
     exception='!examples/contract-v1.1/*.npy'
     if exception not in rules:ignore.write_text(rules+'\n# Tiny public protocol fixtures\n'+exception+'\n')
+    shutil.copytree(ROOT/'src/visualization/published-pages',target,dirs_exist_ok=True)
     shutil.copy2(ROOT/'index.html',target/'index.html')
     shutil.copy2(ROOT/'src/visualization/legacy/serve.py',target/'serve.py')
     catalog=json.loads((ROOT/'src/visualization/public-scenes.json').read_text())

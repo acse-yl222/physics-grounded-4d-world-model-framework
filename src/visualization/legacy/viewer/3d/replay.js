@@ -387,5 +387,6 @@ ${stateText(f.counts)}`;
   function setVisible(v) { group.visible = v; }
   function stopShots() { R.shot = null; clearFollow(); cancelCamera(); trackBirds(null); setUavScale(1); markers.visible = false; corridors.visible = false; mapShot = false; applyTrafficMap(); }
   Object.defineProperties(R, { birds: { get: () => birdLayer }, birdTarget: { get: () => birdTrack.target } });   // live getters (Object.assign would copy the values)
-  return Object.assign(R, { update, tick, startShot, nextShot, stopShots, clearFollow, cancelCamera, applyLayers, setVisible, followCamera, timeString, trackBirds, flockSummary });
+  function shiftClock(elapsed,now){if(Number.isFinite(R.shotUntil))R.shotUntil+=elapsed;if(R.orbit)R.orbit.t0+=elapsed;previousTick=now;}
+  return Object.assign(R, { shiftClock, update, tick, startShot, nextShot, stopShots, clearFollow, cancelCamera, applyLayers, setVisible, followCamera, timeString, trackBirds, flockSummary });
 }

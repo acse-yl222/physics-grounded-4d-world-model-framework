@@ -1,14 +1,14 @@
-<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>二维物理场</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>2D physical fields</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#101923;color:#e5edf5;font:14px system-ui}header{padding:16px 24px;border-bottom:1px solid #314354;display:flex;align-items:center;gap:20px;flex-wrap:wrap}h1{margin:0;font-size:19px}a{color:#86cee6}main{display:grid;grid-template-columns:280px 1fr;height:calc(100vh - 64px)}aside{padding:20px;background:#162332;overflow:auto}label{display:block;margin:18px 0 7px}select,button,input[type=number]{color:#e5edf5;background:#23384a;border:1px solid #526579;padding:8px;border-radius:6px}select{width:100%}button{cursor:pointer}input[type=range]{width:100%;accent-color:#79c5db}input[type=number]{width:95px}p,small{line-height:1.65;color:#b2c6d6}#map{width:100%;height:100%;display:block;touch-action:none;cursor:crosshair}#plot{min-width:0;min-height:0;position:relative}#hint{position:absolute;left:20px;top:15px;color:#c5d9e5;pointer-events:none}#status{color:#88d6c9}.legend{height:12px;background:linear-gradient(90deg,#263f83,#168ba6,#67c8a4,#f3dc69,#ed7445);margin-top:10px}.ticks{display:flex;justify-content:space-between;color:#b2c6d6}#readout{min-height:72px;font-variant-numeric:tabular-nums}@media(max-width:700px){main{grid-template-columns:210px 1fr}aside{padding:12px}header{padding:12px}h1{font-size:16px}}
-</style></head><body><header><h1 id="title">二维物理场</h1><a id="three" href="../3d/">返回三维查看器 ↗</a></header><main><aside>
-<label for="layer">物理场</label><select id="layer"></select><p id="description"></p>
-<label for="frame">时间帧 <span id="frame-label"></span></label><input id="frame" type="range" min="0" max="99" value="59"><p id="time"></p>
-<button id="play">播放</button> <button id="reset">重置视图</button>
-<label><input id="arrows" type="checkbox" checked> 风向箭头</label>
-<label><input id="buildings" type="checkbox" checked> <span id="geometry-label">建筑轮廓</span></label>
-<label>颜色范围</label><input id="lo" type="number" step="any"> — <input id="hi" type="number" step="any">
+</style></head><body><header><h1 id="title">2D physical fields</h1><a id="three" href="../3d/">Back to 3D viewer ↗</a></header><main><aside>
+<label for="layer">Physical field</label><select id="layer"></select><p id="description"></p>
+<label for="frame">Time frame <span id="frame-label"></span></label><input id="frame" type="range" min="0" max="99" value="59"><p id="time"></p>
+<button id="play">Play</button> <button id="reset">Reset view</button>
+<label><input id="arrows" type="checkbox" checked> Wind-direction arrows</label>
+<label><input id="buildings" type="checkbox" checked> <span id="geometry-label">Building footprints</span></label>
+<label>Colour range</label><input id="lo" type="number" step="any"> — <input id="hi" type="number" step="any">
 <div class="legend"></div><div class="ticks"><span id="min"></span><span id="unit"></span><span id="max"></span></div>
-<p id="status">加载中…</p><p id="readout">将鼠标移到热力图上读取数值。</p>
-<small>滚轮缩放 · 拖动平移。直接读取已保存的数值数组；灰色为建筑/固体，暗色为无数据或干燥区域。各物理场使用自己的时间轴。</small>
-</aside><div id="plot"><canvas id="map"></canvas><div id="hint">↑ 网格 +y</div></div></main><script type="module" src="main.js"></script></body></html>
+<p id="status">Loading…</p><p id="readout">Hover over the heat map to inspect values.</p>
+<small>Scroll to zoom; drag to pan. Values come from saved arrays. Grey indicates buildings or solids; dark areas indicate missing data or dry cells. Each field uses its own time axis.</small>
+</aside><div id="plot"><canvas id="map"></canvas><div id="hint">↑ Grid +y</div></div></main><script type="module" src="main.js"></script></body></html>
