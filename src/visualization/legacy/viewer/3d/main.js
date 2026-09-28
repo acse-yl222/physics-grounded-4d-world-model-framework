@@ -478,7 +478,14 @@ function repaint() {
   }
 }
 async function loadStep(step) {
-  try { return await loadStepInner(step); } catch (e) { state.loading = false; console.error('frame load failed', e); }
+  const requestToken = state.token + 1;
+  try { return await loadStepInner(step); } catch (e) {
+    if (requestToken !== state.token) return; // A superseded request must not stop its successor.
+    state.loading = false; setPlaying(false);
+    ui.stage.textContent = 'Frame unavailable — showing the last loaded data. Select a frame to retry.';
+    ui.timeLabel.textContent = 'Requested frame unavailable';
+    console.error('frame load failed', e);
+  }
 }
 async function loadStepInner(step) {
   const token = ++state.token, fi = frameIndex(step);
@@ -657,7 +664,16 @@ for (const el of [ui.lCars, ui.lUavs, ui.lSignals, ui.lStations, ui.lRoads, ui.l
 // ---- bird tracker module (panel): follow the flock centroid or a single bird; holds the "Birds" view until another tab is chosen
 const birdUI = { box: $('bird-tracker'), target: $('bird-target'), mode: $('bird-mode'), readout: $('bird-readout') };
 function setupBirdTracker() {
-  if (!replayLayer?.birds) return;
+  if (!replayLayer?.birds) {
+    ui.lBirds.checked = false; ui.lBirds.disabled = true;
+    const message = 'Bird replay unavailable: required trajectory data could not be loaded.';
+    ui.lBirds.closest('label').title = message;
+    const button = document.querySelector('[data-shot="birds"]');
+    if (button) { button.disabled = true; button.textContent = 'Birds unavailable'; button.title = message; }
+    const note = document.createElement('p'); note.className = 'quality-note'; note.textContent = message;
+    ui.lBirds.closest('label').after(note);
+    return;
+  }
   for (let i = 0; i < replayLayer.birds.stats.birds; i++) { const o = document.createElement('option'); o.value = i; o.textContent = `Bird ${String(i + 1).padStart(3, '0')}`; birdUI.target.append(o); }
   birdUI.box.style.display = '';
 }
@@ -881,7 +897,8 @@ function animate(now) {
   if (controls.enabled) controls.update();
   updateFades(dt);
   if (state.introDone && wind.lines.visible) stepParticles(dt);
-  renderer.render(scene, camera);
+  // The opaque loading overlay hides the scene; avoid drawing unbatched geometry.
+  if (ui.loading.classList.contains('hide')) renderer.render(scene, camera);
 }
 renderer.domElement.addEventListener('pointerdown', () => { if (section === 'campus') { if (flight) { flight = null; controls.enabled = true; } replayLayer?.cancelCamera(); if (tour.active) { tour.active = false; controls.enabled = true; setSectionUI(); } } });
 window.addEventListener('resize', () => {
@@ -920,13 +937,14 @@ async function boot() {
 
   // data first (small), then the model
   const M = SCENE.masks ?? {};
+  let dataError = null;
   const dataReady = (async () => {
     await initFrames(); console.log('field frames:', framesInfo());
     for (const [cell, file] of Object.entries(M.footprint ?? {})) footprints[+cell] = await loadMask(file);
     if (M.solid_wind && has('wind')) solidWind = await npy(M.solid_wind.file).read(M.solid_wind.layer ?? 0);
     if (M.study_area) studyArea = await loadMask(M.study_area);
-    await loadStep(Math.round(STEPS * 0.6));
-  })().catch(e => { ui.stage.textContent = 'Data error: ' + e.message; console.error(e); });
+    await loadStepInner(Math.round(STEPS * 0.6));
+  })().catch(e => { dataError = e; });
 
   const loader = new GLTFLoader();
   loader.setMeshoptDecoder(MeshoptDecoder);
@@ -980,6 +998,7 @@ async function boot() {
     // proxy city from the masks (already needed for the fields), then the replay layers
     ui.pct.textContent = 'Lite mode · building the voxel city…';
     await dataReady;
+    if (dataError) throw dataError;
     const lite = SCENE.lite, lg = gridOf(lite.cell_m ?? CELL);
     const footprint = footprints[lg.cell] ?? await loadMask(lite.footprint), roof = await loadMask(lite.roof);
     const proxy = buildProxyCity({ footprint, roof, W: lg.w, H: lg.h, CELL: lg.cell, X0, ZS });
@@ -1002,7 +1021,8 @@ async function boot() {
     // static buildings into a few draw calls. Ground and trees stay separate meshes so their toggles keep working.
     ui.pct.textContent = 'Merging static buildings…';
     if (MODEL.demo_filter) await applyCityFilter(gltf.scene);
-    if (MODEL.expansion) for (const batch of EXPANSION_BATCHES) {
+    if (MODEL.expansion) for (const [index, batch] of EXPANSION_BATCHES.entries()) {
+      ui.pct.textContent = `Building refinements · ${index + 1} / ${EXPANSION_BATCHES.length}`;
       try {
         const refined = await loader.loadAsync(batch.url);
         const expansion = await installExpansion(gltf.scene, refined.scene, batch.ids, batch.projectionM);
@@ -1026,6 +1046,7 @@ async function boot() {
       console.log('tile: hole clipping on', holeMaterials.size, 'ground materials:', [...holeMaterials].map(m => m.name).join('; '));
     }
     for (const m of [...groundMeshes, ...treeMeshes]) m.visible = false;
+    ui.pct.textContent = 'Optimizing scene geometry…';
     const batches = await batchStaticCity(gltf.scene); model.add(batches.object);
     for (const m of [...groundMeshes, ...treeMeshes]) if (!tileHidden.has(m)) m.visible = true;
     mainScene = gltf.scene; mainBatches = batches.object;
@@ -1080,6 +1101,7 @@ async function boot() {
     setupTransportUI();
   }
   await dataReady;
+    if (dataError) throw dataError;
   ui.loading.classList.add('hide');
   // ?pose=campus|overhead jumps straight to that view (no intro); ?step=N picks the time step
   const qs = new URLSearchParams(location.search), pose = qs.get('pose');
@@ -1121,5 +1143,6 @@ async function boot() {
   }
   setTimeout(playIntro, 400);
 }
-boot();
 window.viewer = { THREE, scene, camera, controls, model, state, renderer, planes, SCENE, LAYERS, PHASES, LG, get replay() { return replayLayer; }, get transport() { return transport; }, get traffic() { return traffic; }, get tile() { return tileGroup; }, get tileBatches() { return tileBatches; } };   // console / debugging access
+
+await boot();

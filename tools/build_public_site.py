@@ -34,8 +34,9 @@ def main():
         path=target/'scenes'/old/'scene.json'
         data=json.loads(path.read_text());data['model']['parts_manifest']=base+'project/'+canonical+'/manifest.json'
         path.write_text(json.dumps(data,indent=2)+'\n')
-    shutil.copy2(ROOT/'src/visualization/legacy/viewer/scene-navigation.js',target/'viewer/scene-navigation.js')
-    for name in ('index.html','main.js','style.css'):
+    for name in ('scene-navigation.js','bootstrap.js','model-source.js'):
+        shutil.copy2(ROOT/'src/visualization/legacy/viewer'/name,target/'viewer'/name)
+    for name in ('index.html','main.js','style.css','replay.js'):
         shutil.copy2(ROOT/'src/visualization/legacy/viewer/3d'/name,target/'viewer/3d'/name)
     movie=target/'viewer/windfarm-movie'
     shutil.copytree(ROOT/'src/visualization/legacy/viewer/windfarm-movie',movie,dirs_exist_ok=True)

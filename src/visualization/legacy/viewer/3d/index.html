@@ -24,16 +24,18 @@
   <div class="sub info" id="info"></div>
 </div>
 
-<button id="panel-toggle" class="hud btn" title="Layers and settings">Layers</button>
+<button id="panel-toggle" class="hud btn" title="Layers and settings" aria-expanded="false" aria-controls="layers">Layers</button>
 <nav class="hud top-tabs" id="tabs">
   <label class="tab auto" title="Play the views one after another and loop"><input type="checkbox" id="auto" checked> Auto loop</label>
 </nav>
 
 <div class="hud top-right panel" id="layers">
   <div class="row head">
-    <span>Camera</span>
+    <span>View settings</span>
     <button id="replay" class="btn" title="Restart from the overview">Restart</button>
   </div>
+  <label class="row head" for="geometry-quality"><span>Geometry quality</span><select id="geometry-quality"><option value="auto">Automatic</option><option value="lite">Lightweight</option><option value="full">Full detail</option></select></label>
+  <p class="quality-note">Full detail downloads a large model. Lightweight uses voxel geometry.</p>
   <div class="row head" style="margin-top:8px">
     <span>Physics fields</span>
     <select id="mode" title="Playback mode"><option value="seq">One after another</option><option value="overlay">Overlay</option></select>
@@ -142,8 +144,8 @@
 <div class="hud readout" id="readout" hidden></div>
 
 <div class="hud bottom timebar">
-  <button id="play" class="btn icon">▶</button>
-  <input type="range" id="step" min="1" max="100" value="1">
+  <button id="play" class="btn icon" aria-label="Play or pause">▶</button>
+  <input aria-label="Simulation time" type="range" id="step" min="1" max="100" value="1">
   <span class="time" id="time-label">Step 1</span>
   <select id="rate" title="Playback speed"></select>
 </div>
@@ -155,7 +157,7 @@
     <div class="small" id="pct">0 %</div>
   </div>
 </div>
-<script>document.getElementById('panel-toggle').addEventListener('click', () => document.getElementById('layers').classList.toggle('open'));</script>
-<script type="module" src="main.js"></script>
+<script>document.getElementById('panel-toggle').addEventListener('click', event => { const open = document.getElementById('layers').classList.toggle('open'); event.currentTarget.setAttribute('aria-expanded', String(open)); });</script>
+<script type="module" src="../bootstrap.js"></script>
 </body>
 </html>
