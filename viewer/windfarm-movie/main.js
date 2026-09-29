@@ -62,6 +62,12 @@ const labels={mac_live:'OUR MAC / TIME EVOLUTION',mac_mean:'OUR MAC / MEAN 200�
 const select=document.querySelector('#model');select.replaceChildren(...['mac_live',...Object.keys(comparison)].map(key=>new Option(labels[key]??key,key)));
 document.querySelector('#slice-detail').textContent=`${meta.turbines.length} turbines · Terrain-following slice: ${layout.height} m AGL`;
 document.querySelector('#sampling-detail').textContent=meta.display_note??`Exploratory comparison · Different terrain treatment; no accuracy ranking · Display sampled at ${spacing} m`;
+if((meta.solver??'').startsWith('TorchRotor-RANS')){
+ const limitations=document.createElement('p');limitations.id='physics-limitations';
+ limitations.textContent='当前未求解真实叶片旋转、轴扭矩、发电功率、控制器或浮式平台运动。叶片转动仅为显示动画。';
+ limitations.style.maxWidth='640px';limitations.style.color='#f0d3a0';
+ document.querySelector('#sampling-detail').after(limitations);
+}
 function selectModel(key){select.value=key;const live=key==='mac_live';document.querySelector('#time').disabled=!live;document.querySelector('#play').disabled=!live;document.querySelector('#spin').disabled=!live;invalidate();}select.onchange=()=>selectModel(select.value);selectModel(meta.default_model??(comparison.mac_mean?'mac_mean':'mac_live'));
 let lastFieldKey=null;const metrics={renders:0,fieldUpdates:0};
 const palette=[[38,63,131],[22,139,166],[103,200,164],[243,220,105],[237,116,69]];
