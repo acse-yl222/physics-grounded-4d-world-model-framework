@@ -6,11 +6,26 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 const configResponse=await fetch(new URL('resources.json',import.meta.url));if(!configResponse.ok)throw Error('Resource configuration unavailable');
-const resourceConfig=await configResponse.json(),base=new URL(resourceConfig.data_base,import.meta.url).href,modelURL=new URL(resourceConfig.model,import.meta.url).href;
+const resourceConfig=await configResponse.json();
+const requestedRun=new URLSearchParams(location.search).get('run');
+const runKey=Object.hasOwn(resourceConfig.runs??{},requestedRun)?requestedRun:resourceConfig.default_run;
+const base=new URL(resourceConfig.runs?.[runKey]?.data_base??resourceConfig.data_base,import.meta.url).href;
+const modelURL=new URL(resourceConfig.model,import.meta.url).href;
+const runSelect=document.querySelector('#run');
+if(runSelect&&resourceConfig.runs){
+ runSelect.replaceChildren(...Object.entries(resourceConfig.runs).map(([key,item])=>new Option(item.label,key)));
+ runSelect.value=runKey;runSelect.disabled=false;
+ runSelect.onchange=()=>{const url=new URL(location.href);url.searchParams.set('run',runSelect.value);location.href=url.href;};
+}else if(runSelect)runSelect.hidden=true;
+
 async function bytes(name){const r=await fetch(base+name);if(!r.ok)throw Error('Unable to load '+name+': '+r.status);return r.arrayBuffer();}
 function f16(a){const out=new Float32Array(a.length);for(let i=0;i<a.length;i++){const h=a[i],s=h&32768?-1:1,e=(h>>10)&31,f=h&1023;out[i]=e===31?(f?NaN:s*Infinity):e===0?s*f*2**-24:s*(1+f/1024)*2**(e-15);}return out;}
 async function wind(meta){const chunks=await Promise.all((meta.wind_chunks??["u-0.bin", "u-1.bin", "u-2.bin", "u-3.bin"]).map(bytes));const a=new Uint16Array(chunks.reduce((n,b)=>n+b.byteLength/2,0));let at=0;for(const b of chunks){a.set(new Uint16Array(b),at);at+=b.byteLength/2;}return f16(a);}
 
+const navigation=document.querySelector('nav');
+if(navigation)new ResizeObserver(()=>{
+ const hud=document.querySelector('.movie-hud');if(hud)hud.style.top=`${navigation.getBoundingClientRect().bottom+12}px`;
+}).observe(navigation);
 const canvas=document.querySelector('canvas');
 const captureMode=new URLSearchParams(location.search).has('capture');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true,preserveDrawingBuffer:captureMode});
