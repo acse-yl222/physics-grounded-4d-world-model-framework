@@ -1,0 +1,26 @@
+[
+  {
+    "reference_run": "20260929T015215Z_99dcd002",
+    "field_sha256": "82dd99b80fba1718d79957f18dccc5aa03032c8d8267e85ab160fa63a1de7862",
+    "torch_disc_speed_m_s": 6.265971431689585,
+    "cpp_disc_speed_m_s": 6.2659714341,
+    "torch_thrust_N": 10.351850106784532,
+    "cpp_thrust_N": 10.3518501147,
+    "torch_force_balance_error_N": 5.329070518200751e-15,
+    "interpretation": "Same converged flow field; C++ source logged immediately before final velocity solve.",
+    "passed": true,
+    "experimental_accuracy_validated": false
+  },
+  {
+    "reference_run": "20260929T015216Z_eb992e34",
+    "field_sha256": "e20c8b3865b686ed040bf553a7303d3dcb8cb1ff79fc6abaf4e049631f9f15b6",
+    "torch_disc_speed_m_s": 6.295664973206391,
+    "cpp_disc_speed_m_s": 6.29566497533,
+    "torch_thrust_N": 10.450194447007108,
+    "cpp_thrust_N": 10.4501944541,
+    "torch_force_balance_error_N": 3.552713678800501e-15,
+    "interpretation": "Same converged flow field; C++ source logged immediately before final velocity solve.",
+    "passed": true,
+    "experimental_accuracy_validated": false
+  }
+]

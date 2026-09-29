@@ -1,0 +1,411 @@
+{
+  "cases": [
+    {
+      "cell_m": 0.08,
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.0,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.08,
+      "speed_error_m_s": 0.08000000000000007,
+      "support_cells": 24,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.08,
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.25,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.043333333333331,
+      "speed_error_m_s": 0.043333333333331225,
+      "support_cells": 27,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.08,
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.49,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.0012,
+      "speed_error_m_s": 0.001200000000000756,
+      "support_cells": 24,
+      "force_balance_error_N": 7.105427357601002e-15
+    },
+    {
+      "cell_m": 0.08,
+      "axis": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.0,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 9.999999999999998,
+      "speed_error_m_s": -1.7763568394002505e-15,
+      "support_cells": 20,
+      "force_balance_error_N": 5.0242958677880805e-15
+    },
+    {
+      "cell_m": 0.08,
+      "axis": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.25,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 9.994324324324323,
+      "speed_error_m_s": -0.005675675675677283,
+      "support_cells": 37,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.08,
+      "axis": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.49,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.0012,
+      "speed_error_m_s": 0.001200000000000756,
+      "support_cells": 16,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.08,
+      "axis": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "hub_offset_cells": 0.0,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.000000000000002,
+      "speed_error_m_s": 1.7763568394002505e-15,
+      "support_cells": 24,
+      "force_balance_error_N": 3.076740298213702e-15
+    },
+    {
+      "cell_m": 0.08,
+      "axis": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "hub_offset_cells": 0.25,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.001334296218369,
+      "speed_error_m_s": 0.0013342962183688911,
+      "support_cells": 30,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.08,
+      "axis": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "hub_offset_cells": 0.49,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.001200000000003,
+      "speed_error_m_s": 0.0012000000000025324,
+      "support_cells": 18,
+      "force_balance_error_N": 6.153480596427404e-15
+    },
+    {
+      "cell_m": 0.04,
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.0,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.0,
+      "speed_error_m_s": 0.0,
+      "support_cells": 216,
+      "force_balance_error_N": 3.552713678800501e-15
+    },
+    {
+      "cell_m": 0.04,
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.25,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 9.998292378598094,
+      "speed_error_m_s": -0.0017076214019056124,
+      "support_cells": 208,
+      "force_balance_error_N": 3.552713678800501e-15
+    },
+    {
+      "cell_m": 0.04,
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.49,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 9.990722636194782,
+      "speed_error_m_s": -0.00927736380521793,
+      "support_cells": 192,
+      "force_balance_error_N": 3.552713678800501e-15
+    },
+    {
+      "cell_m": 0.04,
+      "axis": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.0,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.0,
+      "speed_error_m_s": 0.0,
+      "support_cells": 220,
+      "force_balance_error_N": 5.0242958677880805e-15
+    },
+    {
+      "cell_m": 0.04,
+      "axis": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.25,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 9.999794520547947,
+      "speed_error_m_s": -0.00020547945205251494,
+      "support_cells": 146,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.04,
+      "axis": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.49,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.00025555665761,
+      "speed_error_m_s": 0.0002555566576099011,
+      "support_cells": 220,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.04,
+      "axis": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "hub_offset_cells": 0.0,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.0,
+      "speed_error_m_s": 0.0,
+      "support_cells": 240,
+      "force_balance_error_N": 9.230220894641107e-15
+    },
+    {
+      "cell_m": 0.04,
+      "axis": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "hub_offset_cells": 0.25,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 9.998345327873698,
+      "speed_error_m_s": -0.0016546721263015485,
+      "support_cells": 180,
+      "force_balance_error_N": 3.076740298213702e-15
+    },
+    {
+      "cell_m": 0.04,
+      "axis": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "hub_offset_cells": 0.49,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.000194760382968,
+      "speed_error_m_s": 0.00019476038296772913,
+      "support_cells": 180,
+      "force_balance_error_N": 6.153480596427404e-15
+    },
+    {
+      "cell_m": 0.02,
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.0,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.0,
+      "speed_error_m_s": 0.0,
+      "support_cells": 1664,
+      "force_balance_error_N": 3.552713678800501e-15
+    },
+    {
+      "cell_m": 0.02,
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.25,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 9.997141076713245,
+      "speed_error_m_s": -0.0028589232867552994,
+      "support_cells": 1636,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.02,
+      "axis": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.49,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 9.995395774623006,
+      "speed_error_m_s": -0.004604225376994009,
+      "support_cells": 1600,
+      "force_balance_error_N": 3.552713678800501e-15
+    },
+    {
+      "cell_m": 0.02,
+      "axis": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.0,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 9.999999999999998,
+      "speed_error_m_s": -1.7763568394002505e-15,
+      "support_cells": 1460,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.02,
+      "axis": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.25,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.000422285096093,
+      "speed_error_m_s": 0.0004222850960928781,
+      "support_cells": 1728,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.02,
+      "axis": [
+        1.0,
+        1.0,
+        0.0
+      ],
+      "hub_offset_cells": 0.49,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.000163105647722,
+      "speed_error_m_s": 0.00016310564772226144,
+      "support_cells": 1452,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.02,
+      "axis": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "hub_offset_cells": 0.0,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.0,
+      "speed_error_m_s": 0.0,
+      "support_cells": 1428,
+      "force_balance_error_N": 0.0
+    },
+    {
+      "cell_m": 0.02,
+      "axis": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "hub_offset_cells": 0.25,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 9.999434338464752,
+      "speed_error_m_s": -0.0005656615352478411,
+      "support_cells": 1662,
+      "force_balance_error_N": 3.076740298213702e-15
+    },
+    {
+      "cell_m": 0.02,
+      "axis": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "hub_offset_cells": 0.49,
+      "exact_continuous_disc_speed_m_s": 10.0,
+      "resolved": true,
+      "disc_speed_m_s": 10.00006363612836,
+      "speed_error_m_s": 6.363612835968979e-05,
+      "support_cells": 1674,
+      "force_balance_error_N": 0.0
+    }
+  ],
+  "interpretation": "Analytical affine-field quadrature audit, not experimental or flow-solver validation.",
+  "rotor_source_sha256": "c7ba3b4e8b3f02ce9d6c0c360a2f0871a6f74ff8a8112ed81b8cb9db49f99abe"
+}

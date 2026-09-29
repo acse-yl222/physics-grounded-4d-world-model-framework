@@ -1,0 +1,105 @@
+{
+  "grids": [
+    {
+      "run_id": "20260929T015853Z_4ae1044e",
+      "cell_m": 0.08,
+      "thrust_N": 6.88116744751,
+      "manifest_sha256": "74e8a3b8d33d6e0f6efb8c32346e2b84860f0d229da05b07445785b32fc83625",
+      "sampling": {
+        "1D": {
+          "raw_points": 128,
+          "unique_points": 115,
+          "identical_duplicates_removed": 13
+        },
+        "3D": {
+          "raw_points": 124,
+          "unique_points": 121,
+          "identical_duplicates_removed": 3
+        },
+        "5D": {
+          "raw_points": 128,
+          "unique_points": 121,
+          "identical_duplicates_removed": 7
+        }
+      }
+    },
+    {
+      "run_id": "20260929T015215Z_99dcd002",
+      "cell_m": 0.04,
+      "thrust_N": 10.3518501147,
+      "manifest_sha256": "505280329b26229a6db696688c051ea88a8b3fe6c0eb3af3cf4284bb41782616",
+      "relative_thrust_change": 0.5043741042002823,
+      "sampling": {
+        "1D": {
+          "raw_points": 121,
+          "unique_points": 121,
+          "identical_duplicates_removed": 0
+        },
+        "3D": {
+          "raw_points": 119,
+          "unique_points": 118,
+          "identical_duplicates_removed": 1
+        },
+        "5D": {
+          "raw_points": 121,
+          "unique_points": 121,
+          "identical_duplicates_removed": 0
+        }
+      },
+      "profile_changes": {
+        "1D": {
+          "deficit_rms_change": 0.1086338021554673,
+          "deficit_max_change": 0.42389944791800005
+        },
+        "3D": {
+          "deficit_rms_change": 0.1392751151858783,
+          "deficit_max_change": 0.3440597634899999
+        },
+        "5D": {
+          "deficit_rms_change": 0.12117412389951228,
+          "deficit_max_change": 0.23369032619499996
+        }
+      }
+    },
+    {
+      "run_id": "20260929T015854Z_ca566296",
+      "cell_m": 0.02,
+      "thrust_N": 10.4277665366,
+      "manifest_sha256": "e9b7508d49fd012c23aec09ad27a15a1cc20e06da20a772b33908ea2addc3568",
+      "relative_thrust_change": 0.00733360907072993,
+      "sampling": {
+        "1D": {
+          "raw_points": 122,
+          "unique_points": 121,
+          "identical_duplicates_removed": 1
+        },
+        "3D": {
+          "raw_points": 121,
+          "unique_points": 121,
+          "identical_duplicates_removed": 0
+        },
+        "5D": {
+          "raw_points": 121,
+          "unique_points": 121,
+          "identical_duplicates_removed": 0
+        }
+      },
+      "profile_changes": {
+        "1D": {
+          "deficit_rms_change": 0.05539744623354277,
+          "deficit_max_change": 0.16230152891100003
+        },
+        "3D": {
+          "deficit_rms_change": 0.03573524447903538,
+          "deficit_max_change": 0.08147130226750021
+        },
+        "5D": {
+          "deficit_rms_change": 0.02273719985936175,
+          "deficit_max_change": 0.05159389952399995
+        }
+      }
+    }
+  ],
+  "experimental_accuracy_validated": false,
+  "interpretation": "Measured grid sensitivity only; identical coordinate/value duplicates removed and coarse profiles linearly interpolated at fine sample coordinates. No assumed asymptotic order or GCI; annular cell-centre masks may converge non-monotonically."
+}

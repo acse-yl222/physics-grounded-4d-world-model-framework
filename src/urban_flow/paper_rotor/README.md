@@ -4,7 +4,7 @@ Source: Davidson, Barajas & Lara, **Turbines and thrusters: A versatile OpenFOAM
 
 ## What is implemented
 
-- `../windfarm_2m/mac_torch.py`: pure PyTorch port of our MAC solver, with a fixed Conv3d pressure stencil. Staggered velocities, first-order upwind advection, masked pressure operator, multigrid-preconditioned CG, pressure outlet. No trained weights; this is a fixed-operator physics solver, not learned neural inference.
+- `../solvers/mac_torch.py`: pure PyTorch port of our MAC solver, with a fixed Conv3d pressure stencil. Staggered velocities, first-order upwind advection, masked pressure operator, multigrid-preconditioned CG, pressure outlet. No trained weights; this is a fixed-operator physics solver, not learned neural inference.
 - `rotor.py`: paper §2.2 Gaussian weighting, finite cylinder/annulus, arbitrary rotor orientation/position, weighted relative hub inflow, Ct-to-induction mapping, velocity-dependent turbine thrust or prescribed signed thrust, equal/opposite fluid force, body force and lever-arm torque. This torque is platform pitching torque, **not blade shaft torque**.
 - `verify.py`: force conservation, relative-velocity response, agreement with old Ct-prime loading, pressure divergence, uniform flow, GPU comparison to original Triton code.
 - `compare.py`: matched small single-phase CFD experiment isolating implementation backend and rotor spatial weighting. It does **not** use the original windfarm geometry, and is **not** Appendix B.2 validation.
@@ -13,7 +13,10 @@ Source: Davidson, Barajas & Lara, **Turbines and thrusters: A versatile OpenFOAM
 
 The paper's full model uses overInterDyMFoam, VoF/MULES, k-omega SST with a wave-related limiter, overset interpolation, sixDoFRigidBodyMotion, wave generation/absorption and mooring restraints. None of those extra coupled modules has been reproduced here. Prescribing a moving hub does not solve floating-body dynamics. PyTorch pressure projection is not OpenFOAM SIMPLE/PIMPLE.
 
-No original OpenFOAM run or author result array is available in this workspace. Therefore no numerical accuracy or speed claim against OpenFOAM is supported. Workstation inspection found no simpleFoam or standard OpenFOAM installation. The comparison is **our Triton solver vs its PyTorch port vs a different rotor force kernel**, not OpenFOAM vs Neural Physics.
+No author case dictionary or original author result array is available in this workspace.
+The old `compare.py` remains **our Triton solver vs its PyTorch port vs a different rotor force kernel**.
+On 2026-09-29 an independent official OpenFOAM 2312 container reference was added (see below);
+it does not turn the old comparison into an OpenFOAM validation or speed benchmark.
 
 ## Formula correspondence
 
@@ -47,10 +50,61 @@ Need original case dictionaries or independently justified values for turbulence
 
 ## Run
 
+### Independent OpenFOAM RANS reference
+
 ```sh
-python tools/paper_rotor/verify.py
-python tools/paper_rotor/compare.py --out output/paper_rotor
-python tools/paper_rotor/compare.py --out output/paper_rotor/refined --cell .05 --refine-only
-python tools/paper_rotor/render.py
+PYTHONPATH=src python -m urban_flow.paper_rotor.openfoam_reference --model kOmegaSST --iterations 2000
+PYTHONPATH=src python -m urban_flow.paper_rotor.openfoam_reference --model kEpsilon --iterations 2000
+PYTHONPATH=src python -m urban_flow.paper_rotor.analyze_reference <printed-run-directory>
+```
+
+Requires the official image pinned by digest in `openfoam_reference.py` and a working
+Docker service. The generator uses a uniform mesh, no-slip floor with wall functions,
+slip top/side walls and the official RANS closures. Its independent C++ weighted source
+uses global reductions across MPI partitions. It runs with the calling user's identity,
+no container network, and access only to its new cache case directory.
+
+At present this isolates closure/boundary differences on the pilot domain. Original
+wind-tunnel geometry, Gaussian details and inlet turbulence are still under verification.
+The reference's inlet turbulence intensity/length are explicit configurable assumptions,
+not claimed author values. `solver_finished` is not numerical convergence; the analyzer
+checks residuals, continuity and thrust-window drift separately. Reference profiles are
+static protocol layers: SIMPLE iterations must never become animation seconds. See
+`project/actuator_lab/reproduction_progress.md` for remaining evidence and live runs.
+
+### 10 m/s uniform-grid experiment
+
+The independent entrypoint below uses the wind-tunnel rotor parameters (10 m/s,
+Ct=0.95, outer/inner diameters 0.4647/0.09 m, thickness 0.08 m). Configuration:
+`project/actuator_lab/configs/paper_rotor_10ms.json`. It does not change old runs.
+
+```sh
+PYTHONPATH=src python -m urban_flow.paper_rotor.wind_tunnel
+PYTHONPATH=src python -m urban_flow.paper_rotor.wind_tunnel --cell .02
+PYTHONPATH=src python -m unittest discover -s tests -p test_paper_rotor.py -v
+```
+
+Use an environment with Torch, Triton, NumPy, Matplotlib and jsonschema; `--backend
+torch` selects the reference backend. Results go to a unique
+`cache/actuator_lab/paper_rotor_10ms/<run_id>` directory, with a protocol manifest,
+source snapshot, configuration, thrust history, exact hub-height velocity slices,
+profiles at 1D/3D/5D and overview plot. Time stepping uses a CFL bound and an
+acceleration bound; cell-to-face integrated force conservation is checked at every
+step. Refinement keeps physical rotor dimensions and smoothing fixed.
+
+This is a **numerical pilot, not completed paper validation**. The domain, hub
+position, density, Gaussian sigma/cutoff and startup are explicitly recorded
+choices, not author-case data. The 0.04 m pilot has only two cells across rotor
+thickness; 0.02 m has four. MAC retains slip bottom and first-order upwinding with
+no turbulence closure. The paper's no-slip bottom, k-epsilon / k-omega SST,
+experimental inlet turbulence, full tunnel geometry and author reference profiles
+are not reproduced. Final thrust is compared with ideal unbounded actuator theory
+only as a diagnostic, never as experimental validation. A prescribed uniform
+10 m/s *disk* speed is not the same as 10 m/s upstream speed after induction.
+
+```sh
+PYTHONPATH=src python -m urban_flow.paper_rotor.verify
+PYTHONPATH=src python -m urban_flow.paper_rotor.compare --out cache/actuator_lab/legacy_pilot/manual
+PYTHONPATH=src python -m urban_flow.paper_rotor.compare --out cache/actuator_lab/legacy_pilot/manual/refined --cell .05 --refine-only
 ```
 Dependencies: torch, numpy, matplotlib, pillow; optional Triton for GPU backend comparison.

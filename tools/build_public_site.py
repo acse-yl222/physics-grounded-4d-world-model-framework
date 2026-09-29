@@ -5,10 +5,27 @@ Never copies project data, local configuration, cache, or recovery history.
 """
 import argparse
 import json
+import re
 from pathlib import Path
 import shutil
 
 ROOT=Path(__file__).resolve().parents[1]
+
+def windfarm_resources(catalog):
+    """Derive immutable resource URLs from the same catalogue shown by the homepage."""
+    scenes=[scene for scene in catalog['scenes'] if scene['scene_id']=='windfarm']
+    if len(scenes)!=1:
+        raise ValueError('Exactly one windfarm catalogue entry is required')
+    base=catalog['resources_url'].rstrip('/')+'/'
+    def version(category):
+        prefix=f'windfarm_{category}_'
+        matches=[key[len(prefix):] for key in scenes[0]['resource_ids'] if key.startswith(prefix)]
+        if len(matches)!=1 or not re.fullmatch(r'[a-z][a-z0-9_]*',matches[0]):
+            raise ValueError(f'Expected one canonical windfarm {category} version')
+        return matches[0]
+    return {'data_base':base+'project/windfarm/runs/'+version('runs')+'/',
+            'model':base+'project/windfarm/geometry/'+version('geometry')+'/region.glb'}
+
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
@@ -41,7 +58,7 @@ def main():
         shutil.copy2(ROOT/'src/visualization/legacy/viewer/3d'/name,target/'viewer/3d'/name)
     movie=target/'viewer/windfarm-movie'
     shutil.copytree(ROOT/'src/visualization/legacy/viewer/windfarm-movie',movie,dirs_exist_ok=True)
-    (movie/'resources.json').write_text(json.dumps({'data_base':base+'project/windfarm/runs/published_movie_v1/','model':base+'project/windfarm/geometry/published_v1/region.glb'},indent=2)+'\n')
+    (movie/'resources.json').write_text(json.dumps(windfarm_resources(catalog),indent=2)+'\n')
     print(f'Built public viewer at {target}; existing legacy routes preserved.')
 
 if __name__=='__main__':main()

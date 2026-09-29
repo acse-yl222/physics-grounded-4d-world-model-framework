@@ -16,9 +16,12 @@ class WeightedRotor(nn.Module):
   # Swept area includes hub hole; hole excludes force-support cells only.
   self.area=math.pi*radius**2
  def forward(self,xyz,velocity,cell_volume,hub,axis,hub_velocity=None,com=None,thrust=None):
-  axis=torch.as_tensor(axis,device=xyz.device,dtype=xyz.dtype);axis=axis/torch.linalg.vector_norm(axis)
+  axis=torch.as_tensor(axis,device=xyz.device,dtype=xyz.dtype)
+  norm=torch.linalg.vector_norm(axis)
+  if axis.shape!=(3,) or not bool(torch.isfinite(axis).all()) or not bool(torch.isfinite(norm)) or not bool(norm>0):raise ValueError('Rotor axis must be finite and nonzero')
+  axis=axis/norm
   hub=torch.as_tensor(hub,device=xyz.device,dtype=xyz.dtype)
-  relative=xyz-hub;axial=(relative*axis).sum(-1);radial2=(relative**2).sum(-1)-axial**2
+  relative=xyz-hub;axial=(relative*axis).sum(-1);radial2=((relative**2).sum(-1)-axial**2).clamp_min(0)
   support=(radial2<=self.radius**2)&(radial2>=self.inner_radius**2)&(axial.abs()<=self.cutoff*self.sigma)
   weight=torch.exp(-axial**2/(2*self.sigma**2))*support
   weighted_volume=(weight*cell_volume).sum()

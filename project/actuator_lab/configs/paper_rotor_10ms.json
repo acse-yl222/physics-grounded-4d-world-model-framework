@@ -1,0 +1,29 @@
+{
+  "inlet_m_s": 10.0,
+  "rotor_diameter_m": 0.4647,
+  "inner_diameter_m": 0.09,
+  "rotor_thickness_m": 0.08,
+  "ct": 0.95,
+  "rho_kg_m3": 1.225,
+  "sigma_m": 0.02,
+  "cutoff_sigma": 2.0,
+  "domain_xyz_m": [5.12, 2.56, 2.56],
+  "hub_xyz_m": [1.28, 1.28, 1.28],
+  "cell_m": 0.04,
+  "end_s": 2.0,
+  "save_interval_s": 0.05,
+  "ramp_s": 0.1,
+  "cfl": 0.4,
+  "pressure_rtol": 0.00001,
+  "source": "Davidson et al., author preprint 10.2139/ssrn.5397073, section 3.2; published DOI 10.1016/j.joes.2026.07.020",
+  "matched_parameters": ["inlet_m_s", "rotor_diameter_m", "inner_diameter_m", "rotor_thickness_m", "ct"],
+  "assumptions": [
+    "Standalone numerical pilot: domain dimensions, hub location, density, ramp and duration are implementation choices, not a matched wind tunnel.",
+    "Gaussian sigma=thickness/4 and cutoff=2 sigma are provisional; author case dictionaries are unavailable.",
+    "Swept area uses outer radius; inner hole excludes force support only, pending author confirmation.",
+    "Uniform cubic grid; cell-centre rotor mask, without subcell integration.",
+    "Existing MAC first-order upwind solver, no explicit viscosity or turbulence closure; slip sides/top/bottom and pressure outlet.",
+    "Paper wind-tunnel bottom is no-slip and uses k-epsilon / k-omega SST; this pilot does not reproduce those conditions.",
+    "No tower, nacelle, blade rotation, electrical power or floating platform. No accuracy or steady-state certification."
+  ]
+}

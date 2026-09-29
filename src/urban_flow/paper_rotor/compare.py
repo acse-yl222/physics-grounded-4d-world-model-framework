@@ -5,9 +5,8 @@ import sys,time,json,math,argparse
 from pathlib import Path
 import numpy as np
 import torch
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'windfarm_2m'))
-from mac_torch import MAC
-from rotor import WeightedRotor
+from urban_flow.solvers.mac_torch import MAC
+from urban_flow.paper_rotor.rotor import WeightedRotor
 
 def run(out,h=.1,refine_only=False):
  torch.backends.cudnn.allow_tf32=False;torch.backends.cuda.matmul.allow_tf32=False
@@ -21,7 +20,7 @@ def run(out,h=.1,refine_only=False):
  cases=[('torch_paper',MAC,'paper'),('torch_legacy',MAC,'legacy')]
  if refine_only:cases=cases[:1]
  if device=='cuda' and not refine_only:
-  from mac import MAC as TritonMAC
+  from urban_flow.solvers.mac_triton import MAC as TritonMAC
   cases.append(('triton_paper',TritonMAC,'paper'))
  metadata=dict(status='single_phase_pilot_not_paper_validation',device=device,shape_zyx=shape,cell_m=h,domain_xyz_m=[9.6,3.2,3.2],hub_xyz_m=hub,rotor_diameter_m=.8,sigma_m=sigma,ct=.75,ct_prime=4/3,inlet_m_s=U,end_s=end,pressure_rtol=1e-5,explicit_turbulence_model=None,boundaries='fixed inlet, pressure outlet; slip sides/top/bottom',cases={})
  for name,cls,kernel in cases:

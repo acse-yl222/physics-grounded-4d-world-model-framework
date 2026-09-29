@@ -1,0 +1,30 @@
+{
+  "reference_case": "20260929T020613Z_da2cf399",
+  "candidate_case": "20260929T022816Z_b3f45d4b",
+  "max_relative_thrust_difference": 0.004973701253835604,
+  "field_comparisons": [
+    {
+      "time_s": 4.0,
+      "rms_difference_m_s": 0.0015298973303288221,
+      "relative_l2_difference": 0.00011657272989396006,
+      "max_difference_m_s": 0.07163214683532715
+    },
+    {
+      "time_s": 6.0,
+      "rms_difference_m_s": 0.0005538830300793052,
+      "relative_l2_difference": 4.2253450374118984e-05,
+      "max_difference_m_s": 0.024013996124267578
+    }
+  ],
+  "timing_window_s": [
+    2.5,
+    5.5
+  ],
+  "reference_wall_seconds": 463.3785826697553,
+  "candidate_wall_seconds": 328.50000002925003,
+  "observed_speed_ratio": 1.4105892926286012,
+  "numerical_difference_screen_passed": true,
+  "interpretation": "Compare a completed parallel branch against already-recorded reference times.\n\nUses interpolation only within recorded reference samples, never extrapolation.\nThe runs have different write-adjusted steps and share a contended host; this is\nan operational comparison, not a pure strong-scaling or time-convergence study.\n",
+  "experimental_accuracy_validated": false,
+  "candidate_log_sha256": "882d54f656d99c33e403cc518e2b970014f1ab51be1a8714b2a893e98ac3a14b"
+}

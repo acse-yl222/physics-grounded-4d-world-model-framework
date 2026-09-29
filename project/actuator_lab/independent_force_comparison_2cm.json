@@ -1,0 +1,14 @@
+[
+  {
+    "reference_run": "20260929T015854Z_ca566296",
+    "field_sha256": "4776ebd52719b13a0e486f8ea3c68e3c13e37a40bf1d9bccfd7612e296aa9b11",
+    "torch_disc_speed_m_s": 6.288905551780653,
+    "cpp_disc_speed_m_s": 6.2889055559,
+    "torch_thrust_N": 10.427766522953243,
+    "cpp_thrust_N": 10.4277665366,
+    "torch_force_balance_error_N": 1.7763568394002505e-15,
+    "interpretation": "Same converged flow field; C++ source logged immediately before final velocity solve.",
+    "passed": true,
+    "experimental_accuracy_validated": false
+  }
+]

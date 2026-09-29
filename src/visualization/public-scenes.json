@@ -26,11 +26,11 @@
       "scene_id": "windfarm",
       "title": "Wind farm",
       "tag": "Energy & flow",
-      "description": "Terrain and turbines, 151 wind-field frames, wake-model comparisons and rotor animation.",
+      "description": "23 turbines with 10 m/s OpenFOAM URANS flow, recorded from 2 to 300 seconds; numerical scenario under validation.",
       "viewer_url": "src/visualization/legacy/viewer/windfarm-movie/",
       "resource_ids": [
         "windfarm_geometry_published_v1",
-        "windfarm_runs_published_movie_v1"
+        "windfarm_runs_openfoam_10ms_v1"
       ]
     }
   ],

@@ -1,9 +1,8 @@
 import sys,json,math
 from pathlib import Path
 import torch
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'windfarm_2m'))
-from mac_torch import MAC
-from rotor import WeightedRotor
+from urban_flow.solvers.mac_torch import MAC
+from urban_flow.paper_rotor.rotor import WeightedRotor
 
 def main():
  torch.set_num_threads(4);torch.manual_seed(17)
@@ -17,7 +16,7 @@ def main():
  initial=[q.clone() for q in m.vel];d=m.project(rtol=1e-7,maxiter=200);assert d['divergence_rms']<2e-6,d
  errors={}
  if device=='cuda':
-  from mac import MAC as TritonMAC
+  from urban_flow.solvers.mac_triton import MAC as TritonMAC
   t=TritonMAC(f,1.,inlet*0);t.vel=[q.clone() for q in initial];t.project(rtol=1e-7,maxiter=200)
   errors['projection_max_abs']=max(float((a-b).abs().max()) for a,b in zip(t.vel,m.vel))
   # Test transport separately with exactly identical input fields.
