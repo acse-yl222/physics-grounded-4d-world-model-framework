@@ -1,8 +1,12 @@
 {
-  "data_base": "https://acse-yl222.github.io/urban-world-model-models/project/windfarm/runs/torch_rotor_rans_v02/",
+  "data_base": "https://acse-yl222.github.io/urban-world-model-models/project/windfarm/runs/torch_rotor_rans_v03/",
   "model": "https://acse-yl222.github.io/urban-world-model-models/project/windfarm/geometry/published_v1/region.glb",
-  "default_run": "torch_rotor_rans_v02",
+  "default_run": "torch_rotor_rans_v03",
   "runs": {
+    "torch_rotor_rans_v03": {
+      "label": "TorchRotor-RANS v0.3 \u00b7 Rotating ALM \u00b7 30 s",
+      "data_base": "https://acse-yl222.github.io/urban-world-model-models/project/windfarm/runs/torch_rotor_rans_v03/"
+    },
     "torch_rotor_rans_v02": {
       "label": "TorchRotor-RANS v0.2 \u00b7 600 s \u00b7 Ct=0.95",
       "data_base": "https://acse-yl222.github.io/urban-world-model-models/project/windfarm/runs/torch_rotor_rans_v02/"

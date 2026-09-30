@@ -47,14 +47,14 @@ try{
 const metaResponse=await fetch(base+'metadata.json');if(!metaResponse.ok)throw Error('Wind metadata unavailable');const meta=await metaResponse.json();
 const [ground,frames,model]=await Promise.all([bytes('ground.bin').then(b=>new Float32Array(b)),wind(meta),new GLTFLoader().loadAsync(modelURL)]);
 const timeline=createTimeline(meta.times);
-document.querySelector('#time').min=timeline.start;document.querySelector('#time').max=timeline.end;
+document.querySelector('#time').min=timeline.start;document.querySelector('#time').max=timeline.end;document.querySelector('#time').step='any';
 if(frames.length!==meta.times.length*meta.display_shape[0]*meta.display_shape[1])throw Error('Wind data length does not match recorded frame times');
 scene.add(model.scene);model.scene.traverse(o=>{if(o.isMesh&&o.name.startsWith('Surface_study'))o.visible=false;});
 const layout=movieLayout(meta,ground.length),{ny,nx,spacing}=layout,N=nx*ny,geo=new THREE.PlaneGeometry((nx-1)*spacing,(ny-1)*spacing,nx-1,ny-1),pos=geo.attributes.position;
 for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const k=j*nx+i;pos.setXYZ(k,...layout.position(i,j,ground[k]));geo.attributes.uv.setXY(k,i/(nx-1),j/(ny-1));}
 geo.computeVertexNormals();const pixels=new Uint8Array(N*4),texture=new THREE.DataTexture(pixels,nx,ny,THREE.RGBAFormat);texture.colorSpace=THREE.SRGBColorSpace;texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearFilter;
 const mat=new THREE.MeshBasicMaterial({map:texture,side:THREE.DoubleSide,transparent:true,opacity:.72,depthWrite:false});const field=new THREE.Mesh(geo,mat);scene.add(field);
-const history=await fetch(base+'rotor-speeds.json').then(r=>r.json());const rotorSystem=buildRotors(model.scene,scene,meta,history);
+const history=await fetch(base+'rotor-speeds.json').then(r=>r.json());const kinematics=meta.rotor_kinematics_asset?await fetch(base+meta.rotor_kinematics_asset).then(r=>{if(!r.ok)throw Error('Rotor kinematics unavailable');return r.json();}):null;const rotorSystem=buildRotors(model.scene,scene,meta,history,kinematics);
 const staticBatches=await batchStaticCity(model.scene);scene.add(staticBatches.object);
 for(const root of [model.scene,staticBatches.object])root.traverse(object=>{object.updateMatrix();object.matrixAutoUpdate=false;});
 const comparison={};for(const key of (meta.comparison_keys??['mac_mean','jensen04','jensen10','gaussian'])){comparison[key]=f16(new Uint16Array(await bytes('comparison/'+key+'.bin')));if(comparison[key].length!==N)throw Error('Comparison shape mismatch');}
@@ -65,8 +65,13 @@ document.querySelector('#sampling-detail').textContent=meta.display_note??`Explo
 if((meta.solver??'').startsWith('TorchRotor-RANS')){
  const methods=document.querySelector('a[href="methods.html"]');
  if(methods&&(meta.solver??'').startsWith('TorchRotor-RANS v0.1 '))methods.href='methods-v01.html';
+ if(methods&&(meta.solver??'').startsWith('TorchRotor-RANS v0.2 '))methods.href='methods-v02.html';
  const limitations=document.createElement('p');limitations.id='physics-limitations';
- limitations.textContent='当前未求解真实叶片旋转、轴扭矩、发电功率、控制器或浮式平台运动。叶片转动仅为显示动画。';
+ limitations.textContent='Current version: actuator-disc aerodynamics with illustrative rotor motion. Blade-resolved rotation, shaft torque, electrical power, control and floating-platform dynamics are not yet coupled.';
+ if(meta.rotor_model==='actuator_line'){
+  limitations.textContent='Rotating actuator-line aerodynamics with prescribed speed; shaft torque and aerodynamic mechanical power are computed. Blade surfaces, rotor-speed dynamics, electrical generation and floating-platform motion are not resolved in this trial.';
+  const spin=document.querySelector('#spin');spin.parentElement.title='Show actuator lines at their recorded solver phase.';spin.nextSibling.textContent=' Show actuator lines';
+ }
  limitations.style.maxWidth='640px';limitations.style.color='#f0d3a0';
  document.querySelector('#sampling-detail').after(limitations);
 }
@@ -88,7 +93,7 @@ if(document.querySelector('#wind-detail').textContent!==detail)document.querySel
 if(captureMode||forExport){ctx.clearRect(0,0,overlay.width,overlay.height);
 const W=canvas.width,H=canvas.height,s=W/1920;ctx.save();ctx.scale(s,s);const hh=H/s;const grad=ctx.createLinearGradient(0,0,0,220);grad.addColorStop(0,'#0b1728e8');grad.addColorStop(1,'#0b172800');ctx.fillStyle=grad;ctx.fillRect(0,0,1920,220);
 ctx.fillStyle='#8fe3d2';ctx.font='600 17px system-ui';ctx.fillText(`WIND FARM / ${meta.turbines.length} TURBINES`,64,58);ctx.fillStyle='#f1f7fc';ctx.font='600 38px system-ui';ctx.fillText(chapter,64,110);ctx.fillStyle='#b5c9d6';ctx.font='20px system-ui';ctx.fillText(`Same geometry + camera + scale   ·   Terrain-following slice: ${layout.height} m AGL`,64,151);
-ctx.textAlign='right';ctx.fillStyle='#f1f7fc';ctx.font='600 37px system-ui';ctx.fillText(live?`${t.toFixed(1)} / ${timeline.end} s`:selected==='mac_mean'?'200–300 s mean':'Steady engineering model',1856,77);ctx.font='18px system-ui';ctx.fillStyle='#b5c9d6';ctx.fillText(detail,1856,109);if(live)ctx.fillText(`Visual rotor speeds: ${rpm[0].toFixed(1)}–${rpm[1].toFixed(1)} rpm (assumed)`,1856,141);ctx.textAlign='left';
+ctx.textAlign='right';ctx.fillStyle='#f1f7fc';ctx.font='600 37px system-ui';ctx.fillText(live?`${t.toFixed(1)} / ${timeline.end} s`:selected==='mac_mean'?'200–300 s mean':'Steady engineering model',1856,77);ctx.font='18px system-ui';ctx.fillStyle='#b5c9d6';ctx.fillText(detail,1856,109);if(live)ctx.fillText(`${meta.rotor_model==='actuator_line'?'Prescribed':'Visual'} rotor speeds: ${rpm[0].toFixed(1)}–${rpm[1].toFixed(1)} rpm`,1856,141);ctx.textAlign='left';
 ctx.fillStyle='#101923d9';ctx.fillRect(48,hh-120,1824,100);ctx.font='16px system-ui';ctx.fillStyle='#b5c9d6';ctx.fillText(meta.display_note??`Exploratory comparison: different terrain treatment / no accuracy ranking · Display sampled at ${spacing} m`,64,hh-45);
 const legend=ctx.createLinearGradient(64,0,504,0);palette.forEach((c,i)=>legend.addColorStop(i/4,`rgb(${c})`));ctx.fillStyle=legend;ctx.fillRect(64,hh-96,440,10);ctx.fillStyle='#eef7ff';ctx.font='17px system-ui';ctx.fillText('≤0',64,hh-63);ctx.fillText('Axial wind speed (m/s)',180,hh-63);ctx.fillText('≥20',486,hh-63);ctx.restore();}
 document.querySelector('#clock').textContent=live?t.toFixed(1)+' s':'Static comparison';document.querySelector('#time').value=t;
@@ -100,7 +105,7 @@ function animate(now){
   if(document.hidden){last=0;return;}
   const dt=last?(now-last)/1000:0;last=now;
   const moving=playing&&select.value==='mac_live';
-  if(moving)time=timeline.advance(time,dt,12.5);
+  if(moving)time=timeline.advance(time,dt,meta.playback_speed??12.5);
   controls.update();
   if(dirty||moving){dirty=false;render(time);}
   if(moving&&!captureMode&&!animationId)animationId=requestAnimationFrame(animate);else last=0;
