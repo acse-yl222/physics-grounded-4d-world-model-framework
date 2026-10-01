@@ -1,0 +1,441 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "white_city",
+  "simulation": "transport",
+  "run_id": "transport_20260930T100611Z_baae17_display_v1",
+  "status": "complete",
+  "created_at": "2026-10-01T00:02:10.027387+00:00",
+  "provenance": {
+    "code_revision": "a3e8ac1b01f62138daeab44971ad2c8182b6cc04",
+    "dirty": true,
+    "parameters": {
+      "operation": "Display-only extraction; original layer bytes, coordinates and times unchanged. No solver recomputation.",
+      "source_run_id": "transport_20260930T100611Z_baae17",
+      "source_provenance": {
+        "code_revision": "a3e8ac1b01f62138daeab44971ad2c8182b6cc04",
+        "dirty": true,
+        "parameters": {
+          "transform": {
+            "lat0": 51.5145,
+            "lon0": -0.224,
+            "scale": 1.0008788503780741,
+            "R": [
+              [
+                0.9992811808758809,
+                -0.03790938600538592
+              ],
+              [
+                0.037909386005385876,
+                0.9992811808758807
+              ]
+            ],
+            "t": [
+              37.25427774346866,
+              -53.01966644353104
+            ],
+            "kind": "equirectangular",
+            "metres_per_degree": 111319.49079327357,
+            "provenance": "similarity fit of 939 named OSM buildings (Overpass, way/relation centres) to GLB node bounding-box centres, local equirectangular projection around (51.5145, -0.2240)",
+            "median_residual_m": 1.5835285253818723
+          },
+          "failed_requests": [],
+          "observed_at_different_times": true
+        },
+        "inputs": [
+          {
+            "id": "stops",
+            "sha256": "10002dd0ff932392eed5c8bd1be4f8940c5b981185d6e6cb4c277de12b6aa492"
+          },
+          {
+            "id": "route_110",
+            "sha256": "ab2039c904f419a977620e79712ec73b1eb93767c0fe7aa808bcb4dfe020d5b9"
+          },
+          {
+            "id": "route_148",
+            "sha256": "1492ef332b32ea2d01bd5b880d5573de7a6de96e16990fef01aa4a23f89bbafd"
+          },
+          {
+            "id": "route_18",
+            "sha256": "37cf6b881e7dce0cc0c05a9e27055ac0457b9a7f5070632ee9bbe503e1232480"
+          },
+          {
+            "id": "route_190",
+            "sha256": "08de5ab4049b469872abe7629e85e6f40c2c2b5c69fa8c1fdb0d274025159d50"
+          },
+          {
+            "id": "route_207",
+            "sha256": "1fe8a864da590dd2314b9c1d6350d79b5987e4fde88d124f31becd30d1f7d076"
+          },
+          {
+            "id": "route_209",
+            "sha256": "0793d399211153a3b6ce5ef4a2e3565636285eef4f3c94c65c6d1a408d359b21"
+          },
+          {
+            "id": "route_211",
+            "sha256": "a91bce1501c53100675f3d357bf13fc5f4b432b793180c63e101627d2b3ccbff"
+          },
+          {
+            "id": "route_218",
+            "sha256": "7b564d8f891c05c567ee1cf167d6a0fa371356db10e0655d24c083b6d883c60f"
+          },
+          {
+            "id": "route_220",
+            "sha256": "15cea99385cd2b05f216c439421833f18741b4f5b3b4162d5c7c27c4ac61f4a6"
+          },
+          {
+            "id": "route_228",
+            "sha256": "c047f54635faaa733b3c70af0d2eadf4a03f4d1c58a52931fdc5eb4a29160107"
+          },
+          {
+            "id": "route_23",
+            "sha256": "17c67a2eabd18eaf9408aa651807645b7c765bf445a8c1a9399fcb49ecc40f45"
+          },
+          {
+            "id": "route_237",
+            "sha256": "8076dddd5ebbe19a031576ec7906da0da03b7a91a2b80c3cf49956fdfd9988af"
+          },
+          {
+            "id": "route_260",
+            "sha256": "6b92ef393b77e4efef3bac0e184626f26f00f7252aec9dd8387d0d2bcbc97bb1"
+          },
+          {
+            "id": "route_267",
+            "sha256": "3505b50f59fe09adf4b4448e438008fe37105918d6d511fca4ea012d466557b5"
+          },
+          {
+            "id": "route_27",
+            "sha256": "5c3f6d81369b584e93369b315e889e14abc52660052a25166dcb5a62b7b1b7a3"
+          },
+          {
+            "id": "route_272",
+            "sha256": "b04292be026a30e8ac5e12a4b2bfee8827ce2168cd4f99a49d95e1b477199a65"
+          },
+          {
+            "id": "route_28",
+            "sha256": "940505c3ee8ab1a3bf7abcefff7ed442d657fb6b768530f808eb336d5ee2fc37"
+          },
+          {
+            "id": "route_295",
+            "sha256": "23f3bf7dc5f38f8a9c08dd1d868acc3fcb6b7a93abc1ea95b2c417102dffb4b9"
+          },
+          {
+            "id": "route_306",
+            "sha256": "fe0f01ea81509eba20d7b22f7ac5fd763ac99bf76c4e1c44a2b92583c7082660"
+          },
+          {
+            "id": "route_31",
+            "sha256": "0690037905c6581d6e2a17242251b4a481f20c0a51ce31fda889733da758204b"
+          },
+          {
+            "id": "route_316",
+            "sha256": "e17ba8eff51d011471d0dcdf2484f8596feb5cf67ad2218f55c2eb5514bd18a2"
+          },
+          {
+            "id": "route_328",
+            "sha256": "efea60accbe9326a8c3f1fff845d6bba715dec1953f3f4ba13d18bd99eed35a6"
+          },
+          {
+            "id": "route_36",
+            "sha256": "8fddb2518bf378968b633210f925f21f94d0fa62f00da3b9f7578b60c95a7ef8"
+          },
+          {
+            "id": "route_452",
+            "sha256": "99a4e4f2afa2f88d61af32f436b0976990c28e350f921490d8ced77a79cc7dbe"
+          },
+          {
+            "id": "route_49",
+            "sha256": "816d124144afdea2a7df8badf58d485c00cc190d8eb43e96fc5c850557ea1826"
+          },
+          {
+            "id": "route_52",
+            "sha256": "dc8f704f781c3fcfb67c63099f0f91b2cc1e12704b850c353ab613d52403276d"
+          },
+          {
+            "id": "route_7",
+            "sha256": "6ed30f2ae416c68d7da6a738dc3551f665a061991e34971416cbac4ac224df31"
+          },
+          {
+            "id": "route_70",
+            "sha256": "e1c55275971e277b903e0427556df55cc5eef56e52af881fa4af29e01cc5ac3a"
+          },
+          {
+            "id": "route_72",
+            "sha256": "8e4c1bb9dfaee0d867a822f620d97aa04faeb23e4cf6375c36c347ffe21237c7"
+          },
+          {
+            "id": "route_74",
+            "sha256": "47cb6289adbe3c82bed70b1d108f26222cdca41ee67458e12652e65f7bab6ed5"
+          },
+          {
+            "id": "route_9",
+            "sha256": "11e6a72b479e2200102b2d03771b5af408c7fa02738d0c4a4acf6f6d4b955872"
+          },
+          {
+            "id": "route_94",
+            "sha256": "0634b83dfab8604af9846611de270183bd0b9ed313aa7d486519e4ddd9c40cfc"
+          },
+          {
+            "id": "route_95",
+            "sha256": "9f9e7098752ef1e26c571a1bf5327cad5ee65faf0a23b5f4b8d5190307d7f6d8"
+          },
+          {
+            "id": "route_c1",
+            "sha256": "eeabf72de96bd9d3282450078f2329206d5220374a44f775c87463664c4577b0"
+          },
+          {
+            "id": "route_c3",
+            "sha256": "7c67248fbeb362a36d68c2443f3dd5e2a80397f8771053ae29d7beb97c90fa66"
+          },
+          {
+            "id": "route_central",
+            "sha256": "afb0ad2df67ef5abecfa32725fcc5f1eea9f3881ffbe8d233d70ffec2b465429"
+          },
+          {
+            "id": "route_circle",
+            "sha256": "13aa3a84caa7b47e5c2b86756cef57721860086b93dd4ec61ee0dda69e3ff87a"
+          },
+          {
+            "id": "route_district",
+            "sha256": "6370d8f5fa65be57d54a9c99e9560712f864b659c403e11775231dbdaf3f8d07"
+          },
+          {
+            "id": "route_h91",
+            "sha256": "f147f723e32cf333663705e56b5540e5219ce57aa5303b922a65ac67b5e33cea"
+          },
+          {
+            "id": "route_hammersmith-city",
+            "sha256": "122c16712cff300dc4a2812c0493661acd29e45b839321dc8c516283b4322b5f"
+          },
+          {
+            "id": "route_mildmay",
+            "sha256": "0730d7c6e26f2a2c06f1cea43d90f37e3742b8df5d4eb5b3801fedb268961df3"
+          },
+          {
+            "id": "route_n11",
+            "sha256": "48ba02c757ce75315c06707b53b6b6226c21488a07666a53e2e4b08f9f944665"
+          },
+          {
+            "id": "route_n118",
+            "sha256": "e4b794eec27bf952032828f8500bb6ad8877168bf38907d7119bfe90e7da08ae"
+          },
+          {
+            "id": "route_n18",
+            "sha256": "8750608ff51954491fbcf6272af6145cdabc0ef9c99214bd778a4171972672a8"
+          },
+          {
+            "id": "route_n207",
+            "sha256": "a93b9bf7220c9a56678a479e9a971c7dc5a5345492c926647ab7a82cef963cad"
+          },
+          {
+            "id": "route_n266",
+            "sha256": "ca1960ee8d459728d6497d686ffafc3155deb7e93469d29b79090dcffe538448"
+          },
+          {
+            "id": "route_n27",
+            "sha256": "40b397f5c369dbba3a826ac738d6ec85c2bef3b40b6f712aaec21b9d895d47ac"
+          },
+          {
+            "id": "route_n28",
+            "sha256": "ff4a64670074f484a7f3c099ab230a3a07d823ad0364269dd9dbeeff747617ef"
+          },
+          {
+            "id": "route_n31",
+            "sha256": "fa4d281505491033ae62e66ea1465180a01a411b1eb429a9845f69a79f26d07d"
+          },
+          {
+            "id": "route_n33",
+            "sha256": "c76e51f62532ba36c24c45a21c12050ad52853a3e9c4d1d6b3779cabbdb37e6c"
+          },
+          {
+            "id": "route_n7",
+            "sha256": "5eb7fb91537103a8471bb8dc05f044a9c40d2484a292f1e87e79daa5d924eecb"
+          },
+          {
+            "id": "route_n72",
+            "sha256": "9c7dc4994fc86a58f066832f8e47ba52d5c00987c93d35557e3c10164abd22f6"
+          },
+          {
+            "id": "route_n74",
+            "sha256": "1e76fd02ebe132e98972c13d4835c5e83e07248a111933789b8bc24a62205909"
+          },
+          {
+            "id": "route_n9",
+            "sha256": "93bcca6cb93b73a6af164a49404a670422106b97fb8e5dbe4340e0f61f3f8827"
+          },
+          {
+            "id": "route_n97",
+            "sha256": "4c9c9e085ec43112771773f164a059f915227a06d65b706237b7c2358286379c"
+          },
+          {
+            "id": "route_piccadilly",
+            "sha256": "b288c9f07fe5ad9ed99685cca7bb49fd674c8112720eda1b58f5e71dac8e092b"
+          },
+          {
+            "id": "route_sl8",
+            "sha256": "688692798bf253b22a01cefd96827cd1a7286b33f4101b88737200030715fa49"
+          },
+          {
+            "id": "route_southern",
+            "sha256": "6adb1aaf9251acc48b00be0cbf40ff89b39d6962581e8b07c356025f21c718ff"
+          },
+          {
+            "id": "line_status",
+            "sha256": "8bf4c3f06fca2ebd77b0c0780208ca7e697daa9998428d83b7a8c67199620bb3"
+          },
+          {
+            "id": "disruptions",
+            "sha256": "207439c4087e8b451233b244618f6b472a4e553753611a3f174b4868ab3aa405"
+          },
+          {
+            "id": "cameras",
+            "sha256": "616f5f98caf344d31920d5344d387890c0bf059b2d463b532562a68c28b316c0"
+          },
+          {
+            "id": "arrivals_940GZZLUWCY",
+            "sha256": "ca40769b7a36e35d8037af5bab53b38cd39feba77c6d833b6b13baa1b652be5e"
+          },
+          {
+            "id": "arrivals_940GZZLULRD",
+            "sha256": "c090d7b0242a3e1c8b8b45a2f79e38c8f63fb1ae919ef9a5602bcb4ef4edcc04"
+          },
+          {
+            "id": "arrivals_940GZZLUWLA",
+            "sha256": "f25423782cfe2bb0eddd79567146702346fac62123703cb4dda387f4849508f4"
+          },
+          {
+            "id": "arrivals_940GZZLUSBM",
+            "sha256": "a3c1be257b11d06838df8182e8f1dac056206cf9b39ddbdffe89def03df19942"
+          },
+          {
+            "id": "arrivals_940GZZLULAD",
+            "sha256": "3747701dfa6a8c5542104474e897e6aaae445aeeb8a0a9bd9d35480b405a60e4"
+          },
+          {
+            "id": "arrivals_910GSHPDSB",
+            "sha256": "963d1676508d29b1f4d2433b1707f3da2e8bee8f1abebc23698fa06da89f7034"
+          },
+          {
+            "id": "arrivals_940GZZLUSBC",
+            "sha256": "f482409c59e298ff035369f62672bb2db56e952753af2ee11fb762b50b0ba455"
+          },
+          {
+            "id": "arrivals_940GZZLUGHK",
+            "sha256": "c2b02a1fec693bc8fcd125f3fd070a70f903d9c06038c22e687473af6f318179"
+          },
+          {
+            "id": "arrivals_940GZZLUHPK",
+            "sha256": "7ea9c760c765d4acdf555841292f30468d1fd020f26dc5a5d60c7fd815681ff0"
+          },
+          {
+            "id": "arrivals_940GZZLUWSP",
+            "sha256": "0126ff8ce99dc7696b949f4620491e8c8d03bcfef327761491155c4239797503"
+          },
+          {
+            "id": "arrivals_940GZZLUNHG",
+            "sha256": "6bbeb4179aabf0288bf5f10275e70e5a006b68db895f80366b89a2502c13176d"
+          },
+          {
+            "id": "arrivals_910GKENOLYM",
+            "sha256": "700e57f2e64efe2c6ac357e6dedb8ba460538547ce19fa0fd60b76d8547f884a"
+          },
+          {
+            "id": "arrivals_940GZZLUKOY",
+            "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+          },
+          {
+            "id": "arrivals_940GZZLUHSC",
+            "sha256": "f5065bb41ec743165a6b521fa9fb913b8383f0ea525a4174820ecffb0d9db65a"
+          },
+          {
+            "id": "arrivals_940GZZLURVP",
+            "sha256": "4d2679de9bc802631ca8853aa1e8f23ea7a5b2562f8a79acc5cece5bd3596be4"
+          },
+          {
+            "id": "arrivals_940GZZLUHSD",
+            "sha256": "57fac665c7743a8b7b42ad44763b11314b2f2c025af309af80ce6352a3a531f7"
+          },
+          {
+            "id": "arrivals_940GZZLUSFB",
+            "sha256": "7378ea96aa8083eebf25abbf99a8205a92c1a5cc771c1316e4c8692b8fb6f5c9"
+          }
+        ]
+      },
+      "reproducibility_scope": "Snapshot contains display exporter only. Original solver source/input bundles are retained locally and are not part of this public display export."
+    },
+    "inputs": [
+      {
+        "id": "source_manifest",
+        "sha256": "e8c93d883720bfbc8f91fefbabf777d78c6751d208726066846d84f825f20f78"
+      }
+    ]
+  },
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.22405,
+      "latitude": 51.5145,
+      "height_m": 0,
+      "vertical_datum": "GLB ground mesh, near planar and not surveyed elevation; uncovered cells at local zero"
+    },
+    "bounds_m": {
+      "min": [
+        -1492.0,
+        -2548.0,
+        0
+      ],
+      "max": [
+        2092.0,
+        1036.0,
+        128
+      ]
+    }
+  },
+  "time": {
+    "unit": "s",
+    "samples": []
+  },
+  "layers": [
+    {
+      "id": "stops",
+      "kind": "scalar_field",
+      "format": "json",
+      "asset": "stops.json",
+      "sampling": "static",
+      "field": {
+        "name": "serving_lines",
+        "unit": "1"
+      },
+      "display": {
+        "widget": "scalar_field",
+        "capabilities": [
+          "pick",
+          "legend",
+          "opacity"
+        ]
+      }
+    },
+    {
+      "id": "routes",
+      "kind": "mesh",
+      "format": "json",
+      "asset": "routes.json",
+      "sampling": "static",
+      "display": {
+        "widget": "mesh",
+        "capabilities": [
+          "pick",
+          "opacity"
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "source_snapshot",
+      "asset": "display_export_source.tar.gz",
+      "sha256": "4d9a8fcab4c85876cd0b69ff4d3bb8979c46971f092174eeaa0427b50d483318",
+      "media_type": "application/gzip"
+    }
+  ]
+}

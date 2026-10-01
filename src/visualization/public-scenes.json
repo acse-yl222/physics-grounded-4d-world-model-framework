@@ -6,8 +6,8 @@
       "scene_id": "south_ken",
       "title": "South Kensington",
       "tag": "Urban environment",
-      "description": "Urban geometry, wind and heat, pollution, sunlight and flooding, with traffic and flight replays.",
-      "viewer_url": "viewer/3d/?scene=south_kensington",
+      "description": "City geometry and environmental fields, with shared SUMO traffic, controlled day-cycle temperature and TfL transport tools. Traffic demand is synthetic and uncalibrated.",
+      "viewer_url": "viewer/3d/?scene=south_kensington&module=traffic",
       "resource_ids": [
         "south_ken_geometry_models_v1"
       ]
@@ -16,8 +16,8 @@
       "scene_id": "white_city",
       "title": "White City",
       "tag": "Urban environment",
-      "description": "A 9 km\u00b2 White City scene with urban models, environmental fields and traffic information.",
-      "viewer_url": "viewer/3d/?scene=white_city",
+      "description": "City geometry and environmental fields, with shared SUMO traffic, controlled day-cycle temperature and TfL transport tools. Traffic demand is synthetic and uncalibrated.",
+      "viewer_url": "viewer/3d/?scene=white_city&module=traffic",
       "resource_ids": [
         "white_city_geometry_white_city_v2"
       ]

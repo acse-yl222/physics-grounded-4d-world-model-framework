@@ -1,0 +1,352 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "south_ken",
+  "simulation": "transport",
+  "run_id": "transport_20260930T100816Z_391ebe_display_v1",
+  "status": "complete",
+  "created_at": "2026-10-01T00:02:10.010301+00:00",
+  "provenance": {
+    "code_revision": "a3e8ac1b01f62138daeab44971ad2c8182b6cc04",
+    "dirty": true,
+    "parameters": {
+      "operation": "Display-only extraction; original layer bytes, coordinates and times unchanged. No solver recomputation.",
+      "source_run_id": "transport_20260930T100816Z_391ebe",
+      "source_provenance": {
+        "code_revision": "a3e8ac1b01f62138daeab44971ad2c8182b6cc04",
+        "dirty": true,
+        "parameters": {
+          "transform": {
+            "kind": "equirectangular",
+            "lat0": 51.498354,
+            "lon0": -0.176896,
+            "metres_per_degree": 111320.0,
+            "scale": 1.0,
+            "R": [
+              [
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0
+              ]
+            ],
+            "t": [
+              0.0,
+              0.0
+            ],
+            "provenance": "Scene authoring mapping; estimated alignment, not a surveyed control network"
+          },
+          "failed_requests": [],
+          "observed_at_different_times": true
+        },
+        "inputs": [
+          {
+            "id": "stops",
+            "sha256": "68400f7614060a1e965ca04ba85095b13554aa7a516b7e7b9804f060f8096d08"
+          },
+          {
+            "id": "route_11",
+            "sha256": "0151c1326fd3f53db86b9f22ee741f10131660a8e0240c11018db534b7bb0674"
+          },
+          {
+            "id": "route_137",
+            "sha256": "2bd72e911600e49243d9ffa49c0e4e3f1efffffb494663b017df3a73ed9bb37a"
+          },
+          {
+            "id": "route_14",
+            "sha256": "f0bf8a8d957182b4ddc5e53feea8cf6909a38e935465c0a48cfa3da24a3b98c5"
+          },
+          {
+            "id": "route_148",
+            "sha256": "1492ef332b32ea2d01bd5b880d5573de7a6de96e16990fef01aa4a23f89bbafd"
+          },
+          {
+            "id": "route_170",
+            "sha256": "728a5d52bec8991b78a83fdeb66bdfa78c01bec8abe0b1dc04a623546af56b7a"
+          },
+          {
+            "id": "route_19",
+            "sha256": "c6dfaa219ef4f6328652e33bc59e3d9f04897bb14884a418d9ba9fc1d9e84bb4"
+          },
+          {
+            "id": "route_190",
+            "sha256": "08de5ab4049b469872abe7629e85e6f40c2c2b5c69fa8c1fdb0d274025159d50"
+          },
+          {
+            "id": "route_211",
+            "sha256": "a91bce1501c53100675f3d357bf13fc5f4b432b793180c63e101627d2b3ccbff"
+          },
+          {
+            "id": "route_22",
+            "sha256": "5cdd5a0677c05c4152bc5c5d21b1960c942c452e3b89b30cf817d8b78100ef76"
+          },
+          {
+            "id": "route_27",
+            "sha256": "5c3f6d81369b584e93369b315e889e14abc52660052a25166dcb5a62b7b1b7a3"
+          },
+          {
+            "id": "route_28",
+            "sha256": "940505c3ee8ab1a3bf7abcefff7ed442d657fb6b768530f808eb336d5ee2fc37"
+          },
+          {
+            "id": "route_31",
+            "sha256": "0690037905c6581d6e2a17242251b4a481f20c0a51ce31fda889733da758204b"
+          },
+          {
+            "id": "route_319",
+            "sha256": "5f23b56fea3ac5e6c7444e03f8cabcc24076100753ec430f7b549380acf3430e"
+          },
+          {
+            "id": "route_328",
+            "sha256": "efea60accbe9326a8c3f1fff845d6bba715dec1953f3f4ba13d18bd99eed35a6"
+          },
+          {
+            "id": "route_345",
+            "sha256": "20e01a5301dddd2f1985eec7b592640e33e24015d49d05ff60dba434f4f138c8"
+          },
+          {
+            "id": "route_360",
+            "sha256": "85fbc5b89abbc385e594d3ecc2927b147c37cec96866908e6043ce564c6a12af"
+          },
+          {
+            "id": "route_430",
+            "sha256": "b873a0200825388ac8d13aa1c2a01c6a5875c281a3ab219b0d67592d5f2b0064"
+          },
+          {
+            "id": "route_452",
+            "sha256": "99a4e4f2afa2f88d61af32f436b0976990c28e350f921490d8ced77a79cc7dbe"
+          },
+          {
+            "id": "route_49",
+            "sha256": "816d124144afdea2a7df8badf58d485c00cc190d8eb43e96fc5c850557ea1826"
+          },
+          {
+            "id": "route_52",
+            "sha256": "dc8f704f781c3fcfb67c63099f0f91b2cc1e12704b850c353ab613d52403276d"
+          },
+          {
+            "id": "route_70",
+            "sha256": "e1c55275971e277b903e0427556df55cc5eef56e52af881fa4af29e01cc5ac3a"
+          },
+          {
+            "id": "route_74",
+            "sha256": "47cb6289adbe3c82bed70b1d108f26222cdca41ee67458e12652e65f7bab6ed5"
+          },
+          {
+            "id": "route_9",
+            "sha256": "11e6a72b479e2200102b2d03771b5af408c7fa02738d0c4a4acf6f6d4b955872"
+          },
+          {
+            "id": "route_94",
+            "sha256": "0634b83dfab8604af9846611de270183bd0b9ed313aa7d486519e4ddd9c40cfc"
+          },
+          {
+            "id": "route_c1",
+            "sha256": "eeabf72de96bd9d3282450078f2329206d5220374a44f775c87463664c4577b0"
+          },
+          {
+            "id": "route_c3",
+            "sha256": "7c67248fbeb362a36d68c2443f3dd5e2a80397f8771053ae29d7beb97c90fa66"
+          },
+          {
+            "id": "route_central",
+            "sha256": "630b8f03a9b59b5eb534d969c27fd6ba8e306d3f4ae9da136c99ac893fcfcf18"
+          },
+          {
+            "id": "route_circle",
+            "sha256": "0f588d59f9b081984805fd02be82ec063fde16fa21d973d5c4cfa4d993ab8805"
+          },
+          {
+            "id": "route_district",
+            "sha256": "6370d8f5fa65be57d54a9c99e9560712f864b659c403e11775231dbdaf3f8d07"
+          },
+          {
+            "id": "route_mildmay",
+            "sha256": "0730d7c6e26f2a2c06f1cea43d90f37e3742b8df5d4eb5b3801fedb268961df3"
+          },
+          {
+            "id": "route_n11",
+            "sha256": "48ba02c757ce75315c06707b53b6b6226c21488a07666a53e2e4b08f9f944665"
+          },
+          {
+            "id": "route_n137",
+            "sha256": "f379d7ec2e0b5b73255f22966f6eb03396b2a9be7b3f3cdcc5a1799f7aba7b25"
+          },
+          {
+            "id": "route_n19",
+            "sha256": "7f4f5b3ef4b5db99c4145691fb9588637b21f9e4ec117af70d4e769d39b45e3c"
+          },
+          {
+            "id": "route_n207",
+            "sha256": "a93b9bf7220c9a56678a479e9a971c7dc5a5345492c926647ab7a82cef963cad"
+          },
+          {
+            "id": "route_n22",
+            "sha256": "11a10614d94efc5bbf7b59b4215530ede485ce4eb6d8e75763c65ca9a5d44382"
+          },
+          {
+            "id": "route_n27",
+            "sha256": "40b397f5c369dbba3a826ac738d6ec85c2bef3b40b6f712aaec21b9d895d47ac"
+          },
+          {
+            "id": "route_n28",
+            "sha256": "ff4a64670074f484a7f3c099ab230a3a07d823ad0364269dd9dbeeff747617ef"
+          },
+          {
+            "id": "route_n31",
+            "sha256": "fa4d281505491033ae62e66ea1465180a01a411b1eb429a9845f69a79f26d07d"
+          },
+          {
+            "id": "route_n74",
+            "sha256": "1e76fd02ebe132e98972c13d4835c5e83e07248a111933789b8bc24a62205909"
+          },
+          {
+            "id": "route_n9",
+            "sha256": "93bcca6cb93b73a6af164a49404a670422106b97fb8e5dbe4340e0f61f3f8827"
+          },
+          {
+            "id": "route_n97",
+            "sha256": "4c9c9e085ec43112771773f164a059f915227a06d65b706237b7c2358286379c"
+          },
+          {
+            "id": "route_piccadilly",
+            "sha256": "9be083daae9b037760b06298749effe358cc3c782978126e3306b1f3f8adb9f0"
+          },
+          {
+            "id": "route_southern",
+            "sha256": "6adb1aaf9251acc48b00be0cbf40ff89b39d6962581e8b07c356025f21c718ff"
+          },
+          {
+            "id": "line_status",
+            "sha256": "8bf4c3f06fca2ebd77b0c0780208ca7e697daa9998428d83b7a8c67199620bb3"
+          },
+          {
+            "id": "disruptions",
+            "sha256": "207439c4087e8b451233b244618f6b472a4e553753611a3f174b4868ab3aa405"
+          },
+          {
+            "id": "cameras",
+            "sha256": "616f5f98caf344d31920d5344d387890c0bf059b2d463b532562a68c28b316c0"
+          },
+          {
+            "id": "arrivals_940GZZLUSKS",
+            "sha256": "f219273cb545b1f14befa098abfc26a35c61d9aff4ec347b299edaf6cfa0dd2c"
+          },
+          {
+            "id": "arrivals_940GZZLUGTR",
+            "sha256": "c0f8ef4362d5a309aafbe11a927046b4c1d6456148d3e96592b2602a03d1e7de"
+          },
+          {
+            "id": "arrivals_940GZZLUKNB",
+            "sha256": "15173a495c9a5d9d0439a00fae7ebaa15993da019b3ba8371529d816cdc29fda"
+          },
+          {
+            "id": "arrivals_940GZZLUHSK",
+            "sha256": "14fe59aa7b9eaccdf8953366014161edf6ef75cdd708c550e3fff10777d539cd"
+          },
+          {
+            "id": "arrivals_940GZZLUECT",
+            "sha256": "1de4ec12d4adb172722074b41f82391fef98f48f736be4ad0c8a49b04928c623"
+          },
+          {
+            "id": "arrivals_940GZZLUSSQ",
+            "sha256": "67dca62f004c06185cacd18c393cb53a63363d7050421dd81d9f27c4fe8b2a9e"
+          },
+          {
+            "id": "arrivals_940GZZLUQWY",
+            "sha256": "32e5c0d45478eec81bfdfaa0c0c168b1d6afd18ada5d72d8bb4d2bbca45bf59c"
+          },
+          {
+            "id": "arrivals_940GZZLUWBN",
+            "sha256": "1cb3cf4bee595ca7f0d662a0deb11fc6e4ed0fcc5cdb8a5b6ca23c750597876d"
+          },
+          {
+            "id": "arrivals_910GWBRMPTN",
+            "sha256": "05afa6dbf07a2e5dc20d9d6f11f7b27a963f023f9508d981b7fe2a547d48a80f"
+          },
+          {
+            "id": "arrivals_940GZZLUNHG",
+            "sha256": "2939dead28eba970effe9146b0bbe63564553f1f1d9947806296a4a7d175655d"
+          }
+        ]
+      },
+      "reproducibility_scope": "Snapshot contains display exporter only. Original solver source/input bundles are retained locally and are not part of this public display export."
+    },
+    "inputs": [
+      {
+        "id": "source_manifest",
+        "sha256": "59eab2d583c8d565a6bdf82c24ff48fa5f0cee92f129863db8cfa2fb0562753f"
+      }
+    ]
+  },
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.176896,
+      "latitude": 51.498354,
+      "height_m": 0,
+      "vertical_datum": "Inherited estimated flat ground; not surveyed elevation"
+    },
+    "bounds_m": {
+      "min": [
+        -1636.0,
+        -1484.0,
+        0
+      ],
+      "max": [
+        1436.0,
+        1332.0,
+        128
+      ]
+    }
+  },
+  "time": {
+    "unit": "s",
+    "samples": []
+  },
+  "layers": [
+    {
+      "id": "stops",
+      "kind": "scalar_field",
+      "format": "json",
+      "asset": "stops.json",
+      "sampling": "static",
+      "field": {
+        "name": "serving_lines",
+        "unit": "1"
+      },
+      "display": {
+        "widget": "scalar_field",
+        "capabilities": [
+          "pick",
+          "legend",
+          "opacity"
+        ]
+      }
+    },
+    {
+      "id": "routes",
+      "kind": "mesh",
+      "format": "json",
+      "asset": "routes.json",
+      "sampling": "static",
+      "display": {
+        "widget": "mesh",
+        "capabilities": [
+          "pick",
+          "opacity"
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "source_snapshot",
+      "asset": "display_export_source.tar.gz",
+      "sha256": "4d9a8fcab4c85876cd0b69ff4d3bb8979c46971f092174eeaa0427b50d483318",
+      "media_type": "application/gzip"
+    }
+  ]
+}

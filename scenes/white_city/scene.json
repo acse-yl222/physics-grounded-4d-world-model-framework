@@ -214,5 +214,6 @@
     "dir": "traffic/",
     "label": "Traffic \u00b7 SUMO replay",
     "note": "one-hour SUMO run on the OSM road network with guessed, actuated signals; synthetic demand"
-  }
+  },
+  "city_tools": "project/white_city/city-tools.json"
 }

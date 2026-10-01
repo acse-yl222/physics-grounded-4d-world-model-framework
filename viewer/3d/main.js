@@ -796,7 +796,7 @@ const tfUI = { box: $('traffic-ctl'), on: $('l-traffic'), cars: $('l-tf-cars'), 
 function applyTrafficLayers() {
   invalidate();
   if (!traffic) return;
-  traffic.setVisible(tfUI.on.checked && section !== 'fields');
+  traffic.setVisible(tfUI.on.checked && section !== 'fields' && !window.cityTools?.current);
   traffic.applyLayers({ cars: tfUI.cars.checked, signals: tfUI.signals.checked, roads: tfUI.roads.checked, paths: tfUI.paths.checked && tour.shot === 'traffic', map: tfUI.map.checked || (section === 'campus' && tour.active && tour.shot === 'trafficMap') });
 }
 function setupTrafficUI() {
@@ -810,7 +810,7 @@ const trUI = { box: $('transport-ctl'), on: $('l-transport'), rail: $('l-tr-rail
 function applyTransportLayers() {
   invalidate();
   if (!transport) return;
-  transport.setVisible(trUI.on.checked && section !== 'fields' && !(section === 'campus' && tour.active && tour.shot === 'trafficMap'));   // the traffic map keeps only the dots and lanes
+  transport.setVisible(trUI.on.checked && section !== 'fields' && !window.cityTools?.current && !(section === 'campus' && tour.active && tour.shot === 'trafficMap'));   // the traffic map keeps only the dots and lanes
   transport.setLayers({ rail: trUI.rail.checked, bus: trUI.bus.checked, stations: trUI.stations.checked, stops: trUI.stops.checked, disruptions: trUI.disruptions.checked, cams: trUI.cams.checked });
 }
 let arrivalsTimer = null;
@@ -1176,3 +1176,19 @@ document.addEventListener('visibilitychange',()=>{
   invalidate();
 });
 await boot();
+if (SCENE.city_tools) {
+  const {installCityTools} = await import('./city-tools.js');
+  await installCityTools({root: ROOT, catalogURL: new URL(SCENE.city_tools, ROOT), scene, camera, invalidate,
+    enter() {
+      setPlaying(false); ui.auto.checked=false; tour.active=false; flight=null; section='free';
+      controls.enabled=true; state.introDone=false; applyLayers();
+      for(const plane of Object.values(planes)){plane.fade=0;plane.target=0;}updateFades(0);
+      replayLayer?.setVisible(false); if(replayLayer)replayLayer.playing=false;
+      traffic?.setVisible(false); if(traffic)traffic.playing=false; transport?.setVisible(false);
+      ui.play.disabled=true;ui.step.disabled=true;ui.rate.disabled=true;
+      ui.stage.textContent='City tools · shared modules';setSectionUI();
+    },
+    leave(){ui.play.disabled=false;ui.rate.disabled=false;runCampus();}
+  });
+  $('tabs').addEventListener('click',()=>{ui.play.disabled=false;ui.rate.disabled=false;});
+}

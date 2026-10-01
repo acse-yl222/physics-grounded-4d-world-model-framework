@@ -209,5 +209,6 @@
       ],
       "title": "Flooding \u00b7 surface water depth (3 h cloudburst, 1 m shallow-water model)"
     }
-  }
+  },
+  "city_tools": "project/south_ken/city-tools.json"
 }

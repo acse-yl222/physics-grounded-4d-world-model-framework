@@ -1,0 +1,274 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "white_city",
+  "simulation": "diurnal",
+  "run_id": "diurnal_20260930T101255Z_bc325b_display_v1",
+  "status": "complete",
+  "created_at": "2026-10-01T00:02:10.023638+00:00",
+  "provenance": {
+    "code_revision": "a3e8ac1b01f62138daeab44971ad2c8182b6cc04",
+    "dirty": true,
+    "parameters": {
+      "operation": "Display-only extraction; original layer bytes, coordinates and times unchanged. No solver recomputation.",
+      "source_run_id": "diurnal_20260930T101255Z_bc325b",
+      "source_provenance": {
+        "code_revision": "a3e8ac1b01f62138daeab44971ad2c8182b6cc04",
+        "dirty": true,
+        "parameters": {
+          "input_path": "diurnal_20260930T101255Z_4f750c",
+          "ambient_c": 20.0,
+          "albedo": 0.2,
+          "emissivity": 0.95,
+          "convective_coefficient_w_m2_k": 12.0,
+          "exchange_per_s": 0.001,
+          "diffusivity_m2_s": 1.0,
+          "scope": "Controlled clear-sky forcing; conservative block mask, area-mean irradiance and velocity; no measured validation",
+          "wind": "Final preserved 3-D snapshot, frozen for the daylight diagnostic; no missing wind times invented"
+        },
+        "inputs": [
+          {
+            "id": "frozen_inputs",
+            "sha256": "b3982b1e0d2e198b8e7dbb96c190cdfaa70efa0727babf7bb3663d1f870b035f"
+          }
+        ]
+      },
+      "reproducibility_scope": "Snapshot contains display exporter only. Original solver source/input bundles are retained locally and are not part of this public display export."
+    },
+    "inputs": [
+      {
+        "id": "source_manifest",
+        "sha256": "da17183dd859460a269322e5c9ac23b5fabf66bb76d4b124fdd504eccb5162c3"
+      }
+    ]
+  },
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.22405,
+      "latitude": 51.5145,
+      "height_m": 0,
+      "vertical_datum": "GLB ground mesh, near planar and not surveyed elevation; uncovered cells at local zero"
+    },
+    "bounds_m": {
+      "min": [
+        -1492.0,
+        -2548.0,
+        0
+      ],
+      "max": [
+        2092.0,
+        1036.0,
+        128
+      ]
+    }
+  },
+  "time": {
+    "unit": "s",
+    "samples": [
+      0.0,
+      600.0,
+      1200.0,
+      1800.0,
+      2400.0,
+      3000.0,
+      3600.0,
+      4200.0,
+      4800.0,
+      5400.0,
+      6000.0,
+      6600.0,
+      7200.0,
+      7800.0,
+      8400.0,
+      9000.0,
+      9600.0,
+      10200.0,
+      10800.0,
+      11400.0,
+      12000.0,
+      12600.0,
+      13200.0,
+      13800.0,
+      14400.0,
+      15000.0,
+      15600.0,
+      16200.0,
+      16800.0,
+      17400.0,
+      18000.0,
+      18600.0,
+      19200.0,
+      19800.0,
+      20400.0,
+      21000.0,
+      21600.0,
+      22200.0,
+      22800.0,
+      23400.0,
+      24000.0,
+      24600.0,
+      25200.0,
+      25800.0,
+      26400.0,
+      27000.0,
+      27600.0,
+      28200.0,
+      28800.0,
+      29400.0,
+      30000.0,
+      30600.0,
+      31200.0,
+      31800.0,
+      32400.0,
+      33000.0,
+      33600.0,
+      34200.0,
+      34800.0,
+      35400.0,
+      36000.0,
+      36600.0,
+      37200.0,
+      37800.0,
+      38400.0,
+      39000.0,
+      39600.0,
+      40200.0,
+      40800.0,
+      41400.0,
+      42000.0,
+      42600.0,
+      43200.0,
+      43800.0,
+      44400.0,
+      45000.0,
+      45600.0,
+      46200.0,
+      46800.0,
+      47400.0,
+      48000.0,
+      48600.0,
+      49200.0,
+      49800.0,
+      50400.0,
+      51000.0,
+      51600.0,
+      52200.0,
+      52800.0,
+      53400.0,
+      54000.0,
+      54600.0,
+      55200.0,
+      55800.0,
+      56400.0,
+      57000.0,
+      57600.0,
+      58200.0,
+      58800.0
+    ],
+    "epoch": "2026-06-21T03:50:00+00:00"
+  },
+  "layers": [
+    {
+      "id": "air",
+      "kind": "scalar_field",
+      "format": "npy",
+      "asset": "air.npy",
+      "sampling": "linear",
+      "field": {
+        "name": "temperature",
+        "unit": "degC"
+      },
+      "encoding": {
+        "coordinate_frame": "ENU",
+        "dtype": "<f4",
+        "shape": [
+          99,
+          112,
+          112
+        ],
+        "axes": "TYX",
+        "origin_m": [
+          -1492,
+          -2548,
+          12.0
+        ],
+        "spacing_m": [
+          32,
+          32
+        ],
+        "sample_location": "cell_center",
+        "byte_order": "little",
+        "compression": "none",
+        "mask_asset": "air_invalid.npy",
+        "mask_dtype": "|u1",
+        "mask_semantics": "invalid_nonzero"
+      },
+      "display": {
+        "widget": "scalar_field",
+        "capabilities": [
+          "pick",
+          "legend",
+          "opacity"
+        ],
+        "range": [
+          19.999988555908203,
+          58.10059356689453
+        ]
+      }
+    },
+    {
+      "id": "surface",
+      "kind": "scalar_field",
+      "format": "npy",
+      "asset": "surface.npy",
+      "sampling": "linear",
+      "field": {
+        "name": "temperature",
+        "unit": "degC"
+      },
+      "encoding": {
+        "coordinate_frame": "ENU",
+        "dtype": "<f4",
+        "shape": [
+          99,
+          112,
+          112
+        ],
+        "axes": "TYX",
+        "origin_m": [
+          -1492,
+          -2548,
+          0.0
+        ],
+        "spacing_m": [
+          32,
+          32
+        ],
+        "sample_location": "cell_center",
+        "byte_order": "little",
+        "compression": "none"
+      },
+      "display": {
+        "widget": "scalar_field",
+        "capabilities": [
+          "pick",
+          "legend",
+          "opacity"
+        ],
+        "range": [
+          20.0,
+          61.73381423950195
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "source_snapshot",
+      "asset": "display_export_source.tar.gz",
+      "sha256": "4d9a8fcab4c85876cd0b69ff4d3bb8979c46971f092174eeaa0427b50d483318",
+      "media_type": "application/gzip"
+    }
+  ]
+}

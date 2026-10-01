@@ -1,0 +1,20 @@
+{
+  "scene_id": "white_city",
+  "modules": {
+    "traffic": {
+      "title": "SUMO traffic \u00b7 baseline",
+      "manifest": "runs/sumo_20260930T101214Z_8d1fed_display_v1/manifest.json",
+      "note": "300 s, 100 synthetic departures; left-hand traffic on OSM roads. Uncalibrated demand and inferred signals, not observed traffic. Road/signal availability follows each network."
+    },
+    "diurnal": {
+      "title": "Day cycle \u00b7 controlled experiment",
+      "manifest": "runs/diurnal_20260930T101255Z_bc325b_display_v1/manifest.json",
+      "note": "Solar-coupled air and surface temperature; constant 20 \u00b0C ambient, uniform materials and a frozen wind field. Controlled experiment, not measured weather. Air values use the declared invalid-cell mask."
+    },
+    "transport": {
+      "title": "Public transport \u00b7 TfL snapshot",
+      "manifest": "runs/transport_20260930T100611Z_baae17_display_v1/manifest.json",
+      "note": "TfL stop and route snapshot, September 2026; individual responses were collected at different times. Not a live service or a calibrated passenger-demand model."
+    }
+  }
+}

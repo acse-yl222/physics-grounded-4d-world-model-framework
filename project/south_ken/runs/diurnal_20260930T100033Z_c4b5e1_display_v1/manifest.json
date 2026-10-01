@@ -1,0 +1,274 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "south_ken",
+  "simulation": "diurnal",
+  "run_id": "diurnal_20260930T100033Z_c4b5e1_display_v1",
+  "status": "complete",
+  "created_at": "2026-10-01T00:02:10.002250+00:00",
+  "provenance": {
+    "code_revision": "a3e8ac1b01f62138daeab44971ad2c8182b6cc04",
+    "dirty": true,
+    "parameters": {
+      "operation": "Display-only extraction; original layer bytes, coordinates and times unchanged. No solver recomputation.",
+      "source_run_id": "diurnal_20260930T100033Z_c4b5e1",
+      "source_provenance": {
+        "code_revision": "a3e8ac1b01f62138daeab44971ad2c8182b6cc04",
+        "dirty": true,
+        "parameters": {
+          "input_path": "diurnal_20260930T095855Z_2a2e16",
+          "ambient_c": 20.0,
+          "albedo": 0.2,
+          "emissivity": 0.95,
+          "convective_coefficient_w_m2_k": 12.0,
+          "exchange_per_s": 0.001,
+          "diffusivity_m2_s": 1.0,
+          "scope": "Controlled clear-sky forcing; conservative block mask, area-mean irradiance and velocity; no measured validation",
+          "wind": "Final preserved 3-D snapshot, frozen for the daylight diagnostic; no missing wind times invented"
+        },
+        "inputs": [
+          {
+            "id": "frozen_inputs",
+            "sha256": "fc030e50b306497c02620efc38bf68d99570f5a5e7bc7e93333e52c6027fcb87"
+          }
+        ]
+      },
+      "reproducibility_scope": "Snapshot contains display exporter only. Original solver source/input bundles are retained locally and are not part of this public display export."
+    },
+    "inputs": [
+      {
+        "id": "source_manifest",
+        "sha256": "f429180c1c9bd0e8d57eec5d1eed85fa8ce9ffe6eec035124f4c8b0a84ba937b"
+      }
+    ]
+  },
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.176896,
+      "latitude": 51.498354,
+      "height_m": 0,
+      "vertical_datum": "Inherited estimated flat ground; not surveyed elevation"
+    },
+    "bounds_m": {
+      "min": [
+        -1636.0,
+        -1484.0,
+        0
+      ],
+      "max": [
+        1436.0,
+        1332.0,
+        128
+      ]
+    }
+  },
+  "time": {
+    "unit": "s",
+    "samples": [
+      0.0,
+      600.0,
+      1200.0,
+      1800.0,
+      2400.0,
+      3000.0,
+      3600.0,
+      4200.0,
+      4800.0,
+      5400.0,
+      6000.0,
+      6600.0,
+      7200.0,
+      7800.0,
+      8400.0,
+      9000.0,
+      9600.0,
+      10200.0,
+      10800.0,
+      11400.0,
+      12000.0,
+      12600.0,
+      13200.0,
+      13800.0,
+      14400.0,
+      15000.0,
+      15600.0,
+      16200.0,
+      16800.0,
+      17400.0,
+      18000.0,
+      18600.0,
+      19200.0,
+      19800.0,
+      20400.0,
+      21000.0,
+      21600.0,
+      22200.0,
+      22800.0,
+      23400.0,
+      24000.0,
+      24600.0,
+      25200.0,
+      25800.0,
+      26400.0,
+      27000.0,
+      27600.0,
+      28200.0,
+      28800.0,
+      29400.0,
+      30000.0,
+      30600.0,
+      31200.0,
+      31800.0,
+      32400.0,
+      33000.0,
+      33600.0,
+      34200.0,
+      34800.0,
+      35400.0,
+      36000.0,
+      36600.0,
+      37200.0,
+      37800.0,
+      38400.0,
+      39000.0,
+      39600.0,
+      40200.0,
+      40800.0,
+      41400.0,
+      42000.0,
+      42600.0,
+      43200.0,
+      43800.0,
+      44400.0,
+      45000.0,
+      45600.0,
+      46200.0,
+      46800.0,
+      47400.0,
+      48000.0,
+      48600.0,
+      49200.0,
+      49800.0,
+      50400.0,
+      51000.0,
+      51600.0,
+      52200.0,
+      52800.0,
+      53400.0,
+      54000.0,
+      54600.0,
+      55200.0,
+      55800.0,
+      56400.0,
+      57000.0,
+      57600.0,
+      58200.0,
+      58800.0
+    ],
+    "epoch": "2026-06-21T03:50:00+00:00"
+  },
+  "layers": [
+    {
+      "id": "air",
+      "kind": "scalar_field",
+      "format": "npy",
+      "asset": "air.npy",
+      "sampling": "linear",
+      "field": {
+        "name": "temperature",
+        "unit": "degC"
+      },
+      "encoding": {
+        "coordinate_frame": "ENU",
+        "dtype": "<f4",
+        "shape": [
+          99,
+          88,
+          96
+        ],
+        "axes": "TYX",
+        "origin_m": [
+          -1636,
+          -1484,
+          12.0
+        ],
+        "spacing_m": [
+          32,
+          32
+        ],
+        "sample_location": "cell_center",
+        "byte_order": "little",
+        "compression": "none",
+        "mask_asset": "air_invalid.npy",
+        "mask_dtype": "|u1",
+        "mask_semantics": "invalid_nonzero"
+      },
+      "display": {
+        "widget": "scalar_field",
+        "capabilities": [
+          "pick",
+          "legend",
+          "opacity"
+        ],
+        "range": [
+          20.0,
+          57.721927642822266
+        ]
+      }
+    },
+    {
+      "id": "surface",
+      "kind": "scalar_field",
+      "format": "npy",
+      "asset": "surface.npy",
+      "sampling": "linear",
+      "field": {
+        "name": "temperature",
+        "unit": "degC"
+      },
+      "encoding": {
+        "coordinate_frame": "ENU",
+        "dtype": "<f4",
+        "shape": [
+          99,
+          88,
+          96
+        ],
+        "axes": "TYX",
+        "origin_m": [
+          -1636,
+          -1484,
+          0.0
+        ],
+        "spacing_m": [
+          32,
+          32
+        ],
+        "sample_location": "cell_center",
+        "byte_order": "little",
+        "compression": "none"
+      },
+      "display": {
+        "widget": "scalar_field",
+        "capabilities": [
+          "pick",
+          "legend",
+          "opacity"
+        ],
+        "range": [
+          20.0,
+          61.636627197265625
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "source_snapshot",
+      "asset": "display_export_source.tar.gz",
+      "sha256": "4d9a8fcab4c85876cd0b69ff4d3bb8979c46971f092174eeaa0427b50d483318",
+      "media_type": "application/gzip"
+    }
+  ]
+}
