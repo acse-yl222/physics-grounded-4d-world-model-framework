@@ -1,0 +1,82 @@
+[
+ {
+  "region": "rail_terminus",
+  "cluster": "trainshed",
+  "line": "prow_shed: {at:[cx,cy], length:m, width:m, prow:\"+x\"|\"-x\", tip_width:m, taper:0..0.7, nose:m, nose_segs:int, wall_height:m, ridge_height:m, wall_material:name, band:m, band_material:name, glaze:0..1, glass_material:name, roof_material:name, bar_material:name, glazing_bars:int, bays:int, frame_material:name, frame_thickness:m, struts:int, curved_ribs:bool, rib_segs:int, rib_curve:float}  flatiron/trainshed MASS: plan tapers from a broad blunt end to a rounded pointed prow, brick walls, one long central ridge, pitched roof glazed over its upper `glaze` fraction, carried on exposed lattice trusses in `bays` regular bays (pair with {\"_set\":{\"masses\":[],\"roof\":[]}}).\nplatform_canopy: {at:[cx,cy], length:m, width:m, tip:\"+x\"|\"-x\", tip_width:m, taper:0..0.7, nose:m, nose_segs:int, eaves_height:m, ridge_height:m, glaze:0..1, glass_material:name, roof_material:name, bar_material:name, glazing_bars:int, bays:int, column_fracs:[f,...], column_radius:m, column_height:m, column_material:name, capital_material:name, frame_material:name, frame_thickness:m, curved_ribs:bool, rib_segs:int, rib_curve:float, struts:int, fascia:m}  open low platform trainshed: ornate columns + curved iron rib trusses under a pitched glazed canopy that narrows to a wedge tip at one end; no walls, nothing above the ridge (pair with {\"_set\":{\"masses\":[],\"floors\":1}}).\narch_arcade: {at:[cx,cy], axis:\"x\"|\"y\", length:m, height:m, thickness:m, count:int, pier:m, springing:m, arch_segs:int, ring:m, ring_segs:int, material:name, arch_material:name, plinth:m, plinth_material:name, cornice:m, cornice_material:name, backing:-1|0|1, backing_material:name}  a run of brick/stone wall pierced by a row of round-arched openings (arcade) with voussoir rings, plinth and cornice, standing along one side of a platform or yard."
+ },
+ {
+  "region": "cbd_tower",
+  "cluster": "roundcorner",
+  "line": "rounded_block: {at:[cx,cy], size:[L,W], height, base=0, radius|radii:[SW,SE,NE,NW], seg=8, material=stone, curve_material=None, band_count=0, band_h, band_pitch, band_z0, band_out=0.12, band_material=glass, parapet_h=0, parapet_out=0.3, parapet_drop=0.4, parapet_material=white}  extruded rounded-rectangle mass (one bowed corner, a semicircular short end with radii=W/2, or four rounded corners) with glazing bands and a parapet band that follow the curve, curve_material glazes only the arc faces; roof_deck: {at:[cx,cy,z], size:[sx,sy], thickness=0.3, radius|radii=0, material=brick|plant, kerb_h=0, kerb_out=0.25, kerb_material=stone}  flat paved or vegetated roof terrace patch with optional kerb; roof_light_well: {at:[cx,cy,z_roof], size:[sx,sy], depth, wall_t=0.5, wall_material=stone, floor_material=slab|plant, cover=none|glass, cover_h=0.6, cover_material=vault_glass, bars:[nx,ny], bar_w, bar_h, bar_material=white}  rectangular courtyard light-well recessed into a roof slab, optionally covered by a pale panelled skylight; rooflight_band: {at:[cx,cy,z], size:[len,width], axis=X|Y, count=1, pitch, ribs=8, cross_ribs=0, rib_w, rib_h, rib_material=white|iron, material=vault_glass, kerb_h=0.4, kerb_w, kerb_material=stone}  raised ribbed/gridded glazed rooflight panel or long continuous glazed roof band; roof_setbacks: {at:[cx,cy], size:[L,W], base, levels=2, inset=5, rise=1.0, material=stone, radius|radii=0, seg=8, parapet_h=0, parapet_out, parapet_material=white}  concentric stepped roof terraces rising inward so the roof steps down toward the perimeter, plus perimeter parapet; roof_drum: {at:[cx,cy,z], radius, height, segs=32, material=white, panels=0, panel_size:[px,py,pz], panel_gap, panel_axis=X, panel_material=glass}  circular drum/disc roof structure with small rectangular skylight/vent panels on top; roof_box_cluster: {at:[cx,cy,z], rows, cols, size:[sx,sy,sz], gap:[gx,gy], material=slab, h_alt=1.0}  grid or row of small boxy rooftop plant/louvre units."
+ },
+ {
+  "region": "cbd_tower",
+  "cluster": "pyramid",
+  "line": "piered_shaft: {at:[x,y], size:[L,W], base:z, height:h, pier_spacing:m (0.8-4), pier_w:m, pier_d:m, recess:m, corner_w:m|0, material:mat (core/glazing plane), pier_material:mat}  dark shaft clad in unbroken full-height vertical piers on all four faces | crown_band: {at:[x,y], size:[L,W], base:z, height:h, out:m, thick:m, open:0|1, material:mat, cornice_h:m, cornice_out:m, cornice_material:mat}  pale horizontal band capping a shaft, optional projecting cornice lip | hipped_roof: {at:[x,y], size:[L,W], base:z, deck_h:m, margin:m (flat perimeter deck width), rise:m, ridge:m (0=pyramid), axis:\"X\"|\"Y\", parapet_h:m, parapet_t:m, ridge_w:m, ridge_up:m, rungs:n, material:mat, ridge_material:mat, deck_material:mat, parapet_material:mat}  four-sided hipped/pyramidal roof with corner-to-apex hip beams (X in plan) on a parapeted flat roof deck"
+ },
+ {
+  "region": "cbd_tower",
+  "cluster": "pilotis",
+  "line": "undercroft: {at:[x,y], axis:\"X\"|\"Y\", length, depth, height, soffit_t, beams:int, beam_d, beam_w, count:int, rows:1|2, row_v, inset, col_shape:\"square\"|\"round\", col_w, col_d, fascia_h, fascia_t, fascia_side:-1|1, fascia_both:bool, soffit_material, col_material, fascia_material}  open colonnaded ground storey: soffit slab on a pier row, transverse downstand beams, blank stone fascia over the cantilever | plaza_apron: {at:[x,y], axis, length, depth, level, steps:int, tread, side:-1|1, material}  raised paved plaza deck with stepped outer edge"
+ },
+ {
+  "region": "cbd_tower",
+  "cluster": "spandrel",
+  "line": "ribbon_curtain_shell: {at:[x,y], size:[L,W], base_z, floors, floor_h, corner_r, depth, band_h, proud, glass, band, crown_h, crown}  glazed shaft with one continuous ribbon band per floor wrapping rounded corners + pale crown band | glazed_podium_wing: {size:[L,W], side:-x|+x|-y|+y, along:[f0,f1], project, grip, floors, floor_h, base_z, band_h, glass, band, cap}  low banded-glass annex projecting beyond one side of the host footprint"
+ },
+ {
+  "region": "cbd_tower",
+  "cluster": "plantbanks",
+  "line": "roof_patch: {at:[cx,cy], z, length, width, axis:\"X\"|\"Y\", kind:\"glazed\"|\"green\"|\"deck\", rot_deg, kerb, bars, material, trim}  flat roof-deck panel: glazed rooflight with white glazing bars / planted sedum area / contrasting deck strip; louvre_screen: {at:[cx,cy,cz], length, height, depth, axis:\"X\"|\"Y\", count, slat, tilt_deg, rot_deg, posts, back, face, material, back_material}  run of tilted louvre slats between end posts under a top rail: rooftop plant screen, perimeter parapet screen, or flush facade vent grille"
+ },
+ {
+  "region": "canal_house",
+  "cluster": "gables",
+  "line": "pitched_roof: {at:[x,y], length, width, axis:\"X\"|\"Y\", eaves_z, rise|pitch, hip:0..1 (0 gable, 1 pyramid/lantern), overhang, rot:deg, material, dormers:n, dormer_w, dormer_h, dormer_material, chimney:[t(-1..1 along ridge), h_above_ridge, width], chimney_material}  |  stepped_gable: {at:[x,y], axis:\"Y\"|\"X\", width, base_z, top_z, shape:\"stepped\"|\"tri\", steps, neck (top width fraction), thickness, material, coping, bars (tri only), bar_material, finial (spike height), finial_r, finial_material}"
+ },
+ {
+  "region": "haussmann_block",
+  "cluster": "balconyrail",
+  "line": "balcony_band: {side:-y|+y|-x|+x, face:wall-plane coord, length, along, levels:[z...], depth=0.85, rail_h=1.0, slab_t=0.18, spacing=0.30, material=iron, slab_material=stone} full-width iron balcony on consoles; window_guards: {side, face, span, along, bays, width=1.4, levels:[z...], rail_h=0.95, proj=0.18, posts=4, sill=true, material=iron} juliet balustrade per window bay, repeated per storey"
+ },
+ {
+  "region": "haussmann_block",
+  "cluster": "courtyard",
+  "line": "mansard_cap: {length, width, base_z, height, inset, overhang, material, top_material, cornice(bool), cornice_material, courtyard[cx,cy,len,wid], dormers(int), dormer_sides[front|back|left|right], dormer_width, dormer_height, dormer_frac, chimneys[[x,y,h,sx,sy],...]}  steep dark mansard roof cap with dormers/chimneys and optional courtyard ring deck | facade_band: {length, width, z, depth, thickness, span:0..1 (FRACTION of that facade's length, never metres), sides:[front|back|left|right] (front = -y), railing(bool), rail_height, post_spacing, material, rail_material}  continuous projecting cornice/balcony ledge with iron balustrade"
+ },
+ {
+  "region": "civic_classical",
+  "cluster": "rotunda",
+  "line": "oval_drum: {at:[x,y], rx, ry, height, base_h, frieze_h, segments, wall, base_material, frieze_material, tiers, windows, win_w, win_h, sill, glass, doors, door_w, door_h, door_material, canopy_depth, canopy_z, canopy_t, canopy_segs, canopy_material, canopy_material} closed elliptical drum: stone base + doorways + projecting canopy, brick wall with tiers of tall arched windows, contrasting frieze band under the eaves | radial_glazed_dome: {at:[x,y,z], rx, ry, rise, panels, rings, hub_frac, hub_r, hub_h, rib_w, material, rib_material, hub_material, cap_material, cap_ratio} shallow glazed oval dome cut into narrow radial wedge panels by white ribs converging on a central lantern/oculus"
+ },
+ {
+  "region": "canal_house",
+  "cluster": "arch_entrance",
+  "line": "stoop: {at:[x,y] point on facade, facing:\"-y|+y|-x|+x\", rise:m, steps:n, width:m, tread:m, landing:m, material, rail:bool, rail_h:m, rail_material, basement:bool, basement_at:offset_m, basement_w:m, basement_drop:m} | door_surround: {at:[x,y], facing, width:m, height:m, sill:z_m, jamb:m, proj:m, surround:mat, door:mat, double:bool, arch:bool, voussoirs:n, fanlight:mat}"
+ },
+ {
+  "region": "warehouse_conversion",
+  "cluster": "arch_rows",
+  "line": "arched_opening_grid: {face:-y|+y|-x|+x, face_at:wall plane coord, span:[u0,u1], cols, rows, width, height, z0, dz, rise (0=flat top), depth, frame, arch_band, arch_steps, glass_material, arch_fill_material, arch_material, frame_material, sill_material}; hinged_shutters: {face, face_at, span, cols, rows, z0, dz, z_off, gap, leaf_w, leaf_h, thick, angle deg, material, hinge_material}"
+ },
+ {
+  "region": "rail_terminus",
+  "cluster": "terminus_roofscape",
+  "line": "viaduct_deck: {at:[x,y], length, width, deck_z, slab_t, beam_h, beam_t, columns, col_size, col_inset, col_material, rail_h, rail_posts, rail_material, tracks, track_offset, gauge, track_overrun, material, beam_material, bed_material, track_material}  elevated deck on regular columns, open undercroft, fascia beam band, edge balustrade, through rail tracks | twin_canopy: {at:[x,y], length, canopy_width, gap, eave_z, rise, bays, count, rib_t, material, rib_material, post_h, posts, post_material}  parallel glazed ridged canopies split by a continuous open slot, transverse rib bays"
+ },
+ {
+  "region": "shophouse",
+  "cluster": "chhajja",
+  "line": "facade_bands: {size:[L,W], floors:int, floor_h:m, base_z:m, levels:[floor indices with a band], band_h:0.2-0.5, proj:0.08-0.25, material, sides:[\"-y\",\"+x\",...], parapet:bool, parapet_h:0.5-1.2, parapet_t:0.15-0.35, parapet_material, hood_count:int, hood_levels:[floor indices], hood_w, hood_t, hood_proj, hood_z, hood_side}  projecting floor bands + flat roof parapet ring + window sunshade hoods\nshopfront_band: {size:[L,W], side:\"-y\", bays:1-8, base_z:m, height:1.8-4, pier_w, pier_proj, sign_h, opening_material, pier_material, sign_material}  ground-floor dark recessed shop openings between piers under a signboard"
+ },
+ {
+  "region": "shophouse",
+  "cluster": "balconygrille",
+  "line": "shopfront_row: {at:[x,y_front_face], z0, height, depth, pier, recess, sign, sign_h, sign_mode:\"band\"|\"bay\", bays:[{kind:\"shutter\"|\"door\"|\"glass\"|\"open\", w, head}], width(when bays=[]), pier_material, shutter_material, door_material, sign_material}  ground-floor shutter/door bay row with signboard band; street_grille: {at:[x,y], z0, width, height, thickness, bar_pitch, bar_w, posts, post_w, material, gates:[{x,w,h}]}  open bar railing/grille screen with gate leaves"
+ },
+ {
+  "region": "shophouse",
+  "cluster": "roofclutter",
+  "line": "shop_recess: {at:[x,y], width, height, depth, bays, pier_w, y_wall, shutter, pier_mat, void_mat, canopy, overhang, canopy_t, canopy_mat, shutter_frac}  recessed ground-floor shutter/gate bays behind projecting piers + full-width canopy; signage_band: {at:[x,y], width, height, z, y_wall, proud, panels, rows, gap, materials, back_mat}  full-width horizontal shop signage/lettering band on a facade"
+ }
+]

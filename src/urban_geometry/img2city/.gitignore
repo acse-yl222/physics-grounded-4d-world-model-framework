@@ -1,0 +1,39 @@
+# ---- generated experiment data & outputs (never committed) -----------------
+data/*
+!data/.gitkeep
+runs/
+.cache/
+*.blend
+*.blend1
+*.blend2
+*.glb
+*.mp4
+*.pt
+lightning_logs/
+
+# ---- python ----------------------------------------------------------------
+__pycache__/
+*.pyc
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+.venv/
+venv/
+
+# ---- os / editors ----------------------------------------------------------
+.DS_Store
+.vscode/
+.idea/
+
+# ---- generated docs (regenerate with `img2city lib-audit`) -----------------
+docs/parts_library.md
+
+# ---- secrets: keys live in .env (loaded by img2city.config), never in git ---
+.env
+.env.*
+!.env.example

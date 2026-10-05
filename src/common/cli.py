@@ -16,6 +16,12 @@ def main(argv=None):
     paths = commands.add_parser('paths', help='Show resolved scene paths without creating data')
     paths.add_argument('scene')
     commands.add_parser('scenes', help='List registered scene metadata')
+    image_city = commands.add_parser('import-img2city', help='Retain an existing Img2City GLB as a separate static view')
+    image_city.add_argument('source', type=Path)
+    image_city.add_argument('--metadata', type=Path, help='buildings.json with the recorded anchor; defaults beside the GLB')
+    image_city.add_argument('--scene', default='south_ken')
+    image_city.add_argument('--run-id')
+    image_city.add_argument('--view-id')
     check = commands.add_parser('validate', help='Validate a run and its data assets')
     check.add_argument('manifest', type=Path)
     keep = commands.add_parser('retain', help='Copy a complete trial into immutable scene runs')
@@ -43,6 +49,11 @@ def main(argv=None):
                 data = json.loads(path.read_text())
                 scenes.append({'scene_id': data['scene_id'], 'title': data['title']})
             print(json.dumps(scenes, indent=2))
+        elif args.command == 'import-img2city':
+            from urban_geometry.img2city_adapter import import_model
+            result = import_model(storage, args.source, args.metadata or args.source.parent / 'buildings.json',
+                                  args.scene, args.run_id, args.view_id)
+            print(f'Retained Img2City view: {result}')
         elif args.command == 'run':
             import os, subprocess
             env = dict(os.environ, UWM_ROOT=str(storage.root))

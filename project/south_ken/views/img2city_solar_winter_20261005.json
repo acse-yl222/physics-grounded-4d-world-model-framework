@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "south_ken",
+  "title": "Img2City \u00b7 South Kensington \u00b7 Solar 2026-12-21",
+  "time_alignment": "absolute",
+  "runs": [
+    "img2city_solar_winter_20261005"
+  ],
+  "layers": [
+    {
+      "run_id": "img2city_solar_winter_20261005",
+      "layer_id": "img2city",
+      "visible": true
+    },
+    {
+      "run_id": "img2city_solar_winter_20261005",
+      "layer_id": "irradiance",
+      "visible": true
+    },
+    {
+      "run_id": "img2city_solar_winter_20261005",
+      "layer_id": "shadow",
+      "visible": false
+    },
+    {
+      "run_id": "img2city_solar_winter_20261005",
+      "layer_id": "sky_view",
+      "visible": false
+    },
+    {
+      "run_id": "img2city_solar_winter_20261005",
+      "layer_id": "sunlit_hours",
+      "visible": false
+    }
+  ]
+}

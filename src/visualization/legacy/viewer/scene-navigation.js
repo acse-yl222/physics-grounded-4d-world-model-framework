@@ -25,7 +25,7 @@ try {
     option.dataset.url = target.href;
     return option;
   }));
-  select.value = current;
+  if(query.has('scene_config')){const option=new Option('Img2City · South Kensington','img2city');option.dataset.url=location.href;select.prepend(option);select.value='img2city';}else select.value = current;
   select.disabled = false;
   select.addEventListener('change', () => {
     const target = select.selectedOptions[0]?.dataset.url;

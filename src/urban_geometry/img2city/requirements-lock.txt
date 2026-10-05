@@ -1,0 +1,43 @@
+# Exact versions of the declared dependencies as installed in the environment
+# every IRP result was produced with (pip freeze, python 3.13.7, macOS arm64,
+# conda env mpm2025; carried over from the thesis repo 2026-08-23, extras
+# re-checked 2026-09-07). pyproject.toml keeps the permissive ranges for
+# installing elsewhere; use this file to reproduce.
+#
+#   pip install -r requirements-lock.txt && pip install -e . --no-deps
+#
+# Non-pip: Blender 4.5.10 LTS (+ BlenderMCP addon), Claude Code CLI.
+# Not pinned: anthropic (only for --backend api; not in the reference env).
+
+# ---- core + sdk backend
+anyio==4.14.0
+claude-agent-sdk==0.2.106
+matplotlib==3.11.0
+numpy==2.3.1
+pillow==12.3.0
+pyproj==3.7.2
+requests==2.32.5
+scipy==1.16.2
+shapely==2.1.2
+
+# ---- [ml] perceptual judges, detectors, learned prior
+deepforest==2.1.0
+dreamsim==0.2.1
+imageio==2.37.0
+peft==0.19.1
+timm==1.0.28
+torch==2.12.1
+torchvision==0.27.1
+transformers==5.12.1
+
+# ---- [gemini]
+google-genai==2.10.0
+
+# ---- [web]
+fastapi==0.141.1
+python-multipart==0.0.32
+uvicorn==0.49.0
+
+# ---- [dev]
+httpx==0.28.1
+pytest==8.4.2

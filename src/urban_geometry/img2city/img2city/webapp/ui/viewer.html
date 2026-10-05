@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>3D Viewer · Parametric City</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/i18n.js"></script>
+<script src="/js/topbar.js" defer></script>
+<script type="importmap">
+{ "imports": { "three": "/vendor/three.module.min.js" } }
+</script>
+</head>
+<body>
+<div class="topbar">
+  <span class="title" data-i18n="site.title"></span>
+  <span class="nav">
+    <a href="/" data-i18n="nav.areas"></a>
+    <a href="/map.html" data-i18n="nav.map"></a>
+    <a href="/upload.html" data-i18n="nav.upload"></a>
+  </span>
+  <span id="area-label" style="margin-left:auto;color:var(--muted)"></span>
+</div>
+<div id="viewer-root">
+  <div id="canvas-holder">
+    <div id="loading-overlay">
+      <div data-i18n="viewer.loading"></div>
+      <div class="bar"><div id="load-bar"></div></div>
+    </div>
+    <div id="hud" data-i18n="viewer.hud"></div>
+  </div>
+  <div id="side">
+    <div class="placeholder" data-i18n="viewer.placeholder"></div>
+  </div>
+</div>
+<script type="module" src="/js/viewer.js"></script>
+</body>
+</html>

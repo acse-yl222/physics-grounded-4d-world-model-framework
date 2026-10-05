@@ -1,0 +1,754 @@
+{
+ "terrace_victorian": {
+  "area": "city_sk",
+  "id": "868975274",
+  "spec": {
+   "footprint": [
+    13.5,
+    7.9
+   ],
+   "floors": 3,
+   "facade": "masonry",
+   "masses": [
+    {
+     "x": [
+      0,
+      1
+     ],
+     "y": [
+      0,
+      1
+     ],
+     "floors": 3,
+     "facade": "masonry"
+    }
+   ],
+   "frame": null,
+   "roof": [],
+   "volumes": [],
+   "typology": "terrace",
+   "colonnade": null,
+   "balustrade": false,
+   "arch_windows": false,
+   "podium": null,
+   "fins": null,
+   "ribbon": null,
+   "terrace": {
+    "bay_m": 4.5,
+    "stucco_floors": 3,
+    "balcony": true,
+    "railings": true,
+    "roof_form": "valley",
+    "roof_tone": "dark",
+    "dormers": false,
+    "pediment": false,
+    "shopfront": false,
+    "bay_windows": false
+   },
+   "entrance": null,
+   "plinth": false
+  }
+ },
+ "shophouse": {
+  "area": "city_sk",
+  "id": "107039272",
+  "spec": {
+   "footprint": [
+    10.8,
+    8.1
+   ],
+   "floors": 4,
+   "facade": "masonry",
+   "masses": [
+    {
+     "x": [
+      0,
+      1
+     ],
+     "y": [
+      0,
+      1
+     ],
+     "floors": 4,
+     "facade": "masonry"
+    }
+   ],
+   "frame": null,
+   "roof": [],
+   "volumes": [],
+   "typology": "terrace",
+   "colonnade": null,
+   "balustrade": false,
+   "arch_windows": false,
+   "podium": null,
+   "fins": null,
+   "ribbon": null,
+   "terrace": {
+    "bay_m": 5.4,
+    "stucco_floors": 0,
+    "balcony": false,
+    "railings": false,
+    "roof_form": "flat",
+    "roof_tone": "dark",
+    "dormers": false,
+    "pediment": false,
+    "shopfront": true,
+    "bay_windows": false
+   },
+   "plinth": false
+  }
+ },
+ "haussmann_block": {
+  "area": "city_sk",
+  "id": "118755592",
+  "spec": {
+   "footprint": [
+    55.4,
+    19.9
+   ],
+   "floors": 3,
+   "floor_h": 3.5,
+   "facade": "masonry",
+   "masses": [
+    {
+     "x": [
+      0.0,
+      0.82
+     ],
+     "y": [
+      0.0,
+      1.0
+     ],
+     "floors": 3,
+     "facade": "masonry",
+     "wall": "stone"
+    },
+    {
+     "x": [
+      0.82,
+      1.0
+     ],
+     "y": [
+      0.0,
+      1.0
+     ],
+     "floors": 3,
+     "facade": "masonry",
+     "wall": "stone"
+    }
+   ],
+   "frame": null,
+   "roof": [
+    {
+     "type": "plant",
+     "boxes": [
+      [
+       -20,
+       2,
+       1.6,
+       2.2,
+       1.6
+      ],
+      [
+       -8,
+       2,
+       1.6,
+       2.2,
+       1.6
+      ],
+      [
+       4,
+       2,
+       1.6,
+       2.2,
+       1.6
+      ],
+      [
+       16,
+       2,
+       1.6,
+       2.2,
+       1.6
+      ],
+      [
+       24,
+       2,
+       1.6,
+       2.2,
+       1.6
+      ]
+     ]
+    }
+   ],
+   "volumes": [],
+   "entrance": {
+    "side": "-y",
+    "along": [
+     0.46,
+     0.56
+    ],
+    "height_frac": 0.35
+   },
+   "typology": "terrace",
+   "colonnade": null,
+   "balustrade": true,
+   "arch_windows": true,
+   "arch_row": 0,
+   "podium": null,
+   "fins": null,
+   "ribbon": null,
+   "terrace": {
+    "bay_m": 7.2,
+    "stucco_floors": 2,
+    "balcony": true,
+    "railings": true,
+    "roof_form": "mansard",
+    "roof_tone": "dark",
+    "dormers": true,
+    "pediment": false,
+    "shopfront": false,
+    "bay_windows": false
+   },
+   "plinth": false
+  }
+ },
+ "panel_housing": {
+  "area": "city_sk",
+  "id": "118710794",
+  "spec": {
+   "footprint": [
+    18.3,
+    16.2
+   ],
+   "floors": 8,
+   "floor_h": 3.1,
+   "facade": "masonry",
+   "typology": "terrace",
+   "masses": [
+    {
+     "x": [
+      0.0,
+      1.0
+     ],
+     "y": [
+      0.0,
+      0.55
+     ],
+     "floors": 8,
+     "facade": "masonry",
+     "wall": "brick"
+    },
+    {
+     "x": [
+      0.0,
+      0.5
+     ],
+     "y": [
+      0.55,
+      1.0
+     ],
+     "floors": 8,
+     "facade": "masonry",
+     "wall": "brick"
+    }
+   ],
+   "frame": null,
+   "podium": null,
+   "roof": [
+    {
+     "type": "plant",
+     "boxes": [
+      [
+       -3,
+       1,
+       1.8,
+       4,
+       3.5
+      ],
+      [
+       2,
+       -2,
+       1.5,
+       3.5,
+       3
+      ],
+      [
+       0,
+       3,
+       1.2,
+       3,
+       2.5
+      ]
+     ]
+    }
+   ],
+   "volumes": [],
+   "entrance": {
+    "side": "-y",
+    "along": [
+     0.06,
+     0.26
+    ],
+    "height_frac": 0.11
+   },
+   "colonnade": null,
+   "balustrade": false,
+   "arch_windows": false,
+   "fins": null,
+   "ribbon": null,
+   "terrace": {
+    "bay_m": 6.0,
+    "stucco_floors": 0,
+    "balcony": false,
+    "railings": true,
+    "roof_form": "flat",
+    "roof_tone": "mid",
+    "dormers": false,
+    "pediment": false,
+    "shopfront": true,
+    "bay_windows": true
+   },
+   "plinth": false
+  }
+ },
+ "cbd_tower": {
+  "area": "city_cw",
+  "id": "183242123",
+  "spec": {
+   "footprint": [
+    75.3,
+    67.2
+   ],
+   "floors": 45,
+   "floor_h": 3.79,
+   "facade": "glass",
+   "masses": [
+    {
+     "x": [
+      0.0,
+      1.0
+     ],
+     "y": [
+      0.0,
+      1.0
+     ],
+     "floors": 45,
+     "facade": "glass"
+    }
+   ],
+   "frame": null,
+   "roof": [
+    {
+     "type": "plant",
+     "boxes": [
+      [
+       0,
+       -8,
+       2.0,
+       30,
+       16
+      ],
+      [
+       0,
+       14,
+       1.8,
+       30,
+       12
+      ],
+      [
+       -26,
+       4,
+       1.5,
+       8,
+       22
+      ],
+      [
+       26,
+       4,
+       1.5,
+       8,
+       22
+      ],
+      [
+       0,
+       26,
+       1.4,
+       18,
+       6
+      ]
+     ]
+    }
+   ],
+   "volumes": [],
+   "entrance": {
+    "side": "-y",
+    "along": [
+     0.44,
+     0.62
+    ],
+    "height_frac": 0.1
+   },
+   "typology": "institutional",
+   "colonnade": null,
+   "balustrade": false,
+   "arch_windows": false,
+   "podium": {
+    "floors": 1
+   },
+   "fins": null,
+   "ribbon": {
+    "glaze_frac": 0.62,
+    "mullion_m": 1.4,
+    "spandrel": "white"
+   },
+   "terrace": null,
+   "plinth": false,
+   "extra_parts": [
+    {
+     "type": "rounded_block",
+     "at": [
+      0.0,
+      0.0
+     ],
+     "size": [
+      77.0,
+      68.5
+     ],
+     "height": 9.0,
+     "base": 0.0,
+     "radius": 14.0,
+     "seg": 16,
+     "material": "glass",
+     "curve_material": "glass",
+     "band_count": 2,
+     "band_h": 3.2,
+     "band_pitch": 4.4,
+     "band_z0": 0.6,
+     "band_out": 0.14,
+     "band_material": "glass",
+     "parapet_h": 0.9,
+     "parapet_out": 0.45,
+     "parapet_material": "white"
+    },
+    {
+     "type": "ribbon_curtain_shell",
+     "at": [
+      0,
+      0
+     ],
+     "size": [
+      75.3,
+      67.2
+     ],
+     "base_z": 0.0,
+     "floors": 45,
+     "floor_h": 3.79,
+     "corner_r": 14.0,
+     "band_h": 1.0,
+     "depth": 0.5,
+     "proud": 0.25,
+     "glass": "glass_green",
+     "band": "slab",
+     "crown_h": 7.0,
+     "crown": "white"
+    },
+    {
+     "type": "glazed_podium_wing",
+     "size": [
+      75.3,
+      67.2
+     ],
+     "side": "-x",
+     "along": [
+      0.22,
+      0.8
+     ],
+     "project": 12.0,
+     "grip": 2.0,
+     "floors": 2,
+     "floor_h": 4.4,
+     "base_z": 0.0,
+     "band_h": 1.0,
+     "glass": "glass_green",
+     "band": "slab",
+     "cap": "white"
+    },
+    {
+     "type": "plaza_apron",
+     "at": [
+      0.0,
+      -35.0
+     ],
+     "axis": "X",
+     "length": 62.0,
+     "depth": 6.0,
+     "level": 1.2,
+     "steps": 3,
+     "tread": 1.0,
+     "side": -1,
+     "material": "stone"
+    },
+    {
+     "type": "roof_box_cluster",
+     "at": [
+      0.0,
+      -8.0,
+      170.8
+     ],
+     "rows": 3,
+     "cols": 4,
+     "size": [
+      8.5,
+      6.0,
+      1.9
+     ],
+     "gap": [
+      3.0,
+      3.0
+     ],
+     "material": "slab",
+     "h_alt": 1.15
+    },
+    {
+     "type": "roof_box_cluster",
+     "at": [
+      0.0,
+      16.0,
+      170.8
+     ],
+     "rows": 2,
+     "cols": 4,
+     "size": [
+      8.5,
+      5.0,
+      1.6
+     ],
+     "gap": [
+      3.0,
+      3.0
+     ],
+     "material": "slab",
+     "h_alt": 1.0
+    },
+    {
+     "type": "roof_box_cluster",
+     "at": [
+      -25.0,
+      6.0,
+      170.8
+     ],
+     "rows": 3,
+     "cols": 1,
+     "size": [
+      5.0,
+      5.5,
+      1.4
+     ],
+     "gap": [
+      2.0,
+      2.5
+     ],
+     "material": "slab",
+     "h_alt": 1.0
+    },
+    {
+     "type": "roof_box_cluster",
+     "at": [
+      25.0,
+      6.0,
+      170.8
+     ],
+     "rows": 3,
+     "cols": 1,
+     "size": [
+      5.0,
+      5.5,
+      1.4
+     ],
+     "gap": [
+      2.0,
+      2.5
+     ],
+     "material": "slab",
+     "h_alt": 1.0
+    }
+   ]
+  }
+ },
+ "canal_house": {
+  "area": "city_ams",
+  "id": "114538342",
+  "spec": {
+   "footprint": [
+    44.7,
+    33.5
+   ],
+   "floors": 3,
+   "floor_h": 3.7,
+   "facade": "masonry",
+   "masses": [
+    {
+     "x": [
+      0.0,
+      0.32
+     ],
+     "y": [
+      0.0,
+      0.62
+     ],
+     "floors": 4,
+     "facade": "masonry",
+     "wall": "stone"
+    },
+    {
+     "x": [
+      0.32,
+      1.0
+     ],
+     "y": [
+      0.0,
+      0.62
+     ],
+     "floors": 3,
+     "facade": "masonry",
+     "wall": "stone"
+    },
+    {
+     "x": [
+      0.1,
+      1.0
+     ],
+     "y": [
+      0.62,
+      1.0
+     ],
+     "floors": 2,
+     "facade": "masonry",
+     "wall": "stone"
+    }
+   ],
+   "frame": null,
+   "roof": [
+    {
+     "type": "ridges",
+     "frac": [
+      0.3,
+      1.0
+     ],
+     "count": 4
+    },
+    {
+     "type": "plant",
+     "boxes": [
+      [
+       6,
+       6,
+       2.0,
+       7,
+       5
+      ],
+      [
+       -2,
+       9,
+       1.8,
+       5,
+       4
+      ],
+      [
+       14,
+       7,
+       1.6,
+       4,
+       4
+      ]
+     ]
+    }
+   ],
+   "volumes": [],
+   "entrance": {
+    "side": "-y",
+    "along": [
+     0.3,
+     0.46
+    ],
+    "height_frac": 0.6
+   },
+   "typology": "institutional",
+   "arch_windows": true,
+   "arch_row": 0,
+   "podium": null,
+   "fins": null,
+   "ribbon": null,
+   "plinth": false,
+   "extra_parts": [
+    {
+     "type": "pitched_roof",
+     "at": [
+      7.2,
+      -6.4
+     ],
+     "length": 30.4,
+     "width": 20.8,
+     "axis": "X",
+     "eaves_z": 11.1,
+     "rise": 6.4,
+     "hip": 0.22,
+     "material": "slate_dark",
+     "dormers": 3,
+     "dormer_w": 1.8,
+     "dormer_h": 1.9,
+     "chimney": [
+      -0.88,
+      3.4,
+      1.8
+     ]
+    },
+    {
+     "type": "pitched_roof",
+     "at": [
+      6.0,
+      6.0
+     ],
+     "length": 22.0,
+     "width": 17.5,
+     "axis": "Y",
+     "eaves_z": 7.4,
+     "rise": 4.6,
+     "hip": 0.2,
+     "material": "slate_dark"
+    },
+    {
+     "type": "pitched_roof",
+     "at": [
+      -15.2,
+      -6.4
+     ],
+     "length": 20.8,
+     "width": 13.4,
+     "axis": "Y",
+     "eaves_z": 14.8,
+     "rise": 5.5,
+     "hip": 0.0,
+     "material": "slate_dark"
+    },
+    {
+     "type": "stepped_gable",
+     "at": [
+      -15.2,
+      -16.9
+     ],
+     "axis": "Y",
+     "width": 13.0,
+     "base_z": 14.8,
+     "top_z": 22.6,
+     "steps": 6,
+     "neck": 0.15,
+     "thickness": 0.7,
+     "material": "brick",
+     "coping": "stone",
+     "finial": 3.2
+    }
+   ]
+  }
+ }
+}

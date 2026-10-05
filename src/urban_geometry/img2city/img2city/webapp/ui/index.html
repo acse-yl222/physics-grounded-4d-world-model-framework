@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Parametric City</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/i18n.js"></script>
+<script src="/js/topbar.js" defer></script>
+</head>
+<body>
+<div class="topbar">
+  <span class="title" data-i18n="site.title"></span>
+  <span class="nav">
+    <a class="active" href="/" data-i18n="nav.areas"></a>
+    <a href="/map.html" data-i18n="nav.map"></a>
+    <a href="/upload.html" data-i18n="nav.upload"></a>
+  </span>
+</div>
+<div class="wrap">
+  <h1 data-i18n="index.h1"></h1>
+  <p style="color:var(--muted)" data-i18n="index.tip"></p>
+  <div class="cards" id="cards"></div>
+</div>
+<script>
+async function main() {
+  const holder = document.getElementById('cards');
+  holder.innerHTML = `<span class="spin"></span> ${t('index.loading')}`;
+  const areas = await (await fetch('/api/areas')).json();
+  holder.innerHTML = '';
+  for (const a of areas.filter(a => a.has_blend && !a.stale)) {
+    const el = document.createElement('div');
+    el.className = 'card';
+    const verdict = a.verdict ? `<span class="badge ${a.verdict === 'PASS' ? 'ok' : 'warn'}">${a.verdict}</span>` : '';
+    const ready = a.glb_ready ? `<span class="badge ok">${t('badge.cached')}</span>` : `<span class="badge">${t('badge.notexported')}</span>`;
+    const preview = a.preview ? `<span class="badge warn">${t('badge.preview')}</span>` : '';
+    el.innerHTML = `<h3>${a.display || a.name}${verdict}${ready}${preview}
+      <button class="ghost rename-btn" title="${t('areas.rename')}" style="float:right;padding:1px 8px;font-size:11px">✏️</button></h3>
+      <div class="meta">${a.display ? a.name + ' · ' : ''}${a.region || ''} · ${t('index.meta', { n: a.buildings, s: a.specs })}<br>
+      ${t('index.center')} ${a.center[0].toFixed(5)}, ${a.center[1].toFixed(5)}</div>`;
+    el.querySelector('.rename-btn').onclick = async ev => {
+      ev.stopPropagation();
+      const nv = prompt(t('areas.rename_prompt'), a.display || '');
+      if (nv === null) return;
+      const r = await fetch(`/api/areas/${a.name}`, {
+        method: 'PATCH', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ display: nv }),
+      });
+      if (!r.ok) { alert(await r.text()); return; }
+      main();
+    };
+    el.onclick = async () => {
+      if (!a.glb_ready) {
+        el.innerHTML += `<div class="meta" style="margin-top:8px"><span class="spin"></span>${t('index.exporting')}</div>`;
+        const r = await fetch(`/api/areas/${a.name}/export`, { method: 'POST' });
+        if (!r.ok) { alert(t('index.export_failed') + (await r.text())); return; }
+      }
+      location.href = `/viewer.html?area=${a.name}`;
+    };
+    holder.appendChild(el);
+  }
+  if (!holder.children.length) holder.innerHTML = `<div class="placeholder">${t('index.none')}</div>`;
+}
+document.addEventListener('DOMContentLoaded', main);
+</script>
+</body>
+</html>

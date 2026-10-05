@@ -1,0 +1,95 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "img2city"
+dynamic = ["version"]
+description = "Agentic image -> editable 3D city pipeline: OSM footprints + satellite/Street View in, parametric Blender city model out."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GPL-3.0-or-later" }
+authors = [{ name = "XIAOCIDONTRUN" }]
+keywords = ["3D", "generative", "agent", "blender", "urban", "procedural", "LLM"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Graphics :: 3D Modeling",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+
+# ---- core: fetching, geometry, imaging, the Claude backends -----------------
+dependencies = [
+    "requests>=2.32",
+    "numpy>=2.0",
+    "Pillow>=10.0",
+    "shapely>=2.1",
+    "scipy>=1.14",
+    "matplotlib>=3.8",          # harness token/score plots
+    "pyproj>=3.6",              # LiDAR height check (BNG), courtyard agent
+    "anthropic>=0.40",          # --backend api
+    "claude-agent-sdk>=0.2",    # --backend sdk (subscription billing)
+    "anyio>=4.0",
+]
+
+[project.optional-dependencies]
+# perceptual judges + detectors + learned prior (heavy: torch stack)
+ml = [
+    "torch>=2.4",
+    "torchvision>=0.19",
+    "transformers>=4.44",       # OWLv2 facade facts, Grounding DINO vehicles, Depth-Anything
+    "dreamsim>=0.2",
+    "peft>=0.10",
+    "deepforest>=1.5",          # tree crowns
+]
+# Gemini image editing (synth_views, facade_clean --clean)
+gemini = ["google-genai>=1.0"]
+# local demo web app
+web = [
+    "fastapi>=0.115",
+    "uvicorn>=0.30",
+    "python-multipart>=0.0.9",
+]
+dev = ["pytest>=8.0", "httpx>=0.27", "ruff>=0.6"]
+all = ["img2city[ml,gemini,web,dev]"]
+
+[project.scripts]
+img2city = "img2city.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/MIAO121131/Img2City"
+
+[tool.setuptools.dynamic]
+version = { attr = "img2city.__version__" }
+
+[tool.setuptools.packages.find]
+include = ["img2city*"]
+
+[tool.setuptools.package-data]
+"img2city.kit" = ["*.json", "vendor/**/*"]
+"img2city.building" = ["*.json"]
+"img2city.webapp" = ["ui/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+# ---- lint: `ruff check .` (also run in CI) ----------------------------------
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+extend-exclude = ["img2city/kit/vendor", "img2city/webapp/ui", "data", "runs", ".cache"]
+
+[tool.ruff.lint]
+# pyflakes + the pycodestyle errors that are real defects; style-only rules
+# (E501 line length, E7xx compound statements) stay advisory for research code.
+select = ["E4", "E7", "E9", "F", "B006", "B008"]
+ignore = ["E701", "E702", "E741"]
+
+[tool.ruff.lint.per-file-ignores]
+# Blender-side sources are concatenated and exec'd inside Blender: bpy, box,
+# MAT, PARTS ... come from the injection context, not from imports.
+"img2city/kit/parts_learned.py" = ["F821", "F841"]
+"img2city/kit/components.py" = ["F841"]
+"img2city/prior/headless_gen.py" = ["E402"]
+"img2city/webapp/export_glb.py" = ["E402"]
+"img2city/webapp/rebuild_bpy.py" = ["E402"]

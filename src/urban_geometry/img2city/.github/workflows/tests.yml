@@ -1,0 +1,31 @@
+# Unit tests for the deterministic layer (no Blender, no API keys, no tokens).
+# Heavy optional imports (torch / SDK chains) are skipped via importorskip,
+# so this runs the light subset on bare CI.
+name: tests
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install (light)
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[web,dev]"
+      - name: Lint
+        run: python -m ruff check .
+      - name: Import every host-side module
+        run: python -m compileall -q img2city && python -c "import img2city.city.make_city, img2city.building.generate, img2city.webapp.server, img2city.agent.llm, img2city.doctor"
+      - name: Run unit tests
+        run: python -m pytest tests -v

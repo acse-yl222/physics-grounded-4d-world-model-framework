@@ -1,0 +1,22 @@
+# Imperial College London -- South Kensington campus
+# One building per line. Lines starting with # are skipped.
+# Curated representative set first (spans types: ornate masonry / Victorian brick /
+# modern glass & concrete). Uncomment or add more as you like.
+
+Queen's Tower, Imperial College London
+Royal School of Mines, Imperial College London
+Imperial College Business School, London
+Blackett Laboratory, Imperial College London
+Sherfield Building, Imperial College London
+Huxley Building, Imperial College London
+City and Guilds Building, Imperial College London
+
+# --- more of the campus (uncomment to include) ---
+# Royal College of Science, Imperial College London
+# Skempton Building, Imperial College London
+# Roderic Hill Building, Imperial College London
+# Bessemer Building, Imperial College London
+# Chemistry Building, Imperial College London
+# Beit Quadrangle, Imperial College London
+# Abdus Salam Library, Imperial College London
+# Faculty Building, Imperial College London

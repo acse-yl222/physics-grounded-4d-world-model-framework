@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Photo to Building · Parametric City</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/i18n.js"></script>
+<script src="/js/topbar.js" defer></script>
+<script type="importmap">
+{ "imports": { "three": "/vendor/three.module.min.js" } }
+</script>
+<style>
+#drop { border: 2px dashed var(--border); border-radius: 12px; padding: 46px 20px;
+  text-align: center; color: var(--muted); cursor: pointer; transition: border-color .15s; }
+#drop.hover { border-color: var(--accent); color: var(--text); }
+#photo-thumb { max-width: 100%; border-radius: 8px; border: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="title" data-i18n="site.title"></span>
+  <span class="nav">
+    <a href="/" data-i18n="nav.areas"></a>
+    <a href="/map.html" data-i18n="nav.map"></a>
+    <a class="active" href="/upload.html" data-i18n="nav.upload"></a>
+  </span>
+</div>
+<div id="viewer-root">
+  <div id="canvas-holder">
+    <div id="loading-overlay" style="display:none"></div>
+    <div id="start-pane" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:var(--bg);z-index:6">
+      <div style="width:min(560px,90%)">
+        <h1 data-i18n="upload.h1"></h1>
+        <p style="color:var(--muted)" data-i18n="upload.desc"></p>
+        <div id="drop" data-i18n="upload.drop"></div>
+        <input type="file" id="file-input" accept="image/*" style="display:none">
+        <div id="up-status" class="sub" style="margin-top:10px"></div>
+      </div>
+    </div>
+    <div id="hud" style="display:none" data-i18n="upload.hud"></div>
+  </div>
+  <div id="side">
+    <div class="placeholder" data-i18n="upload.side_placeholder"></div>
+  </div>
+</div>
+<script type="module" src="/js/upload.js"></script>
+</body>
+</html>

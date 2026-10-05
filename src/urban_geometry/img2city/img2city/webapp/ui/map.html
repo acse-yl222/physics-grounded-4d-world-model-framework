@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Generate from Map · Parametric City</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/i18n.js"></script>
+<link rel="stylesheet" href="/vendor/maplibre-gl.css">
+<style>
+#map-root { display: flex; height: calc(100vh - 45px); }
+#map { flex: 1; min-width: 0; position: relative; }
+/* screenshot-style selection box: drag the body to move, the handles to resize.
+   Positioned each frame from map.project() of the bbox corners, so it tracks
+   pan and zoom exactly. Map rotation is disabled (map.js) -- a geographic bbox
+   is axis-aligned, so an axis-aligned overlay is only correct at bearing 0. */
+#sel-ov { position: absolute; z-index: 2; pointer-events: none; }
+#sel-ov .body { position: absolute; inset: 0; cursor: move; pointer-events: auto;
+  touch-action: none; }
+/* 22px hit area, 14px of it visible: a small target is hard to catch on a
+   high-DPI screen, but a 22px yellow square would swamp a small selection.
+   touch-action:none stops the browser claiming the gesture as a scroll/pan
+   and firing pointercancel half-way through a drag. */
+#sel-ov .h { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px;
+  background: none; border: 0; pointer-events: auto; touch-action: none; }
+#sel-ov .h::after { content: ''; position: absolute; left: 4px; top: 4px;
+  width: 14px; height: 14px; box-sizing: border-box;
+  background: #fbbf24; border: 2px solid #1b1f27; border-radius: 3px;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.5), 0 1px 3px rgba(0,0,0,.5); }
+#sel-ov .h:hover::after { background: #fde68a; transform: scale(1.15); }
+#sel-ov .h.nw, #sel-ov .h.se { cursor: nwse-resize; }
+#sel-ov .h.ne, #sel-ov .h.sw { cursor: nesw-resize; }
+#sel-ov .h.n,  #sel-ov .h.s  { cursor: ns-resize; }
+#sel-ov .h.e,  #sel-ov .h.w  { cursor: ew-resize; }
+#sel-ov.busy .h::after { background: #fde68a; }
+#map-side { width: 380px; background: var(--panel); border-left: 1px solid var(--border);
+  overflow-y: auto; padding: 14px 16px; }
+#map-side label { display: block; color: var(--muted); font-size: 12.5px; margin: 8px 0 3px; }
+#map-side input[type=number], #map-side input[type=text] {
+  width: 100%; background: var(--panel2); color: var(--text); border: 1px solid var(--border);
+  border-radius: 6px; padding: 6px 9px; font-size: 13px; }
+pre.log { background: #0e1116; border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 10px; font-size: 11px; line-height: 1.45; max-height: 220px;
+  overflow: auto; white-space: pre-wrap; word-break: break-all; color: #9fb0c3; }
+.stage { display: flex; justify-content: space-between; font-size: 13px; padding: 2px 0; }
+.stage .ok { color: var(--ok); }
+.stage .off { color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="title" data-i18n="site.title"></span>
+  <span class="nav">
+    <a href="/" data-i18n="nav.areas"></a>
+    <a class="active" href="/map.html" data-i18n="nav.map"></a>
+    <a href="/upload.html" data-i18n="nav.upload"></a>
+  </span>
+</div>
+<div id="map-root">
+  <div id="map"></div>
+  <div id="map-side">
+    <h2 style="font-size:16px" data-i18n="map.h2"></h2>
+    <div class="sub" data-i18n="map.tip"></div>
+    <label data-i18n="map.centre"></label>
+    <input type="text" id="centre" placeholder="51.49580, -0.17350">
+    <label data-i18n="map.width"></label>
+    <input type="number" id="w-m" value="400" min="50" max="1500" step="25">
+    <label data-i18n="map.height"></label>
+    <input type="number" id="h-m" value="400" min="50" max="1500" step="25">
+    <div class="sub" id="bbox-label" style="margin-top:8px"></div>
+    <div style="margin-top:10px">
+      <button id="resolve-btn" data-i18n="map.check"></button>
+    </div>
+    <div id="result" style="margin-top:14px"></div>
+  </div>
+</div>
+<script src="/js/topbar.js"></script>
+<script src="/js/jobcard.js"></script>
+<script src="/vendor/maplibre-gl.js"></script>
+<script src="/js/map.js"></script>
+</body>
+</html>

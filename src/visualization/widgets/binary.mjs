@@ -39,7 +39,8 @@ class GridWidget extends DataWidget {
     if(dynamic&&e.shape[0]!==context.manifest.time.samples.length)throw new Error('Grid time dimension mismatch');
     if(vector&&e.shape[dynamic?1:0]!==3)throw new Error('Grid needs three components');
     this.sourceLayer=layer;this.source=layer.format==='npy_frames'?new NpyFrameSeries(context.baseURL,e,signal,assetURL):new NpySource(assetURL(context.baseURL,layer.asset),e,signal);await this.source.open();this.sequence=0;
-    const ny=e.shape.at(-2),nx=e.shape.at(-1),step=Math.max(1,Math.ceil(Math.sqrt(nx*ny/(vector?600:4096))));
+    const surface=this.surface=!vector&&context.manifest.provenance?.parameters?.grid_rendering==='surface';
+    const ny=e.shape.at(-2),nx=e.shape.at(-1),step=surface?1:Math.max(1,Math.ceil(Math.sqrt(nx*ny/(vector?600:4096))));
     let heights=null,mask=null;
     if(e.mask_asset){const source=await new NpySource(assetURL(context.baseURL,e.mask_asset),{dtype:'|u1',shape:[ny,nx],axes:'YX'},signal).open();mask=await source.frame(0);source.dispose();if(mask.some(v=>v!==0&&v!==1))throw new Error('Invalid missing-value mask');this.source.invalidMask=mask;}
     if(e.height_asset){const source=await new NpySource(assetURL(context.baseURL,e.height_asset),{dtype:e.height_dtype,shape:[ny,nx],axes:'YX'},signal).open();heights=await source.frame(0);source.dispose();}
@@ -47,6 +48,12 @@ class GridWidget extends DataWidget {
     for(let y=Math.floor(step/2);y<ny;y+=step)for(let x=Math.floor(step/2);x<nx;x+=step){if(mask?.[y*nx+x])continue;this.indices.push(y*nx+x);positions.push([e.origin_m[0]+(x+.5)*e.spacing_m[0],e.origin_m[1]+(y+.5)*e.spacing_m[1],e.origin_m[2]+(heights?.[y*nx+x]||0)]);}
     this.plane=nx*ny;this.vector=vector;const first=await this.source.frame(0);const values=this.extract(first);
     const data={positions,[vector?'vectors':'values']:values};this.initialize(context,{...layer,format:'json',sampling:'static'},data);
+    if(surface){
+      this.instances.geometry.dispose();this.instances.material.dispose();
+      this.instances.geometry=new THREE.PlaneGeometry(e.spacing_m[0]*step,e.spacing_m[1]*step).rotateX(-Math.PI/2);
+      this.instances.material=new THREE.MeshBasicMaterial({transparent:true,opacity:.8,side:THREE.DoubleSide,depthWrite:false,toneMapped:false});
+      this.instances.computeBoundingSphere();this.initialOpacity=.8;
+    }
     this.layer=layer;this.scale=Math.min(...e.spacing_m)*step*.025;this.displayStep=step;this.loadedTime=context.manifest.time.samples[0]||0;
     await this.setTime(this.loadedTime);
   }
@@ -64,6 +71,12 @@ class GridWidget extends DataWidget {
       const weight=high===low?0:(seconds-times[low])/(times[high]-times[low]);const first=this.extract(a),last=this.extract(b);
       this.data[this.vector?'vectors':'values']=first.map((v,i)=>this.vector?v.map((x,j)=>x+(last[i][j]-x)*weight):v+(last[i]-v)*weight);
       const layer=this.layer;this.layer={...layer,sampling:'static'};DataWidget.prototype.setTime.call(this,seconds);this.layer=layer;this.loadedTime=seconds;this.renderedKey=key;
+      if(this.surface && this.layer.id==='shadow'){
+        const shade=new THREE.Color('#121c60'),lit=new THREE.Color('#ffea96');
+        this.current.forEach((v,i)=>this.instances.setColorAt(i,v>=.5?shade:lit));
+        this.instances.instanceColor.needsUpdate=true;
+      }
+      this.context.availability(this.layer.id,true);
     }catch(error){if(!this.disposed&&serial===this.sequence){this.available=false;this.group.visible=false;this.context.availability(this.layer.id,false,error.message);}}finally{if(serial===this.sequence)this.pendingKey=null;}
   }
   pick(query){const hit=super.pick(query);if(hit)hit.display_stride=this.displayStep;return hit;}

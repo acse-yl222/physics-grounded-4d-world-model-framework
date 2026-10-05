@@ -1,0 +1,108 @@
+[
+ {
+  "name": "terrace_victorian",
+  "tags": [
+   "terrace_victorian"
+  ],
+  "learned_from": "city_sk",
+  "cues": "joined row houses 3-5 storeys; brick or white stucco; sash windows taller than wide in vertical bays; ground-floor porticos/doors per unit; pitched or valley roofs, chimney rows; iron railings at street"
+ },
+ {
+  "name": "cbd_tower",
+  "tags": [
+   "cbd_tower"
+  ],
+  "learned_from": "city_cw",
+  "cues": "office tower or slab over ~8 storeys; curtain-wall glass or dense punched grid; flat roof with plant/parapet; podium at street; sometimes rounded corners, setbacks, pyramid or crown top"
+ },
+ {
+  "name": "rail_terminus",
+  "tags": [
+   "rail_terminus"
+  ],
+  "learned_from": "city_sk",
+  "cues": "long low shed with glazed pitched roof on iron/steel trusses; open platform sides; arcaded masonry flank walls; wedge-shaped plan ends possible"
+ },
+ {
+  "name": "canal_house",
+  "tags": [
+   "canal_house"
+  ],
+  "learned_from": "city_ams",
+  "cues": "narrow deep row house 3-5 storeys on a canal or dense old street; gable facing street (stepped/bell/neck gable); large windows stacked; hoist beam at top"
+ },
+ {
+  "name": "machiya",
+  "tags": [],
+  "learned_from": null,
+  "cues": "low wooden townhouse 1-3 storeys; dark timber lattice fronts; tiled pitched roof with deep eaves; narrow frontage, deep plan"
+ },
+ {
+  "name": "brutalist_estate",
+  "tags": [],
+  "learned_from": null,
+  "cues": "exposed board-marked concrete; repeated deep balcony bands or access decks; massive piers/pilotis; towers on podium or long slabs; small windows in heavy frames"
+ },
+ {
+  "name": "gothic_church",
+  "tags": [],
+  "learned_from": null,
+  "cues": "church or chapel; pointed-arch windows, buttresses, tower or spire; steep pitched roof; stone tracery"
+ },
+ {
+  "name": "industrial_shed",
+  "tags": [],
+  "learned_from": null,
+  "cues": "single-storey wide-span shed; profiled metal or brick skin; sawtooth or shallow-pitch roof; roller doors; few windows"
+ },
+ {
+  "name": "shophouse",
+  "tags": [
+   "shophouse"
+  ],
+  "learned_from": "city_del",
+  "cues": "2-4 storey row with continuous shopfronts at ground; living floors above with shuttered windows; covered walkway/arcade possible"
+ },
+ {
+  "name": "panel_housing",
+  "tags": [],
+  "learned_from": null,
+  "cues": "prefabricated concrete-panel apartment slab or tower; strictly repeated window grid; visible panel joints; minimal ornament"
+ },
+ {
+  "name": "courtyard_vernacular",
+  "tags": [],
+  "learned_from": null,
+  "cues": "low buildings around an inner courtyard; thick rendered or mudbrick walls; small windows; flat or low tiled roof"
+ },
+ {
+  "name": "haussmann_block",
+  "tags": [
+   "haussmann_block"
+  ],
+  "learned_from": "city_par",
+  "cues": "5-7 storey stone apartment block; continuous balconies on 2nd/5th floors; mansard roof with dormers; tall shuttered windows"
+ },
+ {
+  "name": "warehouse_conversion",
+  "tags": [
+   "warehouse_conversion"
+  ],
+  "learned_from": "city_ams",
+  "cues": "4-8 storey brick warehouse; large segmental-arch window openings in regular grid; loading doors/hoists; flat or shallow roof"
+ },
+ {
+  "name": "suburban_detached",
+  "tags": [],
+  "learned_from": null,
+  "cues": "free-standing 1-2 storey house with garden; pitched roof; porch/garage; irregular plan"
+ },
+ {
+  "name": "civic_classical",
+  "tags": [
+   "civic_classical"
+  ],
+  "learned_from": "web_260819_51497",
+  "cues": "monumental stone public building; giant-order columns or pilasters; pediment; balustraded parapet; symmetric grand entrance"
+ }
+]

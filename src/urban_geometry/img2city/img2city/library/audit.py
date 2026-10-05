@@ -1,0 +1,156 @@
+"""img2city/library/audit.py -- make the parts library legible: one generated manifest of
+every part (core kit + learned dialects), its parameters, its provenance, and
+its REAL usage across the whole spec corpus -- so growth stays organised.
+
+  python -m img2city.library.audit     # prints summary, writes docs/parts_library.md
+
+Read-only: parses components.py / parts_learned.py ASTs, joins spec_dialect.json
+(cluster + card provenance) and every data/*/buildings/*/spec.json (usage).
+"""
+import ast
+import collections
+import glob
+import json
+import os
+import re
+
+from img2city import config, kit
+
+DATA = str(config.DATA_DIR)
+DOCS = str(config.PROJECT_ROOT / "docs")
+
+
+def parse_parts(path, registry_names):
+    """AST pass: top-level functions + the p.get("param", default) surface."""
+    src = open(path).read()
+    tree = ast.parse(src)
+    parts = {}
+    for node in tree.body:
+        if not isinstance(node, ast.FunctionDef):
+            continue
+        params = []
+        for sub in ast.walk(node):
+            if (isinstance(sub, ast.Call) and isinstance(sub.func, ast.Attribute)
+                    and sub.func.attr == "get" and sub.args
+                    and isinstance(sub.args[0], ast.Constant)
+                    and isinstance(getattr(sub.func.value, "id", None), str)
+                    and sub.func.value.id == "p"):
+                default = None
+                if len(sub.args) > 1:
+                    try:
+                        default = ast.literal_eval(sub.args[1])
+                    except Exception:
+                        default = "…"
+                params.append((sub.args[0].value, default))
+        doc = (ast.get_docstring(node) or "").split("\n")[0][:110]
+        parts[node.name] = {"doc": doc, "params": params,
+                            "lines": (node.lineno, node.end_lineno),
+                            "registered": node.name in registry_names}
+    return parts
+
+
+def registry_names(path, dict_name):
+    """Every name registered across ALL `PARTS_LEARNED = {...}` blocks (the
+    file re-assigns the dict once per adopted cluster section)."""
+    src = open(path).read()
+    names = set()
+    for m in re.finditer(dict_name + r"\s*=\s*\{(.*?)\}", src, re.S):
+        names |= set(re.findall(r'"(\w+)"\s*:', m.group(1)))
+    return names
+
+
+def spec_usage():
+    """How often each extra_parts type / core section appears in real specs."""
+    part_use = collections.Counter()
+    part_areas = collections.defaultdict(set)
+    for sp in glob.glob(os.path.join(DATA, "*", "buildings", "*", "spec.json")):
+        area = sp.split(os.sep)[-4]
+        if area.endswith(("_stale", "_webtest")):
+            continue
+        try:
+            s = json.load(open(sp))
+        except Exception:
+            continue
+        for ep in s.get("extra_parts") or []:
+            t = ep.get("type")
+            if t:
+                part_use[t] += 1
+                part_areas[t].add(area)
+    return part_use, part_areas
+
+
+def dialect_provenance():
+    """spec_dialect.json entries: {region/card, cluster, line "part: {...}"}."""
+    p = str(kit.SPEC_DIALECT_JSON)
+    prov = {}
+    if os.path.exists(p):
+        try:
+            for entry in json.load(open(p)):
+                line = entry.get("line", "")
+                for name in re.findall(r"(\w+)\s*:\s*\{", line):
+                    prov.setdefault(name, (entry.get("region", "?"),
+                                           entry.get("cluster", "?")))
+        except Exception:
+            pass
+    return prov
+
+
+def main():
+    import argparse
+    argparse.ArgumentParser(
+        description="Parts-library manifest: registered vs used learned parts; "
+                    "writes docs/parts_library.md.").parse_args()
+    learned_reg = registry_names(str(kit.PARTS_LEARNED_PY), "PARTS_LEARNED")
+    learned = parse_parts(str(kit.PARTS_LEARNED_PY), learned_reg)
+    use, areas_of = spec_usage()
+    prov = dialect_provenance()
+
+    # helper functions vs real parts: a part takes (p, i); helpers differ
+    rows = []
+    for name, info in learned.items():
+        if not info["params"] and not info["registered"] and use[name] == 0:
+            continue                      # pure helper
+        rows.append({
+            "name": name,
+            "cluster": "/".join(prov.get(name, ("unadopted",))[:1]) +
+                       ("·" + prov[name][1] if name in prov else ""),
+            "registered": info["registered"],
+            "used": use[name],
+            "areas": sorted(areas_of[name]),
+            "n_params": len(dict(info["params"])),
+            "lines": info["lines"],
+            "doc": info["doc"],
+        })
+    rows.sort(key=lambda r: (-r["used"], r["name"]))
+
+    dup = [r["name"] for r in rows
+           if sum(1 for q in rows if q["name"] == r["name"]) > 1]
+    unused = [r["name"] for r in rows if r["used"] == 0 and r["registered"]]
+
+    lines_md = ["# Parts library manifest (generated by library/audit.py)",
+                "",
+                "| part | cluster | used | areas | params | source lines |",
+                "|---|---|---:|---|---:|---|"]
+    print(f"{'part':<24}{'cluster':<18}{'used':>5}  areas")
+    for r in rows:
+        reg = "" if r["registered"] else "  (NOT in PARTS_LEARNED!)"
+        print(f"{r['name']:<24}{r['cluster']:<18}{r['used']:>5}  "
+              f"{','.join(a.replace('city_','') for a in r['areas'])}{reg}")
+        lines_md.append(
+            f"| `{r['name']}` | {r['cluster']} | {r['used']} | "
+            f"{', '.join(a.replace('city_', '') for a in r['areas'])} | "
+            f"{r['n_params']} | {r['lines'][0]}–{r['lines'][1]} |")
+    print(f"\nlearned parts: {len(rows)} | unused-but-registered: {unused or 'none'}"
+          f" | duplicate names: {dup or 'none'}")
+    lines_md += ["", f"Unused but registered: {unused or 'none'}",
+                 f"Duplicate names: {dup or 'none'}", "",
+                 "Core-kit sections (components.py) are covered by "
+                 "`docs/building_params.md`; this manifest tracks the LEARNED tier."]
+    os.makedirs(DOCS, exist_ok=True)
+    out = os.path.join(DOCS, "parts_library.md")
+    open(out, "w").write("\n".join(lines_md) + "\n")
+    print(f"manifest -> {out}")
+
+
+if __name__ == "__main__":
+    main()

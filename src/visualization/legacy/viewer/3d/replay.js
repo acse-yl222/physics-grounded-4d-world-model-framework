@@ -8,10 +8,12 @@ import { allocateHubParking } from '../../agents/demo_rev02/parking.js';
 import { createFollowCamera } from '../../agents/demo_rev02/follow-camera.js';
 import { createBirdLayer } from '../../agents/demo_rev02/birds.js';
 
-export const DEMO = new URL('../../agents/demo_rev02/', import.meta.url).href;
+import {loadScene} from '../scene.js';
+const customScene = new URLSearchParams(location.search).has('scene_config') ? await loadScene() : null;
+export const DEMO = customScene?.replay_base ? customScene.url(customScene.replay_base) : new URL('../../agents/demo_rev02/', import.meta.url).href;
 const SUMO_OX = 2912.594719173, SUMO_OZ = 1704.705026026;   // SUMO -> world: X = x - OX, Z = OZ - y
 const CAR_STOPPED = 0.1;
-const CAMPUS_BOX = { min: [514, -9], max: [897, 324] };      // Imperial College buildings (X, Z)
+const CAMPUS_BOX = customScene?.replay_focus ?? { min: [514, -9], max: [897, 324] };      // Imperial College buildings (X, Z)
 const JUNCTION_MAX_M = 165;                                   // junctions at most this far from the campus box (its ring roads)
 function distToCampusBox(x, z) { return Math.hypot(Math.max(CAMPUS_BOX.min[0] - x, 0, x - CAMPUS_BOX.max[0]), Math.max(CAMPUS_BOX.min[1] - z, 0, z - CAMPUS_BOX.max[1])); }
 async function readJSON(url, optional = false) { const r = await fetch(url); if (!r.ok) { if (optional && r.status === 404) return null; throw new Error(`${url}: ${r.status}`); } return r.json(); }
@@ -30,11 +32,11 @@ export async function applyCityFilter(cityScene) {
 }
 
 export const SHOTS = {
-  overview: { label: 'Imperial College campus · traffic and UAV overview', dur: 11, speed: 2 },
+  overview: { label: customScene ? 'Img2City · 原版交通和无人机回放（未重算）' : 'Imperial College campus · traffic and UAV overview', dur: 11, speed: 2 },
   junction: { label: 'Busiest signalised junction around the campus', dur: 14, speed: 1 },
   traffic: { label: 'Traffic · overhead (drivable lanes, cars, signals)', dur: 14, speed: 2 },
   uavs: { label: 'UAVs · wide view (campus, nearby hubs and stations)', dur: 14, speed: 2 },
-  birds: { label: 'Birds · tracking the flock (Akira flock model replay)', dur: 16, speed: 1 },
+  birds: { label: customScene?.bird_sample_loop ? 'Birds · Img2City CPU · 40 birds / 120 s sample loop' : 'Birds · tracking the flock (Akira flock model replay)', dur: 16, speed: 1 },
 };
 export const SHOT_ORDER = ['overview', 'junction', 'traffic', 'uavs', 'birds'];
 const BIRD_STATES = ['foraging', 'transit', 'murmuration', 'descending', 'roosting'];
@@ -211,7 +213,8 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
       const show = (R.followKind === 'uav' && u.idIndex === R.followId) || !seen.has(u.station); if (show) seen.add(u.station); return { ...u, visible: show };
     });
     actors.updateUavs(displayed); actors.updateCars(R.cars); signalLayer?.update(trafficTime(t));
-    const birds = birdLayer ? birdLayer.update(t) : null;
+    const birdT=customScene?.bird_sample_loop && birdLayer ? birdLayer.stats.first_t_s + ((Math.max(0,t-birdLayer.stats.first_t_s)) % (birdLayer.stats.last_t_s-birdLayer.stats.first_t_s)) : t;
+    const birds = birdLayer ? birdLayer.update(birdT) : null;
     let n = 0; const mp = markerGeom.attributes.position.array, mc = markerGeom.attributes.color.array, col = new THREE.Color();
     for (const u of R.uavs) { if (!u.airborne || u.opacity < 0.3) continue; mp[n * 3] = u.x; mp[n * 3 + 1] = u.y + 3; mp[n * 3 + 2] = u.z; col.set(u.color === '#f2924b' ? '#ff7a1a' : u.color === '#2563eb' ? '#4f8cff' : '#ffd23c'); mc[n * 3] = col.r; mc[n * 3 + 1] = col.g; mc[n * 3 + 2] = col.b; n++; }
     markerGeom.setDrawRange(0, n); markerGeom.attributes.position.needsUpdate = true; markerGeom.attributes.color.needsUpdate = true;
@@ -226,7 +229,7 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
     const air = R.uavs.filter(u => u.airborne).length;
     const done = replay.deliveries.filter(d => d.dropoff_s <= t).length;
     R.stats = `Cars on the network ${R.cars.length} (${moving} moving) · ${near} within 450 m of campus\nUAVs airborne ${air} · delivered ${done}/600` + (traffic && traffic.lastTime < 3600 ? `\nTraffic: ${traffic.lastTime - traffic.firstTime} s sample looping (at ${timeString(trafficTime(t))}); full-hour files not placed in demo_rev02` : '');
-    if (birds && birds.present) { const names = ['foraging', 'transit', 'murmuration', 'descending', 'roosting']; R.stats += `\nBirds ${birds.present} (flock model replay): ` + birds.stateCounts.map((n, k) => n ? `${n} ${names[k]}` : '').filter(Boolean).join(' · '); }
+    if (birds && birds.present) { const names = ['foraging', 'transit', 'murmuration', 'descending', 'roosting']; R.stats += `\nBirds ${birds.present} (${customScene?.bird_sample_loop ? 'Img2City CPU · 120 s sample loop · '+timeString(birdT) : 'flock model replay'}): ` + birds.stateCounts.map((n, k) => n ? `${n} ${names[k]}` : '').filter(Boolean).join(' · '); }
   }
   function junctionCandidates(maxDist = JUNCTION_MAX_M) {
     const byTls = new Map();

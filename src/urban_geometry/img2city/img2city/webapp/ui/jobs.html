@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Jobs · Parametric City</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/i18n.js"></script>
+<style>
+pre.log { background: #0e1116; border: 1px solid var(--border); border-radius: 8px;
+  padding: 8px 10px; font-size: 11px; line-height: 1.45; max-height: 200px;
+  overflow: auto; white-space: pre-wrap; word-break: break-all; color: #9fb0c3; }
+.stage { display: flex; justify-content: space-between; font-size: 13px; padding: 2px 0; }
+.stage .ok { color: var(--ok); }
+.stage .off { color: var(--muted); }
+#jobs-list .group { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <span class="title" data-i18n="site.title"></span>
+  <span class="nav">
+    <a href="/" data-i18n="nav.areas"></a>
+    <a href="/map.html" data-i18n="nav.map"></a>
+    <a href="/upload.html" data-i18n="nav.upload"></a>
+  </span>
+</div>
+<div class="wrap">
+  <h1 data-i18n="jobs.h1"></h1>
+  <p style="color:var(--muted)" data-i18n="jobs.tip"></p>
+  <div id="jobs-list"></div>
+</div>
+<script src="/js/topbar.js"></script>
+<script src="/js/jobcard.js"></script>
+<script>
+async function refresh() {
+  const list = await (await fetch('/api/jobs')).json();
+  const holder = document.getElementById('jobs-list');
+  if (!list.length) {
+    holder.innerHTML = `<div class="placeholder">${t('jobs.none')}</div>`;
+    return;
+  }
+  // fetch full detail (log tail) for active jobs only
+  const html = [];
+  for (const j of list) {
+    let full = j;
+    if (['quoting', 'running', 'awaiting_confirm'].includes(j.status)) {
+      try { full = await (await fetch(`/api/jobs/${j.id}`)).json(); } catch (e) {}
+    }
+    const wrap = document.createElement('div');
+    wrap.dataset.jid = j.id;
+    wrap.innerHTML = jobCardHTML(full, { log: full !== j });
+    html.push(wrap);
+  }
+  holder.replaceChildren(...html);
+  for (const w of html) bindJobActions(w, w.dataset.jid);
+}
+document.addEventListener('DOMContentLoaded', () => {
+  refresh();
+  setInterval(refresh, 3000);
+});
+</script>
+</body>
+</html>

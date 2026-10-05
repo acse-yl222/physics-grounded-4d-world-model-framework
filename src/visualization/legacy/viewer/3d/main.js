@@ -51,7 +51,7 @@ const HAS_REPLAY = SCENE.replay === 'demo_rev02';   // the South Kensington traf
 const MODEL = SCENE.model;
 const PHASE_ORDER = (SCENE.phase_order ?? ['wind', 'temp', 'solar', 'diurnal', 'poll', 'flood']).filter(has);
 const TAB_NAME = { wind: 'Wind', temp: 'Temperature', solar: 'Sunlight', diurnal: 'Day cycle', poll: 'Pollution', flood: 'Flooding' };
-const TREE_NODE = /simplified canopy|simplified trunk|inherited tre|\btrees?\b|canopy|crown|hedge|planting|planter/i;
+const TREE_NODE = /Veg_|Tree_|simplified canopy|simplified trunk|inherited tre|\btrees?\b|canopy|crown|hedge|planting|planter/i;
 const TREE_MAT = /broadleaf|crown|tree bark|hedge|foliage|grass|substrate|shrub|lawn|leaves|planting/i;
 const FILES = {
   wind: LAYERS.wind?.file, poll: LAYERS.poll?.file, temp: LAYERS.temp?.file,
@@ -108,6 +108,13 @@ function setupSceneUI() {
   if (SCENE.limits?.length) { $('limits').replaceChildren(...SCENE.limits.map(t => { const d = document.createElement('div'); d.textContent = '· ' + t; return d; })); }
 }
 setupSceneUI();
+if(SCENE.integration_note)ui.auto.checked=false;
+if(SCENE.integration_note){const note=document.createElement('div');note.textContent=SCENE.integration_note;note.style.cssText='position:fixed;bottom:78px;left:16px;max-width:min(620px,calc(100vw - 350px));padding:8px 12px;background:#132938ee;border:1px solid #6ca7c2;border-radius:6px;font-size:12px;line-height:1.6;z-index:5;pointer-events:none';$('title').after(note);}
+if(SCENE.unavailable_modules?.length){
+ const box=document.createElement('div');box.className='hint limits';
+ for(const module of SCENE.unavailable_modules){const p=document.createElement('p');p.textContent=module.label+'：'+module.reason;box.append(p);const tab=document.createElement('button');tab.className='tab';tab.textContent=module.label+' · 未计算';tab.title=module.reason;tab.disabled=true;box.append(tab);}
+ $('limits').before(box);
+}
 const shotButtons = [...document.querySelectorAll('.shot[data-shot]')];
 const fieldButtons = [...document.querySelectorAll('.field[data-field]')];
 let section = 'campus';   // 'campus' (the site tour: replay shots, or the plain orbit) | 'fields' (overhead physics fields) | 'free'
@@ -168,7 +175,8 @@ const model = new THREE.Group();
 scene.add(model);
 
 // ------------------------------------------------------------------ field planes (textures), one per layer on its own grid
-const planes = {};
+const planes = {};let surfaceInvalid=null;
+function maskSurface(P){if(!surfaceInvalid||P.g.w*P.g.h!==surfaceInvalid.length)return;for(let i=0;i<surfaceInvalid.length;i++)if(surfaceInvalid[i])P.data[i*4+3]=0;P.tex.needsUpdate=true;}
 function makePlane(key, g, y, opacity, renderOrder, magFilter = THREE.LinearFilter) {
   const data = new Uint8Array(g.w * g.h * 4);
   const tex = new THREE.DataTexture(data, g.w, g.h, THREE.RGBAFormat);
@@ -197,7 +205,7 @@ function uploadShadow(u8) {
   for (let i = 0, o = 0; i < n; i++, o += 4) {
     if (u8[i]) { d[o] = 18; d[o + 1] = 28; d[o + 2] = 96; d[o + 3] = 158; } else { d[o] = 255; d[o + 1] = 234; d[o + 2] = 150; d[o + 3] = 80; }   // shade: blue-violet veil; sun: warm wash
   }
-  shadowPlane.tex.needsUpdate = true;
+  maskSurface(shadowPlane);shadowPlane.tex.needsUpdate = true;
 }
 /** packed shadow rows (uint8 [rows, cols/8], numpy packbits axis 1) -> Uint8Array 0/1 of the fine grid */
 function unpackBits(packed, g) {
@@ -323,7 +331,7 @@ function paintSolar(vals) {
     else { d[o] = 255; d[o + 1] = 234; d[o + 2] = 150; d[o + 3] = 80; }
   }
   ui.solarOpen.textContent = dusk ? 'dusk' : `${solarOpen.toFixed(0)} open sky`;
-  solarPlane.tex.needsUpdate = true;
+  maskSurface(solarPlane);solarPlane.tex.needsUpdate = true;
 }
 const diurnalArray = () => FILES.diurnal[ui.diurnalMode.value.replace('Rel', '')];
 const diurnalSeries = () => manifest?.temperature3d_solar?.diurnal?.[LAYERS.diurnal?.series ?? 'diurnal_2026-06-21'];
@@ -958,6 +966,16 @@ async function boot() {
   const M = SCENE.masks ?? {};
   let dataError = null;
   const dataReady = (async () => {
+    if(SCENE.surface_invalid)surfaceInvalid=await loadMask(SCENE.surface_invalid);
+    if(SCENE.surface_height){
+      const heights=await npy(SCENE.surface_height).readAll();
+      if(heights.length!==W*H)throw new Error('Surface height grid mismatch');
+      for(const key of ['solar','shadow']){const P=planes[key];if(!P)continue;
+        const g=new THREE.PlaneGeometry(SPAN_X,SPAN_Z,W-1,H-1);g.rotateX(-Math.PI/2);
+        const a=g.attributes.position;for(let i=0;i<a.count;i++){const x=Math.min(W-1,Math.floor((a.getX(i)+SPAN_X/2)/CELL)),y=Math.min(H-1,Math.floor((SPAN_Z/2-a.getZ(i))/CELL));a.setY(i,heights[y*W+x]);}
+        g.computeVertexNormals();P.mesh.geometry.dispose();P.mesh.geometry=g;P.mesh.rotation.x=0;
+      }
+    }
     await initFrames(); console.log('field frames:', framesInfo());
     for (const [cell, file] of Object.entries(M.footprint ?? {})) footprints[+cell] = await loadMask(file);
     if (M.solid_wind && has('wind')) solidWind = await npy(M.solid_wind.file).read(M.solid_wind.layer ?? 0);
@@ -976,6 +994,7 @@ async function boot() {
     : new Promise((resolve, reject) => loader.load(TILE.url, resolve, ev => { tileMB = ` · tile ${(ev.loaded / 1048576).toFixed(0)} / ${(TILE.bytes / 1048576).toFixed(0)} MB`; }, reject))
       .catch(e => { console.error('detail tile failed to load', e); return null; });
   const onCity = (gltf, resolve) => {
+      if(MODEL.matrix)gltf.scene.applyMatrix4(new THREE.Matrix4().fromArray(MODEL.matrix));
       // scene.json model.recolor: [{match: <regex on the material name>, color}] - e.g. the White City GLB paints its parks a
       // muted sage that reads as grey next to the roads; the viewer shows vegetation in a clearer green (the file is untouched).
       // model.lift: [{match, dy}] raises meshes whose material matches (the same GLB buries its park grass 7 cm under the ground plate).
