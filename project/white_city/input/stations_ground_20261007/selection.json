@@ -1,0 +1,71 @@
+{
+  "method": "Farthest-point spread on supported 6x6m ground patches; free padded 8m columns; 8m road/canopy clearance",
+  "geometry": {
+    "source": "/home/yl222/workspace/UrbanWorldModel/output/white_city/source/white_city_9km2_compressed_162MB.glb",
+    "source_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09",
+    "bounds_local_xyz_m": [
+      [
+        -1277.7265625,
+        -2352.068359375,
+        -1.5
+      ],
+      [
+        1884.351806640625,
+        845.5381469726562,
+        138.5
+      ]
+    ],
+    "source_region_origin_xyz_m": [
+      -1492.0,
+      -2548.0,
+      0.0
+    ],
+    "shape_zyx": [
+      96,
+      1792,
+      1792
+    ],
+    "spacing_xyz_m": [
+      2,
+      2,
+      2
+    ],
+    "axis_order": "zyx",
+    "gltf_to_local_xyz": "(x,-z,y)",
+    "horizontal_orientation": "assumed x east, -gltf_z north; not georeferenced",
+    "cell_centres": "local_xyz = origin + (index_xyz + 0.5) * 2 metres",
+    "max_building_z_m": 138.5,
+    "primitives_above_wind_domain": 1,
+    "footprint_fraction": 0.21130464514907527,
+    "classification_counts": {
+      "building": 41044,
+      "asphalt": 105,
+      "canopy": 8,
+      "excluded": 14,
+      "grass": 6,
+      "paving": 80,
+      "ground": 3
+    },
+    "ground_mesh_range_m": [
+      -0.10166323184967041,
+      0.0
+    ],
+    "georeferenced": false,
+    "method": "2 m cell-centre barycentric triangle sampling; maximum roof; solid columns from z=0; excludes foliage and ground materials",
+    "limits": [
+      "Semantic classification inferred from names/materials; not supplied building labels.",
+      "Overhangs and bridges become solid columns; thin features may be missed.",
+      "Ground mesh is not a verified terrain elevation model.",
+      "Full geometry retained; wind workflow uses bottom 128 m."
+    ],
+    "seconds": 10.938793420791626
+  },
+  "rasters": {
+    "height_m.npy": "7a93cfc4fb68d30d6021dd743dcf512d8ad7ca6b1b5be54b6c05424db2a51fd9",
+    "ground_mesh_m_yx.npy": "f298cc82d3118f7a04474d10838a138baf74cdaf53170c156c5fb56e5eb29b49",
+    "ground_mesh_valid_yx.npy": "2f0a060d10d29f916e8ec9c8c9e11fdd1c02d3922663bd9389476df4b773a6a7",
+    "asphalt_8m_yx.npy": "b96a1b80e7b68b11c9b86de98e785056f9d72628b0bcb12107be8e53722ebd20",
+    "canopy_8m_yx.npy": "d2b7defca39bf46dbfda82dbe55f723fdf8cfd3db40c7845905f20dcfe4acbf4"
+  },
+  "candidate_count": 240978
+}
