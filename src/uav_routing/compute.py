@@ -1,7 +1,7 @@
-"""Reproducible South Kensington Wave PDE all-pairs airborne routing pilot.
+"""Reproducible scene-specific Wave PDE all-pairs ground routing.
 
-Uses current baked geometry rasterized by the framework prepare_glb adapter.
-Endpoints are elevated flight gates, NOT certified rooftop takeoff/landing paths.
+Uses scene geometry rasterized by the framework prepare_glb adapter.
+Ground mode adds 30m vertical legs; sites are model-derived, not surveyed.
 """
 import argparse
 from collections import Counter
@@ -24,6 +24,7 @@ def write_json(path, value):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--scene', choices=['south_ken', 'white_city'], default='south_ken')
     ap.add_argument('--output', type=Path, required=True)
     ap.add_argument('--framework', type=Path, default=Path(__file__).resolve().parents[2])
     ap.add_argument('--sources', type=int, default=30)
@@ -37,7 +38,7 @@ def main():
     meta = json.loads((geo / 'metadata.json').read_text())
     from common.storage import Storage
     storage = Storage.load(args.framework)
-    station_file = args.station_file or storage.assets('south_ken', 'input') / 'stations_ground_20261007/stations.json'
+    station_file = args.station_file or storage.assets(args.scene, 'input') / 'stations_ground_20261007/stations.json'
     stations = json.loads(station_file.read_text())
     fine = np.load(geo / 'height_m.npy')
     # Include sampled canopy heights if available in future adapter exports.
@@ -136,7 +137,7 @@ def main():
         del result
     np.save(out/'travel_time_matrix_s.npy',matrix)
     np.savetxt(out/'travel_time_matrix_s.csv',matrix,delimiter=',',header=','.join(s['label'] for s in stations),comments='')
-    summary = dict(scene='south_ken',cfg=asdict(cfg),spacing_m=cell,shape_xyz=list(mask.shape),origin_enu_m=origin.tolist(),
+    summary = dict(scene=args.scene,cfg=asdict(cfg),spacing_m=cell,shape_xyz=list(mask.shape),origin_enu_m=origin.tolist(),
                    ground_mode=args.ground_mode,waveform='gaussian_long',routes=routes,successes=sum(r['success'] for r in routes),total=len(routes),
                    elapsed_this_invocation_s=time.time()-started,geometry=meta,
                    station_sha256=hashlib.sha256(station_file.read_bytes()).hexdigest(),

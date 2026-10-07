@@ -57,3 +57,33 @@ visited by multiple UAVs at once. Ground site locations are model-derived.
 
 Checks: `node --test tests/test_random_uav.mjs`; validate the retained manifest with
 `python tools/check_contract.py project/south_ken/runs/wavepde_ground_20261007_8m/manifest.json`.
+
+## White City
+
+The White City viewer also shows 300 independent UAVs on 870 computed directed
+routes. Its 30 demonstration sites (3 hubs, 9 collection, 18 dropoff) are selected
+from White City's own geometry, not transferred from South Kensington. Sites use
+supported 6 × 6 m ground patches, free padded routing columns, and at least 8 m
+sampled road/canopy clearance. The first is near the scene origin; the remaining
+sites use deterministic farthest-point placement. These are not surveyed landing
+facilities. Existing White City traffic and transport layers remain independent.
+
+Use the prepared White City voxel directory, including `height_m.npy`, ground
+height/valid rasters and 8 m asphalt/canopy masks:
+
+```bash
+PYTHONPATH=src python -m uav_routing.ground_sites --scene white_city --geometry /path/to/voxel_2m
+PYTHONPATH=src python -m uav_routing.compute --scene white_city --geometry /path/to/voxel_2m \
+  --ground-mode --output cache/white_city/wavepde/my_run
+PYTHONPATH=src python -m uav_routing.audit --scene white_city --geometry /path/to/voxel_2m \
+  --wave-repo /path/to/WavePde-UAV-Path-Model --output cache/white_city/wavepde/my_run --run-id my_run
+PYTHONPATH=src python -m uav_routing.export --scene white_city --run-id my_run
+```
+
+The audit retains the source snapshot, numerical inputs and paths, and independently
+checks grid intersections, endpoints, 30 m vertical legs and model travel times.
+`project/white_city/configs/uav_visualization.json` selects the published preview.
+The UAV tab shares the viewer's playback controls; route lines appear in this tab,
+and the layer hides in physics views. Full buildings: `?scene=white_city&lite=0&pose=campus&shot=uavs&hold=1`.
+Browser check: `node tests/browser_white_city_uav.cjs` with `PUPPETEER_MODULE`,
+`CHROME_PATH` and optionally `UWM_VIEWER_URL` set for the test environment.

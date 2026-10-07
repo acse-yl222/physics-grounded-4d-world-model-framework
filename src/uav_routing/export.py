@@ -11,8 +11,9 @@ from common.storage import Storage
 
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
+    ap.add_argument('--scene', choices=['south_ken', 'white_city'], default='south_ken')
     ap.add_argument('--run-id',default='wavepde_ground_20261007_8m')
-    args=ap.parse_args();storage=Storage.load();run=storage.run('south_ken',args.run_id)
+    args=ap.parse_args();storage=Storage.load();run=storage.run(args.scene,args.run_id)
     summary=json.loads((run/'summary.json').read_text());stations=json.loads((run/'stations_enu.json').read_text())
     if not summary.get('ground_mode'):raise ValueError('Ground-to-ground routes required')
     target=run/'uav_visualization';target.mkdir(exist_ok=False)

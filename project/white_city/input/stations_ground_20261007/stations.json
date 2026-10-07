@@ -1,0 +1,542 @@
+[
+  {
+    "id": 1,
+    "station_id": "H1",
+    "label": "H1",
+    "role": "hub",
+    "name": "White City H1 (model ground site)",
+    "xyz": [
+      -35.0,
+      0.08106362968683242,
+      13.0
+    ],
+    "ground_surface_enu_z_m": -0.06893637031316757,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 2,
+    "station_id": "H2",
+    "label": "H2",
+    "role": "hub",
+    "name": "White City H2 (model ground site)",
+    "xyz": [
+      1715.0,
+      0.0641312837600708,
+      2123.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 26.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 3,
+    "station_id": "H3",
+    "label": "H3",
+    "role": "hub",
+    "name": "White City H3 (model ground site)",
+    "xyz": [
+      -1171.0,
+      0.0641312837600708,
+      2171.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 32.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 4,
+    "station_id": "C1",
+    "label": "C1",
+    "role": "collection",
+    "name": "White City C1 (model ground site)",
+    "xyz": [
+      1783.0,
+      0.0641312837600708,
+      -745.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 14.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 5,
+    "station_id": "C2",
+    "label": "C2",
+    "role": "collection",
+    "name": "White City C2 (model ground site)",
+    "xyz": [
+      1333.0,
+      0.0641312837600708,
+      667.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 26.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 6,
+    "station_id": "C3",
+    "label": "C3",
+    "role": "collection",
+    "name": "White City C3 (model ground site)",
+    "xyz": [
+      267.0,
+      0.0641312837600708,
+      1901.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 16.1245154965971,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 7,
+    "station_id": "C4",
+    "label": "C4",
+    "role": "collection",
+    "name": "White City C4 (model ground site)",
+    "xyz": [
+      -1177.0,
+      0.0641312837600708,
+      787.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 34.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 8,
+    "station_id": "C5",
+    "label": "C5",
+    "role": "collection",
+    "name": "White City C5 (model ground site)",
+    "xyz": [
+      -1177.0,
+      0.0641312837600708,
+      -745.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 48.08326112068523,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 9,
+    "station_id": "C6",
+    "label": "C6",
+    "role": "collection",
+    "name": "White City C6 (model ground site)",
+    "xyz": [
+      691.0,
+      0.0641312837600708,
+      -745.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 36.05551275463989,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 10,
+    "station_id": "C7",
+    "label": "C7",
+    "role": "collection",
+    "name": "White City C7 (model ground site)",
+    "xyz": [
+      -99.0,
+      0.0641312837600708,
+      991.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 11,
+    "station_id": "C8",
+    "label": "C8",
+    "role": "collection",
+    "name": "White City C8 (model ground site)",
+    "xyz": [
+      1077.0,
+      0.0641312837600708,
+      1513.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 43.68065933568311,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 12,
+    "station_id": "C9",
+    "label": "C9",
+    "role": "collection",
+    "name": "White City C9 (model ground site)",
+    "xyz": [
+      -325.0,
+      0.0641312837600708,
+      -745.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 13,
+    "station_id": "D1",
+    "label": "D1",
+    "role": "dropoff",
+    "name": "White City D1 (model ground site)",
+    "xyz": [
+      -531.0,
+      0.0641312837600708,
+      1675.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 24.08318915758459,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 14,
+    "station_id": "D2",
+    "label": "D2",
+    "role": "dropoff",
+    "name": "White City D2 (model ground site)",
+    "xyz": [
+      -843.0,
+      0.0641312837600708,
+      35.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 15,
+    "station_id": "D3",
+    "label": "D3",
+    "role": "dropoff",
+    "name": "White City D3 (model ground site)",
+    "xyz": [
+      755.0,
+      0.0641312837600708,
+      75.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 24.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 16,
+    "station_id": "D4",
+    "label": "D4",
+    "role": "dropoff",
+    "name": "White City D4 (model ground site)",
+    "xyz": [
+      1783.0,
+      0.0641312837600708,
+      1259.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 34.17601498127012,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 17,
+    "station_id": "D5",
+    "label": "D5",
+    "role": "dropoff",
+    "name": "White City D5 (model ground site)",
+    "xyz": [
+      621.0,
+      0.0641312837600708,
+      797.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 18,
+    "station_id": "D6",
+    "label": "D6",
+    "role": "dropoff",
+    "name": "White City D6 (model ground site)",
+    "xyz": [
+      915.0,
+      0.0641312837600708,
+      2213.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.246211251235321,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 19,
+    "station_id": "D7",
+    "label": "D7",
+    "role": "dropoff",
+    "name": "White City D7 (model ground site)",
+    "xyz": [
+      1451.0,
+      0.0641312837600708,
+      -99.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 20,
+    "station_id": "D8",
+    "label": "D8",
+    "role": "dropoff",
+    "name": "White City D8 (model ground site)",
+    "xyz": [
+      -285.0,
+      0.0641312837600708,
+      2235.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 21,
+    "station_id": "D9",
+    "label": "D9",
+    "role": "dropoff",
+    "name": "White City D9 (model ground site)",
+    "xyz": [
+      -557.0,
+      0.0641312837600708,
+      573.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 22,
+    "station_id": "D10",
+    "label": "D10",
+    "role": "dropoff",
+    "name": "White City D10 (model ground site)",
+    "xyz": [
+      -1157.0,
+      0.0641312837600708,
+      1581.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 31.622776601683793,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 23,
+    "station_id": "D11",
+    "label": "D11",
+    "role": "dropoff",
+    "name": "White City D11 (model ground site)",
+    "xyz": [
+      -731.0,
+      0.0641312837600708,
+      1149.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 14.142135623730951,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 24,
+    "station_id": "D12",
+    "label": "D12",
+    "role": "dropoff",
+    "name": "White City D12 (model ground site)",
+    "xyz": [
+      1243.0,
+      0.0641312837600708,
+      -613.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 25,
+    "station_id": "D13",
+    "label": "D13",
+    "role": "dropoff",
+    "name": "White City D13 (model ground site)",
+    "xyz": [
+      315.0,
+      0.0641312837600708,
+      1331.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 26,
+    "station_id": "D14",
+    "label": "D14",
+    "role": "dropoff",
+    "name": "White City D14 (model ground site)",
+    "xyz": [
+      277.0,
+      0.0641312837600708,
+      -421.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 31.622776601683793,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 27,
+    "station_id": "D15",
+    "label": "D15",
+    "role": "dropoff",
+    "name": "White City D15 (model ground site)",
+    "xyz": [
+      209.0,
+      0.0641312837600708,
+      475.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 10.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 28,
+    "station_id": "D16",
+    "label": "D16",
+    "role": "dropoff",
+    "name": "White City D16 (model ground site)",
+    "xyz": [
+      -751.0,
+      0.0641312837600708,
+      -467.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 82.21921916437786,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 29,
+    "station_id": "D17",
+    "label": "D17",
+    "role": "dropoff",
+    "name": "White City D17 (model ground site)",
+    "xyz": [
+      1033.0,
+      0.0641312837600708,
+      1037.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 36.76955262170047,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  },
+  {
+    "id": 30,
+    "station_id": "D18",
+    "label": "D18",
+    "role": "dropoff",
+    "name": "White City D18 (model ground site)",
+    "xyz": [
+      1701.0,
+      0.0641312837600708,
+      371.0
+    ],
+    "ground_surface_enu_z_m": -0.0858687162399292,
+    "marker_offset_m": 0.15,
+    "full_coarse_column_free": true,
+    "road_canopy_clearance_sampled_m": 8.0,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "d6bfdfdc9e43a199bf404c29bd3f992892db9cc351614f5126d0768b83bcca09"
+  }
+]
