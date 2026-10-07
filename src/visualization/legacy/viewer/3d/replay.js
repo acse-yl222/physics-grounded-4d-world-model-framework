@@ -1,10 +1,10 @@
 // Traffic + UAV replay layer for the integrated page. Reuses demo_rev02's actor / signal / station /
-// parking / follow-camera modules and data files unchanged (SUMO traffic sample, NVMF UAV schedule).
+// follow-camera modules; UAVs use independent random Wave PDE ground-to-ground flights.
 import * as THREE from 'three';
 import { createActorLayer, sumoHeadingToWorldYaw, carColorForId } from '../../agents/demo_rev02/actors/actor-layer.js';
 import { addStations, addRoadSurfaces } from '../../agents/demo_rev02/stations.js';
 import { createSignalLayerV2 } from '../../agents/demo_rev02/signals-v2.js';
-import { allocateHubParking } from '../../agents/demo_rev02/parking.js';
+import { loadRandomUav } from './random-uav.mjs';
 import { createFollowCamera } from '../../agents/demo_rev02/follow-camera.js';
 import { createBirdLayer } from '../../agents/demo_rev02/birds.js';
 
@@ -42,14 +42,17 @@ const UAV_MACRO_SCALE = 4;   // cargo UAVs are 1.3 m wide; enlarged only in the 
 
 export async function createReplay({ scene, camera, controls, campusCentre, campusPose, flyTo, onProgress = () => {} }) {
   const group = new THREE.Group(); group.name = 'Replay layers'; scene.add(group);
-  const stationById = new Map(), routeByKey = new Map(), parkingById = new Map(), carIdentities = new Map();
+  const stationById = new Map(), carIdentities = new Map();
   const nearStations = new Set();
-  let actors, stationLayer, signalLayer, roadMesh, hubParking, replay = null, traffic = null, stations = [], parking = [], bayLibrary = null, birdLayer = null;
+  let actors, stationLayer, signalLayer, roadMesh, traffic = null, stations = [], parking = [], birdLayer = null;
 
   onProgress('Reading stations and routes…');
-  let routes;
-  [stations, parking, routes, bayLibrary] = await Promise.all([readJSON(DEMO + 'data/stations.json'), readJSON(DEMO + 'data/parking.json'), readJSON(DEMO + 'data/routes.json'), readJSON(DEMO + 'data/hub-bays.json')]);
-  parking = parking.parking; stations.forEach(s => stationById.set(s.station_id, s)); parking.forEach(p => parkingById.set(p.uav_id, p)); routes.routes.forEach(r => routeByKey.set(r.from_station + '-' + r.to_station, r));
+  const routeConfigURL = new URL((import.meta.url.includes('/src/visualization/legacy/') ? '../../../../../' : '../../') + 'project/south_ken/configs/uav_visualization.json', import.meta.url);
+  const routeConfig = await readJSON(routeConfigURL);
+  const flightData = await loadRandomUav(new URL(routeConfig.routes, routeConfigURL), {count:routeConfig.uav_count,seed:routeConfig.seed});
+  stations = flightData.stations;
+  const routes = {routes: flightData.routes};
+  stations.forEach(s => stationById.set(s.station_id, s));
   for (const s of stations) if (Math.hypot(s.x_m - campusCentre.x, s.z_m - campusCentre.z) < 650) nearStations.add(s.station_id);
 
   onProgress('Cars, UAVs, stations, lanes…');
@@ -64,7 +67,7 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
   const dotTex = new THREE.CanvasTexture(dot); dotTex.colorSpace = THREE.SRGBColorSpace;
   const markers = new THREE.Points(markerGeom, new THREE.PointsMaterial({ size: 13, sizeAttenuation: false, map: dotTex, alphaTest: 0.3, vertexColors: true, depthTest: false, transparent: true }));
   markers.frustumCulled = false; markers.renderOrder = 20; markers.visible = false; group.add(markers);
-  // flight corridors (the certified route centrelines) - shown only in the wide UAV shot
+  // flight corridors (the computed Wave PDE route centrelines) - shown only in the wide UAV shot
   const corridorPos = [];
   for (const r of routes.routes) for (let i = 1; i < r.points_m.length; i++) corridorPos.push(...r.points_m[i - 1], ...r.points_m[i]);
   const corridorGeom = new THREE.BufferGeometry(); corridorGeom.setAttribute('position', new THREE.Float32BufferAttribute(corridorPos, 3));
@@ -87,49 +90,8 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
       console.log('bird layer:', birdLayer.stats);
     }
   } catch (e) { console.error('bird layer failed', e); birdLayer = null; }
-  const schedule = await readJSON(DEMO + 'data/schedule.json');
-
-  // ---- UAV geometry along the certified routes (ported from the demo viewer, unchanged semantics)
-  function routePoints(from, to, owner, segment) {
-    const key = Math.min(from, to) + '-' + Math.max(from, to); const route = routeByKey.get(key); if (!route) throw new Error(`Missing flight path ${from}→${to}`);
-    let points = route.points_m.map(p => p.slice()); if (from > to) points.reverse();
-    const h = points[1][1];
-    if (stationById.get(from).role === 'hub') { const c = stationById.get(from), base = parkingById.get(owner), off = segment?._departureOffset ?? base.offset_from_station_m; const bay = [c.x_m + off[0], c.y_m, c.z_m + off[2]]; points = [bay, [bay[0], h, bay[2]], ...points.slice(1)]; }
-    if (stationById.get(to).role === 'hub') { const c = stationById.get(to), base = parkingById.get(owner), off = segment?._arrivalOffset ?? base.offset_from_station_m; const bay = [c.x_m + off[0], c.y_m, c.z_m + off[2]]; points = [...points.slice(0, -1), [bay[0], h, bay[2]], bay]; }
-    const lengths = []; let total = 0; for (let i = 1; i < points.length; i++) { total += Math.hypot(...points[i].map((x, k) => x - points[i - 1][k])); lengths.push(total); }
-    return { points, lengths, total };
-  }
-  function pointAlong(path, fraction) {
-    const d = Math.min(1, Math.max(0, fraction)) * path.total; let i = path.lengths.findIndex(v => v >= d); if (i < 0) i = path.points.length - 2;
-    const prev = i ? path.lengths[i - 1] : 0, len = path.lengths[i] - prev, r = len > 1e-8 ? (d - prev) / len : 0;
-    const a = path.points[i], b = path.points[i + 1];
-    return { x: a[0] + (b[0] - a[0]) * r, y: a[1] + (b[1] - a[1]) * r, z: a[2] + (b[2] - a[2]) * r, headingRadians: Math.atan2(b[0] - a[0], b[2] - a[2]) };
-  }
-  function stationaryPose(stationId, owner, t = 0) {
-    const s = stationById.get(stationId), p = { x: s.x_m, y: s.y_m, z: s.z_m, headingRadians: 0 };
-    if (s.role === 'hub') { const off = hubParking?.offset(owner, stationId, t) ?? parkingById.get(owner).offset_from_station_m; p.x += off[0]; p.z += off[2]; }
-    return p;
-  }
-  hubParking = allocateHubParking(schedule, stations, parking, bayLibrary);
-  for (const u of schedule.uavs) for (const seg of u.segments) if (seg.from_station !== seg.to_station) seg._path = routePoints(seg.from_station, seg.to_station, u.id, seg);
-  replay = schedule;
-  function uavStates(t) {
-    return replay.uavs.map(u => {
-      const seg = u.segments.find(s => t >= s.t0_s && t < s.t1_s) ?? u.segments[u.segments.length - 1];
-      if (!seg) return { idIndex: u.id, ...stationaryPose(u.birth_station, u.id), activity: 'HOLD', airborne: false, station: u.birth_station, opacity: 1 };
-      const f = Math.min(1, Math.max(0, (t - seg.t0_s) / Math.max(1e-8, seg.t1_s - seg.t0_s))), airborne = !!seg._path;
-      const pose = airborne ? pointAlong(seg._path, f) : stationaryPose(seg.from_station, u.id, t);
-      const swap = seg.kind.includes('SWAP');
-      const dockedHidden = !airborne && hubParking.isReturnedStay(u.id, seg.from_station, t);
-      const fade = Math.min(1.2, (seg.t1_s - seg.t0_s) / 2);
-      let opacity = dockedHidden ? 0 : 1;
-      if (airborne && fade > 0) { if (seg._fadeIntoHub) opacity = Math.min(opacity, Math.max(0, (seg.t1_s - t) / fade)); if (seg._fadeOutOfHub) opacity = Math.min(opacity, Math.max(0, (t - seg.t0_s) / fade)); }
-      return { idIndex: u.id, ...pose, activity: seg.display_kind ?? seg.kind, order_id: seg.order_id, airborne, to: airborne ? seg.to_station : null, from: seg.from_station,
-        station: airborne ? null : seg.from_station, color: swap ? '#2563eb' : (seg.payload0 ? '#f2924b' : '#ffffff'), opacity, visible: !dockedHidden };
-    });
-  }
-  /** Replay clock -> traffic-sample time. The UAV schedule and the birds cover the full hour; the traffic files in the
-   *  repository are a 300 s sample, so the cars and signals loop inside that window (t mod window) while the clock goes on. */
+  const uavStates = t => flightData.model.sample(t);
+  // Cars retain the existing recorded replay; UAV random walks use their own paths.
   function trafficTime(t) {
     if (!traffic) return t;
     const span = traffic.lastTime - traffic.firstTime; if (span <= 0 || (t >= traffic.firstTime && t <= traffic.lastTime)) return t;
@@ -195,9 +157,9 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
 
   // ---- state
   const R = {
-    group, traffic, duration: replay.metadata.duration_s, t: traffic ? Math.min(traffic.lastTime, traffic.firstTime + 30) : 0, playing: false, speed: 1,
+    group, traffic, duration: flightData.model.duration, t: traffic ? Math.min(traffic.lastTime, traffic.firstTime + 30) : 0, playing: false, speed: 1,
     cars: [], uavs: [], lastDraw: -Infinity, followKind: null, followId: null, shot: null, shotUntil: 0, cycleDone: false, info: '', label: '', orbit: null,
-    stats: '',
+    stats: '', uavMode: 'random_wavepde', flightData,
   };
   const followCamera = createFollowCamera({ camera, controls });
   
@@ -224,8 +186,7 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
     const moving = R.cars.filter(c => c.speed > CAR_STOPPED).length;
     const near = R.cars.filter(c => Math.hypot(c.x - campusCentre.x, c.z - campusCentre.z) < 450).length;
     const air = R.uavs.filter(u => u.airborne).length;
-    const done = replay.deliveries.filter(d => d.dropoff_s <= t).length;
-    R.stats = `Cars on the network ${R.cars.length} (${moving} moving) · ${near} within 450 m of campus\nUAVs airborne ${air} · delivered ${done}/600` + (traffic && traffic.lastTime < 3600 ? `\nTraffic: ${traffic.lastTime - traffic.firstTime} s sample looping (at ${timeString(trafficTime(t))}); full-hour files not placed in demo_rev02` : '');
+    R.stats = `Cars on the network ${R.cars.length} (${moving} moving) · ${near} within 450 m of campus\nUAVs ${air} · random Wave PDE flights · no scheduling` + (traffic && traffic.lastTime < 3600 ? `\nTraffic: ${traffic.lastTime - traffic.firstTime} s sample looping (at ${timeString(trafficTime(t))}); full-hour files not placed in demo_rev02` : '');
     if (birds && birds.present) { const names = ['foraging', 'transit', 'murmuration', 'descending', 'roosting']; R.stats += `\nBirds ${birds.present} (flock model replay): ` + birds.stateCounts.map((n, k) => n ? `${n} ${names[k]}` : '').filter(Boolean).join(' · '); }
   }
   function junctionCandidates(maxDist = JUNCTION_MAX_M) {
@@ -318,7 +279,7 @@ ${stateText(f.counts)}`;
       const start = orbitPose(orbit, 0), lead = 2200;
       const begin = () => { R.orbit = { ...orbit, t0: performance.now(), dur: shot.dur * 1000 - lead - 100 }; controls.enabled = false; };
       if (camera.position.distanceTo(start.pos) > 40) flyTo(start, lead, begin); else begin();
-      R.info = 'Cars: SUMO replay · UAVs: NVMF schedule replay · signals: recorded states';
+      R.info = 'Cars: SUMO replay · UAVs: random Wave PDE routes · signals: recorded states';
     } else if (id === 'junction') {
       const j = junctionCandidates()[0];
       if (!j) { R.info = 'No signal data'; return; }
@@ -346,7 +307,7 @@ ${stateText(f.counts)}`;
       if (camera.position.distanceTo(start.pos) > 40) flyTo(start, lead, begin); else begin();
       const air = R.uavs.filter(u => u.airborne).length;
       const nearNames = [...nearStations].map(id => stationById.get(id)).filter(Boolean).map(st => st.label).join(' / ');
-      R.info = `${air} UAVs airborne (dots; models enlarged ${UAV_MACRO_SCALE}×; yellow = empty, returning to hub, orange = carrying cargo) · thin orange lines are the flight corridors · stations near campus: ${nearNames}`;
+      R.info = `${air} UAVs airborne (dots; models enlarged ${UAV_MACRO_SCALE}×; independent random destinations; no orders or scheduling) · thin orange lines are the flight corridors · stations near campus: ${nearNames}`;
     }
   }
   function nextShot() {
@@ -367,7 +328,7 @@ ${stateText(f.counts)}`;
     if (R.playing) {
       R.t += dt * R.speed;
       const end = R.duration || 3600;
-      if (R.t >= end) R.t = traffic ? traffic.firstTime + 10 : 0;   // full-hour loop (UAV schedule); the traffic sample loops on its own inside carStates
+      if (R.t >= end) R.t = traffic ? traffic.firstTime + 10 : 0;   // full-hour illustrative random-flight loop; the traffic sample loops on its own inside carStates
     }
     if ((R.playing && now - R.lastDraw >= 35) || R.lastDraw === -Infinity) { update(R.t); R.lastDraw = now; }
     if (R.playing) updateBirdTracking(dt);

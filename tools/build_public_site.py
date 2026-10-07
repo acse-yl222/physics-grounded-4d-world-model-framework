@@ -42,6 +42,13 @@ def main():
     movie=target/'viewer/windfarm-movie'
     shutil.copytree(ROOT/'src/visualization/legacy/viewer/windfarm-movie',movie,dirs_exist_ok=True)
     (movie/'resources.json').write_text(json.dumps({'data_base':base+'project/windfarm/runs/published_movie_v1/','model':base+'project/windfarm/geometry/published_v1/region.glb'},indent=2)+'\n')
+    # Selected UAV route preview assets; do not copy unrelated local datasets.
+    shutil.copy2(ROOT/'src/visualization/legacy/viewer/3d/random-uav.mjs',target/'viewer/3d/random-uav.mjs')
+    config=Path('project/south_ken/configs/uav_visualization.json')
+    (target/config).parent.mkdir(parents=True,exist_ok=True)
+    shutil.copy2(ROOT/config,target/config)
+    routes=Path('project/south_ken/input/uav_routes_ground_20261007')
+    shutil.copytree(ROOT/routes,target/routes,dirs_exist_ok=True)
     print(f'Built public viewer at {target}; existing legacy routes preserved.')
 
 if __name__=='__main__':main()

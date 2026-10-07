@@ -1,0 +1,842 @@
+[
+  {
+    "id": 1,
+    "station_id": 1,
+    "label": "H1",
+    "role": "hub",
+    "name": "West garden Hub (ground site)",
+    "xyz": [
+      -1020.0,
+      0.13000000044703483,
+      -40.0
+    ],
+    "original_xyz": [
+      -1020.0,
+      0.13000000044703483,
+      -40.0
+    ],
+    "original_name": "West garden Hub",
+    "ground_surface_enu_z_m": -0.019999999552965164,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 0.0,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 78.89233169326408,
+    "road_clearance_sampled_m": 91.76055797563569,
+    "canopy_clearance_sampled_m": 1603.0333745745907,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 2,
+    "station_id": 2,
+    "label": "H2",
+    "role": "hub",
+    "name": "North garden Hub (ground site)",
+    "xyz": [
+      520.0,
+      0.13000000044703483,
+      -400.0
+    ],
+    "original_xyz": [
+      520.0,
+      0.13000000044703483,
+      -400.0
+    ],
+    "original_name": "North garden Hub",
+    "ground_surface_enu_z_m": -0.019999999552965164,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 0.0,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 129.6919426949878,
+    "road_clearance_sampled_m": 225.22877258467668,
+    "canopy_clearance_sampled_m": 415.76916672596104,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 3,
+    "station_id": 3,
+    "label": "H3",
+    "role": "hub",
+    "name": "South open-ground Hub (ground site)",
+    "xyz": [
+      360.0,
+      0.09999999925494193,
+      440.0
+    ],
+    "original_xyz": [
+      360.0,
+      0.09999999925494193,
+      440.0
+    ],
+    "original_name": "South open-ground Hub",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 0.0,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 48.08326112068523,
+    "road_clearance_sampled_m": 40.44749683231337,
+    "canopy_clearance_sampled_m": 357.5024475440693,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 4,
+    "station_id": 4,
+    "label": "C1",
+    "role": "collection",
+    "name": "HSBC UK (ground site)",
+    "xyz": [
+      -373.0,
+      0.16499999966472387,
+      -181.0
+    ],
+    "original_xyz": [
+      -359.1409860347657,
+      13.30052997066861,
+      -136.20249039733955
+    ],
+    "original_name": "HSBC UK",
+    "ground_surface_enu_z_m": 0.014999999664723873,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 46.89231423899885,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 14.142135623730951,
+    "road_clearance_sampled_m": 21.540659228538015,
+    "canopy_clearance_sampled_m": 991.9778223327374,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 5,
+    "station_id": 5,
+    "label": "C2",
+    "role": "collection",
+    "name": "215-217 Kensington High Street (ground site)",
+    "xyz": [
+      -813.0,
+      0.16499999966472387,
+      141.0
+    ],
+    "original_xyz": [
+      -683.5707076120265,
+      13.300080806160492,
+      140.4811015727499
+    ],
+    "original_name": "215-217 Kensington High Street",
+    "ground_surface_enu_z_m": 0.014999999664723873,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 129.43033254855428,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 10.0,
+    "road_clearance_sampled_m": 11.313708498984761,
+    "canopy_clearance_sampled_m": 1390.368296531534,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 6,
+    "station_id": 6,
+    "label": "C3",
+    "role": "collection",
+    "name": "15-19 Aubrey Walk (ground site)",
+    "xyz": [
+      -1051.0,
+      0.09999999925494193,
+      -563.0
+    ],
+    "original_xyz": [
+      -1054.4958175521215,
+      10.149228640729348,
+      -580.3817032840875
+    ],
+    "original_name": "15-19 Aubrey Walk",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 17.729758865077073,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 12.649110640673518,
+    "road_clearance_sampled_m": 26.832815729997478,
+    "canopy_clearance_sampled_m": 1747.5708855437024,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 7,
+    "station_id": 7,
+    "label": "C4",
+    "role": "collection",
+    "name": "NEXUS (ground site)",
+    "xyz": [
+      669.0,
+      0.09999999925494193,
+      717.0
+    ],
+    "original_xyz": [
+      658.4003039867748,
+      16.449403146100085,
+      691.0073267572619
+    ],
+    "original_name": "NEXUS",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 28.07084996711952,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 18.439088914585774,
+    "road_clearance_sampled_m": 7.211102550927978,
+    "canopy_clearance_sampled_m": 555.2260800790972,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 8,
+    "station_id": 8,
+    "label": "C5",
+    "role": "collection",
+    "name": "9 Kensington Palace Gardens (ground site)",
+    "xyz": [
+      -323.0,
+      0.09999999925494193,
+      -901.0
+    ],
+    "original_xyz": [
+      -341.3102241919991,
+      10.15004700581167,
+      -900.0337539064802
+    ],
+    "original_name": "9 Kensington Palace Gardens",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 18.335701281230335,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 12.165525060596439,
+    "road_clearance_sampled_m": 38.62641583165593,
+    "canopy_clearance_sampled_m": 1295.4690270322947,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 9,
+    "station_id": 9,
+    "label": "C6",
+    "role": "collection",
+    "name": "Continuing Care Centre (ground site)",
+    "xyz": [
+      -309.0,
+      0.09999999925494193,
+      347.0
+    ],
+    "original_xyz": [
+      -309.1950638946411,
+      13.301219995816352,
+      434.37981607932215
+    ],
+    "original_name": "Continuing Care Centre",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 87.38003380623722,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 17.08800749063506,
+    "road_clearance_sampled_m": 29.120439557122072,
+    "canopy_clearance_sampled_m": 917.4093960713504,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 10,
+    "station_id": 10,
+    "label": "C7",
+    "role": "collection",
+    "name": "Gloucester Walk (ground site)",
+    "xyz": [
+      -597.0,
+      0.09999999925494193,
+      -469.0
+    ],
+    "original_xyz": [
+      -580.8851881078722,
+      13.300194314796107,
+      -411.32222924716825
+    ],
+    "original_name": "Gloucester Walk",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 59.88666296709875,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 12.806248474865697,
+    "road_clearance_sampled_m": 14.0,
+    "canopy_clearance_sampled_m": 1289.1004615622476,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 11,
+    "station_id": 11,
+    "label": "C8",
+    "role": "collection",
+    "name": "Serpentine North (ground site)",
+    "xyz": [
+      1117.0,
+      0.13000000044703483,
+      -763.0
+    ],
+    "original_xyz": [
+      1070.0785387195474,
+      13.300483225463546,
+      -777.723387288818
+    ],
+    "original_name": "Serpentine North",
+    "ground_surface_enu_z_m": -0.019999999552965164,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 49.177247401105525,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 39.395431207184416,
+    "road_clearance_sampled_m": 10.0,
+    "canopy_clearance_sampled_m": 907.167018800838,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 12,
+    "station_id": 12,
+    "label": "C9",
+    "role": "collection",
+    "name": "St Mary Abbotts Terrace (ground site)",
+    "xyz": [
+      -1133.0,
+      0.09999999925494193,
+      243.0
+    ],
+    "original_xyz": [
+      -1104.64267535491,
+      10.149389121819677,
+      300.966522006617
+    ],
+    "original_name": "St Mary Abbotts Terrace",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 64.5310431852039,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 11.661903789690601,
+    "road_clearance_sampled_m": 29.5296461204668,
+    "canopy_clearance_sampled_m": 1715.2422569421499,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 13,
+    "station_id": 13,
+    "label": "D1",
+    "role": "dropoff",
+    "name": "Imperial College Early Years Education Centre (ground site)",
+    "xyz": [
+      981.0,
+      0.09999999925494193,
+      37.0
+    ],
+    "original_xyz": [
+      974.9280767857952,
+      16.449431652774983,
+      10.975552321284443
+    ],
+    "original_name": "Imperial College Early Years Education Centre",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 26.723400391817716,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 21.540659228538015,
+    "road_clearance_sampled_m": 8.0,
+    "canopy_clearance_sampled_m": 348.82660448996717,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 14,
+    "station_id": 14,
+    "label": "D2",
+    "role": "dropoff",
+    "name": "Mary George House (ground site)",
+    "xyz": [
+      109.0,
+      0.09999999925494193,
+      611.0
+    ],
+    "original_xyz": [
+      55.046052046915456,
+      21.174717960019514,
+      616.2424881360505
+    ],
+    "original_name": "Mary George House",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 54.20804535842245,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 24.331050121192877,
+    "road_clearance_sampled_m": 8.0,
+    "canopy_clearance_sampled_m": 656.8043848818307,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 15,
+    "station_id": 15,
+    "label": "D3",
+    "role": "dropoff",
+    "name": "25 Logan Place (ground site)",
+    "xyz": [
+      -813.0,
+      0.09999999925494193,
+      587.0
+    ],
+    "original_xyz": [
+      -798.8197595670869,
+      7.0002549951105415,
+      696.1699960314778
+    ],
+    "original_name": "25 Logan Place",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 110.0870893985671,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 15.620499351813308,
+    "road_clearance_sampled_m": 37.94733192202055,
+    "canopy_clearance_sampled_m": 1467.3908818034818,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 16,
+    "station_id": 16,
+    "label": "D4",
+    "role": "dropoff",
+    "name": "195-201 Earl's Court Road (ground site)",
+    "xyz": [
+      -267.0,
+      0.09999999925494193,
+      973.0
+    ],
+    "original_xyz": [
+      -341.19664160209624,
+      13.299525024548455,
+      957.702033788311
+    ],
+    "original_name": "195-201 Earl's Court Road",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 75.75730588691691,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 25.45584412271571,
+    "road_clearance_sampled_m": 12.806248474865697,
+    "canopy_clearance_sampled_m": 1178.658559549796,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 17,
+    "station_id": 17,
+    "label": "D5",
+    "role": "dropoff",
+    "name": "Serpentine South (ground site)",
+    "xyz": [
+      813.0,
+      0.13000000044703483,
+      -525.0
+    ],
+    "original_xyz": [
+      812.1395566284714,
+      13.298969855532539,
+      -507.1418090463824
+    ],
+    "original_name": "Serpentine South",
+    "ground_surface_enu_z_m": -0.019999999552965164,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 17.878907878600355,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 10.198039027185569,
+    "road_clearance_sampled_m": 98.48857801796105,
+    "canopy_clearance_sampled_m": 558.4872424684381,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 18,
+    "station_id": 18,
+    "label": "D6",
+    "role": "dropoff",
+    "name": "Thurloe Court (ground site)",
+    "xyz": [
+      1163.0,
+      0.09999999925494193,
+      835.0
+    ],
+    "original_xyz": [
+      1185.0916911229542,
+      19.600588541714597,
+      853.8404259783072
+    ],
+    "original_name": "Thurloe Court",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 29.034539219971887,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 24.08318915758459,
+    "road_clearance_sampled_m": 11.313708498984761,
+    "canopy_clearance_sampled_m": 878.1366636236071,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 19,
+    "station_id": 19,
+    "label": "D7",
+    "role": "dropoff",
+    "name": "Bowden Court (ground site)",
+    "xyz": [
+      -1013.0,
+      0.09999999925494193,
+      -1021.0
+    ],
+    "original_xyz": [
+      -988.4297009621134,
+      13.299333542508837,
+      -987.858824956883
+    ],
+    "original_name": "Bowden Court",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 41.25575206016354,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 17.08800749063506,
+    "road_clearance_sampled_m": 30.463092423455635,
+    "canopy_clearance_sampled_m": 1913.5778008745817,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 20,
+    "station_id": 20,
+    "label": "D8",
+    "role": "dropoff",
+    "name": "11 Bina Gardens (ground site)",
+    "xyz": [
+      267.0,
+      0.09999999925494193,
+      987.0
+    ],
+    "original_xyz": [
+      269.0162857014763,
+      16.45072430846904,
+      1007.3556328769824
+    ],
+    "original_name": "11 Bina Gardens",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 20.455248662689637,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 11.661903789690601,
+    "road_clearance_sampled_m": 12.649110640673518,
+    "canopy_clearance_sampled_m": 882.4262008802776,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 21,
+    "station_id": 21,
+    "label": "D9",
+    "role": "dropoff",
+    "name": "yes way-364339536 (ground site)",
+    "xyz": [
+      -107.0,
+      0.09999999925494193,
+      -611.0
+    ],
+    "original_xyz": [
+      -130.33053435565103,
+      13.299650958104893,
+      -611.975789540242
+    ],
+    "original_name": "yes way-364339536",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 23.350931427826566,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 17.88854381999832,
+    "road_clearance_sampled_m": 44.04543109109048,
+    "canopy_clearance_sampled_m": 939.7808255119913,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 22,
+    "station_id": 22,
+    "label": "D10",
+    "role": "dropoff",
+    "name": "Victoria and Albert Museum (ground site)",
+    "xyz": [
+      1043.0,
+      0.16499999966472387,
+      333.0
+    ],
+    "original_xyz": [
+      1092.115711335361,
+      13.303717936934584,
+      330.8812892893309
+    ],
+    "original_name": "Victoria and Albert Museum",
+    "ground_surface_enu_z_m": 0.014999999664723873,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 49.1613876436988,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 17.88854381999832,
+    "road_clearance_sampled_m": 74.32361670424818,
+    "canopy_clearance_sampled_m": 479.6415328138296,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 23,
+    "station_id": 23,
+    "label": "D11",
+    "role": "dropoff",
+    "name": "202 Apartments (ground site)",
+    "xyz": [
+      -605.0,
+      0.09999999925494193,
+      -859.0
+    ],
+    "original_xyz": [
+      -582.1232454000508,
+      19.599459873763788,
+      -891.4929365471049
+    ],
+    "original_name": "202 Apartments",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 39.738354602077884,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 22.80350850198276,
+    "road_clearance_sampled_m": 6.0,
+    "canopy_clearance_sampled_m": 1484.719502128264,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 24,
+    "station_id": 24,
+    "label": "D12",
+    "role": "dropoff",
+    "name": "Thistle Kensington Gardens (ground site)",
+    "xyz": [
+      163.0,
+      0.09999999925494193,
+      -1107.0
+    ],
+    "original_xyz": [
+      162.94523713431445,
+      13.29882341013458,
+      -1151.0135632228892
+    ],
+    "original_name": "Thistle Kensington Gardens",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 44.01359729159523,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 34.92849839314596,
+    "road_clearance_sampled_m": 8.0,
+    "canopy_clearance_sampled_m": 1197.012948969225,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 25,
+    "station_id": 25,
+    "label": "D13",
+    "role": "dropoff",
+    "name": "Philbeach Gardens (ground site)",
+    "xyz": [
+      -861.0,
+      0.09999999925494193,
+      1157.0
+    ],
+    "original_xyz": [
+      -854.187807509149,
+      13.299103737238383,
+      1135.5747603788084
+    ],
+    "original_name": "Philbeach Gardens",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 22.48214534598257,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 14.142135623730951,
+    "road_clearance_sampled_m": 19.697715603592208,
+    "canopy_clearance_sampled_m": 1759.0383736576073,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 26,
+    "station_id": 26,
+    "label": "D14",
+    "role": "dropoff",
+    "name": "18 Victoria Road (ground site)",
+    "xyz": [
+      43.0,
+      0.09999999925494193,
+      165.0
+    ],
+    "original_xyz": [
+      64.65139205397654,
+      10.149941153463336,
+      56.69407572278356
+    ],
+    "original_name": "18 Victoria Road",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 110.44888415650534,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 10.770329614269007,
+    "road_clearance_sampled_m": 30.0,
+    "canopy_clearance_sampled_m": 536.9283006137784,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 27,
+    "station_id": 27,
+    "label": "D15",
+    "role": "dropoff",
+    "name": "8 Onslow Gardens (ground site)",
+    "xyz": [
+      779.0,
+      0.09999999925494193,
+      1037.0
+    ],
+    "original_xyz": [
+      798.6127666099611,
+      13.300956203685313,
+      1035.8150922116058
+    ],
+    "original_name": "8 Onslow Gardens",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 19.648527185613755,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 16.1245154965971,
+    "road_clearance_sampled_m": 20.591260281974,
+    "canopy_clearance_sampled_m": 889.6606094460966,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 28,
+    "station_id": 28,
+    "label": "D16",
+    "role": "dropoff",
+    "name": "Serpentine Road (ground site)",
+    "xyz": [
+      1193.0,
+      0.13000000044703483,
+      -525.0
+    ],
+    "original_xyz": [
+      1192.9828297421514,
+      13.297767419925998,
+      -508.9144097186874
+    ],
+    "original_name": "Serpentine Road",
+    "ground_surface_enu_z_m": -0.019999999552965164,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 16.0855994453428,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 11.661903789690601,
+    "road_clearance_sampled_m": 136.93794214898952,
+    "canopy_clearance_sampled_m": 771.1212615406217,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 29,
+    "station_id": 29,
+    "label": "D17",
+    "role": "dropoff",
+    "name": "Beaumont House (ground site)",
+    "xyz": [
+      -1123.0,
+      0.09999999925494193,
+      827.0
+    ],
+    "original_xyz": [
+      -1143.2207869957479,
+      16.450690271315498,
+      846.6229157844224
+    ],
+    "original_name": "Beaumont House",
+    "ground_surface_enu_z_m": -0.05000000074505806,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 28.17692407999743,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 15.620499351813308,
+    "road_clearance_sampled_m": 20.09975124224178,
+    "canopy_clearance_sampled_m": 1838.5472525883038,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  },
+  {
+    "id": 30,
+    "station_id": 30,
+    "label": "D18",
+    "role": "dropoff",
+    "name": "25 Kensington Gore (ground site)",
+    "xyz": [
+      483.0,
+      0.13000000044703483,
+      -181.0
+    ],
+    "original_xyz": [
+      486.64562106152044,
+      10.199750817372495,
+      -103.21683800318193
+    ],
+    "original_name": "25 Kensington Gore",
+    "ground_surface_enu_z_m": -0.019999999552965164,
+    "marker_offset_m": 0.15,
+    "relocation_horizontal_m": 77.86854848491427,
+    "support": "2m sampled near-zero ground/paving/grass, 6x6m supported patch",
+    "building_clearance_sampled_m": 63.52952069707436,
+    "road_clearance_sampled_m": 14.0,
+    "canopy_clearance_sampled_m": 221.96396103872357,
+    "full_coarse_column_free": true,
+    "candidate_status": "MODEL_GROUND_SITE; NOT_SURVEYED",
+    "source_geometry_sha256": "e9d3c323b2899033b4d042b241910a85e6a525b8c341422a9752dc0d3674566e"
+  }
+]

@@ -15,4 +15,4 @@ uwm = "common.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["common*", "urban_geometry*", "urban_flow*", "traffic*", "visualization.adapters*"]
+include = ["common*", "urban_geometry*", "urban_flow*", "traffic*", "uav_routing*", "visualization.adapters*"]
