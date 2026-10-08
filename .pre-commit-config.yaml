@@ -1,0 +1,10 @@
+minimum_pre_commit_version: '4.6.2'
+repos:
+  - repo: local
+    hooks:
+      - id: repository-format
+        name: Format repository files
+        entry: python3 tools/format.py --write
+        language: system
+        types: [file]
+        require_serial: true

@@ -1,0 +1,19 @@
+{
+  "name": "physics-grounded-4d-world-model-framework-dev",
+  "private": true,
+  "description": "Formatting and synthetic viewer checks for the framework repository",
+  "engines": {
+    "node": ">=24 <25"
+  },
+  "scripts": {
+    "format": "python3 tools/format.py --write",
+    "format:check": "python3 tools/format.py --check",
+    "test": "node --test tests/test_*.mjs",
+    "test:browser": "python3 tools/check_browser.py"
+  },
+  "devDependencies": {
+    "@taplo/cli": "0.7.0",
+    "prettier": "3.9.9",
+    "puppeteer": "25.12.0"
+  }
+}
