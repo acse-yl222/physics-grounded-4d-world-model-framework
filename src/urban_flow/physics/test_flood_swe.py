@@ -6,6 +6,7 @@
 5. rain on a slope with buildings: no flow into solid cells, volume balance with drainage and open boundary
 """
 
+import argparse
 import json
 import math
 import sys
@@ -213,7 +214,11 @@ def urban_slope():
     }
 
 
-if __name__ == "__main__":
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, help="Write the complete numerical report")
+    args = parser.parse_args(argv)
+    report.clear()
     t0 = time.time()
     for fn in (
         lake_at_rest,
@@ -230,11 +235,15 @@ if __name__ == "__main__":
     report["all_pass"] = all(v["pass"] for v in report.values() if isinstance(v, dict))
     report["device"] = str(dev)
     report["total_seconds"] = time.time() - t0
-    report = json.loads(
+    result = json.loads(
         json.dumps(report, default=lambda o: bool(o) if isinstance(o, np.bool_) else float(o))
     )
-    print(json.dumps(report, indent=2))
-    out = Path(sys.argv[sys.argv.index("--out") + 1]) if "--out" in sys.argv else None
-    if out:
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(json.dumps(report, indent=2))
+    print(json.dumps(result, indent=2))
+    if args.out:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(result, indent=2))
+    return 0 if result["all_pass"] else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

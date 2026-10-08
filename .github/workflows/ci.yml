@@ -77,6 +77,7 @@ jobs:
       - run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
       - run: python -m pip install -e '.[birds,traffic,flow]'
       - run: python -m unittest discover -s tests -p test_package_imports.py -v
+      - run: python -m unittest discover -s tests -p test_numerical_exit.py -v
 
   browser:
     name: Synthetic viewer

@@ -1,6 +1,7 @@
 """Verification of solar_np: sun position vs NOAA reference, shadow network vs brute-force ray march, pole shadow length,
 canyon sky-view factor vs the analytical integral."""
 
+import argparse
 import json
 import math
 import sys
@@ -115,7 +116,11 @@ def test_canyon_svf():
     }
 
 
-if __name__ == "__main__":
+def main(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--out", type=Path, help="Write the complete numerical report")
+    args = parser.parse_args(argv)
+    rep.clear()
     t0 = time.time()
     for fn in (test_sun_position, test_brute_force, test_pole, test_canyon_svf):
         s = time.time()
@@ -124,11 +129,15 @@ if __name__ == "__main__":
     rep["all_pass"] = all(v["pass"] for v in rep.values() if isinstance(v, dict))
     rep["device"] = str(dev)
     rep["total_seconds"] = time.time() - t0
-    rep = json.loads(
+    result = json.loads(
         json.dumps(rep, default=lambda o: bool(o) if isinstance(o, np.bool_) else float(o))
     )
-    print(json.dumps(rep, indent=2))
-    if "--out" in sys.argv:
-        out = Path(sys.argv[sys.argv.index("--out") + 1])
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(json.dumps(rep, indent=2))
+    print(json.dumps(result, indent=2))
+    if args.out:
+        args.out.parent.mkdir(parents=True, exist_ok=True)
+        args.out.write_text(json.dumps(result, indent=2))
+    return 0 if result["all_pass"] else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
