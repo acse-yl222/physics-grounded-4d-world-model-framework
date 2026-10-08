@@ -1,3 +1,9 @@
+# Compatibility for direct source-script execution; package imports need no path changes.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 from common.layout import scene_input
 from common.runtime import trial_root
 import torch
@@ -6,15 +12,14 @@ import sys
 import os
 import glob
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from configs.default import (
+from traffic.configs.default import (
     VEHICLE_DIM, JACOBI_ITERS, HIST_STEPS,
     # Constant Velocity baseline
     MAX_SPEED, DT, CELL_SIZE, PRED_STEPS, GRID_SIZE,
     TRAIN_TRAJECTORIES, VAL_TRAJECTORIES, EVAL_SEED_OFFSET,
 )
-from models.particle_mlp import ParticleTrafficModel
-from data.generate_complex import generate_dataset
+from traffic.models.particle_mlp import ParticleTrafficModel
+from traffic.data.generate_complex import generate_dataset
 
 
 def find_latest_model(date_filter=None):

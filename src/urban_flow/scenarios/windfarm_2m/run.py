@@ -1,13 +1,19 @@
 """All 23 turbines, actual isotropic 2 m grid; independent MAC numerical solver.
 A separate experiment, NOT an equivalent AI4Urban implementation or trained inference.
 """
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 from common.runtime import source_path, trial_root
 import argparse,json,math,time,traceback
 from pathlib import Path
 import numpy as np
 import torch
 import h5py
-from mac import MAC
 
 def write(path,data):
  t=path.with_suffix('.tmp');t.write_text(json.dumps(data,indent=2,allow_nan=False));t.replace(path)
@@ -15,6 +21,7 @@ def write(path,data):
 @torch.inference_mode()
 def main():
  p=argparse.ArgumentParser();p.add_argument('--seconds',type=float,default=300);p.add_argument('--max-steps',type=int,default=0);p.add_argument('--resume',action='store_true');p.add_argument('--save-every',type=float,default=2);a=p.parse_args()
+ from urban_flow.solvers.mac_triton import MAC
  root=Path.cwd();geom=source_path('legacy_output','region_crop_2m/geometry');out=trial_root('windfarm','mac_2m');web=out/'export';out.mkdir(parents=True,exist_ok=True);web.mkdir(parents=True,exist_ok=True)
  status=out/'status.json';started=time.time();last_time=0.;step=0
  try:

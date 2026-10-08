@@ -1,0 +1,5 @@
+include index.html
+recursive-include schemas *.json
+recursive-include examples *
+recursive-include src/visualization *
+global-exclude __pycache__ *.py[cod]

@@ -1,5 +1,6 @@
-#!/usr/bin/env python3
 """Validate protocol v1 manifests and the minimum JSON asset encoding."""
+
+#!/usr/bin/env python3
 import argparse
 import json
 import hashlib
@@ -8,6 +9,7 @@ from pathlib import Path, PurePosixPath
 import sys
 
 from jsonschema import Draft202012Validator, FormatChecker
+from .locations import resource_path
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -60,7 +62,7 @@ def asset_references(layer):
 def validate(path):
     path = Path(path).resolve()
     manifest = read_json(path)
-    schema = read_json(ROOT / 'schemas/run-manifest-v1.schema.json')
+    schema = read_json(resource_path('schemas/run-manifest-v1.schema.json'))
     Draft202012Validator.check_schema(schema)
     Draft202012Validator(schema, format_checker=FormatChecker()).validate(manifest)
     artifacts = manifest.get('artifacts', [])

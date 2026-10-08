@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import tarfile
 from datetime import datetime, timezone
+from common.locations import code_path
 
 import matplotlib
 matplotlib.use('Agg')
@@ -51,8 +52,11 @@ def main():
     ap.add_argument('--geometry',type=Path,required=True)
     ap.add_argument('--output',type=Path,required=True)
     ap.add_argument('--run-id',default='wavepde_routes_20261007_8m')
-    ap.add_argument('--framework',type=Path,default=Path(__file__).resolve().parents[2])
+    ap.add_argument('--framework',type=Path,help='Scene workspace (or P4D_ROOT/UWM_ROOT)')
     args=ap.parse_args(); out=args.output
+    from common.storage import Storage
+    storage=Storage.load(args.framework)
+    args.framework=storage.root
     summary=json.loads((out/'summary.json').read_text())
     stations=json.loads((out/'stations_enu.json').read_text())
     ground=summary.get('ground_mode',False)
@@ -93,8 +97,6 @@ def main():
     fig.savefig(out/'travel_times.png',dpi=160);plt.close(fig)
     # Retained protocol run: grouped thin ribbons display the computed static routes.
     run_id=args.run_id
-    from common.storage import Storage
-    storage=Storage.load(args.framework)
     run=storage.run(args.scene,run_id)
     run.mkdir(exist_ok=False)
     (run/'data').mkdir()
@@ -125,8 +127,9 @@ def main():
         for path in sorted((args.wave_repo/'src/wavepde').rglob('*.py')):
             tar.add(path,arcname='wavepde/'+str(path.relative_to(args.wave_repo)))
         for directory in ['src/uav_routing','src/urban_geometry/voxelization']:
-            for path in sorted((args.framework/directory).rglob('*.py')):
-                tar.add(path,arcname='framework/'+str(path.relative_to(args.framework)))
+            base=code_path(directory)
+            for path in sorted(base.rglob('*.py')):
+                tar.add(path,arcname='framework/'+str(Path(directory)/path.relative_to(base)))
     # Retain the numerical and station-selection inputs, not just their hashes.
     with tarfile.open(run/'routing_inputs.tar.gz','w:gz') as tar:
         for name in ['height_m.npy','metadata.json','ground_mesh_m_yx.npy','ground_mesh_valid_yx.npy','asphalt_8m_yx.npy','canopy_8m_yx.npy']:

@@ -1,3 +1,9 @@
+# Compatibility for direct source-script execution; package imports need no path changes.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 from common.runtime import trial_root
 import matplotlib
 matplotlib.use('Agg')
@@ -11,13 +17,12 @@ import sys
 import os
 import argparse
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from configs.default import (
+from traffic.configs.default import (
     GRID_SIZE, CELL_SIZE, DT, HIST_STEPS, PRED_STEPS,
     VEHICLE_DIM, TOTAL_FEAT_DIM, EVAL_SEED_OFFSET,
 )
-from evaluate import load_model, find_latest_model
-from data.generate_complex import (
+from traffic.evaluate import load_model, find_latest_model
+from traffic.data.generate_complex import (
     get_road_network, build_road_lane_centers, get_lane_centerlines,
     simulate_trajectory,
 )

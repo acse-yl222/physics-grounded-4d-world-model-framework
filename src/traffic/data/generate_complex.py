@@ -1,13 +1,19 @@
 """
 Multi-Intersection Irregular Road Network Simulation Dataset
 """
+
+# Compatibility for direct source-script execution; package imports need no path changes.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 import numpy as np
 import torch
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from configs.default import (
+from traffic.configs.default import (
     GRID_SIZE, CELL_SIZE, MAX_SPEED, DT,
     TOTAL_FEAT_DIM, VEHICLE_DIM, HIST_STEPS, PRED_STEPS,
 )

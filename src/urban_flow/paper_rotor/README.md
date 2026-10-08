@@ -48,9 +48,11 @@ Need original case dictionaries or independently justified values for turbulence
 ## Run
 
 ```sh
-python tools/paper_rotor/verify.py
-python tools/paper_rotor/compare.py --out output/paper_rotor
-python tools/paper_rotor/compare.py --out output/paper_rotor/refined --cell .05 --refine-only
-python tools/paper_rotor/render.py
+python -m urban_flow.paper_rotor.verify
+python -m urban_flow.paper_rotor.compare --out cache/windfarm/paper_rotor/my_run
+python -m urban_flow.paper_rotor.compare --out cache/windfarm/paper_rotor/my_run/refined --cell .05 --refine-only
+python -m urban_flow.paper_rotor.render --input cache/windfarm/paper_rotor/my_run --output cache/windfarm/paper_rotor_render/my_run
 ```
 Dependencies: torch, numpy, matplotlib, pillow; optional Triton for GPU backend comparison.
+
+The comparison defaults to a unique cache trial when `--out` is omitted. Rendering takes an explicit completed input directory and writes plots to a separate cache trial by default; importing either module starts no computation.

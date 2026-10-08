@@ -5,6 +5,13 @@ Pressure Poisson operator = fixed Conv3d stencil; multigrid = pooling/upsampling
 controlled comparison, the legacy smooth kernel with the identical load law.
 Not a reproduction of the paper's OpenFOAM model, and no turbulence closure.
 """
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 from common.runtime import source_path, trial_root
 import argparse,json,math,sys,time,traceback
 from pathlib import Path
@@ -12,9 +19,8 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 here=Path(__file__).resolve().parent
-for p in (here,here.parent/'windfarm_2m',here.parent/'paper_rotor'):sys.path.insert(0,str(p))
-from mac_torch import MAC
-from rotor import WeightedRotor
+from urban_flow.solvers.mac_torch import MAC
+from urban_flow.solvers.rotor import WeightedRotor
 
 def write(path,data):
  t=path.with_suffix('.tmp');t.write_text(json.dumps(data,indent=2,allow_nan=False));t.replace(path)

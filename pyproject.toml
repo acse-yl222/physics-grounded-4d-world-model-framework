@@ -16,3 +16,12 @@ uwm = "common.cli:main"
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["common*", "urban_geometry*", "urban_flow*", "traffic*", "uav_routing*", "visualization.adapters*"]
+
+[tool.setuptools.cmdclass]
+build_py = "common._build.BuildPy"
+
+[project.optional-dependencies]
+birds = ["scipy>=1.10", "matplotlib>=3.7", "trimesh", "rtree", "tqdm>=4.65"]
+traffic = ["torch>=2.1", "matplotlib>=3.7", "bayesian-optimization>=1.4"]
+geometry = ["numba", "Pillow", "DracoPy"]
+flow = ["torch>=2.1", "scipy>=1.10", "matplotlib>=3.7", "h5py>=3.10"]

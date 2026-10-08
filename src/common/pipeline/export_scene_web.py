@@ -9,9 +9,14 @@ from the geometry metadata, registers the scene in visualizer/scenes/index.json 
 frames with visualizer/scenes/tools/export_web_frames.py. The city model is the input GLB itself
 (hard-linked; the viewer decodes Draco and plain glTF).
 """
-from pathlib import Path as _UwmPath
-import sys as _uwm_sys
-_uwm_sys.path.insert(0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / 'common').is_dir())))
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from common.locations import code_path
 from common.layout import repo_root
 import argparse
 import glob
@@ -25,8 +30,6 @@ from pathlib import Path
 
 import numpy as np
 
-if __package__ in (None, ''):
-    sys.path.insert(0, str(repo_root()))
 from common.pipeline.paths import ROOT
 from urban_geometry.voxelization.glb_plan import read_glb_header
 from common.pipeline.run_scene import load_config, read_json, rel
@@ -298,7 +301,7 @@ def main():
     print('registered in', rel(index_path))
 
     if not args.no_frames and phase_order:
-        cmd = [sys.executable, str(ROOT / 'src/visualization/adapters/legacy/shared/export_web_frames.py'), str(web)]
+        cmd = [sys.executable, str(code_path('src/visualization/adapters/legacy/shared/export_web_frames.py')), str(web)]
         print('$ ' + ' '.join(cmd), flush=True)
         subprocess.run(cmd, cwd=p['visualizer'], check=True)
     elif not phase_order:

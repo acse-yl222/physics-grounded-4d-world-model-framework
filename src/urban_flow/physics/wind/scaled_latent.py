@@ -6,23 +6,23 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.nn.functional as F
-from scaled.model.autoencoders.autoencoder3dv1 import AutoencoderKL
-from scaled.model.unets.unet_3ds import UNet3DsModel
-SCALED_REPO = Path('/home/yl222/workspace/SCALED-Tutorial')
 SCALE = 4
 TILE_PHYS, HALO_PHYS = 256, 8
 TILE_LAT, HALO_LAT = 256, 4
 DEC_TILE_OUT, DEC_HALO_LAT = 256, 4
 device = torch.device('cuda')
 
-def load_models():
+def load_models(weights_root, target_device=device):
+    from scaled.model.autoencoders.autoencoder3dv1 import AutoencoderKL
+    from scaled.model.unets.unet_3ds import UNet3DsModel
+    weights_root = Path(weights_root).expanduser().resolve()
     enc = AutoencoderKL(in_channels=3, out_channels=3, down_block_types=['DownEncoderBlock3D'] * 3,
                         up_block_types=['UpDecoderBlock3D'] * 3, block_out_channels=[128, 256, 384], latent_channels=4)
-    enc.load_state_dict(torch.load(SCALED_REPO / 'weight/compression.pth', map_location='cpu', weights_only=True), strict=True)
+    enc.load_state_dict(torch.load(weights_root / 'compression.pth', map_location='cpu', weights_only=True), strict=True)
     net = UNet3DsModel(in_channels=8, out_channels=4, down_block_types=('DownBlock3D',) * 4,
                        up_block_types=('UpBlock3D',) * 4, block_out_channels=(128, 256, 384, 512), add_attention=False)
-    net.load_state_dict(torch.load(SCALED_REPO / 'weight/inference.pth', map_location='cpu', weights_only=True), strict=True)
-    return enc.eval().requires_grad_(False).to(device), net.eval().requires_grad_(False).to(device)
+    net.load_state_dict(torch.load(weights_root / 'inference.pth', map_location='cpu', weights_only=True), strict=True)
+    return enc.eval().requires_grad_(False).to(target_device), net.eval().requires_grad_(False).to(target_device)
 
 @torch.inference_mode()
 def encode_domain(solid, enc):

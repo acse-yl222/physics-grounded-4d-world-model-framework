@@ -65,7 +65,10 @@ Git 保存代码、协议、场景配置、视图配置和小型合成示例。�
 {"data_root": "/absolute/path/to/urban-data", "cache_root": "/absolute/path/to/scratch"}
 ```
 
-数据路径解析规则：未配置时以仓库根为 data_root，cache_root 为仓库根下 cache；
+数据工作区由显式 `--root`、`P4D_ROOT`、兼容变量 `UWM_ROOT`、开发安装的源码根依次选择。
+wheel 安装不推测 site-packages 为工作区；需显式指定已有目录。内置 schema、示例和查看器
+从程序资源读取，不受工作区或 data_root 影响。
+路径解析规则：未配置时以工作区为 data_root，cache_root 为工作区下 cache；
 配置后，大数据位于 `<data_root>/project/<scene>/{input,geometry,runs}`，
 缓存位于 `<cache_root>/<scene>/<simulation>/<run_id>`。
 小型 `project.json`、configs 和 views 始终在仓库内。运行入口必须打印解析后的路径，
@@ -183,7 +186,8 @@ python3 tools/check_contract.py examples/contract-v1/manifest.json
 Pages 使用独立 `pages` 分支，以已发布站点为基础加上统一查看器，保留旧演示资源。
 本次发布不意味着以后自动允许上传任何新数据。
 
-自动检查配置见 [GitHub Actions 示例](contract-workflow.example.yml)。当前未启用线上 CI；拥有 workflow 写入权限时，可将该文件复制到 `.github/workflows/contract.yml` 并提交。
+自动检查配置见 [GitHub Actions 示例](contract-workflow.example.yml)。导入与安装检查使用 `.github/workflows/portability.yml`，覆盖协议、纯 JS、包导入和独立 wheel；
+较完整的历史检查模板仍保留在上述示例中。
 
 ## 8. 当前可执行入口
 

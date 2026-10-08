@@ -4,9 +4,14 @@ Stores every latent checkpoint and 8 m wind frame with lossless NPZ compression;
 latent/float16 quantisation matches the reference checkpoint convention. Live
 inference stays float32. An extra float32 latest checkpoint supports exact resume.
 """
-from pathlib import Path as _UwmPath
-import sys as _uwm_sys
-_uwm_sys.path.insert(0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / 'common').is_dir())))
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from common.locations import code_path
 from common.layout import repo_root
 import argparse
 import hashlib
@@ -21,8 +26,6 @@ import time
 import numpy as np
 import torch
 
-if __package__ in (None, ''):
-    sys.path.insert(0,str(repo_root()))
 from common.pipeline.paths import ROOT, project_path
 
 
@@ -56,11 +59,20 @@ def main():
     geom=project_path(cfg['geometry']); out=project_path(cfg['output'])
     wind=out/'wind'; temp=out/'temperature'; lat=wind/'latent'
     for p in (wind,temp,lat):p.mkdir(parents=True,exist_ok=True)
-    sys.path.insert(0,str(project_path(cfg['scaled_repo'])))
-    sys.path.insert(0,str(ROOT/'src/urban_flow/physics/wind_temperature_teacher/code'))
+    if cfg.get('scaled_repo'):
+        scaled_repo = project_path(cfg['scaled_repo'])
+        if not (scaled_repo / 'scaled').is_dir():
+            raise ValueError(f'SCALED source checkout not found: {scaled_repo}')
+        # Explicit legacy source dependency; installed SCALED needs no path override.
+        sys.path.insert(0, str(scaled_repo))
     from urban_flow.physics.wind import scaled_latent as kernel
-    import cloud_workflow as cw
-    kernel.SCALED_REPO=project_path(cfg['scaled_repo'])
+    from urban_flow.physics.wind_temperature_teacher.code import cloud_workflow as cw
+    if cfg.get('weights_root'):
+        weights = project_path(cfg['weights_root'])
+    elif cfg.get('scaled_repo'):
+        weights = project_path(cfg['scaled_repo']) / 'weight'
+    else:
+        raise ValueError('Set wind.weights_root or wind.scaled_repo for SCALED checkpoints')
     torch.set_num_threads(8); torch.manual_seed(cfg['thermal']['seed'])
     torch.backends.cudnn.benchmark=True
     if not torch.cuda.is_available():raise RuntimeError('CUDA is required')
@@ -74,9 +86,9 @@ def main():
     geo=cw.coarse_geometry(solid,factor=factor,spacing=float(coarse))
     record={'config':cfg,'geometry_metadata_sha256':digest(geom/'metadata.json'),
             'solid_sha256':digest(geom/'solid.npy'),
-            'weights':{n:digest(kernel.SCALED_REPO/'weight'/n) for n in ['compression.pth','inference.pth']},
+            'weights':{n:digest(weights/n) for n in ['compression.pth','inference.pth']},
             'temperature_weights_sha256':digest(project_path(cfg['temperature_checkpoint'])),
-            'code':{str(p.relative_to(ROOT)):digest(p) for p in [Path(__file__).resolve(),ROOT/'src/urban_flow/physics/wind/scaled_latent.py',ROOT/'src/urban_flow/physics/wind_temperature_teacher/code/cloud_workflow.py']},
+            'code':{name:digest(code_path(name)) for name in ['src/common/pipeline/scene_scaled_latent.py','src/urban_flow/physics/wind/scaled_latent.py','src/urban_flow/physics/wind_temperature_teacher/code/cloud_workflow.py']},
             'shape_zyx':list(solid.shape),'cell_m':cell,'coarse_cell_m':coarse,
             'local_origin_xyz_m':metadata['source_region_origin_xyz_m'],
             'environment':{'torch':str(torch.__version__),'numpy':np.__version__,'gpu':torch.cuda.get_device_name()},
@@ -101,7 +113,7 @@ def main():
 
     def wind_path(k):return wind/f'wind{coarse}m_{k:03d}.npz'
     if args.stage in ('wind','all'):
-        enc,net=kernel.load_models(); log('Strict checkpoint loading passed; models on CUDA')
+        enc,net=kernel.load_models(weights); log('Strict checkpoint loading passed; models on CUDA')
         encoded=wind/'encoded_geometry.npz'
         if encoded.exists():
             with np.load(encoded) as a:

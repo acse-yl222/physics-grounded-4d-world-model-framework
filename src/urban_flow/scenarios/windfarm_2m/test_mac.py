@@ -1,5 +1,10 @@
+if __name__ == '__main__' and not __package__:
+ import sys
+ from pathlib import Path
+ sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 import json,torch,numpy as np
-from mac import MAC
+from urban_flow.solvers.mac_triton import MAC
 
 torch.set_num_threads(4)
 with torch.inference_mode():

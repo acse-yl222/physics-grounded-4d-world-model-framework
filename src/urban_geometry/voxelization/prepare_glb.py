@@ -15,9 +15,9 @@ import numpy as np
 from numba import njit
 from PIL import Image
 
-if __package__ in (None, ''):
+if __name__ == '__main__' and not __package__:
     import sys
-    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from urban_geometry.voxelization.glb_plan import read_glb_header, local_bounds, plan_grid
 
 COMPONENT = {5120: np.int8, 5121: np.uint8, 5122: np.int16, 5123: np.uint16, 5125: np.uint32, 5126: np.float32}

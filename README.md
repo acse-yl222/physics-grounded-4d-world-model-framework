@@ -76,6 +76,27 @@ p4d serve --port 8769
 
 Open [localhost:8769](http://127.0.0.1:8769/). When local scene runs are absent, the homepage links open the published scenes. You can also open the [local synthetic example](http://127.0.0.1:8769/src/visualization/viewer/?manifest=../../../examples/contract-v1/manifest.json) directly.
 
+## Installed packages and workspaces
+
+`python -m pip install -e .` supports source development. A wheel includes the
+canonical schemas, small examples and static viewers. `p4d validate /path/to/manifest.json`
+needs no checkout or scene workspace. Other commands accept `p4d --root /path/to/workspace ...`;
+`P4D_ROOT` and the legacy `UWM_ROOT` are also supported, in that order.
+An explicit workspace must be an existing directory and can initially be empty.
+`p4d --root /path/to/empty-directory serve` can display the bundled synthetic viewer.
+
+`storage.local.json` in that workspace controls `data_root` and `cache_root`.
+Code and bundled resources always come from the installed package, independently
+of these paths. External historical inputs are configured in `sources.local.json`
+or `UWM_SOURCE_<NAME>`; defaults use the configured scene input directory.
+
+Install optional environments with `.[birds]`, `.[traffic]`, `.[geometry]` or
+`.[flow]`. PyTorch/CUDA, Blender and external SCALED/Wave PDE installations have
+additional platform requirements. These extras do not supply weights or city data.
+Package entrypoints include `python -m traffic.train` and
+`python -m urban_geometry.birds.scripts.run_sim`. Historical research scripts outside
+these maintained entrypoints retain their documented environments.
+
 ## Run a simulation
 
 Inspect a scene pipeline first:

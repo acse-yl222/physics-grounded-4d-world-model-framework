@@ -5,18 +5,24 @@ Reference:Understanding and Quantifying Motor Vehicle Emissions with Vehicle
           by José Luis Jiménez-Palacios
 """
 
+# Compatibility for direct source-script execution; package imports need no path changes.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
+
 import numpy as np
 import torch
 import sys
 import os
 import argparse
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from configs.default import (
+from traffic.configs.default import (
     PRED_STEPS, MAX_SPEED, EVAL_SEED_OFFSET, GRID_SIZE, VEHICLE_DIM, DT,
 )
-from data.generate_intersection import generate_dataset
-from evaluate import load_model, modify_regulation
+from traffic.data.generate_intersection import generate_dataset
+from traffic.evaluate import load_model, modify_regulation
 
 VSP_BINS = [
     (-99,    0,  1.5, 0.3),   # Deceleration/Braking

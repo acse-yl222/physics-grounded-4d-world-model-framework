@@ -6,8 +6,8 @@ functions return (N, 3) array of force vectors for N birds
 
 import numpy as np
 from scipy.ndimage import distance_transform_edt, map_coordinates
-from sim.states import TRANSIT, MURMURATION, DESCENT
-from sim.sites import get_site_heightmaps, sample_surface_height
+from urban_geometry.birds.sim.states import TRANSIT, MURMURATION, DESCENT
+from urban_geometry.birds.sim.sites import get_site_heightmaps, sample_surface_height
 
 def compute_separation(positions, neighbor_indices, neighbor_distances, r_hard_sphere, r_separation, separation_gaussian_floor=0.01, mode='single'):
     """

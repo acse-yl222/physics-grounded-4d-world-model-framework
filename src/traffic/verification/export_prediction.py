@@ -1,6 +1,3 @@
-from pathlib import Path
-from common.layout import scene_input
-from common.runtime import trial_root
 """
 Convert the model-predicted trajectories from a real road network
 back to the world coordinate system and export them as JSON.
@@ -9,6 +6,16 @@ Note:
 For the coordinate system transformation, AI was used with the assistance of explicit instructions.
 I have confirmed that all modified or written AI code conforms to my intended purpose.
 """
+
+# Compatibility for direct source-script execution; package imports need no path changes.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from pathlib import Path
+from common.layout import scene_input
+from common.runtime import trial_root
 import argparse
 import json
 import os
@@ -17,10 +24,9 @@ import sys
 import numpy as np
 import torch
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-import configs.default as C
-import generate_complex_london as gen
-from particle_mlp_london import ParticleTrafficModel
+import traffic.configs.default as C
+from traffic.verification import generate_complex_london as gen
+from traffic.verification.particle_mlp_london import ParticleTrafficModel
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 

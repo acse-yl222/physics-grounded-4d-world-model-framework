@@ -1,16 +1,19 @@
 """All-turbine 4 m terrain crop: paired actuator-on/off AI4Urban trial."""
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
 from common.runtime import source_path, trial_root
-from pathlib import Path as _UwmPath
-import sys as _uwm_sys
-_uwm_sys.path.insert(0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / 'common').is_dir())))
 from common.layout import repo_root
 import argparse,json,math,sys,time
 from pathlib import Path
 import numpy as np
 import torch
 import h5py
-sys.path.insert(0,str((repo_root() / 'src/urban_flow/scenarios/region')))
-from run_ai4urban import build_model,allocate,advance,write_json
+from urban_flow.scenarios.region.run_ai4urban import build_model,allocate,advance,write_json
 
 @torch.inference_mode()
 def main():

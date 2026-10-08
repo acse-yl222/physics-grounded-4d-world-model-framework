@@ -9,9 +9,8 @@ import numpy as np
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from configs.default import GRID_SIZE
-from data.generate_complex import (
+from traffic.configs.default import GRID_SIZE
+from traffic.data.generate_complex import (
     get_road_network, build_road_lane_centers, simulate_trajectory,
 )
 

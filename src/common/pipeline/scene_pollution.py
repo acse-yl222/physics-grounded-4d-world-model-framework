@@ -3,9 +3,14 @@
 Uses the same Yuhang upwind solver as core008 scaled_latent. Concentration has
 arbitrary tracer units: it is not a measured or calibrated PM2.5 prediction.
 """
-from pathlib import Path as _UwmPath
-import sys as _uwm_sys
-_uwm_sys.path.insert(0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / 'common').is_dir())))
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from common.locations import code_path
 from common.layout import repo_root
 import argparse
 import importlib.util
@@ -18,8 +23,6 @@ import time
 import numpy as np
 import torch
 
-if __package__ in (None,''):
-    sys.path.insert(0,str(repo_root()))
 from common.pipeline.paths import ROOT,project_path
 from common.pipeline.scene_scaled_latent import save_npz,save_json,digest,log
 
@@ -29,7 +32,7 @@ def main():
     ap.add_argument('--config',default='configs/white_city/scaled_latent.json')
     args=ap.parse_args();cfg=json.loads(project_path(args.config).read_text())
     run=project_path(cfg['output']);out=run/'pollution';out.mkdir(exist_ok=True)
-    path=ROOT/'src/urban_flow/physics/wind_pollution_code/code/vendor/yuhang/data_generation/physical_transport.py'
+    path=code_path('src/urban_flow/physics/wind_pollution_code/code/vendor/yuhang/data_generation/physical_transport.py')
     spec=importlib.util.spec_from_file_location('scene_tracer_transport',path)
     transport=importlib.util.module_from_spec(spec);sys.modules[spec.name]=transport;spec.loader.exec_module(transport)
     torch.set_num_threads(8);cell=cfg['cell_m']*cfg['coarse_factor'];device='cuda'

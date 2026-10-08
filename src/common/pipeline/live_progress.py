@@ -1,7 +1,12 @@
 """Refresh progress figures after completed wind steps; no GPU required."""
-from pathlib import Path as _UwmPath
-import sys as _uwm_sys
-_uwm_sys.path.insert(0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / 'common').is_dir())))
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from common.locations import code_path
 from common.layout import repo_root
 import argparse
 import json
@@ -12,8 +17,6 @@ import subprocess
 import sys
 import time
 
-if __package__ in (None,''):
-    sys.path.insert(0,str(repo_root()))
 from common.pipeline.paths import ROOT,project_path
 
 
@@ -27,7 +30,7 @@ def main():
         rows=json.loads(metrics.read_text())['steps'] if metrics.exists() else []
         step=rows[-1]['step'] if rows else 0
         if step and step!=last:
-            subprocess.run([sys.executable,str(ROOT/'src/common/pipeline/plot_scene.py'),'--config',args.config,'--step',str(step)],cwd=ROOT,check=True)
+            subprocess.run([sys.executable,str(code_path('src/common/pipeline/plot_scene.py')),'--config',args.config,'--step',str(step)],cwd=ROOT,check=True)
             record={'completed_steps':step,'total_steps':cfg['wind_steps'],
                     'updated':time.strftime('%Y-%m-%d %H:%M:%S'),
                     'free_gib':shutil.disk_usage(run).free/1024**3,

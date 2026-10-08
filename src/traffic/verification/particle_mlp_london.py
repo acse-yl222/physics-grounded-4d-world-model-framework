@@ -9,8 +9,7 @@ import torch.nn as nn
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from configs.default import (
+from traffic.configs.default import (
     WINDOW_SIZE, HIST_STEPS, PRED_STEPS,
     VEHICLE_DIM, REGULATION_DIM, TOTAL_FEAT_DIM,
     HIDDEN_DIM, EGO_HIDDEN_DIM, N_HIDDEN_LAYERS,

@@ -14,8 +14,6 @@ import time
 import numpy as np
 from scipy.ndimage import maximum_filter
 import torch
-from wavepde.torch_backend import WaveConfig, plan_paths, waveform_samples
-from wavepde.torch_backend.geometry import segment_free, segment_time
 
 
 def write_json(path, value):
@@ -26,12 +24,14 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--scene', choices=['south_ken', 'white_city'], default='south_ken')
     ap.add_argument('--output', type=Path, required=True)
-    ap.add_argument('--framework', type=Path, default=Path(__file__).resolve().parents[2])
+    ap.add_argument('--framework', type=Path, help='Scene workspace (or P4D_ROOT/UWM_ROOT)')
     ap.add_argument('--sources', type=int, default=30)
     ap.add_argument('--geometry', type=Path, required=True, help='Prepared 2m geometry directory')
     ap.add_argument('--station-file', type=Path)
     ap.add_argument('--ground-mode', action='store_true')
     args = ap.parse_args()
+    from wavepde.torch_backend import WaveConfig, plan_paths, waveform_samples
+    from wavepde.torch_backend.geometry import segment_free, segment_time
     out = args.output
     out.mkdir(parents=True, exist_ok=True)
     geo = args.geometry

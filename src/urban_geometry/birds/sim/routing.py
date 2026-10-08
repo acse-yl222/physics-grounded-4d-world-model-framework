@@ -70,7 +70,7 @@ def build_arrival_time_field(geo_data, origin, roost_centers, config, wind_time=
 
     # pollution and noise modify the traversal cost but do not make a direction physically impossible (unlike wind, which can make a direction impossible)
     if config.route_use_pollution or config.route_use_noise:
-        from sim.environment import get_environment
+        from urban_geometry.birds.sim.environment import get_environment
         env = get_environment(cell_pos, wind_time, config)
         if config.route_use_pollution:
             poll = np.clip(env['pollution'], 0.0, 1.0).reshape(nx, ny, nz).transpose(2, 1, 0)
@@ -82,7 +82,7 @@ def build_arrival_time_field(geo_data, origin, roost_centers, config, wind_time=
     # evaluate the wind field used by the Zermelo navigation model
     # unlike the isotropic preferences above, wind is directional = the travel time from A to B can differ from the travel time from B to A
     if config.route_use_wind:
-        from sim.wind import get_wind
+        from urban_geometry.birds.sim.wind import get_wind
         w = get_wind(cell_pos, wind_time, config) # (nx*ny*nz, 3)
         w_grid = w.reshape(nx, ny, nz, 3).transpose(2, 1, 0, 3) # (nz,ny,nx,3) world x,y,z
     else:

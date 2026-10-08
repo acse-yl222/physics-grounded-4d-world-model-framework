@@ -1,9 +1,10 @@
-from common.layout import scene_input
 """
 config.py = all simulation params (in SI units)
 """
 
-from dataclasses import dataclass
+from common.layout import scene_input
+
+from dataclasses import dataclass, field
 import numpy as np
 
 # INDIVIDUAL TRAITS = spec for per-bird trait sampling i.e. creates individuals rather than clones
@@ -144,7 +145,7 @@ class SimConfig:
     geometry_path: str = (
         None  # path to separate geometry .npz from glb_to_geo.py; None = use geometry from scaled_wind_path
     )
-    geometry_path: str = str(scene_input('south_ken','birds','geometry.npz'))
+    geometry_path: str = field(default_factory=lambda: str(scene_input('south_ken','birds','geometry.npz')))
     world: dict = None
 
     # WORLD GENERATION = auto-placement of roosts/forage sites based on voxel geometry
@@ -389,9 +390,7 @@ class SimConfig:
     )  # wind direction (unit vector) TODO: remove this and just use scaled
 
     # SCALED wind field (precomputed)
-    scaled_wind_path: str = (
-        str(scene_input('south_ken','birds','geometry.npz'))  # path to .npz from generate_wind.py
-    )
+    scaled_wind_path: str = field(default_factory=lambda: str(scene_input('south_ken','birds','geometry.npz')))
     # scaled_wind_path: str = "data/wind_field_SK.npz" # path to .npz from generate_wind.py
     embed_detailed_model: bool = (
         False  # embed the detailed GLB in the viewer (large HTML), false = voxel boxes only
