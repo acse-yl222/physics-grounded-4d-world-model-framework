@@ -1,0 +1,20 @@
+from pathlib import Path
+import json,numpy as np,zipfile,hashlib
+import matplotlib;matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+S=Path(__file__).resolve().parent;R=S/'input/canary_wharf_20261007';O=R/'exports/leyland-ground-contact-001';r=json.loads((O/'checks.json').read_text());ss=r['perimeter_samples'];a=np.array([[p['x'],p['y'],p['dtm_scene_z'],p['existing_site_z'] if p['existing_site_z'] is not None else np.nan] for p in ss]);fig,ax=plt.subplots(1,2,figsize=(12,7),layout='constrained');im=ax[0].scatter(a[:,0],a[:,1],c=a[:,2],s=12);fig.colorbar(im,ax=ax[0],label='DTM scene z m');missing=~np.isfinite(a[:,3]);ax[0].scatter(a[missing,0],a[missing,1],s=30,facecolors='none',edgecolors='r',label='No existing site-support hit');ax[0].set(aspect='equal',title='Full owner perimeter coverage audit',xlabel='ENUeast m',ylabel='ENUnorth m');ax[0].legend(fontsize=7);ax[1].scatter(a[:,1],a[:,2],s=8,label='DTM at perimeter');ax[1].scatter(a[:,1],a[:,3],s=5,label='Existing support (where present)');ax[1].axhline(0,color='k',label='Old wallbase0');ax[1].set(xlabel='ENUnorth m (multiple perimeter sides)',ylabel='Scene elevation m',title='Positive terrain; original walls penetrated local DTM');ax[1].legend();fig.savefig(O/'terrain-coverage.png',dpi=150)
+(O/'report.md').write_text(f'''# Leyland ground-contact study
+
+Positive local terrain is the issue: owner-interior DTM scene elevations are0.933–1.774 m (median1.561), outside3 m ring0.799–2.094 m. The common4.28000021 m ODN offset remains fixed. Old wallbase0 is below this terrain, so extension downward would be wrong. Of{len(ss)} perimeter sample rays, {int(missing.sum())} have no existing regional site-support hit; existing hits are approximately−0.100 m. Missing illustrative surface is distinct from a measured wall-to-ground airgap.
+
+This independent candidate clips lower wall vertices upward to the native BNG pixel-centre DTM triangle surface, with an explicit0.03 m display overlap. Roof and upper wall vertices remain exactly unchanged. All26 building meshes remain closed. It includes a small DTM surface within the3 m ownerbuffer; this margin is a visualization choice, not a cadastral boundary. No ramp or interpolated transition to the regional site was invented.
+
+Both native reopening and independent GLB triangle reimport passed. Roof/uppervertex preservation and native closedness were asserted. All bottom-edge samples, including internal cap triangulations, lie−0.08589 to+0.01377 m relative to the interpolated ground surface; this means the base approximates terrain rather than exactly conforming everywhere. Separate exterior-wall-base audit excludes internal cap diagonals and samples each exterior edge at9positions against actual terrain triangles: all exterior residuals are−0.0352523 to−0.0179369 m, with zero positive samples. The +0.01377 m upper extreme belongs to internal cap interpolation, not floating exterior walls. It is not a measured foundation. The ground itself is deliberately an open surface.
+
+Actual views inspected: ground-contact.png and north-contact-detail.png. Northern wall feet visibly meet the local ground ribbon. The original footprint and courtyard remain open; only a narrow evidence-backed surface surrounds wall edges. The current local patch overlaps the old regional surface where it exists, and its site seam remains unresolved. Do not integrate this candidate as a finished regional terrain correction. No global files or retained regional asset were changed.
+
+Source: leyland_dtm_001, EA OGLv3; exact overlap with original composite grid already verified. Actual capture date unknown. Contains Environment Agency information © Environment Agency copyright and/or database right2022. Source SHA and unchanged source building hashes are in checks.json.
+''')
+with zipfile.ZipFile(O/'sources.zip','w',zipfile.ZIP_DEFLATED) as z:
+ for p in list(S.glob('leyland_ground_*.py'))+[R/'references/leyland_ground_input.json',O/'checks.json',O/'exterior_base_check.json',O/'report.md']:z.write(p,str(p.relative_to(S)))
+print(hashlib.sha256((O/'sources.zip').read_bytes()).hexdigest())

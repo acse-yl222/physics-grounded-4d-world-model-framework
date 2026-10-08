@@ -1,0 +1,17 @@
+{
+  "run_id": "sumo_20261005T110312Z_e4bd73",
+  "view_id": "sumo_20261005t110312z_e4bd73",
+  "summary": {
+    "arrived": 173,
+    "departed": 200,
+    "collisions": 0,
+    "teleports": 0,
+    "generated": 200,
+    "requested": 200,
+    "finished_mean_duration_s": 91.75722543352602,
+    "unfinished": 27,
+    "vehicle_seconds": 17077,
+    "halted_vehicle_seconds": 308,
+    "calibration_status": "synthetic_uncalibrated"
+  }
+}

@@ -1,0 +1,8 @@
+from pathlib import Path
+s=Path('project/tower_hamlets/prepare_water8_study.py').read_text().split('from shapely.geometry import box')[0].replace('36beb80b-ced9-4f18-a461-04680502f52e','d2b07e0e-59df-4c73-be75-b4b7032dd1d5');exec(s)
+from shapely.geometry import shape,box
+r=json.loads((R/'references/bank40_study.json').read_text());r['objects']=[];L,H,B,T=-1,11.5,-310.25,-307.5;w=1.25;outer=box(L-w,B-w,H+w,T+w);base=159.3590087890625;top=163.38;D=(top-base)/w
+for reg in r['regions']:
+ q=shape(reg['geometry_uv']);q=q.difference(outer) if reg['name']=='southwest_main' else q;r['objects'].append(make(set_precision(q,.000001),[reg['candidate_level_odn'],0,0],'Bank40002_'+reg['name']))
+for name,q,c in [('plateau',box(L,B,H,T),[top,0,0]),('west',Polygon([(L-w,B-w),(L,B),(L,T),(L-w,T+w)]),[top-D*L,D,0]),('east',Polygon([(H,B),(H+w,B-w),(H+w,T+w),(H,T)]),[top+D*H,-D,0]),('south',Polygon([(L-w,B-w),(H+w,B-w),(H,B),(L,B)]),[top-D*B,0,D]),('north',Polygon([(L,T),(H,T),(H+w,T+w),(L-w,T+w)]),[top+D*T,0,-D])]:r['objects'].append(make(q,c,'Bank40002_central_'+name))
+r['scope']='40BankStreet descriptivecomparison002: coherentcentralraisedroofplateau andestimated1.25m edge transitions, no equipmentidentity. SW/eastplateausfromDSM; northoriginal153m retained. Otherhigh/lowreturns unresolved.';r['central_parameters']={'inner_bounds_uv':[L,B,H,T],'ramp_width_m':w,'top_ODN':top,'base_ODN':base,'assumption':'Rectangularplateauandfourplanaredges estimated fromnative1m profiles, exactedgesuncertain.'};r['limitations']=[q for q in r['limitations'] if 'Centralhigh' not in q]+['Centralotherhighlinesoutside modeledplateau remainunresolved. Profilebounds±.5m andrampwidth sensitivity recorded.'];(R/'references/bank40_study002.json').write_text(json.dumps(r,indent=2))

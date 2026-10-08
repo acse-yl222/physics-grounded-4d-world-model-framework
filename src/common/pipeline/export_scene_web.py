@@ -114,6 +114,7 @@ def main():
                 uvw[i] = d['uvw'][:, LZ]
         name = f'wind/uvw_{coarse}m_z{zlo}-{zhi}m_tcyx.npy'
         save(name, uvw, components='u local +x, v local +y, w up (m/s)', time_s=[step_s * (i + 1) for i in range(len(wind_files))],
+             layer_m=[zlo, zhi],
              note='SCALED latent surrogate, block mean of the fine field, solid cells zero')
         timeline = {'step_s': step_s, 'steps': len(wind_files)}
         layers_json['wind'] = {'file': name, 'cell_m': coarse, 'frames': len(wind_files), 't0_s': step_s, 'step_s': step_s,
@@ -133,6 +134,7 @@ def main():
         frames = tz.shape[0]
         dt = tcfg['duration_seconds'] / max(frames - 1, 1)
         save(name, np.asarray(tz[:, LZ]).astype(np.float16), time_s=[dt * i for i in range(frames)], units='C',
+             layer_m=[zlo, zhi],
              ambient_c=tcfg['ambient_c'], surface_c=tcfg['surface_c'],
              note='Yi Qi 3-D finite-difference solver driven by the last wind frames; controlled thermal scenario')
         man['temperature3d_physical'] = {k: tcfg[k] for k in ('ambient_c', 'surface_c', 'cell_m', 'duration_seconds', 'limitations') if k in tcfg}

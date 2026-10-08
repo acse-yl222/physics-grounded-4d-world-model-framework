@@ -81,11 +81,11 @@ def main():
             'local_origin_xyz_m':metadata['source_region_origin_xyz_m'],
             'environment':{'torch':str(torch.__version__),'numpy':np.__version__,'gpu':torch.cuda.get_device_name()},
             'limits':['New-geometry surrogate transfer; no CFD or measured validation.',
-                      'Wind input clipped at 128 m; full GLB and 192 m geometry retained.',
-                      '50 seconds/step is a grid-scaled interpretation, not a calibrated clock.',
+                      f'Wind input uses bottom {cfg["wind_layers"]*cell} m; full source GLB retained.',
+                      f'{cfg["step_seconds"]} seconds/step is a grid-scaled interpretation, not a calibrated clock.',
                       'Horizontal compass alignment unverified without GLB coordinate metadata.',
-                      '8 m thermal grid differs from checkpoint training; results are transfer diagnostics.',
-                      'Thermal conditions are controlled assumptions, not White City measurements.']}
+                      f'{coarse} m thermal grid; results are transfer diagnostics.',
+                      'Thermal conditions are controlled assumptions, not local measurements.']}
     manifest=out/'run_config.json'
     if manifest.exists() and json.loads(manifest.read_text())!=record:
         raise RuntimeError('Input/config/code changed: use a new run directory.')

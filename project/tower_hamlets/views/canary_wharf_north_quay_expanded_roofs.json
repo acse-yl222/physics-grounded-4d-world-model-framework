@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "tower_hamlets",
+  "title": "North Quay \u00b7 expanded roof candidates",
+  "time_alignment": "relative",
+  "runs": [
+    "canary_wharf_north_quay_expanded_roofs_001"
+  ],
+  "layers": [
+    {
+      "run_id": "canary_wharf_north_quay_expanded_roofs_001",
+      "layer_id": "observed_roofs",
+      "visible": true
+    }
+  ]
+}

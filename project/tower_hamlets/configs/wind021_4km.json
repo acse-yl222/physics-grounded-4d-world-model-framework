@@ -1,0 +1,40 @@
+{
+  "scene_id": "tower_hamlets",
+  "scenario": "expanded4km_controlled_west_to_east_5ms_startup",
+  "origin_xyz_m": [
+    -3072,
+    -3072,
+    0
+  ],
+  "shape_zyx": [
+    32,
+    384,
+    384
+  ],
+  "cell_m": 16,
+  "inlet_m_s": 5.0,
+  "cfl": 0.35,
+  "dt_max_s": 0.5,
+  "pressure_rtol": 1e-05,
+  "pressure_maxiter": 240,
+  "smoke_seconds": 10,
+  "target_seconds": 600,
+  "fallback_seconds": 60,
+  "wall_budget_s": 840,
+  "save_interval_s": 20,
+  "sample_heights_m": [
+    8,
+    24,
+    56,
+    120
+  ],
+  "scene_bounds_xy_m": [
+    -2000,
+    -2000,
+    2000,
+    2000
+  ],
+  "limitations": [
+    "Mapped buildings supplied inside the 4km scene only; exterior computational padding is unknown geometry treated as empty, not a mapped urban survey."
+  ]
+}

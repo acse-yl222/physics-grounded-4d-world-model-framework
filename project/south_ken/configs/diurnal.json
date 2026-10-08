@@ -1,0 +1,9 @@
+{
+  "input_path": "diurnal_20260930T095855Z_2a2e16",
+  "ambient_c": 20.0,
+  "albedo": 0.2,
+  "emissivity": 0.95,
+  "convective_coefficient_w_m2_k": 12.0,
+  "exchange_per_s": 0.001,
+  "diffusivity_m2_s": 1.0
+}

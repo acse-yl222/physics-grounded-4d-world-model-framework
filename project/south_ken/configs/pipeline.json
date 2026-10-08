@@ -1,0 +1,37 @@
+{
+  "scene": "south_ken",
+  "source": "simulation_geometry/city_baked.glb",
+  "domain": {
+    "cell_m": 4,
+    "crop_local_m": null,
+    "wind_layers": 64
+  },
+  "georeference": {
+    "confirmed": true,
+    "latitude_deg": 51.498354,
+    "longitude_deg": -0.176896,
+    "north": "local +y assumed north; local +x assumed east",
+    "terrain": "Inherited estimated flat ground; not surveyed elevation",
+    "note": "Inherited scene authoring coordinates; experimental flat-ground assumptions, not a surveyed calibration."
+  },
+  "stages": [
+    "geometry",
+    "wind",
+    "temperature",
+    "temperature3d",
+    "pollution",
+    "solar",
+    "flood",
+    "plot",
+    "verify",
+    "visualize"
+  ],
+  "wind": {
+    "steps": 100,
+    "step_seconds": 50
+  },
+  "visualize": {
+    "layer": 1,
+    "title": "South Kensington"
+  }
+}

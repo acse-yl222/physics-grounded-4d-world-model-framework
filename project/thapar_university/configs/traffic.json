@@ -1,0 +1,33 @@
+{
+  "schema_version": "city-traffic-1",
+  "scene_id": "thapar_university",
+  "osm_snapshot": "osm_20261005/map.osm.xml",
+  "buffer_m": 536,
+  "transform": {
+    "kind": "equirectangular",
+    "lat0": 30.35447,
+    "lon0": 76.36621,
+    "metres_per_degree": 111320.0,
+    "scale": 1.0,
+    "R": [[1.0, 0.0], [0.0, 1.0]],
+    "t": [0.0, 0.0],
+    "provenance": "Local equirectangular approximation shared by OSM geometry and roads; origin near centre of OSM university way 395256540, not surveyed control"
+  },
+  "duration_s": 600,
+  "step_s": 1,
+  "seed": 42,
+  "demand": {
+    "period_s": 3,
+    "min_distance_m": 400,
+    "fringe_factor": 5,
+    "vehicle_class": "passenger",
+    "calibration_status": "synthetic_uncalibrated"
+  },
+  "network": {"left_hand": true, "signals": "guessed_actuated"},
+  "intervention": {"speed_factor": 1.0, "closed_edges": []},
+  "limitations": [
+    "Synthetic passenger-car demand; not an observed Patiala traffic replay.",
+    "Two-wheelers, auto-rickshaws, pedestrians and heterogeneous lane behaviour are not calibrated.",
+    "Historical official traffic counts are context only; no current OD matrix or measured signal timings."
+  ]
+}

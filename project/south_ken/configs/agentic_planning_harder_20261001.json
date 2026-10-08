@@ -1,0 +1,43 @@
+{
+  "schema_version": "urban-rsi-0.1",
+  "scene_id": "south_ken",
+  "input_runs": {},
+  "tasks": [
+    {
+      "id": "initial_development",
+      "input": "solar",
+      "phase": "initial",
+      "role": "development"
+    },
+    {
+      "id": "changed_promotion",
+      "input": "solar",
+      "phase": "changed",
+      "role": "promotion"
+    },
+    {
+      "id": "initial_final",
+      "input": "solar",
+      "phase": "initial",
+      "role": "test"
+    }
+  ],
+  "generations": 1,
+  "episode_evaluations": 16,
+  "episode_steps": 18,
+  "max_model_calls": 80,
+  "max_output_tokens": 4096,
+  "max_total_tokens": 800000,
+  "max_evaluations": 90,
+  "promotion_min_gain": 1e-06,
+  "seed_revision": {
+    "planner": "Find a feasible plan with high summer direct-radiation reduction. Respect winter and site constraints. Use evaluations and diagnostics strategically. Submit a previously evaluated feasible plan before the budget expires.",
+    "updater": "Inspect the recorded development failures and decisions. Propose a concrete reusable improvement to the planner and, if warranted, to this update procedure. Retain useful inherited behavior. Do not memorize site IDs as universal solutions. Explain the modification and its expected effect. Never change the evaluator, objective, budgets or final-test access.",
+    "memory": []
+  },
+  "scope": "Fixed-agent harder size-choice experiment: 30 options at 15 sites, up to 4 panels, varying costs and tighter winter cap. Same original seed planner; 16 charged evaluations per episode, 3 final repetitions. Claude Opus 5.5 explicitly requested. No revisions. Existing correlated solar holdout; no independent weather/city validation. Predeclared GP and random baselines with seeds 0,1,2, same evaluation cap; report all repetitions including failures.",
+  "input_paths": {
+    "solar": "planning_city_size_choice_20261001"
+  },
+  "final_repetitions": 3
+}

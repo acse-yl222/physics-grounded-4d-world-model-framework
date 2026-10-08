@@ -1,0 +1,148 @@
+{
+  "status": "designed_not_executed",
+  "purpose": "Engineering wake comparison alongside matched PyTorch/OpenFOAM single-phase CFD; not full tunnel reproduction",
+  "baseline": {
+    "inlet_m_s": 10.0,
+    "diameter_m": 0.4647,
+    "hub_height_m": 0.8,
+    "ct": 0.95,
+    "ambient_ti": 0.003,
+    "wind_direction_deg": 270,
+    "coordinate_convention": "x east, y north; meteorological wind from west gives +x flow",
+    "yaw_deg": 0
+  },
+  "models": [
+    {
+      "name": "Jensen_1983",
+      "wake_expansion_k": 0.04,
+      "parameter_status": "declared diagnostic choice, not paper value"
+    },
+    {
+      "name": "Bastankhah_PorteAgel_2014",
+      "wake_expansion_k": 0.04,
+      "parameter_status": "declared diagnostic choice, not calibrated"
+    }
+  ],
+  "sampling": {
+    "downstream_x_over_D": [
+      1,
+      3,
+      5,
+      7,
+      10
+    ],
+    "transverse_y_over_R": [
+      -3,
+      3
+    ],
+    "transverse_points": 121,
+    "height": "hub",
+    "primary_comparison_x_over_D": [
+      3,
+      5
+    ],
+    "extended_far_wake_x_over_D": [
+      7,
+      10
+    ],
+    "near_wake_diagnostic_only_x_over_D": [
+      1
+    ],
+    "grid_meaning": "evaluation points, not CFD cells"
+  },
+  "experiments": [
+    {
+      "id": "P1_single_rotor",
+      "layout_xD_yD": [
+        [
+          0,
+          0
+        ]
+      ],
+      "purpose": "Compare engineering wake shape and recovery with CFD; near-wake annular double peak not expected to be reproduced"
+    },
+    {
+      "id": "P2_expansion_sensitivity",
+      "layout_xD_yD": [
+        [
+          0,
+          0
+        ]
+      ],
+      "wake_expansion_k_values": [
+        0.02,
+        0.04,
+        0.075
+      ],
+      "purpose": "Separate assumed wake expansion from CFD discrepancy; all results reported, no selection by reference error"
+    },
+    {
+      "id": "P3_ct_sensitivity",
+      "layout_xD_yD": [
+        [
+          0,
+          0
+        ]
+      ],
+      "ct_values": [
+        0.6,
+        0.75,
+        0.95
+      ],
+      "purpose": "Test loading trends and flag high-Ct/near-wake model limitations; existing CFD reference only at Ct .95"
+    },
+    {
+      "id": "P4_two_turbines",
+      "upstream_xD_yD": [
+        0,
+        0
+      ],
+      "downstream_separation_D": [
+        3,
+        5,
+        7,
+        10
+      ],
+      "downstream_lateral_offset_D": [
+        0,
+        0.5,
+        1
+      ],
+      "superposition": "SquaredSum, explicit for both model families",
+      "rotor_averaging": "area quadrature with convergence check; report rotor average separately from hub-point wind",
+      "purpose": "Compare downstream rotor effective wind speed; layouts are new experiments, not paper cases"
+    }
+  ],
+  "metrics": [
+    "velocity deficit 1-Ux/Uin",
+    "profile RMSE on common uniformly spaced y/R grid",
+    "maximum deficit",
+    "wake deficit integral over common sampled width",
+    "downstream rotor averaged effective speed for P4"
+  ],
+  "reference": {
+    "openfoam_limited_run": "20260930T192035Z_ac6df5e6",
+    "pressure_converged": false,
+    "corrected_serial_profiles": "project/actuator_lab/reports/20261001/wake_{distance}D.csv",
+    "paper_curves": "project/actuator_lab/formal_figure_b33.json",
+    "warning": "OpenFOAM is an unvalidated numerical reference, not ground truth; record provenance and sampling differences"
+  },
+  "limitations": [
+    "UniformSite does not reproduce wind-tunnel bottom no-slip boundary, wall-generated shear, finite tunnel boundaries or terrain.",
+    "Engineering wake models do not resolve annular force-region geometry or central hole.",
+    "Ct is specified against reference wind; CFD induction-based local-disc loading must be audited separately.",
+    "No physical power curve is available. Do not report electrical power, AEP, or T*U as generation. If an API placeholder power function is required, tag it nonphysical and discard power outputs.",
+    "Fixed-k models do not constitute ambient-TI sensitivity models; keep ambient TI fixed in this matrix.",
+    "No 23-turbine terrain comparison until inflow, rotor curves and terrain assumptions are explicitly matched."
+  ],
+  "execution_requirements": [
+    "Install PyWake in isolated environment and pin exact installed version.",
+    "Verify literature model APIs, explicit Ct-to-induction choice and high-Ct behavior in that version.",
+    "Smoke test downstream direction, zero-Ct recovery, finite outputs and rotor quadrature convergence.",
+    "Store configs, source snapshot, version, profiles and limitations under protocol v1.1 before retaining runs."
+  ],
+  "sources": [
+    "https://topfarm.pages.windenergy.dtu.dk/PyWake/api/PredefinedEngineeringWindFarmModels.html",
+    "https://topfarm.pages.windenergy.dtu.dk/PyWake/notebooks/EngineeringWindFarmModels.html"
+  ]
+}

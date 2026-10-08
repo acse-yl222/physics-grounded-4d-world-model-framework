@@ -138,7 +138,7 @@ def legacy_wind_config(cfg, p):
 def legacy_surface_config(cfg, p):
     g = cfg['georeference']
     return {'scene': cfg['scene'], 'geometry': rel(p['geometry']), 'output': rel(p['physics']),
-            'cell_m': cfg['domain']['cell_m'],
+            'cell_m': cfg['domain']['cell_m'], 'coarse_factor': cfg['wind']['coarse_factor'],
             'experimental_assumptions_confirmed': bool(g['confirmed']),
             'assumptions': {'latitude_deg': g['latitude_deg'], 'longitude_deg': g['longitude_deg'],
                             'north': g['north'], 'terrain': g['terrain']},
@@ -267,7 +267,7 @@ def commands(stage, cfg, p, wind_cfg, surface_cfg):
     if stage == 'geometry':
         cmd = py + [str(ROOT / 'src/urban_geometry/voxelization/prepare_glb.py'), '--cell', str(cfg['domain']['cell_m']),
                     '--source', str(p['source']), '--out', str(p['geometry']),
-                    '--min-layers', str(cfg['domain']['wind_layers'])]
+                    '--min-layers', str(cfg['domain']['wind_layers']), '--coarse-factor', str(cfg['wind']['coarse_factor'])]
         crop = cfg['domain']['crop_local_m']
         if crop is not None:
             cmd += ['--crop'] + [str(float(v)) for v in crop]

@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "south_ken",
+  "title": "temperature \u00b7 recorded simulation",
+  "time_alignment": "relative",
+  "runs": [
+    "legacy_web",
+    "city_temperature_20260930T095257Z_c63146"
+  ],
+  "layers": [
+    {
+      "run_id": "legacy_web",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "city_temperature_20260930T095257Z_c63146",
+      "layer_id": "temperature",
+      "visible": true
+    }
+  ]
+}

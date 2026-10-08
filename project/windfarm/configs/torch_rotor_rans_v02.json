@@ -1,0 +1,30 @@
+{
+  "inlet_m_s": 10.0,
+  "rho_kg_m3": 1.225,
+  "ct": 0.95,
+  "cutoff_sigma": 2.0,
+  "cell_m": 8.0,
+  "turbulence_model": "kEpsilon",
+  "kinematic_viscosity_m2_s": 1.5e-05,
+  "turbulence_intensity": 0.003,
+  "turbulence_length_m": 5.302964371250929,
+  "assumptions": [
+    "Full-scale terrain and 23 turbines preserved; this is a parameter-transfer experiment, not the paper wind-tunnel geometry.",
+    "Ct=0.95 and annulus/thickness-to-diameter ratios from paper Appendix B.2.",
+    "N=2 is a paper default; sigma/D=(0.08/4)/0.4647 is inferred, not explicitly reported for B.2.",
+    "TI=0.3% follows cited experiment, not an explicit B.2 inlet condition.",
+    "Turbulence length 0.03 m in the reference setup was assumed; scaling by median full-scale diameter is also an assumption.",
+    "Air density 1.225 kg/m3 and molecular viscosity 1.5e-5 m2/s are retained assumptions. Reynolds number is not matched after geometric scaling.",
+    "Terrain, towers and nacelles remain; paper B.2 omitted tower/nacelle. Domain size, turbine count, transient integration, wall/corner treatment and numerical discretization also differ, not just the mesh.",
+    "8 m grid and inferred thin rotor kernel are underresolved; no grid-independent or validated accuracy claim.",
+    "5 s force ramp is a numerical startup choice, not a paper parameter.",
+    "No multiphase flow, waves, floating motion, flexible moorings, blade-resolved rotation or electrical power model."
+  ],
+  "slice_agl_m": 80.0,
+  "startup_ramp_s": 5.0,
+  "model_name": "TorchRotor-RANS",
+  "model_version": "0.2",
+  "sigma_over_diameter": 0.043038519474930065,
+  "inner_diameter_ratio": 0.19367333763718528,
+  "model_card": "project/windfarm/torch_rotor_rans_v02.md"
+}

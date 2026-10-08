@@ -1,0 +1,13 @@
+{
+  "scene_id": "south_ken",
+  "source_input": "planning_city_20260930T100137Z_087db6",
+  "task_id": "planning_city_size_choice_20261001",
+  "permutation_seed": 20261001,
+  "variants": [{"scale": 0.75, "cost_units": 1}, {"scale": 1.0, "cost_units": 2}],
+  "phases": {
+    "initial": {"max_panels": 4, "max_cost_units": 7, "max_winter_loss_fraction": 0.0025, "excluded_sites": [], "evaluation_budget": 16},
+    "changed": {"max_panels": 3, "max_cost_units": 5, "max_winter_loss_fraction": 0.0025, "excluded_sites": ["p03", "p08"], "evaluation_budget": 16}
+  },
+  "baseline_seeds": [0, 1, 2],
+  "scope": "Hypothetical 15 footprint-clear sites with nested 9m and 12m panels, synthetic size costs plus alternating site surcharge, flat planning plane and uniform receptors. Same-site options are mutually exclusive through existing overlap validation. Existing direct-solar physics and previously inspected correlated intervals; no new weather, wind, temperature or land-access validation. Increased combinatorial difficulty does not establish empirical agent difficulty."
+}

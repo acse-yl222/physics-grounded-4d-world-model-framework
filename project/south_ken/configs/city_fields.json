@@ -1,0 +1,26 @@
+{
+  "wind": {
+    "run_id": "city_wind_20260930T095339Z_fa5f00",
+    "view_id": "city_wind_20260930t095339z_fa5f00"
+  },
+  "temperature": {
+    "run_id": "city_temperature_20260930T095339Z_fa5f00",
+    "view_id": "city_temperature_20260930t095339z_fa5f00"
+  },
+  "pollution": {
+    "run_id": "city_pollution_20260930T095339Z_fa5f00",
+    "view_id": "city_pollution_20260930t095339z_fa5f00"
+  },
+  "flood": {
+    "run_id": "city_flood_20260930T095339Z_fa5f00",
+    "view_id": "city_flood_20260930t095339z_fa5f00"
+  },
+  "solar_20260621": {
+    "run_id": "city_solar_20260621_20260930T095339Z_fa5f00",
+    "view_id": "city_solar_20260621_20260930t095339z_fa5f00"
+  },
+  "solar_20261221": {
+    "run_id": "city_solar_20261221_20260930T095339Z_fa5f00",
+    "view_id": "city_solar_20261221_20260930t095339z_fa5f00"
+  }
+}

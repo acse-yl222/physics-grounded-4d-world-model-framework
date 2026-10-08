@@ -1,0 +1,13 @@
+from pathlib import Path
+import json,numpy as np
+import matplotlib;matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+P=Path(__file__).resolve().parent;O=P/'input/canary_wharf_20261007/exports/cabot-west-roof-study-001';d=json.loads((O/'boundary-study.json').read_text());rows=d['all_strip_cells'];u=np.array([r['u'] for r in rows]);v=np.array([r['v'] for r in rows]);z=np.array([r['dsm_odn'] for r in rows]);dtm=np.array([r['dtm_odn'] for r in rows]);best=d['selected_for_diagnostic_only'];height=d['high_seed_odn_median'];low=d['baseline_odn'];near=[q for q in d['candidate_family'] if q['rmse_all']<=best['rmse_all']+.1];fig,axs=plt.subplots(1,3,figsize=(17,6));axs[0].scatter(u,v,c=z,s=20,vmin=9,vmax=27)
+for q in near:
+ t=np.linspace(np.pi,2*np.pi,100);axs[0].plot(q['center_u']+q['radius_u']*np.cos(t),5+(5-q['front_v'])*np.sin(t),c='red',alpha=.3,lw=.7)
+axs[0].set(xlim=(17,34),ylim=(0,5.3),xlabel='along u m',ylabel='inward v m',title='All boundaries within +0.10 m RMSE')
+profiles=[]
+for ax,uc in zip(axs[1:],[23.,27.]):
+ m=abs(u-uc)<=1;ax.scatter(v[m],z[m],label='DSM');ax.scatter(v[m],dtm[m],label='DTM');front=5-(5-best['front_v'])*np.sqrt(1-((uc-best['center_u'])/best['radius_u'])**2);ax.plot([-2,front,front,5],[low,low,height,height],c='red',label='candidate vertical step');ax.set(xlabel='inward v m',ylabel='ODN m',title=f'Cross section u={uc} +/-1 m');ax.legend(fontsize=8);profiles.append({'center_u':uc,'native_cells':[rows[i] for i in np.where(m)[0]],'candidate_boundary_v':float(front)})
+fig.tight_layout();fig.savefig(O/'boundary-sensitivity.png',dpi=150)
+report={'near_best_within_0_1m_rmse_count':len(near),'near_best_parameters':near,'height_jump_m':height-low,'profiles':profiles,'recommendation':'HOLD independent candidate; high roof presence supported, exact semicircle/ellipse sidewall and nearly10m vertical rise not established by1mDSM or uncalibrated photo.','photo_observation':'Actual Anna photo has a continuous stone upper fascia over a curved glazed center, with side fascia aligned. Does not directly show an isolated solid half-cylinder projecting from a lower terrace as in candidate render. Existing zone mismatch prevents translating this observation into a corrected cap boundary.','next_action':'Use high patch elevation as evidence; do not retain candidate vertical wall as verified architecture. Need independent closer/front oblique evidence or robust local roof boundary constraints before facade authoring.'};(O/'boundary-sensitivity.json').write_text(json.dumps(report,indent=2));print({k:v for k,v in report.items() if k not in ['near_best_parameters','profiles']})

@@ -16,3 +16,11 @@ class ResourceSelectionTests(unittest.TestCase):
         bad=self.catalog('published_movie_v1');bad['scenes'][0]['resource_ids'].append('windfarm_runs_other')
         for catalog in (bad,self.catalog('../other')):
             with self.assertRaises(ValueError):module.windfarm_resources(catalog)
+
+    def test_torch_run_keeps_previous_animation_versions(self):
+        for version in ('torch_rotor_rans_v01','torch_rotor_rans_v02','torch_rotor_rans_v03'):
+            with self.subTest(version=version):
+                result=module.windfarm_resources(self.catalog(version))
+                self.assertEqual(result['default_run'],version)
+                for previous in ('torch_rotor_rans_v01','torch_rotor_rans_v02','openfoam_10ms_v1','published_movie_v1'):
+                    self.assertIn(previous,result['runs'])

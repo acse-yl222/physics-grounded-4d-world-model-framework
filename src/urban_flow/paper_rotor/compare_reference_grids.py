@@ -25,7 +25,7 @@ def compare(runs, output):
     if len(records) < 3 or len({r['cell_m'] for r in records}) != len(records):
         raise ValueError('At least three distinct grids are required')
     # Only grid discretization may change; compare the complete physical configuration.
-    ignored = {'cell_m', 'grid_cells_xyz', 'processes'}
+    ignored = {'cell_m', 'grid_cells_xyz', 'mesh_counts_xyz', 'actual_spacing_xyz_m', 'processes'}
     physical = [{k: v for k, v in c.items() if k not in ignored} for c in configs]
     if any(c != physical[0] for c in physical[1:]):
         raise ValueError('Configurations differ beyond grid or processor count')

@@ -1,0 +1,8 @@
+from pathlib import Path
+import json
+from shapely.geometry import Polygon,LineString
+from shapely.ops import unary_union
+R=Path(__file__).resolve().parent/'input/canary_wharf_20261007';g=json.loads((R/'geometry.json').read_text());p=R/'references/one_canada_facade_study.json';r=json.loads(p.read_text());fs=[f for f in g['buildings'] if f.get('name')=='One Canada Square'];polys={f['id']:unary_union([Polygon(a['outer'],a.get('holes',[])) for a in f['geometry']]) for f in fs};body=[f for f in fs if f['height_m']!=235];lower=unary_union([polys[f['id']] for f in body]);central=next(f for f in fs if f['height_m']==210);checks=[]
+for e in r['edge_ownership']:
+ line=LineString(e['edge']);domain=lower if e['tier'][0]==0 else polys[central['id']];outside=line.difference(domain.boundary.buffer(1e-6)).length;ownererror=line.difference(polys[e['owner']].boundary.buffer(1e-6)).length;assert outside<1e-6;assert ownererror<1e-6 or e['ambiguous'];checks.append({'tier':e['tier'],'owner':e['owner'],'edge_length_m':line.length,'outside_exposed_boundary_m':outside,'outside_owner_boundary_m':ownererror,'ambiguous':e['ambiguous']})
+r['facade_band_note']='52 estimated horizontal facade intervals:48lower+4upper; these are not actual storeys. Primary50storeys fact does not verify this regular visual grid.';r['numerical_boundary_checks']=checks;p.write_text(json.dumps(r,indent=2)+'\n');O=R/'exports/one-canada-facade-study-001';v=json.loads((O/'verification.json').read_text());v['exposed_boundary_checks']=checks;v['facade_band_note']=r['facade_band_note'];(O/'verification.json').write_text(json.dumps(v,indent=2)+'\n');print('verified',len(checks),'external segments;ambiguous',sum(e['ambiguous'] for e in checks))

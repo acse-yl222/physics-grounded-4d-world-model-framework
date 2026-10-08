@@ -1,0 +1,10 @@
+{
+  "overture-b817ed67-ac31-4448-96ed-17db35d602e4": "Ambiguous hostel H compound envelope fully contains the more articulated mapped Vyan Hall footprint. Use the individual outline, retain excluded source for review; not a demolition claim.",
+  "osm-way-1289149658": "Same ambiguous compound envelope as excluded Overture hostel H; prevent supplemental reintroduction.",
+  "overture-e8bb0127-8ac1-4515-a659-94e01201d8f3": "Ambiguous Vasudha compound envelope overlaps six separate mapped buildings. Prefer individual footprints and retain this alternate source extent; current covered courtyard status unverified.",
+  "osm-way-1322696651": "Same ambiguous compound envelope as excluded Overture Vasudha; prevent supplemental reintroduction.",
+  "overture-ae420b5a-0a17-4964-8d3f-0f20e69614b2": "Ambiguous Ambaram compound envelope fully contains an articulated building footprint. Prefer individual outline; source layer=1 does not establish a continuous roof/podium height.",
+  "osm-way-1289149657": "Same ambiguous compound envelope as excluded Overture Ambaram; prevent supplemental reintroduction.",
+  "overture-8344a460-14ad-4465-bea7-0412526cc278": "Ambiguous Anantam compound outline encloses separately mapped A/B/C/D blocks. Prefer height-tagged individual blocks; preserve alternate compound geometry in raw input.",
+  "osm-way-1318424170": "Same ambiguous compound envelope as excluded Overture Anantam; prevent supplemental reintroduction."
+}

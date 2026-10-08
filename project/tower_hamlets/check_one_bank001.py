@@ -1,0 +1,5 @@
+import bpy,json,math
+from pathlib import Path
+from mathutils import Vector,Matrix
+R=Path(__file__).resolve().parent/'input/canary_wharf_20261007';O=R/'exports/one-bank-massing-study-001';d=json.loads((O/'review.json').read_text());bpy.ops.wm.open_mainfile(filepath=str(O/'one-bank.blend'));A={o.name:[[min(v.co[i] for v in o.data.vertices) for i in range(3)],[max(v.co[i] for v in o.data.vertices) for i in range(3)]] for o in bpy.context.scene.objects if o.type=='MESH'}
+bpy.ops.wm.read_factory_settings(use_empty=True);bpy.ops.import_scene.gltf(filepath=str(O/'one-bank.glb'));B={o.name:[[min((o.matrix_world@v.co)[i] for v in o.data.vertices) for i in range(3)],[max((o.matrix_world@v.co)[i] for v in o.data.vertices) for i in range(3)]] for o in bpy.context.scene.objects if o.type=='MESH'};error=max(abs(x-y) for n in A for row,col in zip(A[n],B[n]) for x,y in zip(row,col));assert error<1e-4;d['independent_bounds_error_m']=error;d['visual_reviewed']=False;(O/'review.json').write_text(json.dumps(d,indent=2)+'\n');print('CHECKED',error)

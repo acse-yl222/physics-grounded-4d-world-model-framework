@@ -40,8 +40,11 @@ def package_export(storage,source,config,run_id,source_snapshot=None,code_revisi
     from .provenance import snapshot_sources
     bundle.mkdir(parents=True)
     snapshot=bundle/'source_snapshot.tar.gz'
+    export_snapshot=None
     if source_snapshot is not None:
         shutil.copy2(source_snapshot,snapshot)
+        export_snapshot=bundle/'export_source_snapshot.tar.gz'
+        snapshot_sources(storage.root,export_snapshot)
     else:
         code_revision=snapshot_sources(storage.root,snapshot)
     code_revision=code_revision or 'source-snapshot'
@@ -49,11 +52,17 @@ def package_export(storage,source,config,run_id,source_snapshot=None,code_revisi
     provenance={'code_revision':code_revision,'dirty':True,'parameters':config,'inputs':[{'id':'scene_export','sha256':digest(source/'scene.json')},{'id':'field_metadata','sha256':digest(source/'physics/manifest.json')},{'id':'geometry_asset','sha256':digest(source/scene_meta['model']['url'])}]}
     base={'schema_version':'1.1.0','scene_id':scene,'status':'complete','created_at':datetime.now(timezone.utc).isoformat(),'provenance':provenance,'spatial':spatial}
     runs=[];selection=[]
-    def emit(simulation,layer,asset,times,epoch=None):
+    def emit(simulation,layer,asset,times,epoch=None,invalid=None):
         rid=f'{run_id}_{simulation}';target=bundle/rid;asset_name='data/'+Path(asset).name
         copy_asset(asset,target/asset_name);layer={**layer,'asset':asset_name}
         copy_asset(snapshot,target/'provenance/source_snapshot.tar.gz')
         manifest={**base,'artifacts':[{'id':'source_snapshot','asset':'provenance/source_snapshot.tar.gz','sha256':snapshot_hash,'media_type':'application/gzip'}],'simulation':simulation,'run_id':rid,'time':{'unit':'s','samples':times},'layers':[layer]}
+        if export_snapshot is not None:
+            copy_asset(export_snapshot,target/'provenance/export_source_snapshot.tar.gz')
+            manifest['artifacts'].append({'id':'export_source_snapshot','asset':'provenance/export_source_snapshot.tar.gz','sha256':digest(export_snapshot),'media_type':'application/gzip'})
+        if invalid is not None:
+            np.save(target/'data/invalid.npy',invalid.astype(np.uint8))
+            layer['encoding'].update(mask_asset='data/invalid.npy',mask_dtype='|u1',mask_semantics='invalid_nonzero')
         if epoch is not None:manifest['time']['epoch']=epoch
         write(target/'manifest.json',manifest);validate(target/'manifest.json');runs.append(rid);selection.append({'run_id':rid,'layer_id':layer['id'],'visible':True})
     try:
@@ -74,8 +83,15 @@ def package_export(storage,source,config,run_id,source_snapshot=None,code_revisi
             if len(times)!=array.shape[0]:raise ValueError(f'{key}: time/array length mismatch')
             cell=meta['cell_m'];kind='vector_field' if vector else 'scalar_field'
             layer={'id':key,'kind':kind,'format':'npy','sampling':'linear','field':{'name':field,'unit':metadata.get('units',unit)},'encoding':{'coordinate_frame':'ENU','dtype':array.dtype.str,'shape':list(array.shape),'axes':'TCYX' if vector else 'TYX','origin_m':[grid['x0'],-grid['z_south'],meta.get('y',0)],'spacing_m':[cell,cell],'sample_location':'cell_center','byte_order':'little','compression':'none'},'display':{'widget':kind,'capabilities':['pick','legend','opacity']}}
+            if metadata.get('layer_m'):
+                layer['encoding']['origin_m'][2]=sum(metadata['layer_m'])/2
+            invalid=None
+            mask=scene_meta.get('masks',{}).get('solid_wind')
+            if key in ('wind','temp') and mask:
+                invalid=np.load(source/'physics'/mask['file'],allow_pickle=False)[mask['layer']]
+                if invalid.shape!=array.shape[-2:]:raise ValueError('Field and obstacle mask grids differ')
             if meta.get('range'):layer['display']['range']=meta['range']
-            emit(key,layer,path,list(times))
+            emit(key,layer,path,list(times),invalid=invalid)
         # Recorded solar irradiance is a scalar series with an explicit UTC clock.
         solar=scene_meta.get('layers',{}).get('solar',{})
         for date,meta in solar.get('dates',{}).items():

@@ -1,0 +1,11 @@
+from pathlib import Path
+import json,hashlib,zipfile,shutil
+from shapely.geometry import Polygon
+from shapely.ops import unary_union
+P=Path(__file__).resolve().parent;R=P/'input/canary_wharf_20261007';O=R/'exports/owner836-roof-study-001';D=json.loads((R/'references/owner836_authoring001.json').read_text());polys=[unary_union([Polygon(g['outer'],g.get('holes',[])) for g in z['geometry']]) for z in D['zones']];original=unary_union([Polygon(g['outer'],g.get('holes',[])) for g in D['source_geometry']['geometry']]);err=original.symmetric_difference(unary_union(polys)).area;overlap=sum(a.intersection(b).area for i,a in enumerate(polys) for b in polys[i+1:]);assert err<.001 and overlap<.001
+review=json.loads((O/'review.json').read_text());review.update({'visual_reviewed':True,'visual_review_scope':'Actually inspected roof.png: continuous simple flat roof; no facade verification; not photographic facade verification.','footprint_symmetric_difference_m2':err,'zone_overlap_m2':overlap,'neighbor_contacts':D['neighbors'],'all_cell_zone_residuals':[{k:z[k] for k in ['label','all_cell_residual']} for z in D['zones']]});(O/'review.json').write_text(json.dumps(review,indent=2));shutil.copy2(R/'references/owner836_authoring001.json',O/'authoring.json')
+def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+ledger={'inputs':{str(p):sha(p) for p in [R/'geometry.json',R/'references/ea_dsm_1m.tif',R/'references/ea_dtm_1m.tif']},'outputs':{p.name:sha(p) for p in O.iterdir() if p.is_file()},'sources':[{'name':'EA composite DSM/DTM','license':'Open Government Licence','vintage':'Actual local survey vintage unresolved'},{'name':'Overture / OSM footprint','license':'ODbL-1.0'},{'name':'Identity unresolved','use':'No new photographs or third-party imagery used.'}],'height_basis':D['source_height_basis']};(O/'evidence_ledger.json').write_text(json.dumps(ledger,indent=2))
+with zipfile.ZipFile(O/'source_snapshot.zip','w',zipfile.ZIP_DEFLATED) as z:
+ for p in list(P.glob('*owner836001.py'))+[O/'authoring.json',O/'review.json',O/'evidence_ledger.json',R/'references/owner836_identity_audit.json',R/'references/ea_vintage_metadata_audit001.json',R/'src/buildings/crossrail_partial_assembly.py']:z.write(p,p.name)
+print('footprint',err,'overlap',overlap)

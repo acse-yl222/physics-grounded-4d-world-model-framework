@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "tower_hamlets",
+  "title": "Canary Wharf \u00b7 Norwood House roof study",
+  "time_alignment": "relative",
+  "runs": [
+    "canary_wharf_appearance_norwood_001"
+  ],
+  "layers": [
+    {
+      "run_id": "canary_wharf_appearance_norwood_001",
+      "layer_id": "geometry",
+      "visible": true
+    }
+  ],
+  "camera": {
+    "position": [
+      -170,
+      360,
+      205
+    ],
+    "target": [
+      0,
+      65,
+      40
+    ]
+  }
+}

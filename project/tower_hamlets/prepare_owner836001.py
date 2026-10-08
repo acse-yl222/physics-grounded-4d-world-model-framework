@@ -1,0 +1,14 @@
+exec(open('project/tower_hamlets/audit_owner836001.py').read().split('mask=')[0])
+mask=~np.ma.getmaskarray(Z)&np.array([p.buffer(-1).contains(Point(a,b)) for a,b in zip(x.flat,y.flat)]).reshape(x.shape);z=np.asarray(Z)
+fig,ax=plt.subplots(figsize=(11,7));im=ax.scatter(x[mask],y[mask],c=z[mask],vmin=5,vmax=23,s=28);fig.colorbar(im,ax=ax,label='DSM ODN m (low returns clipped in colour only)');c=np.array(p.exterior.coords);ax.plot(c[:,0],c[:,1],'k');
+for i,(a,b) in enumerate(c[:-1]):ax.text(a,b,str(i))
+ax.set_aspect('equal');fig.savefig(R/'references/owner836_roof_detail001.png',dpi=150)
+print('coords',c.tolist());print('hist',np.histogram(z[mask],bins=np.arange(0,75,1)))
+
+from shapely import constrained_delaunay_triangles,set_precision
+q=set_precision(p,1e-6);odn=float(np.median(z[mask]));res=z[mask]-odn;geom=[{'outer':list(q.exterior.coords)[:-1],'holes':[list(h.coords)[:-1] for h in q.interiors],'triangles':[list(t.exterior.coords)[:3] for t in constrained_delaunay_triangles(q).geoms]}];zones=[{'label':'single spatially continuous roof envelope','geometry':geom,'height_m':odn-4.28000021,'roof_median_odn_m':odn,'area_m2':q.area,'stable_residual_p95_m':None,'all_cell_residual':{'count':int(mask.sum()),'mae_m':float(np.mean(abs(res))),'p95_absolute_m':float(np.percentile(abs(res),95))}}];neighbors=[]
+for feat in g['buildings']:
+ if feat['id'] in [f['id'],'site-support']:continue
+ bp=unary_union([Polygon(a['outer'],a.get('holes',[])) for a in feat['geometry']]);gap=p.distance(bp)
+ if gap<35:neighbors.append({'id':feat['id'],'name':feat.get('name'),'gap_m':gap,'overlap_m2':p.intersection(bp).area,'shared_boundary_m':p.boundary.intersection(bp.boundary).length})
+D={'building_id':f['id'],'source_geometry':f,'zones':zones,'neighbors':neighbors,'identity':'Unnamed mapped commercial office strip immediately west of20BankStreet, east ofPadium; address/occupier unconfirmed. OSMway1107719153, four floors, no mapped parts/holes.','primary_text_url':None,'source_height_basis':'10.501664m supplied byMicrosoftML Buildings /properties/height, not measured source height.','unverified':['EA composite local capture vintage unresolved; no current building morphology verification.','Spatially uniform18.98ODN surface supports flat envelope, not roof construction type or equipment.','DSMminuslocalDTM19.19m summary overstates scene roof due grounddatum: actual scene roof14.699m after ODNminus4.28000021.','Mapped fourfloor office has unconfirmed address/occupier; no new photo acquired and no facade guessed.','Full original footprint preserved, flat base0 is a retained estimated groundinterface; nearwater localDTMnegative values are notusedasnewbuildingbase.']};(R/'references/owner836_authoring001.json').write_text(json.dumps(D,indent=2));print(zones[0]['all_cell_residual'],neighbors)

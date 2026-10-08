@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "south_ken",
+  "title": "solar \u00b7 20260621",
+  "time_alignment": "relative",
+  "runs": [
+    "legacy_web",
+    "city_solar_20260621_20260930T095339Z_fa5f00"
+  ],
+  "layers": [
+    {
+      "run_id": "legacy_web",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "city_solar_20260621_20260930T095339Z_fa5f00",
+      "layer_id": "solar",
+      "visible": true
+    }
+  ]
+}

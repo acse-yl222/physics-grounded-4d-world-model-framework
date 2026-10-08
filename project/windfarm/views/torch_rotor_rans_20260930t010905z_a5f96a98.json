@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "windfarm",
+  "title": "TorchRotor-RANS v0.2 \u00b7 600 s exploratory transient",
+  "time_alignment": "relative",
+  "runs": [
+    "20260930T010905Z_a5f96a98"
+  ],
+  "layers": [
+    {
+      "run_id": "20260930T010905Z_a5f96a98",
+      "layer_id": "velocity",
+      "visible": true
+    }
+  ]
+}

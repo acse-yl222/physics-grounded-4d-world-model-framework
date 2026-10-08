@@ -7,7 +7,9 @@ export async function loadScene() {
   const qs = new URLSearchParams(location.search);
   let id = qs.get('scene') || index.default;
   if (!index.scenes.some(s => s.id === id)) { console.warn('unknown scene', id, '- using', index.default); id = index.default; }
-  const base = ROOT + 'scenes/' + id + '/';
+  const entry = index.scenes.find(scene => scene.id === id);
+  const base = entry.base_url ? new URL(entry.base_url, ROOT).href : ROOT + 'scenes/' + id + '/';
+  if (new URL(base).origin !== new URL(ROOT).origin) throw new Error('Local scene assets must be same-origin');
   const r = await fetch(base + 'scene.json', { cache: 'no-cache' });
   if (!r.ok) throw new Error(`scene ${id}: ${base}scene.json is missing (HTTP ${r.status})`);
   const scene = await r.json();

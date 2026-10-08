@@ -26,11 +26,11 @@
       "scene_id": "windfarm",
       "title": "Wind farm",
       "tag": "Energy & flow",
-      "description": "23 turbines with 10 m/s OpenFOAM URANS flow, recorded from 2 to 300 seconds; numerical scenario under validation.",
+      "description": "23 turbines with TorchRotor-RANS v0.3: rotating actuator lines, prescribed speed, 10 m/s inlet, 8 m grid, 30 s coupling trial; previous actuator-disc runs remain selectable.",
       "viewer_url": "src/visualization/legacy/viewer/windfarm-movie/",
       "resource_ids": [
         "windfarm_geometry_published_v1",
-        "windfarm_runs_openfoam_10ms_v1"
+        "windfarm_runs_torch_rotor_rans_v03"
       ]
     }
   ],

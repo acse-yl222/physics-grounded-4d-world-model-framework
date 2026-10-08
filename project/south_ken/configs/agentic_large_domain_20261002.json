@@ -1,0 +1,11 @@
+{
+ "scene_id":"south_ken",
+ "scaled_repo":"/home/yl222/workspace/SCALED/SCALED-Tutorial",
+ "cell_m":4,
+ "domain_shape_zyx":[64,1024,1024],
+ "domain_origin_enu_m":[-2116,-2124,0],
+ "editable_bounds_enu_m":[-516,-524,508,500],
+ "wind_steps":100,
+ "thermal_duration_s":300,
+ "scope":"Exploratory large-domain integration pilot: fresh 4.096km x4.096km SCALED wind inference at4m,16 editable256m blocks in central1.024km window,physical thermal model,one prescribed solar forcing. Padded domain is not complete4km urban survey. Fixed geometry-only wind forcing inherited from SCALED; no selectable inlet/weather guarantee. One Claude Opus5.5 episode,two evaluated candidates; first requires geometry change. No superiority or generalization claim."
+}

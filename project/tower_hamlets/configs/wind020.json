@@ -1,0 +1,18 @@
+{
+  "scene_id": "tower_hamlets",
+  "scenario": "controlled_west_to_east_5ms_startup",
+  "origin_xyz_m": [-1120, -1008, 0],
+  "shape_zyx": [64, 256, 256],
+  "cell_m": 8,
+  "inlet_m_s": 5.0,
+  "cfl": 0.35,
+  "dt_max_s": 0.5,
+  "pressure_rtol": 0.00001,
+  "pressure_maxiter": 240,
+  "smoke_seconds": 10,
+  "target_seconds": 200,
+  "fallback_seconds": 60,
+  "wall_budget_s": 840,
+  "save_interval_s": 10,
+  "sample_heights_m": [4,20,60,120]
+}

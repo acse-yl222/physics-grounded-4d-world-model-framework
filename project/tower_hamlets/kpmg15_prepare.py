@@ -1,0 +1,13 @@
+from pathlib import Path
+s=Path('project/tower_hamlets/prepare_water8_study.py').read_text().split('from shapely.geometry import box')[0].replace('36beb80b-ced9-4f18-a461-04680502f52e','def47cf3-2875-4e34-ae57-aad5a67e6fa1');exec(s)
+from shapely.geometry import shape
+from shapely.ops import unary_union
+r=json.loads((R/'references/kpmg15_structure.json').read_text());r['objects']=[]
+# Descriptive levels must come from all native cells, not inferred equipment identity.
+namespace={'__file__':str(Path('project/tower_hamlets/kpmg15_review.py').resolve())};exec(Path('project/tower_hamlets/kpmg15_review.py').read_text().split('rows=[]')[0],namespace)
+x,y,z=namespace['x'],namespace['y'],namespace['z'];u=x*co+y*si;v=-x*si+y*co;valid=namespace['mask'](p.buffer(-2));from shapely import contains_xy
+for reg in r['regions']:
+ q=shape(reg['geometry_uv']);k=valid&contains_xy(q,u,v);level=float(np.median(z[k]));reg['candidate_constant_odn_m']=level;reg['constant_allcell_rmse_m']=float(np.sqrt(np.mean((z[k]-level)**2)));r['objects'].append(make(set_precision(q,.000001),[level,0,0],'KPMG_'+reg['name']))
+r.update({'building_id':bid,'replacement_ids':[bid],'scope':'KPMG source-name five estimated descriptive roof levels preserving mappedfootprint. Source68.5m AG L agrees DSM-minuslocalDTM; scene height changes partly reflect commonODNdatum, not claim sourceheight wrong. NEsmallraisedreturns unresolved, no equipment or facade attribution.','datum_odn_m':datum,'limitations':r['limitations']+['Central36cell lowpatch boundary especially uncertain; constant plane avoids unsupported gradient.','Separateclosed prisms retain internalcoincidentwalls. Geometric boundaries estimated from same DSM, not surveyed.'],'checks':{'partition_symmetric_difference_m2':transform(uv,p).symmetric_difference(unary_union([shape(a['geometry_uv']) for a in r['regions']])).area}});(R/'references/kpmg15_study.json').write_text(json.dumps(r,indent=2))
+# Neighbor interface, no change to adjacentowner.
+ng=namespace['g'];neighbor=next(f for f in ng['buildings'] if f['id'].startswith('overture-building-6e7e0de2'));npoly=Polygon(neighbor['geometry'][0]['outer']);shared=p.boundary.intersection(npoly.boundary);(R/'references/kpmg15_interface.json').write_text(json.dumps({'neighbor_id':neighbor['id'],'shared_geometry':shared.__geo_interface__,'shared_length_m':shared.length,'overlap_m2':p.intersection(npoly).area,'neighbor_source_height_m':neighbor['height_m'],'candidate_roof_levels_scene':[{'region':a['name'],'scene_z':a['candidate_constant_odn_m']-datum} for a in r['regions']],'instruction':'Do not alterFitchowner. Sharedwall contact permitted; no windows modeled.'},indent=2))

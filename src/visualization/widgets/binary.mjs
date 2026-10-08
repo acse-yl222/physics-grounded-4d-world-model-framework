@@ -47,6 +47,10 @@ class GridWidget extends DataWidget {
     for(let y=Math.floor(step/2);y<ny;y+=step)for(let x=Math.floor(step/2);x<nx;x+=step){if(mask?.[y*nx+x])continue;this.indices.push(y*nx+x);positions.push([e.origin_m[0]+(x+.5)*e.spacing_m[0],e.origin_m[1]+(y+.5)*e.spacing_m[1],e.origin_m[2]+(heights?.[y*nx+x]||0)]);}
     this.plane=nx*ny;this.vector=vector;const first=await this.source.frame(0);const values=this.extract(first);
     const data={positions,[vector?'vectors':'values']:values};this.initialize(context,{...layer,format:'json',sampling:'static'},data);
+    // Scalar instances are created with a scene-sized radius by DataWidget. Set
+    // their actual geometry size from sample spacing, so city points do not hide buildings.
+    const markerRadius=Math.min(...e.spacing_m)*step*.12;
+    if(this.instances)this.instances.geometry.scale(markerRadius/this.scale,markerRadius/this.scale,markerRadius/this.scale);
     this.layer=layer;this.scale=Math.min(...e.spacing_m)*step*.025;this.displayStep=step;this.loadedTime=context.manifest.time.samples[0]||0;
     await this.setTime(this.loadedTime);
   }

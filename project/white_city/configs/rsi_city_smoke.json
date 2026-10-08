@@ -1,0 +1,42 @@
+{
+  "schema_version": "urban-rsi-0.1",
+  "scene_id": "white_city",
+  "input_runs": {},
+  "tasks": [
+    {
+      "id": "initial_development",
+      "input": "solar",
+      "phase": "initial",
+      "role": "development"
+    },
+    {
+      "id": "changed_promotion",
+      "input": "solar",
+      "phase": "changed",
+      "role": "promotion"
+    },
+    {
+      "id": "initial_final",
+      "input": "solar",
+      "phase": "initial",
+      "role": "test"
+    }
+  ],
+  "generations": 1,
+  "episode_evaluations": 3,
+  "episode_steps": 5,
+  "max_model_calls": 60,
+  "max_output_tokens": 16384,
+  "max_total_tokens": 300000,
+  "max_evaluations": 128,
+  "promotion_min_gain": 1e-06,
+  "seed_revision": {
+    "planner": "Find a feasible plan with high summer direct-radiation reduction. Respect winter and site constraints. Use evaluations and diagnostics strategically. Submit a previously evaluated feasible plan before the budget expires.",
+    "updater": "Inspect the recorded development failures and decisions. Propose a concrete reusable improvement to the planner and, if warranted, to this update procedure. Retain useful inherited behavior. Do not memorize site IDs as universal solutions. Explain the modification and its expected effect. Never change the evaluator, objective, budgets or final-test access.",
+    "memory": []
+  },
+  "scope": "Engineering parity check on city-specific solar data. Fixture provider responses are not evidence of LLM performance.",
+  "input_paths": {
+    "solar": "planning_city_20260930T100050Z_99f7fc"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "white_city",
+  "title": "Planning agent \u00b7 fixture lifecycle check",
+  "time_alignment": "relative",
+  "runs": [
+    "rsi_20260930T100521Z_0d9657"
+  ],
+  "layers": [
+    {
+      "run_id": "rsi_20260930T100521Z_0d9657",
+      "layer_id": "final_submission_valid",
+      "visible": true
+    },
+    {
+      "run_id": "rsi_20260930T100521Z_0d9657",
+      "layer_id": "final_summer_reduction",
+      "visible": true
+    },
+    {
+      "run_id": "rsi_20260930T100521Z_0d9657",
+      "layer_id": "final_holdout_feasible",
+      "visible": true
+    }
+  ]
+}

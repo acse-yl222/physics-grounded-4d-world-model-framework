@@ -1,0 +1,11 @@
+{
+  "scene_id": "south_ken",
+  "stations": "input/stations_ground_20261007/stations.json",
+  "station_frame": "glTF-y-up",
+  "station_to_enu": "(x,-z,y)",
+  "vertical_ascent_m": 30,
+  "vertical_descent_m": 30,
+  "cruise_mode": "3D Wave PDE between flight gates; not constrained to fixed altitude",
+  "run_id": "wavepde_ground_20261007_8m",
+  "view_id": "wavepde_ground_light_20261007"
+}

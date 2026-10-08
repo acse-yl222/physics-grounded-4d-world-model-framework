@@ -1,0 +1,51 @@
+{
+  "schema_version": "city-traffic-1",
+  "scene_id": "south_ken",
+  "osm_snapshot": "traffic/osm_20260930/map.osm.xml",
+  "buffer_m": 600,
+  "transform": {
+    "kind": "equirectangular",
+    "lat0": 51.498354,
+    "lon0": -0.176896,
+    "metres_per_degree": 111320.0,
+    "scale": 1.0,
+    "R": [
+      [
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0
+      ]
+    ],
+    "t": [
+      0.0,
+      0.0
+    ],
+    "provenance": "Scene authoring mapping; estimated alignment, not a surveyed control network"
+  },
+  "duration_s": 300,
+  "step_s": 1,
+  "seed": 42,
+  "demand": {
+    "period_s": 3,
+    "min_distance_m": 400,
+    "fringe_factor": 5,
+    "vehicle_class": "passenger",
+    "calibration_status": "synthetic_uncalibrated"
+  },
+  "network": {
+    "left_hand": true,
+    "signals": "guessed_actuated"
+  },
+  "intervention": {
+    "speed_factor": 1.0,
+    "closed_edges": []
+  },
+  "limitations": [
+    "No measured OD matrix or TfL signal timings.",
+    "OSM road tags and inferred lane connections require local review.",
+    "This is a new baseline, not a reproduction of the historical replay."
+  ]
+}

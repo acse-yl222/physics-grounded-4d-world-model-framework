@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0.0",
+  "building_id": "overture-7f4a1b64-57c1-430d-b02b-ae7e82629154",
+  "building_name": "Vyom Hall",
+  "alternate_name": "Hostel O",
+  "source_geometry": "project/thapar_university/geometry/refinement_candidate_20261007_v2/geometry.json",
+  "style_label": "Artistically completed cream-and-brick hostel facade; not surveyed reconstruction",
+  "palette": "cream",
+  "accent_palette": "brick",
+  "bay_pitch_m": 3.2,
+  "window_width_m": 1.5,
+  "window_height_m": 1.5,
+  "shade_depth_m": 0.4,
+  "parapet_height_m": 0.5,
+  "floor_height_target_m": 3.0,
+  "preserve_footprint": true,
+  "preserve_height_m": 24.0,
+  "source_floor_count": 8,
+  "height_basis": "source_floor_count_times_assumed_3m",
+  "rationale": "The mapped feature identifies an eight-storey hostel. An orderly 3.2 m facade rhythm with cream walls and brick accents provides a readable residential character at campus scale. The facade palette, window rhythm, openings, shading and parapets are artistic choices, not observations of this building. Keep the existing six-vertex footprint, its placement and its 24 m body height unchanged. The 24 m value is derived from eight source-reported storeys times an assumed 3 m, not a measured height.",
+  "provenance": {
+    "footprint": "Mapped Overture feature sourced from OpenStreetMap w1028320601@2",
+    "source_floor_count": "OSM building:levels=8",
+    "artistic_parameters": [
+      "palette",
+      "accent_palette",
+      "bay_pitch_m",
+      "window_width_m",
+      "window_height_m",
+      "shade_depth_m",
+      "parapet_height_m",
+      "floor_height_target_m"
+    ],
+    "photographic_verification": false,
+    "connectors": "No inter-building connector inferred from this profile"
+  }
+}

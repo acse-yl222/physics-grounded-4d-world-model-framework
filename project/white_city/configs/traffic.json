@@ -1,0 +1,52 @@
+{
+  "schema_version": "city-traffic-1",
+  "scene_id": "white_city",
+  "osm_snapshot": "traffic/osm_20260930/map.osm.xml",
+  "buffer_m": 600,
+  "transform": {
+    "lat0": 51.5145,
+    "lon0": -0.224,
+    "scale": 1.0008788503780741,
+    "R": [
+      [
+        0.9992811808758809,
+        -0.03790938600538592
+      ],
+      [
+        0.037909386005385876,
+        0.9992811808758807
+      ]
+    ],
+    "t": [
+      37.25427774346866,
+      -53.01966644353104
+    ],
+    "kind": "equirectangular",
+    "metres_per_degree": 111319.49079327357,
+    "provenance": "similarity fit of 939 named OSM buildings (Overpass, way/relation centres) to GLB node bounding-box centres, local equirectangular projection around (51.5145, -0.2240)",
+    "median_residual_m": 1.5835285253818723
+  },
+  "duration_s": 300,
+  "step_s": 1,
+  "seed": 42,
+  "demand": {
+    "period_s": 3,
+    "min_distance_m": 400,
+    "fringe_factor": 5,
+    "vehicle_class": "passenger",
+    "calibration_status": "synthetic_uncalibrated"
+  },
+  "network": {
+    "left_hand": true,
+    "signals": "guessed_actuated"
+  },
+  "intervention": {
+    "speed_factor": 1.0,
+    "closed_edges": []
+  },
+  "limitations": [
+    "No measured OD matrix or TfL signal timings.",
+    "OSM road tags and inferred lane connections require local review.",
+    "This is a new baseline, not a reproduction of the historical replay."
+  ]
+}

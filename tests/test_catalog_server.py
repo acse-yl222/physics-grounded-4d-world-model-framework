@@ -45,4 +45,22 @@ class RegistryServerTests(unittest.TestCase):
         self.assertEqual(error.exception.code,416)
         with self.assertRaises(urllib.error.HTTPError):urllib.request.urlopen(f'http://127.0.0.1:{server.server_port}/.history/repositories/secrets')
 
+    def test_local_city_viewer_catalog_requires_completed_run(self):
+        catalog=self.root/'src/visualization/legacy/scenes/index.json'
+        catalog.parent.mkdir(parents=True)
+        catalog.write_text(json.dumps({'default':'south_kensington','scenes':[]}))
+        config=self.root/'project/south_ken/configs/city_viewer.json'
+        config.parent.mkdir()
+        config.write_text(json.dumps({'run_id':'synthetic_v1','title':'Local city'}))
+        server=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(ViewerHandler,storage=self.storage))
+        threading.Thread(target=server.serve_forever,daemon=True).start()
+        self.addCleanup(server.server_close);self.addCleanup(server.shutdown)
+        url=f'http://127.0.0.1:{server.server_port}/src/visualization/legacy/scenes/index.json'
+        with urllib.request.urlopen(url) as response:self.assertEqual(json.load(response)['scenes'],[])
+        (self.root/'project/south_ken/runs/synthetic_v1/scene.json').write_text('{}')
+        with urllib.request.urlopen(url) as response:
+            entry=json.load(response)['scenes'][0]
+            self.assertEqual(entry['base_url'],'/project/south_ken/runs/synthetic_v1/')
+            self.assertEqual(entry['id'],'south_ken')
+
 if __name__=='__main__':unittest.main()

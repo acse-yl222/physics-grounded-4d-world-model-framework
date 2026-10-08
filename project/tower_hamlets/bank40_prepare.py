@@ -1,0 +1,10 @@
+from pathlib import Path
+s=Path('project/tower_hamlets/prepare_water8_study.py').read_text().split('from shapely.geometry import box')[0].replace('36beb80b-ced9-4f18-a461-04680502f52e','d2b07e0e-59df-4c73-be75-b4b7032dd1d5');exec(s)
+from shapely.geometry import shape,box
+from shapely.ops import unary_union
+r=json.loads((R/'references/bank40_structure.json').read_text());main=next(a for a in r['regions'] if a['name']=='southwest_main');high=next(a for a in r['regions'] if a['name']=='central_high');main['geometry_uv']=shape(main['geometry_uv']).union(shape(high['geometry_uv'])).__geo_interface__;r['regions']=[a for a in r['regions'] if a['name']!='central_high'];r['objects']=[]
+whole=transform(uv,p);east=whole.intersection(box(31,-1000,1000,1000));north=whole.intersection(box(-1000,-302,31,1000));south=whole.difference(east.union(north));domains={'east_lower':east,'north_mixed':north,'southwest_main':south}
+for a in r['regions']:a['geometry_uv']=domains[a['name']].__geo_interface__
+for a in r['regions']:
+ level=153+datum if a['name']=='north_mixed' else a['constant_odn'];a['candidate_level_odn']=level;r['objects'].append(make(set_precision(shape(a['geometry_uv']),.000001),[level,0,0],'Bank40_'+a['name']))
+r.update({'building_id':bid,'replacement_ids':[bid],'scope':'40BankStreet three-zone descriptivecomparison: mainSW/eastlower plateau fromDSM, northernmixedroof retains original153m scenebaseline. Centralhighreturns~163.3ODN remain unresolved andnotmodeled as equipment. Notcompleteaccurateroof.','datum_odn_m':datum,'limitations':['Native1m DSM; actualcapturevintageunknown. Northern baselineexplicitlyretained, notaveragedintofalseplane.','Easternboundarylowreturns retainedinerroranalysis; candidateextendsdescriptiveplateautooriginaloutline.','Centralhighreturns omitted, recordedinstructurediagnostic, notdiscardedfromerrors.','Separateclosedzoneprisms retain internalwalls. No facade or equipmentgeometry.'],'checks':{'footprint_symmetric_difference_m2':transform(uv,p).symmetric_difference(unary_union([shape(a['geometry_uv']) for a in r['regions']])).area}});(R/'references/bank40_study.json').write_text(json.dumps(r,indent=2))

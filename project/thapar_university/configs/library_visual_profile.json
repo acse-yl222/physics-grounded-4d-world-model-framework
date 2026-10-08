@@ -1,0 +1,32 @@
+{
+  "source_feature_id": "overture-cf214e36-997b-4bcb-b49f-fbdd683fb55b",
+  "source_name": "Nava Nalanda Library",
+  "source_geometry": "geometry/refinement_candidate_20261007_v2/geometry.json",
+  "status": "artistic_visual_completion_not_reconstruction",
+  "style_label": "estimated_sandstone_library_shaded_bays",
+  "palette": "sandstone",
+  "bay_pitch_m": 3.2,
+  "window_width_m": 1.65,
+  "window_height_m": 1.5,
+  "shade_depth_m": 0.4,
+  "parapet_height_m": 0.5,
+  "floor_height_target_m": 3.0,
+  "preserve_source_footprint": true,
+  "preserve_source_height": true,
+  "source_height_m": 9.0,
+  "source_height_basis": "assumed_unknown_height",
+  "rationale": "The existing mapped feature is one irregular six-edge polygon without holes, with long exterior edges suitable for repeated shaded bays. A 3.0 m target floor interval fits the retained 9.0 m assumed envelope. Warm sandstone, bay spacing and modest shading are deterministic artistic choices for campus-wide visual detail, not observations of this building. Fit bays independently to each existing edge with corner clearance; do not rectangularize the irregular footprint or add a courtyard.",
+  "inference_caveats": [
+    "The library name is inherited from the existing Overture/OpenStreetMap feature, not a newly verified identification of the current library building.",
+    "All palette, fenestration, shading, parapet and floor-layout parameters are artistically estimated; no current facade photography or survey supports these dimensions.",
+    "Keep the total 9.0 m source height unchanged, including any parapet; this is an assumed source height, not a measured library height.",
+    "Do not infer an actual entrance, roof equipment, connectivity to another building, or hidden courtyard from this profile.",
+    "OSM layer=1 is not a verified storey count or physical elevation; this profile does not use it as one."
+  ],
+  "source_record": {
+    "dataset": "OpenStreetMap via Overture 2026-09-23.1",
+    "record_id": "w1028320603@2",
+    "license": "ODbL-1.0",
+    "evidence_source_id": "overture_20260923"
+  }
+}

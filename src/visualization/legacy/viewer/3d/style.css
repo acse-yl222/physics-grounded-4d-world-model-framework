@@ -111,3 +111,9 @@ input[type=range] { accent-color: #6ccfc3; }
 button:disabled { opacity: .5; cursor: not-allowed; }
 .info { position: fixed; left: 16px; bottom: 82px; max-width: min(420px, calc(100vw - 360px)); background: rgba(18,29,39,.9); border-radius: 8px; padding: 8px 10px; }
 .info:empty { display: none; }
+#city-tools { border-bottom:1px solid #607080; padding-bottom:12px; margin-bottom:12px; }
+#city-tools select { max-width:100%; }
+#city-tools canvas { width:100%; height:auto; }
+#city-tools pre { max-height:110px; overflow:auto; font-size:10px; }
+#city-time { min-width:70px; width:50%; }
+.city-tool-active .timebar, .city-tool-active #readout, .city-tool-active #info, .city-tool-active #stats { display:none !important; }

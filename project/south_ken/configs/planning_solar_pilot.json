@@ -1,0 +1,22 @@
+{
+  "schema_version": "planning-pilot-0.1",
+  "scene_id": "south_ken",
+  "task_id": "solar_panel_siting_pilot",
+  "legacy_relative_root": "core008/physics/scaled_latent",
+  "bounds_enu_m": [100, -180, 260, 180],
+  "receptor_spacing_m": 4,
+  "candidate_spacing_m": 20,
+  "candidate_count": 15,
+  "panel_width_m": 12,
+  "panel_depth_m": 12,
+  "panel_clearance_m": 3.2,
+  "max_site_relief_m": 0.75,
+  "hours_utc": [10, 16],
+  "dates": {"summer": "2026-06-21", "winter": "2026-12-21"},
+  "phases": {
+    "initial": {"max_panels": 3, "max_cost_units": 3, "max_winter_loss_fraction": 0.005, "excluded_ids": [], "evaluation_budget": 24},
+    "changed": {"max_panels": 2, "max_cost_units": 2, "max_winter_loss_fraction": 0.005, "excluded_ids": ["p03", "p08"], "evaluation_budget": 12}
+  },
+  "seeds": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+  "interpretation": "Geometry-filtered hypothetical sites and uniform open-ground receptors; no land-access, pedestrian-demand, cost-in-GBP or structural survey. Direct radiation only. Bounds are a scene-local pilot window, not a surveyed public-space boundary."
+}

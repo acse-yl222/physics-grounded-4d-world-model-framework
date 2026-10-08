@@ -1,0 +1,11 @@
+from pathlib import Path
+import json,numpy as np
+exec(Path(__file__).with_name('review_poplar_current_roof.py').read_text().split('rows=[]')[0])
+n=json.loads((R/'references/poplar_current_native.json').read_text());o=n['objects'][0];vs=np.array(o['vertices']);prediction=np.full(x.shape,np.nan)
+for face in o['faces']:
+ for i in range(1,len(face)-1):
+  a,b,c=vs[[face[0],face[i],face[i+1]]];normal=np.cross(b-a,c-a)
+  if abs(normal[2])<1e-6:continue
+  A=np.array([[a[0],b[0],c[0]],[a[1],b[1],c[1]],[1,1,1]]);abc=np.linalg.solve(A,np.stack([x.flat,y.flat,np.ones(x.size)]));inside=np.min(abc,axis=0)>-1e-7;zz=np.array([a[2],b[2],c[2]])@abc;pred=prediction.ravel();pred[inside]=np.fmax(pred[inside],zz[inside])
+m=mask(p.buffer(-1))&np.isfinite(prediction);metric=lambda a:{'cells':len(a),'median_signed_m':float(np.median(a)),'median_abs_m':float(np.median(abs(a))),'rmse_m':float(np.sqrt(np.mean(a*a)))}
+r={'building_id':fs[0]['id'],'current_native_source':n['source'],'source_sha256':n['sha256'],'existing_refinement':'refinement-005; references/poplar_bowls_report.json; src/buildings/poplar_bowls_roof.py','native_vertices':len(vs),'native_faces':len(o['faces']),'native_top_m':float(vs[:,2].max()),'source_mapped_gabled':True,'existing_roof_rise_m':1.25,'existing_roof_rise_basis':'artist estimate, not image verified','datum_comparisons':{'against_shared_ODN_offset':metric((z-prediction-4.28000021)[m]),'against_cell_local_DTM':metric((z-prediction-t)[m]),'dtm_local_median_odn':float(np.median(t[m]))},'decision':'Retain existing gable; no new geometry candidate. Known refinement already supplies mapped roofshape. Sparse DSM does not establish exact ridge topology; localterrain/base offset explains substantial globalvertical discrepancy and should not be treated as roofrise evidence. Central high zone and narrower wings warrant future licensed visual evidence rather than arbitrary roofgrid.','limitations':['Actual raster capture vintage unresolved.','143wholefootprint returns,33at2minset,zero4minset;1mresolution coarse for narrow wings.','AGL comparison is only diagnostic; do not rebase scene to localDTM silently.','No facade image identity or entry evidence.'],'geometry_modified':False};(R/'references/poplar_retained_roof_audit.json').write_text(json.dumps(r,indent=2));print(json.dumps(r,indent=2))

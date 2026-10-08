@@ -1,0 +1,63 @@
+{
+  "view_id": "canary_wharf_4km_multiphysics_021",
+  "area_km2": 16,
+  "bounds_xy_m": [
+    -2000,
+    -2000,
+    2000,
+    2000
+  ],
+  "detailed_core_unchanged": true,
+  "native_sha256": "8fac46a7d350d83cf92b9d85e976713dd2ed1d20b5304d55c0db080dda5c5413",
+  "glb_sha256": "788e1d3b31b1219f7877d4b4f62c4f866d5205944c2191db6c30bc150649b15d",
+  "coarse_outer_building_and_part_records": 12668,
+  "coupling": {
+    "geometry_to_wind": true,
+    "wind_to_temperature": "Frozen final600s wind used throughout600s controlled thermal scenario",
+    "geometry_to_temperature": "32m columns approximated from preservedcore plusmappedouter",
+    "road_network_to_traffic": true,
+    "traffic_heat_or_emissions_to_temperature": false
+  },
+  "scenario_assumptions": [
+    "5m/s uniformwest-to-east inflow; inviscidcoarse startup, not convergedCFD.",
+    "Controlled summer clear-sky20Cambient, uniformmaterials; no measuredweather.",
+    "300seeded uncalibratedpassengervehicle trips, inferredsignals, no observedcounts.",
+    "Shared relative comparisontime, not mutuallysynchronized observedworldstate.",
+    "Outer heights:2412sourceheight,6096floorsxassumed3m,4160assumed9m.",
+    "Scene includes4km actualmappedcontext; externalwindpadding unknowngeometry treatedempty."
+  ],
+  "runs": [
+    {
+      "id": "canary_wharf_appearance_roof_completion_019",
+      "manifest_sha256": "1a4ba249effb40804ac9d330baa31b87465c71af6ea03586909f6d978db810b2"
+    },
+    {
+      "id": "canary_wharf_outer4km_geometry_021",
+      "manifest_sha256": "dc259c98a4580ad2a4557670bb3fb5dcb1c1301ac5a533f53702c6f78d83a5a8"
+    },
+    {
+      "id": "sumo_20261008T215153Z_661689",
+      "manifest_sha256": "567d08380549798116c8d4ff0a0ccd23b24eb37e680c67b5ddd1fb8e27bdeaec"
+    },
+    {
+      "id": "canary_wharf_wind021_4km_display_20261008",
+      "manifest_sha256": "8e1f940ad7ae9cba53d27dfed12c5bab330f4517e0619d737820870d7f4ea18d"
+    },
+    {
+      "id": "canary_wharf_temperature021_4km_accepted",
+      "manifest_sha256": "daac435db3c722d177275c830f3aee0dfac0f60825d6682561197961302d3c9e"
+    }
+  ],
+  "original_default_preserved": true,
+  "validation": {
+    "browser_passed": true,
+    "loaded_layers": 16,
+    "recorded_value_position_and_mask_checks": true,
+    "no_invented_frames": true,
+    "native_core_preserved": true,
+    "protocol_tests": 13,
+    "catalog_server_tests": 5,
+    "viewer_tests": 5,
+    "wind_display_exact_crop_verified": true
+  }
+}

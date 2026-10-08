@@ -1,0 +1,107 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "tower_hamlets",
+  "title": "Canary Wharf 4 km \u00b7 geometry, temperature, wind & traffic",
+  "time_alignment": "relative",
+  "runs": [
+    "canary_wharf_appearance_roof_completion_019",
+    "canary_wharf_outer4km_geometry_021",
+    "sumo_20261008T215153Z_661689",
+    "canary_wharf_wind021_4km_display_20261008",
+    "canary_wharf_temperature021_4km_accepted"
+  ],
+  "layers": [
+    {
+      "run_id": "canary_wharf_appearance_roof_completion_019",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "canary_wharf_outer4km_geometry_021",
+      "layer_id": "outer_buildings",
+      "visible": true
+    },
+    {
+      "run_id": "canary_wharf_outer4km_geometry_021",
+      "layer_id": "outer_ground",
+      "visible": true
+    },
+    {
+      "run_id": "canary_wharf_outer4km_geometry_021",
+      "layer_id": "outer_water",
+      "visible": true
+    },
+    {
+      "run_id": "sumo_20261008T215153Z_661689",
+      "layer_id": "traffic",
+      "visible": true
+    },
+    {
+      "run_id": "sumo_20261008T215153Z_661689",
+      "layer_id": "roads",
+      "visible": true
+    },
+    {
+      "run_id": "sumo_20261008T215153Z_661689",
+      "layer_id": "signals",
+      "visible": false
+    },
+    {
+      "run_id": "sumo_20261008T215153Z_661689",
+      "layer_id": "traffic_counts",
+      "visible": false
+    },
+    {
+      "run_id": "canary_wharf_wind021_4km_display_20261008",
+      "layer_id": "wind_z8_0m",
+      "visible": false
+    },
+    {
+      "run_id": "canary_wharf_wind021_4km_display_20261008",
+      "layer_id": "wind_z24_0m",
+      "visible": false
+    },
+    {
+      "run_id": "canary_wharf_wind021_4km_display_20261008",
+      "layer_id": "wind_z56_0m",
+      "visible": false
+    },
+    {
+      "run_id": "canary_wharf_wind021_4km_display_20261008",
+      "layer_id": "wind_z120_0m",
+      "visible": false
+    },
+    {
+      "run_id": "canary_wharf_temperature021_4km_accepted",
+      "layer_id": "air_temperature_8m",
+      "visible": true
+    },
+    {
+      "run_id": "canary_wharf_temperature021_4km_accepted",
+      "layer_id": "air_temperature_24m",
+      "visible": false
+    },
+    {
+      "run_id": "canary_wharf_temperature021_4km_accepted",
+      "layer_id": "air_temperature_56m",
+      "visible": false
+    },
+    {
+      "run_id": "canary_wharf_temperature021_4km_accepted",
+      "layer_id": "surface_temperature",
+      "visible": false
+    }
+  ],
+  "camera": {
+    "position": [
+      2900,
+      -3600,
+      4200
+    ],
+    "target": [
+      0,
+      0,
+      20
+    ]
+  }
+}

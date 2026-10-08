@@ -3,11 +3,13 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { registry } from '../widgets/index.mjs';
 import { createWidget } from '../widgets/binary.mjs';
 import { enuToWorld } from '../shared/time.mjs';
+import { nearPlaneForSceneBounds } from '../shared/camera-depth.mjs';
 
 const $=id=>document.getElementById(id),viewport=$('viewport');
 const scene=new THREE.Scene();scene.background=new THREE.Color(0x111923);
 const camera=new THREE.PerspectiveCamera(45,1,.01,1e7);
-const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));viewport.prepend(renderer.domElement);
+const cameraForward=new THREE.Vector3();
+const renderer=new THREE.WebGLRenderer({antialias:true,logarithmicDepthBuffer:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));viewport.prepend(renderer.domElement);
 const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;
 scene.add(new THREE.HemisphereLight(0xdff5ff,0x38514e,2.5));const sun=new THREE.DirectionalLight(0xffffff,3);sun.position.set(300,500,150);scene.add(sun);
 const raycaster=new THREE.Raycaster();const widgets=[],rows=new Map();let manifest,playing=false,previous=performance.now(),disposed=false;
@@ -16,6 +18,8 @@ let animationId=0,dirty=true;
 const performanceStats={renders:0};
 function invalidate(){dirty=true;if(!disposed&&!document.hidden&&!animationId)animationId=requestAnimationFrame(animate);}
 controls.addEventListener('change',invalidate);
+// Context restoration rebuilds GPU resources but needs a new on-demand frame.
+renderer.domElement.addEventListener('webglcontextrestored',invalidate);
 const resize=new ResizeObserver(()=>{const {width,height}=viewport.getBoundingClientRect();camera.aspect=width/height;camera.updateProjectionMatrix();renderer.setSize(width,height);invalidate();});resize.observe(viewport);
 function fit(){if(!manifest)return;const {min,max}=manifest.spatial.bounds_m;const center=min.map((v,i)=>(v+max[i])/2),span=Math.max(...max.map((v,i)=>v-min[i]),1);controls.target.set(...enuToWorld(center));const radius=Math.hypot(...max.map((v,i)=>v-min[i]))/2||1;const halfFov=Math.min(camera.fov*Math.PI/360,Math.atan(Math.tan(camera.fov*Math.PI/360)*camera.aspect));const distance=radius/Math.sin(halfFov)*1.15;camera.position.copy(controls.target).add(new THREE.Vector3(1,.85,1).normalize().multiplyScalar(distance));camera.near=Math.max(span/10000,.001);camera.far=span*100;camera.updateProjectionMatrix();controls.update();}
 function setTime(value){$('time').value=value;$('clock').textContent=`${Number(value).toFixed(2)} s`;widgets.forEach(w=>{if(w.layer.sampling!=='static'||w.layer.kind==='time_series')w.setTime(Number(value)-(w.timeOffset||0));});invalidate();}
@@ -41,18 +45,30 @@ async function load(){
   let catalog={scenes:[]};try{catalog=await json(catalogURL);}catch{}
   for(const item of catalog.scenes){const option=document.createElement('option');option.value=item.scene_id;option.textContent=item.title;$('scene').append(option);}
   const siteRoot=new URL('../../../',location.href);
-  try{const published=await json(new URL('src/visualization/public-scenes.json',siteRoot));const group=document.createElement('optgroup');group.label='Published scene viewers';
+  try{const published=await json(new URL('src/visualization/public-scenes.json',siteRoot));const group=document.createElement('optgroup');group.label='City and published viewers';
     for(const item of published.scenes){const option=document.createElement('option');option.value='published:'+item.scene_id;option.textContent=item.title;option.dataset.viewer=new URL(item.viewer_url,siteRoot).href;group.append(option);}$('scene').append(group);
   }catch{}
   let chosen=params.get('scene')||(!requested?catalog.default:'');
   $('scene').value=chosen||'';
+  if(chosen){
+    try{
+      const cityCatalog=await json(new URL('src/visualization/legacy/scenes/index.json',siteRoot));
+      const alias=chosen==='south_ken'?'south_kensington':chosen;
+      if(cityCatalog.scenes.some(item=>item.id===alias)){
+        const link=document.createElement('a');link.textContent='City viewer · 城市视图';
+        link.href=new URL(`src/visualization/legacy/viewer/3d/?scene=${encodeURIComponent(alias)}`,siteRoot).href;
+        link.id='city-viewer-link';$('fit').before(link);
+      }
+    }catch{}
+  }
   $('scene').addEventListener('change',()=>{const published=$('scene').selectedOptions[0]?.dataset.viewer;if(published){location.href=published;return;}const next=new URL(location.href);next.search='';if($('scene').value)next.searchParams.set('scene',$('scene').value);else next.searchParams.set('manifest','../../../examples/contract-v1/manifest.json');location.href=next;});
-  const runs=[];let selections=null,metadata=null,timeMode='relative';
+  const runs=[];let selections=null,metadata=null,timeMode='relative',viewCamera=null;
   if(chosen){
     if(!/^[a-z][a-z0-9_]*$/.test(chosen))throw new Error('Invalid scene ID');
     const projectBase=new URL(`${chosen}/`,catalogURL),project=await json(new URL('project.json',projectBase));metadata=project;
     const viewID=params.get('view')||project.default_view;if(!/^[a-z][a-z0-9_]*$/.test(viewID))throw new Error('Invalid view ID');
     const view=await json(new URL(`views/${viewID}.json`,projectBase));
+    viewCamera=view.camera;
     if(view.scene_id!==chosen||project.scene_id!==chosen)throw new Error('Scene/view identity mismatch');
     timeMode=view.time_alignment;if(!['relative','absolute'].includes(timeMode))throw new Error('Unknown time alignment');
     selections=view.layers;
@@ -74,6 +90,7 @@ async function load(){
   manifest={...runs[0].manifest,spatial:metadata?.spatial||runs[0].manifest.spatial,time:{unit:'s',samples:times}};
   $('title').textContent=metadata?.title||`${manifest.scene_id} · ${manifest.simulation}`;
   $('source-note').textContent=manifest.provenance?.parameters?.synthetic?'Synthetic protocol example':`${runs.length} run(s) · ${timeMode} time`;
+  if(manifest.provenance?.parameters?.artistic_visual_version){$('source-note').textContent='视觉详细版 · 门窗/楼层/屋顶/廊架为估计 · 非实测';$('source-note').title=manifest.provenance.parameters.note;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=.85;}
   const boundsSize=manifest.spatial.bounds_m.max.map((v,i)=>v-manifest.spatial.bounds_m.min[i]);
   let total=0;
   for(const run of runs){
@@ -93,6 +110,10 @@ async function load(){
   if(selections&&total!==selections.length)throw new Error('View references a missing layer');
   $('status').textContent=`${widgets.length} / ${total} layers ready`;
   $('time').min=times[0]||0;$('time').max=times.at(-1)||0;$('time').disabled=times.length<2;$('play').disabled=times.length<2;setTime(times[0]||0);fit();
+  if(viewCamera){
+    if(![viewCamera.position,viewCamera.target].every(value=>Array.isArray(value)&&value.length===3&&value.every(Number.isFinite)))throw new Error('Invalid view camera');
+    camera.position.set(...enuToWorld(viewCamera.position));controls.target.set(...enuToWorld(viewCamera.target));controls.update();invalidate();
+  }
   window.urbanViewer={performanceStats,get manifest(){return manifest;},get widgets(){return widgets;},setTime,fit,dispose};
 }
 function animate(now){
@@ -100,10 +121,11 @@ function animate(now){
   const dt=previous?(now-previous)/1000:0;previous=now;
   if(playing){const next=Math.min(Number($('time').max),Number($('time').value)+dt);setTime(next);if(next>=Number($('time').max)){playing=false;$('play').textContent='Play';}}
   controls.update();
+  if(manifest){const near=nearPlaneForSceneBounds(camera.position.toArray(),manifest.spatial.bounds_m,camera.getWorldDirection(cameraForward).toArray());if(near!==camera.near){camera.near=near;camera.updateProjectionMatrix();}}
   if(dirty){dirty=false;renderer.render(scene,camera);performanceStats.renders++;}
   if(playing&&!animationId)animationId=requestAnimationFrame(animate);else if(!animationId)previous=0;
 }
 document.addEventListener('visibilitychange',()=>{if(animationId)cancelAnimationFrame(animationId);animationId=0;previous=0;if(!document.hidden)invalidate();});
-function dispose(){if(disposed)return;disposed=true;if(animationId)cancelAnimationFrame(animationId);abort.abort();widgets.forEach(w=>w.dispose());controls.dispose();resize.disconnect();renderer.dispose();}
+function dispose(){if(disposed)return;disposed=true;if(animationId)cancelAnimationFrame(animationId);renderer.domElement.removeEventListener('webglcontextrestored',invalidate);abort.abort();widgets.forEach(w=>w.dispose());controls.dispose();resize.disconnect();renderer.dispose();}
 window.addEventListener('pagehide',dispose,{once:true});
 load().catch(error=>{$('error').hidden=false;$('error').textContent=error.message;$('status').textContent='Unable to load this run';});invalidate();

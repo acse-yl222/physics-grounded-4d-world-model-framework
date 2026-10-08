@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "tower_hamlets",
+  "title": "Canary Wharf \u00b7 Car Park and North Quay partial roofs 015",
+  "time_alignment": "relative",
+  "runs": [
+    "canary_wharf_refinement_015"
+  ],
+  "layers": [
+    {
+      "run_id": "canary_wharf_refinement_015",
+      "layer_id": "geometry",
+      "visible": true
+    }
+  ]
+}

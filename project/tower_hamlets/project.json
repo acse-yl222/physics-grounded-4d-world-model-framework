@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "tower_hamlets",
+  "title": "Tower Hamlets \u00b7 Canary Wharf 4 km urban simulation",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.0188,
+      "latitude": 51.5053,
+      "height_m": 0,
+      "vertical_datum": "Unsurveyed local flat ground z=0; not Ordnance Datum"
+    },
+    "bounds_m": {
+      "min": [
+        -2000,
+        -2000,
+        -0.28
+      ],
+      "max": [
+        2000,
+        2000,
+        235
+      ]
+    }
+  },
+  "inputs": [
+    {
+      "id": "overture_buildings",
+      "path": "input/canary_wharf_20261007/references/buildings.geojson",
+      "source": "Overture Maps Foundation 2026-09-23.1 / OpenStreetMap",
+      "sha256": "9081c3e60cf5404d50f51cb8ee7708bd008d9bb0e08640c38a5f319367b5446d",
+      "license": "ODbL-1.0"
+    },
+    {
+      "id": "overture_buildings_20260923_4km",
+      "path": "input/expanded4km_20261008/references/buildings.geojson",
+      "source": "Overture Maps Foundation / source contributors 2026-09-23.1",
+      "sha256": "4a085633d3c0b702cce372e2e982fb578e1dc5c51f725630308bb2d29fc11d38",
+      "license": "ODbL-1.0"
+    },
+    {
+      "id": "overture_building_parts_20260923_4km",
+      "path": "input/expanded4km_20261008/references/building_parts.geojson",
+      "source": "Overture Maps Foundation / source contributors 2026-09-23.1",
+      "sha256": "c01140a954706429c5a6296fc3a52c5868cffd20aad9cf5b6783c24d7bedeff6",
+      "license": "ODbL-1.0"
+    }
+  ],
+  "default_view": "canary_wharf_refinement_002"
+}

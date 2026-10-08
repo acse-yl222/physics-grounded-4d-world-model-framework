@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "thapar_university",
+  "title": "Refined geometry only \u00b7 visual_study",
+  "time_alignment": "relative",
+  "runs": [
+    "visual_study_roofs_20261008_geometry"
+  ],
+  "layers": [
+    {
+      "run_id": "visual_study_roofs_20261008_geometry",
+      "layer_id": "refined_geometry",
+      "visible": true
+    },
+    {
+      "run_id": "visual_study_roofs_20261008_geometry",
+      "layer_id": "roof_detail",
+      "visible": true
+    }
+  ],
+  "camera": {
+    "position": [
+      1500,
+      -1800,
+      1550
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  }
+}

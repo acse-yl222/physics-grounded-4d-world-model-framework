@@ -1,5 +1,7 @@
 # Yi Qi - Temperature
 
+> DIGIT wind generation was removed at user request. The DIGIT setup and generation instructions below are historical and no longer executable. Shared geometry helpers remain for temperature code. Existing temperature surrogate weights and numerical solvers are retained; supply external wind inputs for new temperature runs.
+
 This folder contains the temperature-modelling workflow for the environment integration project. The code builds a high-resolution South Kensington urban temperature pipeline from four linked parts:
 
 - `models/velocity_calculation/`: prepares South Kensington geometry and generates 3D velocity fields with the DIGIT velocity surrogate.

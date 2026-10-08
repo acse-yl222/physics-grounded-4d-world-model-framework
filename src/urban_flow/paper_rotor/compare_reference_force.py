@@ -22,16 +22,18 @@ def compare(case):
     if not match:raise ValueError('Missing vector internal field')
     count=int(match[1]);velocity=np.fromstring(match[2].replace('(',' ').replace(')',' '),sep=' ')
     if velocity.size!=3*count or not np.isfinite(velocity).all():raise ValueError('Invalid velocity field')
-    nx,ny,nz=config['grid_cells_xyz'];h=config['cell_m']
+    nx,ny,nz=config['grid_cells_xyz']
+    spacing=config.get('actual_spacing_xyz_m',[config['cell_m']]*3)
+    dx,dy,dz=spacing;volume=dx*dy*dz
     if nx*ny*nz!=count:raise ValueError('Reference field is not the declared complete uniform grid')
-    z,y,x=np.meshgrid((np.arange(nz)+.5)*h,(np.arange(ny)+.5)*h,(np.arange(nx)+.5)*h,indexing='ij')
+    z,y,x=np.meshgrid((np.arange(nz)+.5)*dz,(np.arange(ny)+.5)*dy,(np.arange(nx)+.5)*dx,indexing='ij')
     xyz=torch.as_tensor(np.stack((x,y,z),axis=-1).reshape(-1,3))
     module=WeightedRotor(config['rotor_diameter_m']/2,config['sigma_m'],ct=config['ct'],
                          inner_radius=config['inner_diameter_m']/2,cutoff=config['cutoff_sigma'],rho=config['rho_kg_m3'])
-    result=module(xyz,torch.as_tensor(velocity.reshape(-1,3)),torch.full((count,),h**3,dtype=torch.float64),
+    result=module(xyz,torch.as_tensor(velocity.reshape(-1,3)),torch.full((count,),volume,dtype=torch.float64),
                   config['hub_xyz_m'],config.get('axis',[1,0,0]))
     thrust=float(result['thrust']);speed=float(result['disc_speed'])
-    integral=-result['acceleration'].sum(0)*h**3*config['rho_kg_m3']
+    integral=-result['acceleration'].sum(0)*volume*config['rho_kg_m3']
     conservation=float(torch.linalg.vector_norm(integral-result['body_force']))
     report=dict(reference_run=case.name,field_sha256=digest(field),torch_disc_speed_m_s=speed,
                 cpp_disc_speed_m_s=summary['last_disc_speed_m_s'],torch_thrust_N=thrust,

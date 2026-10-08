@@ -1,0 +1,26 @@
+"""Build003photo-hierarchy study on three mapped exposededges, preserving002roof."""
+from pathlib import Path
+import bpy,json,hashlib
+from mathutils import Vector
+R=Path(__file__).resolve().parent/'input/canary_wharf_20261007';source=R/'references/westferry_house_facade_study_003.json';r=json.loads(source.read_text());O=R/'exports/westferry-house-facade-003';O.mkdir(exist_ok=False);bpy.ops.wm.read_factory_settings(use_empty=True)
+def mat(name,color,metal=0,rough=.75):
+ m=bpy.data.materials.new(name);m.use_nodes=True;m.diffuse_color=(*color,1);p=m.node_tree.nodes['Principled BSDF'];p.inputs['Base Color'].default_value=(*color,1);p.inputs['Metallic'].default_value=metal;p.inputs['Roughness'].default_value=rough;return m
+stone=mat('Estimated pale stone',(.61,.57,.48));roof=mat('002 roof illustrative finish',(.18,.26,.29));glass=mat('Estimated reflective opaque glazing proxy',(.09,.18,.21),.2,.24);frames=mat('Estimated dark metal window frames',(.11,.14,.15),.5,.3);sill=mat('Estimated stone sill profile',(.65,.61,.53));materials={'glazing':glass,'window_frames':frames,'ground_frames':frames,'stone_sills':sill,'attic_louvers':frames};expected={}
+for item in r['objects']:
+ m=bpy.data.meshes.new(item['name']);m.from_pydata(item['vertices'],[],item['faces']);m.update();ob=bpy.data.objects.new(item['name'],m);bpy.context.collection.objects.link(ob);ob['building_id']=r['building_id'];ob['research_object_id']='westferry-house-facade-003::'+item['name'];ob['source_owner_ids']=[r['building_id']];ob['source_id']='pexels_ollie_11491155 + EA1mDSM + mappedfootprint';ob['coverage']=r['scope'];ob['estimated_edges']='Lower5,6,9;upperwest/southattic only;4sharededgeundecorated';ob['vertical_datum']='002 roof unchanged ODN-4.28000021m; publiclevel7m is estimated';expected[ob.name]=len(item['faces'])
+ if item['kind']=='body':
+  m.materials.append(stone);m.materials.append(roof)
+  for p,i in zip(m.polygons,item['materials']):p.material_index=i
+ else:m.materials.append(materials[item['kind']])
+s=bpy.context.scene;s.render.engine='CYCLES';s.cycles.samples=32;s.render.resolution_x=1400;s.render.resolution_y=1050;s.render.resolution_percentage=100;s.world=bpy.data.worlds.new('Inspection world');s.world.use_nodes=True;s.world.node_tree.nodes['Background'].inputs['Color'].default_value=(.65,.73,.8,1);s.world.node_tree.nodes['Background'].inputs['Strength'].default_value=.8;bpy.ops.object.light_add(type='SUN');sun=bpy.context.object;sun.data.energy=2.2;sun.rotation_euler=(.5,-.4,-.7)
+bpy.ops.object.camera_add();cam=bpy.context.object;s.camera=cam;cam.data.type='ORTHO';target=Vector((-463,67,27));cam.location=target+Vector((-130,-80,70));cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.ortho_scale=88
+bpy.ops.wm.save_as_mainfile(filepath=str(O/'westferry-house.blend'),compress=False);bpy.ops.object.select_all(action='DESELECT')
+for ob in bpy.data.objects:
+ if ob.type=='MESH':ob.select_set(True)
+bpy.ops.export_scene.gltf(filepath=str(O/'westferry-house.glb'),export_format='GLB',use_selection=True,export_extras=True,export_draco_mesh_compression_enable=False)
+views=[('front',(-463,67,27),(-130,-80,70),104),('roof',(-463,67,27),(-5,-10,180),88),('rear',(-463,67,27),(90,130,75),104),('window-detail',(-488,65,30),(-40,-12,14),25),('ground-detail',(-488,65,12),(-40,-12,10),25)]
+for label,point,offset,scale in views:
+ target=Vector(point);cam.location=target+Vector(offset);cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.ortho_scale=scale;s.render.filepath=str(O/(label+'.png'));bpy.ops.render.render(write_still=True)
+points=[v for q in r['objects'] for v in q['vertices']];expected_bounds=[[min(v[i] for v in points) for i in range(3)],[max(v[i] for v in points) for i in range(3)]];bpy.ops.wm.open_mainfile(filepath=str(O/'westferry-house.blend'));actual={o.name:len(o.data.polygons) for o in bpy.data.objects if o.type=='MESH'};assert actual==expected
+bpy.ops.wm.read_factory_settings(use_empty=True);bpy.ops.import_scene.gltf(filepath=str(O/'westferry-house.glb'));obs=[o for o in bpy.data.objects if o.type=='MESH'];assert sum(len(o.data.polygons) for o in obs)==sum(expected.values());assert all(o.get('building_id')==r['building_id'] for o in obs);assert all(o.data.materials for o in obs);pts=[o.matrix_world@v.co for o in obs for v in o.data.vertices];bounds=[[min(v[i] for v in pts) for i in range(3)],[max(v[i] for v in pts) for i in range(3)]];assert all(abs(a-b)<.0002 for ar,br in zip(bounds,expected_bounds) for a,b in zip(ar,br))
+report={'native_reopened':True,'independent_glb_import':True,'native_objects':len(expected),'triangles':sum(expected.values()),'bounds_enu_m':bounds,'owner_ids':[r['building_id']],'source_json_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'native_sha256':hashlib.sha256((O/'westferry-house.blend').read_bytes()).hexdigest(),'glb_sha256':hashlib.sha256((O/'westferry-house.glb').read_bytes()).hexdigest(),'visual_reviewed':False,'geometry_checks':r['checks'],'scope':r['scope'],'uncertainty':r['uncertainty'],'material_caution':'Darkglazing is an opaque reflective proxy without calibratedtransmission orinteriors. Daytimeinspectionappearance; no photographedlitwindowpattern copied.'};(O/'verification.json').write_text(json.dumps(report,indent=2)+'\n')

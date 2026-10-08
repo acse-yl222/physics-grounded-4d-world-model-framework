@@ -1,0 +1,27 @@
+{
+  "schema_version": "osm-climate-pilot-1",
+  "scene_id": "thapar_university",
+  "osm_snapshot": "osm_20261005/map.osm.xml",
+  "domain_half_width_m": 1536,
+  "cell_m": 8,
+  "height_m": 128,
+  "unknown_building_height_m": 9,
+  "level_height_m": 3,
+  "flow_duration_s": 600,
+  "flow_cfl": 0.6,
+  "flow_dt_max_s": 3,
+  "pressure_rtol": 0.00001,
+  "thermal_duration_s": 600,
+  "thermal_output_interval_s": 60,
+  "sample_height_m": 12,
+  "albedo": 0.2,
+  "emissivity": 0.95,
+  "convective_coefficient_w_m2_k": 12,
+  "exchange_per_s": 0.001,
+  "diffusivity_m2_s": 1,
+  "weather": [
+    {"id": "summer", "date": "2025-06-21", "hour_utc": 9},
+    {"id": "winter", "date": "2025-12-21", "hour_utc": 9}
+  ],
+  "scope": "Exploratory OSM geometry and ERA5-conditioned finite-duration wind/thermal runs. Not validated campus weather; dates are two selected snapshots, not seasonal climatology."
+}

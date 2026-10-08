@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "tower_hamlets",
+  "title": "Canary Wharf \u00b7 Western visible facade studies",
+  "time_alignment": "relative",
+  "runs": [
+    "canary_wharf_appearance_western_facades_001"
+  ],
+  "layers": [
+    {
+      "run_id": "canary_wharf_appearance_western_facades_001",
+      "layer_id": "geometry",
+      "visible": true
+    }
+  ],
+  "camera": {
+    "position": [
+      -640,
+      210,
+      290
+    ],
+    "target": [
+      -360,
+      0,
+      45
+    ]
+  }
+}

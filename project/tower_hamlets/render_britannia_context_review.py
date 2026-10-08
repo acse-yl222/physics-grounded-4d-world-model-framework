@@ -1,0 +1,4 @@
+from pathlib import Path
+import bpy,json
+from mathutils import Vector
+R=Path(__file__).resolve().parent/'input/canary_wharf_20261007';O=R/'exports/appearance-britannia-001';bpy.ops.wm.open_mainfile(filepath=str(O/'region.blend'));r=json.loads((R/'references/britannia_envelope_study.json').read_text());pts=[v for q in r['objects'] for v in q['vertices']];target=Vector(tuple((min(v[i] for v in pts)+max(v[i] for v in pts))/2 for i in range(3)));s=bpy.context.scene;cam=s.camera;cam.location=target+Vector((-120,-40,260));cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=190;s.render.resolution_x=1200;s.render.resolution_y=900;s.cycles.samples=32;s.render.filepath=str(O/'britannia-roof-context.png');bpy.ops.render.render(write_still=True)

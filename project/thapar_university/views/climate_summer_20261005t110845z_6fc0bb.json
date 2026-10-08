@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "thapar_university",
+  "title": "summer \u00b7 exploratory wind and temperature",
+  "time_alignment": "relative",
+  "runs": [
+    "osm_geometry_20261005T110125Z_1bf7f0",
+    "climate_summer_20261005T110845Z_6fc0bb"
+  ],
+  "layers": [
+    {
+      "run_id": "osm_geometry_20261005T110125Z_1bf7f0",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "climate_summer_20261005T110845Z_6fc0bb",
+      "layer_id": "wind",
+      "visible": true
+    },
+    {
+      "run_id": "climate_summer_20261005T110845Z_6fc0bb",
+      "layer_id": "temperature",
+      "visible": true
+    },
+    {
+      "run_id": "climate_summer_20261005T110845Z_6fc0bb",
+      "layer_id": "surface",
+      "visible": false
+    }
+  ],
+  "camera": {
+    "position": [
+      1800,
+      -2200,
+      1800
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  }
+}

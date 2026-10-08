@@ -46,6 +46,20 @@ class ExportTests(unittest.TestCase):
         bundle=package_export(self.storage,self.source,self.config,'trial_02');path=promote_bundle(self.storage,bundle);before=path.read_bytes()
         with self.assertRaises(FileExistsError):promote_bundle(self.storage,bundle)
         self.assertEqual(path.read_bytes(),before)
+    def test_physical_height_and_obstacle_mask_survive_city_export(self):
+        mask=np.zeros((2,4,4),dtype=bool);mask[1,1,2]=True
+        np.save(self.source/'physics/solid.npy',mask)
+        path=self.source/'physics/manifest.json';document=json.loads(path.read_text())
+        document['arrays']['wind.npy']['layer_m']=[8,16];path.write_text(json.dumps(document))
+        path=self.source/'scene.json';document=json.loads(path.read_text())
+        document['masks']={'solid_wind':{'file':'solid.npy','layer':1}};path.write_text(json.dumps(document))
+        bundle=package_export(self.storage,self.source,self.config,'mask_trial')
+        manifest=json.loads((bundle/'mask_trial_wind/manifest.json').read_text())
+        encoding=manifest['layers'][0]['encoding']
+        self.assertEqual(encoding['origin_m'][2],12)
+        self.assertEqual(encoding['mask_semantics'],'invalid_nonzero')
+        np.testing.assert_array_equal(np.load(bundle/'mask_trial_wind'/encoding['mask_asset']),mask[1])
+        promote_bundle(self.storage,bundle)
     def test_invalid_bundle_does_not_expose_runs(self):
         bundle=package_export(self.storage,self.source,self.config,'trial_03');file=bundle/'bundle.json';data=json.loads(file.read_text());data['view']['layers'][0]['layer_id']='missing';file.write_text(json.dumps(data))
         with self.assertRaises(ValueError):promote_bundle(self.storage,bundle)

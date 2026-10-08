@@ -1,0 +1,22 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "white_city",
+  "title": "pollution \u00b7 recorded simulation",
+  "time_alignment": "relative",
+  "runs": [
+    "legacy_web",
+    "city_pollution_20260930T095257Z_f293ce"
+  ],
+  "layers": [
+    {
+      "run_id": "legacy_web",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "city_pollution_20260930T095257Z_f293ce",
+      "layer_id": "pollution",
+      "visible": true
+    }
+  ]
+}

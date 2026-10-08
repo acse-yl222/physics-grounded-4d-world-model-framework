@@ -32,7 +32,7 @@ def inspect_log(log, config):
     residuals = {}
     for field, initial in re.findall(r'Solving for (\w+), Initial residual = ([\deE.+-]+)', log):
         residuals[field] = float(initial)
-    required = ('p', 'Ux', 'Uy', 'Uz', 'k', 'omega' if config['turbulence_model']=='kOmegaSST' else 'epsilon')
+    required = ('p', 'Ux', 'Uy', 'Uz', 'k', 'omega' if config['turbulence_model'] in ('kOmega','kOmegaSST','paperSSTLF18') else 'epsilon')
     if any(name not in residuals for name in required) or not all(math.isfinite(x) for x in residuals.values()):
         raise ValueError('Missing or nonfinite solver residuals')
     continuity = re.findall(r'continuity errors : sum local = ([\deE.+-]+), global = ([\deE.+-]+)', log)
@@ -85,7 +85,7 @@ def analyze(target):
                header='simple_iteration,disc_speed_m_s,thrust_N,force_over_density_balance_error',comments='')
     # Preserve all dictionaries needed to rebuild this case, independently of cache.
     with tarfile.open(target/'case_inputs.tar.gz','w:gz') as archive:
-        for folder in ('0','system','constant'):
+        for folder in ('0','system','constant','custom/source'):
             for path in sorted((target/folder).rglob('*')):
                 if path.is_file() and 'polyMesh' not in path.parts:
                     archive.add(path,arcname=str(path.relative_to(target)))

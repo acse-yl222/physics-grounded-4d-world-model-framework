@@ -1,3 +1,6 @@
+"""Shared geometry/plotting helpers retained for temperature workflows.
+DIGIT network and inference implementation were removed at user request.
+"""
 from __future__ import annotations
 
 import json
@@ -11,7 +14,6 @@ os.environ.setdefault("MPLCONFIGDIR", "/tmp/matplotlib")
 
 import numpy as np
 import torch
-import torch.nn as nn
 
 try:
     import matplotlib.animation as mpl_animation
@@ -64,92 +66,6 @@ class SouthKensingtonConfig:
     output_dir: str = str(BUNDLE_ROOT / "outputs" / "south_kensington_digit")
 
 
-class UNet_New(nn.Module):
-    def __init__(
-        self,
-        dim: int = 2,
-        input_channels: int = 6,
-        output_channels: int = 2,
-        num_levels: int = 4,
-        base_channels: int = 32,
-        activation_final: nn.Module | None = None,
-        if_norm: bool = False,
-        if_maxpool: bool = True,
-    ) -> None:
-        super().__init__()
-        self.if_norm = if_norm
-        self.if_maxpool = if_maxpool
-        self.num_levels = num_levels
-        self.base_channels = base_channels
-
-        if dim == 3:
-            self.Conv = nn.Conv3d
-            self.ConvTranspose = nn.ConvTranspose3d
-            self.MaxPool = nn.MaxPool3d
-        elif dim == 1:
-            self.Conv = nn.Conv1d
-            self.ConvTranspose = nn.ConvTranspose1d
-            self.MaxPool = nn.MaxPool1d
-        else:
-            self.Conv = nn.Conv2d
-            self.ConvTranspose = nn.ConvTranspose2d
-            self.MaxPool = nn.MaxPool2d
-
-        self.encoder_blocks = nn.ModuleList()
-        self.decoder_blocks = nn.ModuleList()
-        self.upconvs = nn.ModuleList()
-
-        in_ch = input_channels
-        for i in range(self.num_levels):
-            out_ch = self.base_channels * (2**i)
-            self.encoder_blocks.append(self.conv_block(in_ch, out_ch))
-            in_ch = out_ch
-
-        self.bottleneck = self.conv_block(in_ch, in_ch * 2)
-        in_ch = in_ch * 2
-        for i in reversed(range(self.num_levels)):
-            out_ch = self.base_channels * (2**i)
-            self.upconvs.append(
-                self.ConvTranspose(in_ch, out_ch, kernel_size=2, stride=2)
-            )
-            self.decoder_blocks.append(self.conv_block(in_ch, out_ch))
-            in_ch = in_ch // 2
-
-        self.final_conv = self.Conv(self.base_channels, output_channels, kernel_size=1)
-        self.activation = activation_final if activation_final else nn.Identity()
-
-    def conv_block(self, in_channels: int, out_channels: int) -> nn.Sequential:
-        return nn.Sequential(
-            self.Conv(in_channels, out_channels, kernel_size=3, padding=1),
-            nn.LeakyReLU(negative_slope=0.01),
-            self.Conv(out_channels, out_channels, kernel_size=3, padding=1),
-            nn.LeakyReLU(negative_slope=0.01),
-        )
-
-    def pool(self, x: torch.Tensor) -> torch.Tensor:
-        if self.if_maxpool:
-            return self.MaxPool(kernel_size=2, stride=2)(x)
-        conv_layer = self.Conv(x.size(1), x.size(1), kernel_size=2, stride=2).to(
-            x.device
-        )
-        return conv_layer(x)
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        enc_feats = []
-        for enc in self.encoder_blocks:
-            x = enc(x)
-            enc_feats.append(x)
-            x = self.pool(x)
-
-        x = self.bottleneck(x)
-
-        for i in range(self.num_levels):
-            x = self.upconvs[i](x)
-            skip = enc_feats[-(i + 1)]
-            x = torch.cat([x, skip], dim=1)
-            x = self.decoder_blocks[i](x)
-
-        return self.activation(self.final_conv(x))
 
 
 def scale_back(u_scaled: torch.Tensor, u_min: float, u_max: float) -> torch.Tensor:
@@ -404,87 +320,14 @@ def infer_input_shape(mesh: np.ndarray, config: SouthKensingtonConfig) -> tuple[
     return (1, 1, full_y, full_x, 64)
 
 
-def load_digit_model(config: SouthKensingtonConfig, device: torch.device) -> UNet_New:
-    model = UNet_New(
-        dim=3,
-        input_channels=10,
-        output_channels=3,
-        num_levels=3,
-        if_maxpool=True,
-        activation_final=nn.Tanh(),
-    )
-    state_dict = torch.load(Path(config.artifact_dir) / "digit.pth", map_location=device)
-    model.load_state_dict(state_dict)
-    model.to(device)
-    model.eval()
-    return model
+def load_digit_model(*args, **kwargs):
+    """Removed DIGIT backend; retained only to report a clear legacy-call error."""
+    raise RuntimeError("DIGIT wind model was removed. Supply precomputed wind to the temperature workflow; no replacement wind model is selected automatically.")
 
 
-def run_digit_rollout(
-    predictor: UNet_New,
-    building_distribution: torch.Tensor,
-    config: SouthKensingtonConfig,
-    device: torch.device,
-) -> torch.Tensor:
-    obs_buildings_batch = building_distribution.float().to(device)
-    nz = building_distribution.shape[-3]
-    ny = building_distribution.shape[-2]
-    nx = building_distribution.shape[-1]
-
-    flow_data = np.zeros((3, nz, ny, nx), dtype=np.float32)
-    flow_data[0] = config.inlet_flow * np.ones((nz, ny, nx), dtype=np.float32)
-    flow_data_torch = torch.from_numpy(flow_data).float().unsqueeze(0).to(device)
-
-    status_t0_batch = flow_data_torch.clone()
-    status_t1_batch = flow_data_torch.clone()
-    predictions = []
-
-    for _ in range(config.timesteppings - 2):
-        status_t2_current = status_t1_batch
-        for _ in range(config.num_iterations):
-            b = config.boundary_size
-            status_t2_current_wb = status_t2_current
-
-            status_t2_current_wb[:, 0, :, :, :b] = config.inlet_flow
-            status_t2_current_wb[:, 0, :, :, -b:] = config.inlet_flow
-            status_t2_current_wb[:, 0, :, :b, :] = status_t2_current_wb[:, 0, :, b : b + b, :]
-            status_t2_current_wb[:, 0, :, -b:, :] = status_t2_current_wb[:, 0, :, -b - b : -b, :]
-            status_t2_current_wb[:, 0, :b, :, :] = 0.0
-            status_t2_current_wb[:, 0, -b:, :, :] = status_t2_current_wb[:, 0, -b - b : -b, :, :]
-
-            status_t2_current_wb[:, 1, :, :, :b] = 0.0
-            status_t2_current_wb[:, 1, :, :, -b:] = 0.0
-            status_t2_current_wb[:, 1, :, :b, :] = 0.0
-            status_t2_current_wb[:, 1, :, -b:, :] = 0.0
-            status_t2_current_wb[:, 1, :b, :, :] = 0.0
-            status_t2_current_wb[:, 1, -b:, :, :] = status_t2_current_wb[:, 1, -b - b : -b, :, :]
-
-            status_t2_current_wb[:, 2, :, :, :b] = 0.0
-            status_t2_current_wb[:, 2, :, :, -b:] = 0.0
-            status_t2_current_wb[:, 2, :, :b, :] = 0.0
-            status_t2_current_wb[:, 2, :, -b:, :] = 0.0
-            status_t2_current_wb[:, 2, :b, :, :] = 0.0
-            status_t2_current_wb[:, 2, -b:, :, :] = 0.0
-
-            status_t0_batch = status_t0_batch * obs_buildings_batch
-            status_t1_batch = status_t1_batch * obs_buildings_batch
-            status_t2_current_wb = status_t2_current_wb * obs_buildings_batch
-
-            with torch.no_grad():
-                input_wholedomain = torch.cat(
-                    (obs_buildings_batch, status_t0_batch, status_t1_batch, status_t2_current_wb),
-                    dim=1,
-                ).float()
-                prediction = predictor(input_wholedomain)
-
-            status_t2_current = prediction
-            prediction = prediction * obs_buildings_batch
-
-        predictions.append(prediction.cpu())
-        status_t0_batch = status_t1_batch
-        status_t1_batch = status_t2_current
-
-    return torch.cat(predictions, dim=0)
+def run_digit_rollout(*args, **kwargs):
+    """Removed DIGIT backend; retained only to report a clear legacy-call error."""
+    raise RuntimeError("DIGIT wind model was removed. Supply precomputed wind to the temperature workflow; no replacement wind model is selected automatically.")
 
 
 def save_summary_and_arrays(results: dict[str, object], output_dir: str | Path | None = None) -> dict[str, object]:
@@ -662,41 +505,9 @@ def save_velocity_animations(
     return saved
 
 
-def run_pipeline(config: SouthKensingtonConfig | None = None) -> dict[str, object]:
-    config = config or SouthKensingtonConfig()
-    static_fields = load_static_fields(config)
-    geometry_fields = prepare_geometry_fields(config, static_fields)
-    mask_resampled = geometry_fields["mask_resampled"]
-    height_resampled = geometry_fields["height_resampled"]
-    mesh, height_voxels = build_voxel_mesh(
-        mask_resampled, height_resampled, config.z_dim, config.height_scale_m
-    )
-    sigma, building_distribution = embed_mesh_in_sigma(mesh, config)
-
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model = load_digit_model(config, device)
-    predictions_3d = run_digit_rollout(model, building_distribution, config, device)
-    predictions_3d = scale_back(predictions_3d, config.velocity_scale_min, config.velocity_scale_max)
-    predictions_3d_np = predictions_3d.detach().cpu().numpy()
-    predictions_3d_vel_mag = compute_velocity_magnitude_3d(predictions_3d_np)
-
-    return {
-        "config": config,
-        "device": str(device),
-        "grid": static_fields["grid"],
-        "geometry_source": geometry_fields["geometry_source"],
-        "geometry_resolution_m": float(geometry_fields["geometry_resolution_m"][0]),
-        "geometry_mask": geometry_fields["geometry_mask"],
-        "geometry_height": geometry_fields["geometry_height"],
-        "mask_resampled": mask_resampled,
-        "height_resampled": height_resampled,
-        "height_voxels": height_voxels,
-        "mesh": mesh,
-        "sigma": sigma,
-        "building_distribution": building_distribution,
-        "predictions_3d": predictions_3d_np,
-        "predictions_3d_vel_mag": predictions_3d_vel_mag,
-    }
+def run_pipeline(*args, **kwargs):
+    """Removed DIGIT backend; retained only to report a clear legacy-call error."""
+    raise RuntimeError("DIGIT wind model was removed. Supply precomputed wind to the temperature workflow; no replacement wind model is selected automatically.")
 
 
 def show_animation(data: np.ndarray, title: str = "South Kensington Velocity Magnitude") -> object:

@@ -1,0 +1,11 @@
+"""Port East conditional repeated-ridge profile with spatial holdout."""
+from pathlib import Path
+import runpy,json,hashlib
+import numpy as np
+from scipy.optimize import least_squares
+import matplotlib.pyplot as plt
+s=Path(__file__).resolve().parent;ns=runpy.run_path(str(s/'analyze_port_east_lidar.py'));globals().update({k:ns[k] for k in ['ROOT','x','y','z','masks','p','rep']});theta=np.deg2rad(-10);u=x*np.cos(theta)+y*np.sin(theta);v=-x*np.sin(theta)+y*np.cos(theta);sel=masks['2']&(z>16)&(z<19);train=sel&(np.floor(u/3).astype(int)%3!=1);test=sel&~train;knots=np.arange(np.ceil(v[train].min()),np.floor(v[train].max())+1)
+def basis(a):return np.array([np.interp(a,knots,q) for q in np.eye(len(knots))]).T
+B=basis(v[train]);D=np.diff(np.eye(len(knots)),2,axis=0);fit=least_squares(lambda c:np.r_[B@c-z[train],.15*D@c],np.full(len(knots),17.5),loss='soft_l1',f_scale=.1);pred=(basis(v.flat)@fit.x).reshape(v.shape);err=z[test]-pred[test]
+fig,axs=plt.subplots(1,2,figsize=(13,5),layout='constrained');axs[0].scatter(v[sel],z[sel],s=8,alpha=.25);axs[0].plot(knots,fit.x,c='red');axs[0].set(title='Port East: repeated roof profile',xlabel='Across row m',ylabel='ODN m');im=axs[1].scatter(u[sel],v[sel],c=(z-pred)[sel],vmin=-.5,vmax=.5,cmap='RdBu_r');fig.colorbar(im,ax=axs[1],label='Observed minus predicted m');axs[1].set(title='Spatial residuals',xlabel='Along row m',ylabel='Across row m',aspect='equal');fig.savefig(ROOT/'references/port_east_profile_fit.png',dpi=140)
+d={'selection':'2m inward footprint,16<DSM<19ODN','holdout':'Every third3m longitudinal strip','train_cells':int(train.sum()),'test_cells':int(test.sum()),'rmse_m':float(np.sqrt(np.mean(err**2))),'p95_abs_m':float(np.percentile(abs(err),95)),'knots_v_m':knots.tolist(),'height_odn_m':fit.x.tolist(),'rotation_deg':-10,'datum_odn_m':4.28000021,'limitations':['Conditional interior fit, not whole roof validation.','Boundary highs may belong to neighbors; low edge cells excluded.','Spline knots not independently measured architectural breaklines.'],'visual_reviewed':False};(ROOT/'references/port_east_profile_fit.json').write_text(json.dumps(d,indent=2)+'\n');print({k:d[k] for k in ['train_cells','test_cells','rmse_m','p95_abs_m']})

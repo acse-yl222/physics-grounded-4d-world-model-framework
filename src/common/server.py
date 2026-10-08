@@ -10,6 +10,20 @@ from urllib.parse import unquote, urlsplit
 from .storage import scene_id, within
 
 
+def local_city_scenes(storage):
+    entries=[]
+    for config_path in sorted((storage.root/'project').glob('*/configs/city_viewer.json')):
+        config=json.loads(config_path.read_text())
+        scene=scene_id(config_path.parent.parent.name)
+        folder=storage.run(scene,config['run_id'])
+        if not (folder/'scene.json').is_file() or not (folder/'manifest.json').is_file():continue
+        manifest=json.loads((folder/'manifest.json').read_text())
+        if manifest.get('status')!='complete' or manifest.get('scene_id')!=scene:continue
+        entries.append({'id':scene,'title':config['title'],'short':config.get('short',config['title']),
+                        'base_url':f'/project/{scene}/runs/{config["run_id"]}/'})
+    return entries
+
+
 class ViewerHandler(BaseHTTPRequestHandler):
     def __init__(self, *args, storage, **kwargs):
         self.storage=storage
@@ -37,7 +51,13 @@ class ViewerHandler(BaseHTTPRequestHandler):
                 self.send_header('Location','/src/visualization/viewer/'+('?' + query if query else ''))
                 self.send_header('Content-Length','0');self.end_headers();return
             legacy=('src','visualization','legacy')
-            if parts[:4]==legacy+('scenes',) and len(parts)>=5 and parts[4]!='index.json':
+            if parts==legacy+('scenes','index.json'):
+                catalog=json.loads((self.storage.root/'src/visualization/legacy/scenes/index.json').read_text())
+                for entry in local_city_scenes(self.storage):
+                    catalog['scenes']=[item for item in catalog['scenes'] if item['id']!=entry['id']]
+                    catalog['scenes'].append(entry)
+                return self.json_response(catalog,head)
+            elif parts[:4]==legacy+('scenes',) and len(parts)>=5 and parts[4]!='index.json':
                 old=parts[4]
                 aliases={'south_kensington':('south_ken','legacy_web'),'white_city':('white_city','legacy_web'),'region':('windfarm','region'),'windfarm_2m':('windfarm','mac_2m'),'windfarm_crop':('windfarm','crop'),'actuator_lab':('actuator_lab','fullgradient'),'actuator_lab_halfgradient':('actuator_lab','halfgradient')}
                 pair=aliases.get(old,('windfarm',old.removeprefix('windfarm_')) if old.startswith('windfarm_') else None)
@@ -52,6 +72,11 @@ class ViewerHandler(BaseHTTPRequestHandler):
                 for item in catalog['scenes']:
                     if not self.storage.assets(item['scene_id'],'runs').is_dir():
                         item['viewer_url']=catalog['published_site'].rstrip('/')+'/'+item['viewer_url'].removeprefix('src/visualization/legacy/')
+                for entry in local_city_scenes(self.storage):
+                    catalog['scenes']=[item for item in catalog['scenes'] if item['scene_id']!=entry['id']]
+                    catalog['scenes'].append({'scene_id':entry['id'],'title':entry['title'],'tag':'Local research case',
+                        'description':'Locally retained geometry and simulation results; see the viewer for provenance and limitations.',
+                        'viewer_url':f'src/visualization/legacy/viewer/3d/?scene={entry["id"]}', 'resource_ids':[]})
                 return self.json_response(catalog,head)
             elif parts==('index.html',):
                 path=self.storage.root/'index.html'

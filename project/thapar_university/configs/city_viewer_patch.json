@@ -1,0 +1,20 @@
+{
+  "model": {"building_ids_are_architecture": true},
+  "focus": {
+    "box": [[-760, -470], [760, 470]],
+    "orbit_m": 1750,
+    "label": "Thapar University campus",
+    "note": "2 × 2 km study focus centred on campus; surrounding 3.072 km computational buffer remains visible. GLTF X=east, Z=south."
+  },
+  "limits": [
+    "Mapped individual footprints cover the approximately 2 × 2 km focus and surrounding computational buffer. Four overlapping, ambiguous hostel compound envelopes are excluded in favour of individual outlines; all raw sources remain retained. This is not surveyed completeness.",
+    "Overture release 2026-09-23.1 and OSM 2026-10-05. Footprints are source-derived; unknown heights use an explicit 9 m assumption. Buildings have not been added to imitate London density.",
+    "Two partial landmark facades use CC BY-SA 2011 photographs. Their exact facade registration and present-day appearance are unverified; other buildings are labelled footprint massing, not full detailed reconstruction.",
+    "Pyproj WGS84 azimuthal equidistant about 76.36621 E, 30.35447 N. Flat unsurveyed ground; no measured terrain or tree canopy. Do not overlay the older approximate-projection traffic run without reprojection.",
+    "Wind uses the same SCALED surrogate as the original city scenes: 100 transient steps, 4 m geometry, 8 m displayed fields at 8–16 m. Fixed model forcing is not ERA5 wind and not calibrated Patiala weather; 50 s/step is an assumed clock.",
+    "Temperature uses the existing three-dimensional physical solver for a controlled 1000 s experiment: 35.4 °C ambient and assumed 40 °C surfaces. It is not a forecast or a measured campus temperature map.",
+    "Sunlight uses clear-sky geometry for 21 June and 21 December 2025, with Asia/Kolkata display times. No measured local cloud forcing or evapotranspiration.",
+    "No pollution or flood results are asserted for this reconstruction. The older traffic experiment is synthetic passenger-car demand, not observed Indian mixed traffic.",
+    "Attribution: Overture Maps Foundation; OpenStreetMap contributors (ODbL); original per-feature sources retained; Ayush.undefined / Wikimedia Commons (CC BY-SA 3.0). Local research assets only; not published."
+  ]
+}

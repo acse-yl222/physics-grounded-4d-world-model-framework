@@ -1,0 +1,177 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "white_city",
+  "title": "Wave PDE ground routes \u00b7 30m ascent",
+  "time_alignment": "relative",
+  "runs": [
+    "legacy_web",
+    "wavepde_ground_20261007_8m"
+  ],
+  "layers": [
+    {
+      "run_id": "legacy_web",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_h1",
+      "visible": true
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_h2",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_h3",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_c1",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_c2",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_c3",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_c4",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_c5",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_c6",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_c7",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_c8",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_c9",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d1",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d2",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d3",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d4",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d5",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d6",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d7",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d8",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d9",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d10",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d11",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d12",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d13",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d14",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d15",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d16",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d17",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "routes_d18",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "flight_gates",
+      "visible": false
+    },
+    {
+      "run_id": "wavepde_ground_20261007_8m",
+      "layer_id": "ground_stations",
+      "visible": true
+    }
+  ]
+}

@@ -16,6 +16,8 @@ def main(argv=None):
     paths = commands.add_parser('paths', help='Show resolved scene paths without creating data')
     paths.add_argument('scene')
     commands.add_parser('scenes', help='List registered scene metadata')
+    city = commands.add_parser('city', help='Shared city tools and capability audit')
+    city.add_argument('options', nargs=argparse.REMAINDER)
     check = commands.add_parser('validate', help='Validate a run and its data assets')
     check.add_argument('manifest', type=Path)
     keep = commands.add_parser('retain', help='Copy a complete trial into immutable scene runs')
@@ -48,6 +50,16 @@ def main(argv=None):
             env = dict(os.environ, UWM_ROOT=str(storage.root))
             env['PYTHONPATH'] = str(storage.root / 'src') + os.pathsep + env.get('PYTHONPATH', '')
             return subprocess.call([args.python, '-m', 'common.pipeline.run_scene', args.scene, *args.options], cwd=storage.root, env=env)
+        elif args.command == 'city':
+            import os
+            from .city_tools import main as city_main
+            previous = os.environ.get('UWM_ROOT')
+            try:
+                os.environ['UWM_ROOT'] = str(storage.root)
+                return city_main(args.options)
+            finally:
+                if previous is None: os.environ.pop('UWM_ROOT', None)
+                else: os.environ['UWM_ROOT'] = previous
         elif args.command == 'experiment':
             import os, subprocess
             env=dict(os.environ,UWM_ROOT=str(storage.root))

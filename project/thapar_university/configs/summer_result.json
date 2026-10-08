@@ -1,0 +1,219 @@
+{
+  "run_id": "climate_summer_20261005T110845Z_6fc0bb",
+  "view_id": "climate_summer_20261005t110845z_6fc0bb",
+  "summary": {
+    "forcing": {
+      "temperature_2m": 35.4,
+      "wind_speed_10m": 2.15,
+      "wind_direction_10m": 158,
+      "shortwave_radiation": 684.0,
+      "direct_radiation": 390.0,
+      "diffuse_radiation": 294.0,
+      "time_utc": "2025-06-21T09:00Z",
+      "scenario": "summer",
+      "modeled_wind_from_deg": 180,
+      "wind_direction_error_deg": 22,
+      "wind_profile": "Uniform inflow at ERA5 10 m speed; nearest cardinal direction required by west-inlet solver",
+      "thermal_clock": "Elapsed controlled experiment; historical forcing held constant, not a weather replay"
+    },
+    "flow": {
+      "records": [
+        {
+          "iterations": 10,
+          "divergence_rms": 9.573667240443667e-07,
+          "linear_relative_residual": 0.00044936112904876073,
+          "time_s": 0.9160189043513204,
+          "step": 1,
+          "relative_velocity_change": 0.00583661973293709
+        },
+        {
+          "iterations": 2,
+          "divergence_rms": 8.57001206345524e-07,
+          "linear_relative_residual": 0.000734110489470269,
+          "time_s": 61.089537198147156,
+          "step": 51,
+          "relative_velocity_change": 0.05971068983458069
+        },
+        {
+          "iterations": 2,
+          "divergence_rms": 4.944199133392317e-07,
+          "linear_relative_residual": 0.00047250565389330383,
+          "time_s": 122.24599969086532,
+          "step": 98,
+          "relative_velocity_change": 0.03204891709958711
+        },
+        {
+          "iterations": 2,
+          "divergence_rms": 3.7634253006762564e-07,
+          "linear_relative_residual": 0.00038185860612606736,
+          "time_s": 182.57899724282083,
+          "step": 143,
+          "relative_velocity_change": 0.024768298574294887
+        },
+        {
+          "iterations": 2,
+          "divergence_rms": 2.800962291660347e-07,
+          "linear_relative_residual": 0.00029883723951849015,
+          "time_s": 243.42849948214692,
+          "step": 188,
+          "relative_velocity_change": 0.021373606029835394
+        },
+        {
+          "iterations": 1,
+          "divergence_rms": 7.377522065986091e-07,
+          "linear_relative_residual": 0.0008122559936486013,
+          "time_s": 304.56857226291174,
+          "step": 233,
+          "relative_velocity_change": 0.019288730380330407
+        },
+        {
+          "iterations": 1,
+          "divergence_rms": 9.38651223030299e-07,
+          "linear_relative_residual": 0.0010577981669973922,
+          "time_s": 364.5722757417677,
+          "step": 277,
+          "relative_velocity_change": 0.01760998423885662
+        },
+        {
+          "iterations": 1,
+          "divergence_rms": 8.36291945801786e-07,
+          "linear_relative_residual": 0.0009608150635859427,
+          "time_s": 424.76303255967014,
+          "step": 321,
+          "relative_velocity_change": 0.016861606033008195
+        },
+        {
+          "iterations": 1,
+          "divergence_rms": 9.330260217257504e-07,
+          "linear_relative_residual": 0.0010901123724511921,
+          "time_s": 485.1306851573474,
+          "step": 365,
+          "relative_velocity_change": 0.016369581473228496
+        },
+        {
+          "iterations": 1,
+          "divergence_rms": 5.689533941622575e-07,
+          "linear_relative_residual": 0.0006747270268833901,
+          "time_s": 545.6706019856713,
+          "step": 409,
+          "relative_velocity_change": 0.015990500228718035
+        },
+        {
+          "iterations": 6,
+          "divergence_rms": 7.970440463358152e-07,
+          "linear_relative_residual": 0.002502254930681087,
+          "time_s": 600.0,
+          "step": 449,
+          "relative_velocity_change": 0.014190261697219568
+        }
+      ],
+      "wall_seconds": 4.952389803947881,
+      "stationarity_established": false,
+      "model": "Existing inviscid upwind MAC with pressure projection; no turbulence closure or buoyancy feedback"
+    },
+    "thermal_intervals": [
+      {
+        "dt_seconds": 0.9836065573770492,
+        "substeps_per_frame": 61,
+        "frame_means_c": [
+          35.400020599365234,
+          35.58645248413086
+        ]
+      },
+      {
+        "dt_seconds": 0.9836065573770492,
+        "substeps_per_frame": 61,
+        "frame_means_c": [
+          35.58645248413086,
+          35.749908447265625
+        ]
+      },
+      {
+        "dt_seconds": 0.9836065573770492,
+        "substeps_per_frame": 61,
+        "frame_means_c": [
+          35.749908447265625,
+          35.90137481689453
+        ]
+      },
+      {
+        "dt_seconds": 0.9836065573770492,
+        "substeps_per_frame": 61,
+        "frame_means_c": [
+          35.90137481689453,
+          36.043521881103516
+        ]
+      },
+      {
+        "dt_seconds": 0.9836065573770492,
+        "substeps_per_frame": 61,
+        "frame_means_c": [
+          36.043521881103516,
+          36.17771530151367
+        ]
+      },
+      {
+        "dt_seconds": 0.9836065573770492,
+        "substeps_per_frame": 61,
+        "frame_means_c": [
+          36.17771530151367,
+          36.30484390258789
+        ]
+      },
+      {
+        "dt_seconds": 0.9836065573770492,
+        "substeps_per_frame": 61,
+        "frame_means_c": [
+          36.30484390258789,
+          36.4255256652832
+        ]
+      },
+      {
+        "dt_seconds": 0.9836065573770492,
+        "substeps_per_frame": 61,
+        "frame_means_c": [
+          36.4255256652832,
+          36.540245056152344
+        ]
+      },
+      {
+        "dt_seconds": 0.9836065573770492,
+        "substeps_per_frame": 61,
+        "frame_means_c": [
+          36.540245056152344,
+          36.649253845214844
+        ]
+      },
+      {
+        "dt_seconds": 0.9836065573770492,
+        "substeps_per_frame": 61,
+        "frame_means_c": [
+          36.649253845214844,
+          36.752323150634766
+        ]
+      }
+    ],
+    "air_final_range_c": [
+      37.33010482788086,
+      61.368770599365234
+    ],
+    "surface_range_c": [
+      48.23175048828125,
+      65.25345611572266
+    ],
+    "wind_speed_range_m_s": [
+      1.305163323195302e-06,
+      2.300145149230957
+    ],
+    "sample_height_m": 12,
+    "solar_altitude_deg": 68.06691992055725,
+    "solar_azimuth_deg": 257.28031289490485,
+    "limitations": [
+      "Incomplete OSM footprints and mostly assumed building heights; no terrain or tree drag.",
+      "ERA5 coarse-grid forcing, two selected dates; not campus measurements or climatology.",
+      "Cardinal wind approximation, uniform vertical inflow, inviscid solver; no turbulence or grid-convergence claim.",
+      "600-second finite-duration wind and thermal diagnostics; wind frozen during thermal integration.",
+      "Uniform material parameters, no evapotranspiration, no measured thermal validation."
+    ]
+  }
+}

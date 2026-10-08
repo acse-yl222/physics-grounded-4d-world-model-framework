@@ -1,0 +1,94 @@
+{
+  "schema_version": "urban-renewal-task-design-0.1",
+  "status": "design_draft_not_executable",
+  "scene_id": "south_ken",
+  "title": "Budget-constrained neighbourhood environmental renewal",
+  "goal": "Produce and verify a spatial intervention plan that preserves development capacity while reducing heat and traffic-source pollutant exposure across uncertain weather, without shifting unacceptable harm to another subarea.",
+  "design_motivation": "The previous 182-choice experiment found the development optimum in six calls but failed on held-out weather. More options alone do not test planning competence.",
+  "proposed_decisions": [
+    {
+      "name": "group_height_changes",
+      "description": "Height redistribution across up to eight connected footprint groups selected before evaluation. Connected raster groups are not verified individual buildings.",
+      "implementation": "requires geometry adapter beyond the existing four-sector ClimateProblem"
+    },
+    {
+      "name": "surface_materials",
+      "description": "Spatial ground-albedo interventions with an explicit area-based synthetic cost.",
+      "implementation": "existing numerical forcing available; finer spatial action mapping needed"
+    },
+    {
+      "name": "traffic_source_mitigation",
+      "description": "Hypothetical reductions of source intensity in recorded traffic sectors, with a separately stated service/cost tradeoff.",
+      "implementation": "existing normalized source arrays and conservative tracer available; not a traffic rerouting model"
+    }
+  ],
+  "objectives": [
+    "Worst-weather high-temperature exposure proxy",
+    "Worst-weather normalized pollutant exposure",
+    "Low-wind area fraction",
+    "Intervention cost"
+  ],
+  "constraints": [
+    "Preserve building-volume proxy within a declared range",
+    "Keep fixed receptor support across plans",
+    "Constrain local harm as well as domain averages",
+    "Charge all numerical queries, including repeated or invalid attempts",
+    "Do not count an untested scenario as passed"
+  ],
+  "agent_workflow": [
+    "Inspect spatial inputs and constraints",
+    "Construct a candidate intervention plan",
+    "Choose which physical process and scenario to evaluate",
+    "Diagnose which intervention causes a failed constraint",
+    "Repair and re-evaluate under remaining budget",
+    "Submit a plan with tested coverage and explicitly unresolved risks"
+  ],
+  "evaluation_design": {
+    "queryable_scenarios": "Predeclare a pool of controlled weather/source conditions; agent chooses queries.",
+    "final_scenarios": "Separately freeze conditions not exposed to the agent; score only after all methods submit.",
+    "budgets": "Count plan-scenario solver calls and model tokens separately; exact caps not yet frozen.",
+    "controls": [
+      "Fixed-scenario agent ablation",
+      "Same-budget conventional optimization with scenario validation",
+      "Materials/source-only conservative control"
+    ],
+    "success_metrics": [
+      "Final scenario feasibility",
+      "Pareto quality or predeclared objective tradeoff",
+      "Local constraint violations",
+      "Verification coverage",
+      "Evaluation and model cost",
+      "Recovery after failed validation"
+    ],
+    "note": "This is a task design, not a completed implementation or a new result. Acceptance thresholds and scenario splits must be fixed before formal runs."
+  },
+  "available_evidence": {
+    "source_run": "traffic_morphology_20260930T025107Z_f7ca5a",
+    "connected_footprint_groups": 19,
+    "groups_at_least_128m2": 17,
+    "footprint_resolution_m": 4,
+    "current_physics_grid_m": 8,
+    "traffic_source_sector_fractions": [
+      0.056652046783625745,
+      0.2842348927875244,
+      0.06469298245614036,
+      0.5944200779727096
+    ]
+  },
+  "existing_modules": {
+    "solar": "src/urban_flow/physics/solar/model.py",
+    "wind": "src/urban_flow/solvers/mac_torch.py",
+    "temperature": "src/urban_flow/physics/diurnal_solver.py",
+    "pollutant_transport": "src/urban_flow/physics/conservative_tracer.py",
+    "planning_adapter": "src/urban_planning/coupled_climate.py"
+  },
+  "missing_for_real_planning": [
+    "Verified building/parcel identities and editable semantics",
+    "Land-use program and population-demand data",
+    "Empirical cost and emissions calibration",
+    "Grid/physics validation for the intended exposure layer"
+  ],
+  "pending_scope_preference": "Task breadth, agent workflow, or per-building geometry freedom; clarification requested in chat.",
+  "model_if_run": "claude-opus-5-5",
+  "scope": "Proposed controlled computational benchmark using existing tools. No new libraries installed, no new model run started, no real-world planning approval implied."
+}

@@ -1,0 +1,6 @@
+-r requirements-contract.txt
+numpy>=1.24
+requests>=2.31
+shapely>=2.0
+matplotlib>=3.7
+torch>=2.7

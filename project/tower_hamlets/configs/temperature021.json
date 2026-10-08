@@ -1,0 +1,31 @@
+{
+  "origin_xy_m": [
+    -2000,
+    -2000
+  ],
+  "shape_yx": [
+    125,
+    125
+  ],
+  "dx_m": 32,
+  "dz_m": 16,
+  "layers": 16,
+  "ambient_c": 20,
+  "exchange_per_s": 0.001,
+  "diffusivity_m2_s": 1,
+  "duration_s": 600,
+  "interval_s": 60,
+  "sample_heights_m": [
+    8,
+    24,
+    56
+  ],
+  "epoch_utc": "2026-06-21T12:00:00+00:00",
+  "latitude": 51.5053,
+  "longitude": -0.0188,
+  "albedo": 0.2,
+  "emissivity": 0.95,
+  "storage_fraction": 0.3,
+  "convective_w_m2_k": 12,
+  "water_mask": "project/tower_hamlets/input/expanded4km_20261008/water/water_8m.npy"
+}

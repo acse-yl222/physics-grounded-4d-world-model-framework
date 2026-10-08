@@ -1,0 +1,50 @@
+{
+  "version": "traffic-morphology-screening-0.1",
+  "scene_id": "south_ken",
+  "bounds_enu_m": [
+    64,
+    -128,
+    320,
+    128
+  ],
+  "height_m": 128,
+  "cell_m": 8,
+  "height_factors": [
+    0.75,
+    1,
+    1.25
+  ],
+  "wind_rotations_quarter_turns": [
+    0,
+    1,
+    2
+  ],
+  "inlet_speed_m_s": 2,
+  "flow_duration_s": 120,
+  "flow_cfl": 0.45,
+  "flow_dt_max_s": 2,
+  "pressure_rtol": 0.00001,
+  "scalar_diffusivity_m2_s": 1,
+  "source_layer_m": [
+    0,
+    8
+  ],
+  "receptor_layer_m": [
+    8,
+    16
+  ],
+  "total_source_au_s": 1,
+  "source_reduction_fraction": 0.5,
+  "max_intervention_sectors": 2,
+  "sector_names": [
+    "south_west",
+    "south_east",
+    "north_west",
+    "north_east"
+  ],
+  "receptor_boundary_buffer_m": 16,
+  "device": "cpu",
+  "torch_threads": 2,
+  "note": "Pre-experiment exploratory configuration. Normalized tracer from recorded SUMO occupancy, not calibrated emissions or rerouting. Hypothetical height changes. Frozen finite-duration inviscid MAC flow and steady passive scalar with prescribed diffusivity."
+}
+

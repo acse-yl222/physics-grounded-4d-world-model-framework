@@ -1,0 +1,4 @@
+-r requirements-sumo.txt
+numba==0.67.0
+pillow==12.3.0
+DracoPy==2.1.0

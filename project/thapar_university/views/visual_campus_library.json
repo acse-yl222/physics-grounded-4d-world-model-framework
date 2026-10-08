@@ -1,0 +1,28 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "thapar_university",
+  "title": "Refined geometry only \u00b7 visual_campus_library",
+  "time_alignment": "relative",
+  "runs": [
+    "visual_campus_20261007_geometry"
+  ],
+  "layers": [
+    {
+      "run_id": "visual_campus_20261007_geometry",
+      "layer_id": "refined_geometry",
+      "visible": true
+    }
+  ],
+  "camera": {
+    "position": [
+      413.0212989225954,
+      -112.36153313619278,
+      73
+    ],
+    "target": [
+      353.0212989225954,
+      -12.36153313619278,
+      8
+    ]
+  }
+}

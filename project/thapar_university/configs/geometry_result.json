@@ -1,0 +1,26 @@
+{
+  "run_id": "osm_geometry_20261005T110125Z_1bf7f0",
+  "audit": {
+    "building_features_in_buffered_download": 308,
+    "building_features_in_2km_focus": 195,
+    "height_basis_all": {
+      "assumed_unknown_height": 287,
+      "osm_levels_times_assumed_floor_height": 20,
+      "osm_height": 1
+    },
+    "height_basis_focus": {
+      "assumed_unknown_height": 175,
+      "osm_levels_times_assumed_floor_height": 20
+    },
+    "skipped": [],
+    "grid_shape_yx": [
+      384,
+      384
+    ],
+    "maximum_height_m": 24.0,
+    "mapped_footprint_fraction_focus": 0.048414470473172,
+    "coverage_status": "OSM mapped footprints only; completeness against aerial imagery has not been established",
+    "terrain": "Assumed planar; no surveyed DTM, vegetation canopy or facade reconstruction",
+    "rasterization": "Cell-centre footprint sampling; any column height occupies intersected vertical cells; narrow buildings may be missed"
+  }
+}

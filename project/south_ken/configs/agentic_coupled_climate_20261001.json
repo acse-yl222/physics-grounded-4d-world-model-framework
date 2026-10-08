@@ -1,0 +1,77 @@
+{
+  "schema_version": "coupled-city-planning-0.1",
+  "scene_id": "south_ken",
+  "source_run": "traffic_morphology_20260930T025107Z_f7ca5a",
+  "bounds_enu_m": [
+    64,
+    -128,
+    320,
+    128
+  ],
+  "cell_m": 8,
+  "height_m": 96,
+  "receptor_boundary_buffer_m": 16,
+  "construction_budget": 6,
+  "volume_ratio_min": 0.95,
+  "volume_ratio_max": 1.05,
+  "max_sector_warming_c": 0.1,
+  "max_stagnant_increase": 0.05,
+  "stagnant_speed_m_s": 0.5,
+  "flow_duration_s": 120,
+  "flow_cfl": 0.45,
+  "flow_dt_max_s": 2,
+  "pressure_rtol": 1e-05,
+  "torch_threads": 2,
+  "thermal_duration_s": 600,
+  "exchange_per_s": 0.005,
+  "evaluation_budget": 12,
+  "agent_repetitions": 2,
+  "baseline_seeds": [
+    0,
+    1
+  ],
+  "max_output_tokens": 16384,
+  "max_steps": 14,
+  "model": "claude-opus-5-5",
+  "scope": "Controlled 256m South Kensington crop; hypothetical sector-level roof-height and paving changes; volume is a floor-area proxy. Recompute geometry shadows and inviscid MAC flow, then existing physical temperature solver. One-way coupling, no buoyancy/turbulence closure. 8m grid and 8-16m air layer, not pedestrian comfort. Frozen 120s wind and 600s thermal transient, not converged climatology. Clear-sky direct shadow plus uniform diffuse, flat ground, no vegetation/latent cooling or radiative reflections. Prescribed weather scenarios, not measured forecasts.",
+  "development_weather": [
+    {
+      "id": "west_noon",
+      "rotation": 0,
+      "speed_m_s": 2,
+      "sun_altitude_deg": 60,
+      "sun_azimuth_deg": 180,
+      "ambient_c": 30,
+      "inflow_from": "west"
+    },
+    {
+      "id": "south_afternoon",
+      "rotation": 1,
+      "speed_m_s": 2,
+      "sun_altitude_deg": 35,
+      "sun_azimuth_deg": 240,
+      "ambient_c": 30,
+      "inflow_from": "south"
+    }
+  ],
+  "holdout_weather": [
+    {
+      "id": "east_hot_low_wind",
+      "rotation": 2,
+      "speed_m_s": 1.3,
+      "sun_altitude_deg": 45,
+      "sun_azimuth_deg": 210,
+      "ambient_c": 32,
+      "inflow_from": "east"
+    },
+    {
+      "id": "north_morning",
+      "rotation": 3,
+      "speed_m_s": 2.5,
+      "sun_altitude_deg": 35,
+      "sun_azimuth_deg": 120,
+      "ambient_c": 28,
+      "inflow_from": "north"
+    }
+  ]
+}

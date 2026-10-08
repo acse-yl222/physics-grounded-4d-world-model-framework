@@ -6,11 +6,26 @@ import * as THREE from 'three';
 import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
 import {OrbitControls} from 'three/addons/controls/OrbitControls.js';
 const configResponse=await fetch(new URL('resources.json',import.meta.url));if(!configResponse.ok)throw Error('Resource configuration unavailable');
-const resourceConfig=await configResponse.json(),base=new URL(resourceConfig.data_base,import.meta.url).href,modelURL=new URL(resourceConfig.model,import.meta.url).href;
+const resourceConfig=await configResponse.json();
+const requestedRun=new URLSearchParams(location.search).get('run');
+const runKey=Object.hasOwn(resourceConfig.runs??{},requestedRun)?requestedRun:resourceConfig.default_run;
+const base=new URL(resourceConfig.runs?.[runKey]?.data_base??resourceConfig.data_base,import.meta.url).href;
+const modelURL=new URL(resourceConfig.model,import.meta.url).href;
+const runSelect=document.querySelector('#run');
+if(runSelect&&resourceConfig.runs){
+ runSelect.replaceChildren(...Object.entries(resourceConfig.runs).map(([key,item])=>new Option(item.label,key)));
+ runSelect.value=runKey;runSelect.disabled=false;
+ runSelect.onchange=()=>{const url=new URL(location.href);url.searchParams.set('run',runSelect.value);location.href=url.href;};
+}else if(runSelect)runSelect.hidden=true;
+
 async function bytes(name){const r=await fetch(base+name);if(!r.ok)throw Error('Unable to load '+name+': '+r.status);return r.arrayBuffer();}
 function f16(a){const out=new Float32Array(a.length);for(let i=0;i<a.length;i++){const h=a[i],s=h&32768?-1:1,e=(h>>10)&31,f=h&1023;out[i]=e===31?(f?NaN:s*Infinity):e===0?s*f*2**-24:s*(1+f/1024)*2**(e-15);}return out;}
 async function wind(meta){const chunks=await Promise.all((meta.wind_chunks??["u-0.bin", "u-1.bin", "u-2.bin", "u-3.bin"]).map(bytes));const a=new Uint16Array(chunks.reduce((n,b)=>n+b.byteLength/2,0));let at=0;for(const b of chunks){a.set(new Uint16Array(b),at);at+=b.byteLength/2;}return f16(a);}
 
+const navigation=document.querySelector('nav');
+if(navigation)new ResizeObserver(()=>{
+ const hud=document.querySelector('.movie-hud');if(hud)hud.style.top=`${navigation.getBoundingClientRect().bottom+12}px`;
+}).observe(navigation);
 const canvas=document.querySelector('canvas');
 const captureMode=new URLSearchParams(location.search).has('capture');
 const renderer=new THREE.WebGLRenderer({canvas,antialias:true,preserveDrawingBuffer:captureMode});
@@ -32,14 +47,14 @@ try{
 const metaResponse=await fetch(base+'metadata.json');if(!metaResponse.ok)throw Error('Wind metadata unavailable');const meta=await metaResponse.json();
 const [ground,frames,model]=await Promise.all([bytes('ground.bin').then(b=>new Float32Array(b)),wind(meta),new GLTFLoader().loadAsync(modelURL)]);
 const timeline=createTimeline(meta.times);
-document.querySelector('#time').min=timeline.start;document.querySelector('#time').max=timeline.end;
+document.querySelector('#time').min=timeline.start;document.querySelector('#time').max=timeline.end;document.querySelector('#time').step='any';
 if(frames.length!==meta.times.length*meta.display_shape[0]*meta.display_shape[1])throw Error('Wind data length does not match recorded frame times');
 scene.add(model.scene);model.scene.traverse(o=>{if(o.isMesh&&o.name.startsWith('Surface_study'))o.visible=false;});
 const layout=movieLayout(meta,ground.length),{ny,nx,spacing}=layout,N=nx*ny,geo=new THREE.PlaneGeometry((nx-1)*spacing,(ny-1)*spacing,nx-1,ny-1),pos=geo.attributes.position;
 for(let j=0;j<ny;j++)for(let i=0;i<nx;i++){const k=j*nx+i;pos.setXYZ(k,...layout.position(i,j,ground[k]));geo.attributes.uv.setXY(k,i/(nx-1),j/(ny-1));}
 geo.computeVertexNormals();const pixels=new Uint8Array(N*4),texture=new THREE.DataTexture(pixels,nx,ny,THREE.RGBAFormat);texture.colorSpace=THREE.SRGBColorSpace;texture.magFilter=THREE.LinearFilter;texture.minFilter=THREE.LinearFilter;
 const mat=new THREE.MeshBasicMaterial({map:texture,side:THREE.DoubleSide,transparent:true,opacity:.72,depthWrite:false});const field=new THREE.Mesh(geo,mat);scene.add(field);
-const history=await fetch(base+'rotor-speeds.json').then(r=>r.json());const rotorSystem=buildRotors(model.scene,scene,meta,history);
+const history=await fetch(base+'rotor-speeds.json').then(r=>r.json());const kinematics=meta.rotor_kinematics_asset?await fetch(base+meta.rotor_kinematics_asset).then(r=>{if(!r.ok)throw Error('Rotor kinematics unavailable');return r.json();}):null;const rotorSystem=buildRotors(model.scene,scene,meta,history,kinematics);
 const staticBatches=await batchStaticCity(model.scene);scene.add(staticBatches.object);
 for(const root of [model.scene,staticBatches.object])root.traverse(object=>{object.updateMatrix();object.matrixAutoUpdate=false;});
 const comparison={};for(const key of (meta.comparison_keys??['mac_mean','jensen04','jensen10','gaussian'])){comparison[key]=f16(new Uint16Array(await bytes('comparison/'+key+'.bin')));if(comparison[key].length!==N)throw Error('Comparison shape mismatch');}
@@ -47,6 +62,19 @@ const labels={mac_live:'OUR MAC / TIME EVOLUTION',mac_mean:'OUR MAC / MEAN 200�
 const select=document.querySelector('#model');select.replaceChildren(...['mac_live',...Object.keys(comparison)].map(key=>new Option(labels[key]??key,key)));
 document.querySelector('#slice-detail').textContent=`${meta.turbines.length} turbines · Terrain-following slice: ${layout.height} m AGL`;
 document.querySelector('#sampling-detail').textContent=meta.display_note??`Exploratory comparison · Different terrain treatment; no accuracy ranking · Display sampled at ${spacing} m`;
+if((meta.solver??'').startsWith('TorchRotor-RANS')){
+ const methods=document.querySelector('a[href="methods.html"]');
+ if(methods&&(meta.solver??'').startsWith('TorchRotor-RANS v0.1 '))methods.href='methods-v01.html';
+ if(methods&&(meta.solver??'').startsWith('TorchRotor-RANS v0.2 '))methods.href='methods-v02.html';
+ const limitations=document.createElement('p');limitations.id='physics-limitations';
+ limitations.textContent='Current version: actuator-disc aerodynamics with illustrative rotor motion. Blade-resolved rotation, shaft torque, electrical power, control and floating-platform dynamics are not yet coupled.';
+ if(meta.rotor_model==='actuator_line'){
+  limitations.textContent='Rotating actuator-line aerodynamics with prescribed speed; shaft torque and aerodynamic mechanical power are computed. Blade surfaces, rotor-speed dynamics, electrical generation and floating-platform motion are not resolved in this trial.';
+  const spin=document.querySelector('#spin');spin.parentElement.title='Show actuator lines at their recorded solver phase.';spin.nextSibling.textContent=' Show actuator lines';
+ }
+ limitations.style.maxWidth='640px';limitations.style.color='#f0d3a0';
+ document.querySelector('#sampling-detail').after(limitations);
+}
 function selectModel(key){select.value=key;const live=key==='mac_live';document.querySelector('#time').disabled=!live;document.querySelector('#play').disabled=!live;document.querySelector('#spin').disabled=!live;invalidate();}select.onchange=()=>selectModel(select.value);selectModel(meta.default_model??(comparison.mac_mean?'mac_mean':'mac_live'));
 let lastFieldKey=null;const metrics={renders:0,fieldUpdates:0};
 const palette=[[38,63,131],[22,139,166],[103,200,164],[243,220,105],[237,116,69]];
@@ -65,9 +93,9 @@ if(document.querySelector('#wind-detail').textContent!==detail)document.querySel
 if(captureMode||forExport){ctx.clearRect(0,0,overlay.width,overlay.height);
 const W=canvas.width,H=canvas.height,s=W/1920;ctx.save();ctx.scale(s,s);const hh=H/s;const grad=ctx.createLinearGradient(0,0,0,220);grad.addColorStop(0,'#0b1728e8');grad.addColorStop(1,'#0b172800');ctx.fillStyle=grad;ctx.fillRect(0,0,1920,220);
 ctx.fillStyle='#8fe3d2';ctx.font='600 17px system-ui';ctx.fillText(`WIND FARM / ${meta.turbines.length} TURBINES`,64,58);ctx.fillStyle='#f1f7fc';ctx.font='600 38px system-ui';ctx.fillText(chapter,64,110);ctx.fillStyle='#b5c9d6';ctx.font='20px system-ui';ctx.fillText(`Same geometry + camera + scale   ·   Terrain-following slice: ${layout.height} m AGL`,64,151);
-ctx.textAlign='right';ctx.fillStyle='#f1f7fc';ctx.font='600 37px system-ui';ctx.fillText(live?`${t.toFixed(1)} / ${timeline.end} s`:selected==='mac_mean'?'200–300 s mean':'Steady engineering model',1856,77);ctx.font='18px system-ui';ctx.fillStyle='#b5c9d6';ctx.fillText(detail,1856,109);if(live)ctx.fillText(`Visual rotor speeds: ${rpm[0].toFixed(1)}–${rpm[1].toFixed(1)} rpm (assumed)`,1856,141);ctx.textAlign='left';
+ctx.textAlign='right';ctx.fillStyle='#f1f7fc';ctx.font='600 37px system-ui';ctx.fillText(live?`${t.toFixed(1)} / ${timeline.end} s`:selected==='mac_mean'?'200–300 s mean':'Steady engineering model',1856,77);ctx.font='18px system-ui';ctx.fillStyle='#b5c9d6';ctx.fillText(detail,1856,109);if(live)ctx.fillText(`${meta.rotor_model==='actuator_line'?'Prescribed':'Visual'} rotor speeds: ${rpm[0].toFixed(1)}–${rpm[1].toFixed(1)} rpm`,1856,141);ctx.textAlign='left';
 ctx.fillStyle='#101923d9';ctx.fillRect(48,hh-120,1824,100);ctx.font='16px system-ui';ctx.fillStyle='#b5c9d6';ctx.fillText(meta.display_note??`Exploratory comparison: different terrain treatment / no accuracy ranking · Display sampled at ${spacing} m`,64,hh-45);
-const legend=ctx.createLinearGradient(64,0,504,0);palette.forEach((c,i)=>legend.addColorStop(i/4,`rgb(${c})`));ctx.fillStyle=legend;ctx.fillRect(64,hh-96,440,10);ctx.fillStyle='#eef7ff';ctx.font='17px system-ui';ctx.fillText('0',64,hh-63);ctx.fillText('Axial wind speed (m/s)',180,hh-63);ctx.fillText('20',486,hh-63);ctx.restore();}
+const legend=ctx.createLinearGradient(64,0,504,0);palette.forEach((c,i)=>legend.addColorStop(i/4,`rgb(${c})`));ctx.fillStyle=legend;ctx.fillRect(64,hh-96,440,10);ctx.fillStyle='#eef7ff';ctx.font='17px system-ui';ctx.fillText('≤0',64,hh-63);ctx.fillText('Axial wind speed (m/s)',180,hh-63);ctx.fillText('≥20',486,hh-63);ctx.restore();}
 document.querySelector('#clock').textContent=live?t.toFixed(1)+' s':'Static comparison';document.querySelector('#time').value=t;
 }
 window.movie={ready:true,metrics,renderer,staticBatchStats:staticBatches.stats,meta,rotorSystem,comparison,selectModel,frame(f,n){const k=f/(n-1),p=Math.max(0,Math.min(1,(k-.12)/.76)),t=timeline.start+timeline.duration*p;const angle=.18+Math.sin(k*Math.PI)*.20,dist=4500-k*600;camera.position.set(200+Math.sin(angle)*dist,2600-k*550,Math.cos(angle)*dist);controls.target.set(200,230,0);controls.update();render(t,Math.min(.72,Math.max(0,(k-.08)*12)),k<.12?'TERRAIN + TURBINE GEOMETRY':'SIMULATED WIND + GEOMETRY',true);const output=document.createElement('canvas');output.width=canvas.width;output.height=canvas.height;const context=output.getContext('2d');context.drawImage(canvas,0,0);context.drawImage(overlay,0,0);return output.toDataURL('image/jpeg',.94).split(',')[1];},render};
@@ -77,7 +105,7 @@ function animate(now){
   if(document.hidden){last=0;return;}
   const dt=last?(now-last)/1000:0;last=now;
   const moving=playing&&select.value==='mac_live';
-  if(moving)time=timeline.advance(time,dt,12.5);
+  if(moving)time=timeline.advance(time,dt,meta.playback_speed??12.5);
   controls.update();
   if(dirty||moving){dirty=false;render(time);}
   if(moving&&!captureMode&&!animationId)animationId=requestAnimationFrame(animate);else last=0;

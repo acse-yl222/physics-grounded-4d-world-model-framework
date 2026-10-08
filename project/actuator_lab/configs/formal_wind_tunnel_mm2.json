@@ -1,0 +1,46 @@
+{
+  "inlet_m_s": 10.0,
+  "rotor_diameter_m": 0.4647,
+  "inner_diameter_m": 0.09,
+  "rotor_thickness_m": 0.08,
+  "ct": 0.95,
+  "rho_kg_m3": 1.225,
+  "sigma_m": 0.02,
+  "cutoff_sigma": 2.0,
+  "domain_xyz_m": [
+    12,
+    7,
+    2
+  ],
+  "hub_xyz_m": [
+    3.66,
+    3.5,
+    0.8
+  ],
+  "cell_m": 0.033,
+  "source": "User-supplied formal article DOI 10.1016/j.joes.2026.07.020, Appendix B.2, Fig B.31, Table 8 MM2",
+  "matched_parameters": [
+    "inlet_m_s",
+    "rotor_diameter_m",
+    "inner_diameter_m",
+    "rotor_thickness_m",
+    "ct"
+  ],
+  "assumptions": [
+    "Hub height 0.8 m taken from cited NTNU experiment; not specified explicitly in formal paper B.2.",
+    "Inlet turbulence intensity 0.3% follows cited experimental report; turbulence length 0.03 m remains assumed.",
+    "Integer counts nearest Table 8 rounded spacings preserve the exact 12 x 7 x 2 m domain; actual spacings recorded.",
+    "N=2 is the paper default; sigma=0.02 m inferred from thickness=2 N sigma. Thin support conflicts with stated smoothing guidance; preserve reported thickness.",
+    "Full outer-disk area with annular support; area convention not explicit.",
+    "Standard OpenFOAM 2312 single-phase turbulence closures; wave overproduction limiter not implemented.",
+    "No tower or nacelle, as in B.2. No experimental-validation claim until profile comparison."
+  ],
+  "mesh_counts_xyz": [
+    364,
+    152,
+    61
+  ],
+  "kinematic_viscosity_m2_s": 1.5e-05,
+  "turbulence_intensity": 0.003,
+  "turbulence_length_m": 0.03
+}

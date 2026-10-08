@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "tower_hamlets",
+  "title": "Canary Wharf \u00b7 estimated unnamed college cc2 envelope",
+  "time_alignment": "relative",
+  "runs": [
+    "canary_wharf_appearance_cc2_001"
+  ],
+  "layers": [
+    {
+      "run_id": "canary_wharf_appearance_cc2_001",
+      "layer_id": "geometry",
+      "visible": true
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "inlet_m_s": 10.0,
+  "rho_kg_m3": 1.225,
+  "ct": 0.75,
+  "sigma_m": 8.0,
+  "cutoff_sigma": 2.0,
+  "cell_m": 8.0,
+  "turbulence_model": "kEpsilon",
+  "kinematic_viscosity_m2_s": 1.5e-05,
+  "turbulence_intensity": 0.01,
+  "turbulence_length_m": 10.0,
+  "assumptions": [
+    "10 m/s inlet specified by user; not measured weather.",
+    "Full-scale rotor radii and hub positions come from the existing geometry; do not substitute the scale-model wind-tunnel diameter.",
+    "Ct=0.75, sigma=8 m and cutoff=2 are inherited scene assumptions, not manufacturer data or paper wind-tunnel values.",
+    "Turbulence inlet intensity 1 percent and length 10 m are explicit unvalidated scenario assumptions.",
+    "8 m uniform grid is a resource-feasible starting grid, not a verified grid-independent solution.",
+    "Preserve terrain coverage mask and original nearest-edge extensions; no new geographical measurements.",
+    "No blade-resolved rotation, shaft power or floating platform; prescribed yaw follows source geometry.",
+    "Terrain k-epsilon wall functions use axis-aligned voxel faces and equal-face corner averaging; not verified equivalent to OpenFOAM.",
+    "First-order conservative upwind transient solver; no learned weights."
+  ],
+  "slice_agl_m": 80.0,
+  "startup_ramp_s": 5.0,
+  "model_name": "TorchRotor-RANS",
+  "model_version": "0.1"
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "thapar_university",
+  "title": "Thapar University \u00b7 2 \u00d7 2 km",
+  "time_alignment": "relative",
+  "runs": [
+    "city_dense_20261005_v4_geometry",
+    "city_dense_20261005_v4_wind",
+    "city_dense_20261005_v4_temp",
+    "city_dense_20261005_v4_solar_20250621",
+    "city_dense_20261005_v4_solar_20251221"
+  ],
+  "layers": [
+    {
+      "run_id": "city_dense_20261005_v4_geometry",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "city_dense_20261005_v4_wind",
+      "layer_id": "wind",
+      "visible": true
+    },
+    {
+      "run_id": "city_dense_20261005_v4_temp",
+      "layer_id": "temp",
+      "visible": true
+    },
+    {
+      "run_id": "city_dense_20261005_v4_solar_20250621",
+      "layer_id": "irradiance",
+      "visible": true
+    },
+    {
+      "run_id": "city_dense_20261005_v4_solar_20251221",
+      "layer_id": "irradiance",
+      "visible": true
+    }
+  ]
+}

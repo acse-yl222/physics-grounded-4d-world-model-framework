@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "thapar_university",
+  "title": "SUMO \u00b7 synthetic demand",
+  "time_alignment": "relative",
+  "runs": [
+    "osm_geometry_20261005T110125Z_1bf7f0",
+    "sumo_20261005T110312Z_e4bd73"
+  ],
+  "layers": [
+    {
+      "run_id": "osm_geometry_20261005T110125Z_1bf7f0",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "sumo_20261005T110312Z_e4bd73",
+      "layer_id": "traffic",
+      "visible": true
+    },
+    {
+      "run_id": "sumo_20261005T110312Z_e4bd73",
+      "layer_id": "roads",
+      "visible": true
+    },
+    {
+      "run_id": "sumo_20261005T110312Z_e4bd73",
+      "layer_id": "traffic_counts",
+      "visible": true
+    }
+  ]
+}

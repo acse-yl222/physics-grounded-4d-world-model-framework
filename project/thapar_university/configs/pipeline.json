@@ -1,0 +1,28 @@
+{
+  "scene": "thapar_university",
+  "source": "../geometry/reconstruction_v2/exports/dense_v5/region.glb",
+  "domain": {"cell_m": 4, "crop_local_m": [-1472, -1472, 1472, 1472], "wind_layers": 64},
+  "georeference": {
+    "confirmed": true,
+    "latitude_deg": 30.35447,
+    "longitude_deg": 76.36621,
+    "north": "Pyproj WGS84 azimuthal equidistant, local X east and Y north at campus origin",
+    "terrain": "Assumed planar local ground; not surveyed elevation",
+    "note": "Open-footprint reconstruction. Coordinates executed with pyproj; heights predominantly assumed. Controlled comparison, not calibrated local weather."
+  },
+  "stages": ["geometry", "wind", "temperature3d", "solar", "visualize"],
+  "wind": {
+    "steps": 100,
+    "step_seconds": 50,
+    "coarse_factor": 2,
+    "scaled_repo": "/home/yl222/workspace/SCALED/SCALED-Tutorial"
+  },
+  "thermal": {"ambient_c": 35.4, "ground_c": 40, "roof_c": 40},
+  "temperature3d": {"frames": 20},
+  "solar": {"dates": ["2025-06-21", "2025-12-21"], "minutes": 10, "timezone": "Asia/Kolkata"},
+  "visualize": {
+    "layer": 1,
+    "title": "Thapar University · 2 × 2 km",
+    "description": "Thapar University and Patiala neighbourhoods. Overture/OSM footprints with mostly assumed heights; two historically photo-informed landmarks. Original city viewer, SCALED transient wind at 4 m, 8 m three-dimensional physical temperature, and clear-sky summer/winter sunlight. Controlled comparison, not measured local climate."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "white_city",
+  "title": "SUMO \u00b7 synthetic demand",
+  "time_alignment": "relative",
+  "runs": [
+    "legacy_web",
+    "sumo_20260930T101214Z_8d1fed"
+  ],
+  "layers": [
+    {
+      "run_id": "legacy_web",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "sumo_20260930T101214Z_8d1fed",
+      "layer_id": "traffic",
+      "visible": true
+    },
+    {
+      "run_id": "sumo_20260930T101214Z_8d1fed",
+      "layer_id": "roads",
+      "visible": true
+    },
+    {
+      "run_id": "sumo_20260930T101214Z_8d1fed",
+      "layer_id": "signals",
+      "visible": true
+    },
+    {
+      "run_id": "sumo_20260930T101214Z_8d1fed",
+      "layer_id": "traffic_counts",
+      "visible": true
+    }
+  ]
+}

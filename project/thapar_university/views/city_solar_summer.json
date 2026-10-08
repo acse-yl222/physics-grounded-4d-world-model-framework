@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "thapar_university",
+  "title": "city solar summer",
+  "time_alignment": "relative",
+  "runs": [
+    "city_dense_20261005_v4_geometry",
+    "city_dense_20261005_v4_solar_20250621"
+  ],
+  "layers": [
+    {
+      "run_id": "city_dense_20261005_v4_geometry",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "city_dense_20261005_v4_solar_20250621",
+      "layer_id": "irradiance",
+      "visible": true
+    }
+  ],
+  "camera": {
+    "position": [
+      1900,
+      -2200,
+      1900
+    ],
+    "target": [
+      0,
+      0,
+      0
+    ]
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "schema_version": "city-traffic-1",
+  "scene_id": "tower_hamlets",
+  "osm_snapshot": "outer4km_20261008/osm/map.osm.xml",
+  "buffer_m": 400,
+  "transform": {
+    "kind": "aeqd",
+    "crs": "+proj=aeqd +lat_0=51.5053 +lon_0=-0.0188 +datum=WGS84 +units=m",
+    "lon0": -0.0188,
+    "lat0": 51.5053,
+    "provenance": "Same local AEQD authoring projection as Canary Wharf geometry; no fitted translation/rotation"
+  },
+  "duration_s": 600,
+  "step_s": 1,
+  "seed": 42,
+  "demand": {
+    "period_s": 2,
+    "min_distance_m": 500,
+    "fringe_factor": 5,
+    "vehicle_class": "passenger",
+    "calibration_status": "synthetic_uncalibrated"
+  },
+  "network": {
+    "left_hand": true,
+    "signals": "guessed_actuated"
+  },
+  "intervention": {
+    "speed_factor": 1.0,
+    "closed_edges": []
+  },
+  "limitations": [
+    "No measured OD matrix or TfL signal timings.",
+    "OSM road tags and inferred lane connections require local review.",
+    "This is a new baseline, not a reproduction of the historical replay.",
+    "600s seeded passenger-car simulation,300 requested trips; demand not measured.",
+    "Road and vehicle rendering at flat z=.15/.275m; bridge/tunnel elevations not reconstructed.",
+    "Bounds4km\u00d74km,400m routing buffer; standalone simulation relative time, not live traffic."
+  ],
+  "bounds_m": {
+    "min": [
+      -2000,
+      -2000,
+      -0.28
+    ],
+    "max": [
+      2000,
+      2000,
+      235
+    ]
+  }
+}

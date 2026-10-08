@@ -1,0 +1,19 @@
+{
+  "directory": "/home/yl222/workspace/physics-grounded-4d-world-model-framework/cache/south_ken/urban_planning/rsi_20260930T100520Z_caa537",
+  "provider": "fixture",
+  "status": "complete",
+  "ledger": {
+    "model_calls": 17,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "unknown_usage_calls": 0,
+    "evaluations": 17,
+    "evaluator_seconds": 0.04454184899805114,
+    "model_seconds": 0.0019210700411349535,
+    "reported_cost_usd": 0.0,
+    "unknown_cost_calls": 17
+  },
+  "run_id": "rsi_20260930T100520Z_caa537",
+  "view_id": "rsi_20260930t100520z_caa537",
+  "retained_directory": "/home/yl222/workspace/physics-grounded-4d-world-model-framework/project/south_ken/runs/rsi_20260930T100520Z_caa537"
+}

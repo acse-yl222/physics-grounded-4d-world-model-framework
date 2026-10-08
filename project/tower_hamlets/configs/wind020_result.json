@@ -1,0 +1,27 @@
+{
+  "run_id": "canary_wharf_wind020_20261008T212000Z",
+  "view_id": "canary_wharf_wind020_20261008t212000z",
+  "status": "delivered_controlled_wind_startup",
+  "geometry_run": "canary_wharf_appearance_roof_completion_019",
+  "manifest_sha256": "ba76863f7f061a69543118fb746b282320be69f2c4f0fc030fc8af405fcbffba",
+  "inlet_m_s": 5,
+  "wind_towards": "east",
+  "cell_m": 8,
+  "physical_seconds": 200.0,
+  "recorded_frames": 21,
+  "slice_heights_m": [
+    4.0,
+    20.0,
+    60.0,
+    124.0
+  ],
+  "compute_wall_seconds": 17.88912992598489,
+  "max_divergence_rms_per_s": 1.0002602304878447e-06,
+  "browser_verified": true,
+  "steady_convergence_verified": false,
+  "turbulence_closure": false,
+  "source_geometry_unchanged": true,
+  "browser_report": "input/canary_wharf_20261007/exports/browser-wind020/report.json",
+  "viewer_url": "http://127.0.0.1:8878/src/visualization/viewer/?scene=tower_hamlets&view=canary_wharf_wind020_20261008t212000z",
+  "completed_utc": "2026-10-08T21:43:51.604123+00:00"
+}

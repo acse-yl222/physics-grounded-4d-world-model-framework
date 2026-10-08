@@ -1,0 +1,27 @@
+from pathlib import Path
+import json,hashlib
+import numpy as np
+from shapely.geometry import Polygon,LineString
+from shapely import contains_xy
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+R=Path(__file__).resolve().parent/'input/canary_wharf_20261007'; E=R/'exports/f9ed_facade_host_study001';E.mkdir(exist_ok=True)
+g=json.loads((R/'geometry.json').read_text());f=next(b for b in g['buildings'] if 'f9ed6834' in b['id']);p=Polygon(f['geometry'][0]['outer']);a=np.load('cache/tower_hamlets/barclays_podium_roof.npz');x,y,z,t,u,v,valid=[a[k] for k in ['x','y','z','t','u','v','valid']];whole=valid&contains_xy(p,x,y)
+c=json.loads((R/'references/barclays_podium_roof_fit.json').read_text())['coefficients'];low,base,peak,vc,slope,sp,uc,ss=c
+pred=np.maximum.reduce([np.where((v>=12)&(v<=52),base,low),peak-slope*np.abs(v-vc),np.where(v<vc,peak-ss*np.abs(u-uc),-100)])
+edge=LineString([p.exterior.coords[11],p.exterior.coords[12]])
+def metrics(m):
+ e=pred[m]-z[m];return {'cells':int(m.sum()),'existing_envelope_rmse_m':float(np.sqrt(np.mean(e*e))),'existing_envelope_median_bias_m':float(np.median(e)),'baseline30_scene_rmse_m':float(np.sqrt(np.mean((34.28000021-z[m])**2))),'dsm_median_odn_m':float(np.median(z[m])),'near_DTM_10cm_cells':int((abs(z[m]-t[m])<.1).sum())}
+groups={'full':whole,'inset4':valid&contains_xy(p.buffer(-4),x,y),'inset10':valid&contains_xy(p.buffer(-10),x,y)}
+for lo,hi in [(0,2),(2,4),(4,6),(6,10)]:groups[f'west_{lo}_{hi}']=whole&contains_xy(edge.buffer(hi).difference(edge.buffer(lo)) if lo else edge.buffer(hi),x,y)
+report={'owner':f['id'],'decision':'HOLD facade attachment and new host geometry; broad interior already has independent roof candidate, outer facade boundary unresolved','geometry_modified':False,'photo_used_for_height':False,'full_footprint_area_m2':p.area,'source_height':{'height_m':f['height_m'],'basis':f['height_basis']},'metrics':{k:metrics(m) for k,m in groups.items()},'minimum_body_correction':'Replace unsupported 30m floor-count baseline with existing broad interior roof massing only after separately resolving outer boundary geometry. Do not extrapolate high interior to mapped west edge or use pediment photo to set roof elevation. No defensible unique facade setback can be inferred from mixed-return strip data.','existing_candidate':'exports/barclays-western-massing-001/barclays_western.blend','existing_candidate_datum_odn_m':4.28000021,'height_support_contract':{'interior10m':'Diagnostic support domain only, NOT an architectural setback or replacement footprint.','west_edge11':'Unsupported as a high facade plane; preserve mapped footprint and every near-DTM sample in audit.','pediment':'Keep local independent asset unplaced until identity, facade plane and projection validated.','terrain':'No alteration of ground, DTM fill, source cells or footprint.'},'source_hashes':{str(s):hashlib.sha256((R/s).read_bytes()).hexdigest() for s in ['geometry.json','references/ea_dsm_1m.tif','references/ea_dtm_1m.tif','references/barclays_podium_roof_fit.json','exports/barclays-western-massing-001/barclays_western.blend']},'limitations':['Actual raster flight date unknown; previous 2017–2020 label is not independently verified acquisition metadata.','Existing envelope model was selected after profile inspection; old strip holdout is not independent model selection validation.','All native valid cells retained, including near-DTM observations; these alone do not establish real facade openings or setbacks.']}
+(E/'report.json').write_text(json.dumps(report,indent=2))
+fig,axs=plt.subplots(1,3,figsize=(17,5),layout='constrained')
+for ax,zz,title,lim in [(axs[0],z,'Observed DSM ODN',(5,80)),(axs[1],pred,'Existing roof envelope ODN',(5,80)),(axs[2],pred-z,'Envelope minus DSM',(-5,65))]:
+ im=ax.scatter(x[whole],y[whole],c=zz[whole],s=5,marker='s',vmin=lim[0],vmax=lim[1]);fig.colorbar(im,ax=ax);ax.plot(*p.exterior.xy,c='black',lw=1);ax.plot(*p.buffer(-10).exterior.xy,c='cyan',lw=1,label='10m diagnostic inset');ax.plot(*edge.xy,c='red',lw=3,label='Mapped edge 11');ax.set(aspect='equal',title=title,xlabel='Local east m',ylabel='Local north m')
+axs[0].legend(fontsize=7);fig.savefig(E/'host-support.png',dpi=160)
+lines=['# f9ed facade host study','',report['decision'],'','The 30 m value is ten floors multiplied by an assumed 3 m; it is not a measured roof elevation. The earlier independent Barclays western candidate already models the elevated interior. Its outer walls remain extrapolations, so it cannot establish the pediment facade plane.','','| Domain | Cells | Existing envelope RMSE m | Envelope median bias m | 30 m baseline RMSE m |','|---|---:|---:|---:|---:|']
+for k,m in report['metrics'].items():lines.append(f"| {k} | {m['cells']} | {m['existing_envelope_rmse_m']:.3f} | {m['existing_envelope_median_bias_m']:.3f} | {m['baseline30_scene_rmse_m']:.3f} |")
+lines+=['','The cyan inset is a sampling diagnostic, not a proposed architectural setback. No geometry, owner footprint, DTM fill, retained scene or pediment asset changed. No high west facade authored.','',report['minimum_body_correction'],'','Required next evidence: identify the photographed owner and facade orientation, establish a geographically anchored facade plane independently of the DSM interior, then reconcile its roof junction with the existing interior candidate. The photograph must not determine the roof height.']
+(E/'report.md').write_text('\n'.join(lines)+'\n');print(json.dumps(report['metrics'],indent=2))

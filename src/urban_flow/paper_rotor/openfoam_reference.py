@@ -10,6 +10,7 @@ import math
 import os
 from pathlib import Path
 import subprocess
+import shutil
 
 from common.export import digest, write
 from common.provenance import snapshot_sources
@@ -114,8 +115,17 @@ paperRotor
 
 
 def build_case(target, config, model, iterations, processes=1):
-    if model not in ('kEpsilon', 'kOmegaSST'):
+    if model not in ('kEpsilon', 'kOmega', 'kOmegaSST', 'paperSSTLF18'):
         raise ValueError('Unsupported reference turbulence model')
+    turbulence_advection = config.get('turbulence_advection', 'upwind')
+    momentum_advection = config.get('momentum_advection', 'linearUpwind')
+    if momentum_advection not in ('upwind', 'linearUpwind'):
+        raise ValueError('Unsupported momentum advection scheme')
+    if turbulence_advection not in ('upwind', 'linearUpwind', 'limitedLinear'):
+        raise ValueError('Unsupported turbulence advection scheme')
+    precision=config.get('write_precision',12)
+    if not isinstance(precision,int) or isinstance(precision,bool) or not 6<=precision<=17:
+        raise ValueError('Use 6 to 17 significant digits for field output')
     if iterations < 1:
         raise ValueError('Positive iteration limit required')
     if not isinstance(processes, int) or not 1 <= processes <= 8:
@@ -132,8 +142,10 @@ def build_case(target, config, model, iterations, processes=1):
     lengths = config['domain_xyz_m']; h = config['cell_m']
     if len(lengths) != 3 or len(config['hub_xyz_m']) != 3:
         raise ValueError('Expected three spatial dimensions')
-    counts = [round(x/h) for x in lengths]
-    if any(n <= 0 or not math.isclose(n*h, length) for n, length in zip(counts, lengths)):
+    counts = config.get('mesh_counts_xyz', [round(x/h) for x in lengths])
+    if len(counts)!=3 or any(not isinstance(n,int) or n<=0 for n in counts):
+        raise ValueError('Expected three positive integer mesh counts')
+    if 'mesh_counts_xyz' not in config and any(not math.isclose(n*h, length) for n, length in zip(counts, lengths)):
         raise ValueError('Reference domain must divide into uniform cubic cells')
     target.mkdir(parents=True, exist_ok=False)
     def put(name, value):
@@ -198,6 +210,20 @@ interpolationSchemes { default linear; }
 snGradSchemes { default corrected; }
 wallDist { method meshWave; }
 ''')
+    if momentum_advection == 'upwind':
+        schemes = target/'system/fvSchemes'
+        schemes.write_text(schemes.read_text().replace(
+            'div(phi,U) bounded Gauss linearUpwind grad(U);',
+            'div(phi,U) bounded Gauss upwind;'))
+    if turbulence_advection != 'upwind':
+        schemes = target/'system/fvSchemes'
+        text = schemes.read_text()
+        for field_name in ('k', 'epsilon', 'omega'):
+            scheme = (f'linearUpwind grad({field_name})'
+                      if turbulence_advection == 'linearUpwind' else 'limitedLinear 1')
+            text = text.replace(f'div(phi,{field_name}) bounded Gauss upwind;',
+                                f'div(phi,{field_name}) bounded Gauss {scheme};')
+        schemes.write_text(text)
     put('system/fvSolution', header('fvSolution')+'''
 solvers {
  p { solver GAMG; tolerance 1e-8; relTol 0.05; smoother GaussSeidel; }
@@ -216,7 +242,7 @@ relaxationFactors { fields { p 0.3; } equations { U 0.5; k 0.5; epsilon 0.5; ome
 application simpleFoam;
 startFrom startTime; startTime 0; stopAt endTime; endTime {iterations}; deltaT 1;
 writeControl timeStep; writeInterval {iterations}; purgeWrite 0;
-writeFormat ascii; writePrecision 12; writeCompression off;
+writeFormat ascii; writePrecision {config.get('write_precision',12)}; writeCompression off;
 timeFormat general; timePrecision 8; runTimeModifiable true;
 functions {{
  profiles {{ type sets; libs ("libsampling.so"); writeControl writeTime;
@@ -225,8 +251,12 @@ functions {{
  }}
 }}
 ''')
+    if model == 'paperSSTLF18':
+        shutil.copytree(Path(__file__).with_name('openfoam_lf18'),target/'custom/source')
+        with (target/'system/controlDict').open('a') as stream:
+            stream.write('\nlibs ("/case/custom/lib/libpaperSSTLF18.so");\n')
     write(target/'configuration.json', dict(config, turbulence_model=model, iterations=iterations, processes=processes,
-           openfoam_image=IMAGE, grid_cells_xyz=counts,
+           openfoam_image=IMAGE, grid_cells_xyz=counts, actual_spacing_xyz_m=[x/n for x,n in zip(lengths,counts)],
            inlet_turbulence={'k': k, 'epsilon': epsilon, 'omega': omega},
            boundary_conditions={'inlet': 'fixed U', 'outlet': 'p=0; velocity inletOutlet',
                                 'bottom': 'no-slip with wall functions', 'sides_and_top': 'symmetry/slip'},
@@ -241,13 +271,16 @@ def execute(target):
     solver = ('simpleFoam > log.simpleFoam 2>&1' if processes == 1 else
               f'decomposePar > log.decomposePar 2>&1 && mpirun --oversubscribe -np {processes} '
               'simpleFoam -parallel > log.simpleFoam 2>&1 && reconstructPar -latestTime > log.reconstructPar 2>&1')
+    build = ('export FOAM_USER_LIBBIN=/case/custom/lib; mkdir -p custom/lib; '
+             '(cd custom/source && wmake libso) > log.buildLF18 2>&1 && '
+             if config['turbulence_model']=='paperSSTLF18' else '')
     command = ['docker', 'run', '--rm', '--name', 'rotor-reference-'+target.name,
                '--user', f'{os.getuid()}:{os.getgid()}', '--cpus', str(processes), '--network', 'none',
                '-e', 'OMP_NUM_THREADS=1',
                '-e', 'HOME=/tmp/foam-home', '-v', f'{target.resolve()}:/case', '-w', '/case',
                '--entrypoint', '/bin/bash', IMAGE, '-lc',
-               'mkdir -p /tmp/foam-home; source /usr/lib/openfoam/openfoam2312/etc/bashrc; '
-               'blockMesh > log.blockMesh 2>&1 && checkMesh > log.checkMesh 2>&1 && '+solver]
+               'mkdir -p /tmp/foam-home; source /usr/lib/openfoam/openfoam2312/etc/bashrc; '+
+               build+'blockMesh > log.blockMesh 2>&1 && checkMesh > log.checkMesh 2>&1 && '+solver]
     write(target/'status.json', {'state': 'running', 'command': command})
     completed = subprocess.run(command, check=False)
     write(target/'status.json', {'state': 'solver_finished' if completed.returncode == 0 else 'failed',
@@ -259,7 +292,7 @@ def execute(target):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--model', choices=['kEpsilon','kOmegaSST'], default='kOmegaSST')
+    parser.add_argument('--model', choices=['kEpsilon','kOmega','kOmegaSST','paperSSTLF18'], default='kOmegaSST')
     parser.add_argument('--cell', type=float, default=.04)
     parser.add_argument('--iterations', type=int, default=1500)
     parser.add_argument('--processes', type=int, default=4)
@@ -276,7 +309,7 @@ def main():
         'Domain and hub position inherited from pilot; source geometry and original inlet turbulence require verification.',
         'Inlet intensity and length scale are explicit assumed values, not author data.',
         'Gaussian sigma and cutoff, full outer-disk thrust area with annular force support remain provisional.',
-        'Official OpenFOAM 2312 RANS closures; no wave limiter is needed for this single-phase reference.',
+        'OpenFOAM 2312 standard closures or explicitly selected paperSSTLF18; limiter impact requires validation.',
         'No blades, nacelle, tower or electrical power; SIMPLE iterations are not physical time.'
     ]
     target = trial_root('actuator_lab', 'openfoam_rotor_reference')

@@ -105,12 +105,13 @@ def main():
     ap.add_argument('--crop', type=float, nargs=4, metavar=('X0', 'Y0', 'X1', 'Y1'),
                     help='Restrict the domain to this local-metre box (z-up frame: x east, y = -gltf_z)')
     ap.add_argument('--min-layers', type=int, default=64, help='Minimum vertical layers kept (wind uses 64)')
+    ap.add_argument('--coarse-factor', type=int, choices=(2, 4), default=4)
     args = ap.parse_args()
     args.out.mkdir(parents=True, exist_ok=True)
     if (args.out/'metadata.json').exists():
         raise RuntimeError('Already prepared; use a new geometry directory.')
     start = time.time()
-    cell = args.cell; coarse = 4*cell
+    cell = args.cell; factor = args.coarse_factor; coarse = factor*cell
     doc, base = read_glb_header(args.source)
     f = args.source.open('rb')
     # Centred padding; multiples of 256 cells match the SCALED encoder tiles.
@@ -157,12 +158,12 @@ def main():
     np.save(args.out/'ground_mesh_m_yx.npy',ground)
     np.save(args.out/'ground_mesh_valid_yx.npy',ground_valid)
     np.save(args.out/f'footprint_{cell}m_yx.npy',footprint)
-    np.save(args.out/f'footprint_{coarse}m_yx.npy',footprint.reshape(ny//4,4,nx//4,4).any(axis=(1,3)))
+    np.save(args.out/f'footprint_{coarse}m_yx.npy',footprint.reshape(ny//factor,factor,nx//factor,factor).any(axis=(1,3)))
     for cls in ('canopy','grass','asphalt','paving'):
         mask = np.isfinite(maps[cls])
-        np.save(args.out/f'{cls}_{coarse}m_yx.npy',mask.reshape(ny//4,4,nx//4,4).any(axis=(1,3)))
-    np.save(args.out/f'height_{coarse}m_yx.npy',height.reshape(ny//4,4,nx//4,4).max(axis=(1,3)))
-    h4 = height.reshape(ny//4,4,nx//4,4).max(axis=(1,3))
+        np.save(args.out/f'{cls}_{coarse}m_yx.npy',mask.reshape(ny//factor,factor,nx//factor,factor).any(axis=(1,3)))
+    np.save(args.out/f'height_{coarse}m_yx.npy',height.reshape(ny//factor,factor,nx//factor,factor).max(axis=(1,3)))
+    h4 = height.reshape(ny//factor,factor,nx//factor,factor).max(axis=(1,3))
     color = np.zeros((*h4.shape,3),np.uint8)+225
     color[h4>0] = np.stack([np.clip(80+h4[h4>0],0,255),np.clip(130-h4[h4>0]/2,0,255),np.full_like(h4[h4>0],170)],axis=-1).astype(np.uint8)
     Image.fromarray(color[::-1]).save(args.out/'height_preview.png')

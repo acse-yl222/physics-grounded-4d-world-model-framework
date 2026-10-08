@@ -1,0 +1,19 @@
+{
+  "directory": "/home/yl222/workspace/physics-grounded-4d-world-model-framework/cache/white_city/urban_planning/rsi_20260930T100521Z_0d9657",
+  "provider": "fixture",
+  "status": "complete",
+  "ledger": {
+    "model_calls": 17,
+    "input_tokens": 0,
+    "output_tokens": 0,
+    "unknown_usage_calls": 0,
+    "evaluations": 17,
+    "evaluator_seconds": 0.05794807799975388,
+    "model_seconds": 0.003152748045977205,
+    "reported_cost_usd": 0.0,
+    "unknown_cost_calls": 17
+  },
+  "run_id": "rsi_20260930T100521Z_0d9657",
+  "view_id": "rsi_20260930t100521z_0d9657",
+  "retained_directory": "/home/yl222/workspace/physics-grounded-4d-world-model-framework/project/white_city/runs/rsi_20260930T100521Z_0d9657"
+}

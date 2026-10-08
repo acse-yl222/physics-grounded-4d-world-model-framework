@@ -26,13 +26,13 @@ from common.pipeline.scene_scaled_latent import save_json,save_npz,digest,log
 
 
 def terrain(cfg):
-    g=project_path(cfg['geometry']);cell=cfg['cell_m']
+    g=project_path(cfg['geometry']);cell=cfg['cell_m'];factor=cfg.get('coarse_factor',4)
     metadata=json.loads((g/'metadata.json').read_text())
     assert metadata['spacing_xyz_m']==[cell]*3
     h=np.load(g/'height_m.npy');foot=np.load(g/f'footprint_{cell}m_yx.npy')
     ground=np.load(g/'ground_mesh_m_yx.npy')
-    canopy=np.repeat(np.repeat(np.load(g/f'canopy_{4*cell}m_yx.npy'),4,0),4,1)
-    grass=np.repeat(np.repeat(np.load(g/f'grass_{4*cell}m_yx.npy'),4,0),4,1)
+    canopy=np.repeat(np.repeat(np.load(g/f'canopy_{factor*cell}m_yx.npy'),factor,0),factor,1)
+    grass=np.repeat(np.repeat(np.load(g/f'grass_{factor*cell}m_yx.npy'),factor,0),factor,1)
     assert h.shape==foot.shape==ground.shape==canopy.shape==grass.shape
     return np.where(foot,np.maximum(h,ground),ground),foot,(canopy|grass)&~foot,canopy&~foot
 
@@ -40,6 +40,8 @@ def terrain(cfg):
 def solar(cfg,bed,foot,green,canopy,out):
     from urban_flow.physics.solar.model import ShadowNet,HorizonNet,sun_position,clear_sky
     cell=cfg['cell_m'];settings=cfg['solar'];loc=cfg['assumptions'];ny,nx=bed.shape
+    factor=cfg.get('coarse_factor',4)
+    local_zone=ZoneInfo(settings.get('timezone','Europe/London'))
     sn=ShadowNet(bed,cell,'cuda');svf,horizon=HorizonNet(sn,n_azimuth=16,altitudes_deg=tuple(range(2,90,5)))()
     np.save(out/'sky_view_factor.npy',svf.cpu().numpy())
     save_npz(out/'horizon.npz',degrees=horizon.cpu().numpy().astype(np.float16))
@@ -61,10 +63,10 @@ def solar(cfg,bed,foot,green,canopy,out):
             dt=settings['minutes']*60;energy+=ghi*dt;sunlit+=(~shadow).float()*dt
             index=len(frames)
             np.save(d/f'shadow_{index:03d}_packed.npy',np.packbits(shadow.cpu().numpy(),axis=1))
-            coarse.append(ghi.reshape(ny//4,4,nx//4,4).mean(dim=(1,3)).cpu().numpy().astype(np.float16))
-            frames.append({'index':index,'utc':stamp.isoformat(),'local_time':stamp.astimezone(ZoneInfo('Europe/London')).isoformat(),
+            coarse.append(ghi.reshape(ny//factor,factor,nx//factor,factor).mean(dim=(1,3)).cpu().numpy().astype(np.float16))
+            frames.append({'index':index,'utc':stamp.isoformat(),'local_time':stamp.astimezone(local_zone).isoformat(),
                            'altitude_deg':alt,'azimuth_deg':az,'dni_w_m2':dni,'dhi_w_m2':dhi})
-        np.save(d/f'ghi_{4*cell}m_tyx.npy',np.stack(coarse));np.save(d/'daily_irradiation_kwh_m2.npy',(energy/3.6e6).cpu().numpy())
+        np.save(d/f'ghi_{factor*cell}m_tyx.npy',np.stack(coarse));np.save(d/'daily_irradiation_kwh_m2.npy',(energy/3.6e6).cpu().numpy())
         np.save(d/'sunlit_hours.npy',(sunlit/3600).cpu().numpy());save_json(d/'frames.json',frames)
         log(f'Solar {date}: {len(frames)} daylight frames')
     save_json(out/'status.json',{'complete':True,'dates':settings['dates'],'assumed_georeferencing':True})

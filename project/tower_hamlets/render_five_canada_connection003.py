@@ -1,0 +1,4 @@
+import bpy,json
+from pathlib import Path
+from mathutils import Vector
+R=Path(__file__).resolve().parent/'input/canary_wharf_20261007';O=R/'exports/five-canada-study-003';d=json.loads((O/'review.json').read_text());bpy.ops.wm.open_mainfile(filepath=str(O/'five-canada.blend'));p=d['structural_connection_checks']['four_supports'][0];base=Vector(p['base_enu']);top=Vector(p['top_enu']);u=Vector((*json.loads((R/'references/five_canada_roof_review.json').read_text())['axis_u_xy'],0));v=Vector((-u.y,u.x,0));target=(base+top)/2;cam=bpy.context.scene.camera;cam.location=target-u*1.5-v*6+Vector((0,0,.1));cam.rotation_euler=(target-cam.location).to_track_quat('-Z','Y').to_euler();cam.data.type='ORTHO';cam.data.ortho_scale=4.2;bpy.context.scene.render.filepath=str(O/'support-connection-closeup.png');bpy.ops.render.render(write_still=True)

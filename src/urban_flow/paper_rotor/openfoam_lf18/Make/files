@@ -1,0 +1,3 @@
+paperSSTLF18.C
+
+LIB = $(FOAM_USER_LIBBIN)/libpaperSSTLF18

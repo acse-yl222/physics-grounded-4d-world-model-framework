@@ -153,3 +153,9 @@ Keep separate backups of unpublished scene data and external originals. The loca
 **A Levistone project.** Developed by the authors listed above, affiliated with **Imperial College London**. Module contributions are recorded in [Contribution.md](Contribution.md).
 
 The framework began as UrbanWorldModel and now targets geometry- and physics-grounded environments across scales. `p4d` is the primary command; `uwm` and `UWM_ROOT` remain available for compatibility. The [original project overview](docs/history/README-before-framework.md) preserves the earlier context.
+
+### UAV routes and random flight
+
+South Kensington now supports ground-to-ground Wave PDE routes with 30 m vertical
+ascent/descent and independent random UAV animation in the integrated city viewer.
+See [routing code and reproduction](src/uav_routing/README.md).

@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "tower_hamlets",
+  "title": "Canary Wharf \u00b7 estimated Wardian balcony study exterior",
+  "time_alignment": "relative",
+  "runs": [
+    "canary_wharf_appearance_wardian_001"
+  ],
+  "layers": [
+    {
+      "run_id": "canary_wharf_appearance_wardian_001",
+      "layer_id": "geometry",
+      "visible": true
+    }
+  ]
+}

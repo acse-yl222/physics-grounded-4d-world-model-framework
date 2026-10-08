@@ -1,0 +1,65 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "thapar_university",
+  "title": "Thapar University \u00b7 Patiala \u00b7 2 km \u00d7 2 km",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": 76.36621,
+      "latitude": 30.35447,
+      "height_m": 0,
+      "vertical_datum": "Local flat-ground assumption; zero is not surveyed elevation above sea level"
+    },
+    "bounds_m": {
+      "min": [
+        -1000,
+        -1000,
+        0
+      ],
+      "max": [
+        1000,
+        1000,
+        128
+      ]
+    }
+  },
+  "inputs": [
+    {
+      "id": "osm",
+      "path": "input/osm_20261005/map.osm.xml",
+      "source": "OpenStreetMap API tiled map snapshot",
+      "sha256": "744f631780063cfca0edaa5090923833af24806397c750cac2e33274dfc8be83",
+      "license": "OpenStreetMap contributors, ODbL 1.0"
+    },
+    {
+      "id": "weather_summer",
+      "path": "input/weather/2025-06-21_era5.json",
+      "source": "https://archive-api.open-meteo.com/v1/archive?latitude=30.35447&longitude=76.36621&start_date=2025-06-21&end_date=2025-06-21&hourly=temperature_2m%2Cwind_speed_10m%2Cwind_direction_10m%2Cshortwave_radiation%2Cdirect_radiation%2Cdiffuse_radiation&wind_speed_unit=ms&models=era5&timezone=UTC",
+      "sha256": "331c781cedd69ff7512de37c32bd112a971fe28be4652e1ac70a4bcd3892622d",
+      "license": "Open-Meteo CC BY 4.0; Copernicus ERA5"
+    },
+    {
+      "id": "weather_winter",
+      "path": "input/weather/2025-12-21_era5.json",
+      "source": "https://archive-api.open-meteo.com/v1/archive?latitude=30.35447&longitude=76.36621&start_date=2025-12-21&end_date=2025-12-21&hourly=temperature_2m%2Cwind_speed_10m%2Cwind_direction_10m%2Cshortwave_radiation%2Cdirect_radiation%2Cdiffuse_radiation&wind_speed_unit=ms&models=era5&timezone=UTC",
+      "sha256": "9c5ff4622c2f6991106495aedf89cb7b8a7d613aa6fcc7afda0d709828d47bf9",
+      "license": "Open-Meteo CC BY 4.0; Copernicus ERA5"
+    },
+    {
+      "id": "overture_buildings",
+      "path": "input/reconstruction_v2/overture_buildings.geojson",
+      "source": "https://docs.overturemaps.org/attribution/ \u2014 release 2026-09-23.1; per-feature sources retained",
+      "sha256": "92fc05146305037c37e824f5622548393103a5ac9423f7322c0c16e4724de05c",
+      "license": "ODbL buildings theme; original source attribution retained"
+    },
+    {
+      "id": "reconstruction_inventory",
+      "path": "geometry/reconstruction_v2/geometry.json",
+      "source": "Projected Overture/OSM inventory with explicit exclusions and historical photo-informed landmark parameters",
+      "sha256": "bf158f5ff26e1bb93b161925b105e04ec910d384269452b8c960152a8d4fb1ad",
+      "license": "ODbL footprint sources; CC BY-SA 3.0 historical facade references; see source ledger"
+    }
+  ],
+  "default_view": "city"
+}

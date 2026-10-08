@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "tower_hamlets",
+  "title": "Transport centreline inspection \u2014 plan only",
+  "time_alignment": "relative",
+  "runs": [
+    "canary_wharf_transport_inspection_001"
+  ],
+  "layers": [
+    {
+      "run_id": "canary_wharf_transport_inspection_001",
+      "layer_id": "transport_plan",
+      "visible": true
+    }
+  ]
+}

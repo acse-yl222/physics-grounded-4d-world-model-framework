@@ -1,0 +1,8 @@
+from pathlib import Path
+import json,math
+import matplotlib;matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+P=Path(__file__).resolve().parent;O=P/'input/canary_wharf_20261007/exports/facade-pediment-pilot001';points={'left_gable_end':[180,465],'apex':[876,60],'right_gable_end':[1535,567],'central_terrace_floor':[876,750]};span=1355;baseline=465+(876-180)/(1535-180)*(567-465);rise=baseline-60;height=750-60
+fig,axs=plt.subplots(1,2,figsize=(12,6),layout='constrained');axs[0].plot([180,876,1535],[465,60,567],'k-');axs[0].plot([180,1535],[465,567],'k--');axs[0].plot([876,876],[60,750],'r--');axs[0].invert_yaxis();axs[0].set(aspect='equal',title='Inspected image points (no photo pixels)',xlabel='Crop pixel x',ylabel='Crop pixel y')
+axs[1].plot([-22,-22,0,22,22],[0,8,23,8,0],'k-');axs[1].plot([-22,22],[8,8],'k--');th=[i*math.pi/48 for i in range(49)];axs[1].plot([5.5*math.cos(t)for t in th],[8+5.5*math.sin(t)for t in th]);axs[1].set(aspect='equal',title='Local facade model: dimensions inferred',xlabel='Local width m',ylabel='Local z m');fig.savefig(O/'proportion-diagram.png',dpi=150)
+r={'crop_source':'cache/tower_hamlets/facade_detail_pilot_review001/pediment-inspection.png','crop_original_xyxy':[1650,4030,3250,4970],'picked_pixels_approximate':points,'normalized_pixel_ratios':{'gable_rise_over_width':rise/span,'apex_to_terrace_floor_over_width':height/span},'model_ratios':{'gable_rise_over_width':15/44,'apex_to_floor_over_width':23/44},'limitation':'Raw image ratios not perspective-rectified; inferred visual proportions, not metrology. Front facade side-edge registration remains unresolved.'};(O/'proportions.json').write_text(json.dumps(r,indent=2));print(r)

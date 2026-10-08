@@ -1,0 +1,5 @@
+from pathlib import Path
+import json,hashlib
+R=Path(__file__).resolve().parent/'input/canary_wharf_20261007';g=json.loads((R/'geometry.json').read_text());ID='overture-building-b0939932-881e-4c5c-8797-8a0a91c38f5c';f=next(a for a in g['buildings'] if a['id']==ID)
+r={'building_id':ID,'footprint':f['geometry'],'total_height_m':220,'occupied_divisions':58,'total_divisions':62,'diamond_storeys':8,'diamond_count_perimeter':8,'glass_inset_m':.25,'diagrid_width_m':.60,'diagrid_depth_m':.30,'scope':'Estimated Newfoundland architectural study.220m total includes crown;58occupied plus4crown equivalent evenly spaced divisions is artistic assumption. Eight-storey diamond type text-supported, perimeter diamond count8,spacing,width,depth,windowpattern,crownshape/materials are estimates. No podium,entrance or interior reconstruction. Old226m forecast conflicts with220m completed reference;220m adopted, no survey height convention claim.','source_hashes':{'geometry.json':hashlib.sha256((R/'geometry.json').read_bytes()).hexdigest()}}
+(R/'references/newfoundland_study.json').write_text(json.dumps(r,indent=2)+'\n')
