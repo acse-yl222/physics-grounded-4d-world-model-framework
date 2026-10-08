@@ -7,6 +7,7 @@ import { LineSegments2 } from 'three/addons/lines/LineSegments2.js';
 import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { loadScene, sceneLink, ROOT } from '../scene.js';
+import { timelineTime, layerSpan } from '../recorded-clock.mjs';
 import { getFrame, f16, loadMask, npy, DATA, setDataBase } from '../npy.js';
 import { initFrames, hasLayer, layerMeta, getFrameF32, framesInfo } from '../frames.js';
 import { ON_PAGES } from '../config.js';
@@ -48,7 +49,7 @@ for (const k of Object.keys(LAYERS)) LG[k] = gridOf(LAYERS[k].cell_m ?? CELL);
 if (has('solar')) LG.shadow = gridOf(LAYERS.solar.shadow_cell_m ?? LAYERS.solar.cell_m ?? CELL);
 const TL = SCENE.timeline ?? { step_s: 25, steps: 100 }, STEP_S = TL.step_s, STEPS = TL.steps;
 const FOCUS = SCENE.focus;                          // {box: [[x, z], [x, z]], orbit_m, label}
-const HAS_UAV_LAYER = SCENE.id === 'white_city';
+const HAS_UAV_LAYER = SCENE.uav?.enabled ?? (SCENE.id === 'white_city');
 const HAS_REPLAY = SCENE.replay === 'demo_rev02';   // the South Kensington traffic / UAV / bird replay
 const MODEL = SCENE.model;
 const PHASE_ORDER = (SCENE.phase_order ?? ['wind', 'temp', 'solar', 'diurnal', 'poll', 'flood']).filter(has);
@@ -96,6 +97,7 @@ function setupSceneUI() {
   for (const el of document.querySelectorAll('[data-layer]')) el.style.display = has(el.dataset.layer) ? '' : 'none';
   const legend = (k, L) => { if (!L.legend) return; $(`lg-${k}-lo`).textContent = L.legend[0]; $(`lg-${k}-unit`).textContent = L.legend[1]; $(`lg-${k}-hi`).textContent = L.legend[2]; };
   for (const k of ['wind', 'temp', 'poll', 'flood', 'solar', 'diurnal']) if (has(k)) { $(`lbl-${k}`).textContent = LAYERS[k].label; if (k !== 'solar' && k !== 'diurnal') legend(k, LAYERS[k]); }
+  if (has('temp') && LAYERS.temp.heat_label) ui.tempMode.querySelector('[value="plane"]').textContent = LAYERS.temp.heat_label;
   if (has('temp')) $('temp-iso-option').textContent = LAYERS.temp.iso_label ?? `Isotherms (every ${ISO.step} °C)`;
   if (has('solar')) {
     ui.solarDate.replaceChildren(...Object.entries(LAYERS.solar.dates).map(([d, v]) => { const o = document.createElement('option'); o.value = d; o.textContent = v.label; return o; }));
@@ -166,6 +168,7 @@ scene.add(new THREE.AmbientLight(0xffffff, 0.25));
 // dark base plate under the model so the field planes have a ground even outside the site mesh
 const base = new THREE.Mesh(new THREE.PlaneGeometry(SPAN_X + 400, SPAN_Z + 400), new THREE.MeshStandardMaterial({ color: MODEL.plate_color ? new THREE.Color(MODEL.plate_color) : 0x2b2f35, roughness: 1 }));
 base.rotation.x = -Math.PI / 2; base.position.set(CX, -0.5, CZ);
+if (MODEL.non_occluding_site_ground) base.renderOrder = -2;
 scene.add(base);
 
 const model = new THREE.Group();
@@ -225,7 +228,7 @@ function paintWind(uv) {
   windPlane.tex.needsUpdate = true;
 }
 // ------------------------------------------------------------------ isotherms (marching squares on a 2x-averaged grid)
-const ISO_STRIDE = 2, TG = LG.temp ?? gridOf(CELL), NX = TG.w / ISO_STRIDE, NY = TG.h / ISO_STRIDE;
+const ISO_STRIDE = 2, TG = LG.temp ?? gridOf(CELL), NX = Math.floor(TG.w / ISO_STRIDE), NY = Math.floor(TG.h / ISO_STRIDE);
 const isoGrid = new Float32Array(NX * NY);
 const ISO_MAX_SEG = 600000;
 const iso = { pos: new Float32Array(ISO_MAX_SEG * 6), col: new Float32Array(ISO_MAX_SEG * 6), geom: null, lines: null, count: 0 };
@@ -419,12 +422,12 @@ function stepParticles(dtSec) {
 // run starts at 1000 s). Layers with their own clock (flood, sunlight, day cycle) play their own frames in sequence mode;
 // in overlay mode they follow the timeline (flood shows its static maximum-depth map instead).
 const clamp = (v, lo, hi) => v < lo ? lo : v > hi ? hi : v;
-const mapped = (L, step) => clamp(Math.floor((step * STEP_S - L.t0_s) / L.step_s + 1e-6), 0, L.frames - 1);
+const mapped = (L, step) => clamp(Math.floor((timelineTime(TL, step) - L.t0_s) / L.step_s + 1e-6), 0, L.frames - 1);
 function phaseSpan(key) {
   const L = LAYERS[key];
   if (key === 'solar') return { start: 1, end: L.frames ?? 99 };
   if (L.own_clock) return { start: 1, end: L.frames };
-  return { start: Math.max(1, Math.ceil(L.t0_s / STEP_S - 1e-6)), end: Math.min(STEPS, Math.floor((L.t0_s + (L.frames - 1) * L.step_s) / STEP_S + 1e-6)) };
+  return layerSpan(TL, L);
 }
 const PHASES = {};
 for (const k of PHASE_ORDER) PHASES[k] = { ...phaseSpan(k), rate: LAYERS[k].rate, label: LAYERS[k].title ?? LAYERS[k].label };
@@ -534,8 +537,8 @@ async function loadStepInner(step) {
     const k = fi.diurnal, dm = diurnalSeries(), hr = dm?.hours_local?.[k], amb = dm?.ambient_c?.[k];
     ui.timeLabel.textContent = `${LAYERS.diurnal.day_label ?? ''} · ${hr !== undefined ? String(hr).padStart(2, '0') + ':00' : `hour ${k + 1}`} local · ambient ${amb !== undefined ? amb.toFixed(1) + ' °C' : '–'} · ${k + 1} / ${ph.end}`;
   } else ui.timeLabel.textContent = seqMode()
-    ? `${ph.label} · frame ${step - ph.start + 1} / ${ph.end - ph.start + 1} · t = ${step * STEP_S} s`
-    : `Step ${step} · t = ${step * STEP_S} s` + (has('temp') && step < PHASES.temp?.start ? ' · temperature run not started' : '') + (act.flood && LAYERS.flood?.max ? ' · flood layer = maximum depth of the event' : '');
+    ? `${ph.label} · frame ${fi[state.phase] + 1} / ${LAYERS[state.phase].frames} · t = ${timelineTime(TL, step)} s`
+    : `Step ${step} · t = ${timelineTime(TL, step)} s` + (has('temp') && step < PHASES.temp?.start ? ' · temperature run not started' : '') + (act.flood && LAYERS.flood?.max ? ' · flood layer = maximum depth of the event' : '');
   for (let k = 1; k <= 4; k++) { const n = step + k; if (n <= ph.end) { const f = frameIndex(n); if (act.wind) prefetch('wind', FILES.wind, f.wind); if (act.poll) prefetch('poll', FILES.poll, f.poll); if (act.temp) prefetch('temp', FILES.temp, f.temp); if (act.flood && f.flood !== null) prefetch('flood', FILES.flood, f.flood); if (act.solar) prefetch(solarKey(), solarFile(), f.solar); if (act.diurnal) prefetch(dKey, diurnalArray(), f.diurnal); } }
 }
 function setStep(s) {
@@ -577,8 +580,8 @@ ui.play.addEventListener('click', () => {
   else if (section === 'campus' && (tour.active || uavLayer)) { tour.paused = !tour.paused; if (traffic) traffic.playing = !tour.paused; if (uavLayer) uavLayer.playing = !tour.paused; ui.play.textContent = tour.paused ? '▶' : '❚❚'; }
   else setPlaying(!state.playing);
 });
-ui.rate.addEventListener('change', () => { if (section === 'campus' && uavLayer) uavLayer.speed = +ui.rate.value; if (section === 'campus' && replayLayer) replayLayer.speed = +ui.rate.value; else if (section === 'campus' && traffic) traffic.speed = +ui.rate.value; else if (state.playing) setPlaying(true); });
-ui.step.addEventListener('input', () => { if (section === 'campus' && uavLayer) { uavLayer.update(+ui.step.value); invalidate(); } if (section === 'campus' && replayLayer) { replayLayer.t = +ui.step.value; replayLayer.update(replayLayer.t); } else if (section === 'campus' && traffic) { traffic.t = +ui.step.value; traffic.update(traffic.t); } else if (section !== 'campus') setStep(+ui.step.value); });
+ui.rate.addEventListener('change', () => { if (section === 'campus' && uavLayer && tour.shot === 'uavs') { uavLayer.speed = +ui.rate.value; return; } if (section === 'campus' && replayLayer) replayLayer.speed = +ui.rate.value; else if (section === 'campus' && traffic) traffic.speed = +ui.rate.value; else if (state.playing) setPlaying(true); });
+ui.step.addEventListener('input', () => { if (section === 'campus' && uavLayer && tour.shot === 'uavs') { uavLayer.update(+ui.step.value); invalidate(); return; } if (section === 'campus' && replayLayer) { replayLayer.t = +ui.step.value; replayLayer.update(replayLayer.t); } else if (section === 'campus' && traffic) { traffic.t = +ui.step.value; traffic.update(traffic.t); tfUI.stats.textContent = traffic.stats; } else if (section !== 'campus') setStep(+ui.step.value); });
 ui.mode.addEventListener('change', () => { if (seqMode()) setPhase(state.phase); else { ui.stage.textContent = OVERLAY_LABEL; applyLayers(); setStep(state.step); } });
 document.addEventListener('keydown', e => {
   if (['INPUT', 'SELECT', 'BUTTON', 'A', 'TEXTAREA'].includes(e.target.tagName) || e.target.isContentEditable) return;
@@ -740,7 +743,7 @@ function updateFlight(now) {
 function campusPoseDeg(azDeg) { return campusPose(THREE.MathUtils.degToRad(azDeg)); }
 // Plain site tour for scenes without a replay: a slow orbit around the focus (then, with a transport layer, a wide orbit
 // over the network), then (auto loop) the fields.
-const TOUR_SHOTS = { uavs: { fixed: () => { const d = fitDistance(); const target = domainCentre.clone(); return { pos: target.clone().add(new THREE.Vector3(0, d * .866, d * .5)), target }; }, dur: 20000, label: () => 'White City · Wave PDE random UAV flights', time: () => uavLayer ? `Flights ${timeString(uavLayer.t)} · ${uavLayer.speed}×` : 'Loading flights' }, overview: { dist: 1, elev: 32, dur: 16000, label: () => `${FOCUS.label ?? SCENE.title} · overview`, time: () => `Overview · orbiting ${FOCUS.label ?? SCENE.title}` },
+const TOUR_SHOTS = { uavs: { fixed: () => { const d = fitDistance(); const target = domainCentre.clone(); return { pos: target.clone().add(new THREE.Vector3(0, d * .866, d * .5)), target }; }, dur: 20000, label: () => `${SCENE.title} · Wave PDE UAV flights`, time: () => uavLayer ? `Flights ${timeString(uavLayer.t)} · ${uavLayer.speed}×` : 'Loading flights' }, overview: { dist: 1, elev: 32, dur: 16000, label: () => `${FOCUS.label ?? SCENE.title} · overview`, time: () => `Overview · orbiting ${FOCUS.label ?? SCENE.title}` },
   traffic: { dist: 0.55, elev: 48, dur: 18000, label: () => `${SCENE.traffic?.label ?? 'Traffic'} · cars and signal states of the SUMO run`, time: () => traffic ? `Replay ${trafficTime(traffic.t)} · ${traffic.speed}×` : 'Traffic' },
   trafficMap: { fixed: () => overheadPose(), dur: 16000, label: () => `${SCENE.traffic?.label ?? 'Traffic'} · whole area: cars as white (moving) / amber (stopped) dots, signal heads as red / amber / green dots`, time: () => traffic ? `Replay ${trafficTime(traffic.t)} · ${traffic.speed}×` : 'Traffic' },
   transport: { dist: 2.4, elev: 52, dur: 14000, label: () => `${SCENE.transport?.label ?? 'Transport'} · tube, rail and bus network, road disruptions and traffic cameras`, time: () => transport?.summary ?? 'Transport' } };
@@ -758,12 +761,13 @@ function startTour(shot = 'overview') {
   if (first) tour.az = THREE.MathUtils.degToRad(-150);
   ui.stage.textContent = TOUR_SHOTS[shot].label(); ui.info.textContent = shot === 'overview' ? (SCENE.description ?? '') : shot === 'traffic' ? (traffic?.info ?? '') : (transport?.statusLines?.slice(0, 4).join(' · ') ?? '');
   applyReplayLayers();
-  if (shot === 'uavs') { ui.info.textContent = 'Ground stations · 30 m vertical takeoff and landing · independent random flights · no scheduling'; ui.stats.textContent = uavLayer?.stats ?? ''; }
+  if (shot === 'uavs') { ui.info.textContent = SCENE.uav?.description ?? 'Ground stations · 30 m vertical takeoff and landing · independent random flights · no scheduling'; ui.stats.textContent = uavLayer?.stats ?? ''; }
   applyTrafficLayers(); applyTransportLayers(); if (shot === 'traffic') traffic?.highlightRoads(true);
   const p = tourPose(tour.az);
   if (camera.position.distanceTo(p.pos) > 50) { flyTo(p, 2600, () => { controls.enabled = false; tour.t0 = performance.now(); }); }
   else { controls.enabled = false; flight = null; }
   if (shot === 'uavs' && uavLayer) { ui.step.min = 0; ui.step.max = uavLayer.duration; ui.step.disabled = false; ui.rate.disabled = false; }
+  else if (traffic) { ui.step.min = traffic.start ?? 0; ui.step.max = traffic.duration; ui.step.disabled = false; ui.rate.disabled = false; }
   setSectionUI();
 }
 function updateTour(now, dt) {
@@ -795,7 +799,7 @@ function runCampus(shot = 'overview') {
   applyTransportLayers(); applyTrafficLayers();
   setRateOptions('replay', replayLayer?.speed ?? uavLayer?.speed ?? traffic?.speed ?? 1); ui.play.textContent = '❚❚';
   if (replayLayer) { ui.step.min = replayLayer.traffic?.firstTime ?? 0; ui.step.max = replayLayer.duration || 3600; ui.step.step = 0.1; ui.step.disabled = false; ui.rate.disabled = false; }
-  else if (traffic) { traffic.playing = true; ui.step.min = 0; ui.step.max = traffic.duration; ui.step.step = 0.1; ui.step.disabled = false; ui.rate.disabled = false; }
+  else if (traffic) { traffic.playing = true; ui.step.min = traffic.start ?? 0; ui.step.max = traffic.duration; ui.step.step = 0.1; ui.step.disabled = false; ui.rate.disabled = false; }
   else if (uavLayer) { ui.step.min = 0; ui.step.max = uavLayer.duration; ui.step.step = .1; ui.step.disabled = false; ui.rate.disabled = false; }
   else { ui.step.disabled = true; ui.rate.disabled = true; }
   if (replayLayer) replayLayer.startShot(shot); else startTour(TOUR_SHOTS[shot] ? shot : 'overview');
@@ -899,7 +903,7 @@ renderer.domElement.addEventListener('pointermove', e => {
 renderer.domElement.addEventListener('pointerleave', () => { ui.readout.hidden = true; });
 
 // ------------------------------------------------------------------ render loop
-let last = performance.now();
+let last = performance.now(), lastTrafficStats = -Infinity;
 function animate(now) {
   requestAnimationFrame(animate);
   if(document.hidden){last=now;return;}
@@ -917,7 +921,7 @@ function animate(now) {
     if (ui.rate.value !== String(replayLayer.speed)) ui.rate.value = String(replayLayer.speed);
     if (boundary) { setSectionUI(); if (replayLayer.cycleDone) { if (ui.auto.checked) runFields(); else replayLayer.startShot('overview'); } }
   } else if (section === 'campus') updateTour(now, dt);
-  if (traffic && !replayLayer && section !== 'fields' && traffic.group.visible) { traffic.tick(now, elapsed/1000); if ((now | 0) % 500 < 20) tfUI.stats.textContent = traffic.stats; }
+  if (traffic && !replayLayer && section !== 'fields' && traffic.group.visible) { traffic.tick(now, elapsed/1000); if (now - lastTrafficStats > 250) { tfUI.stats.textContent = traffic.stats; lastTrafficStats = now; } }
   if (uavLayer) { uavLayer.setVisible(section !== 'fields' && !window.cityTools?.current); if (uavLayer.group.visible) uavLayer.tick(elapsed / 1000); }
   updateFlight(now);
   if (controls.enabled) controls.update();
@@ -1008,13 +1012,25 @@ async function boot() {
         if (!o.geometry.boundingBox) o.geometry.computeBoundingBox();
         box.copy(o.geometry.boundingBox).applyMatrix4(o.matrixWorld); box.getSize(size);
         // ground-like: thinner than 3 m and wider than 30 m (site ground, roads, paths, paving, kerbs)
-        if (size.y < 3 && Math.max(size.x, size.z) > 30) groundMeshes.push(o);
+        const mappedArchitecture = MODEL.building_ids_are_architecture && o.userData.building_id && o.userData.building_id !== 'site-support' && !o.userData.support_not_building;
+        if (!mappedArchitecture && size.y < 3 && Math.max(size.x, size.z) > 30) {
+          groundMeshes.push(o);
+          // Flat unsurveyed support does not need to occlude geometry above it.
+          // Avoid kilometre-scale ground triangles competing with mapped water.
+          if (MODEL.non_occluding_site_ground && o.userData.building_id === 'site-support' && box.max.y <= 0) {
+            o.material = Array.isArray(o.material) ? o.material.map(m => m.clone()) : o.material.clone();
+            for (const m of (Array.isArray(o.material) ? o.material : [o.material])) {
+              m.depthWrite = false;
+              if (MODEL.ground_color) { m.color.set(MODEL.ground_color); m.roughness = 1; m.metalness = 0; }
+            }
+            o.renderOrder = -1;
+          }
+        }
         if (/way-\d+_\|_surface/.test(o.name) && box.max.y > 1) elevatedMeshes.push(o);
         // trees / vegetation: by node (or ancestor) name, or by material name
         let names = '';
         for (let a = o; a && a !== gltf.scene; a = a.parent) names += (a.name || '') + ' | ';
         const matName = Array.isArray(o.material) ? o.material.map(m => m.name).join(' | ') : (o.material && o.material.name) || '';
-        const mappedArchitecture = MODEL.building_ids_are_architecture && o.userData.building_id && !o.userData.support_not_building;
         if (!mappedArchitecture && (TREE_NODE.test(names) || (TREE_MAT.test(matName) && !/tree wells/i.test(matName)))) treeMeshes.push(o);
       });
       model.add(gltf.scene);
@@ -1123,15 +1139,15 @@ async function boot() {
   releaseBatchedGeometry();
   }
   if (HAS_UAV_LAYER) {
-    ui.pct.textContent = 'White City UAV routes…';
-    uavLayer = await createUavLayer({ scene, sceneId: SCENE.id });
+    ui.pct.textContent = `${SCENE.title} UAV routes…`;
+    uavLayer = await createUavLayer({ scene, sceneId: SCENE.id, configURL: SCENE.uav?.config ? SCENE.url(SCENE.uav.config) : undefined });
     const query = new URLSearchParams(location.search);
     if (query.has('t')) uavLayer.update(+query.get('t'));
     applyReplayLayers();
   }
   if (SCENE.traffic) {   // loads in the background (34 MB of vehicle records): the page opens without it and the layer appears when ready
     tfUI.box.style.display = ''; tfUI.stats.textContent = 'Loading the SUMO replay…';
-    createTraffic({ scene, base: SCENE.url(SCENE.traffic.dir ?? 'traffic/'), elevated: elevatedMeshes }).then(T => { traffic = T; setupTrafficUI(); const q = new URLSearchParams(location.search); if (q.has('t')) { T.t = +q.get('t'); T.update(T.t); } if (q.get('play') === '0') T.playing = false; if (section === 'campus' && tour.active) startTour(tour.shot); })
+    createTraffic({ scene, base: SCENE.url(SCENE.traffic.dir ?? 'traffic/'), elevated: elevatedMeshes }).then(T => { traffic = T; setupTrafficUI(); const q = new URLSearchParams(location.search); T.t = q.has('t') ? +q.get('t') : (SCENE.traffic.start_s ?? T.start); T.update(T.t); tfUI.stats.textContent = T.stats; if (q.get('play') === '0') T.playing = false; if (section === 'campus' && tour.active) startTour(tour.shot); })
       .catch(e => { console.error('traffic replay unavailable', e); tfUI.stats.textContent = 'Traffic replay unavailable: ' + (e.message || e); });
   }
   if (SCENE.transport) {

@@ -1,0 +1,173 @@
+{
+  "solid_path": "project/tower_hamlets/runs/canary_wharf_outer4km_geometry_021/solver_grid8m/solid.npy",
+  "origin_enu_m": [
+    -2000,
+    -2000,
+    0
+  ],
+  "source_cell_m": 8,
+  "pool_factor": 2,
+  "stations": [
+    {
+      "id": "S1",
+      "enu_m": [
+        -100.0,
+        236.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -100.0,
+        236.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 41.95051766360582,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S2",
+      "enu_m": [
+        -1476.0,
+        1188.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -1476.0,
+        1188.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 43.15598381727292,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S3",
+      "enu_m": [
+        1196.0,
+        1204.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        1196.0,
+        1204.0,
+        48.15
+      ],
+      "building_water_clearance_m": 75.8946638440411,
+      "mapped_passenger_lane_clearance_m": 98.97846547519723,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S4",
+      "enu_m": [
+        -1444.0,
+        -948.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -1444.0,
+        -948.0,
+        48.15
+      ],
+      "building_water_clearance_m": 48.662100242385755,
+      "mapped_passenger_lane_clearance_m": 21.10031222881193,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S5",
+      "enu_m": [
+        1420.0,
+        -1196.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        1420.0,
+        -1196.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 102.31164882517513,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S6",
+      "enu_m": [
+        -156.0,
+        1404.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -156.0,
+        1404.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 27.17878479633862,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    }
+  ],
+  "routes": [
+    [
+      "S1",
+      "S2"
+    ],
+    [
+      "S1",
+      "S3"
+    ],
+    [
+      "S1",
+      "S4"
+    ],
+    [
+      "S1",
+      "S5"
+    ],
+    [
+      "S1",
+      "S6"
+    ],
+    [
+      "S2",
+      "S1"
+    ],
+    [
+      "S3",
+      "S1"
+    ],
+    [
+      "S4",
+      "S1"
+    ],
+    [
+      "S5",
+      "S1"
+    ],
+    [
+      "S6",
+      "S1"
+    ],
+    [
+      "S2",
+      "S3"
+    ],
+    [
+      "S4",
+      "S5"
+    ]
+  ],
+  "wave": {
+    "c0": 15,
+    "cz_up": 6,
+    "cz_down": 4,
+    "dt": 0.4,
+    "n_steps": 1200,
+    "pulse_t0_steps": 30,
+    "pulse_tau_steps": 8,
+    "source_sigma_cells": 1.5,
+    "sponge_layers": 4,
+    "min_peak_amp": 1e-08,
+    "reg_low_factor": 1,
+    "reg_z_low": -2,
+    "reg_z_full": -1
+  }
+}

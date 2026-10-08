@@ -19,13 +19,20 @@ def read_header(path):
         assert kind == 0x004E4942
         offset = stream.tell()
         assert offset + binary_length == total
-    allowed = {'asset', 'scene', 'scenes', 'nodes', 'meshes', 'materials', 'accessors', 'bufferViews', 'buffers'}
+    allowed = {'asset', 'scene', 'scenes', 'nodes', 'meshes', 'materials', 'accessors', 'bufferViews', 'buffers', 'extensionsUsed', 'extensionsRequired'}
     assert set(document) <= allowed
     assert len(document['buffers']) == len(document['scenes']) == 1
     assert 'uri' not in document['buffers'][0]
-    assert all(set(node) <= {'name', 'mesh', 'extras'} for node in document['nodes'])
+    assert all(set(node) <= {'name', 'mesh', 'extras', 'translation', 'rotation', 'scale', 'matrix', 'children'} for node in document['nodes'])
     assert all('sparse' not in accessor for accessor in document['accessors'])
-    assert '"extensions"' not in json.dumps(document)
+    supported = {'KHR_materials_transmission', 'KHR_materials_ior'}
+    assert set(document.get('extensionsUsed', [])) <= supported
+    assert set(document.get('extensionsRequired', [])) <= supported
+    # Only scalar material extensions are supported; textures/indexed extensions
+    # would need explicit remapping rather than silent loss.
+    for material in document.get('materials', []):
+        assert set(material.get('extensions', {})) <= supported
+        assert 'Texture' not in json.dumps(material)
     return document, offset, binary_length
 
 
@@ -54,7 +61,12 @@ def merge(paths, output):
                     primitive['indices'] += shifts['accessors']
                 if 'material' in primitive:
                     primitive['material'] += shifts['materials']
+        for key in ('extensionsUsed', 'extensionsRequired'):
+            if key in document:
+                result[key] = sorted(set(result.get(key, [])) | set(document[key]))
         for node in document['nodes']:
+            if 'children' in node:
+                node['children'] = [i + shifts['nodes'] for i in node['children']]
             if 'mesh' in node:
                 node['mesh'] += shifts['meshes']
         result['scenes'][0]['nodes'].extend(index + shifts['nodes'] for index in document['scenes'][0]['nodes'])
@@ -90,7 +102,10 @@ def merge(paths, output):
     with output.open('rb') as stream:
         digest = hashlib.file_digest(stream, 'sha256').hexdigest()
     return {'asset': str(output), 'bytes': total, 'sha256': digest,
-            'source_assets': [str(path) for path in paths], 'binary_payloads_identical': True,
+            'source_assets': [str(path) for path in paths],
+            'sources': [{'path':str(path),'sha256':hashlib.file_digest(path.open('rb'),'sha256').hexdigest(),'meshes':len(doc['meshes']),'nodes':len(doc['nodes']),'transformed_nodes':sum(any(k in n for k in ('translation','rotation','scale','matrix'))for n in doc['nodes'])} for path,doc,off,size in sources],
+            'meshes':len(result['meshes']), 'materials':len(result['materials']),
+            'node_transforms_preserved':True, 'material_definitions_preserved':True, 'binary_payloads_identical': True,
             'nodes': len(result['nodes']), 'compression': 'none', 'coordinates_changed': False}
 
 

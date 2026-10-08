@@ -180,13 +180,17 @@ def validate_settings(cfg):
         raise ValueError('Random trips cannot be labelled calibrated')
 
 
-def run(storage, scene, *, duration=None, speed_factor=None, retain=False, seed=None):
+def run(storage, scene, *, duration=None, speed_factor=None, retain=False, seed=None, demand_period=None):
     import sumolib
     import traci
     cfg = configuration(storage, scene)
     if duration is not None: cfg['duration_s'] = duration
     if speed_factor is not None: cfg['intervention']['speed_factor'] = speed_factor
     if seed is not None: cfg['seed'] = seed
+    if demand_period is not None:
+        cfg['demand']['period_s'] = demand_period
+        cfg['limitations'] = [x for x in cfg.get('limitations',[]) if 'requested trips' not in x]
+        cfg['limitations'].append(f"{cfg['duration_s']:g}s seeded passenger demand with {math.ceil(cfg['duration_s']/demand_period)} requested trips; not measured.")
     validate_settings(cfg)
     raw = within(storage.assets(scene, 'input'), cfg['osm_snapshot'])
     raw_meta = raw.with_suffix('.provenance.json')
@@ -351,11 +355,11 @@ def main():
     parser.add_argument('action', choices=['fetch', 'run'])
     parser.add_argument('scene', type=scene_id)
     parser.add_argument('--duration', type=float); parser.add_argument('--speed-factor', type=float)
-    parser.add_argument('--seed', type=int); parser.add_argument('--retain', action='store_true')
+    parser.add_argument('--demand-period', type=float, help='Assumed seconds between requested trips; uncalibrated'); parser.add_argument('--seed', type=int); parser.add_argument('--retain', action='store_true')
     parser.add_argument('--endpoint', default='https://api.openstreetmap.org/api/0.6/map')
     args = parser.parse_args(); storage = Storage.load()
     if args.action == 'fetch': result = fetch_osm(storage, args.scene, args.endpoint)
-    else: result = run(storage, args.scene, duration=args.duration, speed_factor=args.speed_factor, seed=args.seed, retain=args.retain)
+    else: result = run(storage, args.scene, duration=args.duration, speed_factor=args.speed_factor, seed=args.seed, retain=args.retain, demand_period=args.demand_period)
     print(result)
 
 
