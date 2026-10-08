@@ -34,6 +34,12 @@ def check():
             names = handle.getnames()
             if 'src/common/cli.py' not in names or any('site-packages' in name for name in names):
                 raise RuntimeError('Source snapshot includes the wrong installation tree')
+            owned = ('src/common/', 'src/urban_geometry/', 'src/urban_flow/',
+                     'src/traffic/', 'src/uav_routing/', 'src/visualization/', 'schemas/')
+            if any(not name.startswith(owned) and name not in ('AGENTS.md', 'pyproject.toml') for name in names):
+                raise RuntimeError('Source snapshot contains unrelated dependency packages')
+            if 'src/visualization/widgets/index.mjs' not in names:
+                raise RuntimeError('Source snapshot lost the installed viewer code')
         server = ThreadingHTTPServer(('127.0.0.1', 0), functools.partial(ViewerHandler, storage=storage))
         thread = threading.Thread(target=server.serve_forever, daemon=True)
         thread.start()

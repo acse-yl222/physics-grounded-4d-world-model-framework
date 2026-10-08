@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 import time
 import uuid
-from .storage import Storage, identifier, within
+from .storage import Storage, identifier, within, scene_id
 
 _TRIALS={}
 
@@ -27,9 +27,12 @@ def source_path(name,*parts,scene='windfarm'):
 
 
 def trial_root(scene,simulation):
-    key=(scene,simulation)
+    storage = Storage.load()
+    scene = scene_id(scene)
+    identifier(simulation)
+    key=(str(storage.cache_root),scene,simulation)
     run_id=os.environ.get('UWM_RUN_ID')
     if run_id is None:
         if key not in _TRIALS:_TRIALS[key]=time.strftime('%Y%m%dT%H%M%SZ',time.gmtime())+'_'+uuid.uuid4().hex[:8]
         run_id=_TRIALS[key]
-    return Storage.load().scratch(scene,simulation,identifier(run_id,run=True))
+    return storage.scratch(scene,simulation,identifier(run_id,run=True))

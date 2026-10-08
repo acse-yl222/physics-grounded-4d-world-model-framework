@@ -13,11 +13,18 @@ def snapshot_sources(root,destination):
     destination.parent.mkdir(parents=True,exist_ok=True)
     with tarfile.open(destination,'w:gz') as archive:
         sources = [(f'src/{name}', code_path(f'src/{name}')) for name in
-                   ('common', 'urban_geometry', 'urban_flow', 'traffic', 'uav_routing', 'visualization/adapters')]
+                   ('common', 'urban_geometry', 'urban_flow', 'traffic', 'uav_routing', 'visualization')]
+        static = resource_path('src/visualization')
+        if static != code_path('src/visualization'):
+            sources.append(('src/visualization', static))
+        written = set()
         for folder, base in [*sources, ('schemas', resource_path('schemas'))]:
             for path in sorted(base.rglob('*')):
                 if path.is_file() and not path.is_symlink() and path.suffix in SOURCE_SUFFIXES and '__pycache__' not in path.parts and 'resources' not in path.relative_to(base).parts:
-                    archive.add(path,arcname=str(Path(folder)/path.relative_to(base)),recursive=False)
+                    name = str(Path(folder)/path.relative_to(base))
+                    if name not in written:
+                        archive.add(path,arcname=name,recursive=False)
+                        written.add(name)
         for name in ('pyproject.toml','AGENTS.md'):
             path=(checkout_root() or root)/name
             if path.exists():archive.add(path,arcname=name,recursive=False)

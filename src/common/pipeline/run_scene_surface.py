@@ -13,7 +13,7 @@ from pathlib import Path
 import subprocess
 import sys
 
-ROOT=repo_root()
+from common.pipeline.paths import ROOT
 from common.pipeline.scene_scaled_latent import save_json
 
 

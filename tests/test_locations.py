@@ -14,7 +14,7 @@ sys.path.insert(0, str(ROOT / 'src'))
 from common.cli import main
 from common.layout import agent_src
 from common.locations import code_path, resource_path, workspace_root
-from common.runtime import source_path
+from common.runtime import source_path, trial_root
 from common.storage import Storage
 
 
@@ -83,6 +83,17 @@ class LocationTests(unittest.TestCase):
         with contextlib.redirect_stdout(output):
             self.assertEqual(main(['--root', str(self.workspace), 'scenes']), 0)
         self.assertEqual(json.loads(output.getvalue()), [])
+
+    def test_aliases_share_a_trial_and_workspace_changes_do_not_reuse_it(self):
+        first = trial_root('core008', 'pipeline')
+        self.assertEqual(first, trial_root('south_ken', 'pipeline'))
+        other = Path(self.tmp.name) / 'other'
+        other.mkdir()
+        with patch.dict(os.environ, {'P4D_ROOT': str(other)}):
+            second = trial_root('south_ken', 'pipeline')
+        self.assertNotEqual(first.name, second.name)
+        self.assertFalse(first.exists())
+        self.assertFalse(second.exists())
 
 
 if __name__ == '__main__':

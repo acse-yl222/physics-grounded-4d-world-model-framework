@@ -26,8 +26,7 @@ from types import SimpleNamespace
 import numpy as np
 import torch
 
-ROOT = repo_root()
-from common.pipeline.paths import project_path
+from common.pipeline.paths import ROOT, project_path
 from common.pipeline.scene_scaled_latent import digest, save_json, log
 
 

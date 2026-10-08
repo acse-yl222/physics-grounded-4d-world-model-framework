@@ -7,13 +7,13 @@ if __name__ == '__main__' and not __package__:
 from pathlib import Path
 import json
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation,PillowWriter
 
 
 def main():
+    import matplotlib
+    matplotlib.use('Agg')
+    import matplotlib.pyplot as plt
+    from matplotlib.animation import FuncAnimation,PillowWriter
     import argparse
     from common.runtime import trial_root
     parser = argparse.ArgumentParser(description="Render a completed paper-rotor comparison")

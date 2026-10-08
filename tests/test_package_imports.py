@@ -39,6 +39,7 @@ modules = [
     'urban_flow.scenarios.actuator_lab.run', 'urban_flow.scenarios.windfarm_neural.run',
     'urban_flow.scenarios.windfarm_2m.run', 'common.pipeline.run_scene',
     'common.pipeline.scene_scaled_latent',
+    'common.pipeline.scene_temperature_physical', 'common.pipeline.run_scene_surface',
 ]
 for name in modules:
     importlib.import_module(name)
@@ -74,6 +75,25 @@ import runpy, sys
 sys.path.insert(0, sys.argv[1])
 sys.argv = ['traffic', '--help']
 runpy.run_module('traffic.train', run_name='__main__')
+''')
+
+    def test_rendering_keeps_completed_inputs_read_only(self):
+        self.run_isolated('''
+import hashlib, json, pathlib, runpy, sys
+import numpy as np
+sys.path.insert(0, sys.argv[1])
+source=pathlib.Path('input'); source.mkdir()
+(source/'comparison.json').write_text('{}')
+for name in ['torch_paper','torch_legacy','triton_paper']:
+    np.savez(source/(name+'.npz'), u=np.full((32,32,96),2.,dtype='f4'),
+             frames=np.full((2,32,96),2.,dtype='f4'), history=[[0,2,1,0],[.25,2,1,0]])
+before={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in source.iterdir()}
+sys.argv=['render','--input',str(source),'--output','plots']
+runpy.run_module('urban_flow.paper_rotor.render',run_name='__main__')
+after={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in source.iterdir()}
+assert before==after
+assert (pathlib.Path('plots')/'metrics.json').is_file()
+assert (pathlib.Path('plots')/'wake.gif').is_file()
 ''')
 
 
