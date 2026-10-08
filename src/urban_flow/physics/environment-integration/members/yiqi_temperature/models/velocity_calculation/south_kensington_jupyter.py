@@ -39,7 +39,9 @@ ASSET_ROOT = BUNDLE_ROOT / "assets"
 @dataclass
 class SouthKensingtonConfig:
     static_dir: str = str(ASSET_ROOT / "data" / "imperial_10m" / "static")
-    raw_buildings_path: str = str(ASSET_ROOT / "data" / "imperial_10m" / "raw" / "osm_buildings.json")
+    raw_buildings_path: str = str(
+        ASSET_ROOT / "data" / "imperial_10m" / "raw" / "osm_buildings.json"
+    )
     artifact_dir: str = str(ASSET_ROOT / "models" / "digit_v1")
     geometry_resolution_m: float = 2.0
     model_resolution_m: float = 4.0
@@ -109,9 +111,7 @@ class UNet_New(nn.Module):
         in_ch = in_ch * 2
         for i in reversed(range(self.num_levels)):
             out_ch = self.base_channels * (2**i)
-            self.upconvs.append(
-                self.ConvTranspose(in_ch, out_ch, kernel_size=2, stride=2)
-            )
+            self.upconvs.append(self.ConvTranspose(in_ch, out_ch, kernel_size=2, stride=2))
             self.decoder_blocks.append(self.conv_block(in_ch, out_ch))
             in_ch = in_ch // 2
 
@@ -129,9 +129,7 @@ class UNet_New(nn.Module):
     def pool(self, x: torch.Tensor) -> torch.Tensor:
         if self.if_maxpool:
             return self.MaxPool(kernel_size=2, stride=2)(x)
-        conv_layer = self.Conv(x.size(1), x.size(1), kernel_size=2, stride=2).to(
-            x.device
-        )
+        conv_layer = self.Conv(x.size(1), x.size(1), kernel_size=2, stride=2).to(x.device)
         return conv_layer(x)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
@@ -171,12 +169,8 @@ def ceil_to_multiple(value: int, divisor: int) -> int:
 def resize_nearest_2d(array: np.ndarray, target_shape: tuple[int, int]) -> np.ndarray:
     src_h, src_w = array.shape
     dst_h, dst_w = target_shape
-    row_idx = np.clip(
-        np.round(np.linspace(0, src_h - 1, dst_h)).astype(int), 0, src_h - 1
-    )
-    col_idx = np.clip(
-        np.round(np.linspace(0, src_w - 1, dst_w)).astype(int), 0, src_w - 1
-    )
+    row_idx = np.clip(np.round(np.linspace(0, src_h - 1, dst_h)).astype(int), 0, src_h - 1)
+    col_idx = np.clip(np.round(np.linspace(0, src_w - 1, dst_w)).astype(int), 0, src_w - 1)
     return array[np.ix_(row_idx, col_idx)]
 
 
@@ -300,7 +294,9 @@ def load_static_fields(config: SouthKensingtonConfig) -> dict[str, object]:
     return {"static_dir": static_dir, "mask": mask, "height": height, "grid": grid}
 
 
-def prepare_geometry_fields(config: SouthKensingtonConfig, static_fields: dict[str, object]) -> dict[str, np.ndarray]:
+def prepare_geometry_fields(
+    config: SouthKensingtonConfig, static_fields: dict[str, object]
+) -> dict[str, np.ndarray]:
     static_mask = static_fields["mask"]
     static_height = static_fields["height"]
     grid = static_fields["grid"]
@@ -308,7 +304,9 @@ def prepare_geometry_fields(config: SouthKensingtonConfig, static_fields: dict[s
     geometry_resolution = float(config.geometry_resolution_m)
     raw_path = Path(config.raw_buildings_path)
     if geometry_resolution < float(grid["resolution_m"]) and raw_path.exists():
-        geometry_mask, geometry_height = rasterize_buildings_from_osm(raw_path, grid, geometry_resolution)
+        geometry_mask, geometry_height = rasterize_buildings_from_osm(
+            raw_path, grid, geometry_resolution
+        )
         geometry_source = "raw_osm"
     else:
         geometry_mask, geometry_height = static_mask, static_height
@@ -332,8 +330,12 @@ def prepare_geometry_fields(config: SouthKensingtonConfig, static_fields: dict[s
         mask_model = (geometry_mask > 0).astype(np.uint8)
         height_model = np.where(mask_model > 0, geometry_height, 0).astype(np.float32)
     else:
-        mask_model = block_reduce_max((geometry_mask > 0).astype(np.uint8), (factor, factor)).astype(np.uint8)
-        height_model = block_reduce_max(np.where(geometry_mask > 0, geometry_height, 0).astype(np.float32), (factor, factor))
+        mask_model = block_reduce_max(
+            (geometry_mask > 0).astype(np.uint8), (factor, factor)
+        ).astype(np.uint8)
+        height_model = block_reduce_max(
+            np.where(geometry_mask > 0, geometry_height, 0).astype(np.float32), (factor, factor)
+        )
         height_model = np.where(mask_model > 0, height_model, 0).astype(np.float32)
 
     target_xy = config.target_xy or mask_model.shape
@@ -356,9 +358,7 @@ def prepare_2d_geometry(
     target_xy: tuple[int, int],
 ) -> tuple[np.ndarray, np.ndarray]:
     mask_binary = (building_mask > 0).astype(np.uint8)
-    height_clean = np.where(mask_binary > 0, np.maximum(building_height, 0), 0).astype(
-        np.float32
-    )
+    height_clean = np.where(mask_binary > 0, np.maximum(building_height, 0), 0).astype(np.float32)
     mask_resampled = resize_nearest_2d(mask_binary, target_xy).astype(np.uint8)
     height_resampled = resize_nearest_2d(height_clean, target_xy).astype(np.float32)
     height_resampled = np.where(mask_resampled > 0, height_resampled, 0).astype(np.float32)
@@ -378,7 +378,9 @@ def build_voxel_mesh(
     return filled.astype(np.uint8)[None, ...], height_voxels
 
 
-def embed_mesh_in_sigma(mesh: np.ndarray, config: SouthKensingtonConfig) -> tuple[torch.Tensor, torch.Tensor]:
+def embed_mesh_in_sigma(
+    mesh: np.ndarray, config: SouthKensingtonConfig
+) -> tuple[torch.Tensor, torch.Tensor]:
     input_shape = infer_input_shape(mesh, config)
     _, _, nx, ny, nz = input_shape
     mesh_y, mesh_x, mesh_z = mesh.shape[1:]
@@ -389,13 +391,17 @@ def embed_mesh_in_sigma(mesh: np.ndarray, config: SouthKensingtonConfig) -> tupl
     y_end = embed_y_start + mesh_y
     x_end = embed_x_start + mesh_x
     z_end = config.embed_z_start + mesh_z
-    sigma[0, 0, embed_y_start:y_end, embed_x_start:x_end, config.embed_z_start:z_end] = free_space_mesh
+    sigma[0, 0, embed_y_start:y_end, embed_x_start:x_end, config.embed_z_start : z_end] = (
+        free_space_mesh
+    )
     building_distribution = sigma.clone().permute(0, 1, 4, 2, 3)
     building_distribution[0, 0, 0, :, :] = 0
     return sigma, building_distribution
 
 
-def infer_input_shape(mesh: np.ndarray, config: SouthKensingtonConfig) -> tuple[int, int, int, int, int]:
+def infer_input_shape(
+    mesh: np.ndarray, config: SouthKensingtonConfig
+) -> tuple[int, int, int, int, int]:
     if config.input_shape is not None:
         return config.input_shape
     mesh_y, mesh_x, _ = mesh.shape[1:]
@@ -487,7 +493,9 @@ def run_digit_rollout(
     return torch.cat(predictions, dim=0)
 
 
-def save_summary_and_arrays(results: dict[str, object], output_dir: str | Path | None = None) -> dict[str, object]:
+def save_summary_and_arrays(
+    results: dict[str, object], output_dir: str | Path | None = None
+) -> dict[str, object]:
     config: SouthKensingtonConfig = results["config"]
     out_dir = Path(output_dir or config.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -520,8 +528,13 @@ def save_summary_and_arrays(results: dict[str, object], output_dir: str | Path |
             float(config.model_resolution_m),
         )
         summary["geometry_preview"] = str(geometry_path)
-        summary["slice_paths"] = [str(path) for path in save_velocity_slices(results["predictions_3d_vel_mag"], config, out_dir)]
-        animation_paths = save_velocity_animations(results["predictions_3d_vel_mag"], config, out_dir)
+        summary["slice_paths"] = [
+            str(path)
+            for path in save_velocity_slices(results["predictions_3d_vel_mag"], config, out_dir)
+        ]
+        animation_paths = save_velocity_animations(
+            results["predictions_3d_vel_mag"], config, out_dir
+        )
         summary["animation_paths"] = {key: str(value) for key, value in animation_paths.items()}
     else:
         summary["geometry_preview"] = None
@@ -587,7 +600,9 @@ def plot_velocity_magnitudes_onerow(
     return fig
 
 
-def save_velocity_slices(predictions_3d_vel_mag: np.ndarray, config: SouthKensingtonConfig, output_dir: Path) -> list[Path]:
+def save_velocity_slices(
+    predictions_3d_vel_mag: np.ndarray, config: SouthKensingtonConfig, output_dir: Path
+) -> list[Path]:
     saved_paths = []
     max_slice = predictions_3d_vel_mag.shape[1] - 1
     max_time = predictions_3d_vel_mag.shape[0] - 1
@@ -676,7 +691,9 @@ def run_pipeline(config: SouthKensingtonConfig | None = None) -> dict[str, objec
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = load_digit_model(config, device)
     predictions_3d = run_digit_rollout(model, building_distribution, config, device)
-    predictions_3d = scale_back(predictions_3d, config.velocity_scale_min, config.velocity_scale_max)
+    predictions_3d = scale_back(
+        predictions_3d, config.velocity_scale_min, config.velocity_scale_max
+    )
     predictions_3d_np = predictions_3d.detach().cpu().numpy()
     predictions_3d_vel_mag = compute_velocity_magnitude_3d(predictions_3d_np)
 
@@ -726,7 +743,9 @@ def show_animation_from_results(results: dict[str, object], slice_idx: int | Non
 
 
 def extract_embedded_height_voxels(sigma: torch.Tensor | np.ndarray) -> np.ndarray:
-    sigma_array = sigma.detach().cpu().numpy() if isinstance(sigma, torch.Tensor) else np.asarray(sigma)
+    sigma_array = (
+        sigma.detach().cpu().numpy() if isinstance(sigma, torch.Tensor) else np.asarray(sigma)
+    )
     if sigma_array.ndim != 5:
         raise ValueError(f"Expected sigma with 5 dimensions, got shape {sigma_array.shape}.")
     free_space = sigma_array[0, 0]
@@ -752,7 +771,9 @@ def align_height_voxels_to_volume(
         else:
             offset_y = min(max(int(embed_offset[0]), 0), max(target_y - src_y, 0))
             offset_x = min(max(int(embed_offset[1]), 0), max(target_x - src_x, 0))
-        aligned[offset_y : offset_y + src_y, offset_x : offset_x + src_x] = height_voxels.astype(np.int32)
+        aligned[offset_y : offset_y + src_y, offset_x : offset_x + src_x] = height_voxels.astype(
+            np.int32
+        )
         return aligned
 
     return resize_nearest_2d(height_voxels.astype(np.int32), (target_y, target_x)).astype(np.int32)

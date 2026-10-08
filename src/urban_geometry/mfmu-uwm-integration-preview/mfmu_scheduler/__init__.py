@@ -3,4 +3,3 @@
 from .api import SchedulingDidNotClose, schedule
 
 __all__ = ["SchedulingDidNotClose", "schedule"]
-

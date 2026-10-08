@@ -27,20 +27,20 @@ and the building refinements in `geometry/`; the scene file only switches them o
 
 ## scene.json
 
-| key | meaning |
-|---|---|
-| `id`, `title`, `description`, `limits[]` | page chrome; the limits are listed at the foot of the layer panel |
-| `grid` | the base field grid: `cell_m`, `cols`, `rows`; `x0` = model X of column 0's west edge, `z_south` = model Z of row 0's south edge (row 0 = south); `domain_origin_xy_m` and `origin_label` for the hover readout |
-| `model` | `url` (scene-relative), `bytes`, `compression` (`meshopt` or `draco`); optional `parts_manifest` (GitHub Pages copy fetched in parts), `supplement`, `tile` + `tile_bytes`, `expansion`, `demo_filter`, `plate_color` |
-| `lite` | footprint + roof-height masks and their cell size for the voxel proxy city (phones, `?lite=1`) |
-| `masks` | `footprint` by cell size (each layer is masked at its own resolution), `solid_wind` (file + layer index), optional `study_area` |
-| `focus` | `box` [[x, z], [x, z]] of the area the tour orbits, `orbit_m`, `label` |
-| `replay` | `"demo_rev02"` switches on the South Kensington traffic / UAV / bird replay and its tabs |
-| `transport` | `file` (transport.json), `label`, `attribution`: the TfL layer and its tab |
-| `traffic` | `dir` (traffic/), `label`: a SUMO replay (roads.json, signal_layer.json, replay/) drawn with demo_rev02's car, signal and lane modules; its Traffic tab and panel block |
-| `timeline` | `step_s`, `steps`: the wind run's clock, shared by the layers that map onto it |
-| `phase_order` | the field tabs and their sequence |
-| `layers` | one entry per field type: `wind`, `temp`, `solar`, `diurnal`, `poll`, `flood` (any subset) |
+| key                                      | meaning                                                                                                                                                                                                               |
+| ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`, `title`, `description`, `limits[]` | page chrome; the limits are listed at the foot of the layer panel                                                                                                                                                     |
+| `grid`                                   | the base field grid: `cell_m`, `cols`, `rows`; `x0` = model X of column 0's west edge, `z_south` = model Z of row 0's south edge (row 0 = south); `domain_origin_xy_m` and `origin_label` for the hover readout       |
+| `model`                                  | `url` (scene-relative), `bytes`, `compression` (`meshopt` or `draco`); optional `parts_manifest` (GitHub Pages copy fetched in parts), `supplement`, `tile` + `tile_bytes`, `expansion`, `demo_filter`, `plate_color` |
+| `lite`                                   | footprint + roof-height masks and their cell size for the voxel proxy city (phones, `?lite=1`)                                                                                                                        |
+| `masks`                                  | `footprint` by cell size (each layer is masked at its own resolution), `solid_wind` (file + layer index), optional `study_area`                                                                                       |
+| `focus`                                  | `box` [[x, z], [x, z]] of the area the tour orbits, `orbit_m`, `label`                                                                                                                                                |
+| `replay`                                 | `"demo_rev02"` switches on the South Kensington traffic / UAV / bird replay and its tabs                                                                                                                              |
+| `transport`                              | `file` (transport.json), `label`, `attribution`: the TfL layer and its tab                                                                                                                                            |
+| `traffic`                                | `dir` (traffic/), `label`: a SUMO replay (roads.json, signal_layer.json, replay/) drawn with demo_rev02's car, signal and lane modules; its Traffic tab and panel block                                               |
+| `timeline`                               | `step_s`, `steps`: the wind run's clock, shared by the layers that map onto it                                                                                                                                        |
+| `phase_order`                            | the field tabs and their sequence                                                                                                                                                                                     |
+| `layers`                                 | one entry per field type: `wind`, `temp`, `solar`, `diurnal`, `poll`, `flood` (any subset)                                                                                                                            |
 
 Layer entries: `file` (scene-relative .npy, `[frames, rows, cols]` or `[frames, 3, rows, cols]` for wind), `cell_m`,
 `frames`, `t0_s` + `step_s` (time of frame 0 and the frame spacing, to map the shared timeline onto the layer), or

@@ -40,6 +40,7 @@ class SurrogateStats:
         surface_temps = []
         surface_exchange = []
         heights = []
+
         def sample_values(arr: np.ndarray, max_values: int = max_values_per_array) -> np.ndarray:
             flat = np.asarray(arr).reshape(-1)
             if flat.size <= max_values:
@@ -69,7 +70,11 @@ class SurrogateStats:
         temp = np.concatenate(temps)
         vel = np.concatenate(velocities)
         surf = np.concatenate(surface_temps) if surface_temps else temp
-        exch = np.concatenate(surface_exchange) if surface_exchange else np.array([1.0], dtype=np.float32)
+        exch = (
+            np.concatenate(surface_exchange)
+            if surface_exchange
+            else np.array([1.0], dtype=np.float32)
+        )
         height = np.concatenate(heights) if heights else np.array([1.0], dtype=np.float32)
 
         return cls(
@@ -107,7 +112,9 @@ class Temperature3DCase:
             np.float32,
         )
         self.shade_field = self._load_optional(self.case_dir / "shade_field.npy", np.float32)
-        self.ambient_temp_series = self._load_optional(self.case_dir / "ambient_temp_series_c.npy", np.float32)
+        self.ambient_temp_series = self._load_optional(
+            self.case_dir / "ambient_temp_series_c.npy", np.float32
+        )
 
         if self.temperature.ndim != 4:
             raise ValueError(f"{self.case_dir / TEMP_FILE} must have shape [time, z, y, x].")
@@ -145,7 +152,11 @@ def discover_case_dirs(root: str | Path) -> list[Path]:
     root = Path(root)
     if (root / TEMP_FILE).exists():
         return [root]
-    case_dirs = sorted(path for path in root.rglob(TEMP_FILE) if SUMMARY_FILE in {p.name for p in path.parent.iterdir()})
+    case_dirs = sorted(
+        path
+        for path in root.rglob(TEMP_FILE)
+        if SUMMARY_FILE in {p.name for p in path.parent.iterdir()}
+    )
     return [path.parent for path in case_dirs]
 
 
@@ -177,7 +188,9 @@ class TemperatureSurrogateDataset(Dataset):
         valid_cases = [case for case in self.cases if case.n_training_steps >= self.history_steps]
         if len(valid_cases) != len(self.cases):
             dropped = len(self.cases) - len(valid_cases)
-            print(f"Dropped {dropped} case(s) with too few time steps for history_steps={self.history_steps}.")
+            print(
+                f"Dropped {dropped} case(s) with too few time steps for history_steps={self.history_steps}."
+            )
         self.cases = valid_cases
         if not self.cases:
             raise ValueError("No cases have enough time steps for training.")
@@ -206,7 +219,13 @@ class TemperatureSurrogateDataset(Dataset):
         speed = np.sqrt(u * u + v * v + w * w)
 
         channels = [self._norm_temp(frame) for frame in temp_history]
-        channels.extend([u / self.stats.velocity_scale, v / self.stats.velocity_scale, w / self.stats.velocity_scale])
+        channels.extend(
+            [
+                u / self.stats.velocity_scale,
+                v / self.stats.velocity_scale,
+                w / self.stats.velocity_scale,
+            ]
+        )
         if self.include_speed:
             channels.append(speed / self.stats.velocity_scale)
         channels.extend(self._static_channels(case, crop, t))
@@ -231,9 +250,13 @@ class TemperatureSurrogateDataset(Dataset):
         starts = []
         for dim, patch in zip(volume_shape, self.patch_size):
             if patch > dim:
-                raise ValueError(f"Patch size {self.patch_size} exceeds volume shape {volume_shape}.")
+                raise ValueError(
+                    f"Patch size {self.patch_size} exceeds volume shape {volume_shape}."
+                )
             max_start = dim - patch
-            starts.append(rng.randint(0, max_start) if self.random_crop and max_start > 0 else max_start // 2)
+            starts.append(
+                rng.randint(0, max_start) if self.random_crop and max_start > 0 else max_start // 2
+            )
         return tuple(starts)
 
     def _crop_slices(self, z0: int, y0: int, x0: int) -> tuple[slice, slice, slice]:
@@ -263,13 +286,20 @@ class TemperatureSurrogateDataset(Dataset):
             if case.roof_mask is not None
             else np.zeros_like(solid_bool)
         ).astype(np.float32)
-        height = self._broadcast_2d(case.height_field, shape, fill=0.0)[crop] / self.stats.height_scale
+        height = (
+            self._broadcast_2d(case.height_field, shape, fill=0.0)[crop] / self.stats.height_scale
+        )
         study = self._broadcast_2d(case.study_area_mask, shape, fill=True)[crop].astype(np.float32)
         surface_exchange = (
-            self._broadcast_2d(case.surface_exchange, shape, fill=0.0)[crop] / self.stats.surface_exchange_scale
+            self._broadcast_2d(case.surface_exchange, shape, fill=0.0)[crop]
+            / self.stats.surface_exchange_scale
         )
-        ground_surface = self._broadcast_2d(case.ground_surface_temperature, shape, fill=self.stats.temp_mean)[crop]
-        ground_surface = ((ground_surface - self.stats.surface_temp_mean) / self.stats.surface_temp_std).astype(np.float32)
+        ground_surface = self._broadcast_2d(
+            case.ground_surface_temperature, shape, fill=self.stats.temp_mean
+        )[crop]
+        ground_surface = (
+            (ground_surface - self.stats.surface_temp_mean) / self.stats.surface_temp_std
+        ).astype(np.float32)
         ambient = self._ambient_channel(case, shape, t)[crop]
         return [
             solid,
@@ -282,7 +312,9 @@ class TemperatureSurrogateDataset(Dataset):
             ambient.astype(np.float32),
         ]
 
-    def _ambient_channel(self, case: Temperature3DCase, shape: tuple[int, int, int], t: int) -> np.ndarray:
+    def _ambient_channel(
+        self, case: Temperature3DCase, shape: tuple[int, int, int], t: int
+    ) -> np.ndarray:
         if case.ambient_temp_series is None:
             value = self.stats.temp_mean
         else:
@@ -291,7 +323,9 @@ class TemperatureSurrogateDataset(Dataset):
         return np.full(shape, value, dtype=np.float32)
 
     @staticmethod
-    def _broadcast_2d(arr: np.ndarray | None, shape: tuple[int, int, int], fill: float | bool) -> np.ndarray:
+    def _broadcast_2d(
+        arr: np.ndarray | None, shape: tuple[int, int, int], fill: float | bool
+    ) -> np.ndarray:
         if arr is None:
             return np.full(shape, fill, dtype=np.float32)
         if arr.ndim == 3:
@@ -299,7 +333,9 @@ class TemperatureSurrogateDataset(Dataset):
         return np.broadcast_to(arr[None, :, :], shape).astype(np.float32)
 
     def _fluid_mask(self, case: Temperature3DCase, crop: tuple[slice, slice, slice]) -> np.ndarray:
-        study = self._broadcast_2d(case.study_area_mask, case.solid_mask.shape, fill=True).astype(bool)
+        study = self._broadcast_2d(case.study_area_mask, case.solid_mask.shape, fill=True).astype(
+            bool
+        )
         return (~np.asarray(case.solid_mask[crop], dtype=bool)) & study[crop]
 
 
@@ -348,7 +384,9 @@ class UNet3D(nn.Module):
         self.decoders = nn.ModuleList()
         for idx in range(depth - 1, -1, -1):
             if upsample_mode == "transpose":
-                self.upconvs.append(nn.ConvTranspose3d(channels[idx + 1], channels[idx], kernel_size=2, stride=2))
+                self.upconvs.append(
+                    nn.ConvTranspose3d(channels[idx + 1], channels[idx], kernel_size=2, stride=2)
+                )
             elif upsample_mode == "trilinear":
                 self.upconvs.append(
                     nn.Sequential(

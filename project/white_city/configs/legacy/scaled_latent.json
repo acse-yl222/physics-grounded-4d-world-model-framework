@@ -11,11 +11,19 @@
   "coarse_factor": 4,
   "min_free_gib": 2,
   "thermal": {
-    "ambient_c": 26.0, "ground_c": 30.0, "roof_c": 30.0,
-    "surface_exchange_per_s": 0.001, "diffusivity_m2_s": 1.0,
-    "cfl_safety": 0.8, "forcing_layers": 1,
-    "temperature_steps": 5, "temperature_overlap": [4,8,8],
-    "fine_spacing_m": 2.0, "factor": 4,
-    "wind_step_seconds": 50.0, "temperature_step_seconds": 90.0, "seed": 0
+    "ambient_c": 26.0,
+    "ground_c": 30.0,
+    "roof_c": 30.0,
+    "surface_exchange_per_s": 0.001,
+    "diffusivity_m2_s": 1.0,
+    "cfl_safety": 0.8,
+    "forcing_layers": 1,
+    "temperature_steps": 5,
+    "temperature_overlap": [4, 8, 8],
+    "fine_spacing_m": 2.0,
+    "factor": 4,
+    "wind_step_seconds": 50.0,
+    "temperature_step_seconds": 90.0,
+    "seed": 0
   }
 }

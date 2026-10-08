@@ -3,9 +3,7 @@
   "scene_id": "windfarm",
   "title": "np4m legacy",
   "time_alignment": "relative",
-  "runs": [
-    "imported_np4m_legacy"
-  ],
+  "runs": ["imported_np4m_legacy"],
   "layers": [
     {
       "run_id": "imported_np4m_legacy",

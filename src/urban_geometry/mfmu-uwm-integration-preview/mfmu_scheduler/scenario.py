@@ -51,18 +51,26 @@ def build_runtime(scenario: dict[str, Any]):
     """
 
     _require(isinstance(scenario, dict), "scenario must be a JSON object")
-    _require(int(scenario.get("horizon_slots", K_SERVICE)) == K_SERVICE,
-             "the current research snapshot requires horizon_slots=240")
+    _require(
+        int(scenario.get("horizon_slots", K_SERVICE)) == K_SERVICE,
+        "the current research snapshot requires horizon_slots=240",
+    )
 
     stations = scenario.get("stations")
-    _require(isinstance(stations, list) and len(stations) >= 2,
-             "stations must contain at least two entries")
+    _require(
+        isinstance(stations, list) and len(stations) >= 2,
+        "stations must contain at least two entries",
+    )
     station_ids = [str(row.get("id")) for row in stations]
     _require(len(set(station_ids)) == len(station_ids), "station IDs must be unique")
     station_index = {sid: idx + 1 for idx, sid in enumerate(station_ids)}
     coordinates = np.asarray([[float(row["x"]), float(row["y"])] for row in stations], dtype=float)
     _require(bool(np.isfinite(coordinates).all()), "station coordinates must be finite")
-    hubs = [idx + 1 for idx, row in enumerate(stations) if str(row.get("role", "station")).lower() == "hub"]
+    hubs = [
+        idx + 1
+        for idx, row in enumerate(stations)
+        if str(row.get("role", "station")).lower() == "hub"
+    ]
     _require(bool(hubs), "at least one station must have role='hub'")
 
     m = len(stations)
@@ -84,18 +92,26 @@ def build_runtime(scenario: dict[str, Any]):
     reserve = int(battery_cfg.get("reserve", 0))
     swap_slots = int(battery_cfg.get("swap_duration_slots", 2))
     swap_soc = int(battery_cfg.get("swap_completion_soc", 75))
-    _require((b_max, b_init, energy, reserve, swap_slots, swap_soc) == (75, 75, 4, 0, 2, 75),
-             "this snapshot supports only the validated battery proxy: 75/75, energy=4, reserve=0, swap=2->75")
+    _require(
+        (b_max, b_init, energy, reserve, swap_slots, swap_soc) == (75, 75, 4, 0, 2, 75),
+        "this snapshot supports only the validated battery proxy: 75/75, energy=4, reserve=0, swap=2->75",
+    )
     for row in fleet:
-        _require(int(row.get("initial_soc", b_init)) == b_init,
-                 "per-UAV initial_soc must equal the homogeneous battery initial_soc")
+        _require(
+            int(row.get("initial_soc", b_init)) == b_init,
+            "per-UAV initial_soc must equal the homogeneous battery initial_soc",
+        )
     try:
-        births = np.asarray([station_index[str(row["start_station"])] for row in fleet], dtype=np.int64)
+        births = np.asarray(
+            [station_index[str(row["start_station"])] for row in fleet], dtype=np.int64
+        )
     except KeyError as exc:
         raise ScenarioError(f"unknown fleet start_station: {exc}") from exc
 
     requests = scenario.get("requests")
-    _require(isinstance(requests, list) and requests, "requests must contain at least one paired request")
+    _require(
+        isinstance(requests, list) and requests, "requests must contain at least one paired request"
+    )
     requests = sorted(requests, key=lambda row: str(row.get("id")))
     order_ids = [str(row.get("id")) for row in requests]
     _require(len(set(order_ids)) == len(order_ids), "request IDs must be unique")
@@ -105,36 +121,50 @@ def build_runtime(scenario: dict[str, Any]):
             c = station_index[str(row["collection_station"])]
             d = station_index[str(row["dropoff_station"])]
         except KeyError as exc:
-            raise ScenarioError(f"request {order_ids[ordinal - 1]} references an unknown station: {exc}") from exc
+            raise ScenarioError(
+                f"request {order_ids[ordinal - 1]} references an unknown station: {exc}"
+            ) from exc
         kp = int(row["collection_slot"])
         earliest = kp + int(travel[c - 1, d - 1])
         window = row.get("dropoff_service_window", [earliest, earliest + 4])
-        _require(isinstance(window, list) and len(window) == 2,
-                 f"request {order_ids[ordinal - 1]} dropoff_service_window must be [first,last]")
+        _require(
+            isinstance(window, list) and len(window) == 2,
+            f"request {order_ids[ordinal - 1]} dropoff_service_window must be [first,last]",
+        )
         first, last = int(window[0]), int(window[1])
-        _require(first == earliest and last == earliest + 4,
-                 f"request {order_ids[ordinal - 1]} must use the frozen five-slot window [{earliest},{earliest + 4}]")
-        _require(1 <= kp <= K_SERVICE and last <= K_SERVICE,
-                 f"request {order_ids[ordinal - 1]} lies outside the 240-slot horizon")
+        _require(
+            first == earliest and last == earliest + 4,
+            f"request {order_ids[ordinal - 1]} must use the frozen five-slot window [{earliest},{earliest + 4}]",
+        )
+        _require(
+            1 <= kp <= K_SERVICE and last <= K_SERVICE,
+            f"request {order_ids[ordinal - 1]} lies outside the 240-slot horizon",
+        )
         eligible_external = row.get("eligible_uavs", uav_ids)
-        _require(isinstance(eligible_external, list) and eligible_external,
-                 f"request {order_ids[ordinal - 1]} requires at least one eligible UAV")
+        _require(
+            isinstance(eligible_external, list) and eligible_external,
+            f"request {order_ids[ordinal - 1]} requires at least one eligible UAV",
+        )
         try:
             eligible = sorted({uav_index[str(uid)] for uid in eligible_external})
         except KeyError as exc:
-            raise ScenarioError(f"request {order_ids[ordinal - 1]} references an unknown UAV: {exc}") from exc
+            raise ScenarioError(
+                f"request {order_ids[ordinal - 1]} references an unknown UAV: {exc}"
+            ) from exc
         eligible_hubs = sorted({int(births[u]) for u in eligible})
-        orders.append({
-            "order_id": ordinal,
-            "c": c,
-            "d": d,
-            "k_p": kp,
-            "k_d": last,
-            "W_D": list(range(first, last + 1)),
-            "U_base": eligible,
-            "n_U_base": len(eligible),
-            "eligible_hubs": eligible_hubs,
-        })
+        orders.append(
+            {
+                "order_id": ordinal,
+                "c": c,
+                "d": d,
+                "k_p": kp,
+                "k_d": last,
+                "W_D": list(range(first, last + 1)),
+                "U_base": eligible,
+                "n_U_base": len(eligible),
+                "eligible_hubs": eligible_hubs,
+            }
+        )
 
     hub_mask = np.zeros(m, dtype=float)
     hub_mask[np.asarray(hubs, dtype=int) - 1] = 1.0
@@ -174,8 +204,16 @@ def build_runtime(scenario: dict[str, Any]):
         json.dumps(authority_payload, sort_keys=True, separators=(",", ":")).encode()
     ).hexdigest()
     authority = battery.AuthV2(
-        battery.MODEL_ID, b_max, b_init, energy, reserve, swap_slots,
-        swap_soc, tuple(hubs), K_SERVICE, authority_digest,
+        battery.MODEL_ID,
+        b_max,
+        b_init,
+        energy,
+        reserve,
+        swap_slots,
+        swap_soc,
+        tuple(hubs),
+        K_SERVICE,
+        authority_digest,
     )
     policy = battery.PolicyV2(
         version="BATTERY_POLICY_V2",

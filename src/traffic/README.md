@@ -32,10 +32,10 @@ Training results appear in a unique `cache/south_ken/traffic_training/<run_id>/`
 
 For memory reasons, data is **generated on the fly during training/evaluation and is not saved to disk**. The two data generators:
 
-| Scenario | Command | Description |
-|---|---|---|
-| Complex intersection | `python -m traffic.data.generate_complex` | 12 feature channels|
-| Single intersection | `python -m traffic.data.generate_intersection` | 11 feature channels|
+| Scenario             | Command                                        | Description         |
+| -------------------- | ---------------------------------------------- | ------------------- |
+| Complex intersection | `python -m traffic.data.generate_complex`      | 12 feature channels |
+| Single intersection  | `python -m traffic.data.generate_intersection` | 11 feature channels |
 
 To adjust the data volume/scenario, edit `configs/default.py` (see §4).
 
@@ -121,15 +121,14 @@ python -m traffic.visualization.visualize_complex_prediction -s 0 -m <complex mo
 
 `configs/default.py`
 
-| Parameter | Meaning | Default |
-|---|---|---|
-| `GRID_SIZE` | Simulation grid side length | 56 |
-| `WINDOW_SIZE` | Observation window side length | 19 |
-| `HIST_STEPS` / `PRED_STEPS` | History steps / prediction steps | 10 / 6 |
-| `EPOCHS` | Training epochs | 250 |
-| `TRAIN_TRAJECTORIES` / `VAL_TRAJECTORIES` | Number of train/val trajectories | 2000 / 200 |
-| `TOTAL_FEAT_DIM` | Number of feature channels | 12 (see §5.1) |
-
+| Parameter                                 | Meaning                          | Default       |
+| ----------------------------------------- | -------------------------------- | ------------- |
+| `GRID_SIZE`                               | Simulation grid side length      | 56            |
+| `WINDOW_SIZE`                             | Observation window side length   | 19            |
+| `HIST_STEPS` / `PRED_STEPS`               | History steps / prediction steps | 10 / 6        |
+| `EPOCHS`                                  | Training epochs                  | 250           |
+| `TRAIN_TRAJECTORIES` / `VAL_TRAJECTORIES` | Number of train/val trajectories | 2000 / 200    |
+| `TOTAL_FEAT_DIM`                          | Number of feature channels       | 12 (see §5.1) |
 
 ## 5. Notes Before Use
 

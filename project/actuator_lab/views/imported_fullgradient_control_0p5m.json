@@ -3,9 +3,7 @@
   "scene_id": "actuator_lab",
   "title": "fullgradient control 0p5m",
   "time_alignment": "relative",
-  "runs": [
-    "imported_fullgradient_control_0p5m"
-  ],
+  "runs": ["imported_fullgradient_control_0p5m"],
   "layers": [
     {
       "run_id": "imported_fullgradient_control_0p5m",

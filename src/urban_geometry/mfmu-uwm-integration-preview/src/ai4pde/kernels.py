@@ -7,6 +7,7 @@ MG 转移核(Prolong/Restrict/_prolong_idx)按卡 §四.3 明确不移植。
 D 矩阵 = 通道混合权重;'km1' 方向抽头 0 放 D.T,'kp1' 方向抽头 2 放 D;
 输入须由调用方 pad 成 (B', M, K+2)(左 0 / 右复制,见 jacobi_cnn._dirconv)。
 """
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -22,13 +23,13 @@ class TravelKernel1D(nn.Module):
         D = np.asarray(D, float)
         M = D.shape[0]
         w = np.zeros((M, M, 3))
-        if direction == "km1":                            # f += x_{k-1} @ D
+        if direction == "km1":  # f += x_{k-1} @ D
             w[:, :, 0] = D.T
-        else:                                             # f += x_{k+1} @ D.T
+        else:  # f += x_{k+1} @ D.T
             w[:, :, 2] = D
         conv = nn.Conv1d(M, M, kernel_size=3, bias=False)
         conv.weight = nn.Parameter(torch.tensor(w, dtype=dtype), requires_grad=False)
-        self.conv = conv                                  # donor 原式:整体替换 Parameter,dtype 由构造决定
+        self.conv = conv  # donor 原式:整体替换 Parameter,dtype 由构造决定
 
     def forward(self, x_padded):
         return self.conv(x_padded)

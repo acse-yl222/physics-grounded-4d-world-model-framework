@@ -192,7 +192,9 @@ def generate_temperature_3d_surrogate_dataset(
                         ambient_temp_c=float(thermal_case["ambient_temp_c"]),
                         inflow_temp_c=float(thermal_case["inflow_temp_c"]),
                         cloud_cover_fraction=float(thermal_case["cloud_cover_fraction"]),
-                        anthropogenic_heat_flux_w_m2=float(thermal_case["anthropogenic_heat_flux_w_m2"]),
+                        anthropogenic_heat_flux_w_m2=float(
+                            thermal_case["anthropogenic_heat_flux_w_m2"]
+                        ),
                     )
                     run_outputs = run_temperature_3d_pipeline(
                         velocity_config,
@@ -217,12 +219,18 @@ def generate_temperature_3d_surrogate_dataset(
                     "ambient_temp_c": float(thermal_case["ambient_temp_c"]),
                     "inflow_temp_c": float(thermal_case["inflow_temp_c"]),
                     "cloud_cover_fraction": float(thermal_case["cloud_cover_fraction"]),
-                    "anthropogenic_heat_flux_w_m2": float(thermal_case["anthropogenic_heat_flux_w_m2"]),
+                    "anthropogenic_heat_flux_w_m2": float(
+                        thermal_case["anthropogenic_heat_flux_w_m2"]
+                    ),
                     "temperature_shape": summary.get("temperature_shape"),
                     "velocity_shape": summary.get("velocity_shape"),
                     "cache_reused": bool(summary.get("cache_reused", False)),
-                    "temperature_solver_backend_used": summary.get("temperature_solver_backend_used"),
-                    "summary_path": summary.get("summary_path", str(case_dir / "temperature_3d_run_summary.json")),
+                    "temperature_solver_backend_used": summary.get(
+                        "temperature_solver_backend_used"
+                    ),
+                    "summary_path": summary.get(
+                        "summary_path", str(case_dir / "temperature_3d_run_summary.json")
+                    ),
                 }
                 write_json(case_dir / "case_metadata.json", record)
                 manifest.append(record)

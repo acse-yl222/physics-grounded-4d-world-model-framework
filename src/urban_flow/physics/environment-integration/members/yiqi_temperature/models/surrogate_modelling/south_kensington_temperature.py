@@ -136,10 +136,9 @@ def compute_solar_position_deg(
 
     latitude_rad = math.radians(float(latitude_deg))
     hour_angle_rad = math.radians(hour_angle_deg)
-    cos_zenith = (
-        math.sin(latitude_rad) * math.sin(solar_declination)
-        + math.cos(latitude_rad) * math.cos(solar_declination) * math.cos(hour_angle_rad)
-    )
+    cos_zenith = math.sin(latitude_rad) * math.sin(solar_declination) + math.cos(
+        latitude_rad
+    ) * math.cos(solar_declination) * math.cos(hour_angle_rad)
     cos_zenith = min(1.0, max(-1.0, cos_zenith))
     solar_zenith_rad = math.acos(cos_zenith)
     solar_elevation_deg = 90.0 - math.degrees(solar_zenith_rad)
@@ -377,7 +376,11 @@ def extract_or_load_flow_fields(
 ) -> tuple[dict[str, object], dict[str, np.ndarray], bool]:
     cached_fields = load_cached_flow_fields(velocity_config, temp_config)
     if cached_fields is not None:
-        return {"config": velocity_config, "grid": {}, "cache_mode": "shared_velocity_output"}, cached_fields, True
+        return (
+            {"config": velocity_config, "grid": {}, "cache_mode": "shared_velocity_output"},
+            cached_fields,
+            True,
+        )
 
     velocity_results = run_pipeline(velocity_config)
     fields = extract_slice_fields(velocity_results, velocity_config, temp_config)
@@ -547,16 +550,12 @@ def solve_temperature_fields(
     source_c_per_second = scenario["source_c_per_second"]
     dx = float(velocity_config.model_resolution_m)
     dy = dx
-    cooling_relaxation_per_second = per_hour_to_per_second(
-        temp_config.ambient_cooling_c_per_hour
-    )
+    cooling_relaxation_per_second = per_hour_to_per_second(temp_config.ambient_cooling_c_per_hour)
     source_decay = float(np.clip(temp_config.afternoon_source_decay, 0.0, 1.0))
 
     u_frames = temp_config.velocity_scale * u_frames
     v_frames = temp_config.velocity_scale * v_frames
-    max_speed = float(
-        np.max(np.sqrt(u_frames**2 + v_frames**2))
-    )
+    max_speed = float(np.max(np.sqrt(u_frames**2 + v_frames**2)))
     stable_dt = temp_config.max_courant * min(dx, dy) / max(max_speed, 1e-6)
     diffusion_dt = 0.24 * min(dx, dy) ** 2 / max(temp_config.diffusion_coeff_m2_s, 1e-6)
     dt = min(stable_dt, diffusion_dt, temp_config.frame_duration_s)
@@ -799,7 +798,9 @@ def run_temperature_label_pipeline(
     velocity_config = velocity_config or SouthKensingtonConfig()
     temp_config = temp_config or TemperatureScenarioConfig()
 
-    velocity_results, fields, cache_reused = extract_or_load_flow_fields(velocity_config, temp_config)
+    velocity_results, fields, cache_reused = extract_or_load_flow_fields(
+        velocity_config, temp_config
+    )
     scenario = build_summer_afternoon_source(fields, velocity_config, temp_config)
     temperature_results = solve_temperature_fields(fields, scenario, velocity_config, temp_config)
     summary = save_results(
@@ -846,9 +847,15 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Generate South Kensington temperature labels from DIGIT velocity fields."
     )
-    parser.add_argument("--timesteppings", type=int, default=70, help="Number of DIGIT rollout steps.")
-    parser.add_argument("--model-resolution-m", type=float, default=4.0, help="Horizontal model resolution.")
-    parser.add_argument("--slice-idx", type=int, default=4, help="Vertical slice index for the temperature solve.")
+    parser.add_argument(
+        "--timesteppings", type=int, default=70, help="Number of DIGIT rollout steps."
+    )
+    parser.add_argument(
+        "--model-resolution-m", type=float, default=4.0, help="Horizontal model resolution."
+    )
+    parser.add_argument(
+        "--slice-idx", type=int, default=4, help="Vertical slice index for the temperature solve."
+    )
     parser.add_argument(
         "--frame-duration-s",
         type=float,

@@ -35,11 +35,13 @@ uwm-group1/
 1. Place the shared GLB and `stations.csv` in `geometry/`.
 
 2. Install bird sim dependencies (from `birds/`):
+
    ```bash
    pip install -r birds/requirements.txt
    ```
 
 3. Install the MFMU scheduler:
+
    ```bash
    cd mfmu-uwm-integration-preview
    pip install -e .
@@ -47,11 +49,13 @@ uwm-group1/
    ```
 
 4. Install traffic model dependencies:
+
 ```bash
    cd traffic && pip install -r requirements.txt && cd ..
 ```
 
 5. Train a traffic model (one-time, ~250 epochs, skip if you already have one):
+
 ```bash
    cd traffic && python train.py && cd ..
 ```
@@ -111,14 +115,14 @@ Without `--requests`, the script generates synthetic COLLECTION→DROPOFF delive
 
 All tuneable constants live at the top of `integrate.py`:
 
-| Constant | What it controls |
-|---|---|
-| `BIRDS_GLB` | Path to the GLB used for bird voxelisation |
-| `STATIONS_CSV` | Path to station positions and roles |
-| `MFMU_SPEED_MPS` | UAV cruise speed (m/s), used to compute travel times |
-| `MFMU_SLOT_DT_S` | Duration of one scheduler time slot (seconds) |
-| `MFMU_HORIZON` | Total scheduler time slots |
-| `MFMU_N_UAV` | Number of UAVs |
+| Constant           | What it controls                                        |
+| ------------------ | ------------------------------------------------------- |
+| `BIRDS_GLB`        | Path to the GLB used for bird voxelisation              |
+| `STATIONS_CSV`     | Path to station positions and roles                     |
+| `MFMU_SPEED_MPS`   | UAV cruise speed (m/s), used to compute travel times    |
+| `MFMU_SLOT_DT_S`   | Duration of one scheduler time slot (seconds)           |
+| `MFMU_HORIZON`     | Total scheduler time slots                              |
+| `MFMU_N_UAV`       | Number of UAVs                                          |
 | `COORD_OFFSET_X/Y` | Translation if station and bird coordinates don't align |
 
 ## Adding another model

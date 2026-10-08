@@ -22,7 +22,9 @@ def find_bundle_root() -> Path:
     for candidate in candidates:
         if (candidate / "temperature_surrogate_3d.py").exists():
             return candidate.resolve()
-    raise FileNotFoundError("Could not find temperature_field_bundle with temperature_surrogate_3d.py")
+    raise FileNotFoundError(
+        "Could not find temperature_field_bundle with temperature_surrogate_3d.py"
+    )
 
 
 BUNDLE_ROOT = find_bundle_root()
@@ -37,9 +39,16 @@ from temperature_surrogate_3d import (  # noqa: E402
 )
 
 
-ROLLOUT_RUN_DIR = BUNDLE_ROOT / "outputs" / "temperature_3d_unet_surrogate_rollout_k5_preserve_onestep_v1"
+ROLLOUT_RUN_DIR = (
+    BUNDLE_ROOT / "outputs" / "temperature_3d_unet_surrogate_rollout_k5_preserve_onestep_v1"
+)
 ROLLOUT_CHECKPOINT = ROLLOUT_RUN_DIR / "best_temperature_3d_unet_surrogate_rollout.pt"
-FALLBACK_CHECKPOINT = BUNDLE_ROOT / "outputs" / "temperature_3d_unet_surrogate" / "best_temperature_3d_unet_surrogate.pt"
+FALLBACK_CHECKPOINT = (
+    BUNDLE_ROOT
+    / "outputs"
+    / "temperature_3d_unet_surrogate"
+    / "best_temperature_3d_unet_surrogate.pt"
+)
 CASE_DIR = (
     BUNDLE_ROOT
     / "outputs"
@@ -108,7 +117,9 @@ def input_channel_count(history_steps: int = HISTORY_STEPS, include_speed: bool 
     return temperature_channels + velocity_window_channels + 8 + cool_surface_channels
 
 
-def adapt_state_dict_for_velocity_window(state_dict: dict[str, torch.Tensor], model: torch.nn.Module) -> dict[str, torch.Tensor]:
+def adapt_state_dict_for_velocity_window(
+    state_dict: dict[str, torch.Tensor], model: torch.nn.Module
+) -> dict[str, torch.Tensor]:
     model_state = model.state_dict()
     first_key = "encoders.0.block.0.weight"
     if first_key not in state_dict or first_key not in model_state:
@@ -165,7 +176,9 @@ def load_model_from_checkpoint(checkpoint: dict[str, object], device: torch.devi
         base_channels=int(config.get("base_channels", 12)),
         depth=int(config.get("depth", 3)),
     ).to(device)
-    model.load_state_dict(adapt_state_dict_for_velocity_window(checkpoint["model_state_dict"], model))
+    model.load_state_dict(
+        adapt_state_dict_for_velocity_window(checkpoint["model_state_dict"], model)
+    )
     model.eval()
     return model
 
@@ -211,7 +224,9 @@ def load_surface_mask_2d(case: Temperature3DCase, filename: str) -> np.ndarray:
     return np.zeros(case.temperature.shape[2:], dtype=bool)
 
 
-def cool_surface_channels(case: Temperature3DCase, crop: tuple[slice, slice, slice]) -> list[np.ndarray]:
+def cool_surface_channels(
+    case: Temperature3DCase, crop: tuple[slice, slice, slice]
+) -> list[np.ndarray]:
     if not USE_COOL_SURFACE_CHANNELS:
         return []
     full_shape = case.temperature.shape[1:]
@@ -249,7 +264,13 @@ def make_input(
         v_next = np.asarray(case.v[next_velocity_t], dtype=np.float32)
         w_next = np.asarray(case.w[next_velocity_t], dtype=np.float32)
         speed_next = np.sqrt(u_next * u_next + v_next * v_next + w_next * w_next)
-        channels.extend([u_next / stats.velocity_scale, v_next / stats.velocity_scale, w_next / stats.velocity_scale])
+        channels.extend(
+            [
+                u_next / stats.velocity_scale,
+                v_next / stats.velocity_scale,
+                w_next / stats.velocity_scale,
+            ]
+        )
         if helper.include_speed:
             channels.append(speed_next / stats.velocity_scale)
     channels.extend(helper._static_channels(case, crop, t))
@@ -282,22 +303,32 @@ def impose_temperature_constraints(
 
     ambient_value = stats.temp_mean
     if case.ambient_temp_series is not None:
-        ambient_value = float(case.ambient_temp_series[min(t + 1, len(case.ambient_temp_series) - 1)])
+        ambient_value = float(
+            case.ambient_temp_series[min(t + 1, len(case.ambient_temp_series) - 1)]
+        )
 
     zdim, ydim, xdim = constrained.shape
     if USE_BOUNDARY_TEMPERATURE_CONSTRAINTS:
         if xdim > 0:
-            vertical_profile = np.linspace(ambient_value + 0.1, ambient_value - 0.1, zdim, dtype=np.float32)
+            vertical_profile = np.linspace(
+                ambient_value + 0.1, ambient_value - 0.1, zdim, dtype=np.float32
+            )
             left_fluid = mask[:, :, 0]
-            constrained[:, :, 0] = np.where(left_fluid, vertical_profile[:, None], constrained[:, :, 0])
+            constrained[:, :, 0] = np.where(
+                left_fluid, vertical_profile[:, None], constrained[:, :, 0]
+            )
         if xdim > 1:
             right_fluid = mask[:, :, -1]
-            constrained[:, :, -1] = np.where(right_fluid, constrained[:, :, -2], constrained[:, :, -1])
+            constrained[:, :, -1] = np.where(
+                right_fluid, constrained[:, :, -2], constrained[:, :, -1]
+            )
         if ydim > 1:
             north_fluid = mask[:, 0, :]
             south_fluid = mask[:, -1, :]
             constrained[:, 0, :] = np.where(north_fluid, constrained[:, 1, :], constrained[:, 0, :])
-            constrained[:, -1, :] = np.where(south_fluid, constrained[:, -2, :], constrained[:, -1, :])
+            constrained[:, -1, :] = np.where(
+                south_fluid, constrained[:, -2, :], constrained[:, -1, :]
+            )
         if zdim > 0:
             top_fluid = mask[-1, :, :]
             constrained[-1, :, :] = np.where(top_fluid, ambient_value, constrained[-1, :, :])
@@ -346,7 +377,9 @@ def predict_volume_tiled(
                 xt = torch.from_numpy(tile[None, ...]).to(device, non_blocking=True)
                 with torch.amp.autocast("cuda", enabled=device.type == "cuda"):
                     pred_norm = model(xt)[0, 0]
-                pred_c = (pred_norm.float().cpu().numpy() * stats.temp_std + stats.temp_mean).astype(np.float32)
+                pred_c = (
+                    pred_norm.float().cpu().numpy() * stats.temp_std + stats.temp_mean
+                ).astype(np.float32)
                 pred_sum[z0 : z0 + tz, y0 : y0 + ty, x0 : x0 + tx] += pred_c
                 pred_count[z0 : z0 + tz, y0 : y0 + ty, x0 : x0 + tx] += 1.0
     return pred_sum / np.maximum(pred_count, 1.0)
@@ -380,13 +413,17 @@ def autoregressive_rollout(
         future_guess = initial_future_guess(correction_history)
         pred = None
         for iteration in range(CORRECTION_ITERATIONS):
-            informed_guess = impose_temperature_constraints(future_guess, case, stats, t, correction_history, mask)
+            informed_guess = impose_temperature_constraints(
+                future_guess, case, stats, t, correction_history, mask
+            )
             x_full = make_input(case, helper, stats, correction_history, informed_guess, t, device)
             pred = predict_volume_tiled(model, x_full, stats, device)
             pred = impose_temperature_constraints(pred, case, stats, t, correction_history, mask)
             alpha = float(iteration + 1) / float(CORRECTION_ITERATIONS)
             future_guess = informed_guess * (1.0 - alpha) + pred * alpha
-            future_guess = impose_temperature_constraints(future_guess, case, stats, t, correction_history, mask)
+            future_guess = impose_temperature_constraints(
+                future_guess, case, stats, t, correction_history, mask
+            )
             pred = future_guess.astype(np.float32)
         if pred is None:
             raise RuntimeError("CORRECTION_ITERATIONS must be at least 1.")
@@ -408,7 +445,12 @@ def masked(arr: np.ndarray, mask: np.ndarray) -> np.ndarray:
     return out
 
 
-def expanded_temperature_limits(values: np.ndarray, lower_pct: float = 1.0, upper_pct: float = 99.0, padding_fraction: float = 0.12) -> tuple[float, float]:
+def expanded_temperature_limits(
+    values: np.ndarray,
+    lower_pct: float = 1.0,
+    upper_pct: float = 99.0,
+    padding_fraction: float = 0.12,
+) -> tuple[float, float]:
     finite = np.asarray(values, dtype=np.float32)
     finite = finite[np.isfinite(finite)]
     if finite.size == 0:
@@ -438,7 +480,9 @@ def save_final_panel(
     z_levels = [min(4, pred.shape[0] - 1), min(11, pred.shape[0] - 1)]
     vmin, vmax = PANEL_TEMP_LIMITS_C
     err_lim = float(np.nanpercentile(np.abs(err[mask]), 98))
-    fig, axes = plt.subplots(len(z_levels), 3, figsize=(14, 4.2 * len(z_levels)), constrained_layout=True)
+    fig, axes = plt.subplots(
+        len(z_levels), 3, figsize=(14, 4.2 * len(z_levels)), constrained_layout=True
+    )
     if len(z_levels) == 1:
         axes = axes[None, :]
     im_temp = None
@@ -446,25 +490,49 @@ def save_final_panel(
         slice_mask = mask[z_idx]
         bias = float(np.mean(err[z_idx][slice_mask]))
         mae = float(np.mean(np.abs(err[z_idx][slice_mask])))
-        im_temp = axes[row, 0].imshow(masked(true[z_idx], slice_mask), cmap=temp_cmap, vmin=vmin, vmax=vmax, origin="upper")
+        im_temp = axes[row, 0].imshow(
+            masked(true[z_idx], slice_mask), cmap=temp_cmap, vmin=vmin, vmax=vmax, origin="upper"
+        )
         axes[row, 0].set_title(f"Physical model T\nframe {frame_id} | z={z_idx}")
-        axes[row, 1].imshow(masked(pred[z_idx], slice_mask), cmap=temp_cmap, vmin=vmin, vmax=vmax, origin="upper")
+        axes[row, 1].imshow(
+            masked(pred[z_idx], slice_mask), cmap=temp_cmap, vmin=vmin, vmax=vmax, origin="upper"
+        )
         axes[row, 1].set_title(f"Rollout-finetuned surrogate T\nz={z_idx}")
-        im_err = axes[row, 2].imshow(masked(err[z_idx], slice_mask), cmap=err_cmap, vmin=-err_lim, vmax=err_lim, origin="upper")
+        im_err = axes[row, 2].imshow(
+            masked(err[z_idx], slice_mask),
+            cmap=err_cmap,
+            vmin=-err_lim,
+            vmax=err_lim,
+            origin="upper",
+        )
         axes[row, 2].set_title(f"Error: surrogate - physical\nbias={bias:+.3f} C | MAE={mae:.3f} C")
         for ax in axes[row]:
-            ax.contour(building_mask_2d.astype(float), levels=[0.5], colors="black", linewidths=0.5, alpha=0.75)
+            ax.contour(
+                building_mask_2d.astype(float),
+                levels=[0.5],
+                colors="black",
+                linewidths=0.5,
+                alpha=0.75,
+            )
             ax.set_xlabel("x index")
             ax.set_ylabel("y index")
     if im_temp is not None:
         fig.colorbar(im_temp, ax=axes[:, :2], shrink=0.85, label="Temperature (deg C)")
     fig.colorbar(im_err, ax=axes[:, 2], shrink=0.85, label="deg C")
-    fig.suptitle("Virtual geometry autoregressive rollout test | rollout-finetuned checkpoint", fontsize=14)
+    fig.suptitle(
+        "Virtual geometry autoregressive rollout test | rollout-finetuned checkpoint", fontsize=14
+    )
     fig.savefig(OUT_DIR / out_filename, dpi=180)
     plt.close(fig)
 
 
-def save_gifs(pred_seq: np.ndarray, true_seq: np.ndarray, mask: np.ndarray, frame_ids: np.ndarray, building_mask_2d: np.ndarray) -> None:
+def save_gifs(
+    pred_seq: np.ndarray,
+    true_seq: np.ndarray,
+    mask: np.ndarray,
+    frame_ids: np.ndarray,
+    building_mask_2d: np.ndarray,
+) -> None:
     temp_cmap = plt.get_cmap("YlOrRd").copy()
     temp_cmap.set_bad("white")
     err_cmap = plt.get_cmap("coolwarm").copy()
@@ -481,12 +549,36 @@ def save_gifs(pred_seq: np.ndarray, true_seq: np.ndarray, mask: np.ndarray, fram
     z_idx = min(4, true.shape[1] - 1)
     fig, axes = plt.subplots(1, 3, figsize=(14, 4.6), constrained_layout=True)
     ims = [
-        axes[0].imshow(masked(true[0, z_idx], mask[z_idx]), cmap=temp_cmap, vmin=vmin, vmax=vmax, origin="upper"),
-        axes[1].imshow(masked(pred[0, z_idx], mask[z_idx]), cmap=temp_cmap, vmin=vmin, vmax=vmax, origin="upper"),
-        axes[2].imshow(masked(err[0, z_idx], mask[z_idx]), cmap=err_cmap, vmin=-err_lim, vmax=err_lim, origin="upper"),
+        axes[0].imshow(
+            masked(true[0, z_idx], mask[z_idx]),
+            cmap=temp_cmap,
+            vmin=vmin,
+            vmax=vmax,
+            origin="upper",
+        ),
+        axes[1].imshow(
+            masked(pred[0, z_idx], mask[z_idx]),
+            cmap=temp_cmap,
+            vmin=vmin,
+            vmax=vmax,
+            origin="upper",
+        ),
+        axes[2].imshow(
+            masked(err[0, z_idx], mask[z_idx]),
+            cmap=err_cmap,
+            vmin=-err_lim,
+            vmax=err_lim,
+            origin="upper",
+        ),
     ]
     for ax in axes:
-        ax.contour(building_mask_2d.astype(float), levels=[0.5], colors="black", linewidths=0.45, alpha=0.75)
+        ax.contour(
+            building_mask_2d.astype(float),
+            levels=[0.5],
+            colors="black",
+            linewidths=0.45,
+            alpha=0.75,
+        )
     fig.colorbar(ims[1], ax=axes[:2], shrink=0.82, label="Temperature (deg C)")
     fig.colorbar(ims[2], ax=axes[2], shrink=0.82, label="Error (deg C)")
 
@@ -502,8 +594,14 @@ def save_gifs(pred_seq: np.ndarray, true_seq: np.ndarray, mask: np.ndarray, fram
         axes[2].set_title(f"Error\nbias={bias:+.3f} C | MAE={mae:.3f} C")
         return ims
 
-    anim = FuncAnimation(fig, update_horizontal, frames=len(frames), interval=1000 / GIF_FPS, blit=False)
-    anim.save(OUT_DIR / f"horizontal_z{z_idx:02d}_rollout_finetuned.gif", writer=PillowWriter(fps=GIF_FPS), dpi=120)
+    anim = FuncAnimation(
+        fig, update_horizontal, frames=len(frames), interval=1000 / GIF_FPS, blit=False
+    )
+    anim.save(
+        OUT_DIR / f"horizontal_z{z_idx:02d}_rollout_finetuned.gif",
+        writer=PillowWriter(fps=GIF_FPS),
+        dpi=120,
+    )
     plt.close(fig)
 
     # Changed vertical view: fixed y plane, x-z section. This follows the main
@@ -512,9 +610,30 @@ def save_gifs(pred_seq: np.ndarray, true_seq: np.ndarray, mask: np.ndarray, fram
     fig, axes = plt.subplots(1, 3, figsize=(14, 4.4), constrained_layout=True)
     section_mask = mask[:, y_idx, :]
     ims = [
-        axes[0].imshow(masked(true[0, :, y_idx, :], section_mask), cmap=temp_cmap, vmin=vmin, vmax=vmax, origin="lower", aspect="auto"),
-        axes[1].imshow(masked(pred[0, :, y_idx, :], section_mask), cmap=temp_cmap, vmin=vmin, vmax=vmax, origin="lower", aspect="auto"),
-        axes[2].imshow(masked(err[0, :, y_idx, :], section_mask), cmap=err_cmap, vmin=-err_lim, vmax=err_lim, origin="lower", aspect="auto"),
+        axes[0].imshow(
+            masked(true[0, :, y_idx, :], section_mask),
+            cmap=temp_cmap,
+            vmin=vmin,
+            vmax=vmax,
+            origin="lower",
+            aspect="auto",
+        ),
+        axes[1].imshow(
+            masked(pred[0, :, y_idx, :], section_mask),
+            cmap=temp_cmap,
+            vmin=vmin,
+            vmax=vmax,
+            origin="lower",
+            aspect="auto",
+        ),
+        axes[2].imshow(
+            masked(err[0, :, y_idx, :], section_mask),
+            cmap=err_cmap,
+            vmin=-err_lim,
+            vmax=err_lim,
+            origin="lower",
+            aspect="auto",
+        ),
     ]
     for ax in axes:
         ax.set_xlabel("x index")
@@ -533,8 +652,14 @@ def save_gifs(pred_seq: np.ndarray, true_seq: np.ndarray, mask: np.ndarray, fram
         axes[2].set_title(f"Error\nbias={bias:+.3f} C | MAE={mae:.3f} C")
         return ims
 
-    anim = FuncAnimation(fig, update_vertical, frames=len(frames), interval=1000 / GIF_FPS, blit=False)
-    anim.save(OUT_DIR / f"vertical_y{y_idx:03d}_xz_rollout_finetuned.gif", writer=PillowWriter(fps=GIF_FPS), dpi=120)
+    anim = FuncAnimation(
+        fig, update_vertical, frames=len(frames), interval=1000 / GIF_FPS, blit=False
+    )
+    anim.save(
+        OUT_DIR / f"vertical_y{y_idx:03d}_xz_rollout_finetuned.gif",
+        writer=PillowWriter(fps=GIF_FPS),
+        dpi=120,
+    )
     plt.close(fig)
 
 
@@ -548,14 +673,19 @@ def main() -> None:
         )
     checkpoint_path = ROLLOUT_CHECKPOINT if ROLLOUT_CHECKPOINT.exists() else FALLBACK_CHECKPOINT
     if checkpoint_path == FALLBACK_CHECKPOINT:
-        print("Rollout checkpoint not found; falling back to one-step checkpoint for comparison.", flush=True)
+        print(
+            "Rollout checkpoint not found; falling back to one-step checkpoint for comparison.",
+            flush=True,
+        )
     checkpoint = torch.load(checkpoint_path, map_location="cpu")
     config = checkpoint.get("config", {})
     CORRECTION_ITERATIONS = int(config.get("correction_iterations", CORRECTION_ITERATIONS))
     stats = SurrogateStats(**checkpoint["stats"])
     history_steps = int(config.get("history_steps", HISTORY_STEPS))
     if history_steps != HISTORY_STEPS:
-        raise ValueError(f"This script expects HISTORY_STEPS={HISTORY_STEPS}, checkpoint has {history_steps}.")
+        raise ValueError(
+            f"This script expects HISTORY_STEPS={HISTORY_STEPS}, checkpoint has {history_steps}."
+        )
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = load_model_from_checkpoint(checkpoint, device)
 
@@ -608,7 +738,11 @@ def main() -> None:
 
     velocity_dir = case._velocity_cache_dir()
     building_mask_path = velocity_dir / "building_mask_2d.npy"
-    building_mask_2d = np.load(building_mask_path).astype(bool) if building_mask_path.exists() else np.any(case.solid_mask, axis=0)
+    building_mask_2d = (
+        np.load(building_mask_path).astype(bool)
+        if building_mask_path.exists()
+        else np.any(case.solid_mask, axis=0)
+    )
     save_final_panel(pred_seq[-1], true_seq[-1], mask, int(frame_ids[-1]), building_mask_2d)
     save_gifs(pred_seq, true_seq, mask, frame_ids, building_mask_2d)
     print("Saved outputs to:", OUT_DIR)

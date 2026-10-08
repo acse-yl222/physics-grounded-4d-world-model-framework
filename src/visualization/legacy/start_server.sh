@@ -6,10 +6,12 @@
 cd "$(dirname "$0")"
 PORT="${1:-8787}"
 if [ -f server.pid ] && kill -0 "$(cat server.pid)" 2>/dev/null; then
-  echo "stopping old server pid $(cat server.pid)"; kill "$(cat server.pid)"; sleep 1
+  echo "stopping old server pid $(cat server.pid)"
+  kill "$(cat server.pid)"
+  sleep 1
 fi
-setsid nohup python3 serve.py "$PORT" --host 0.0.0.0 --no-browser > server.log 2>&1 &
-echo $! > server.pid
+setsid nohup python3 serve.py "$PORT" --host 0.0.0.0 --no-browser >server.log 2>&1 &
+echo $! >server.pid
 sleep 1
 echo "started pid $(cat server.pid); $(head -1 server.log)"
 echo "local:     http://localhost:$PORT/viewer/3d/"

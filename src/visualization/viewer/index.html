@@ -1,14 +1,53 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Physics-Grounded 4D World Model Framework · Scene viewer</title>
-<link rel="stylesheet" href="style.css">
-<script type="importmap">{"imports":{"three":"../vendor/three/build/three.module.js","three/addons/":"../vendor/three/examples/jsm/"}}</script>
-</head>
-<body>
-<header><a href="../../../">All scenes</a><strong>Physics-Grounded 4D World Model Framework</strong><select id="scene" aria-label="Scene"><option value="">Protocol example</option></select><select id="view" aria-label="View"></select><span id="title">Scene viewer</span><button id="fit">Fit scene</button></header>
-<main><aside><h1>Layers</h1><p id="status" role="status">Loading…</p><div id="layers"></div><h2>Selection</h2><pre id="selection">Click an object to inspect it.</pre><div id="legends"></div></aside><section id="viewport" aria-label="Interactive 3D scene"><div id="error" role="alert" hidden></div><div id="charts"></div></section></main>
-<footer><button id="play" aria-label="Play timeline">Play</button><input id="time" aria-label="Time in seconds" type="range" min="0" max="1" step="any" value="0"><output id="clock">0 s</output><span id="source-note">Synthetic protocol example</span></footer>
-<script type="module" src="main.mjs"></script>
-</body></html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Physics-Grounded 4D World Model Framework · Scene viewer</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "../vendor/three/build/three.module.js",
+          "three/addons/": "../vendor/three/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <header>
+      <a href="../../../">All scenes</a><strong>Physics-Grounded 4D World Model Framework</strong
+      ><select id="scene" aria-label="Scene">
+        <option value="">Protocol example</option></select
+      ><select id="view" aria-label="View"></select
+      ><span id="title">Scene viewer</span><button id="fit">Fit scene</button>
+    </header>
+    <main>
+      <aside>
+        <h1>Layers</h1>
+        <p id="status" role="status">Loading…</p>
+        <div id="layers"></div>
+        <h2>Selection</h2>
+        <pre id="selection">Click an object to inspect it.</pre>
+        <div id="legends"></div>
+      </aside>
+      <section id="viewport" aria-label="Interactive 3D scene">
+        <div id="error" role="alert" hidden></div>
+        <div id="charts"></div>
+      </section>
+    </main>
+    <footer>
+      <button id="play" aria-label="Play timeline">Play</button
+      ><input
+        id="time"
+        aria-label="Time in seconds"
+        type="range"
+        min="0"
+        max="1"
+        step="any"
+        value="0"
+      /><output id="clock">0 s</output><span id="source-note">Synthetic protocol example</span>
+    </footer>
+    <script type="module" src="main.mjs"></script>
+  </body>
+</html>

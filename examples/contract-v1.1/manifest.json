@@ -23,24 +23,13 @@
       "vertical_datum": "synthetic"
     },
     "bounds_m": {
-      "min": [
-        0,
-        0,
-        0
-      ],
-      "max": [
-        5,
-        4,
-        4
-      ]
+      "min": [0, 0, 0],
+      "max": [5, 4, 4]
     }
   },
   "time": {
     "unit": "s",
-    "samples": [
-      0,
-      1
-    ]
+    "samples": [0, 1]
   },
   "layers": [
     {
@@ -56,29 +45,14 @@
       "encoding": {
         "coordinate_frame": "ENU",
         "dtype": "<f4",
-        "shape": [
-          2,
-          3,
-          4,
-          5
-        ],
+        "shape": [2, 3, 4, 5],
         "axes": "TCYX",
-        "origin_m": [
-          0,
-          0,
-          1
-        ],
-        "spacing_m": [
-          1,
-          1
-        ],
+        "origin_m": [0, 0, 1],
+        "spacing_m": [1, 1],
         "sample_location": "cell_center",
         "byte_order": "little",
         "compression": "none",
-        "frame_assets": [
-          "frame_0.npy",
-          "frame_1.npy"
-        ],
+        "frame_assets": ["frame_0.npy", "frame_1.npy"],
         "height_asset": "height.npy",
         "height_dtype": "<f4",
         "mask_asset": "mask.npy",
@@ -87,11 +61,7 @@
       },
       "display": {
         "widget": "vector_field",
-        "capabilities": [
-          "pick",
-          "legend",
-          "opacity"
-        ]
+        "capabilities": ["pick", "legend", "opacity"]
       }
     }
   ]

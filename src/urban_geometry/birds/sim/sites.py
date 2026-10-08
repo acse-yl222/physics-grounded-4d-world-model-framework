@@ -3,7 +3,7 @@ sites.py = compute and sample landing-site surface heightmaps
 
 a "site" is any place birds descend to and land on e.g. a roost, or a forage site
 - each site is a dict with 'center' [x,y,z], 'size' [len,wid], 'forward', 'normal', and 'quality'
-- drapes each site's rectangle onto the voxel geometry below it 
+- drapes each site's rectangle onto the voxel geometry below it
 - heightmaps are computed once at init and cached for the lifetime of the simulation
 
 TODO: make this work based on roost quality score
@@ -34,17 +34,17 @@ def compute_site_heightmap(site_def, geo_data, grid_origin, resolution=50):
     Returns:
         heightmap dict with heights array and coordinate system info
     """
-    center = np.array(site_def['center'])
-    size = site_def.get('size', [30.0, 30.0])
+    center = np.array(site_def["center"])
+    size = site_def.get("size", [30.0, 30.0])
 
     # build orthonormal basis for the site rectangle
-    forward = np.array(site_def.get('forward', [1, 0, 0]), dtype=float)
-    normal = np.array(site_def.get('normal', [0, 0, 1]), dtype=float)
+    forward = np.array(site_def.get("forward", [1, 0, 0]), dtype=float)
+    normal = np.array(site_def.get("normal", [0, 0, 1]), dtype=float)
     forward = forward / np.maximum(np.linalg.norm(forward), 1e-6)
     normal = normal / np.maximum(np.linalg.norm(normal), 1e-6)
     side = np.cross(normal, forward)
     side = side / np.maximum(np.linalg.norm(side), 1e-6)
-    forward = np.cross(side, normal) # re-orthogonalize
+    forward = np.cross(side, normal)  # re-orthogonalize
 
     half_len = size[0] / 2.0
     half_wid = size[1] / 2.0
@@ -54,16 +54,18 @@ def compute_site_heightmap(site_def, geo_data, grid_origin, resolution=50):
     v_vals = np.linspace(-half_wid, half_wid, resolution)
 
     # default height = ground level (no geometry below)
-    heights = np.full((resolution, resolution), 0.5) # TODO: this 0.5 is a fallback but should not trigger
+    heights = np.full(
+        (resolution, resolution), 0.5
+    )  # TODO: this 0.5 is a fallback but should not trigger
 
     if geo_data is not None:
-        geo = geo_data['geometry'] # (nz, ny, nx) bool array
-        sp = geo_data['grid_spacing'] # xy grid spacing in meters
-        sp_z = geo_data['grid_spacing_z'] # z grid spacing in meters
+        geo = geo_data["geometry"]  # (nz, ny, nx) bool array
+        sp = geo_data["grid_spacing"]  # xy grid spacing in meters
+        sp_z = geo_data["grid_spacing_z"]  # z grid spacing in meters
         origin = np.array(grid_origin)
 
         # vectorized: compute world positions for all sample points at once
-        uu, vv = np.meshgrid(u_vals, v_vals, indexing='ij') # (res, res)
+        uu, vv = np.meshgrid(u_vals, v_vals, indexing="ij")  # (res, res)
         world_x = center[0] + uu * forward[0] + vv * side[0]
         world_y = center[1] + uu * forward[1] + vv * side[1]
 
@@ -89,14 +91,14 @@ def compute_site_heightmap(site_def, geo_data, grid_origin, resolution=50):
             heights[is_solid] = origin[2] + (gk + 1) * sp_z
 
     return {
-        'heights': heights,
-        'u_vals': u_vals,
-        'v_vals': v_vals,
-        'forward': forward,
-        'side': side,
-        'center': center,
-        'normal': normal,
-        'size': size,
+        "heights": heights,
+        "u_vals": u_vals,
+        "v_vals": v_vals,
+        "forward": forward,
+        "side": side,
+        "center": center,
+        "normal": normal,
+        "size": size,
     }
 
 
@@ -115,15 +117,18 @@ def get_site_heightmaps(config, sites, geo_data=None, grid_origin=None):
     """
     if not sites:
         return []
-    
+
     # cache key = tuple of site centers, invalidates if sites move
-    centers = tuple(tuple(s['center']) for s in sites)
+    centers = tuple(tuple(s["center"]) for s in sites)
     if centers not in _heightmap_cache:
-        origin = np.array(grid_origin) if grid_origin is not None else np.array(config.scaled_grid_origin)
-        _heightmap_cache[centers] = [
-            compute_site_heightmap(s, geo_data, origin) for s in sites
-        ]
+        origin = (
+            np.array(grid_origin)
+            if grid_origin is not None
+            else np.array(config.scaled_grid_origin)
+        )
+        _heightmap_cache[centers] = [compute_site_heightmap(s, geo_data, origin) for s in sites]
     return _heightmap_cache[centers]
+
 
 def sample_surface_height(heightmaps, positions):
     """
@@ -144,33 +149,35 @@ def sample_surface_height(heightmaps, positions):
         return np.full(N, 0.5), np.zeros(N, dtype=int)
 
     # find closest site per bird by 3D distance to site centers
-    site_centers = np.array([h['center'] for h in heightmaps]) # (R, 3)
-    diffs = site_centers[np.newaxis, :, :] - positions[:, np.newaxis, :] # (N, R, 3)
-    dists = np.linalg.norm(diffs, axis=-1) # (N, R)
-    closest_site = np.argmin(dists, axis=1) # (N,)
+    site_centers = np.array([h["center"] for h in heightmaps])  # (R, 3)
+    diffs = site_centers[np.newaxis, :, :] - positions[:, np.newaxis, :]  # (N, R, 3)
+    dists = np.linalg.norm(diffs, axis=-1)  # (N, R)
+    closest_site = np.argmin(dists, axis=1)  # (N,)
 
-    surface_z = np.full(N, 0.5) # default ground level TODO: this should not trigger maybe change later
+    surface_z = np.full(
+        N, 0.5
+    )  # default ground level TODO: this should not trigger maybe change later
 
     # interpolate each bird from its closest site's heightmap
     for ri in range(len(heightmaps)):
         hmap = heightmaps[ri]
-        bird_mask = (closest_site == ri)
+        bird_mask = closest_site == ri
         if not bird_mask.any():
             continue
 
         bird_pos = positions[bird_mask]
-        center = hmap['center']
-        forward = hmap['forward']
-        side = hmap['side']
-        u_vals = hmap['u_vals']
-        v_vals = hmap['v_vals']
-        heights = hmap['heights']
+        center = hmap["center"]
+        forward = hmap["forward"]
+        side = hmap["side"]
+        u_vals = hmap["u_vals"]
+        v_vals = hmap["v_vals"]
+        heights = hmap["heights"]
         res = heights.shape[0]
 
         # project bird positions into site-local uv coordinates
-        rel = bird_pos - center # (M, 3)
-        u_pos = rel @ forward # (M,) position along site length
-        v_pos = rel @ side # (M,) position along site width
+        rel = bird_pos - center  # (M, 3)
+        u_pos = rel @ forward  # (M,) position along site length
+        v_pos = rel @ side  # (M,) position along site width
 
         # convert to fractional grid indices for bilinear interpolation
         u_frac = (u_pos - u_vals[0]) / (u_vals[-1] - u_vals[0]) * (res - 1)
@@ -185,7 +192,7 @@ def sample_surface_height(heightmaps, positions):
         v0 = np.floor(v_frac).astype(int)
         u1 = np.minimum(u0 + 1, res - 1)
         v1 = np.minimum(v0 + 1, res - 1)
-        du = u_frac - u0 # fractional position within cell
+        du = u_frac - u0  # fractional position within cell
         dv = v_frac - v0
 
         h00 = heights[u0, v0]
@@ -194,9 +201,8 @@ def sample_surface_height(heightmaps, positions):
         h11 = heights[u1, v1]
 
         # weighted average of four corners
-        surface_z[bird_mask] = (h00 * (1 - du) * (1 - dv) +
-                                h10 * du * (1 - dv) +
-                                h01 * (1 - du) * dv +
-                                h11 * du * dv)
+        surface_z[bird_mask] = (
+            h00 * (1 - du) * (1 - dv) + h10 * du * (1 - dv) + h01 * (1 - du) * dv + h11 * du * dv
+        )
 
     return surface_z, closest_site

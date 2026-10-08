@@ -7,18 +7,18 @@
 
 本文使用中文说明规则，代码字段、接口名称和路径保留英文，以便与实现对应。
 
-| 术语 | 中文含义 |
-| --- | --- |
-| scene | 场景：共享空间坐标的一组几何、配置和运行结果 |
-| run | 一次仿真运行及其输出 |
-| manifest | 运行清单：声明数据、来源、坐标、时间和图层的 JSON 文件 |
-| layer | 图层：可单独加载、显示和查询的一组数据 |
-| widget | 可视化组件：把图层数据转为几何、箭头、曲线等展示 |
-| asset / artifact | 资产文件 / 附加产物，如模型、数组、日志和源码快照 |
-| provenance | 来源与复现信息：代码版本、参数、输入和文件校验值 |
-| schema | 结构规范：机器可执行的 JSON 校验规则 |
-| sampling | 时间采样方式：静态、阶梯取样或线性插值 |
-| bundle | 运行集合：一起保留并注册为一个视图的多个运行 |
+| 术语             | 中文含义                                               |
+| ---------------- | ------------------------------------------------------ |
+| scene            | 场景：共享空间坐标的一组几何、配置和运行结果           |
+| run              | 一次仿真运行及其输出                                   |
+| manifest         | 运行清单：声明数据、来源、坐标、时间和图层的 JSON 文件 |
+| layer            | 图层：可单独加载、显示和查询的一组数据                 |
+| widget           | 可视化组件：把图层数据转为几何、箭头、曲线等展示       |
+| asset / artifact | 资产文件 / 附加产物，如模型、数组、日志和源码快照      |
+| provenance       | 来源与复现信息：代码版本、参数、输入和文件校验值       |
+| schema           | 结构规范：机器可执行的 JSON 校验规则                   |
+| sampling         | 时间采样方式：静态、阶梯取样或线性插值                 |
+| bundle           | 运行集合：一起保留并注册为一个视图的多个运行           |
 
 ## 1. 目录与责任
 
@@ -62,7 +62,7 @@ Git 保存代码、协议、场景配置、视图配置和小型合成示例。�
 本地可选 `storage.local.json`（已加入 Git ignore）：
 
 ```json
-{"data_root": "/absolute/path/to/urban-data", "cache_root": "/absolute/path/to/scratch"}
+{ "data_root": "/absolute/path/to/urban-data", "cache_root": "/absolute/path/to/scratch" }
 ```
 
 数据工作区由显式 `--root`、`P4D_ROOT`、兼容变量 `UWM_ROOT`、开发安装的源码根依次选择。
@@ -110,13 +110,13 @@ project/views 分别由 `project-v1.schema.json`、`view-v1.schema.json` 校验�
 
 v1 最小编码是 UTF-8 JSON，`kind` 决定 payload：
 
-| kind | JSON payload | 可视化工具与典型交互 |
-| --- | --- | --- |
-| mesh | positions: N×3；triangles: M×3 整数索引 | 网格、材质、透明度、对象选择 |
-| scalar_field | positions: N×3；values: N 或 T×N | 色带、范围、数值查询；剖切需能力声明 |
-| vector_field | positions: N×3；vectors: N×3 或 T×N×3 | 箭头；流线需插值器支持 |
-| trajectories | ids: N 个唯一字符串；positions: T×N×3 | 实体、轨迹、回放、实体选择 |
-| time_series | values: N 或 T×N，labels: N 个字符串 | 曲线、时间游标、数值查询 |
+| kind         | JSON payload                            | 可视化工具与典型交互                 |
+| ------------ | --------------------------------------- | ------------------------------------ |
+| mesh         | positions: N×3；triangles: M×3 整数索引 | 网格、材质、透明度、对象选择         |
+| scalar_field | positions: N×3；values: N 或 T×N        | 色带、范围、数值查询；剖切需能力声明 |
+| vector_field | positions: N×3；vectors: N×3 或 T×N×3   | 箭头；流线需插值器支持               |
+| trajectories | ids: N 个唯一字符串；positions: T×N×3   | 实体、轨迹、回放、实体选择           |
+| time_series  | values: N 或 T×N，labels: N 个字符串    | 曲线、时间游标、数值查询             |
 
 这里 N 是点/实体/通道数；T 必须等于 time.samples 长度。静态层使用 sampling=static；
 动态层使用 step 或 linear；mesh 在此版本仅支持 static。轨迹必须是动态层。

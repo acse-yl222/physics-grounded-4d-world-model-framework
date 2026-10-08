@@ -15,6 +15,3 @@ Temperature Model Yiqi Zhu, Zhongkai Yueyan/Nerual Physics
 Pollution model Yueyan, Yuhang Dai, Zhongkai/Nerual Physics
 Flooding Model Yueyan, Dingyu/Nerual Physics
 Sunlight Model Yueyan/Nerual Physics
-
-
-

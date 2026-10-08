@@ -1,13 +1,210 @@
-import{setDataBase,getFrame,npy,loadMask,f16}from'../npy.js';
-const base='../../scenes/windfarm_2m/';setDataBase(base);const $=id=>document.getElementById(id),palette=[[38,63,131],[22,139,166],[103,200,164],[243,220,105],[237,116,69]];let g,m,mask,ground,nx,ny,data,view,playing=false,epoch=0,request=0;
-async function json(p){const r=await fetch(base+p,{cache:'no-store'});if(!r.ok)throw Error(p+': '+r.status);return r.json();}
-function setView(){if($('focus').value==='all')view=[0,0,nx,ny];else{const t=g.turbines[+$('focus').value],x=(t.hub_xyz_m[0]-g.origin_xyz_m[0])/2,y=(t.hub_xyz_m[1]-g.origin_xyz_m[1])/2;view=[Math.max(0,Math.min(nx-320,Math.floor(x-90))),Math.max(0,Math.min(ny-320,Math.floor(y-160))),320,320];}draw();}
-function draw(){if(!data)return;const can=$('wind'),ctx=can.getContext('2d'),[x0,y0,w,h]=view;can.width=w;can.height=h;const im=ctx.createImageData(w,h);for(let y=0;y<h;y++)for(let x=0;x<w;x++){const i=(y+y0)*nx+x+x0,t=Math.max(0,Math.min(4,data[i]/5)),j=Math.min(3,Math.floor(t)),f=t-j,rgb=mask[i]?[90,100,110]:palette[j].map((c,k)=>c+(palette[j+1][k]-c)*f);im.data.set([...rgb,255],((h-1-y)*w+x)*4);}ctx.putImageData(im,0,0);ctx.strokeStyle='white';ctx.lineWidth=w===nx?3:1;for(const t of g.turbines){const x=(t.hub_xyz_m[0]-g.origin_xyz_m[0])/2-x0,y=h-((t.hub_xyz_m[1]-g.origin_xyz_m[1])/2-y0);ctx.beginPath();ctx.moveTo(x,y-t.radius_m/2);ctx.lineTo(x,y+t.radius_m/2);ctx.stroke();}terrain();}
-function terrain(){const can=$('terrain'),ctx=can.getContext('2d');can.width=nx;can.height=ny;const im=ctx.createImageData(nx,ny),[lo,hi]=g.ground_range_m;for(let y=0;y<ny;y++)for(let x=0;x<nx;x++){const i=y*nx+x,t=(ground[i]-lo)/(hi-lo);im.data.set([45+t*165,70+t*140,61+t*100,255],((ny-1-y)*nx+x)*4);}ctx.putImageData(im,0,0);for(const t of g.turbines){ctx.beginPath();ctx.arc((t.hub_xyz_m[0]-g.origin_xyz_m[0])/2,ny-(t.hub_xyz_m[1]-g.origin_xyz_m[1])/2,7,0,7);ctx.fillStyle='white';ctx.fill();}ctx.strokeStyle='#85e5da';ctx.lineWidth=3;ctx.strokeRect(view[0],ny-view[1]-view[3],view[2],view[3]);}
-async function show(i){const token=++request;try{const values=f16(await getFrame(m.files[i],0));if(token!==request)return;data=values;draw();$('clock').textContent=`${i+1}/${m.times.length} frames · ${m.times[i].toFixed(1)} s`;$('time').value=i;const r=m.metrics[i];$('metrics').textContent=`Step ${r.step} · Post-projection divergence RMS ${r.pressure.divergence_rms.toExponential(2)} s⁻¹ · Peak GPU memory ${r.gpu_peak_gib.toFixed(2)} GiB`;$('rows').replaceChildren(...g.turbines.map((t,k)=>{const tr=document.createElement('tr');for(const v of [t.id.replace('node-',''),r.disk_velocity_m_s[k].toFixed(2),(r.thrust_N[k]/1000).toFixed(1)]){const td=document.createElement('td');td.textContent=v;tr.append(td);}return tr;}));}catch(e){$('metrics').textContent='Read failed: '+e.message;stop();}}
-function stop(){playing=false;epoch++;$('play').textContent='Play';}async function tick(e){if(!playing||e!==epoch)return;await show((+$('time').value+1)%m.times.length);if(playing&&e===epoch)setTimeout(()=>tick(e),200);}
-$('play').onclick=()=>{if(playing)stop();else{$('live').checked=false;playing=true;$('play').textContent='Pause';tick(++epoch);}};$('time').oninput=()=>{stop();$('live').checked=false;show(+$('time').value);};$('focus').onchange=setView;$('live').onchange=()=>{if($('live').checked){stop();show(m.times.length-1);}};
-$('wind').onmousemove=e=>{if(!data)return;const r=e.target.getBoundingClientRect(),x=Math.floor((e.clientX-r.left)/r.width*view[2])+view[0],y=view[1]+view[3]-1-Math.floor((e.clientY-r.top)/r.height*view[3]),i=y*nx+x;if(i<0||i>=nx*ny)return;$('readout').textContent=`Axial velocity ${data[i].toFixed(3)} m/s · x ${(g.origin_xyz_m[0]+(x+.5)*2).toFixed(0)} m / y ${(g.origin_xyz_m[1]+(y+.5)*2).toFixed(0)} m`;};
-async function refresh(){try{const [next,s]=await Promise.all([json('manifest.json'),json('status.json')]);const count=m?.files.length??0;m=next;$('time').max=m.times.length-1;$('status').className=s.state==='failed'?'bad':'good';$('status').textContent=`${s.state==='complete'?'Complete':s.state==='failed'?'Stopped: '+s.error:s.state==='step_limit'?'Trial paused':'Computing on workstation'} · Saved ${m.simulated_seconds.toFixed(1)} / ${m.target_seconds} seconds · ${m.completed_steps} steps`;$('play').disabled=m.times.length<2;if(g&&$('live').checked&&count!==m.files.length)await show(m.files.length-1);}catch(e){$('status').textContent='Live status is temporarily unavailable: '+e.message;}}
-try{g=await json('geometry.json');[ny,nx]=g.shape_zyx.slice(1);[mask,ground]=await Promise.all([loadMask('mask.npy'),npy('ground.npy').readAll()]);for(const [i,t] of g.turbines.entries())$('focus').append(Object.assign(document.createElement('option'),{value:i,textContent:'Turbine '+t.id.replace('node-','')}));view=[0,0,nx,ny];$('geometry').textContent=`All ${g.turbines.length} turbines · ${g.cell_m} m grid · Terrain coverage ${(g.terrain_coverage_fraction*100).toFixed(1)}%`;
- await refresh();if(!data&&m)await show(m.times.length-1);setInterval(refresh,15000);}catch(e){$('status').textContent='Initialization failed: '+e.message;}
+import { setDataBase, getFrame, npy, loadMask, f16 } from '../npy.js';
+const base = '../../scenes/windfarm_2m/';
+setDataBase(base);
+const $ = (id) => document.getElementById(id),
+  palette = [
+    [38, 63, 131],
+    [22, 139, 166],
+    [103, 200, 164],
+    [243, 220, 105],
+    [237, 116, 69],
+  ];
+let g,
+  m,
+  mask,
+  ground,
+  nx,
+  ny,
+  data,
+  view,
+  playing = false,
+  epoch = 0,
+  request = 0;
+async function json(p) {
+  const r = await fetch(base + p, { cache: 'no-store' });
+  if (!r.ok) throw Error(p + ': ' + r.status);
+  return r.json();
+}
+function setView() {
+  if ($('focus').value === 'all') view = [0, 0, nx, ny];
+  else {
+    const t = g.turbines[+$('focus').value],
+      x = (t.hub_xyz_m[0] - g.origin_xyz_m[0]) / 2,
+      y = (t.hub_xyz_m[1] - g.origin_xyz_m[1]) / 2;
+    view = [
+      Math.max(0, Math.min(nx - 320, Math.floor(x - 90))),
+      Math.max(0, Math.min(ny - 320, Math.floor(y - 160))),
+      320,
+      320,
+    ];
+  }
+  draw();
+}
+function draw() {
+  if (!data) return;
+  const can = $('wind'),
+    ctx = can.getContext('2d'),
+    [x0, y0, w, h] = view;
+  can.width = w;
+  can.height = h;
+  const im = ctx.createImageData(w, h);
+  for (let y = 0; y < h; y++)
+    for (let x = 0; x < w; x++) {
+      const i = (y + y0) * nx + x + x0,
+        t = Math.max(0, Math.min(4, data[i] / 5)),
+        j = Math.min(3, Math.floor(t)),
+        f = t - j,
+        rgb = mask[i] ? [90, 100, 110] : palette[j].map((c, k) => c + (palette[j + 1][k] - c) * f);
+      im.data.set([...rgb, 255], ((h - 1 - y) * w + x) * 4);
+    }
+  ctx.putImageData(im, 0, 0);
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = w === nx ? 3 : 1;
+  for (const t of g.turbines) {
+    const x = (t.hub_xyz_m[0] - g.origin_xyz_m[0]) / 2 - x0,
+      y = h - ((t.hub_xyz_m[1] - g.origin_xyz_m[1]) / 2 - y0);
+    ctx.beginPath();
+    ctx.moveTo(x, y - t.radius_m / 2);
+    ctx.lineTo(x, y + t.radius_m / 2);
+    ctx.stroke();
+  }
+  terrain();
+}
+function terrain() {
+  const can = $('terrain'),
+    ctx = can.getContext('2d');
+  can.width = nx;
+  can.height = ny;
+  const im = ctx.createImageData(nx, ny),
+    [lo, hi] = g.ground_range_m;
+  for (let y = 0; y < ny; y++)
+    for (let x = 0; x < nx; x++) {
+      const i = y * nx + x,
+        t = (ground[i] - lo) / (hi - lo);
+      im.data.set([45 + t * 165, 70 + t * 140, 61 + t * 100, 255], ((ny - 1 - y) * nx + x) * 4);
+    }
+  ctx.putImageData(im, 0, 0);
+  for (const t of g.turbines) {
+    ctx.beginPath();
+    ctx.arc(
+      (t.hub_xyz_m[0] - g.origin_xyz_m[0]) / 2,
+      ny - (t.hub_xyz_m[1] - g.origin_xyz_m[1]) / 2,
+      7,
+      0,
+      7,
+    );
+    ctx.fillStyle = 'white';
+    ctx.fill();
+  }
+  ctx.strokeStyle = '#85e5da';
+  ctx.lineWidth = 3;
+  ctx.strokeRect(view[0], ny - view[1] - view[3], view[2], view[3]);
+}
+async function show(i) {
+  const token = ++request;
+  try {
+    const values = f16(await getFrame(m.files[i], 0));
+    if (token !== request) return;
+    data = values;
+    draw();
+    $('clock').textContent = `${i + 1}/${m.times.length} frames · ${m.times[i].toFixed(1)} s`;
+    $('time').value = i;
+    const r = m.metrics[i];
+    $('metrics').textContent =
+      `Step ${r.step} · Post-projection divergence RMS ${r.pressure.divergence_rms.toExponential(2)} s⁻¹ · Peak GPU memory ${r.gpu_peak_gib.toFixed(2)} GiB`;
+    $('rows').replaceChildren(
+      ...g.turbines.map((t, k) => {
+        const tr = document.createElement('tr');
+        for (const v of [
+          t.id.replace('node-', ''),
+          r.disk_velocity_m_s[k].toFixed(2),
+          (r.thrust_N[k] / 1000).toFixed(1),
+        ]) {
+          const td = document.createElement('td');
+          td.textContent = v;
+          tr.append(td);
+        }
+        return tr;
+      }),
+    );
+  } catch (e) {
+    $('metrics').textContent = 'Read failed: ' + e.message;
+    stop();
+  }
+}
+function stop() {
+  playing = false;
+  epoch++;
+  $('play').textContent = 'Play';
+}
+async function tick(e) {
+  if (!playing || e !== epoch) return;
+  await show((+$('time').value + 1) % m.times.length);
+  if (playing && e === epoch) setTimeout(() => tick(e), 200);
+}
+$('play').onclick = () => {
+  if (playing) stop();
+  else {
+    $('live').checked = false;
+    playing = true;
+    $('play').textContent = 'Pause';
+    tick(++epoch);
+  }
+};
+$('time').oninput = () => {
+  stop();
+  $('live').checked = false;
+  show(+$('time').value);
+};
+$('focus').onchange = setView;
+$('live').onchange = () => {
+  if ($('live').checked) {
+    stop();
+    show(m.times.length - 1);
+  }
+};
+$('wind').onmousemove = (e) => {
+  if (!data) return;
+  const r = e.target.getBoundingClientRect(),
+    x = Math.floor(((e.clientX - r.left) / r.width) * view[2]) + view[0],
+    y = view[1] + view[3] - 1 - Math.floor(((e.clientY - r.top) / r.height) * view[3]),
+    i = y * nx + x;
+  if (i < 0 || i >= nx * ny) return;
+  $('readout').textContent =
+    `Axial velocity ${data[i].toFixed(3)} m/s · x ${(g.origin_xyz_m[0] + (x + 0.5) * 2).toFixed(0)} m / y ${(g.origin_xyz_m[1] + (y + 0.5) * 2).toFixed(0)} m`;
+};
+async function refresh() {
+  try {
+    const [next, s] = await Promise.all([json('manifest.json'), json('status.json')]);
+    const count = m?.files.length ?? 0;
+    m = next;
+    $('time').max = m.times.length - 1;
+    $('status').className = s.state === 'failed' ? 'bad' : 'good';
+    $('status').textContent =
+      `${s.state === 'complete' ? 'Complete' : s.state === 'failed' ? 'Stopped: ' + s.error : s.state === 'step_limit' ? 'Trial paused' : 'Computing on workstation'} · Saved ${m.simulated_seconds.toFixed(1)} / ${m.target_seconds} seconds · ${m.completed_steps} steps`;
+    $('play').disabled = m.times.length < 2;
+    if (g && $('live').checked && count !== m.files.length) await show(m.files.length - 1);
+  } catch (e) {
+    $('status').textContent = 'Live status is temporarily unavailable: ' + e.message;
+  }
+}
+try {
+  g = await json('geometry.json');
+  [ny, nx] = g.shape_zyx.slice(1);
+  [mask, ground] = await Promise.all([loadMask('mask.npy'), npy('ground.npy').readAll()]);
+  for (const [i, t] of g.turbines.entries())
+    $('focus').append(
+      Object.assign(document.createElement('option'), {
+        value: i,
+        textContent: 'Turbine ' + t.id.replace('node-', ''),
+      }),
+    );
+  view = [0, 0, nx, ny];
+  $('geometry').textContent =
+    `All ${g.turbines.length} turbines · ${g.cell_m} m grid · Terrain coverage ${(g.terrain_coverage_fraction * 100).toFixed(1)}%`;
+  await refresh();
+  if (!data && m) await show(m.times.length - 1);
+  setInterval(refresh, 15000);
+} catch (e) {
+  $('status').textContent = 'Initialization failed: ' + e.message;
+}

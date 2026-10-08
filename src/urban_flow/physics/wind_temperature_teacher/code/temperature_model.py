@@ -2,6 +2,7 @@ from __future__ import annotations
 import torch
 from torch import nn
 
+
 class ConvBlock3D(nn.Module):
     def __init__(self, in_channels: int, out_channels: int):
         super().__init__()
@@ -19,6 +20,7 @@ class ConvBlock3D(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.block(x)
+
 
 class UNet3D(nn.Module):
     def __init__(
@@ -46,7 +48,9 @@ class UNet3D(nn.Module):
         self.decoders = nn.ModuleList()
         for idx in range(depth - 1, -1, -1):
             if upsample_mode == "transpose":
-                self.upconvs.append(nn.ConvTranspose3d(channels[idx + 1], channels[idx], kernel_size=2, stride=2))
+                self.upconvs.append(
+                    nn.ConvTranspose3d(channels[idx + 1], channels[idx], kernel_size=2, stride=2)
+                )
             elif upsample_mode == "trilinear":
                 self.upconvs.append(
                     nn.Sequential(

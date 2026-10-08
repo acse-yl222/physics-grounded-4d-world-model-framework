@@ -206,7 +206,7 @@ def build_mfmu_scenario(stations, dist_km, T_slots, requests=None):
     for i in range(MFMU_N_UAV):
         fleet.append(
             {
-                "id": f"uav-{i+1:02d}",
+                "id": f"uav-{i + 1:02d}",
                 "start_station": start_hub,
                 "initial_soc": MFMU_BATTERY["initial_soc"],
             }
@@ -244,12 +244,8 @@ def generate_synthetic_requests(stations, T_slots):
     dropoffs = [(i, s) for i, s in enumerate(stations) if s["role"] == "DROPOFF"]
 
     if not collections or not dropoffs:
-        print(
-            "[WARN] No COLLECTION or DROPOFF stations — generating empty request list."
-        )
-        print(
-            "       Provide a requests file via --requests if your station roles differ."
-        )
+        print("[WARN] No COLLECTION or DROPOFF stations — generating empty request list.")
+        print("       Provide a requests file via --requests if your station roles differ.")
         return []
 
     pairs = [(ci, cs, di, ds) for ci, cs in collections for di, ds in dropoffs]
@@ -268,13 +264,13 @@ def generate_synthetic_requests(stations, T_slots):
 
         if d_end >= MFMU_HORIZON:
             print(
-                f"[WARN] Request {idx+1} dropoff window {d_end} exceeds horizon {MFMU_HORIZON}, skipping"
+                f"[WARN] Request {idx + 1} dropoff window {d_end} exceeds horizon {MFMU_HORIZON}, skipping"
             )
             continue
 
         requests.append(
             {
-                "id": f"request-{idx+1:03d}",
+                "id": f"request-{idx + 1:03d}",
                 "collection_station": cs["name"],
                 "dropoff_station": ds["name"],
                 "collection_slot": c_slot,
@@ -313,9 +309,9 @@ def run_voxelise(glb_path, out_path):
         "-o",
         os.path.abspath(out_path),
     ]
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"[voxelise] {' '.join(cmd)}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     subprocess.run(cmd, check=True)
     print(f"[voxelise] wrote {out_path}")
 
@@ -334,10 +330,10 @@ def run_birds(output_path):
         "--output",
         os.path.abspath(output_path),
     ]
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"[birds] {' '.join(cmd)}")
     print(f"[birds] cwd = {os.path.abspath(BIRDS_DIR)}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     subprocess.run(cmd, check=True, cwd=BIRDS_DIR)
     print(f"[birds] wrote {output_path}")
 
@@ -349,18 +345,16 @@ def run_mfmu(scenario_path, output_path):
     which registers the `mfmu-schedule` command.
     """
     cmd = ["mfmu-schedule", scenario_path, "--output", output_path]
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"[mfmu] {' '.join(cmd)}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
 
     try:
         subprocess.run(cmd, check=True)
     except FileNotFoundError:
         # fall back to calling as a Python module (in case CLI entry point
         # isn't on PATH but the package is importable)
-        print(
-            "[mfmu] `mfmu-schedule` not on PATH, trying `python -m mfmu_scheduler` ..."
-        )
+        print("[mfmu] `mfmu-schedule` not on PATH, trying `python -m mfmu_scheduler` ...")
         cmd = [
             sys.executable,
             "-m",
@@ -394,10 +388,10 @@ def run_traffic_train():
         raise RuntimeError(f"Traffic train.py not found: {script}")
 
     cmd = [sys.executable, os.path.abspath(script)]
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"[traffic] training: {' '.join(cmd)}")
     print(f"[traffic] cwd = {os.path.abspath(TRAFFIC_DIR)}")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
     subprocess.run(cmd, check=True, cwd=TRAFFIC_DIR)
 
 
@@ -413,14 +407,12 @@ def run_traffic_eval(model_date, output_dir):
         raise RuntimeError(f"Traffic evaluate.py not found: {script}")
 
     cmd = [sys.executable, os.path.abspath(script), "--model", model_date]
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"[traffic] evaluating model {model_date}")
     print(f"[traffic] {' '.join(cmd)}")
     print(f"[traffic] cwd = {os.path.abspath(TRAFFIC_DIR)}")
-    print(f"{'='*60}")
-    result = subprocess.run(
-        cmd, check=True, cwd=TRAFFIC_DIR, capture_output=True, text=True
-    )
+    print(f"{'=' * 60}")
+    result = subprocess.run(cmd, check=True, cwd=TRAFFIC_DIR, capture_output=True, text=True)
 
     # save the evaluation output (metrics printed to stdout)
     eval_out = os.path.join(output_dir, "eval_output.txt")
@@ -495,12 +487,8 @@ def main():
     parser = argparse.ArgumentParser(
         description="Run bird sim and MFMU UAV scheduler on shared geometry"
     )
-    parser.add_argument(
-        "--skip-birds", action="store_true", help="skip the bird simulation"
-    )
-    parser.add_argument(
-        "--skip-mfmu", action="store_true", help="skip the MFMU scheduler"
-    )
+    parser.add_argument("--skip-birds", action="store_true", help="skip the bird simulation")
+    parser.add_argument("--skip-mfmu", action="store_true", help="skip the MFMU scheduler")
     parser.add_argument(
         "--skip-voxelise",
         action="store_true",
@@ -533,8 +521,7 @@ def main():
     parser.add_argument(
         "--train-traffic",
         action="store_true",
-        help="train the traffic model before evaluating "
-        "(slow — 250 epochs by default)",
+        help="train the traffic model before evaluating (slow — 250 epochs by default)",
     )
     args = parser.parse_args()
 
@@ -588,8 +575,7 @@ def main():
         print(f"\n[mfmu] Read {len(stations)} stations from {STATIONS_CSV}")
         for s in stations:
             print(
-                f"       {s['name']:20s}  role={s['role']:12s}  "
-                f"x={s['x_m']:.1f}  y={s['y_m']:.1f}"
+                f"       {s['name']:20s}  role={s['role']:12s}  x={s['x_m']:.1f}  y={s['y_m']:.1f}"
             )
 
         dist_km, T_slots = compute_matrices(stations, MFMU_SPEED_MPS, MFMU_SLOT_DT_S)
@@ -668,9 +654,9 @@ def main():
     # ── STEP 6: write manifest ────────────────────────────────────────────────
     write_manifest(out, parts)
 
-    print(f"\n{'='*60}")
+    print(f"\n{'=' * 60}")
     print(f"Integration complete.  Results in {out}/")
-    print(f"{'='*60}")
+    print(f"{'=' * 60}")
 
 
 if __name__ == "__main__":

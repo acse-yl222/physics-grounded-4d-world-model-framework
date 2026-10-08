@@ -1,5 +1,5 @@
 """
-A copy of generate_complex.py with minor modifications 
+A copy of generate_complex.py with minor modifications
 for the complex London map display scenario
 
 Notes:
@@ -7,9 +7,10 @@ Some revisions were debugged with AI assistance
 """
 
 # Compatibility for direct source-script execution; package imports need no path changes.
-if __name__ == '__main__' and not __package__:
+if __name__ == "__main__" and not __package__:
     import sys
     from pathlib import Path
+
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import numpy as np
@@ -18,18 +19,25 @@ import sys
 import os
 
 from traffic.configs.default import (
-    GRID_SIZE, CELL_SIZE, MAX_SPEED, DT,
-    TOTAL_FEAT_DIM, VEHICLE_DIM, HIST_STEPS, PRED_STEPS,
+    GRID_SIZE,
+    CELL_SIZE,
+    MAX_SPEED,
+    DT,
+    TOTAL_FEAT_DIM,
+    VEHICLE_DIM,
+    HIST_STEPS,
+    PRED_STEPS,
 )
 
 LEFT_HAND = False  # Left Travel Switch: True=Left Travel, False=Right Travel
 
 _ROADS = None  # Loaded real road network (set by load_map); None => use synthetic fallback
 
+
 #  Polyline Road Network
 def _catmull_rom(points, n_per_seg=25):
     """
-    The spacing of control points on real roads is uneven, 
+    The spacing of control points on real roads is uneven,
     so centripetal Catmull-Rom (α=0.5) is adopted instead.
     """
     pts = np.asarray(points, dtype=float)
@@ -42,8 +50,7 @@ def _catmull_rom(points, n_per_seg=25):
     # Centripetal knot sequence
     knots = [0.0]
     for k in range(1, len(p)):
-        knots.append(knots[-1] + np.sqrt(np.hypot(p[k][0] - p[k - 1][0],
-                                                  p[k][1] - p[k - 1][1])))
+        knots.append(knots[-1] + np.sqrt(np.hypot(p[k][0] - p[k - 1][0], p[k][1] - p[k - 1][1])))
 
     curve = []
     for i in range(1, len(p) - 2):
@@ -66,6 +73,8 @@ def get_road_network():
 
 
 _ROADS_CACHE = None
+
+
 def _road_network_cached():
     global _ROADS_CACHE
     if _ROADS is not None:
@@ -74,35 +83,57 @@ def _road_network_cached():
         return _ROADS_CACHE
     roads = [
         # Main road: two-way, 4 lanes
-        {"centerline": [(13.5, 2), (13.5, 15), (13.5, 28), (13.5, 41), (13.5, 54)],
-         "lanes_per_dir": 2, "two_way": True},
-        {"centerline": [(41.5, 2), (41.5, 15), (41.5, 28), (41.5, 41), (41.5, 54)],
-         "lanes_per_dir": 2, "two_way": True},
-        {"centerline": [(2, 13.5), (15, 13.5), (28, 13.5), (41, 13.5), (54, 13.5)],
-         "lanes_per_dir": 2, "two_way": True},
+        {
+            "centerline": [(13.5, 2), (13.5, 15), (13.5, 28), (13.5, 41), (13.5, 54)],
+            "lanes_per_dir": 2,
+            "two_way": True,
+        },
+        {
+            "centerline": [(41.5, 2), (41.5, 15), (41.5, 28), (41.5, 41), (41.5, 54)],
+            "lanes_per_dir": 2,
+            "two_way": True,
+        },
+        {
+            "centerline": [(2, 13.5), (15, 13.5), (28, 13.5), (41, 13.5), (54, 13.5)],
+            "lanes_per_dir": 2,
+            "two_way": True,
+        },
         # Branch road: two-way, 2 lanes
-        {"centerline": [(2, 41.5), (15, 41.5), (28, 41.5), (41, 41.5), (54, 41.5)],
-         "lanes_per_dir": 1, "two_way": True},
+        {
+            "centerline": [(2, 41.5), (15, 41.5), (28, 41.5), (41, 41.5), (54, 41.5)],
+            "lanes_per_dir": 1,
+            "two_way": True,
+        },
         # Diagonal road: two-way, 2 lanes
-        {"centerline": [(18, 2), (28, 12), (38, 22), (48, 32), (54, 38)],
-         "lanes_per_dir": 1, "two_way": True},
+        {
+            "centerline": [(18, 2), (28, 12), (38, 22), (48, 32), (54, 38)],
+            "lanes_per_dir": 1,
+            "two_way": True,
+        },
         # Curved one-way road: one-way, 2 lanes
-        {"centerline": [(2, 20), (12, 24), (22, 28), (32, 32), (42, 36), (54, 38)],
-         "lanes_per_dir": 2, "two_way": False},
+        {
+            "centerline": [(2, 20), (12, 24), (22, 28), (32, 32), (42, 36), (54, 38)],
+            "lanes_per_dir": 2,
+            "two_way": False,
+        },
         # Three-way road: two-way, 2 lanes
-        {"centerline": [(2, 28), (13.5, 28)],
-         "lanes_per_dir": 1, "two_way": True},
+        {"centerline": [(2, 28), (13.5, 28)], "lanes_per_dir": 1, "two_way": True},
     ]
     # Smooth the centerline into curves
-    _ROADS_CACHE = [{"centerline": _catmull_rom(r["centerline"]),
-                     "lanes_per_dir": r["lanes_per_dir"],
-                     "two_way": r["two_way"]} for r in roads]
+    _ROADS_CACHE = [
+        {
+            "centerline": _catmull_rom(r["centerline"]),
+            "lanes_per_dir": r["lanes_per_dir"],
+            "two_way": r["two_way"],
+        }
+        for r in roads
+    ]
     return _ROADS_CACHE
 
 
 def _reset_caches():
     """Clear derived caches so a newly loaded map / handedness / grid size takes effect."""
-    for name in ('_ROADS_CACHE', '_LANE_LINES_CACHE', '_INTERSECTIONS_CACHE', '_LANE_CACHE'):
+    for name in ("_ROADS_CACHE", "_LANE_LINES_CACHE", "_INTERSECTIONS_CACHE", "_LANE_CACHE"):
         globals()[name] = None
 
 
@@ -112,12 +143,18 @@ def load_map(roads_json_path, left_hand=True):
     Returns the parsed JSON dict (roads / grid_size / transform)."""
     import json as _json
     from traffic.verification.london_utils import resample_uniform
+
     with open(roads_json_path) as f:
         data = _json.load(f)
     global _ROADS, LEFT_HAND, GRID_SIZE
-    _ROADS = [{"centerline": resample_uniform(_catmull_rom(np.asarray(r["centerline"], dtype=float))),
-               "lanes_per_dir": r["lanes_per_dir"], "two_way": r["two_way"]}
-              for r in data["roads"]]
+    _ROADS = [
+        {
+            "centerline": resample_uniform(_catmull_rom(np.asarray(r["centerline"], dtype=float))),
+            "lanes_per_dir": r["lanes_per_dir"],
+            "two_way": r["two_way"],
+        }
+        for r in data["roads"]
+    ]
     LEFT_HAND = left_hand
     GRID_SIZE = int(data["grid_size"])
     _reset_caches()
@@ -126,7 +163,7 @@ def load_map(roads_json_path, left_hand=True):
 
 def _point_segment_dist(p, a, b):
     """
-    Perpendicular distance from point p=(row,col) to segment a->b, 
+    Perpendicular distance from point p=(row,col) to segment a->b,
     and the coordinates of the nearest projection point
     """
     pr, pc = p
@@ -169,6 +206,8 @@ def _offset_polyline(polyline, offset):
 
 
 _LANE_LINES_CACHE = None
+
+
 def get_lane_centerlines(roads):
     global _LANE_LINES_CACHE
     if _LANE_LINES_CACHE is not None:
@@ -204,6 +243,8 @@ def _seg_intersect(p1, p2, p3, p4):
 
 
 _INTERSECTIONS_CACHE = None
+
+
 def _detect_intersections(roads):
     global _INTERSECTIONS_CACHE
     if _INTERSECTIONS_CACHE is not None:
@@ -237,8 +278,10 @@ def _detect_intersections(roads):
         for p in g:
             for idx in (p[2], p[3]):
                 poly = cl[idx]
-                near = any(abs(p[0] - ep[0]) < 2.0 and abs(p[1] - ep[1]) < 2.0
-                           for ep in (poly[0], poly[-1]))
+                near = any(
+                    abs(p[0] - ep[0]) < 2.0 and abs(p[1] - ep[1]) < 2.0
+                    for ep in (poly[0], poly[-1])
+                )
                 if not near:
                     is_double_endpoint = False
                     break
@@ -275,8 +318,9 @@ def get_entries(roads):
                 if j == i:
                     continue
                 for a in range(len(other["centerline"]) - 1):
-                    d, _ = _point_segment_dist(ep, other["centerline"][a],
-                                               other["centerline"][a + 1])
+                    d, _ = _point_segment_dist(
+                        ep, other["centerline"][a], other["centerline"][a + 1]
+                    )
                     if d < 1.5:
                         on_other = True
                         break
@@ -289,6 +333,8 @@ def get_entries(roads):
 
 
 _LANE_CACHE = None
+
+
 def build_road_lane_centers(roads):
     global _LANE_CACHE
     if _LANE_CACHE is not None:
@@ -299,14 +345,15 @@ def build_road_lane_centers(roads):
 
     for r in range(GRID_SIZE):
         for c in range(GRID_SIZE):
-            best_lane_dist = float('inf')
+            best_lane_dist = float("inf")
             best_lane_pos = (0.0, 0.0)
             for road in roads:
                 offsets = _lane_offsets(road["lanes_per_dir"], road["two_way"])
                 half = max(abs(o) for o in offsets) + 0.5
                 for i in range(len(road["centerline"]) - 1):
-                    d, proj = _point_segment_dist((r, c), road["centerline"][i],
-                                                  road["centerline"][i + 1])
+                    d, proj = _point_segment_dist(
+                        (r, c), road["centerline"][i], road["centerline"][i + 1]
+                    )
                     if d > half + 0.01:
                         continue
                     drivable[r, c, 0] = 1.0
@@ -323,7 +370,7 @@ def build_road_lane_centers(roads):
                     if lane_dist < best_lane_dist:
                         best_lane_dist = lane_dist
                         best_lane_pos = (lr, lc)
-            if best_lane_dist < float('inf'):
+            if best_lane_dist < float("inf"):
                 lane[r, c, 0] = best_lane_pos[0] / GRID_SIZE
                 lane[r, c, 1] = best_lane_pos[1] / GRID_SIZE
 
@@ -331,10 +378,11 @@ def build_road_lane_centers(roads):
     return _LANE_CACHE
 
 
-S0 = 5.0       # Minimum Spacing (m)
-T_HW = 1.5     # Safety Time Interval (s)
-A_MAX = 2.0    # Maximum Acceleration (m/s²)
+S0 = 5.0  # Minimum Spacing (m)
+T_HW = 1.5  # Safety Time Interval (s)
+A_MAX = 2.0  # Maximum Acceleration (m/s²)
 B_COMFORT = 3.0  # comfortable braking deceleration (m/s²)
+
 
 def idm_acceleration(v, delta_v, gap, v_desired):
     """
@@ -353,6 +401,7 @@ def idm_acceleration(v, delta_v, gap, v_desired):
 
 
 # Vehicle generation
+
 
 def _road_path(roads, road_idx, direction):
     pts = roads[road_idx]["centerline"]
@@ -374,7 +423,7 @@ def _poly_interp(poly, t):
 
 
 def _nearest_poly_t(poly, pt):
-    best_t, best_d = 0.0, float('inf')
+    best_t, best_d = 0.0, float("inf")
     for i in range(len(poly) - 1):
         d, proj = _point_segment_dist(pt, poly[i], poly[i + 1])
         seg_len = np.hypot(poly[i + 1][0] - poly[i][0], poly[i + 1][1] - poly[i][1])
@@ -387,7 +436,7 @@ def _nearest_poly_t(poly, pt):
 
 def _dest_to_road_dist(dest, centerline):
     """Shortest distance from the destination to a road's centerline"""
-    best = float('inf')
+    best = float("inf")
     for i in range(len(centerline) - 1):
         d, _ = _point_segment_dist(dest, centerline[i], centerline[i + 1])
         if d < best:
@@ -406,14 +455,14 @@ def _spawn_lane(road):
 
 
 def _find_lead(ego, vehicles):
-    best_gap = float('inf')
+    best_gap = float("inf")
     best_lead = None
     for v in vehicles:
         if v is ego or v["arrived"]:
             continue
         if v["road"] != ego["road"] or v["direction"] != ego["direction"]:
             continue
-        if abs(v["lane"] - ego["lane"]) > 0.4:   # Do not follow in different lanes
+        if abs(v["lane"] - ego["lane"]) > 0.4:  # Do not follow in different lanes
             continue
         # wp_idx always increases (_road_path is already ordered by direction); the larger one is ahead
         gap_idx = v["wp_idx"] - ego["wp_idx"]
@@ -455,10 +504,9 @@ def simulate_trajectory(total_steps=70, seed=None, initial_vehicles=None, allow_
             v.setdefault("turn_count", 0)
             v.setdefault("arrived", False)
             vehicles.append(v)
-            vehicle_tracks[v["id"]] = {'entry': f'road{v["road"]}', 'positions': []}
+            vehicle_tracks[v["id"]] = {"entry": f"road{v['road']}", "positions": []}
 
-    trajectory = np.zeros((total_steps, GRID_SIZE, GRID_SIZE, TOTAL_FEAT_DIM),
-                          dtype=np.float32)
+    trajectory = np.zeros((total_steps, GRID_SIZE, GRID_SIZE, TOTAL_FEAT_DIM), dtype=np.float32)
     for t in range(total_steps):
         trajectory[t, :, :, 9] = lane_centers[:, :, 0]
         trajectory[t, :, :, 10] = lane_centers[:, :, 1]
@@ -470,8 +518,8 @@ def simulate_trajectory(total_steps=70, seed=None, initial_vehicles=None, allow_
                 # Entry occupancy check to avoid overlap
                 entry_pt = _road_path(roads, road_idx, direction)[0]
                 entry_blocked = any(
-                    np.hypot(v["row"] - entry_pt[0], v["col"] - entry_pt[1]) < 5.0
-                    for v in vehicles)
+                    np.hypot(v["row"] - entry_pt[0], v["col"] - entry_pt[1]) < 5.0 for v in vehicles
+                )
                 if entry_blocked:
                     next_spawn_step[e_idx] = t + 1
                     continue
@@ -490,21 +538,22 @@ def simulate_trajectory(total_steps=70, seed=None, initial_vehicles=None, allow_
                 dest = entries[dest_idx]
                 vid = vehicle_counter
                 vehicle_counter += 1
-                vehicles.append({
-                    "id": vid,
-                    "row": spawn_row,
-                    "col": spawn_col,
-                    "speed": np.random.uniform(3.0, 8.0),
-                    "road": road_idx,
-                    "direction": direction,
-                    "lane": lane,
-                    "wp_idx": 0.0,
-                    "dest": (dest[2][0], dest[2][1]),
-                    "turn_count": 0,
-                    "arrived": False,
-                })
-                vehicle_tracks[vid] = {'entry': f'road{road_idx}', 'positions': []}
-
+                vehicles.append(
+                    {
+                        "id": vid,
+                        "row": spawn_row,
+                        "col": spawn_col,
+                        "speed": np.random.uniform(3.0, 8.0),
+                        "road": road_idx,
+                        "direction": direction,
+                        "lane": lane,
+                        "wp_idx": 0.0,
+                        "dest": (dest[2][0], dest[2][1]),
+                        "turn_count": 0,
+                        "arrived": False,
+                    }
+                )
+                vehicle_tracks[vid] = {"entry": f"road{road_idx}", "positions": []}
 
         for v in vehicles:
             if v["arrived"]:
@@ -542,8 +591,7 @@ def simulate_trajectory(total_steps=70, seed=None, initial_vehicles=None, allow_
                 delta_v = 0.0
             acc = idm_acceleration(v["speed"], delta_v, gap_m, limit_approach)
             if red:
-                acc_stop = idm_acceleration(v["speed"], v["speed"],
-                                            dist_light * CELL_SIZE, 0.0)
+                acc_stop = idm_acceleration(v["speed"], v["speed"], dist_light * CELL_SIZE, 0.0)
                 acc = min(acc, acc_stop)
 
             v["speed"] = max(0.0, v["speed"] + acc * DT)
@@ -565,18 +613,26 @@ def simulate_trajectory(total_steps=70, seed=None, initial_vehicles=None, allow_
                         phase_green = light["roads"][0] if (t % cycle) < half else light["roads"][1]
                         if v["road"] != phase_green:
                             break
-                        other_road = light["roads"][0] if light["roads"][1] == v["road"] else light["roads"][1]
+                        other_road = (
+                            light["roads"][0]
+                            if light["roads"][1] == v["road"]
+                            else light["roads"][1]
+                        )
                         cur_dist = _dest_to_road_dist(v["dest"], roads[v["road"]]["centerline"])
                         other_dist = _dest_to_road_dist(v["dest"], roads[other_road]["centerline"])
                         if other_dist < cur_dist and np.random.random() < 0.7:
                             v["road"] = other_road
                             new_poly = roads[other_road]["centerline"]
-                            d0 = np.hypot(v["dest"][0] - new_poly[0][0], v["dest"][1] - new_poly[0][1])
-                            d1 = np.hypot(v["dest"][0] - new_poly[-1][0], v["dest"][1] - new_poly[-1][1])
+                            d0 = np.hypot(
+                                v["dest"][0] - new_poly[0][0], v["dest"][1] - new_poly[0][1]
+                            )
+                            d1 = np.hypot(
+                                v["dest"][0] - new_poly[-1][0], v["dest"][1] - new_poly[-1][1]
+                            )
                             if roads[other_road]["two_way"]:
                                 v["direction"] = +1 if d1 < d0 else -1
                             else:
-                                v["direction"] = +1   # A one-way road can only be traveled forward
+                                v["direction"] = +1  # A one-way road can only be traveled forward
                             other_path = _road_path(roads, other_road, v["direction"])
                             # Pass through the intersection (offset 2 cells forward) to avoid turning again immediately in the next frame
                             v["wp_idx"] = _nearest_poly_t(other_path, (lr, lc)) + 2.0
@@ -584,7 +640,7 @@ def simulate_trajectory(total_steps=70, seed=None, initial_vehicles=None, allow_
                             v["turn_count"] += 1
                             break
 
-            # Vehicles that reach the destination before the prediction ends will not be removed; 
+            # Vehicles that reach the destination before the prediction ends will not be removed;
             # instead, they will park on the spot.
             dr, dc = v["dest"]
             if np.hypot(v["row"] - dr, v["col"] - dc) < 3.0:
@@ -643,9 +699,15 @@ def simulate_trajectory(total_steps=70, seed=None, initial_vehicles=None, allow_
             trajectory[t, cell_r, cell_c, 10] = lane_centers[cell_r, cell_c, 1]
             trajectory[t, cell_r, cell_c, 11] = drivable[cell_r, cell_c, 0]
 
-            vehicle_tracks[v["id"]]['positions'].append(
-                (t, v["row"], v["col"],
-                 v["speed"] * v_dr / MAX_SPEED, v["speed"] * v_dc / MAX_SPEED))
+            vehicle_tracks[v["id"]]["positions"].append(
+                (
+                    t,
+                    v["row"],
+                    v["col"],
+                    v["speed"] * v_dr / MAX_SPEED,
+                    v["speed"] * v_dc / MAX_SPEED,
+                )
+            )
 
     return trajectory, vehicle_tracks
 
@@ -674,9 +736,9 @@ def generate_dataset(n_trajectories, total_steps=None, seed_offset=0, return_tra
                 win_tracks = {}
                 t_end = t_start + window_len
                 for vid, vt in tracks.items():
-                    pos = [p for p in vt['positions'] if t_start <= p[0] < t_end]
+                    pos = [p for p in vt["positions"] if t_start <= p[0] < t_end]
                     if pos:
-                        win_tracks[vid] = {'entry': vt['entry'], 'positions': pos}
+                        win_tracks[vid] = {"entry": vt["entry"], "positions": pos}
                 all_tracks.append(win_tracks)
                 all_t_starts.append(t_start)
 
@@ -688,17 +750,13 @@ def generate_dataset(n_trajectories, total_steps=None, seed_offset=0, return_tra
         return inputs, labels, all_tracks, all_t_starts
     return inputs, labels
 
+
 if __name__ == "__main__":
     n_train = 2000
     n_validation = 200
-    train_inputs, train_labels = generate_dataset(
-        n_trajectories=2000, seed_offset=0
-    )
+    train_inputs, train_labels = generate_dataset(n_trajectories=2000, seed_offset=0)
     print(f"The training set has been generated ({n_train} trajectories)")
-    val_inputs, val_labels = generate_dataset(
-        n_trajectories=200, seed_offset=2000
-    )
+    val_inputs, val_labels = generate_dataset(n_trajectories=200, seed_offset=2000)
     print(f"The validation set has been generated ({n_validation} trajectories)")
     print(f"training set: inputs {list(train_inputs.shape)}, labels {list(train_labels.shape)}")
     print(f"Validation set: inputs {list(val_inputs.shape)}, labels {list(val_labels.shape)}")
-

@@ -39,4 +39,3 @@ Neither the sealed campaign nor this lightweight package establishes:
 - reduced global rounds caused by Mean-field guidance;
 - improved journey time, energy, or service rate caused by Mean-field guidance;
 - production reliability or a general-purpose battery model.
-

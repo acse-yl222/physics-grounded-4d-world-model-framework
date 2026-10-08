@@ -14,10 +14,7 @@
       "minLength": 1
     },
     "time_alignment": {
-      "enum": [
-        "relative",
-        "absolute"
-      ]
+      "enum": ["relative", "absolute"]
     },
     "runs": {
       "type": "array",
@@ -47,11 +44,7 @@
             "type": "boolean"
           }
         },
-        "required": [
-          "run_id",
-          "layer_id",
-          "visible"
-        ]
+        "required": ["run_id", "layer_id", "visible"]
       }
     },
     "camera": {
@@ -75,19 +68,9 @@
           "maxItems": 3
         }
       },
-      "required": [
-        "position",
-        "target"
-      ]
+      "required": ["position", "target"]
     }
   },
-  "required": [
-    "schema_version",
-    "scene_id",
-    "title",
-    "time_alignment",
-    "runs",
-    "layers"
-  ],
+  "required": ["schema_version", "scene_id", "title", "time_alignment", "runs", "layers"],
   "$schema": "https://json-schema.org/draft/2020-12/schema"
 }

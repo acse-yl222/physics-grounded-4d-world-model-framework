@@ -9,6 +9,7 @@ is needed. ?scene=<id> picks the scene (scenes/index.json). Run:
     python3 serve.py 9000                 # custom port
     python3 serve.py 8787 --host 0.0.0.0 --no-browser   # workstation: listen on all interfaces
 """
+
 import os
 import sys
 import re
@@ -38,7 +39,14 @@ class RangeHandler(SimpleHTTPRequestHandler):
     def do_GET(self):
         # old links: the page lived at /web/3d/ until the 2026-09-14 restructure
         if self.path == "/" or self.path.startswith("/web/"):
-            self.send_response(302); self.send_header("Location", "/viewer/3d/" + (self.path.split("?", 1)[1:] and "?" + self.path.split("?", 1)[1] or "")); self.end_headers(); return
+            self.send_response(302)
+            self.send_header(
+                "Location",
+                "/viewer/3d/"
+                + (self.path.split("?", 1)[1:] and "?" + self.path.split("?", 1)[1] or ""),
+            )
+            self.end_headers()
+            return
         rng = self.headers.get("Range")
         if not rng:
             return super().do_GET()

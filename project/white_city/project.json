@@ -12,16 +12,8 @@
       "vertical_datum": "GLB ground mesh, near planar and not surveyed elevation; uncovered cells at local zero"
     },
     "bounds_m": {
-      "min": [
-        -1492.0,
-        -2548.0,
-        0
-      ],
-      "max": [
-        2092.0,
-        1036.0,
-        128
-      ]
+      "min": [-1492.0, -2548.0, 0],
+      "max": [2092.0, 1036.0, 128]
     }
   },
   "inputs": [

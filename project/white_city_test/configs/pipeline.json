@@ -2,8 +2,12 @@
   "scene": "white_city_test",
   "source": "../../white_city/input/white_city_9km2_compressed_162MB.glb",
   "domain": { "cell_m": 4, "crop_local_m": [0, -1400, 700, -700], "wind_layers": 64 },
-  "georeference": { "confirmed": true, "latitude_deg": 51.5145, "longitude_deg": -0.22405,
-                    "note": "smoke test of the pipeline; same assumptions as white_city" },
+  "georeference": {
+    "confirmed": true,
+    "latitude_deg": 51.5145,
+    "longitude_deg": -0.22405,
+    "note": "smoke test of the pipeline; same assumptions as white_city"
+  },
   "wind": { "steps": 10, "step_seconds": 50 },
   "temperature3d": { "frames": 5 },
   "solar": { "dates": ["2026-06-21"], "minutes": 60 },

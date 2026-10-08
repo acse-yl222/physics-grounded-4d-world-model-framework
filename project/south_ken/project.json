@@ -12,16 +12,8 @@
       "vertical_datum": "Inherited estimated flat ground; not surveyed elevation"
     },
     "bounds_m": {
-      "min": [
-        -1636.0,
-        -1484.0,
-        0
-      ],
-      "max": [
-        1436.0,
-        1332.0,
-        128
-      ]
+      "min": [-1636.0, -1484.0, 0],
+      "max": [1436.0, 1332.0, 128]
     }
   },
   "inputs": [

@@ -3,9 +3,7 @@
   "scene_id": "windfarm",
   "title": "mac 2m",
   "time_alignment": "relative",
-  "runs": [
-    "imported_mac_2m"
-  ],
+  "runs": ["imported_mac_2m"],
   "layers": [
     {
       "run_id": "imported_mac_2m",

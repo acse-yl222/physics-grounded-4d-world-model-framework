@@ -10,7 +10,18 @@
     "terrain": "GLB ground mesh, near planar and not surveyed elevation; uncovered cells at local zero",
     "note": "User confirmed experimental assumptions in conversation on 2026-09-16."
   },
-  "stages": ["geometry", "wind", "temperature", "temperature3d", "pollution", "solar", "flood", "plot", "verify", "visualize"],
+  "stages": [
+    "geometry",
+    "wind",
+    "temperature",
+    "temperature3d",
+    "pollution",
+    "solar",
+    "flood",
+    "plot",
+    "verify",
+    "visualize"
+  ],
   "wind": { "steps": 100, "step_seconds": 50 },
   "visualize": { "layer": 1, "title": "White City 9 km²" }
 }

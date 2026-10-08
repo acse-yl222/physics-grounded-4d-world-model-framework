@@ -7,7 +7,7 @@ This folder is independent of the city loader, route builder, traffic simulation
 The viewer's existing import map for `three` is required by Three's GLTFLoader. This module itself imports the bundled `../vendor/three` files and has no network/CDN dependency.
 
 ```js
-import {createActorLayer, sumoHeadingToWorldYaw} from './actors/actor-layer.js';
+import { createActorLayer, sumoHeadingToWorldYaw } from './actors/actor-layer.js';
 
 const actors = await createActorLayer({
   scene,
@@ -20,19 +20,23 @@ const actors = await createActorLayer({
 // Snapshot update: omitted actors become hidden. idIndex is a stable slot index,
 // not an arbitrary string or an unbounded SUMO departure ID.
 actors.updateCars([
-  {idIndex: 0, x: 120, y: 0.02, z: 340,
-   headingRadians: sumoHeadingToWorldYaw(Math.PI / 2),
-   visible: true, color: '#466779'},
+  {
+    idIndex: 0,
+    x: 120,
+    y: 0.02,
+    z: 340,
+    headingRadians: sumoHeadingToWorldYaw(Math.PI / 2),
+    visible: true,
+    color: '#466779',
+  },
 ]);
-actors.updateUavs([
-  {idIndex: 0, x: 120, y: 35, z: 340, headingRadians: 0.3, visible: true},
-]);
+actors.updateUavs([{ idIndex: 0, x: 120, y: 35, z: 340, headingRadians: 0.3, visible: true }]);
 
 // For a delta update, preserve actors not mentioned:
-actors.updateCars([{idIndex: 0, visible: false}], {hideUnmentioned: false});
+actors.updateCars([{ idIndex: 0, visible: false }], { hideUnmentioned: false });
 // Or update both kinds together:
-actors.update({cars: carSnapshot, uavs: uavSnapshot});
-actors.setVisible({cars: true, uavs: true});
+actors.update({ cars: carSnapshot, uavs: uavSnapshot });
+actors.setVisible({ cars: true, uavs: true });
 // At teardown only:
 // actors.dispose();
 ```
