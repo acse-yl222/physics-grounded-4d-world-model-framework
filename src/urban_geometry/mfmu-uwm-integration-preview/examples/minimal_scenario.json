@@ -2,10 +2,10 @@
   "schema_version": "mfmu.integration.v1",
   "horizon_slots": 240,
   "stations": [
-    {"id": "hub-west", "x": 0.0, "y": 0.0, "role": "hub"},
-    {"id": "collection-a", "x": 1.0, "y": 0.0, "role": "station"},
-    {"id": "dropoff-b", "x": 2.0, "y": 0.0, "role": "station"},
-    {"id": "hub-east", "x": 3.0, "y": 0.0, "role": "hub"}
+    { "id": "hub-west", "x": 0.0, "y": 0.0, "role": "hub" },
+    { "id": "collection-a", "x": 1.0, "y": 0.0, "role": "station" },
+    { "id": "dropoff-b", "x": 2.0, "y": 0.0, "role": "station" },
+    { "id": "hub-east", "x": 3.0, "y": 0.0, "role": "hub" }
   ],
   "travel_time_slots": [
     [0, 1, 2, 3],
@@ -20,10 +20,10 @@
     [3.0, 2.0, 1.0, 0.0]
   ],
   "fleet": [
-    {"id": "uav-01", "start_station": "hub-west", "initial_soc": 75},
-    {"id": "uav-02", "start_station": "hub-west", "initial_soc": 75},
-    {"id": "uav-03", "start_station": "hub-east", "initial_soc": 75},
-    {"id": "uav-04", "start_station": "hub-east", "initial_soc": 75}
+    { "id": "uav-01", "start_station": "hub-west", "initial_soc": 75 },
+    { "id": "uav-02", "start_station": "hub-west", "initial_soc": 75 },
+    { "id": "uav-03", "start_station": "hub-east", "initial_soc": 75 },
+    { "id": "uav-04", "start_station": "hub-east", "initial_soc": 75 }
   ],
   "battery": {
     "max_soc": 75,
@@ -64,4 +64,3 @@
     }
   ]
 }
-

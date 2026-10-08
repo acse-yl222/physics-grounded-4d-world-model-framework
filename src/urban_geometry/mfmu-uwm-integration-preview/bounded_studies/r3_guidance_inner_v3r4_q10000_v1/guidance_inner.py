@@ -21,6 +21,7 @@ starting template only; the N matrices are never merged.
 Energy is F_TBC + F_CAP only. No F_assign, no F_charge, no trainable parameter, no optimizer,
 no training epoch. FP64 on CUDA, fail-closed.
 """
+
 import dataclasses
 import json
 import statistics
@@ -41,6 +42,7 @@ THETA_MAX_INNER = 3000
 @dataclasses.dataclass(frozen=True)
 class Config:
     """The candidate's science configuration. Every field is inside the GO 8.3 envelope."""
+
     candidate_id: str = "C0_BASELINE"
     a_init: float = 0.10
     theta0_factor: float = 0.95
@@ -57,16 +59,26 @@ class Config:
 
     def sha(self):
         import hashlib
-        return hashlib.sha256(json.dumps(dataclasses.asdict(self), sort_keys=True).encode()).hexdigest()
+
+        return hashlib.sha256(
+            json.dumps(dataclasses.asdict(self), sort_keys=True).encode()
+        ).hexdigest()
 
     def as_dict(self):
         return dataclasses.asdict(self)
 
 
 ENVELOPE = {  # GO 8.3 default allowed values; continuous interior values are permitted
-    "a_init": (0.05, 0.30), "theta0_factor": (0.25, 0.95), "theta_min_factor": (0.005, 0.02),
-    "gamma": (0.90, 0.97), "alpha": (0.05, 0.25), "beta": (0.5, 32.0),
-    "max_inner": (1, 1200), "max_outer": (1, 600), "refresh_orders": (500, 2500)}
+    "a_init": (0.05, 0.30),
+    "theta0_factor": (0.25, 0.95),
+    "theta_min_factor": (0.005, 0.02),
+    "gamma": (0.90, 0.97),
+    "alpha": (0.05, 0.25),
+    "beta": (0.5, 32.0),
+    "max_inner": (1, 1200),
+    "max_outer": (1, 600),
+    "refresh_orders": (500, 2500),
+}
 
 
 def check_envelope(cfg):
@@ -81,7 +93,9 @@ def check_envelope(cfg):
 def require_cuda(device):
     """GO 10.2: fail-closed. A silent CPU fallback is never taken."""
     if device is None or not str(device).startswith("cuda"):
-        raise ValueError(f"OUTSIDE_AUTHORISED_SCIENCE_ENVELOPE: native CUDA required, got {device!r}")
+        raise ValueError(
+            f"OUTSIDE_AUTHORISED_SCIENCE_ENVELOPE: native CUDA required, got {device!r}"
+        )
     if not torch.cuda.is_available():
         raise RuntimeError("OUTSIDE_AUTHORISED_SCIENCE_ENVELOPE: CUDA requested but unavailable")
     return device
@@ -89,9 +103,19 @@ def require_cuda(device):
 
 def make_solver(a, device="cuda"):
     require_cuda(device)
-    return CNNJacobiSolver(a["D"], a["Ccap"], a["lam_cap"], a["x0s"], s=a["s"], pins=a["pins"],
-                           gamma_s=0.0, costs=CostConfig(eps_time=0.0, mu_conc=0.0),
-                           update="redblack", dtype="float64", device=device)
+    return CNNJacobiSolver(
+        a["D"],
+        a["Ccap"],
+        a["lam_cap"],
+        a["x0s"],
+        s=a["s"],
+        pins=a["pins"],
+        gamma_s=0.0,
+        costs=CostConfig(eps_time=0.0, mu_conc=0.0),
+        update="redblack",
+        dtype="float64",
+        device=device,
+    )
 
 
 class B1Field(torch.nn.Module):
@@ -101,20 +125,22 @@ class B1Field(torch.nn.Module):
         super().__init__()
         self.f0 = donor_field
         td = donor_field.lam.dtype
-        self.register_buffer("Dm", torch.tensor(np.asarray(D, float), dtype=td,
-                                                device=donor_field.lam.device))
+        self.register_buffer(
+            "Dm", torch.tensor(np.asarray(D, float), dtype=td, device=donor_field.lam.device)
+        )
         self.K = K
 
     def forward(self, x):
         B, N, K, M = x.shape
         Dm = self.Dm
         f = x.new_zeros(B, N, K, M)
-        f[:, :, 1:, :] = x[:, :, :-1, :] @ Dm                       # km1: contracts D[i, o]
-        nxt = torch.cat([x[:, :, 1:, :], x[:, :, -1:, :]], dim=2)   # frozen Neumann right edge
-        f = f + nxt @ Dm.transpose(0, 1)                            # kp1: contracts D[o, i]
+        f[:, :, 1:, :] = x[:, :, :-1, :] @ Dm  # km1: contracts D[i, o]
+        nxt = torch.cat([x[:, :, 1:, :], x[:, :, -1:, :]], dim=2)  # frozen Neumann right edge
+        f = f + nxt @ Dm.transpose(0, 1)  # kp1: contracts D[o, i]
         occ = torch.einsum("nkm,bnkm->bkm", self.f0.oms, x)
-        f = f + self.f0.lam.view(1, 1, K, -1) * (occ.unsqueeze(1)
-                                                 - self.f0.Cc.view(1, 1, K, -1)) * self.f0.oms.unsqueeze(0)
+        f = f + self.f0.lam.view(1, 1, K, -1) * (
+            occ.unsqueeze(1) - self.f0.Cc.view(1, 1, K, -1)
+        ) * self.f0.oms.unsqueeze(0)
         return f
 
 
@@ -140,13 +166,13 @@ def shared_x_init(U, a_init, N, K, M, x0s, pins, seeds_count=1):
     own committed pins and history, (3) row normalisation. Returns [B, N, K, M] where every batch
     member b uses that seed's own template.
     """
-    tpl = shared_template(U, a_init)                       # (K, M), identical for every UAV
+    tpl = shared_template(U, a_init)  # (K, M), identical for every UAV
     x = np.broadcast_to(tpl[None, :, :], (N, K, M)).copy()
-    x[:, 0, :] = np.asarray(x0s, dtype=np.float64)         # 1. real current/birth Hub row
-    for (u, k), m in sorted(pins.items()):                 # 2. that UAV's committed pins
+    x[:, 0, :] = np.asarray(x0s, dtype=np.float64)  # 1. real current/birth Hub row
+    for (u, k), m in sorted(pins.items()):  # 2. that UAV's committed pins
         x[u, k, :] = 0.0
         x[u, k, m] = 1.0
-    s = x[:, 1:, :].sum(2, keepdims=True)                  # 3. normalisation check on free rows
+    s = x[:, 1:, :].sum(2, keepdims=True)  # 3. normalisation check on free rows
     if not np.all(np.isfinite(s)) or float(np.abs(s - 1.0).max()) > 1e-12:
         x[:, 1:, :] = x[:, 1:, :] / s
     return np.repeat(x[None], seeds_count, axis=0)
@@ -193,9 +219,13 @@ def theta_c_shared(a, cfg, reg, field_seed, refresh_start, device="cuda"):
     parts, pos = [], 0
     sizes = [min(THETA_CHUNK, THETA_N - i) for i in range(0, THETA_N, THETA_CHUNK)]
     for b in sizes:
-        rungs = ladder[pos:pos + b]
-        x = prepare_x(sol, shared_x_init(U, cfg.a_init, a["N"], a["K"], a["M"], a["x0s"],
-                                         a["pins"], seeds_count=b))
+        rungs = ladder[pos : pos + b]
+        x = prepare_x(
+            sol,
+            shared_x_init(
+                U, cfg.a_init, a["N"], a["K"], a["M"], a["x0s"], a["pins"], seeds_count=b
+            ),
+        )
         th = torch.tensor(np.asarray(rungs, float), dtype=sol._td, device=sol.device)
         done = torch.zeros(b, dtype=torch.bool, device=sol.device)
         for _ in range(THETA_MAX_INNER):
@@ -210,13 +240,21 @@ def theta_c_shared(a, cfg, reg, field_seed, refresh_start, device="cuda"):
     tc, crossed = float(ladder[-1]), False
     for j in range(1, THETA_N):
         if (mp[j - 1] - thresh) * (mp[j] - thresh) < 0:
-            tc = float(ladder[j - 1] + (thresh - mp[j - 1]) * (ladder[j] - ladder[j - 1])
-                       / (mp[j] - mp[j - 1]))
+            tc = float(
+                ladder[j - 1]
+                + (thresh - mp[j - 1]) * (ladder[j] - ladder[j - 1]) / (mp[j] - mp[j - 1])
+            )
             crossed = True
             break
-    return {"theta_c": tc, "ladder": ladder.tolist(), "sat_curve": mp.tolist(),
-            "threshold": thresh, "tcs_analytic": tcs, "ladder_crossed": crossed,
-            "theta_c_is_ladder_floor_fallback": not crossed}
+    return {
+        "theta_c": tc,
+        "ladder": ladder.tolist(),
+        "sat_curve": mp.tolist(),
+        "threshold": thresh,
+        "tcs_analytic": tcs,
+        "ladder_crossed": crossed,
+        "theta_c_is_ladder_floor_fallback": not crossed,
+    }
 
 
 def solve(a, cfg, reg, field_seed, refresh_start, theta_c, device="cuda", seeds_count=1):
@@ -225,8 +263,10 @@ def solve(a, cfg, reg, field_seed, refresh_start, theta_c, device="cuda", seeds_
     field = fast_field(sol, a)
     U = reg.base_U(field_seed, refresh_start, a["K"], a["M"])
     B = seeds_count
-    x = prepare_x(sol, shared_x_init(U, cfg.a_init, a["N"], a["K"], a["M"], a["x0s"], a["pins"],
-                                     seeds_count=B))
+    x = prepare_x(
+        sol,
+        shared_x_init(U, cfg.a_init, a["N"], a["K"], a["M"], a["x0s"], a["pins"], seeds_count=B),
+    )
     th = torch.full((B,), cfg.theta0_factor * theta_c, dtype=sol._td, device=sol.device)
     tmin = torch.full((B,), cfg.theta_min_factor * theta_c, dtype=sol._td, device=sol.device)
     dx_last = torch.ones(B, dtype=sol._td, device=sol.device)
@@ -262,14 +302,21 @@ def solve(a, cfg, reg, field_seed, refresh_start, theta_c, device="cuda", seeds_
     dxf = [bool(v) for v in (dx_last < cfg.tol).cpu().numpy()]
     pol = [bool(v) for v in (sat >= cfg.sat_stop).cpu().numpy()]
     fl = [bool(v) for v in floor.cpu().numpy()]
-    return {"x": x.double().cpu().numpy(),
-            "DX_LAST": dx_last.double().cpu().numpy().tolist(),
-            "SAT": sat.double().cpu().numpy().tolist(),
-            "theta_terminal": th_term.double().cpu().numpy().tolist(),
-            "DX_FIXED_POINT": dxf, "POLARISED": pol, "THETA_FLOOR_REACHED": fl,
-            "outer_levels_executed": outer, "sweeps": sweeps,
-            "forwards": sweeps * 2, "theta_c_used": theta_c, "field_seed": field_seed,
-            "refresh_start": refresh_start}
+    return {
+        "x": x.double().cpu().numpy(),
+        "DX_LAST": dx_last.double().cpu().numpy().tolist(),
+        "SAT": sat.double().cpu().numpy().tolist(),
+        "theta_terminal": th_term.double().cpu().numpy().tolist(),
+        "DX_FIXED_POINT": dxf,
+        "POLARISED": pol,
+        "THETA_FLOOR_REACHED": fl,
+        "outer_levels_executed": outer,
+        "sweeps": sweeps,
+        "forwards": sweeps * 2,
+        "theta_c_used": theta_c,
+        "field_seed": field_seed,
+        "refresh_start": refresh_start,
+    }
 
 
 def raw_state(res, i=0, guidance_stable=None):
@@ -295,16 +342,24 @@ def observer(a, cfg, x_terminal, theta_terminal, sweeps=20, device="cuda", keep=
         x, dxb = complete_sweep(field, sol, x, th, act, cfg.alpha)
         if (i + 1) in keep:
             traj.append({"sweep": i + 1, "x": x.double().cpu().numpy()})
-    return {"x": x.double().cpu().numpy(), "sweeps": sweeps,
-            "dx_last": dxb.double().cpu().numpy().tolist(), "checkpoints": traj}
+    return {
+        "x": x.double().cpu().numpy(),
+        "sweeps": sweeps,
+        "dx_last": dxb.double().cpu().numpy().tolist(),
+        "checkpoints": traj,
+    }
 
 
 def engine_counters(sol, field):
     tp = sum(p.numel() for p in field.parameters() if p.requires_grad)
     tp += sum(p.numel() for p in sol.field.parameters() if p.requires_grad)
-    return {"TRAINABLE_PARAMETER_COUNT": int(tp), "OPTIMIZER_STEP_COUNT": 0,
-            "TRAINING_EPOCH_COUNT": 0, "CPU_FALLBACK_COUNT": 0,
-            "grad_enabled_any": bool(any(p.requires_grad for p in field.parameters()))}
+    return {
+        "TRAINABLE_PARAMETER_COUNT": int(tp),
+        "OPTIMIZER_STEP_COUNT": 0,
+        "TRAINING_EPOCH_COUNT": 0,
+        "CPU_FALLBACK_COUNT": 0,
+        "grad_enabled_any": bool(any(p.requires_grad for p in field.parameters())),
+    }
 
 
 def prefix_timing(a, cfg, reg, batch_size, *, sweeps=12, warmups=2, repeats=3, device="cuda"):
@@ -312,8 +367,9 @@ def prefix_timing(a, cfg, reg, batch_size, *, sweeps=12, warmups=2, repeats=3, d
     field = fast_field(sol, a)
     tcs = float(theta_c_scalar_multi(a["D"], a["Ccap"], a["lam_cap"], a["N"]))
     U = reg.base_U(0, 0, a["K"], a["M"])
-    xi = shared_x_init(U, cfg.a_init, a["N"], a["K"], a["M"], a["x0s"], a["pins"],
-                       seeds_count=batch_size)
+    xi = shared_x_init(
+        U, cfg.a_init, a["N"], a["K"], a["M"], a["x0s"], a["pins"], seeds_count=batch_size
+    )
     theta = torch.full((batch_size,), cfg.theta0_factor * tcs, dtype=sol._td, device=sol.device)
     active = torch.ones(batch_size, dtype=torch.bool, device=sol.device)
     torch.cuda.reset_peak_memory_stats()
@@ -329,9 +385,17 @@ def prefix_timing(a, cfg, reg, batch_size, *, sweeps=12, warmups=2, repeats=3, d
         if r >= warmups:
             walls.append(w)
     med = statistics.median(walls)
-    return {"B": batch_size, "sweeps": sweeps, "walls_s": walls, "median_wall_s": med,
-            "amortized_forward_equivalent_s": med / (2 * sweeps),
-            "live_device": str(x.device), "live_dtype": str(x.dtype),
-            "peak_reserved_gib": torch.cuda.max_memory_reserved() / 2**30,
-            "timing_scope": ("complete red-black sweep end to end, synchronised only at the "
-                             "prefix boundary; raw kernel time never substituted")}
+    return {
+        "B": batch_size,
+        "sweeps": sweeps,
+        "walls_s": walls,
+        "median_wall_s": med,
+        "amortized_forward_equivalent_s": med / (2 * sweeps),
+        "live_device": str(x.device),
+        "live_dtype": str(x.dtype),
+        "peak_reserved_gib": torch.cuda.max_memory_reserved() / 2**30,
+        "timing_scope": (
+            "complete red-black sweep end to end, synchronised only at the "
+            "prefix boundary; raw kernel time never substituted"
+        ),
+    }

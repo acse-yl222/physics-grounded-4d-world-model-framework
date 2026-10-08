@@ -1,6 +1,214 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>23 turbines · 4 m cropped-domain test</title><style>
-body{margin:0;background:#101923;color:#e9f0f7;font:14px system-ui}main{max-width:1600px;margin:auto;padding:24px}h1{font-size:24px;margin:0 0 8px}p{color:#b4c7d6;line-height:1.7}.bar{display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:#1b2d3c;padding:14px;border-radius:8px}select,button{background:#294457;color:#fff;padding:8px;border:1px solid #537286;border-radius:5px}input[type=range]{flex:1;min-width:180px;accent-color:#80dacf}.plots{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}article{padding:12px;border-radius:8px;background:#182936;min-width:0}h2{font-size:15px}canvas{width:100%;display:block;cursor:crosshair}small{color:#b4c7d6;line-height:1.6}.legend{height:10px;background:linear-gradient(90deg,#263f83,#168ba6,#67c8a4,#f3dc69,#ed7445);margin:10px 0}.diff{background:linear-gradient(90deg,#3876bf,#e9eff3,#e46742)}.ticks{display:flex;justify-content:space-between;color:#b4c7d6;font-size:12px}.note{border-left:3px solid #e1bb65;padding:12px;background:#26303a}.stats{color:#89e0d1}a{color:#8ad4ed}#terrain{max-height:340px;object-fit:contain}table{border-collapse:collapse;width:100%;font-size:13px}td,th{padding:6px 12px;text-align:right;border-bottom:1px solid #304554}th:first-child,td:first-child{text-align:left}.details{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:900px){.plots,.details{grid-template-columns:1fr}main{padding:12px}}
-</style><main><h1>All 23 turbines · 4 m cropped-domain test</h1><p id="summary">Loading simulation results…</p><div class="bar"><label>View region <select id="focus"><option value="all">All 23 turbines</option></select></label><button id="play">Play</button><input id="time" type="range" min="0" max="30" value="30"><span id="clock"></span><label><input id="contours" type="checkbox" checked> Terrain contours</label></div>
-<div class="plots"><article><h2>Terrain and static towers · No rotor force</h2><canvas id="control"></canvas><div class="legend"></div><div class="ticks"><span>0</span><span>Axial velocity u(m/s)</span><span>20</span></div></article><article><h2>Same terrain and 23 actuator disks</h2><canvas id="actuator"></canvas><div class="legend"></div><div class="ticks"><span>0</span><span>Axial velocity u(m/s)</span><span>20</span></div></article><article><h2>Rotor-force difference · Control minus actuator disk</h2><canvas id="difference"></canvas><div class="legend diff"></div><div class="ticks"><span>−6: acceleration</span><span>Δu(m/s)</span><span>+6: deceleration</span></div></article></div>
-<p class="stats" id="stats"></p><p id="readout">Select a turbine to zoom into the matching region of both runs and their difference. White segments mark rotor locations.</p><div class="details"><article><h2>Cropped terrain elevation · White dots mark 23 turbines</h2><canvas id="terrain" width="1024" height="512"></canvas><p id="terrain-info"></p></article><article><h2>Disk velocity by turbine</h2><div style="max-height:360px;overflow:auto"><table><thead><tr><th>Turbine</th><th>No rotor force</th><th>Actuator disk</th><th>Thrust (kN)</th></tr></thead><tbody id="rows"></tbody></table></div></article></div>
-<p class="note">This test preserves all turbine locations and the scene terrain. Rotor dimensions come from the visualization model, not manufacturer measurements. Inflow is assumed along +x at 8 m/s above the terrain, with all rotors facing the wind and C′T=4/3. Axial actuator-disk forces replace static blades; towers and nacelles are retained. There are no resolved rotating blades, torque, turbulence closure or electrical power. The computational grid is 4 m, while the original DSM is about 30 m; this adds no terrain measurement accuracy. This is a 10-second startup test. Local peak velocities exceed the inlet significantly and require further numerical checks. Colours saturate outside the displayed range; hover for raw values. Steady state and engineering accuracy remain unverified.</p><p><a href="../../scenes/windfarm_crop/report.json">Numerical check report</a> · <a href="../actuator-lab/">Single-turbine test</a> · <a href="../2d/?scene=region">Original wind farm</a></p><p id="status"></p></main><script type="module" src="main.js"></script></html>
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>23 turbines · 4 m cropped-domain test</title
+  ><style>
+    body {
+      margin: 0;
+      background: #101923;
+      color: #e9f0f7;
+      font: 14px system-ui;
+    }
+    main {
+      max-width: 1600px;
+      margin: auto;
+      padding: 24px;
+    }
+    h1 {
+      font-size: 24px;
+      margin: 0 0 8px;
+    }
+    p {
+      color: #b4c7d6;
+      line-height: 1.7;
+    }
+    .bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      background: #1b2d3c;
+      padding: 14px;
+      border-radius: 8px;
+    }
+    select,
+    button {
+      background: #294457;
+      color: #fff;
+      padding: 8px;
+      border: 1px solid #537286;
+      border-radius: 5px;
+    }
+    input[type='range'] {
+      flex: 1;
+      min-width: 180px;
+      accent-color: #80dacf;
+    }
+    .plots {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 18px 0;
+    }
+    article {
+      padding: 12px;
+      border-radius: 8px;
+      background: #182936;
+      min-width: 0;
+    }
+    h2 {
+      font-size: 15px;
+    }
+    canvas {
+      width: 100%;
+      display: block;
+      cursor: crosshair;
+    }
+    small {
+      color: #b4c7d6;
+      line-height: 1.6;
+    }
+    .legend {
+      height: 10px;
+      background: linear-gradient(90deg, #263f83, #168ba6, #67c8a4, #f3dc69, #ed7445);
+      margin: 10px 0;
+    }
+    .diff {
+      background: linear-gradient(90deg, #3876bf, #e9eff3, #e46742);
+    }
+    .ticks {
+      display: flex;
+      justify-content: space-between;
+      color: #b4c7d6;
+      font-size: 12px;
+    }
+    .note {
+      border-left: 3px solid #e1bb65;
+      padding: 12px;
+      background: #26303a;
+    }
+    .stats {
+      color: #89e0d1;
+    }
+    a {
+      color: #8ad4ed;
+    }
+    #terrain {
+      max-height: 340px;
+      object-fit: contain;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-size: 13px;
+    }
+    td,
+    th {
+      padding: 6px 12px;
+      text-align: right;
+      border-bottom: 1px solid #304554;
+    }
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+    .details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 900px) {
+      .plots,
+      .details {
+        grid-template-columns: 1fr;
+      }
+      main {
+        padding: 12px;
+      }
+    }
+  </style>
+  <main>
+    <h1>All 23 turbines · 4 m cropped-domain test</h1>
+    <p id="summary">Loading simulation results…</p>
+    <div class="bar">
+      <label
+        >View region
+        <select id="focus">
+          <option value="all">All 23 turbines</option>
+        </select></label
+      ><button id="play">Play</button
+      ><input id="time" type="range" min="0" max="30" value="30" /><span id="clock"></span
+      ><label><input id="contours" type="checkbox" checked /> Terrain contours</label>
+    </div>
+    <div class="plots">
+      <article>
+        <h2>Terrain and static towers · No rotor force</h2>
+        <canvas id="control"></canvas>
+        <div class="legend"></div>
+        <div class="ticks"><span>0</span><span>Axial velocity u(m/s)</span><span>20</span></div>
+      </article>
+      <article>
+        <h2>Same terrain and 23 actuator disks</h2>
+        <canvas id="actuator"></canvas>
+        <div class="legend"></div>
+        <div class="ticks"><span>0</span><span>Axial velocity u(m/s)</span><span>20</span></div>
+      </article>
+      <article>
+        <h2>Rotor-force difference · Control minus actuator disk</h2>
+        <canvas id="difference"></canvas>
+        <div class="legend diff"></div>
+        <div class="ticks">
+          <span>−6: acceleration</span><span>Δu(m/s)</span><span>+6: deceleration</span>
+        </div>
+      </article>
+    </div>
+    <p class="stats" id="stats"></p>
+    <p id="readout">
+      Select a turbine to zoom into the matching region of both runs and their difference. White
+      segments mark rotor locations.
+    </p>
+    <div class="details">
+      <article>
+        <h2>Cropped terrain elevation · White dots mark 23 turbines</h2>
+        <canvas id="terrain" width="1024" height="512"></canvas>
+        <p id="terrain-info"></p>
+      </article>
+      <article>
+        <h2>Disk velocity by turbine</h2>
+        <div style="max-height: 360px; overflow: auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Turbine</th>
+                <th>No rotor force</th>
+                <th>Actuator disk</th>
+                <th>Thrust (kN)</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+    <p class="note">
+      This test preserves all turbine locations and the scene terrain. Rotor dimensions come from
+      the visualization model, not manufacturer measurements. Inflow is assumed along +x at 8 m/s
+      above the terrain, with all rotors facing the wind and C′T=4/3. Axial actuator-disk forces
+      replace static blades; towers and nacelles are retained. There are no resolved rotating
+      blades, torque, turbulence closure or electrical power. The computational grid is 4 m, while
+      the original DSM is about 30 m; this adds no terrain measurement accuracy. This is a 10-second
+      startup test. Local peak velocities exceed the inlet significantly and require further
+      numerical checks. Colours saturate outside the displayed range; hover for raw values. Steady
+      state and engineering accuracy remain unverified.
+    </p>
+    <p>
+      <a href="../../scenes/windfarm_crop/report.json">Numerical check report</a> ·
+      <a href="../actuator-lab/">Single-turbine test</a> ·
+      <a href="../2d/?scene=region">Original wind farm</a>
+    </p>
+    <p id="status"></p>
+  </main>
+  <script type="module" src="main.js"></script>
+</html>

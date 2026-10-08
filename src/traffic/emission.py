@@ -6,9 +6,10 @@ Reference:Understanding and Quantifying Motor Vehicle Emissions with Vehicle
 """
 
 # Compatibility for direct source-script execution; package imports need no path changes.
-if __name__ == '__main__' and not __package__:
+if __name__ == "__main__" and not __package__:
     import sys
     from pathlib import Path
+
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
@@ -19,23 +20,28 @@ import os
 import argparse
 
 from traffic.configs.default import (
-    PRED_STEPS, MAX_SPEED, EVAL_SEED_OFFSET, GRID_SIZE, VEHICLE_DIM, DT,
+    PRED_STEPS,
+    MAX_SPEED,
+    EVAL_SEED_OFFSET,
+    GRID_SIZE,
+    VEHICLE_DIM,
+    DT,
 )
 from traffic.data.generate_intersection import generate_dataset
 from traffic.evaluate import load_model, modify_regulation
 
 VSP_BINS = [
-    (-99,    0,  1.5, 0.3),   # Deceleration/Braking
-    (0,      3,  2.0, 0.5),   # Idle/Low Speed
-    (3,      6,  3.5, 1.2),   # Medium Speed Cruise
-    (6,      9,  5.0, 2.0),   # Acceleration
-    (9,     12,  7.0, 3.5),   # Rapid Acceleration
-    (12,    99,  9.0, 5.0),   # Aggressive Acceleration
+    (-99, 0, 1.5, 0.3),  # Deceleration/Braking
+    (0, 3, 2.0, 0.5),  # Idle/Low Speed
+    (3, 6, 3.5, 1.2),  # Medium Speed Cruise
+    (6, 9, 5.0, 2.0),  # Acceleration
+    (9, 12, 7.0, 3.5),  # Rapid Acceleration
+    (12, 99, 9.0, 5.0),  # Aggressive Acceleration
 ]
 
 
 def compute_vsp(v_ms, a_ms2):
-    return v_ms * (1.1 * a_ms2 + 0.132) + 0.000302 * v_ms ** 3
+    return v_ms * (1.1 * a_ms2 + 0.132) + 0.000302 * v_ms**3
 
 
 def vsp_to_emission_rate(vsp):
@@ -46,7 +52,7 @@ def vsp_to_emission_rate(vsp):
 
 
 def trajectory_emissions(positions, velocities, dt=0.5):
-    v_ms = np.sqrt(velocities[:, 0]**2 + velocities[:, 1]**2) * MAX_SPEED
+    v_ms = np.sqrt(velocities[:, 0] ** 2 + velocities[:, 1] ** 2) * MAX_SPEED
     a_ms2 = np.diff(v_ms, prepend=v_ms[0]) / dt
 
     total_co2 = 0.0
@@ -61,15 +67,15 @@ def trajectory_emissions(positions, velocities, dt=0.5):
         vsps.append(vsp)
 
     return {
-        'CO2_g': total_co2,
-        'NOx_mg': total_nox,
-        'vsp_mean': np.mean(vsps),
+        "CO2_g": total_co2,
+        "NOx_mg": total_nox,
+        "vsp_mean": np.mean(vsps),
     }
 
 
 def evaluate_prediction_emissions(grid, pred_grid, last_frame, log=print):
     """Calculate emissions for all vehicles in one inference and return total CO2 (g)"""
-    occupied = (last_frame[:, :, :VEHICLE_DIM].abs().sum(dim=-1) > 1e-6)
+    occupied = last_frame[:, :, :VEHICLE_DIM].abs().sum(dim=-1) > 1e-6
     cells = occupied.nonzero()
 
     total_co2 = 0.0
@@ -90,7 +96,7 @@ def evaluate_prediction_emissions(grid, pred_grid, last_frame, log=print):
             continue
 
         em = trajectory_emissions(pred_pos, pred_vel, dt=DT)
-        total_co2 += em['CO2_g']
+        total_co2 += em["CO2_g"]
         n_vehicles += 1
 
     return total_co2, n_vehicles
@@ -114,21 +120,19 @@ def optimize_control(sample_idx, model_date=None, init_points=5, n_iter=15, log=
     last_frame = grid_orig[-1]
 
     def black_box(speed_factor):
-        modified = modify_regulation(grid_orig, signal_mode=None,
-                                      speed_factor=speed_factor)
+        modified = modify_regulation(grid_orig, signal_mode=None, speed_factor=speed_factor)
 
         # Run the model
         pred_grid = model.predict_full_grid(modified.to(device), n_iters=1, alpha=0.3)
 
         # Calculate emissions
-        total_co2, n_veh = evaluate_prediction_emissions(
-            grid_orig, pred_grid.cpu(), last_frame)
+        total_co2, n_veh = evaluate_prediction_emissions(grid_orig, pred_grid.cpu(), last_frame)
 
         return -total_co2
 
     # Bayesian Optimization
     pbounds = {
-        'speed_factor': (0.3, 1.0),
+        "speed_factor": (0.3, 1.0),
     }
 
     optimizer = BayesianOptimization(
@@ -151,17 +155,19 @@ def optimize_control(sample_idx, model_date=None, init_points=5, n_iter=15, log=
 
     baseline_co2 = black_box(1.0)
     log(f"\nbaseline (speed=1.0): CO2 = {-baseline_co2:.1f} g")
-    log(f"Optimal Scheme Emission Reduction:{(-baseline_co2 + best['target']) / (-baseline_co2) * 100:.1f}%")
+    log(
+        f"Optimal Scheme Emission Reduction:{(-baseline_co2 + best['target']) / (-baseline_co2) * 100:.1f}%"
+    )
 
     return optimizer, best
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument('--sample', '-s', type=int, default=0)
-    parser.add_argument('--model', '-m', type=str, default=None)
-    parser.add_argument('--init', type=int, default=5)   # Initial random sampling points
-    parser.add_argument('--iter', type=int, default=15)  # Number of optimization iterations
+    parser.add_argument("--sample", "-s", type=int, default=0)
+    parser.add_argument("--model", "-m", type=str, default=None)
+    parser.add_argument("--init", type=int, default=5)  # Initial random sampling points
+    parser.add_argument("--iter", type=int, default=15)  # Number of optimization iterations
     args = parser.parse_args()
 
     optimize_control(args.sample, args.model, args.init, args.iter)

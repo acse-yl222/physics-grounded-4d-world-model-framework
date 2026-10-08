@@ -13,6 +13,7 @@
 
 crisp 能量评审一律走冻结层 compute_F(单一事实源),本模块不重复实现。
 """
+
 from dataclasses import dataclass
 
 from ._frozen import compute_F
@@ -21,8 +22,9 @@ from ._frozen import compute_F
 @dataclass(frozen=True)
 class CostConfig:
     """求解器的力场配置。默认值 = 正典 s=0 行为(全部可选项关闭)。"""
-    eps_time: float = 0.0        # TieBreakCost 强度(0=关;开则捆绑 scenario.longhop)
-    mu_conc: float = 0.0         # ConcCost 强度(0=关;默认关,见台账)
+
+    eps_time: float = 0.0  # TieBreakCost 强度(0=关;开则捆绑 scenario.longhop)
+    mu_conc: float = 0.0  # ConcCost 强度(0=关;默认关,见台账)
 
     def describe(self):
         parts = ["TravelCost(eq53)", "CapacityCost(eq55)"]

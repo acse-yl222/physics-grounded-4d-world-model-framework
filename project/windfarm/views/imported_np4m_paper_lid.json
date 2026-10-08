@@ -3,9 +3,7 @@
   "scene_id": "windfarm",
   "title": "np4m paper lid",
   "time_alignment": "relative",
-  "runs": [
-    "imported_np4m_paper_lid"
-  ],
+  "runs": ["imported_np4m_paper_lid"],
   "layers": [
     {
       "run_id": "imported_np4m_paper_lid",

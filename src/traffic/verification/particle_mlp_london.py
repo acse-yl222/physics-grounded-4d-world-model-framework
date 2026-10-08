@@ -1,19 +1,26 @@
 """
-It's a copy of particle_mlp.py. 
-Minor adjustments were made to adapt it to the London map scenario, 
-allowing the model to predict on grids of arbitrary resolution. 
+It's a copy of particle_mlp.py.
+Minor adjustments were made to adapt it to the London map scenario,
+allowing the model to predict on grids of arbitrary resolution.
 The model framework remains unchanged.
 """
+
 import torch
 import torch.nn as nn
 import sys
 import os
 
 from traffic.configs.default import (
-    WINDOW_SIZE, HIST_STEPS, PRED_STEPS,
-    VEHICLE_DIM, REGULATION_DIM, TOTAL_FEAT_DIM,
-    HIDDEN_DIM, EGO_HIDDEN_DIM, N_HIDDEN_LAYERS,
-    JACOBI_ITERS
+    WINDOW_SIZE,
+    HIST_STEPS,
+    PRED_STEPS,
+    VEHICLE_DIM,
+    REGULATION_DIM,
+    TOTAL_FEAT_DIM,
+    HIDDEN_DIM,
+    EGO_HIDDEN_DIM,
+    N_HIDDEN_LAYERS,
+    JACOBI_ITERS,
 )
 
 
@@ -45,21 +52,21 @@ class ParticleInteractionMLP(nn.Module):
         W = WINDOW_SIZE
         ctr = W // 2
 
-        ego = x[:, :, ctr, ctr, :]                # (B, H, TOTAL_FEAT)
-        ego = ego.reshape(b, -1)              # (B, H*TOTAL_FEAT)
-        ego = torch.relu(self.ego_fc(ego))    # (B, EGO_HIDDEN_DIM)
+        ego = x[:, :, ctr, ctr, :]  # (B, H, TOTAL_FEAT)
+        ego = ego.reshape(b, -1)  # (B, H*TOTAL_FEAT)
+        ego = torch.relu(self.ego_fc(ego))  # (B, EGO_HIDDEN_DIM)
         # if disable_ego:
         #     ego = torch.zeros_like(ego)
 
-        dest = x[:, -1, ctr, ctr, 6:9]             # (B, 3)
-        dest = torch.relu(self.dest_amp(dest))     # (B, DEST_INJECT_DIM)
+        dest = x[:, -1, ctr, ctr, 6:9]  # (B, 3)
+        dest = torch.relu(self.dest_amp(dest))  # (B, DEST_INJECT_DIM)
 
-        x = x.reshape(b, -1)                  # (B, W*W*H*TOTAL_FEAT)
+        x = x.reshape(b, -1)  # (B, W*W*H*TOTAL_FEAT)
         x = torch.relu(self.fc1(x))
         x = self.dropout(x)
 
         # Three-path fusion
-        x = torch.cat([x, ego, dest], dim=-1)      # (B, HIDDEN+EGO+DEST)
+        x = torch.cat([x, ego, dest], dim=-1)  # (B, HIDDEN+EGO+DEST)
         x = torch.relu(self.fc2(x))
         x = self.dropout(x)
         x = torch.relu(self.fc3(x))
@@ -80,7 +87,9 @@ class ParticleTrafficModel(nn.Module):
     @torch.no_grad()
     # def predict_full_grid(self, grid):
     # def predict_full_grid(self, grid, mask_neighbors=False, n_iters=None, alpha=0.3, disable_ego=False):  # debug
-    def predict_full_grid(self, grid, mask_neighbors=False, n_iters=None, alpha=0.3, disp_scale=1.0):
+    def predict_full_grid(
+        self, grid, mask_neighbors=False, n_iters=None, alpha=0.3, disp_scale=1.0
+    ):
         """
         Add disp_scale to adjust the ratio between actual and simulated grids
         Modify grid_size for dynamic acquisition
@@ -92,7 +101,7 @@ class ParticleTrafficModel(nn.Module):
         # so the same model can predict on any map resolution (e.g. London 138x138).
         grid_size = grid.shape[1]
         pred_grid = torch.zeros(PRED_STEPS, grid_size, grid_size, VEHICLE_DIM, device=device)
-        occupied = (grid[-1, :, :, :VEHICLE_DIM].abs().sum(dim=-1) > 1e-6) # cells with vehicles
+        occupied = grid[-1, :, :, :VEHICLE_DIM].abs().sum(dim=-1) > 1e-6  # cells with vehicles
         cells = occupied.nonzero()  # (N_vehicles, 2)
         if cells.shape[0] == 0:
             return pred_grid
@@ -104,8 +113,7 @@ class ParticleTrafficModel(nn.Module):
             for idx in range(cells.shape[0]):
                 r, c = cells[idx, 0].item(), cells[idx, 1].item()
                 # outside the boundary set to 0
-                w = torch.zeros(HIST_STEPS, WINDOW_SIZE, WINDOW_SIZE,
-                                TOTAL_FEAT_DIM, device=device)
+                w = torch.zeros(HIST_STEPS, WINDOW_SIZE, WINDOW_SIZE, TOTAL_FEAT_DIM, device=device)
                 r_start = max(0, r - half)
                 r_end = min(grid_size, r + half + 1)
                 c_start = max(0, c - half)
@@ -114,8 +122,9 @@ class ParticleTrafficModel(nn.Module):
                 wc_start = c_start - (c - half)
                 n_rows = min(r_end - r_start, WINDOW_SIZE - wr_start)
                 n_cols = min(c_end - c_start, WINDOW_SIZE - wc_start)
-                w[:, wr_start:wr_start + n_rows, wc_start:wc_start + n_cols, :] = \
-                    work_grid[:, r_start:r_start + n_rows, c_start:c_start + n_cols, :]
+                w[:, wr_start : wr_start + n_rows, wc_start : wc_start + n_cols, :] = work_grid[
+                    :, r_start : r_start + n_rows, c_start : c_start + n_cols, :
+                ]
                 if mask_neighbors:
                     center = w[:, half, half, :].clone()
                     w.zero_()
@@ -131,6 +140,7 @@ class ParticleTrafficModel(nn.Module):
                 pred_abs = preds[idx].clone()
                 pred_abs[:, :2] = preds[idx, :, :2] * disp_scale + start_pos
                 pred_grid[:, r, c, :] = pred_abs
-                work_grid[-1, r, c, :VEHICLE_DIM] = \
-                    (1 - alpha) * work_grid[-1, r, c, :VEHICLE_DIM] + alpha * pred_abs[0, :]
+                work_grid[-1, r, c, :VEHICLE_DIM] = (1 - alpha) * work_grid[
+                    -1, r, c, :VEHICLE_DIM
+                ] + alpha * pred_abs[0, :]
         return pred_grid

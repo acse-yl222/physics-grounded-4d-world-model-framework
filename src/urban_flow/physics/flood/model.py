@@ -16,6 +16,7 @@ Equations (depth h, surface eta = z_b + h, unit width discharge q = H_f u at fac
 
 Arrays are [ny, nx] with row 0 = south, col 0 = west; u at interior x-faces [ny, nx-1], v at [ny-1, nx].
 """
+
 import math
 
 import torch
@@ -32,8 +33,11 @@ class ShallowWater:
         self.solid = torch.as_tensor(solid, dtype=torch.bool, device=device)
         self.ny, self.nx = self.zb.shape
         n = torch.as_tensor(manning, dtype=torch.float32, device=device)
-        self.n_x = 0.5 * (n[:, :-1] + n[:, 1:]); self.n_y = 0.5 * (n[:-1] + n[1:])
-        self.zfx = torch.maximum(self.zb[:, :-1], self.zb[:, 1:])        # face bottom = higher of the two cells
+        self.n_x = 0.5 * (n[:, :-1] + n[:, 1:])
+        self.n_y = 0.5 * (n[:-1] + n[1:])
+        self.zfx = torch.maximum(
+            self.zb[:, :-1], self.zb[:, 1:]
+        )  # face bottom = higher of the two cells
         self.zfy = torch.maximum(self.zb[:-1], self.zb[1:])
         self.wallx = self.solid[:, :-1] | self.solid[:, 1:]
         self.wally = self.solid[:-1] | self.solid[1:]
@@ -62,12 +66,12 @@ class ShallowWater:
 
     def _v_at_ufaces(self):
         """v (ny-1, nx) averaged to interior x-faces (ny, nx-1)."""
-        vp = F.pad(self.v, (0, 0, 1, 1))                                   # (ny+1, nx), zero at boundary faces
-        vc = 0.5 * (vp[:-1] + vp[1:])                                       # cell centres (ny, nx)
+        vp = F.pad(self.v, (0, 0, 1, 1))  # (ny+1, nx), zero at boundary faces
+        vc = 0.5 * (vp[:-1] + vp[1:])  # cell centres (ny, nx)
         return 0.5 * (vc[:, :-1] + vc[:, 1:])
 
     def _u_at_vfaces(self):
-        up = F.pad(self.u, (1, 1, 0, 0))                                   # (ny, nx+1)
+        up = F.pad(self.u, (1, 1, 0, 0))  # (ny, nx+1)
         uc = 0.5 * (up[:, :-1] + up[:, 1:])
         return 0.5 * (uc[:-1] + uc[1:])
 
@@ -75,18 +79,21 @@ class ShallowWater:
     def _upwind_x(f, vel):
         """upwind d f/dx (in cells) for a field f on a regular array, advecting velocity vel (same shape)."""
         fp = torch.cat([f[:, :1], f, f[:, -1:]], dim=1)
-        back = fp[:, 1:-1] - fp[:, :-2]; fwd = fp[:, 2:] - fp[:, 1:-1]
+        back = fp[:, 1:-1] - fp[:, :-2]
+        fwd = fp[:, 2:] - fp[:, 1:-1]
         return torch.where(vel > 0, back, fwd)
 
     @staticmethod
     def _upwind_y(f, vel):
         fp = torch.cat([f[:1], f, f[-1:]], dim=0)
-        back = fp[1:-1] - fp[:-2]; fwd = fp[2:] - fp[1:-1]
+        back = fp[1:-1] - fp[:-2]
+        fwd = fp[2:] - fp[1:-1]
         return torch.where(vel > 0, back, fwd)
 
     def _div(self, Hx, Hy, u, v):
         """d(Hu)/dx + d(Hv)/dy at cell centres, divided by dx (returns per metre)."""
-        qx = F.pad(Hx * u, (1, 1, 0, 0)); qy = F.pad(Hy * v, (0, 0, 1, 1))
+        qx = F.pad(Hx * u, (1, 1, 0, 0))
+        qy = F.pad(Hy * v, (0, 0, 1, 1))
         return (qx[:, 1:] - qx[:, :-1] + qy[1:] - qy[:-1]) / self.dx
 
     def _grad_x(self, f):
@@ -101,27 +108,36 @@ class ShallowWater:
 
     def _cg(self, rhs, Hx, Hy, c):
         """Jacobi-preconditioned conjugate gradient for the surface increment."""
-        diag = 1.0 + c / self.dx ** 2 * (F.pad(Hx, (1, 1, 0, 0))[:, 1:] + F.pad(Hx, (1, 1, 0, 0))[:, :-1]
-                                         + F.pad(Hy, (0, 0, 1, 1))[1:] + F.pad(Hy, (0, 0, 1, 1))[:-1])
+        diag = 1.0 + c / self.dx**2 * (
+            F.pad(Hx, (1, 1, 0, 0))[:, 1:]
+            + F.pad(Hx, (1, 1, 0, 0))[:, :-1]
+            + F.pad(Hy, (0, 0, 1, 1))[1:]
+            + F.pad(Hy, (0, 0, 1, 1))[:-1]
+        )
         x = rhs / diag
         r = rhs - self._apply_A(x, Hx, Hy, c)
         tol = self.cg_tol * torch.linalg.vector_norm(rhs)
         self.last_cg_iters = 0
         if torch.linalg.vector_norm(r) <= tol:
             return x
-        z = r / diag; p = z.clone(); rz = torch.sum(r * z)
+        z = r / diag
+        p = z.clone()
+        rz = torch.sum(r * z)
         for k in range(1, self.cg_max + 1):
             Ap = self._apply_A(p, Hx, Hy, c)
             pAp = torch.sum(p * Ap)
             if pAp <= 0:
                 break
             alpha = rz / pAp
-            x = x + alpha * p; r = r - alpha * Ap
+            x = x + alpha * p
+            r = r - alpha * Ap
             self.last_cg_iters = k
             if torch.linalg.vector_norm(r) <= tol:
                 break
-            z = r / diag; rz_new = torch.sum(r * z)
-            p = z + (rz_new / rz) * p; rz = rz_new
+            z = r / diag
+            rz_new = torch.sum(r * z)
+            p = z + (rz_new / rz) * p
+            rz = rz_new
         return x
 
     # ---------- one time step ----------
@@ -134,13 +150,24 @@ class ShallowWater:
         Hx, Hy = self.face_depths(eta)
         wetx, wety = Hx > 0, Hy > 0
         # momentum predictor: upwind advection, implicit friction, explicit old surface gradient
-        v_u = self._v_at_ufaces(); u_v = self._u_at_vfaces()
+        v_u = self._v_at_ufaces()
+        u_v = self._u_at_vfaces()
         adv_u = (self.u * self._upwind_x(self.u, self.u) + v_u * self._upwind_y(self.u, v_u)) / dx
         adv_v = (u_v * self._upwind_x(self.v, u_v) + self.v * self._upwind_y(self.v, self.v)) / dx
         u_hat = self.u - dt * adv_u - g * dt * self._grad_x(eta)
         v_hat = self.v - dt * adv_v - g * dt * self._grad_y(eta)
-        cf_x = g * self.n_x ** 2 * torch.sqrt(self.u ** 2 + v_u ** 2) / torch.clamp(Hx, min=self.hmin) ** (4.0 / 3.0)
-        cf_y = g * self.n_y ** 2 * torch.sqrt(u_v ** 2 + self.v ** 2) / torch.clamp(Hy, min=self.hmin) ** (4.0 / 3.0)
+        cf_x = (
+            g
+            * self.n_x**2
+            * torch.sqrt(self.u**2 + v_u**2)
+            / torch.clamp(Hx, min=self.hmin) ** (4.0 / 3.0)
+        )
+        cf_y = (
+            g
+            * self.n_y**2
+            * torch.sqrt(u_v**2 + self.v**2)
+            / torch.clamp(Hy, min=self.hmin) ** (4.0 / 3.0)
+        )
         u_hat = torch.where(wetx, u_hat / (1.0 + dt * cf_x), torch.zeros_like(u_hat))
         v_hat = torch.where(wety, v_hat / (1.0 + dt * cf_y), torch.zeros_like(v_hat))
         # implicit surface increment: (I - g dt^2 div H grad) d_eta = -dt div(H u_hat) + dt S
@@ -156,16 +183,16 @@ class ShallowWater:
         self.last_neg_volume = float(neg.sum().item()) * dx * dx
         h_new = torch.clamp(h_new, min=0.0)
         h_new = torch.where(self.solid, torch.zeros_like(h_new), h_new)
-        out = {'neg_clamped': self.last_neg_volume, 'cg_iters': self.last_cg_iters}
+        out = {"neg_clamped": self.last_neg_volume, "cg_iters": self.last_cg_iters}
         if sink_rate is not None:
             drained = torch.minimum(h_new, sink_rate * dt)
             h_new = h_new - drained
-            out['drained'] = float(drained.sum().item()) * dx * dx
+            out["drained"] = float(drained.sum().item()) * dx * dx
         if absorb is not None:
-            out['outflow'] = float(h_new[absorb].sum().item()) * dx * dx
+            out["outflow"] = float(h_new[absorb].sum().item()) * dx * dx
             h_new = torch.where(absorb, torch.zeros_like(h_new), h_new)
         if source is not None:
-            out['source'] = float(source.sum().item()) * dt * dx * dx
+            out["source"] = float(source.sum().item()) * dt * dx * dx
         self.h = h_new
         return out
 
@@ -178,9 +205,11 @@ class ShallowWater:
         return m
 
     def cell_speed(self):
-        up = F.pad(self.u, (1, 1, 0, 0)); vp = F.pad(self.v, (0, 0, 1, 1))
-        uc = 0.5 * (up[:, :-1] + up[:, 1:]); vc = 0.5 * (vp[:-1] + vp[1:])
-        return torch.sqrt(uc ** 2 + vc ** 2), uc, vc
+        up = F.pad(self.u, (1, 1, 0, 0))
+        vp = F.pad(self.v, (0, 0, 1, 1))
+        uc = 0.5 * (up[:, :-1] + up[:, 1:])
+        vc = 0.5 * (vp[:-1] + vp[1:])
+        return torch.sqrt(uc**2 + vc**2), uc, vc
 
     def volume(self):
         return float(self.h.sum().item()) * self.dx * self.dx

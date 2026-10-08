@@ -24,7 +24,12 @@ class ReadoutTest(unittest.TestCase):
     def test_uniform_signal_abstains(self):
         g = np.zeros(4)
         q = readout.qualify_v2(
-            g, g, g, g, g, g,
+            g,
+            g,
+            g,
+            g,
+            g,
+            g,
             physical_response_pass=True,
             self_pin_free_pass=True,
         )
@@ -33,4 +38,3 @@ class ReadoutTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

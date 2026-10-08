@@ -3,10 +3,7 @@
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "enum": [
-        "1.0.0",
-        "1.1.0"
-      ]
+      "enum": ["1.0.0", "1.1.0"]
     },
     "scene_id": {
       "type": "string",
@@ -21,11 +18,7 @@
       "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$"
     },
     "status": {
-      "enum": [
-        "running",
-        "complete",
-        "failed"
-      ]
+      "enum": ["running", "complete", "failed"]
     },
     "created_at": {
       "type": "string",
@@ -60,19 +53,11 @@
                 "pattern": "^[a-f0-9]{64}$"
               }
             },
-            "required": [
-              "id",
-              "sha256"
-            ]
+            "required": ["id", "sha256"]
           }
         }
       },
-      "required": [
-        "code_revision",
-        "dirty",
-        "parameters",
-        "inputs"
-      ]
+      "required": ["code_revision", "dirty", "parameters", "inputs"]
     },
     "spatial": {
       "type": "object",
@@ -106,12 +91,7 @@
               "minLength": 1
             }
           },
-          "required": [
-            "longitude",
-            "latitude",
-            "height_m",
-            "vertical_datum"
-          ]
+          "required": ["longitude", "latitude", "height_m", "vertical_datum"]
         },
         "bounds_m": {
           "type": "object",
@@ -134,21 +114,13 @@
               "maxItems": 3
             }
           },
-          "required": [
-            "min",
-            "max"
-          ]
+          "required": ["min", "max"]
         },
         "georeferenced": {
           "type": "boolean"
         }
       },
-      "required": [
-        "frame",
-        "units",
-        "origin",
-        "bounds_m"
-      ]
+      "required": ["frame", "units", "origin", "bounds_m"]
     },
     "time": {
       "type": "object",
@@ -168,10 +140,7 @@
           "format": "date-time"
         }
       },
-      "required": [
-        "unit",
-        "samples"
-      ]
+      "required": ["unit", "samples"]
     },
     "layers": {
       "type": "array",
@@ -184,33 +153,17 @@
             "pattern": "^[a-z][a-z0-9_]*$"
           },
           "kind": {
-            "enum": [
-              "mesh",
-              "scalar_field",
-              "vector_field",
-              "trajectories",
-              "time_series"
-            ]
+            "enum": ["mesh", "scalar_field", "vector_field", "trajectories", "time_series"]
           },
           "format": {
-            "enum": [
-              "json",
-              "glb",
-              "npy",
-              "trajectory_frames",
-              "npy_frames"
-            ]
+            "enum": ["json", "glb", "npy", "trajectory_frames", "npy_frames"]
           },
           "asset": {
             "type": "string",
             "minLength": 1
           },
           "sampling": {
-            "enum": [
-              "static",
-              "step",
-              "linear"
-            ]
+            "enum": ["static", "step", "linear"]
           },
           "field": {
             "type": "object",
@@ -225,10 +178,7 @@
                 "minLength": 1
               }
             },
-            "required": [
-              "name",
-              "unit"
-            ]
+            "required": ["name", "unit"]
           },
           "display": {
             "type": "object",
@@ -242,12 +192,7 @@
                 "type": "array",
                 "uniqueItems": true,
                 "items": {
-                  "enum": [
-                    "pick",
-                    "legend",
-                    "slice",
-                    "opacity"
-                  ]
+                  "enum": ["pick", "legend", "slice", "opacity"]
                 }
               },
               "color_map": {
@@ -263,27 +208,17 @@
                 "maxItems": 2
               }
             },
-            "required": [
-              "widget",
-              "capabilities"
-            ]
+            "required": ["widget", "capabilities"]
           },
           "encoding": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
               "coordinate_frame": {
-                "enum": [
-                  "ENU",
-                  "glTF-y-up"
-                ]
+                "enum": ["ENU", "glTF-y-up"]
               },
               "dtype": {
-                "enum": [
-                  "<f2",
-                  "<f4",
-                  "<f8"
-                ]
+                "enum": ["<f2", "<f4", "<f8"]
               },
               "shape": {
                 "type": "array",
@@ -295,12 +230,7 @@
                 "maxItems": 4
               },
               "axes": {
-                "enum": [
-                  "YX",
-                  "CYX",
-                  "TYX",
-                  "TCYX"
-                ]
+                "enum": ["YX", "CYX", "TYX", "TCYX"]
               },
               "origin_m": {
                 "type": "array",
@@ -341,11 +271,7 @@
                 "minLength": 1
               },
               "height_dtype": {
-                "enum": [
-                  "<f2",
-                  "<f4",
-                  "<f8"
-                ]
+                "enum": ["<f2", "<f4", "<f8"]
               },
               "mask_asset": {
                 "type": "string",
@@ -361,57 +287,35 @@
             "allOf": [
               {
                 "if": {
-                  "required": [
-                    "height_asset"
-                  ]
+                  "required": ["height_asset"]
                 },
                 "then": {
-                  "required": [
-                    "height_dtype"
-                  ]
+                  "required": ["height_dtype"]
                 }
               },
               {
                 "if": {
-                  "required": [
-                    "mask_asset"
-                  ]
+                  "required": ["mask_asset"]
                 },
                 "then": {
-                  "required": [
-                    "mask_dtype",
-                    "mask_semantics"
-                  ]
+                  "required": ["mask_dtype", "mask_semantics"]
                 }
               }
             ]
           }
         },
-        "required": [
-          "id",
-          "kind",
-          "format",
-          "asset",
-          "sampling",
-          "display"
-        ],
+        "required": ["id", "kind", "format", "asset", "sampling", "display"],
         "allOf": [
           {
             "if": {
               "properties": {
                 "kind": {
-                  "enum": [
-                    "scalar_field",
-                    "vector_field",
-                    "time_series"
-                  ]
+                  "enum": ["scalar_field", "vector_field", "time_series"]
                 }
               }
             },
             "then": {
-              "required": [
-                "field"
-              ]
+              "required": ["field"]
             }
           },
           {
@@ -441,10 +345,7 @@
             "then": {
               "properties": {
                 "sampling": {
-                  "enum": [
-                    "step",
-                    "linear"
-                  ]
+                  "enum": ["step", "linear"]
                 }
               }
             }
@@ -463,9 +364,7 @@
                   "const": "mesh"
                 },
                 "encoding": {
-                  "required": [
-                    "coordinate_frame"
-                  ],
+                  "required": ["coordinate_frame"],
                   "properties": {
                     "coordinate_frame": {
                       "const": "glTF-y-up"
@@ -473,29 +372,21 @@
                   }
                 }
               },
-              "required": [
-                "encoding"
-              ]
+              "required": ["encoding"]
             }
           },
           {
             "if": {
               "properties": {
                 "format": {
-                  "enum": [
-                    "npy",
-                    "npy_frames"
-                  ]
+                  "enum": ["npy", "npy_frames"]
                 }
               }
             },
             "then": {
               "properties": {
                 "kind": {
-                  "enum": [
-                    "scalar_field",
-                    "vector_field"
-                  ]
+                  "enum": ["scalar_field", "vector_field"]
                 },
                 "encoding": {
                   "required": [
@@ -516,9 +407,7 @@
                   }
                 }
               },
-              "required": [
-                "encoding"
-              ]
+              "required": ["encoding"]
             }
           },
           {
@@ -548,15 +437,10 @@
             "then": {
               "properties": {
                 "encoding": {
-                  "required": [
-                    "frame_assets"
-                  ]
+                  "required": ["frame_assets"]
                 },
                 "sampling": {
-                  "enum": [
-                    "step",
-                    "linear"
-                  ]
+                  "enum": ["step", "linear"]
                 }
               }
             }
@@ -569,12 +453,7 @@
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": [
-          "id",
-          "asset",
-          "sha256",
-          "media_type"
-        ],
+        "required": ["id", "asset", "sha256", "media_type"],
         "properties": {
           "id": {
             "type": "string",
@@ -645,9 +524,7 @@
                 }
               },
               "not": {
-                "required": [
-                  "encoding"
-                ]
+                "required": ["encoding"]
               }
             }
           }

@@ -17,17 +17,12 @@
     {
       "scene_id": "south_ken",
       "title": "South Kensington core008",
-      "views": [
-        "default",
-        "traffic"
-      ]
+      "views": ["default", "traffic"]
     },
     {
       "scene_id": "white_city",
       "title": "White City 9 km\u00b2",
-      "views": [
-        "default"
-      ]
+      "views": ["default"]
     },
     {
       "scene_id": "windfarm",

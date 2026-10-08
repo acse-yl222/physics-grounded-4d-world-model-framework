@@ -11,6 +11,7 @@ pointwise layer (ASHRAE clear-sky model with monthly A, B, C). Nothing is traine
 
 Arrays: [ny, nx], row 0 = south, col 0 = west, metres. Azimuth: degrees clockwise from north (0 = N, 90 = E).
 """
+
 import math
 
 import torch
@@ -22,27 +23,42 @@ NEG = -1.0e4
 def sun_position(lat_deg, lon_deg, year, month, day, hour_utc):
     """NOAA solar position (degrees): returns (altitude, azimuth clockwise from north). hour_utc may be fractional."""
     # Julian day
-    a = (14 - month) // 12; y = year + 4800 - a; m = month + 12 * a - 3
+    a = (14 - month) // 12
+    y = year + 4800 - a
+    m = month + 12 * a - 3
     jdn = day + (153 * m + 2) // 5 + 365 * y + y // 4 - y // 100 + y // 400 - 32045
     jd = jdn + (hour_utc - 12.0) / 24.0
     jc = (jd - 2451545.0) / 36525.0
     gmls = (280.46646 + jc * (36000.76983 + jc * 0.0003032)) % 360.0
     gmas = 357.52911 + jc * (35999.05029 - 0.0001537 * jc)
     ecc = 0.016708634 - jc * (0.000042037 + 0.0000001267 * jc)
-    seqc = (math.sin(math.radians(gmas)) * (1.914602 - jc * (0.004817 + 0.000014 * jc)) + math.sin(math.radians(2 * gmas)) * (0.019993 - 0.000101 * jc)
-            + math.sin(math.radians(3 * gmas)) * 0.000289)
+    seqc = (
+        math.sin(math.radians(gmas)) * (1.914602 - jc * (0.004817 + 0.000014 * jc))
+        + math.sin(math.radians(2 * gmas)) * (0.019993 - 0.000101 * jc)
+        + math.sin(math.radians(3 * gmas)) * 0.000289
+    )
     stl = gmls + seqc
     sal = stl - 0.00569 - 0.00478 * math.sin(math.radians(125.04 - 1934.136 * jc))
     moe = 23.0 + (26.0 + (21.448 - jc * (46.815 + jc * (0.00059 - jc * 0.001813))) / 60.0) / 60.0
     oc = moe + 0.00256 * math.cos(math.radians(125.04 - 1934.136 * jc))
     decl = math.degrees(math.asin(math.sin(math.radians(oc)) * math.sin(math.radians(sal))))
     vy = math.tan(math.radians(oc / 2)) ** 2
-    eqt = 4 * math.degrees(vy * math.sin(2 * math.radians(gmls)) - 2 * ecc * math.sin(math.radians(gmas)) + 4 * ecc * vy * math.sin(math.radians(gmas)) * math.cos(2 * math.radians(gmls))
-                           - 0.5 * vy * vy * math.sin(4 * math.radians(gmls)) - 1.25 * ecc * ecc * math.sin(2 * math.radians(gmas)))
+    eqt = 4 * math.degrees(
+        vy * math.sin(2 * math.radians(gmls))
+        - 2 * ecc * math.sin(math.radians(gmas))
+        + 4 * ecc * vy * math.sin(math.radians(gmas)) * math.cos(2 * math.radians(gmls))
+        - 0.5 * vy * vy * math.sin(4 * math.radians(gmls))
+        - 1.25 * ecc * ecc * math.sin(2 * math.radians(gmas))
+    )
     tst = (hour_utc * 60.0 + eqt + 4 * lon_deg) % 1440.0
     ha = tst / 4.0 - 180.0 if tst / 4.0 >= 0 else tst / 4.0 + 180.0
     lat, dec, h = map(math.radians, (lat_deg, decl, ha))
-    zen = math.acos(max(-1.0, min(1.0, math.sin(lat) * math.sin(dec) + math.cos(lat) * math.cos(dec) * math.cos(h))))
+    zen = math.acos(
+        max(
+            -1.0,
+            min(1.0, math.sin(lat) * math.sin(dec) + math.cos(lat) * math.cos(dec) * math.cos(h)),
+        )
+    )
     alt = 90.0 - math.degrees(zen)
     if abs(math.sin(zen)) < 1e-9:
         az = 180.0
@@ -54,7 +70,8 @@ def sun_position(lat_deg, lon_deg, year, month, day, hour_utc):
     if alt > 85:
         refr = 0.0
     elif alt > 5:
-        t = math.tan(math.radians(alt)); refr = 58.1 / t - 0.07 / t ** 3 + 0.000086 / t ** 5
+        t = math.tan(math.radians(alt))
+        refr = 58.1 / t - 0.07 / t**3 + 0.000086 / t**5
     elif alt > -0.575:
         refr = 1735 + alt * (-518.2 + alt * (103.4 + alt * (-12.79 + alt * 0.711)))
     else:
@@ -74,8 +91,12 @@ class ShadowNet(torch.nn.Module):
         self.ny, self.nx = self.H.shape
         self.dx = float(dx)
         self.max_vec, self.min_vec = max_vec, min_vec
-        ys, xs = torch.meshgrid(torch.arange(self.ny, device=device, dtype=torch.float32), torch.arange(self.nx, device=device, dtype=torch.float32), indexing='ij')
-        self.xs, self.ys = xs, ys                                  # cell coordinates
+        ys, xs = torch.meshgrid(
+            torch.arange(self.ny, device=device, dtype=torch.float32),
+            torch.arange(self.nx, device=device, dtype=torch.float32),
+            indexing="ij",
+        )
+        self.xs, self.ys = xs, ys  # cell coordinates
         self.hrange = float(self.H.max() - self.H.min())
         self._cache = {}
 
@@ -84,7 +105,8 @@ class ShadowNet(torch.nn.Module):
         key = round(azimuth_deg, 3)
         if key in self._cache:
             return self._cache[key]
-        az = math.radians(azimuth_deg); ux, uy = math.sin(az), math.cos(az)
+        az = math.radians(azimuth_deg)
+        ux, uy = math.sin(az), math.cos(az)
         best = None
         for px in range(-self.max_vec, self.max_vec + 1):
             for py in range(-self.max_vec, self.max_vec + 1):
@@ -92,7 +114,11 @@ class ShadowNet(torch.nn.Module):
                 if n < self.min_vec or n > self.max_vec:
                     continue
                 err = math.acos(max(-1.0, min(1.0, (px * ux + py * uy) / n)))
-                if best is None or err < best[0] - 1e-12 or (abs(err - best[0]) <= 1e-12 and n < best[3]):
+                if (
+                    best is None
+                    or err < best[0] - 1e-12
+                    or (abs(err - best[0]) <= 1e-12 and n < best[3])
+                ):
                     best = (err, px, py, n)
         self._cache[key] = best[1:]
         return best[1:]
@@ -103,19 +129,21 @@ class ShadowNet(torch.nn.Module):
         ys0, ys1 = max(0, -oy), min(self.ny, self.ny - oy)
         xs0, xs1 = max(0, -ox), min(self.nx, self.nx - ox)
         if ys1 > ys0 and xs1 > xs0:
-            out[ys0:ys1, xs0:xs1] = f[ys0 + oy:ys1 + oy, xs0 + ox:xs1 + ox]
+            out[ys0:ys1, xs0:xs1] = f[ys0 + oy : ys1 + oy, xs0 + ox : xs1 + ox]
         return out
 
     def running_max(self, G, px, py, S_cells):
         """max over s in (0, S] of G(x + s d), d = p/|p|: stage 0 = nearest samples along p, then doubling with 2^k p."""
-        n = math.hypot(px, py); m = int(round(n))
+        n = math.hypot(px, py)
+        m = int(round(n))
         M = None
         for s in range(1, m + 1):
             sh = self.shift(G, int(round(s * px / n)), int(round(s * py / n)))
             M = sh if M is None else torch.maximum(M, sh)
         k = 1
         while k * n < S_cells:
-            M = torch.maximum(M, self.shift(M, k * px, k * py)); k *= 2
+            M = torch.maximum(M, self.shift(M, k * px, k * py))
+            k *= 2
         return M
 
     def forward(self, altitude_deg, azimuth_deg, max_range_m=None):
@@ -136,12 +164,14 @@ class HorizonNet(torch.nn.Module):
 
     def __init__(self, shadow: ShadowNet, n_azimuth=16, altitudes_deg=tuple(range(2, 90, 5))):
         super().__init__()
-        self.sn = shadow; self.n_az = n_azimuth; self.alts = list(altitudes_deg)
+        self.sn = shadow
+        self.n_az = n_azimuth
+        self.alts = list(altitudes_deg)
 
     def horizon(self, azimuth_deg):
         """Lowest tested altitude at which the sun is visible; cells shaded at all altitudes get 90."""
         h = torch.full_like(self.sn.H, 90.0)
-        for a in reversed(self.alts):                       # from high to low: visible at a -> horizon <= a
+        for a in reversed(self.alts):  # from high to low: visible at a -> horizon <= a
             vis = ~self.sn(a, azimuth_deg)
             h = torch.where(vis, torch.full_like(h, float(a)), h)
         return h
@@ -157,9 +187,20 @@ class HorizonNet(torch.nn.Module):
 
 
 # ASHRAE clear-sky coefficients (A W/m^2, B, C) for the 21st of each month, 1 .. 12
-ASHRAE = {1: (1230, 0.142, 0.058), 2: (1215, 0.144, 0.060), 3: (1186, 0.156, 0.071), 4: (1136, 0.180, 0.097), 5: (1104, 0.196, 0.121),
-          6: (1088, 0.205, 0.134), 7: (1085, 0.207, 0.136), 8: (1107, 0.201, 0.122), 9: (1151, 0.177, 0.092), 10: (1192, 0.160, 0.073),
-          11: (1221, 0.149, 0.063), 12: (1233, 0.142, 0.057)}
+ASHRAE = {
+    1: (1230, 0.142, 0.058),
+    2: (1215, 0.144, 0.060),
+    3: (1186, 0.156, 0.071),
+    4: (1136, 0.180, 0.097),
+    5: (1104, 0.196, 0.121),
+    6: (1088, 0.205, 0.134),
+    7: (1085, 0.207, 0.136),
+    8: (1107, 0.201, 0.122),
+    9: (1151, 0.177, 0.092),
+    10: (1192, 0.160, 0.073),
+    11: (1221, 0.149, 0.063),
+    12: (1233, 0.142, 0.057),
+}
 
 
 def clear_sky(altitude_deg, month):

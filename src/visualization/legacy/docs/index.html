@@ -1,858 +1,2732 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Urban World Model · South Kensington</title>
-<meta name="description" content="One 3-D city model, one coordinate frame, six physical layers, three kinds of moving agents and a single browser viewer for South Kensington core008.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<style>
-:root{
-  --paper:#f3f4f1; --surface:#ffffff; --ink:#171c22; --muted:#5c6570; --rule:#d3d8d2; --rule-soft:#e6e9e4;
-  --wind:#1f8a8a; --temp:#d3702a; --sun:#b8891c; --poll:#7a5bc2; --flood:#2b63b0; --city:#6f7780; --agent:#3f8f4a;
-  --wind-soft:#e0f1f0; --temp-soft:#fbe9dc; --sun-soft:#faf0d2; --poll-soft:#ebe4f8; --flood-soft:#dfe8f6; --city-soft:#e8eaed; --agent-soft:#e2f0e3;
-  --accent:#2b63b0; --grid-dot:#c9cfc8; --code-bg:#eceee9;
-  --display:"Barlow Condensed","Arial Narrow","Helvetica Neue",Arial,sans-serif;
-  --body:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0f1419; --surface:#161c23; --ink:#e4e8ea; --muted:#9aa4ae; --rule:#2b333c; --rule-soft:#222a32;
-    --wind:#4fbcb8; --temp:#ec9556; --sun:#e4b74a; --poll:#a78ee6; --flood:#6e9fe0; --city:#a0a8b1; --agent:#74bd7c;
-    --wind-soft:#123334; --temp-soft:#3a2416; --sun-soft:#3a2f10; --poll-soft:#2a2140; --flood-soft:#182a44; --city-soft:#232a31; --agent-soft:#183121;
-    --accent:#6e9fe0; --grid-dot:#27303a; --code-bg:#1b222a;
-  }
-}
-:root[data-theme="dark"]{
-  --paper:#0f1419; --surface:#161c23; --ink:#e4e8ea; --muted:#9aa4ae; --rule:#2b333c; --rule-soft:#222a32;
-  --wind:#4fbcb8; --temp:#ec9556; --sun:#e4b74a; --poll:#a78ee6; --flood:#6e9fe0; --city:#a0a8b1; --agent:#74bd7c;
-  --wind-soft:#123334; --temp-soft:#3a2416; --sun-soft:#3a2f10; --poll-soft:#2a2140; --flood-soft:#182a44; --city-soft:#232a31; --agent-soft:#183121;
-  --accent:#6e9fe0; --grid-dot:#27303a; --code-bg:#1b222a;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
-a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
-a:hover{border-bottom-color:var(--accent)}
-a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-img{max-width:100%;height:auto;display:block}
-code,pre,.mono{font-family:var(--mono);font-size:.86em}
-code{background:var(--code-bg);padding:.1em .35em;border-radius:3px}
-pre{background:var(--code-bg);padding:14px 16px;border-radius:4px;overflow-x:auto;line-height:1.5;margin:0}
-pre code{background:none;padding:0}
-h1,h2,h3,h4{font-family:var(--display);line-height:1.05;margin:0;text-wrap:balance;font-weight:600}
-h1{font-size:clamp(44px,7vw,84px);letter-spacing:-.01em}
-h2{font-size:clamp(30px,4vw,44px)}
-h3{font-size:clamp(22px,2.6vw,28px)}
-h4{font-size:19px;font-weight:600}
-p{margin:0}
-.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
-.measure{max-width:64ch}
-.lede{font-size:19px;line-height:1.5;max-width:60ch}
-.muted{color:var(--muted)}
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Urban World Model · South Kensington</title>
+    <meta
+      name="description"
+      content="One 3-D city model, one coordinate frame, six physical layers, three kinds of moving agents and a single browser viewer for South Kensington core008."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    />
+    <style>
+      :root {
+        --paper: #f3f4f1;
+        --surface: #ffffff;
+        --ink: #171c22;
+        --muted: #5c6570;
+        --rule: #d3d8d2;
+        --rule-soft: #e6e9e4;
+        --wind: #1f8a8a;
+        --temp: #d3702a;
+        --sun: #b8891c;
+        --poll: #7a5bc2;
+        --flood: #2b63b0;
+        --city: #6f7780;
+        --agent: #3f8f4a;
+        --wind-soft: #e0f1f0;
+        --temp-soft: #fbe9dc;
+        --sun-soft: #faf0d2;
+        --poll-soft: #ebe4f8;
+        --flood-soft: #dfe8f6;
+        --city-soft: #e8eaed;
+        --agent-soft: #e2f0e3;
+        --accent: #2b63b0;
+        --grid-dot: #c9cfc8;
+        --code-bg: #eceee9;
+        --display: 'Barlow Condensed', 'Arial Narrow', 'Helvetica Neue', Arial, sans-serif;
+        --body: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+        --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) {
+          --paper: #0f1419;
+          --surface: #161c23;
+          --ink: #e4e8ea;
+          --muted: #9aa4ae;
+          --rule: #2b333c;
+          --rule-soft: #222a32;
+          --wind: #4fbcb8;
+          --temp: #ec9556;
+          --sun: #e4b74a;
+          --poll: #a78ee6;
+          --flood: #6e9fe0;
+          --city: #a0a8b1;
+          --agent: #74bd7c;
+          --wind-soft: #123334;
+          --temp-soft: #3a2416;
+          --sun-soft: #3a2f10;
+          --poll-soft: #2a2140;
+          --flood-soft: #182a44;
+          --city-soft: #232a31;
+          --agent-soft: #183121;
+          --accent: #6e9fe0;
+          --grid-dot: #27303a;
+          --code-bg: #1b222a;
+        }
+      }
+      :root[data-theme='dark'] {
+        --paper: #0f1419;
+        --surface: #161c23;
+        --ink: #e4e8ea;
+        --muted: #9aa4ae;
+        --rule: #2b333c;
+        --rule-soft: #222a32;
+        --wind: #4fbcb8;
+        --temp: #ec9556;
+        --sun: #e4b74a;
+        --poll: #a78ee6;
+        --flood: #6e9fe0;
+        --city: #a0a8b1;
+        --agent: #74bd7c;
+        --wind-soft: #123334;
+        --temp-soft: #3a2416;
+        --sun-soft: #3a2f10;
+        --poll-soft: #2a2140;
+        --flood-soft: #182a44;
+        --city-soft: #232a31;
+        --agent-soft: #183121;
+        --accent: #6e9fe0;
+        --grid-dot: #27303a;
+        --code-bg: #1b222a;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--body);
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+        border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+      }
+      a:hover {
+        border-bottom-color: var(--accent);
+      }
+      a:focus-visible,
+      button:focus-visible {
+        outline: 2px solid var(--accent);
+        outline-offset: 2px;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+      code,
+      pre,
+      .mono {
+        font-family: var(--mono);
+        font-size: 0.86em;
+      }
+      code {
+        background: var(--code-bg);
+        padding: 0.1em 0.35em;
+        border-radius: 3px;
+      }
+      pre {
+        background: var(--code-bg);
+        padding: 14px 16px;
+        border-radius: 4px;
+        overflow-x: auto;
+        line-height: 1.5;
+        margin: 0;
+      }
+      pre code {
+        background: none;
+        padding: 0;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        font-family: var(--display);
+        line-height: 1.05;
+        margin: 0;
+        text-wrap: balance;
+        font-weight: 600;
+      }
+      h1 {
+        font-size: clamp(44px, 7vw, 84px);
+        letter-spacing: -0.01em;
+      }
+      h2 {
+        font-size: clamp(30px, 4vw, 44px);
+      }
+      h3 {
+        font-size: clamp(22px, 2.6vw, 28px);
+      }
+      h4 {
+        font-size: 19px;
+        font-weight: 600;
+      }
+      p {
+        margin: 0;
+      }
+      .wrap {
+        max-width: 1180px;
+        margin: 0 auto;
+        padding-inline: clamp(16px, 4vw, 40px);
+      }
+      .eyebrow {
+        font-family: var(--mono);
+        font-size: 12px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .measure {
+        max-width: 64ch;
+      }
+      .lede {
+        font-size: 19px;
+        line-height: 1.5;
+        max-width: 60ch;
+      }
+      .muted {
+        color: var(--muted);
+      }
 
-/* ---- top bar */
-.topbar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule-soft)}
-.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px}
-.brand{font-family:var(--display);font-weight:700;font-size:20px;letter-spacing:.02em;text-transform:uppercase;border:0;color:var(--ink)}
-.topnav{display:flex;gap:18px;flex-wrap:wrap;font-size:13.5px}
-.topnav a{border:0;color:var(--muted)}
-.topnav a:hover{color:var(--ink)}
-@media (max-width:720px){.topnav{display:none}}
+      /* ---- top bar */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: color-mix(in srgb, var(--paper) 88%, transparent);
+        backdrop-filter: blur(8px);
+        border-bottom: 1px solid var(--rule-soft);
+      }
+      .topbar .wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 52px;
+      }
+      .brand {
+        font-family: var(--display);
+        font-weight: 700;
+        font-size: 20px;
+        letter-spacing: 0.02em;
+        text-transform: uppercase;
+        border: 0;
+        color: var(--ink);
+      }
+      .topnav {
+        display: flex;
+        gap: 18px;
+        flex-wrap: wrap;
+        font-size: 13.5px;
+      }
+      .topnav a {
+        border: 0;
+        color: var(--muted);
+      }
+      .topnav a:hover {
+        color: var(--ink);
+      }
+      @media (max-width: 720px) {
+        .topnav {
+          display: none;
+        }
+      }
 
-/* ---- hero */
-.hero{padding-block:56px 40px;background-image:radial-gradient(var(--grid-dot) 1px,transparent 1.2px);background-size:24px 24px;border-bottom:1px solid var(--rule-soft)}
-.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:end}
-@media (max-width:860px){.hero-grid{grid-template-columns:1fr}}
-.hero .lede{margin-top:20px}
-.hero-meta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
-.hero-meta b{color:var(--ink);font-weight:500}
-.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--ink);border-radius:3px;font-family:var(--display);font-size:17px;font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
-.btn.primary{background:var(--ink);color:var(--paper)}
-.btn:hover{border-bottom-color:var(--ink)}
-.hero-figure{margin:0;border:1px solid var(--rule);background:var(--surface);box-shadow:0 12px 40px -20px rgba(0,0,0,.45)}
-.hero-figure img{aspect-ratio:16/10;object-fit:cover;width:100%}
-.hero-figure figcaption{padding:10px 14px;font-size:13px;color:var(--muted);border-top:1px solid var(--rule-soft)}
+      /* ---- hero */
+      .hero {
+        padding-block: 56px 40px;
+        background-image: radial-gradient(var(--grid-dot) 1px, transparent 1.2px);
+        background-size: 24px 24px;
+        border-bottom: 1px solid var(--rule-soft);
+      }
+      .hero-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+        gap: 40px;
+        align-items: end;
+      }
+      @media (max-width: 860px) {
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .hero .lede {
+        margin-top: 20px;
+      }
+      .hero-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 18px;
+        margin-top: 24px;
+        font-family: var(--mono);
+        font-size: 12.5px;
+        color: var(--muted);
+      }
+      .hero-meta b {
+        color: var(--ink);
+        font-weight: 500;
+      }
+      .cta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 28px;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 16px;
+        border: 1px solid var(--ink);
+        border-radius: 3px;
+        font-family: var(--display);
+        font-size: 17px;
+        font-weight: 600;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      .btn.primary {
+        background: var(--ink);
+        color: var(--paper);
+      }
+      .btn:hover {
+        border-bottom-color: var(--ink);
+      }
+      .hero-figure {
+        margin: 0;
+        border: 1px solid var(--rule);
+        background: var(--surface);
+        box-shadow: 0 12px 40px -20px rgba(0, 0, 0, 0.45);
+      }
+      .hero-figure img {
+        aspect-ratio: 16/10;
+        object-fit: cover;
+        width: 100%;
+      }
+      .hero-figure figcaption {
+        padding: 10px 14px;
+        font-size: 13px;
+        color: var(--muted);
+        border-top: 1px solid var(--rule-soft);
+      }
 
-/* ---- swatch strip: the four fields + agents + geometry */
-.strip{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--rule);background:var(--surface);margin-top:44px;overflow:hidden}
-.strip a{display:block;padding:14px 14px 12px;border:0;box-shadow:1px 1px 0 var(--rule-soft);color:var(--ink);position:relative}
-.strip a::before{content:"";position:absolute;left:0;top:0;right:0;height:4px;background:var(--c)}
-.strip .k{font-family:var(--display);font-size:22px;font-weight:600;line-height:1}
-.strip .v{font-size:12.5px;color:var(--muted);margin-top:4px}
-@media (max-width:960px){.strip{grid-template-columns:repeat(4,1fr)}}
-@media (max-width:480px){.strip{grid-template-columns:repeat(2,1fr)}}
+      /* ---- swatch strip: the four fields + agents + geometry */
+      .strip {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        border: 1px solid var(--rule);
+        background: var(--surface);
+        margin-top: 44px;
+        overflow: hidden;
+      }
+      .strip a {
+        display: block;
+        padding: 14px 14px 12px;
+        border: 0;
+        box-shadow: 1px 1px 0 var(--rule-soft);
+        color: var(--ink);
+        position: relative;
+      }
+      .strip a::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        height: 4px;
+        background: var(--c);
+      }
+      .strip .k {
+        font-family: var(--display);
+        font-size: 22px;
+        font-weight: 600;
+        line-height: 1;
+      }
+      .strip .v {
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+      @media (max-width: 960px) {
+        .strip {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+      @media (max-width: 480px) {
+        .strip {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
 
-/* ---- sections */
-section.block{padding-block:64px;border-bottom:1px solid var(--rule-soft)}
-.section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:24px 48px;align-items:start;margin-bottom:36px}
-@media (max-width:860px){.section-head{grid-template-columns:1fr}}
-.section-head .eyebrow{margin-bottom:10px}
-.section-head p{max-width:64ch}
+      /* ---- sections */
+      section.block {
+        padding-block: 64px;
+        border-bottom: 1px solid var(--rule-soft);
+      }
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+        gap: 24px 48px;
+        align-items: start;
+        margin-bottom: 36px;
+      }
+      @media (max-width: 860px) {
+        .section-head {
+          grid-template-columns: 1fr;
+        }
+      }
+      .section-head .eyebrow {
+        margin-bottom: 10px;
+      }
+      .section-head p {
+        max-width: 64ch;
+      }
 
-/* module layout: spec rail + content */
-.module{display:grid;grid-template-columns:230px minmax(0,1fr);gap:24px 40px;padding-block:36px;border-top:1px solid var(--rule)}
-.module:first-of-type{border-top:0}
-@media (max-width:860px){.module{grid-template-columns:1fr}}
-.rail{position:sticky;top:64px;align-self:start;font-size:13px}
-@media (max-width:860px){.rail{position:static}}
-.rail .tag{display:inline-block;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px 2px;color:#fff;background:var(--c);border-radius:2px}
-:root[data-theme="dark"] .rail .tag{color:#0f1419}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .rail .tag{color:#0f1419}}
-.rail dl{margin:14px 0 0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 10px}
-.rail dt{color:var(--muted);font-family:var(--mono);font-size:11.5px;text-transform:uppercase;letter-spacing:.06em;padding-top:2px}
-.rail dd{margin:0;overflow-wrap:anywhere}
-.rail dd code{font-size:12px}
-.module h3{margin-bottom:12px}
-.module .body{display:grid;gap:18px}
-.module .body p{max-width:66ch}
-.module ul{margin:0;padding-left:20px;max-width:66ch}
-.module li{margin:4px 0}
-.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:6px;align-items:start}
-.figs.two{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
-.figs figure,figure.wide{margin:0;background:var(--surface);border:1px solid var(--rule)}
-figure.wide{margin-top:6px}
-.figs figcaption,figure.wide figcaption{padding:8px 12px 10px;font-size:12.5px;line-height:1.45;color:var(--muted);border-top:1px solid var(--rule-soft)}
-.figs img,figure.wide img{width:100%}
-.figs .tall img{max-height:520px;object-fit:cover;object-position:top}
+      /* module layout: spec rail + content */
+      .module {
+        display: grid;
+        grid-template-columns: 230px minmax(0, 1fr);
+        gap: 24px 40px;
+        padding-block: 36px;
+        border-top: 1px solid var(--rule);
+      }
+      .module:first-of-type {
+        border-top: 0;
+      }
+      @media (max-width: 860px) {
+        .module {
+          grid-template-columns: 1fr;
+        }
+      }
+      .rail {
+        position: sticky;
+        top: 64px;
+        align-self: start;
+        font-size: 13px;
+      }
+      @media (max-width: 860px) {
+        .rail {
+          position: static;
+        }
+      }
+      .rail .tag {
+        display: inline-block;
+        font-family: var(--display);
+        font-weight: 600;
+        font-size: 15px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        padding: 3px 8px 2px;
+        color: #fff;
+        background: var(--c);
+        border-radius: 2px;
+      }
+      :root[data-theme='dark'] .rail .tag {
+        color: #0f1419;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root:not([data-theme='light']) .rail .tag {
+          color: #0f1419;
+        }
+      }
+      .rail dl {
+        margin: 14px 0 0;
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: 6px 10px;
+      }
+      .rail dt {
+        color: var(--muted);
+        font-family: var(--mono);
+        font-size: 11.5px;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        padding-top: 2px;
+      }
+      .rail dd {
+        margin: 0;
+        overflow-wrap: anywhere;
+      }
+      .rail dd code {
+        font-size: 12px;
+      }
+      .module h3 {
+        margin-bottom: 12px;
+      }
+      .module .body {
+        display: grid;
+        gap: 18px;
+      }
+      .module .body p {
+        max-width: 66ch;
+      }
+      .module ul {
+        margin: 0;
+        padding-left: 20px;
+        max-width: 66ch;
+      }
+      .module li {
+        margin: 4px 0;
+      }
+      .figs {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 16px;
+        margin-top: 6px;
+        align-items: start;
+      }
+      .figs.two {
+        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      }
+      .figs figure,
+      figure.wide {
+        margin: 0;
+        background: var(--surface);
+        border: 1px solid var(--rule);
+      }
+      figure.wide {
+        margin-top: 6px;
+      }
+      .figs figcaption,
+      figure.wide figcaption {
+        padding: 8px 12px 10px;
+        font-size: 12.5px;
+        line-height: 1.45;
+        color: var(--muted);
+        border-top: 1px solid var(--rule-soft);
+      }
+      .figs img,
+      figure.wide img {
+        width: 100%;
+      }
+      .figs .tall img {
+        max-height: 520px;
+        object-fit: cover;
+        object-position: top;
+      }
 
-/* fact table */
-table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
-.tscroll{overflow-x:auto}
-th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
-th{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
-td.num,th.num{text-align:right}
-tbody tr:last-child td{border-bottom:1px solid var(--rule)}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border:1px solid var(--rule);background:var(--surface)}
-.facts div{padding:12px 14px;border-right:1px solid var(--rule-soft)}
-.facts div:last-child{border-right:0}
-.facts .n{font-family:var(--display);font-size:30px;font-weight:600;line-height:1;color:var(--c,var(--ink))}
-.facts .l{font-size:12.5px;color:var(--muted);margin-top:4px}
-@media (max-width:600px){.facts div{border-bottom:1px solid var(--rule-soft)}}
+      /* fact table */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 14px;
+        font-variant-numeric: tabular-nums;
+      }
+      .tscroll {
+        overflow-x: auto;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 8px 10px;
+        border-bottom: 1px solid var(--rule-soft);
+        vertical-align: top;
+      }
+      th {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--muted);
+        font-weight: 500;
+      }
+      td.num,
+      th.num {
+        text-align: right;
+      }
+      tbody tr:last-child td {
+        border-bottom: 1px solid var(--rule);
+      }
+      .facts {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 0;
+        border: 1px solid var(--rule);
+        background: var(--surface);
+      }
+      .facts div {
+        padding: 12px 14px;
+        border-right: 1px solid var(--rule-soft);
+      }
+      .facts div:last-child {
+        border-right: 0;
+      }
+      .facts .n {
+        font-family: var(--display);
+        font-size: 30px;
+        font-weight: 600;
+        line-height: 1;
+        color: var(--c, var(--ink));
+      }
+      .facts .l {
+        font-size: 12.5px;
+        color: var(--muted);
+        margin-top: 4px;
+      }
+      @media (max-width: 600px) {
+        .facts div {
+          border-bottom: 1px solid var(--rule-soft);
+        }
+      }
 
-.note{border-left:3px solid var(--c,var(--rule));padding:10px 14px;background:var(--surface);font-size:14.5px;max-width:70ch}
-.note b{font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px;font-weight:500}
+      .note {
+        border-left: 3px solid var(--c, var(--rule));
+        padding: 10px 14px;
+        background: var(--surface);
+        font-size: 14.5px;
+        max-width: 70ch;
+      }
+      .note b {
+        font-family: var(--mono);
+        font-size: 11.5px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+        display: block;
+        margin-bottom: 4px;
+        font-weight: 500;
+      }
 
-/* diagram */
-.diagram{margin:0;background:var(--surface);border:1px solid var(--rule);padding:18px 18px 12px;overflow-x:auto}
-.diagram svg{display:block;width:100%;height:auto;min-width:760px;font-family:var(--body)}
-.diagram figcaption{font-size:13px;color:var(--muted);margin-top:10px;max-width:80ch}
+      /* diagram */
+      .diagram {
+        margin: 0;
+        background: var(--surface);
+        border: 1px solid var(--rule);
+        padding: 18px 18px 12px;
+        overflow-x: auto;
+      }
+      .diagram svg {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-width: 760px;
+        font-family: var(--body);
+      }
+      .diagram figcaption {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 10px;
+        max-width: 80ch;
+      }
 
-/* gallery */
-.gallery{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-@media (max-width:1100px){.gallery{grid-template-columns:repeat(3,1fr)}}
-@media (max-width:700px){.gallery{grid-template-columns:repeat(2,1fr)}}
-.gallery figure{margin:0;background:var(--surface);border:1px solid var(--rule)}
-.gallery img{aspect-ratio:16/10;object-fit:cover;width:100%}
-.gallery figcaption{padding:8px 10px;font-size:12.5px;color:var(--muted);border-top:1px solid var(--rule-soft)}
-.gallery figcaption b{color:var(--ink);font-weight:500}
+      /* gallery */
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 14px;
+      }
+      @media (max-width: 1100px) {
+        .gallery {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 700px) {
+        .gallery {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      .gallery figure {
+        margin: 0;
+        background: var(--surface);
+        border: 1px solid var(--rule);
+      }
+      .gallery img {
+        aspect-ratio: 16/10;
+        object-fit: cover;
+        width: 100%;
+      }
+      .gallery figcaption {
+        padding: 8px 10px;
+        font-size: 12.5px;
+        color: var(--muted);
+        border-top: 1px solid var(--rule-soft);
+      }
+      .gallery figcaption b {
+        color: var(--ink);
+        font-weight: 500;
+      }
 
-/* claim list */
-.claims{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px 32px;margin:0;padding:0;list-style:none}
-.claims li{border-top:2px solid var(--c);padding-top:10px;font-size:14.5px}
-.claims li b{display:block;font-family:var(--display);font-size:19px;font-weight:600;margin-bottom:4px}
+      /* claim list */
+      .claims {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 18px 32px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .claims li {
+        border-top: 2px solid var(--c);
+        padding-top: 10px;
+        font-size: 14.5px;
+      }
+      .claims li b {
+        display: block;
+        font-family: var(--display);
+        font-size: 19px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
 
-/* run */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-.steps h4{margin-bottom:8px}
-.steps p{font-size:14px;color:var(--muted);margin-bottom:10px}
+      /* run */
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+      .steps h4 {
+        margin-bottom: 8px;
+      }
+      .steps p {
+        font-size: 14px;
+        color: var(--muted);
+        margin-bottom: 10px;
+      }
 
-/* credits */
-.credits{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px 32px;font-size:14px}
-.credits b{font-weight:500}
-footer{padding-block:32px 48px;font-size:13px;color:var(--muted)}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
-</style>
-</head>
-<body>
-
-<div class="topbar"><div class="wrap">
-  <a class="brand" href="#top">Urban World Model</a>
-  <nav class="topnav">
-    <a href="#frame">One frame</a>
-    <a href="#geometry">Geometry</a>
-    <a href="#fields">Physics</a>
-    <a href="#sunlight">Sunlight</a>
-    <a href="#agents">Agents</a>
-    <a href="#viewer">Viewer</a>
-    <a href="#boundary">Claim boundary</a>
-    <a href="#run">Run it</a>
-  </nav>
-</div></div>
-
-<header class="hero" id="top"><div class="wrap">
-  <div class="hero-grid">
-    <div>
-      <div class="eyebrow">South Kensington · core008 · 2.8 × 2.6 km</div>
-      <h1>One city, one frame, every model in it.</h1>
-      <p class="lede">A working urban world model of South Kensington, London: a single 3-D city model, six physical layers computed on the same grid (wind, temperature, sunlight, a solar-driven day cycle, pollutant transport, surface-water flooding), three kinds of moving agents (road traffic, delivery UAVs, a pigeon flock) and one browser page that plays all of them in the same coordinate frame.</p>
-      <div class="hero-meta">
-        <span>grid <b>704 × 768 · 4 m</b></span>
-        <span>domain <b>X 480–3552 · Y 640–3456 m</b></span>
-        <span>model <b>254 MB glTF · meshopt</b></span>
-        <span>replay clock <b>1 h</b></span>
-      </div>
-      <div class="cta">
-        <a class="btn primary" href="https://ese-yl222.tail8083c2.ts.net/viewer/3d/">Open the live viewer</a>
-        <a class="btn" href="https://github.com/acse-yl222/physics-grounded-4d-world-model-framework">Repository</a>
+      /* credits */
+      .credits {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 14px 32px;
+        font-size: 14px;
+      }
+      .credits b {
+        font-weight: 500;
+      }
+      footer {
+        padding-block: 32px 48px;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      footer .wrap {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="wrap">
+        <a class="brand" href="#top">Urban World Model</a>
+        <nav class="topnav">
+          <a href="#frame">One frame</a>
+          <a href="#geometry">Geometry</a>
+          <a href="#fields">Physics</a>
+          <a href="#sunlight">Sunlight</a>
+          <a href="#agents">Agents</a>
+          <a href="#viewer">Viewer</a>
+          <a href="#boundary">Claim boundary</a>
+          <a href="#run">Run it</a>
+        </nav>
       </div>
     </div>
-    <figure class="hero-figure">
-      <img src="media/view_campus.jpg" alt="Three-dimensional view of the Imperial College campus with simulated traffic and UAVs" width="1400" height="875">
-      <figcaption>The viewer's opening shot: Imperial College campus at t = 120 s of the replay. Cars are the SUMO run, UAVs the NVMF schedule, buildings the core008 model.</figcaption>
-    </figure>
-  </div>
 
-  <nav class="strip" aria-label="Modules">
-    <a href="#geometry" style="--c:var(--city)"><div class="k">Geometry</div><div class="v">core008 model · 306 added buildings · station tile</div></a>
-    <a href="#wind" style="--c:var(--wind)"><div class="k">Wind</div><div class="v">SCALED latent surrogate · 100 × 25 s</div></a>
-    <a href="#temperature" style="--c:var(--temp)"><div class="k">Temperature</div><div class="v">3-D U-Net · 2-D label model</div></a>
-    <a href="#sunlight" style="--c:var(--sun)"><div class="k">Sunlight</div><div class="v">1 m shadows · SVF · day cycle coupling</div></a>
-    <a href="#pollution" style="--c:var(--poll)"><div class="k">Pollution</div><div class="v">transport on the wind field</div></a>
-    <a href="#flood" style="--c:var(--flood)"><div class="k">Flooding</div><div class="v">shallow water · 1 m LIDAR DTM</div></a>
-    <a href="#agents" style="--c:var(--agent)"><div class="k">Agents</div><div class="v">SUMO traffic · 300 UAVs · 100 birds</div></a>
-  </nav>
-</div></header>
+    <header class="hero" id="top">
+      <div class="wrap">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">South Kensington · core008 · 2.8 × 2.6 km</div>
+            <h1>One city, one frame, every model in it.</h1>
+            <p class="lede">
+              A working urban world model of South Kensington, London: a single 3-D city model, six
+              physical layers computed on the same grid (wind, temperature, sunlight, a solar-driven
+              day cycle, pollutant transport, surface-water flooding), three kinds of moving agents
+              (road traffic, delivery UAVs, a pigeon flock) and one browser page that plays all of
+              them in the same coordinate frame.
+            </p>
+            <div class="hero-meta">
+              <span>grid <b>704 × 768 · 4 m</b></span>
+              <span>domain <b>X 480–3552 · Y 640–3456 m</b></span>
+              <span>model <b>254 MB glTF · meshopt</b></span>
+              <span>replay clock <b>1 h</b></span>
+            </div>
+            <div class="cta">
+              <a class="btn primary" href="https://ese-yl222.tail8083c2.ts.net/viewer/3d/"
+                >Open the live viewer</a
+              >
+              <a
+                class="btn"
+                href="https://github.com/acse-yl222/physics-grounded-4d-world-model-framework"
+                >Repository</a
+              >
+            </div>
+          </div>
+          <figure class="hero-figure">
+            <img
+              src="media/view_campus.jpg"
+              alt="Three-dimensional view of the Imperial College campus with simulated traffic and UAVs"
+              width="1400"
+              height="875"
+            />
+            <figcaption>
+              The viewer's opening shot: Imperial College campus at t = 120 s of the replay. Cars
+              are the SUMO run, UAVs the NVMF schedule, buildings the core008 model.
+            </figcaption>
+          </figure>
+        </div>
 
-<!-- ================================================================ ONE FRAME -->
-<section class="block" id="frame"><div class="wrap">
-  <div class="section-head">
-    <div><div class="eyebrow">Why it is one work</div><h2>Every module writes into the same frame</h2></div>
-    <p>The modules were built by different people with different tools, from a latent-space wind surrogate on an RTX 5090 to a Blender export of a station plate. What makes them one system is a strict contract: one 4 m raster with a fixed origin and orientation, one metre-based glTF world, and a published transform between the two. Anything that lands in that frame shows up in the viewer without preprocessing.</p>
-  </div>
-
-  <figure class="diagram">
-    <svg viewBox="0 0 1100 500" role="img" aria-label="Flow from geometry sources through derived grids and models to exported arrays and the viewer, with the shared coordinate contract as the common base.">
-      <defs>
-        <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker>
-      </defs>
-      <g fill="none" stroke="currentColor" stroke-width="1.2" font-size="12.5" font-family="inherit">
-        <!-- column headers -->
-        <g fill="currentColor" stroke="none" font-size="11" font-family="IBM Plex Mono, monospace" letter-spacing="1.5" opacity=".65">
-          <text x="20" y="22">SOURCES</text>
-          <text x="290" y="22">DERIVED GRIDS</text>
-          <text x="560" y="22">MODELS</text>
-          <text x="830" y="22">EXPORTS · VIEWER</text>
-        </g>
-        <!-- sources -->
-        <rect x="20" y="40" width="220" height="44" rx="2" fill="var(--city-soft)" stroke="var(--city)"/>
-        <text x="30" y="58" fill="currentColor" stroke="none" font-weight="600">core008 city model</text>
-        <text x="30" y="75" fill="currentColor" stroke="none" opacity=".7">glTF, 254 MB · buildings, roads, trees</text>
-        <rect x="20" y="96" width="220" height="44" rx="2" fill="var(--city-soft)" stroke="var(--city)"/>
-        <text x="30" y="114" fill="currentColor" stroke="none" font-weight="600">OpenStreetMap footprints</text>
-        <text x="30" y="131" fill="currentColor" stroke="none" opacity=".7">6,631 features audited · 306 added</text>
-        <rect x="20" y="152" width="220" height="44" rx="2" fill="var(--flood-soft)" stroke="var(--flood)"/>
-        <text x="30" y="170" fill="currentColor" stroke="none" font-weight="600">EA LIDAR DTM 2022</text>
-        <text x="30" y="187" fill="currentColor" stroke="none" opacity=".7">1 m bare earth · 4 tiles · OSTN15</text>
-        <rect x="20" y="208" width="220" height="44" rx="2" fill="var(--agent-soft)" stroke="var(--agent)"/>
-        <text x="30" y="226" fill="currentColor" stroke="none" font-weight="600">OSM road network</text>
-        <text x="30" y="243" fill="currentColor" stroke="none" opacity=".7">repaired for SUMO · 6,209 lane ribbons</text>
-        <rect x="20" y="264" width="220" height="44" rx="2" fill="var(--agent-soft)" stroke="var(--agent)"/>
-        <text x="30" y="282" fill="currentColor" stroke="none" font-weight="600">NVMF delivery run</text>
-        <text x="30" y="299" fill="currentColor" stroke="none" opacity=".7">30 stations · 300 UAVs · 600 orders</text>
-
-        <!-- derived -->
-        <rect x="290" y="40" width="220" height="56" rx="2" fill="var(--city-soft)" stroke="var(--city)"/>
-        <text x="300" y="58" fill="currentColor" stroke="none" font-weight="600">1 m voxels · 4 m masks</text>
-        <text x="300" y="75" fill="currentColor" stroke="none" opacity=".7">solid [64, 2816, 3072] · footprint,</text>
-        <text x="300" y="89" fill="currentColor" stroke="none" opacity=".7">roof height, vegetation, paving</text>
-        <rect x="290" y="152" width="220" height="44" rx="2" fill="var(--flood-soft)" stroke="var(--flood)"/>
-        <text x="300" y="170" fill="currentColor" stroke="none" font-weight="600">Flood terrain</text>
-        <text x="300" y="187" fill="currentColor" stroke="none" opacity=".7">DTM + raised building blocks · 1 m</text>
-        <rect x="290" y="208" width="220" height="44" rx="2" fill="var(--agent-soft)" stroke="var(--agent)"/>
-        <text x="300" y="226" fill="currentColor" stroke="none" font-weight="600">SUMO net revision_02</text>
-        <text x="300" y="243" fill="currentColor" stroke="none" opacity=".7">largest component 1,369 edges</text>
-
-        <!-- models -->
-        <rect x="560" y="40" width="220" height="38" rx="2" fill="var(--wind-soft)" stroke="var(--wind)"/>
-        <text x="570" y="57" fill="currentColor" stroke="none" font-weight="600">Wind · SCALED latent U-Net</text>
-        <text x="570" y="72" fill="currentColor" stroke="none" opacity=".7">100 steps × 25 s · 9 latent blocks</text>
-        <rect x="560" y="88" width="220" height="38" rx="2" fill="var(--temp-soft)" stroke="var(--temp)"/>
-        <text x="570" y="105" fill="currentColor" stroke="none" font-weight="600">Temperature · 3-D and 2-D</text>
-        <text x="570" y="120" fill="currentColor" stroke="none" opacity=".7">one-step U-Net · label model · Yi Qi 3-D</text>
-        <rect x="560" y="136" width="220" height="38" rx="2" fill="var(--sun-soft)" stroke="var(--sun)"/>
-        <text x="570" y="153" fill="currentColor" stroke="none" font-weight="600">Sunlight · ShadowNet, SVF, ASHRAE</text>
-        <text x="570" y="168" fill="currentColor" stroke="none" opacity=".7">1 m, every 10 min, two solstices</text>
-        <rect x="560" y="184" width="220" height="38" rx="2" fill="var(--poll-soft)" stroke="var(--poll)"/>
-        <text x="570" y="201" fill="currentColor" stroke="none" font-weight="600">Pollutant transport</text>
-        <text x="570" y="216" fill="currentColor" stroke="none" opacity=".7">advected by the wind steps</text>
-        <rect x="560" y="232" width="220" height="38" rx="2" fill="var(--flood-soft)" stroke="var(--flood)"/>
-        <text x="570" y="249" fill="currentColor" stroke="none" font-weight="600">Flood · shallow-water solver</text>
-        <text x="570" y="264" fill="currentColor" stroke="none" opacity=".7">3 h cloudburst · 75,053 steps</text>
-        <rect x="560" y="280" width="220" height="38" rx="2" fill="var(--agent-soft)" stroke="var(--agent)"/>
-        <text x="570" y="297" fill="currentColor" stroke="none" font-weight="600">SUMO traffic · UAV replay · flock</text>
-        <text x="570" y="312" fill="currentColor" stroke="none" opacity=".7">1 h each · one frame per second</text>
-
-        <!-- exports / viewer -->
-        <rect x="830" y="40" width="250" height="230" rx="2" fill="var(--surface)" stroke="currentColor" stroke-dasharray="4 3"/>
-        <text x="842" y="60" fill="currentColor" stroke="none" font-weight="600">physics/</text>
-        <text x="842" y="78" fill="currentColor" stroke="none" opacity=".7" font-family="IBM Plex Mono, monospace" font-size="11.5">float16 .npy · [t, 704, 768]</text>
-        <text x="842" y="96" fill="currentColor" stroke="none" opacity=".7" font-family="IBM Plex Mono, monospace" font-size="11.5">uint8 shadow · [t, 2816, 3072]</text>
-        <text x="842" y="114" fill="currentColor" stroke="none" opacity=".7" font-family="IBM Plex Mono, monospace" font-size="11.5">manifest.json · masks/ · metadata/</text>
-        <text x="842" y="146" fill="currentColor" stroke="none" font-weight="600">agents/demo_rev02/data/</text>
-        <text x="842" y="164" fill="currentColor" stroke="none" opacity=".7" font-family="IBM Plex Mono, monospace" font-size="11.5">traffic_flow.f32 · tls_frames.jsonl</text>
-        <text x="842" y="182" fill="currentColor" stroke="none" opacity=".7" font-family="IBM Plex Mono, monospace" font-size="11.5">schedule.json · birds/*.npy</text>
-        <text x="842" y="214" fill="currentColor" stroke="none" font-weight="600">geometry/completion/output/</text>
-        <text x="842" y="232" fill="currentColor" stroke="none" opacity=".7" font-family="IBM Plex Mono, monospace" font-size="11.5">buildings_supplement.glb · 3.6 MB</text>
-        <rect x="830" y="284" width="250" height="56" rx="2" fill="var(--ink)" stroke="none"/>
-        <text x="842" y="307" fill="var(--paper)" stroke="none" font-weight="600" font-size="15">viewer/3d/ · three.js viewer</text>
-        <text x="842" y="326" fill="var(--paper)" stroke="none" opacity=".8">HTTP Range reads · no preprocessing</text>
-
-        <!-- arrows sources -> derived -->
-        <line x1="240" y1="62" x2="290" y2="62" marker-end="url(#arr)"/>
-        <line x1="240" y1="118" x2="265" y2="118"/><line x1="265" y1="118" x2="265" y2="70"/>
-        <line x1="240" y1="174" x2="290" y2="174" marker-end="url(#arr)"/>
-        <line x1="240" y1="230" x2="290" y2="230" marker-end="url(#arr)"/>
-        <line x1="240" y1="286" x2="545" y2="286" stroke-dasharray="3 3"/><line x1="545" y1="286" x2="545" y2="299"/><line x1="545" y1="299" x2="560" y2="299" marker-end="url(#arr)"/>
-        <!-- derived -> models -->
-        <line x1="510" y1="59" x2="560" y2="59" marker-end="url(#arr)"/>
-        <line x1="535" y1="59" x2="535" y2="107"/><line x1="535" y1="107" x2="560" y2="107" marker-end="url(#arr)"/>
-        <line x1="535" y1="107" x2="535" y2="203"/><line x1="535" y1="203" x2="560" y2="203" marker-end="url(#arr)"/>
-        <line x1="510" y1="174" x2="522" y2="174"/><line x1="522" y1="174" x2="522" y2="155"/><line x1="522" y1="155" x2="560" y2="155" marker-end="url(#arr)"/>
-        <line x1="522" y1="174" x2="522" y2="251"/><line x1="522" y1="251" x2="560" y2="251" marker-end="url(#arr)"/>
-        <line x1="510" y1="230" x2="528" y2="230"/><line x1="528" y1="230" x2="528" y2="290"/><line x1="528" y1="290" x2="560" y2="290" marker-end="url(#arr)"/>
-        <!-- wind -> temp / poll, sun -> temp -->
-        <path d="M780,59 C802,59 802,107 780,107" marker-end="url(#arr)" stroke="var(--wind)" stroke-width="1.6"/>
-        <path d="M780,59 C812,59 812,203 780,203" marker-end="url(#arr)" stroke="var(--wind)" stroke-width="1.6"/>
-        <path d="M780,155 C802,155 802,112 780,112" marker-end="url(#arr)" stroke="var(--sun)" stroke-width="1.6"/>
-        <text x="797" y="135" fill="var(--wind)" stroke="none" font-size="11">drives</text>
-        <text x="796" y="180" fill="var(--sun)" stroke="none" font-size="11">shade</text>
-        <!-- models -> exports -->
-        <line x1="818" y1="59" x2="818" y2="251"/>
-        <line x1="780" y1="251" x2="818" y2="251"/>
-        <line x1="818" y1="130" x2="830" y2="130" marker-end="url(#arr)"/>
-        <line x1="780" y1="299" x2="830" y2="299" marker-end="url(#arr)"/>
-        <!-- exports -> viewer -->
-        <line x1="955" y1="270" x2="955" y2="284" marker-end="url(#arr)"/>
-        <line x1="130" y1="84" x2="130" y2="96"/>
-        <path d="M130,308 L130,362 L955,362 L955,340" marker-end="url(#arr)" stroke-dasharray="3 3"/>
-        <text x="540" y="358" fill="currentColor" stroke="none" font-size="11" text-anchor="middle" opacity=".7">city model + supplement + station tile load directly</text>
-
-        <!-- coordinate contract band -->
-        <rect x="20" y="402" width="1060" height="80" rx="2" fill="var(--code-bg)" stroke="none"/>
-        <g fill="currentColor" stroke="none" font-family="IBM Plex Mono, monospace" font-size="12">
-          <text x="34" y="422" font-size="11" letter-spacing="1.5" opacity=".65">SHARED FRAME · EVERY ARROW ABOVE OBEYS IT</text>
-          <text x="34" y="444">raster: row 0 = south, col 0 = west · 4 m cell (iy, ix) at domain x = 480 + 4·ix, y = 640 + 4·iy · 1 m cell (iy, ix) inside 4 m cell (iy ÷ 4, ix ÷ 4)</text>
-          <text x="34" y="464">region = domain − (2116, 2124) · model X = region x, model Z = −region y, Y up · SUMO X = x − 2912.59, Z = 1704.71 − y</text>
-        </g>
-        <line x1="130" y1="382" x2="130" y2="402" stroke-dasharray="3 3"/>
-        <line x1="400" y1="382" x2="400" y2="402" stroke-dasharray="3 3"/>
-        <line x1="670" y1="382" x2="670" y2="402" stroke-dasharray="3 3"/>
-        <line x1="955" y1="382" x2="955" y2="402" stroke-dasharray="3 3"/>
-      </g>
-    </svg>
-    <figcaption>Sources on the left become grids in the shared raster, models run on those grids, and the results are written as plain arrays the viewer streams frame by frame. The wind field feeds the temperature models and the pollutant transport; the 1 m terrain (LIDAR ground plus building blocks) feeds both the flood and the sunlight models, and the sunlight model's shade and sky-view factor drive the 3-D temperature model's day cycle. Everything 1 m is exported alongside 4 m block means on the same grid.</figcaption>
-  </figure>
-
-  <div class="tscroll" style="margin-top:28px">
-  <table>
-    <thead><tr><th>Layer</th><th>Grid</th><th>Frames</th><th class="num">Frame step</th><th>Array</th><th>Producer</th></tr></thead>
-    <tbody>
-      <tr><td>Wind (u, v, w)</td><td>4 m · 704 × 768 · layers 8–12 m and 40–44 m</td><td>100</td><td class="num">25 s</td><td><code>wind/uvw_z8-12m_tcyx.npy</code></td><td>SCALED latent run</td></tr>
-      <tr><td>Temperature 2-D</td><td>4 m · 704 × 768 · 12–16 m layer</td><td>61</td><td class="num">25 s</td><td><code>temperature2d/temperature_tyx.npy</code></td><td>label model on wind steps 41–100</td></tr>
-      <tr><td>Temperature 3-D</td><td>4 m · 704 × 768 · 10 m slice</td><td>5 + 8 ref.</td><td class="num">90 s</td><td><code>temperature3d/unet_one_step_tyx.npy</code></td><td>one-step U-Net vs solver</td></tr>
-      <tr><td>Pollution</td><td>4 m · 704 × 768 · 12–16 m layer</td><td>100</td><td class="num">25 s</td><td><code>pollution/concentration_z12-16m_tyx.npy</code></td><td>transport on wind steps</td></tr>
-      <tr><td>Sunlight, irradiance</td><td>4 m · 704 × 768, block means of the 1 m model</td><td>99 / 47</td><td class="num">10 min</td><td><code>solar/ghi_4m_20260621_tyx.npy</code></td><td>ShadowNet + SVF + ASHRAE, two solstices</td></tr>
-      <tr><td>Sunlight, shadows</td><td>1 m · 2816 × 3072 · uint8</td><td>17 / 7</td><td class="num">1 h</td><td><code>solar/shadow_1m_20260621_tyx.npy</code></td><td>ShadowNet direct beam</td></tr>
-      <tr><td>Day cycle temperature</td><td>4 m · 704 × 768 · surface, 0–4 m, 12–16 m</td><td>20</td><td class="num">1 h</td><td><code>temperature3d_solar/diurnal_20260621_*.npy</code></td><td>Yi Qi 3-D model, solar-coupled</td></tr>
-      <tr><td>Flood depth</td><td>1 m · 2816 × 3072, and 4 m block means</td><td>19</td><td class="num">10 min</td><td><code>flood/depth_4m_tyx.npy</code></td><td>shallow-water solver</td></tr>
-      <tr><td>Traffic</td><td>metres, glTF world · 5.29 M records</td><td>3,600</td><td class="num">1 s</td><td><code>traffic/replay/traffic_flow.f32</code></td><td>SUMO 1.27.1</td></tr>
-      <tr><td>UAVs</td><td>metres, glTF world · 30 stations</td><td>3,600</td><td class="num">1 s</td><td><code>schedule.json</code></td><td>NVMF replay</td></tr>
-      <tr><td>Birds</td><td>4 m solid voxels, X 600–1300 / Z 350–1050</td><td>3,600</td><td class="num">1 s</td><td><code>birds_southken/</code></td><td>flock model</td></tr>
-    </tbody>
-  </table>
-  </div>
-</div></section>
-
-<!-- ================================================================ GEOMETRY -->
-<section class="block" id="geometry"><div class="wrap">
-  <div class="section-head">
-    <div><div class="eyebrow">Module group</div><h2>Geometry</h2></div>
-    <p>The city exists twice: as a glTF model the viewer draws, and as voxel and raster masks the physics runs on. Both come from the same core008 asset, so a wall in the wind field is the wall you see. Three geometry efforts extend that base without touching it.</p>
-  </div>
-
-  <article class="module" style="--c:var(--city)" id="citymodel">
-    <aside class="rail">
-      <span class="tag">City model</span>
-      <dl>
-        <dt>File</dt><dd><code>south_kensington_core008_web.glb</code></dd>
-        <dt>Size</dt><dd>254 MB, meshopt + quantised</dd>
-        <dt>Extent</dt><dd>buildings X 625–3474, Y 754–3348 m (domain)</dd>
-        <dt>Masks</dt><dd><code>scenes/south_kensington/physics/masks/</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>core008 city model and its 1 m voxelisation</h3>
-      <p>The base asset is a full-city glTF with buildings, roads, footways, grass and trees, Y up in metres. For the physics it is voxelised at 1 m over a 64 m tall domain of 2816 × 3072 cells and conservatively coarsened to 4 m: a 4 m cell counts as solid if any of its 1 m voxels does, so narrow streets close and the wind field never leaks through a wall. The viewer confirms the alignment by matching the model's building bounding box against the voxel extent to the metre.</p>
-      <div class="facts">
-        <div><div class="n">2.8 × 2.6</div><div class="l">km covered by the raster</div></div>
-        <div><div class="n">19.8 %</div><div class="l">of 1 m ground cells inside buildings</div></div>
-        <div><div class="n">17.7 %</div><div class="l">grass and tree canopy</div></div>
-        <div><div class="n">16</div><div class="l">4 m layers, bottom 64 m</div></div>
+        <nav class="strip" aria-label="Modules">
+          <a href="#geometry" style="--c: var(--city)"
+            ><div class="k">Geometry</div>
+            <div class="v">core008 model · 306 added buildings · station tile</div></a
+          >
+          <a href="#wind" style="--c: var(--wind)"
+            ><div class="k">Wind</div>
+            <div class="v">SCALED latent surrogate · 100 × 25 s</div></a
+          >
+          <a href="#temperature" style="--c: var(--temp)"
+            ><div class="k">Temperature</div>
+            <div class="v">3-D U-Net · 2-D label model</div></a
+          >
+          <a href="#sunlight" style="--c: var(--sun)"
+            ><div class="k">Sunlight</div>
+            <div class="v">1 m shadows · SVF · day cycle coupling</div></a
+          >
+          <a href="#pollution" style="--c: var(--poll)"
+            ><div class="k">Pollution</div>
+            <div class="v">transport on the wind field</div></a
+          >
+          <a href="#flood" style="--c: var(--flood)"
+            ><div class="k">Flooding</div>
+            <div class="v">shallow water · 1 m LIDAR DTM</div></a
+          >
+          <a href="#agents" style="--c: var(--agent)"
+            ><div class="k">Agents</div>
+            <div class="v">SUMO traffic · 300 UAVs · 100 birds</div></a
+          >
+        </nav>
       </div>
-    </div>
-  </article>
+    </header>
 
-  <article class="module" style="--c:var(--city)" id="completion">
-    <aside class="rail">
-      <span class="tag">Building completion</span>
-      <dl>
-        <dt>Folder</dt><dd><code>geometry/completion/</code></dd>
-        <dt>Output</dt><dd><code>buildings_supplement.glb</code> 3.6 MB, plus the editable <code>.blend</code></dd>
-        <dt>Licence</dt><dd>OpenStreetMap, ODbL</dd>
-        <dt>Status</dt><dd>in the viewer, toggle "Added buildings · 306"</dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>306 missing buildings from OpenStreetMap</h3>
-      <p>An audit compared every mapped building inside the ground rectangle against the model. Of 6,631 features, 309 conservative candidates lay wholly inside the bounds with under 2 % overlap against existing buildings, and 306 also cleared the drivable lanes. They were extruded in Blender with estimated heights and procedural facades, registered in the same EPSG:32630 frame (median residual 23 mm on 5,838 control points), and exported as a separate GLB so the original model stays byte-identical.</p>
-      <ul>
-        <li>Three candidates with real road conflicts were deliberately left out and are listed in the status report.</li>
-        <li>Heights, roof shapes and windows are estimates, not photogrammetry. No satellite pixels were traced.</li>
-        <li>The physics fields were not recomputed after the additions. They describe the original geometry.</li>
-      </ul>
-      <div class="figs">
-        <figure><img src="media/supplement_candidates.jpg" alt="Map of candidate building footprints over the model bounds" loading="lazy"><figcaption>Audit map: accepted footprints against the represented buildings and lane ribbons. From <code>geometry/completion/reports/</code>.</figcaption></figure>
+    <!-- ================================================================ ONE FRAME -->
+    <section class="block" id="frame">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Why it is one work</div>
+            <h2>Every module writes into the same frame</h2>
+          </div>
+          <p>
+            The modules were built by different people with different tools, from a latent-space
+            wind surrogate on an RTX 5090 to a Blender export of a station plate. What makes them
+            one system is a strict contract: one 4 m raster with a fixed origin and orientation, one
+            metre-based glTF world, and a published transform between the two. Anything that lands
+            in that frame shows up in the viewer without preprocessing.
+          </p>
+        </div>
+
+        <figure class="diagram">
+          <svg
+            viewBox="0 0 1100 500"
+            role="img"
+            aria-label="Flow from geometry sources through derived grids and models to exported arrays and the viewer, with the shared coordinate contract as the common base."
+          >
+            <defs>
+              <marker
+                id="arr"
+                viewBox="0 0 10 10"
+                refX="9"
+                refY="5"
+                markerWidth="8"
+                markerHeight="8"
+                orient="auto-start-reverse"
+              >
+                <path d="M0,0 L10,5 L0,10 z" fill="currentColor" />
+              </marker>
+            </defs>
+            <g
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.2"
+              font-size="12.5"
+              font-family="inherit"
+            >
+              <!-- column headers -->
+              <g
+                fill="currentColor"
+                stroke="none"
+                font-size="11"
+                font-family="IBM Plex Mono, monospace"
+                letter-spacing="1.5"
+                opacity=".65"
+              >
+                <text x="20" y="22">SOURCES</text>
+                <text x="290" y="22">DERIVED GRIDS</text>
+                <text x="560" y="22">MODELS</text>
+                <text x="830" y="22">EXPORTS · VIEWER</text>
+              </g>
+              <!-- sources -->
+              <rect
+                x="20"
+                y="40"
+                width="220"
+                height="44"
+                rx="2"
+                fill="var(--city-soft)"
+                stroke="var(--city)"
+              />
+              <text x="30" y="58" fill="currentColor" stroke="none" font-weight="600">
+                core008 city model
+              </text>
+              <text x="30" y="75" fill="currentColor" stroke="none" opacity=".7">
+                glTF, 254 MB · buildings, roads, trees
+              </text>
+              <rect
+                x="20"
+                y="96"
+                width="220"
+                height="44"
+                rx="2"
+                fill="var(--city-soft)"
+                stroke="var(--city)"
+              />
+              <text x="30" y="114" fill="currentColor" stroke="none" font-weight="600">
+                OpenStreetMap footprints
+              </text>
+              <text x="30" y="131" fill="currentColor" stroke="none" opacity=".7">
+                6,631 features audited · 306 added
+              </text>
+              <rect
+                x="20"
+                y="152"
+                width="220"
+                height="44"
+                rx="2"
+                fill="var(--flood-soft)"
+                stroke="var(--flood)"
+              />
+              <text x="30" y="170" fill="currentColor" stroke="none" font-weight="600">
+                EA LIDAR DTM 2022
+              </text>
+              <text x="30" y="187" fill="currentColor" stroke="none" opacity=".7">
+                1 m bare earth · 4 tiles · OSTN15
+              </text>
+              <rect
+                x="20"
+                y="208"
+                width="220"
+                height="44"
+                rx="2"
+                fill="var(--agent-soft)"
+                stroke="var(--agent)"
+              />
+              <text x="30" y="226" fill="currentColor" stroke="none" font-weight="600">
+                OSM road network
+              </text>
+              <text x="30" y="243" fill="currentColor" stroke="none" opacity=".7">
+                repaired for SUMO · 6,209 lane ribbons
+              </text>
+              <rect
+                x="20"
+                y="264"
+                width="220"
+                height="44"
+                rx="2"
+                fill="var(--agent-soft)"
+                stroke="var(--agent)"
+              />
+              <text x="30" y="282" fill="currentColor" stroke="none" font-weight="600">
+                NVMF delivery run
+              </text>
+              <text x="30" y="299" fill="currentColor" stroke="none" opacity=".7">
+                30 stations · 300 UAVs · 600 orders
+              </text>
+
+              <!-- derived -->
+              <rect
+                x="290"
+                y="40"
+                width="220"
+                height="56"
+                rx="2"
+                fill="var(--city-soft)"
+                stroke="var(--city)"
+              />
+              <text x="300" y="58" fill="currentColor" stroke="none" font-weight="600">
+                1 m voxels · 4 m masks
+              </text>
+              <text x="300" y="75" fill="currentColor" stroke="none" opacity=".7">
+                solid [64, 2816, 3072] · footprint,
+              </text>
+              <text x="300" y="89" fill="currentColor" stroke="none" opacity=".7">
+                roof height, vegetation, paving
+              </text>
+              <rect
+                x="290"
+                y="152"
+                width="220"
+                height="44"
+                rx="2"
+                fill="var(--flood-soft)"
+                stroke="var(--flood)"
+              />
+              <text x="300" y="170" fill="currentColor" stroke="none" font-weight="600">
+                Flood terrain
+              </text>
+              <text x="300" y="187" fill="currentColor" stroke="none" opacity=".7">
+                DTM + raised building blocks · 1 m
+              </text>
+              <rect
+                x="290"
+                y="208"
+                width="220"
+                height="44"
+                rx="2"
+                fill="var(--agent-soft)"
+                stroke="var(--agent)"
+              />
+              <text x="300" y="226" fill="currentColor" stroke="none" font-weight="600">
+                SUMO net revision_02
+              </text>
+              <text x="300" y="243" fill="currentColor" stroke="none" opacity=".7">
+                largest component 1,369 edges
+              </text>
+
+              <!-- models -->
+              <rect
+                x="560"
+                y="40"
+                width="220"
+                height="38"
+                rx="2"
+                fill="var(--wind-soft)"
+                stroke="var(--wind)"
+              />
+              <text x="570" y="57" fill="currentColor" stroke="none" font-weight="600">
+                Wind · SCALED latent U-Net
+              </text>
+              <text x="570" y="72" fill="currentColor" stroke="none" opacity=".7">
+                100 steps × 25 s · 9 latent blocks
+              </text>
+              <rect
+                x="560"
+                y="88"
+                width="220"
+                height="38"
+                rx="2"
+                fill="var(--temp-soft)"
+                stroke="var(--temp)"
+              />
+              <text x="570" y="105" fill="currentColor" stroke="none" font-weight="600">
+                Temperature · 3-D and 2-D
+              </text>
+              <text x="570" y="120" fill="currentColor" stroke="none" opacity=".7">
+                one-step U-Net · label model · Yi Qi 3-D
+              </text>
+              <rect
+                x="560"
+                y="136"
+                width="220"
+                height="38"
+                rx="2"
+                fill="var(--sun-soft)"
+                stroke="var(--sun)"
+              />
+              <text x="570" y="153" fill="currentColor" stroke="none" font-weight="600">
+                Sunlight · ShadowNet, SVF, ASHRAE
+              </text>
+              <text x="570" y="168" fill="currentColor" stroke="none" opacity=".7">
+                1 m, every 10 min, two solstices
+              </text>
+              <rect
+                x="560"
+                y="184"
+                width="220"
+                height="38"
+                rx="2"
+                fill="var(--poll-soft)"
+                stroke="var(--poll)"
+              />
+              <text x="570" y="201" fill="currentColor" stroke="none" font-weight="600">
+                Pollutant transport
+              </text>
+              <text x="570" y="216" fill="currentColor" stroke="none" opacity=".7">
+                advected by the wind steps
+              </text>
+              <rect
+                x="560"
+                y="232"
+                width="220"
+                height="38"
+                rx="2"
+                fill="var(--flood-soft)"
+                stroke="var(--flood)"
+              />
+              <text x="570" y="249" fill="currentColor" stroke="none" font-weight="600">
+                Flood · shallow-water solver
+              </text>
+              <text x="570" y="264" fill="currentColor" stroke="none" opacity=".7">
+                3 h cloudburst · 75,053 steps
+              </text>
+              <rect
+                x="560"
+                y="280"
+                width="220"
+                height="38"
+                rx="2"
+                fill="var(--agent-soft)"
+                stroke="var(--agent)"
+              />
+              <text x="570" y="297" fill="currentColor" stroke="none" font-weight="600">
+                SUMO traffic · UAV replay · flock
+              </text>
+              <text x="570" y="312" fill="currentColor" stroke="none" opacity=".7">
+                1 h each · one frame per second
+              </text>
+
+              <!-- exports / viewer -->
+              <rect
+                x="830"
+                y="40"
+                width="250"
+                height="230"
+                rx="2"
+                fill="var(--surface)"
+                stroke="currentColor"
+                stroke-dasharray="4 3"
+              />
+              <text x="842" y="60" fill="currentColor" stroke="none" font-weight="600">
+                physics/
+              </text>
+              <text
+                x="842"
+                y="78"
+                fill="currentColor"
+                stroke="none"
+                opacity=".7"
+                font-family="IBM Plex Mono, monospace"
+                font-size="11.5"
+              >
+                float16 .npy · [t, 704, 768]
+              </text>
+              <text
+                x="842"
+                y="96"
+                fill="currentColor"
+                stroke="none"
+                opacity=".7"
+                font-family="IBM Plex Mono, monospace"
+                font-size="11.5"
+              >
+                uint8 shadow · [t, 2816, 3072]
+              </text>
+              <text
+                x="842"
+                y="114"
+                fill="currentColor"
+                stroke="none"
+                opacity=".7"
+                font-family="IBM Plex Mono, monospace"
+                font-size="11.5"
+              >
+                manifest.json · masks/ · metadata/
+              </text>
+              <text x="842" y="146" fill="currentColor" stroke="none" font-weight="600">
+                agents/demo_rev02/data/
+              </text>
+              <text
+                x="842"
+                y="164"
+                fill="currentColor"
+                stroke="none"
+                opacity=".7"
+                font-family="IBM Plex Mono, monospace"
+                font-size="11.5"
+              >
+                traffic_flow.f32 · tls_frames.jsonl
+              </text>
+              <text
+                x="842"
+                y="182"
+                fill="currentColor"
+                stroke="none"
+                opacity=".7"
+                font-family="IBM Plex Mono, monospace"
+                font-size="11.5"
+              >
+                schedule.json · birds/*.npy
+              </text>
+              <text x="842" y="214" fill="currentColor" stroke="none" font-weight="600">
+                geometry/completion/output/
+              </text>
+              <text
+                x="842"
+                y="232"
+                fill="currentColor"
+                stroke="none"
+                opacity=".7"
+                font-family="IBM Plex Mono, monospace"
+                font-size="11.5"
+              >
+                buildings_supplement.glb · 3.6 MB
+              </text>
+              <rect
+                x="830"
+                y="284"
+                width="250"
+                height="56"
+                rx="2"
+                fill="var(--ink)"
+                stroke="none"
+              />
+              <text
+                x="842"
+                y="307"
+                fill="var(--paper)"
+                stroke="none"
+                font-weight="600"
+                font-size="15"
+              >
+                viewer/3d/ · three.js viewer
+              </text>
+              <text x="842" y="326" fill="var(--paper)" stroke="none" opacity=".8">
+                HTTP Range reads · no preprocessing
+              </text>
+
+              <!-- arrows sources -> derived -->
+              <line x1="240" y1="62" x2="290" y2="62" marker-end="url(#arr)" />
+              <line x1="240" y1="118" x2="265" y2="118" />
+              <line x1="265" y1="118" x2="265" y2="70" />
+              <line x1="240" y1="174" x2="290" y2="174" marker-end="url(#arr)" />
+              <line x1="240" y1="230" x2="290" y2="230" marker-end="url(#arr)" />
+              <line x1="240" y1="286" x2="545" y2="286" stroke-dasharray="3 3" />
+              <line x1="545" y1="286" x2="545" y2="299" />
+              <line x1="545" y1="299" x2="560" y2="299" marker-end="url(#arr)" />
+              <!-- derived -> models -->
+              <line x1="510" y1="59" x2="560" y2="59" marker-end="url(#arr)" />
+              <line x1="535" y1="59" x2="535" y2="107" />
+              <line x1="535" y1="107" x2="560" y2="107" marker-end="url(#arr)" />
+              <line x1="535" y1="107" x2="535" y2="203" />
+              <line x1="535" y1="203" x2="560" y2="203" marker-end="url(#arr)" />
+              <line x1="510" y1="174" x2="522" y2="174" />
+              <line x1="522" y1="174" x2="522" y2="155" />
+              <line x1="522" y1="155" x2="560" y2="155" marker-end="url(#arr)" />
+              <line x1="522" y1="174" x2="522" y2="251" />
+              <line x1="522" y1="251" x2="560" y2="251" marker-end="url(#arr)" />
+              <line x1="510" y1="230" x2="528" y2="230" />
+              <line x1="528" y1="230" x2="528" y2="290" />
+              <line x1="528" y1="290" x2="560" y2="290" marker-end="url(#arr)" />
+              <!-- wind -> temp / poll, sun -> temp -->
+              <path
+                d="M780,59 C802,59 802,107 780,107"
+                marker-end="url(#arr)"
+                stroke="var(--wind)"
+                stroke-width="1.6"
+              />
+              <path
+                d="M780,59 C812,59 812,203 780,203"
+                marker-end="url(#arr)"
+                stroke="var(--wind)"
+                stroke-width="1.6"
+              />
+              <path
+                d="M780,155 C802,155 802,112 780,112"
+                marker-end="url(#arr)"
+                stroke="var(--sun)"
+                stroke-width="1.6"
+              />
+              <text x="797" y="135" fill="var(--wind)" stroke="none" font-size="11">drives</text>
+              <text x="796" y="180" fill="var(--sun)" stroke="none" font-size="11">shade</text>
+              <!-- models -> exports -->
+              <line x1="818" y1="59" x2="818" y2="251" />
+              <line x1="780" y1="251" x2="818" y2="251" />
+              <line x1="818" y1="130" x2="830" y2="130" marker-end="url(#arr)" />
+              <line x1="780" y1="299" x2="830" y2="299" marker-end="url(#arr)" />
+              <!-- exports -> viewer -->
+              <line x1="955" y1="270" x2="955" y2="284" marker-end="url(#arr)" />
+              <line x1="130" y1="84" x2="130" y2="96" />
+              <path
+                d="M130,308 L130,362 L955,362 L955,340"
+                marker-end="url(#arr)"
+                stroke-dasharray="3 3"
+              />
+              <text
+                x="540"
+                y="358"
+                fill="currentColor"
+                stroke="none"
+                font-size="11"
+                text-anchor="middle"
+                opacity=".7"
+              >
+                city model + supplement + station tile load directly
+              </text>
+
+              <!-- coordinate contract band -->
+              <rect
+                x="20"
+                y="402"
+                width="1060"
+                height="80"
+                rx="2"
+                fill="var(--code-bg)"
+                stroke="none"
+              />
+              <g
+                fill="currentColor"
+                stroke="none"
+                font-family="IBM Plex Mono, monospace"
+                font-size="12"
+              >
+                <text x="34" y="422" font-size="11" letter-spacing="1.5" opacity=".65">
+                  SHARED FRAME · EVERY ARROW ABOVE OBEYS IT
+                </text>
+                <text x="34" y="444">
+                  raster: row 0 = south, col 0 = west · 4 m cell (iy, ix) at domain x = 480 + 4·ix,
+                  y = 640 + 4·iy · 1 m cell (iy, ix) inside 4 m cell (iy ÷ 4, ix ÷ 4)
+                </text>
+                <text x="34" y="464">
+                  region = domain − (2116, 2124) · model X = region x, model Z = −region y, Y up ·
+                  SUMO X = x − 2912.59, Z = 1704.71 − y
+                </text>
+              </g>
+              <line x1="130" y1="382" x2="130" y2="402" stroke-dasharray="3 3" />
+              <line x1="400" y1="382" x2="400" y2="402" stroke-dasharray="3 3" />
+              <line x1="670" y1="382" x2="670" y2="402" stroke-dasharray="3 3" />
+              <line x1="955" y1="382" x2="955" y2="402" stroke-dasharray="3 3" />
+            </g>
+          </svg>
+          <figcaption>
+            Sources on the left become grids in the shared raster, models run on those grids, and
+            the results are written as plain arrays the viewer streams frame by frame. The wind
+            field feeds the temperature models and the pollutant transport; the 1 m terrain (LIDAR
+            ground plus building blocks) feeds both the flood and the sunlight models, and the
+            sunlight model's shade and sky-view factor drive the 3-D temperature model's day cycle.
+            Everything 1 m is exported alongside 4 m block means on the same grid.
+          </figcaption>
+        </figure>
+
+        <div class="tscroll" style="margin-top: 28px">
+          <table>
+            <thead>
+              <tr>
+                <th>Layer</th>
+                <th>Grid</th>
+                <th>Frames</th>
+                <th class="num">Frame step</th>
+                <th>Array</th>
+                <th>Producer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Wind (u, v, w)</td>
+                <td>4 m · 704 × 768 · layers 8–12 m and 40–44 m</td>
+                <td>100</td>
+                <td class="num">25 s</td>
+                <td><code>wind/uvw_z8-12m_tcyx.npy</code></td>
+                <td>SCALED latent run</td>
+              </tr>
+              <tr>
+                <td>Temperature 2-D</td>
+                <td>4 m · 704 × 768 · 12–16 m layer</td>
+                <td>61</td>
+                <td class="num">25 s</td>
+                <td><code>temperature2d/temperature_tyx.npy</code></td>
+                <td>label model on wind steps 41–100</td>
+              </tr>
+              <tr>
+                <td>Temperature 3-D</td>
+                <td>4 m · 704 × 768 · 10 m slice</td>
+                <td>5 + 8 ref.</td>
+                <td class="num">90 s</td>
+                <td><code>temperature3d/unet_one_step_tyx.npy</code></td>
+                <td>one-step U-Net vs solver</td>
+              </tr>
+              <tr>
+                <td>Pollution</td>
+                <td>4 m · 704 × 768 · 12–16 m layer</td>
+                <td>100</td>
+                <td class="num">25 s</td>
+                <td><code>pollution/concentration_z12-16m_tyx.npy</code></td>
+                <td>transport on wind steps</td>
+              </tr>
+              <tr>
+                <td>Sunlight, irradiance</td>
+                <td>4 m · 704 × 768, block means of the 1 m model</td>
+                <td>99 / 47</td>
+                <td class="num">10 min</td>
+                <td><code>solar/ghi_4m_20260621_tyx.npy</code></td>
+                <td>ShadowNet + SVF + ASHRAE, two solstices</td>
+              </tr>
+              <tr>
+                <td>Sunlight, shadows</td>
+                <td>1 m · 2816 × 3072 · uint8</td>
+                <td>17 / 7</td>
+                <td class="num">1 h</td>
+                <td><code>solar/shadow_1m_20260621_tyx.npy</code></td>
+                <td>ShadowNet direct beam</td>
+              </tr>
+              <tr>
+                <td>Day cycle temperature</td>
+                <td>4 m · 704 × 768 · surface, 0–4 m, 12–16 m</td>
+                <td>20</td>
+                <td class="num">1 h</td>
+                <td><code>temperature3d_solar/diurnal_20260621_*.npy</code></td>
+                <td>Yi Qi 3-D model, solar-coupled</td>
+              </tr>
+              <tr>
+                <td>Flood depth</td>
+                <td>1 m · 2816 × 3072, and 4 m block means</td>
+                <td>19</td>
+                <td class="num">10 min</td>
+                <td><code>flood/depth_4m_tyx.npy</code></td>
+                <td>shallow-water solver</td>
+              </tr>
+              <tr>
+                <td>Traffic</td>
+                <td>metres, glTF world · 5.29 M records</td>
+                <td>3,600</td>
+                <td class="num">1 s</td>
+                <td><code>traffic/replay/traffic_flow.f32</code></td>
+                <td>SUMO 1.27.1</td>
+              </tr>
+              <tr>
+                <td>UAVs</td>
+                <td>metres, glTF world · 30 stations</td>
+                <td>3,600</td>
+                <td class="num">1 s</td>
+                <td><code>schedule.json</code></td>
+                <td>NVMF replay</td>
+              </tr>
+              <tr>
+                <td>Birds</td>
+                <td>4 m solid voxels, X 600–1300 / Z 350–1050</td>
+                <td>3,600</td>
+                <td class="num">1 s</td>
+                <td><code>birds_southken/</code></td>
+                <td>flock model</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <a class="muted" href="../geometry/completion/docs/STATUS.md">Audit, sources and limitations →</a>
-    </div>
-  </article>
+    </section>
 
-  <article class="module" style="--c:var(--city)" id="tile">
-    <aside class="rail">
-      <span class="tag">Station tile</span>
-      <dl>
-        <dt>File</dt><dd><code>south_kensington_current.glb</code> 180 MB</dd>
-        <dt>Plate</dt><dd>390 × 400 m around the station</dd>
-        <dt>Loader</dt><dd><code>viewer/3d/tile.js</code></dd>
-        <dt>Status</dt><dd>off by default, <code>?tile=1</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>South Kensington station detail tile</h3>
-      <p>A Blender-authored plate of the station district: 245 OSM buildings with PBR facades, the station arcade, the open railway cutting and platforms, gardens, trees and street lamps. Its local frame is rotated against the main model by the UTM grid convergence, so it is placed with a rigid transform fitted on the 237 buildings the two files share, matched by OSM id. Inside the plate the main model's ground, roads and duplicate buildings are clipped away; outside it the tile is clipped. It stays off by default because its palette reads differently from the base model.</p>
-      <div class="facts">
-        <div><div class="n">237</div><div class="l">shared buildings used for the fit</div></div>
-        <div><div class="n">0.7 m</div><div class="l">median residual after the fit</div></div>
-        <div><div class="n">+0.038 rad</div><div class="l">rotation about Y</div></div>
+    <!-- ================================================================ GEOMETRY -->
+    <section class="block" id="geometry">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Module group</div>
+            <h2>Geometry</h2>
+          </div>
+          <p>
+            The city exists twice: as a glTF model the viewer draws, and as voxel and raster masks
+            the physics runs on. Both come from the same core008 asset, so a wall in the wind field
+            is the wall you see. Three geometry efforts extend that base without touching it.
+          </p>
+        </div>
+
+        <article class="module" style="--c: var(--city)" id="citymodel">
+          <aside class="rail">
+            <span class="tag">City model</span>
+            <dl>
+              <dt>File</dt>
+              <dd><code>south_kensington_core008_web.glb</code></dd>
+              <dt>Size</dt>
+              <dd>254 MB, meshopt + quantised</dd>
+              <dt>Extent</dt>
+              <dd>buildings X 625–3474, Y 754–3348 m (domain)</dd>
+              <dt>Masks</dt>
+              <dd><code>scenes/south_kensington/physics/masks/</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>core008 city model and its 1 m voxelisation</h3>
+            <p>
+              The base asset is a full-city glTF with buildings, roads, footways, grass and trees, Y
+              up in metres. For the physics it is voxelised at 1 m over a 64 m tall domain of 2816 ×
+              3072 cells and conservatively coarsened to 4 m: a 4 m cell counts as solid if any of
+              its 1 m voxels does, so narrow streets close and the wind field never leaks through a
+              wall. The viewer confirms the alignment by matching the model's building bounding box
+              against the voxel extent to the metre.
+            </p>
+            <div class="facts">
+              <div>
+                <div class="n">2.8 × 2.6</div>
+                <div class="l">km covered by the raster</div>
+              </div>
+              <div>
+                <div class="n">19.8 %</div>
+                <div class="l">of 1 m ground cells inside buildings</div>
+              </div>
+              <div>
+                <div class="n">17.7 %</div>
+                <div class="l">grass and tree canopy</div>
+              </div>
+              <div>
+                <div class="n">16</div>
+                <div class="l">4 m layers, bottom 64 m</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="module" style="--c: var(--city)" id="completion">
+          <aside class="rail">
+            <span class="tag">Building completion</span>
+            <dl>
+              <dt>Folder</dt>
+              <dd><code>geometry/completion/</code></dd>
+              <dt>Output</dt>
+              <dd>
+                <code>buildings_supplement.glb</code> 3.6 MB, plus the editable <code>.blend</code>
+              </dd>
+              <dt>Licence</dt>
+              <dd>OpenStreetMap, ODbL</dd>
+              <dt>Status</dt>
+              <dd>in the viewer, toggle "Added buildings · 306"</dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>306 missing buildings from OpenStreetMap</h3>
+            <p>
+              An audit compared every mapped building inside the ground rectangle against the model.
+              Of 6,631 features, 309 conservative candidates lay wholly inside the bounds with under
+              2 % overlap against existing buildings, and 306 also cleared the drivable lanes. They
+              were extruded in Blender with estimated heights and procedural facades, registered in
+              the same EPSG:32630 frame (median residual 23 mm on 5,838 control points), and
+              exported as a separate GLB so the original model stays byte-identical.
+            </p>
+            <ul>
+              <li>
+                Three candidates with real road conflicts were deliberately left out and are listed
+                in the status report.
+              </li>
+              <li>
+                Heights, roof shapes and windows are estimates, not photogrammetry. No satellite
+                pixels were traced.
+              </li>
+              <li>
+                The physics fields were not recomputed after the additions. They describe the
+                original geometry.
+              </li>
+            </ul>
+            <div class="figs">
+              <figure>
+                <img
+                  src="media/supplement_candidates.jpg"
+                  alt="Map of candidate building footprints over the model bounds"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Audit map: accepted footprints against the represented buildings and lane ribbons.
+                  From <code>geometry/completion/reports/</code>.
+                </figcaption>
+              </figure>
+            </div>
+            <a class="muted" href="../geometry/completion/docs/STATUS.md"
+              >Audit, sources and limitations →</a
+            >
+          </div>
+        </article>
+
+        <article class="module" style="--c: var(--city)" id="tile">
+          <aside class="rail">
+            <span class="tag">Station tile</span>
+            <dl>
+              <dt>File</dt>
+              <dd><code>south_kensington_current.glb</code> 180 MB</dd>
+              <dt>Plate</dt>
+              <dd>390 × 400 m around the station</dd>
+              <dt>Loader</dt>
+              <dd><code>viewer/3d/tile.js</code></dd>
+              <dt>Status</dt>
+              <dd>off by default, <code>?tile=1</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>South Kensington station detail tile</h3>
+            <p>
+              A Blender-authored plate of the station district: 245 OSM buildings with PBR facades,
+              the station arcade, the open railway cutting and platforms, gardens, trees and street
+              lamps. Its local frame is rotated against the main model by the UTM grid convergence,
+              so it is placed with a rigid transform fitted on the 237 buildings the two files
+              share, matched by OSM id. Inside the plate the main model's ground, roads and
+              duplicate buildings are clipped away; outside it the tile is clipped. It stays off by
+              default because its palette reads differently from the base model.
+            </p>
+            <div class="facts">
+              <div>
+                <div class="n">237</div>
+                <div class="l">shared buildings used for the fit</div>
+              </div>
+              <div>
+                <div class="n">0.7 m</div>
+                <div class="l">median residual after the fit</div>
+              </div>
+              <div>
+                <div class="n">+0.038 rad</div>
+                <div class="l">rotation about Y</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="module" style="--c: var(--city)" id="expansion">
+          <aside class="rail">
+            <span class="tag">Geometry expansion</span>
+            <dl>
+              <dt>Folder</dt>
+              <dd><code>geometry/expansion/</code></dd>
+              <dt>Status</dt>
+              <dd>brief written, audit pending</dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>Extending the campus-grade detail outward</h3>
+            <p>
+              A planned batch process: audit the boundary of the authored campus geometry, rank
+              complete neighbouring buildings within a 150 m search ring, model one adjacent
+              building per reviewed batch, and only integrate results that replace their original
+              nodes by source id. The brief fixes the coordinate contract and the evidence standard
+              so later batches cannot drift. No geometry has been produced yet.
+            </p>
+            <a class="muted" href="../geometry/expansion/docs/BRIEF.md">Read the brief →</a>
+          </div>
+        </article>
       </div>
-    </div>
-  </article>
+    </section>
 
-  <article class="module" style="--c:var(--city)" id="expansion">
-    <aside class="rail">
-      <span class="tag">Geometry expansion</span>
-      <dl>
-        <dt>Folder</dt><dd><code>geometry/expansion/</code></dd>
-        <dt>Status</dt><dd>brief written, audit pending</dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>Extending the campus-grade detail outward</h3>
-      <p>A planned batch process: audit the boundary of the authored campus geometry, rank complete neighbouring buildings within a 150 m search ring, model one adjacent building per reviewed batch, and only integrate results that replace their original nodes by source id. The brief fixes the coordinate contract and the evidence standard so later batches cannot drift. No geometry has been produced yet.</p>
-      <a class="muted" href="../geometry/expansion/docs/BRIEF.md">Read the brief →</a>
-    </div>
-  </article>
-</div></section>
+    <!-- ================================================================ PHYSICS -->
+    <section class="block" id="fields">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Module group</div>
+            <h2>Physical fields</h2>
+          </div>
+          <p>
+            Six layers, one grid. The wind comes first because the temperature and pollution models
+            consume it; the sunlight model shares the flood model's 1 m terrain and in turn drives
+            the 3-D temperature model's day cycle. All runs were made on a single RTX 5090
+            workstation and exported as arrays with a manifest describing shape, units and
+            orientation, which is exactly what the viewer reads.
+          </p>
+        </div>
 
-<!-- ================================================================ PHYSICS -->
-<section class="block" id="fields"><div class="wrap">
-  <div class="section-head">
-    <div><div class="eyebrow">Module group</div><h2>Physical fields</h2></div>
-    <p>Six layers, one grid. The wind comes first because the temperature and pollution models consume it; the sunlight model shares the flood model's 1 m terrain and in turn drives the 3-D temperature model's day cycle. All runs were made on a single RTX 5090 workstation and exported as arrays with a manifest describing shape, units and orientation, which is exactly what the viewer reads.</p>
-  </div>
+        <article class="module" style="--c: var(--wind)" id="wind">
+          <aside class="rail">
+            <span class="tag">Wind</span>
+            <dl>
+              <dt>Method</dt>
+              <dd>SCALED latent-space domain decomposition</dd>
+              <dt>Weights</dt>
+              <dd>SCALED-Tutorial <code>inference.pth</code> + <code>compression.pth</code></dd>
+              <dt>Run</dt>
+              <dd>2026-09-10, 100 steps</dd>
+              <dt>Export</dt>
+              <dd><code>scenes/south_kensington/physics/wind/</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>Wind: a latent U-Net stepped over the whole city</h3>
+            <p>
+              The published SCALED surrogate was trained on a 1024 m South Kensington case. To run
+              it over the 2.8 km domain the geometry is encoded once into a latent field, then each
+              time step advances nine 1024 m latent blocks with a 4-cell halo and never returns to
+              physical space until the final decode. That is the same latent-to-latent regime the
+              model was trained in, and it removed the momentum loss that a physical-space blocking
+              attempt showed. From rest the field settles into a statistically steady, turbulent
+              state after about 50 steps with the inflow from the west.
+            </p>
+            <div class="facts">
+              <div>
+                <div class="n">3.9 s</div>
+                <div class="l">per step, 9 blocks, inference only</div>
+              </div>
+              <div>
+                <div class="n">1.12 m/s</div>
+                <div class="l">mean fluid-cell speed at step 100</div>
+              </div>
+              <div>
+                <div class="n">0.08</div>
+                <div class="l">step-to-step RMS change once steady</div>
+              </div>
+              <div>
+                <div class="n">24.4 GiB</div>
+                <div class="l">peak GPU memory (decode)</div>
+              </div>
+            </div>
+            <div class="figs">
+              <figure>
+                <img
+                  src="media/wind_step100.jpg"
+                  alt="Wind speed and direction at 10 to 14 m and 40 to 44 m over the city, step 100"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Step 100 at 4 m: speed and horizontal direction at 10–14 m (top) and 40–44 m
+                  (bottom). Wakes, street channelling, and no seams between the 1024 m blocks.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/wind_convergence.png"
+                  alt="Mean speed and step-to-step change over the 100 steps"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Spin-up: mean speed peaks at step 10, dips, then holds between 1.10 and 1.18 m/s.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="note">
+              <b>Interpretation boundary</b>No CFD or measurement reference exists for this
+              geometry. The 25 s per step mapping is inherited from the tutorial package, the 64 m
+              domain cuts the tops of buildings above that height, and the conservative 4 m
+              coarsening closes narrow streets.
+            </div>
+          </div>
+        </article>
 
-  <article class="module" style="--c:var(--wind)" id="wind">
-    <aside class="rail">
-      <span class="tag">Wind</span>
-      <dl>
-        <dt>Method</dt><dd>SCALED latent-space domain decomposition</dd>
-        <dt>Weights</dt><dd>SCALED-Tutorial <code>inference.pth</code> + <code>compression.pth</code></dd>
-        <dt>Run</dt><dd>2026-09-10, 100 steps</dd>
-        <dt>Export</dt><dd><code>scenes/south_kensington/physics/wind/</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>Wind: a latent U-Net stepped over the whole city</h3>
-      <p>The published SCALED surrogate was trained on a 1024 m South Kensington case. To run it over the 2.8 km domain the geometry is encoded once into a latent field, then each time step advances nine 1024 m latent blocks with a 4-cell halo and never returns to physical space until the final decode. That is the same latent-to-latent regime the model was trained in, and it removed the momentum loss that a physical-space blocking attempt showed. From rest the field settles into a statistically steady, turbulent state after about 50 steps with the inflow from the west.</p>
-      <div class="facts">
-        <div><div class="n">3.9 s</div><div class="l">per step, 9 blocks, inference only</div></div>
-        <div><div class="n">1.12 m/s</div><div class="l">mean fluid-cell speed at step 100</div></div>
-        <div><div class="n">0.08</div><div class="l">step-to-step RMS change once steady</div></div>
-        <div><div class="n">24.4 GiB</div><div class="l">peak GPU memory (decode)</div></div>
+        <article class="module" style="--c: var(--temp)" id="temperature">
+          <aside class="rail">
+            <span class="tag">Temperature</span>
+            <dl>
+              <dt>3-D</dt>
+              <dd>controlled thermal solver + 15-channel U-Net, 4 m [16, 704, 768]</dd>
+              <dt>2-D</dt>
+              <dd>Yi Qi's label model, 12–16 m layer, 60 × 25 s</dd>
+              <dt>Export</dt>
+              <dd><code>temperature3d/</code>, <code>temperature2d/</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>Temperature: two models, one honest comparison</h3>
+            <p>
+              The 3-D experiment drives a controlled heat solver with wind steps 82 to 100 (ambient
+              26 °C, ground and roofs at 30 °C) and asks a single-step U-Net to predict each next
+              state. Used one step at a time it beats the persistence baseline from 180 s onward and
+              stays near 0.26 °C error. Fed its own output recursively, its error grows linearly to
+              1.5 °C, so the recursive mode is reported as not usable. The 2-D label model is the
+              one shown in the viewer: a fast surface-layer solver on the same wind, with building
+              footprints, roof heights and vegetation as labels, giving a 1500 s summer-afternoon
+              evolution in 7 s of compute.
+            </p>
+            <div class="tscroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Lead time</th>
+                    <th class="num">One-step U-Net</th>
+                    <th class="num">Recursive U-Net</th>
+                    <th class="num">Persistence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>+90 s</td>
+                    <td class="num">0.347</td>
+                    <td class="num">0.347</td>
+                    <td class="num">0.192</td>
+                  </tr>
+                  <tr>
+                    <td>+180 s</td>
+                    <td class="num">0.277</td>
+                    <td class="num">0.607</td>
+                    <td class="num">0.321</td>
+                  </tr>
+                  <tr>
+                    <td>+270 s</td>
+                    <td class="num">0.270</td>
+                    <td class="num">0.908</td>
+                    <td class="num">0.407</td>
+                  </tr>
+                  <tr>
+                    <td>+360 s</td>
+                    <td class="num">0.266</td>
+                    <td class="num">1.192</td>
+                    <td class="num">0.465</td>
+                  </tr>
+                  <tr>
+                    <td>+450 s</td>
+                    <td class="num">0.263</td>
+                    <td class="num">1.495</td>
+                    <td class="num">0.504</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="muted" style="font-size: 13px">
+              Mean absolute error in °C over fluid cells against the solver reference.
+            </p>
+            <div class="figs">
+              <figure>
+                <img
+                  src="media/temperature_comparison.jpg"
+                  alt="Solver reference, one-step U-Net and recursive U-Net temperature slices at 10 m"
+                  loading="lazy"
+                />
+                <figcaption>
+                  10 m slice at +450 s: solver reference, one-step and recursive U-Net.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/temperature2d.gif"
+                  alt="Animation of the 2-D surface-layer temperature over 1500 s"
+                  loading="lazy"
+                />
+                <figcaption>
+                  2-D label model, 12–16 m layer: mean rises from 31.78 to 31.86 °C over 1500 s,
+                  range 30.8–32.2 °C.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <article class="module" style="--c: var(--sun)" id="sunlight">
+          <aside class="rail">
+            <span class="tag">Sunlight</span>
+            <dl>
+              <dt>Method</dt>
+              <dd>ShadowNet + HorizonNet: fixed-weight tensor layers, no training</dd>
+              <dt>Terrain</dt>
+              <dd>EA LIDAR DTM 2022 + core008 buildings, 1 m</dd>
+              <dt>Days</dt>
+              <dd>21 June and 21 December 2026, every 10 min</dd>
+              <dt>Export</dt>
+              <dd><code>scenes/south_kensington/physics/solar/</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>Sunlight: shadows and sky view as a visibility transport problem</h3>
+            <p>
+              The same idea as the wind and flood solvers, applied to light: a cell is in shadow
+              when the height field along the ray towards the sun rises above the cell's own line of
+              sight, which is a running maximum along that ray. The running maximum is built by
+              doubling (shift, take the maximum, shift twice as far, repeat), so a shadow of any
+              length costs only log₂ of its length in layers, and every shift is an exact integer
+              step with no interpolation. The same network run at 16 azimuths and 18 altitudes gives
+              each cell its horizon angles and hence its sky-view factor. An ASHRAE clear-sky model
+              then turns sun position, shadow and sky view into irradiance. Both solstice days at 1
+              m over the whole 2.8 × 2.6 km domain take under two seconds on the GPU.
+            </p>
+            <div class="tscroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Clear-sky day</th>
+                    <th class="num">21 June</th>
+                    <th class="num">21 December</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Sunrise to sunset, local</td>
+                    <td class="num">04:50–21:10 · 16.5 h</td>
+                    <td class="num">08:10–15:50 · 7.8 h</td>
+                  </tr>
+                  <tr>
+                    <td>Maximum sun altitude</td>
+                    <td class="num">61.9°</td>
+                    <td class="num">15.1°</td>
+                  </tr>
+                  <tr>
+                    <td>Ground cells: mean hours of direct sun</td>
+                    <td class="num">12.7 h</td>
+                    <td class="num">4.4 h</td>
+                  </tr>
+                  <tr>
+                    <td>Ground with under 1 h of direct sun</td>
+                    <td class="num">0.9 %</td>
+                    <td class="num">23.7 %</td>
+                  </tr>
+                  <tr>
+                    <td>Daily irradiation: open sky / ground mean</td>
+                    <td class="num">8.21 / 7.38 kWh/m²</td>
+                    <td class="num">0.99 / 0.72 kWh/m²</td>
+                  </tr>
+                  <tr>
+                    <td>Mean ground sky-view factor</td>
+                    <td class="num" colspan="2">0.84 (10th–90th percentile 0.49–0.99)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="figs two">
+              <figure>
+                <img
+                  src="media/solar_shadows_june.jpg"
+                  alt="Shadows over the core area every two hours on 21 June"
+                  loading="lazy"
+                />
+                <figcaption>
+                  21 June, core area, 08:00 to 18:00 every two hours. Nearly every street sees hours
+                  of direct sun.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/solar_shadows_december.jpg"
+                  alt="Shadows over the core area every two hours on 21 December"
+                  loading="lazy"
+                />
+                <figcaption>
+                  21 December: with the sun at most 15° high, 20–30 m buildings throw 75–110 m
+                  shadows and only north–south streets see the sun at noon.
+                </figcaption>
+              </figure>
+              <figure>
+                <img src="media/solar_svf.jpg" alt="Sky-view factor map" loading="lazy" />
+                <figcaption>
+                  Sky-view factor at 1 m from the horizon angles in 16 directions. Courtyards and
+                  narrow streets fall below 0.5.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/solar_sunlit_hours_december.jpg"
+                  alt="Hours of direct sun on 21 December across the domain"
+                  loading="lazy"
+                />
+                <figcaption>Hours of direct sun on 21 December over the whole domain.</figcaption>
+              </figure>
+            </div>
+            <p>
+              Verification against analytic cases: sun position matches the NOAA calculator, a 20 m
+              column casts 113 / 34 / 11 m shadows at 10° / 30° / 60° (analytic 113.4 / 34.6 / 11.5
+              m), the sky-view factor at the floor of an infinite 20 m by 20 m street canyon is
+              0.451 against the 0.447 integral, and random building fields disagree with a
+              brute-force ray march on at most 1.2 % of cells, all at the tips of long shadows.
+            </p>
+            <div class="note">
+              <b>Interpretation boundary</b>Clear sky only, with monthly ASHRAE coefficients;
+              London's real annual irradiation is roughly half the clear-sky value. Buildings are
+              flat-topped columns, so arcades and overhangs are filled and facades receive no
+              irradiance. Trees are not in the height field and only attenuate the beam on their own
+              canopy cells. One ground bounce, no inter-reflections.
+            </div>
+          </div>
+        </article>
+
+        <article class="module" style="--c: var(--temp)" id="coupling">
+          <aside class="rail">
+            <span class="tag">Sunlight → temperature</span>
+            <dl>
+              <dt>Model</dt>
+              <dd>
+                Yi Qi's 3-D temperature physical model, source unchanged, two functions swapped at
+                run time
+              </dd>
+              <dt>Wind</dt>
+              <dd>SCALED steps 81–100, 16 layers, 90 s frames</dd>
+              <dt>Runs</dt>
+              <dd>single-time comparison · 21 June hourly 04:00–24:00</dd>
+              <dt>Export</dt>
+              <dd><code>scenes/south_kensington/physics/temperature3d_solar/</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>Coupling the sun into the 3-D temperature model</h3>
+            <p>
+              The 3-D model solves a surface energy balance and 3-D advection–diffusion, but its
+              shortwave input was one irradiance number for the whole city with an in-house
+              per-building shadow loop, and one longwave value from the sky. The coupling is
+              one-way: the shadow term becomes the solar model's sunlit fraction and sky-view
+              diffuse light, and the downwelling longwave is weighted by the sky-view factor with
+              walls radiating at air temperature. Everything else in the model, including latent
+              heat, storage, anthropogenic heat and the solver, is untouched. It is also the first
+              time this model runs on the full core008 domain, using a 3-D velocity cache built from
+              the SCALED wind.
+            </p>
+            <div class="tscroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>25 July, 13:00 UTC, after 30 min</th>
+                    <th class="num">Native</th>
+                    <th class="num">Solar-coupled</th>
+                    <th class="num">Difference</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Mean ground shade / radiation deficit</td>
+                    <td class="num">0.036</td>
+                    <td class="num">0.086</td>
+                    <td class="num">shadow + canyon diffuse loss</td>
+                  </tr>
+                  <tr>
+                    <td>Mean ground surface temperature</td>
+                    <td class="num">28.97 °C</td>
+                    <td class="num">28.76 °C</td>
+                    <td class="num">−0.21 °C (5th–95th −1.50 to +0.46)</td>
+                  </tr>
+                  <tr>
+                    <td>Mean air temperature, 0–4 m</td>
+                    <td class="num">26.57 °C</td>
+                    <td class="num">26.22 °C</td>
+                    <td class="num">−0.34 °C, correlation 0.993</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p>
+              The differences sit where the sky view is low: street canyons, courtyards and the
+              north sides of buildings lose diffuse and longwave income and come out 1–1.5 °C cooler
+              at the surface, locally up to 6 °C, while open ground and parks barely move. Over the
+              summer-solstice day the hourly chain shows the city surface running about 9 °C above
+              the air by mid-afternoon and 1–2.5 °C below it at night, a near-surface air excess
+              peaking at +2.0 °C around 13:00–14:00 and turning to −0.8 °C at night, and vegetation
+              surfaces staying below the air all day.
+            </p>
+            <div class="figs two">
+              <figure>
+                <img
+                  src="media/coupled_native_vs_solar.jpg"
+                  alt="Native and solar-coupled shade, surface temperature and air temperature over the core area"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Core area, native versus coupled: shade or radiation deficit, ground surface
+                  temperature, and 0–4 m air after 30 min.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/coupled_diurnal_maps.jpg"
+                  alt="Surface and air temperature maps at six hours through 21 June"
+                  loading="lazy"
+                />
+                <figcaption>
+                  21 June day cycle: surface and air temperature at 06, 09, 12, 15, 18 and 21 h
+                  local.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/coupled_diurnal_series.png"
+                  alt="Hourly series of ambient, air and surface temperature"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Hourly means: ambient air, 0–4 m air over city and vegetation, ground surface.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/coupled_diurnal_air.gif"
+                  alt="Animation of 0–4 m air temperature through the day"
+                  loading="lazy"
+                />
+                <figcaption>0–4 m air temperature through the day, hourly.</figcaption>
+              </figure>
+            </div>
+            <div class="note">
+              <b>Interpretation boundary</b>No observations. The model's scenario parameters set the
+              absolute temperatures; the coupling only redistributes shortwave and longwave in
+              space. The surface balance is instantaneous with no ground heat storage, so night
+              cooling is too fast. Cloud is a simple direct-beam reduction, the wind is the steady
+              SCALED field cycled with no thermal feedback, and facades carry no radiation term.
+            </div>
+          </div>
+        </article>
+
+        <article class="module" style="--c: var(--poll)" id="pollution">
+          <aside class="rail">
+            <span class="tag">Pollution</span>
+            <dl>
+              <dt>Method</dt>
+              <dd>Yuhang's <code>physical_transport.py</code>, unchanged</dd>
+              <dt>Source</dt>
+              <dd>continuous line, x 520–600, y 848–3248, z 8–32 m</dd>
+              <dt>Export</dt>
+              <dd><code>pollution/concentration_z12-16m_tyx.npy</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>Pollutant transport carried by the wind steps</h3>
+            <p>
+              A transport solver runs on the 4 m wind field with each 25 s wind step split into
+              fifty 0.5 s sub-steps and the wind interpolated between frames. The source is a
+              continuous line along the upwind western edge, so the plume crosses the whole city. By
+              step 100 the domain holds 17.8 million units of the 18 million emitted; outflow has
+              only just begun. Hot spots form at the windward feet of large buildings where the wind
+              converges, an artefact of the wind field rather than of the transport scheme.
+            </p>
+            <div class="figs">
+              <figure>
+                <img
+                  src="media/pollution_step100.jpg"
+                  alt="Log-scaled pollutant concentration at 12 m, step 100"
+                  loading="lazy"
+                />
+                <figcaption>Concentration at 12 m, step 100, log colour scale.</figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/pollution_mass.png"
+                  alt="Emitted and in-domain mass over the 100 steps"
+                  loading="lazy"
+                />
+                <figcaption>Mass balance: emitted versus in-domain over 100 steps.</figcaption>
+              </figure>
+            </div>
+            <div class="note">
+              <b>Scope</b>Run at 4 m only. The 1 m grid would be 550 million cells and exceeds GPU
+              memory. The source strength and boundary velocities are experimental settings, not an
+              emissions inventory.
+            </div>
+          </div>
+        </article>
+
+        <article class="module" style="--c: var(--flood)" id="flood">
+          <aside class="rail">
+            <span class="tag">Flooding</span>
+            <dl>
+              <dt>Method</dt>
+              <dd>shallow-water solver in the NN4PDEs style (Chen et al. 2025)</dd>
+              <dt>Terrain</dt>
+              <dd>EA LIDAR DTM 2022, 1 m + core008 buildings</dd>
+              <dt>Scenario</dt>
+              <dd>50 mm in 90 min, 12 July 2021 type</dd>
+              <dt>Export</dt>
+              <dd><code>scenes/south_kensington/physics/flood/</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>Surface-water flooding from a cloudburst</h3>
+            <p>
+              The discretised shallow-water equations are expressed as fixed convolution stencils on
+              the GPU, following the Advances in Water Resources paper, with three changes for a
+              city: an Arakawa C grid so buildings act as walls and dry cells stay still, a
+              conjugate-gradient free-surface solve for controllable mass conservation, and
+              first-order upwind advection. Rain falls on a 1 m bare-earth LIDAR terrain with
+              buildings raised as solid blocks, sewers remove 12 mm/h from paved ground and roofs,
+              green areas infiltrate 20 mm/h, and excess roof runoff drops to the nearest ground
+              cell.
+            </p>
+            <div class="facts">
+              <div>
+                <div class="n">73.6 ha</div>
+                <div class="l">max depth above 10 cm</div>
+              </div>
+              <div>
+                <div class="n">21.0 ha</div>
+                <div class="l">above 30 cm</div>
+              </div>
+              <div>
+                <div class="n">0.59 m</div>
+                <div class="l">99th percentile ground depth</div>
+              </div>
+              <div>
+                <div class="n">−5.5 m³</div>
+                <div class="l">mass error on 401,000 m³</div>
+              </div>
+              <div>
+                <div class="n">17.8 min</div>
+                <div class="l">wall time, 75,053 steps at 1 m</div>
+              </div>
+            </div>
+            <div class="figs two">
+              <figure>
+                <img
+                  src="media/flood_max_depth_whole.jpg"
+                  alt="Maximum water depth over three hours across the whole domain"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Maximum depth over the 3 h event at 1 m. Water collects along streets into
+                  junctions, courtyards and park hollows; the Serpentine and Round Pond fill
+                  naturally, which checks the drainage directions.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/flood_depth_evolution.gif"
+                  alt="Animation of water depth every 10 minutes through the event"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Depth every 10 min. Peak storage 236,000 m³ at 75 min, then recession at the sewer
+                  rate.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/flood_time_series.png"
+                  alt="Rain intensity, stored volume, flooded area and point depths over time"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Rain, stored volume, flooded area and depth at points of interest.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/flood_hazard.jpg"
+                  alt="Maximum speed and depth-times-speed hazard maps"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Maximum speed and h·v hazard. Street values mostly below 0.5 m²/s; the extremes
+                  sit on DTM cliffs under sub-millimetre films.
+                </figcaption>
+              </figure>
+            </div>
+            <p>
+              Solver verification covers a still lake with buildings (zero motion), a closed basin
+              under rain (volume error 1.8e-8), Manning uniform flow (depth 0.18488 m against the
+              same analytic value), and Stoker dam breaks, where the non-conservative momentum form
+              is 0.7 % off for a mild jump but does not converge for a strong one. Urban depths are
+              centimetres to decimetres, so that limit does not bite here.
+            </p>
+            <div class="note">
+              <b>Interpretation boundary</b>There are no observations of the 2021 event on this
+              geometry. Rainfall, sewer capacity, infiltration and roughness are set values, and
+              there is no pipe network. Real pits in the DTM (the railway cutting at South
+              Kensington station, basements, light wells) collect most of the deepest water, so read
+              the percentile and area metrics rather than the maximum.
+            </div>
+          </div>
+        </article>
       </div>
-      <div class="figs">
-        <figure><img src="media/wind_step100.jpg" alt="Wind speed and direction at 10 to 14 m and 40 to 44 m over the city, step 100" loading="lazy"><figcaption>Step 100 at 4 m: speed and horizontal direction at 10–14 m (top) and 40–44 m (bottom). Wakes, street channelling, and no seams between the 1024 m blocks.</figcaption></figure>
-        <figure><img src="media/wind_convergence.png" alt="Mean speed and step-to-step change over the 100 steps" loading="lazy"><figcaption>Spin-up: mean speed peaks at step 10, dips, then holds between 1.10 and 1.18 m/s.</figcaption></figure>
+    </section>
+
+    <!-- ================================================================ AGENTS -->
+    <section class="block" id="agents">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Module group</div>
+            <h2>Moving agents</h2>
+          </div>
+          <p>
+            Three replay layers share the one-hour clock and the glTF world frame. They are
+            simulations with audited evidence, not measurements: the traffic is rule-based SUMO on
+            the repaired network, the deliveries come from an earlier NVMF run, and the birds are a
+            flock model run against the same building voxels the wind uses.
+          </p>
+        </div>
+
+        <article class="module" style="--c: var(--agent)" id="traffic">
+          <aside class="rail">
+            <span class="tag">Road traffic</span>
+            <dl>
+              <dt>Engine</dt>
+              <dd>Eclipse SUMO 1.27.1, run <code>netF2_3600</code></dd>
+              <dt>Package</dt>
+              <dd><code>agents/demo_rev02/</code> revision_02</dd>
+              <dt>Shipped</dt>
+              <dd>first 300 s of the replay; full hour is a separate drop-in</dd>
+              <dt>Evidence</dt>
+              <dd><code>agents/demo_rev02/evidence/</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>SUMO traffic on a repaired OSM network</h3>
+            <p>
+              The first-version network left most of the city unreachable: its largest strongly
+              connected component had 232 edges. Revision 02 re-qualified the lanes geometrically on
+              the original OSM network, reopening 611 lanes and restoring 21 missing middle
+              segments, and closed 65 short lanes on building-clearance evidence. Every one of the
+              851 signal heads reads the recorded state of its own connection. The result is a
+              one-hour run that passes six release gates: integrity, identity, no teleports,
+              on-drawn-road, signals, and native replay.
+            </p>
+            <div class="tscroll">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Metric</th>
+                    <th class="num">First version</th>
+                    <th class="num">Revision 02</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Largest connected component</td>
+                    <td class="num">232 edges · 12.9 km</td>
+                    <td class="num">1,369 edges · 94.9 km</td>
+                  </tr>
+                  <tr>
+                    <td>Share of cars moving, hour mean</td>
+                    <td class="num">20 %</td>
+                    <td class="num">43 %</td>
+                  </tr>
+                  <tr>
+                    <td>Cars ever stopped ≥ 600 s</td>
+                    <td class="num">926</td>
+                    <td class="num">16</td>
+                  </tr>
+                  <tr>
+                    <td>Longest stop</td>
+                    <td class="num">3,595 s</td>
+                    <td class="num">962 s</td>
+                  </tr>
+                  <tr>
+                    <td>Teleports / forced removals</td>
+                    <td class="num">—</td>
+                    <td class="num">0 / 0</td>
+                  </tr>
+                  <tr>
+                    <td>Centres off drawn lanes</td>
+                    <td class="num">—</td>
+                    <td class="num">0</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="figs">
+              <figure>
+                <img
+                  src="media/traffic_map_after.jpg"
+                  alt="Map of the revision 02 road network with the largest connected component highlighted"
+                  loading="lazy"
+                />
+                <figcaption>
+                  Revision 02 network: largest component in green, reopened lanes, gap fills in
+                  blue, junction patches and the one evidenced movement restriction.
+                </figcaption>
+              </figure>
+              <figure>
+                <img
+                  src="media/traffic_map_diff.jpg"
+                  alt="Difference map between the first version and revision 02 networks"
+                  loading="lazy"
+                />
+                <figcaption>
+                  What changed against the first version. No road was closed to improve the numbers.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="note">
+              <b>Residual, stated</b>56 cars are still stopped for 180 s or more at the end, all on
+              the westbound Kensington Road corridor with its closely spaced uncoordinated
+              fixed-time signals, and one wall corner in Radley Mews where a car body overlaps by up
+              to 0.3 m for about 30 s.
+            </div>
+          </div>
+        </article>
+
+        <article class="module" style="--c: var(--agent)" id="uav">
+          <aside class="rail">
+            <span class="tag">UAV deliveries</span>
+            <dl>
+              <dt>Source</dt>
+              <dd>NVMF schedule replay, unchanged service times and battery</dd>
+              <dt>Scene</dt>
+              <dd>30 stations, hub bays, routes in <code>agents/demo_rev02/data/</code></dd>
+              <dt>Model</dt>
+              <dd><code>actors/hexacopter_cargo.glb</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>300 UAVs, 600 orders, one hour</h3>
+            <p>
+              The delivery layer replays a schedule produced by the NVMF planner over rooftop
+              stations and hubs. Revision 02 only touched the display timeline: same-station
+              take-offs that shared a second are released 2 s apart using their waiting time, which
+              collapsed 103 simultaneous groups to 7, and the original timeline stays switchable.
+              Station positions are a demonstration design, and the replay says nothing about the
+              planner's capability.
+            </p>
+            <div class="facts">
+              <div>
+                <div class="n">300</div>
+                <div class="l">UAVs</div>
+              </div>
+              <div>
+                <div class="n">600</div>
+                <div class="l">deliveries spread over the hour</div>
+              </div>
+              <div>
+                <div class="n">30</div>
+                <div class="l">stations</div>
+              </div>
+              <div>
+                <div class="n">103 → 7</div>
+                <div class="l">same-second take-off groups</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="module" style="--c: var(--agent)" id="birds">
+          <aside class="rail">
+            <span class="tag">Birds</span>
+            <dl>
+              <dt>Model</dt>
+              <dd>Akira's flock simulator, source unchanged</dd>
+              <dt>Geometry</dt>
+              <dd>4 m solid voxels cropped around the station, 25 × 176 × 175</dd>
+              <dt>Data</dt>
+              <dd><code>agents/demo_rev02/data/birds_southken/</code></dd>
+              <dt>Tools</dt>
+              <dd><code>agents/demo_rev02/tools/birds/</code></dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>A pigeon flock over South Kensington station</h3>
+            <p>
+              One hundred birds run for an hour with a roost on the station roof and forage sites
+              within 90 m. The geometry they avoid is the same 4 m building mask the wind field
+              uses, cropped to the station district, which is the clearest small example of the
+              shared frame: the flock file records the crop origin and spacing, and the viewer
+              places it without any calibration. At the noon clock the model stays in its
+              murmuration state for the whole hour, so no roosting or foraging trips appear. The
+              bird tracker in the viewer follows the flock centroid or a single bird.
+            </p>
+          </div>
+        </article>
       </div>
-      <div class="note"><b>Interpretation boundary</b>No CFD or measurement reference exists for this geometry. The 25 s per step mapping is inherited from the tutorial package, the 64 m domain cuts the tops of buildings above that height, and the conservative 4 m coarsening closes narrow streets.</div>
-    </div>
-  </article>
+    </section>
 
-  <article class="module" style="--c:var(--temp)" id="temperature">
-    <aside class="rail">
-      <span class="tag">Temperature</span>
-      <dl>
-        <dt>3-D</dt><dd>controlled thermal solver + 15-channel U-Net, 4 m [16, 704, 768]</dd>
-        <dt>2-D</dt><dd>Yi Qi's label model, 12–16 m layer, 60 × 25 s</dd>
-        <dt>Export</dt><dd><code>temperature3d/</code>, <code>temperature2d/</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>Temperature: two models, one honest comparison</h3>
-      <p>The 3-D experiment drives a controlled heat solver with wind steps 82 to 100 (ambient 26 °C, ground and roofs at 30 °C) and asks a single-step U-Net to predict each next state. Used one step at a time it beats the persistence baseline from 180 s onward and stays near 0.26 °C error. Fed its own output recursively, its error grows linearly to 1.5 °C, so the recursive mode is reported as not usable. The 2-D label model is the one shown in the viewer: a fast surface-layer solver on the same wind, with building footprints, roof heights and vegetation as labels, giving a 1500 s summer-afternoon evolution in 7 s of compute.</p>
-      <div class="tscroll">
-      <table>
-        <thead><tr><th>Lead time</th><th class="num">One-step U-Net</th><th class="num">Recursive U-Net</th><th class="num">Persistence</th></tr></thead>
-        <tbody>
-          <tr><td>+90 s</td><td class="num">0.347</td><td class="num">0.347</td><td class="num">0.192</td></tr>
-          <tr><td>+180 s</td><td class="num">0.277</td><td class="num">0.607</td><td class="num">0.321</td></tr>
-          <tr><td>+270 s</td><td class="num">0.270</td><td class="num">0.908</td><td class="num">0.407</td></tr>
-          <tr><td>+360 s</td><td class="num">0.266</td><td class="num">1.192</td><td class="num">0.465</td></tr>
-          <tr><td>+450 s</td><td class="num">0.263</td><td class="num">1.495</td><td class="num">0.504</td></tr>
-        </tbody>
-      </table>
+    <!-- ================================================================ VIEWER -->
+    <section class="block" id="viewer">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Integration</div>
+            <h2>The viewer</h2>
+          </div>
+          <p>
+            A single three.js page reads every layer straight from the files on disk. Field frames
+            are fetched by HTTP Range request from the float16 arrays and decoded in the browser, so
+            a new run appears the moment its arrays are dropped into the folder. Nothing is tiled,
+            converted or cached in advance.
+          </p>
+        </div>
+
+        <div class="gallery">
+          <figure>
+            <img
+              src="media/view_junction.jpg"
+              alt="Close view of a signalised junction with cars and signal heads"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>Junction.</b> The busiest signalised junction on the campus ring roads, signal
+              heads reading recorded states.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="media/view_traffic.jpg"
+              alt="Near-vertical view over the roads with lanes, car dots and signals"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>Traffic map.</b> Drivable lanes in blue, cars as moving or stopped dots, every
+              signal as a red, amber or green dot.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="media/view_uavs.jpg"
+              alt="Wide view of the campus with UAV corridors and stations"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>UAVs.</b> High orbit over the campus with the corridors and rooftop stations drawn.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="media/view_birds.jpg"
+              alt="The pigeon flock over South Kensington station"
+              loading="lazy"
+            />
+            <figcaption><b>Birds.</b> The flock tracker following the centroid.</figcaption>
+          </figure>
+          <figure>
+            <img
+              src="media/view_wind.jpg"
+              alt="Overhead wind speed heat map with buildings cut out"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>Wind.</b> Speed at 8–12 m as a heat map, building cells cut out, optional
+              streamline particles.
+            </figcaption>
+          </figure>
+          <figure>
+            <img src="media/view_temp.jpg" alt="Overhead temperature heat map" loading="lazy" />
+            <figcaption>
+              <b>Temperature.</b> Ground heat map or isotherms every 0.1 °C, broken at walls.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="media/view_solar.jpg"
+              alt="Overhead view with 1 m building shadows draped on the streets"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>Sunlight.</b> The 1 m shadow mask on the hour, or the 10-min irradiance, as a sun
+              and shade wash over the streets; the scene light follows the real sun.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="media/view_diurnal.jpg"
+              alt="Overhead map of ground surface temperature relative to ambient air at 14:00"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>Day cycle.</b> Solar-coupled 3-D temperature, hourly: surface or air layers, in °C
+              or relative to the hour's ambient air.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="media/view_poll.jpg"
+              alt="Overhead translucent pollution layer"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>Pollution.</b> Translucent concentration layer at 14 m with logarithmic opacity.
+            </figcaption>
+          </figure>
+          <figure>
+            <img
+              src="media/view_flood.jpg"
+              alt="Overhead flood depth layer with the ground kept visible"
+              loading="lazy"
+            />
+            <figcaption>
+              <b>Flooding.</b> Water depth on the ground, roads and greens left visible under the
+              water.
+            </figcaption>
+          </figure>
+        </div>
+
+        <div
+          class="module"
+          style="--c: var(--flood); margin-top: 36px; border-top: 1px solid var(--rule)"
+        >
+          <aside class="rail">
+            <span class="tag" style="background: var(--ink)">viewer/3d/</span>
+            <dl>
+              <dt>Renderer</dt>
+              <dd>three.js 0.185.1, meshopt decoding, logarithmic depth buffer</dd>
+              <dt>Reader</dt>
+              <dd><code>viewer/npy.js</code>, Range requests, float16 in-browser</dd>
+              <dt>Server</dt>
+              <dd><code>serve.py</code>, system Python only</dd>
+              <dt>Code</dt>
+              <dd>about 1,400 lines across four modules</dd>
+            </dl>
+          </aside>
+          <div class="body">
+            <h3>How the page is put together</h3>
+            <ul>
+              <li>
+                <b>One loop, two halves.</b> A campus tour (overview, junction, traffic map, UAVs,
+                birds) then an overhead pass that plays wind, temperature, sunlight, the day cycle,
+                pollution and flooding one after another. Big tabs jump to any view; auto loop off
+                holds the current one.
+              </li>
+              <li>
+                <b>Field playback.</b> Sequential mode shows one field at a time at 12 steps per
+                second; the flood, the hourly shadows and the day cycle run at 2 frames per second
+                on their own clocks. Overlay mode lets layers be combined by hand.
+              </li>
+              <li>
+                <b>1 m without preprocessing.</b> The hourly shadow frames are 8.7 MB each and are
+                expanded in the browser into a 3072 × 2816 texture draped over the streets, so the 1
+                m result is shown at full resolution straight from the array.
+              </li>
+              <li>
+                <b>Replay modules reused unchanged.</b> The traffic, UAV, signal and bird modules
+                from the demo package are wrapped by <code>replay.js</code> rather than rewritten,
+                so the colleague's package remains the source of truth.
+              </li>
+              <li>
+                <b>Decoupled clocks.</b> The replay clock runs the full hour for UAVs and birds
+                while the 300 s traffic sample loops inside it until the full-hour files are dropped
+                in.
+              </li>
+              <li>
+                <b>Deployment.</b> Served from the workstation and published through a Tailscale
+                Funnel; remote viewers see roughly 20 Mbps, so the fields section can stutter until
+                frames are pre-rendered to small textures, which is the next step.
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <p class="muted" style="font-size:13px">Mean absolute error in °C over fluid cells against the solver reference.</p>
-      <div class="figs">
-        <figure><img src="media/temperature_comparison.jpg" alt="Solver reference, one-step U-Net and recursive U-Net temperature slices at 10 m" loading="lazy"><figcaption>10 m slice at +450 s: solver reference, one-step and recursive U-Net.</figcaption></figure>
-        <figure><img src="media/temperature2d.gif" alt="Animation of the 2-D surface-layer temperature over 1500 s" loading="lazy"><figcaption>2-D label model, 12–16 m layer: mean rises from 31.78 to 31.86 °C over 1500 s, range 30.8–32.2 °C.</figcaption></figure>
+    </section>
+
+    <!-- ================================================================ CLAIM BOUNDARY -->
+    <section class="block" id="boundary">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Read before citing</div>
+            <h2>Claim boundary</h2>
+          </div>
+          <p>
+            Every module keeps its own limitations next to its results. The short version, per
+            layer:
+          </p>
+        </div>
+        <ul class="claims">
+          <li style="--c: var(--city)">
+            <b>Geometry</b>Added buildings and the station tile are estimates registered to the
+            frame, not surveys. Physics fields were not recomputed after the 306 additions.
+          </li>
+          <li style="--c: var(--wind)">
+            <b>Wind</b>Transfer of a surrogate trained on a 1024 m case to new geometry, with no CFD
+            or measurement reference. Time scale inherited, domain capped at 64 m.
+          </li>
+          <li style="--c: var(--temp)">
+            <b>Temperature</b>Experimental heat scenario against an adapted controlled solver. The
+            recursive 3-D mode is reported as unusable; the 2-D model is a label model, not a heat
+            budget. The solar-coupled day cycle has no observations and no ground heat storage.
+          </li>
+          <li style="--c: var(--sun)">
+            <b>Sunlight</b>Clear sky only; real irradiation is roughly half. Flat-topped building
+            columns, no facade irradiance, trees only attenuate, one ground bounce.
+          </li>
+          <li style="--c: var(--poll)">
+            <b>Pollution</b>Idealised continuous line source with set strength. 4 m only. Hot spots
+            inherit the wind field's convergence.
+          </li>
+          <li style="--c: var(--flood)">
+            <b>Flooding</b>No observed inundation for this geometry. Drainage is a uniform rate with
+            no pipe network; DTM pits dominate the maxima.
+          </li>
+          <li style="--c: var(--agent)">
+            <b>Agents</b>Rule-based traffic with simulated signal timing, not TfL data. Deliveries
+            replay an earlier planner run. Birds are a behavioural model with no observation.
+          </li>
+        </ul>
       </div>
-    </div>
-  </article>
+    </section>
 
-  <article class="module" style="--c:var(--sun)" id="sunlight">
-    <aside class="rail">
-      <span class="tag">Sunlight</span>
-      <dl>
-        <dt>Method</dt><dd>ShadowNet + HorizonNet: fixed-weight tensor layers, no training</dd>
-        <dt>Terrain</dt><dd>EA LIDAR DTM 2022 + core008 buildings, 1 m</dd>
-        <dt>Days</dt><dd>21 June and 21 December 2026, every 10 min</dd>
-        <dt>Export</dt><dd><code>scenes/south_kensington/physics/solar/</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>Sunlight: shadows and sky view as a visibility transport problem</h3>
-      <p>The same idea as the wind and flood solvers, applied to light: a cell is in shadow when the height field along the ray towards the sun rises above the cell's own line of sight, which is a running maximum along that ray. The running maximum is built by doubling (shift, take the maximum, shift twice as far, repeat), so a shadow of any length costs only log₂ of its length in layers, and every shift is an exact integer step with no interpolation. The same network run at 16 azimuths and 18 altitudes gives each cell its horizon angles and hence its sky-view factor. An ASHRAE clear-sky model then turns sun position, shadow and sky view into irradiance. Both solstice days at 1 m over the whole 2.8 × 2.6 km domain take under two seconds on the GPU.</p>
-      <div class="tscroll">
-      <table>
-        <thead><tr><th>Clear-sky day</th><th class="num">21 June</th><th class="num">21 December</th></tr></thead>
-        <tbody>
-          <tr><td>Sunrise to sunset, local</td><td class="num">04:50–21:10 · 16.5 h</td><td class="num">08:10–15:50 · 7.8 h</td></tr>
-          <tr><td>Maximum sun altitude</td><td class="num">61.9°</td><td class="num">15.1°</td></tr>
-          <tr><td>Ground cells: mean hours of direct sun</td><td class="num">12.7 h</td><td class="num">4.4 h</td></tr>
-          <tr><td>Ground with under 1 h of direct sun</td><td class="num">0.9 %</td><td class="num">23.7 %</td></tr>
-          <tr><td>Daily irradiation: open sky / ground mean</td><td class="num">8.21 / 7.38 kWh/m²</td><td class="num">0.99 / 0.72 kWh/m²</td></tr>
-          <tr><td>Mean ground sky-view factor</td><td class="num" colspan="2">0.84 (10th–90th percentile 0.49–0.99)</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="figs two">
-        <figure><img src="media/solar_shadows_june.jpg" alt="Shadows over the core area every two hours on 21 June" loading="lazy"><figcaption>21 June, core area, 08:00 to 18:00 every two hours. Nearly every street sees hours of direct sun.</figcaption></figure>
-        <figure><img src="media/solar_shadows_december.jpg" alt="Shadows over the core area every two hours on 21 December" loading="lazy"><figcaption>21 December: with the sun at most 15° high, 20–30 m buildings throw 75–110 m shadows and only north–south streets see the sun at noon.</figcaption></figure>
-        <figure><img src="media/solar_svf.jpg" alt="Sky-view factor map" loading="lazy"><figcaption>Sky-view factor at 1 m from the horizon angles in 16 directions. Courtyards and narrow streets fall below 0.5.</figcaption></figure>
-        <figure><img src="media/solar_sunlit_hours_december.jpg" alt="Hours of direct sun on 21 December across the domain" loading="lazy"><figcaption>Hours of direct sun on 21 December over the whole domain.</figcaption></figure>
-      </div>
-      <p>Verification against analytic cases: sun position matches the NOAA calculator, a 20 m column casts 113 / 34 / 11 m shadows at 10° / 30° / 60° (analytic 113.4 / 34.6 / 11.5 m), the sky-view factor at the floor of an infinite 20 m by 20 m street canyon is 0.451 against the 0.447 integral, and random building fields disagree with a brute-force ray march on at most 1.2 % of cells, all at the tips of long shadows.</p>
-      <div class="note"><b>Interpretation boundary</b>Clear sky only, with monthly ASHRAE coefficients; London's real annual irradiation is roughly half the clear-sky value. Buildings are flat-topped columns, so arcades and overhangs are filled and facades receive no irradiance. Trees are not in the height field and only attenuate the beam on their own canopy cells. One ground bounce, no inter-reflections.</div>
-    </div>
-  </article>
-
-  <article class="module" style="--c:var(--temp)" id="coupling">
-    <aside class="rail">
-      <span class="tag">Sunlight → temperature</span>
-      <dl>
-        <dt>Model</dt><dd>Yi Qi's 3-D temperature physical model, source unchanged, two functions swapped at run time</dd>
-        <dt>Wind</dt><dd>SCALED steps 81–100, 16 layers, 90 s frames</dd>
-        <dt>Runs</dt><dd>single-time comparison · 21 June hourly 04:00–24:00</dd>
-        <dt>Export</dt><dd><code>scenes/south_kensington/physics/temperature3d_solar/</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>Coupling the sun into the 3-D temperature model</h3>
-      <p>The 3-D model solves a surface energy balance and 3-D advection–diffusion, but its shortwave input was one irradiance number for the whole city with an in-house per-building shadow loop, and one longwave value from the sky. The coupling is one-way: the shadow term becomes the solar model's sunlit fraction and sky-view diffuse light, and the downwelling longwave is weighted by the sky-view factor with walls radiating at air temperature. Everything else in the model, including latent heat, storage, anthropogenic heat and the solver, is untouched. It is also the first time this model runs on the full core008 domain, using a 3-D velocity cache built from the SCALED wind.</p>
-      <div class="tscroll">
-      <table>
-        <thead><tr><th>25 July, 13:00 UTC, after 30 min</th><th class="num">Native</th><th class="num">Solar-coupled</th><th class="num">Difference</th></tr></thead>
-        <tbody>
-          <tr><td>Mean ground shade / radiation deficit</td><td class="num">0.036</td><td class="num">0.086</td><td class="num">shadow + canyon diffuse loss</td></tr>
-          <tr><td>Mean ground surface temperature</td><td class="num">28.97 °C</td><td class="num">28.76 °C</td><td class="num">−0.21 °C (5th–95th −1.50 to +0.46)</td></tr>
-          <tr><td>Mean air temperature, 0–4 m</td><td class="num">26.57 °C</td><td class="num">26.22 °C</td><td class="num">−0.34 °C, correlation 0.993</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <p>The differences sit where the sky view is low: street canyons, courtyards and the north sides of buildings lose diffuse and longwave income and come out 1–1.5 °C cooler at the surface, locally up to 6 °C, while open ground and parks barely move. Over the summer-solstice day the hourly chain shows the city surface running about 9 °C above the air by mid-afternoon and 1–2.5 °C below it at night, a near-surface air excess peaking at +2.0 °C around 13:00–14:00 and turning to −0.8 °C at night, and vegetation surfaces staying below the air all day.</p>
-      <div class="figs two">
-        <figure><img src="media/coupled_native_vs_solar.jpg" alt="Native and solar-coupled shade, surface temperature and air temperature over the core area" loading="lazy"><figcaption>Core area, native versus coupled: shade or radiation deficit, ground surface temperature, and 0–4 m air after 30 min.</figcaption></figure>
-        <figure><img src="media/coupled_diurnal_maps.jpg" alt="Surface and air temperature maps at six hours through 21 June" loading="lazy"><figcaption>21 June day cycle: surface and air temperature at 06, 09, 12, 15, 18 and 21 h local.</figcaption></figure>
-        <figure><img src="media/coupled_diurnal_series.png" alt="Hourly series of ambient, air and surface temperature" loading="lazy"><figcaption>Hourly means: ambient air, 0–4 m air over city and vegetation, ground surface.</figcaption></figure>
-        <figure><img src="media/coupled_diurnal_air.gif" alt="Animation of 0–4 m air temperature through the day" loading="lazy"><figcaption>0–4 m air temperature through the day, hourly.</figcaption></figure>
-      </div>
-      <div class="note"><b>Interpretation boundary</b>No observations. The model's scenario parameters set the absolute temperatures; the coupling only redistributes shortwave and longwave in space. The surface balance is instantaneous with no ground heat storage, so night cooling is too fast. Cloud is a simple direct-beam reduction, the wind is the steady SCALED field cycled with no thermal feedback, and facades carry no radiation term.</div>
-    </div>
-  </article>
-
-  <article class="module" style="--c:var(--poll)" id="pollution">
-    <aside class="rail">
-      <span class="tag">Pollution</span>
-      <dl>
-        <dt>Method</dt><dd>Yuhang's <code>physical_transport.py</code>, unchanged</dd>
-        <dt>Source</dt><dd>continuous line, x 520–600, y 848–3248, z 8–32 m</dd>
-        <dt>Export</dt><dd><code>pollution/concentration_z12-16m_tyx.npy</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>Pollutant transport carried by the wind steps</h3>
-      <p>A transport solver runs on the 4 m wind field with each 25 s wind step split into fifty 0.5 s sub-steps and the wind interpolated between frames. The source is a continuous line along the upwind western edge, so the plume crosses the whole city. By step 100 the domain holds 17.8 million units of the 18 million emitted; outflow has only just begun. Hot spots form at the windward feet of large buildings where the wind converges, an artefact of the wind field rather than of the transport scheme.</p>
-      <div class="figs">
-        <figure><img src="media/pollution_step100.jpg" alt="Log-scaled pollutant concentration at 12 m, step 100" loading="lazy"><figcaption>Concentration at 12 m, step 100, log colour scale.</figcaption></figure>
-        <figure><img src="media/pollution_mass.png" alt="Emitted and in-domain mass over the 100 steps" loading="lazy"><figcaption>Mass balance: emitted versus in-domain over 100 steps.</figcaption></figure>
-      </div>
-      <div class="note"><b>Scope</b>Run at 4 m only. The 1 m grid would be 550 million cells and exceeds GPU memory. The source strength and boundary velocities are experimental settings, not an emissions inventory.</div>
-    </div>
-  </article>
-
-  <article class="module" style="--c:var(--flood)" id="flood">
-    <aside class="rail">
-      <span class="tag">Flooding</span>
-      <dl>
-        <dt>Method</dt><dd>shallow-water solver in the NN4PDEs style (Chen et al. 2025)</dd>
-        <dt>Terrain</dt><dd>EA LIDAR DTM 2022, 1 m + core008 buildings</dd>
-        <dt>Scenario</dt><dd>50 mm in 90 min, 12 July 2021 type</dd>
-        <dt>Export</dt><dd><code>scenes/south_kensington/physics/flood/</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>Surface-water flooding from a cloudburst</h3>
-      <p>The discretised shallow-water equations are expressed as fixed convolution stencils on the GPU, following the Advances in Water Resources paper, with three changes for a city: an Arakawa C grid so buildings act as walls and dry cells stay still, a conjugate-gradient free-surface solve for controllable mass conservation, and first-order upwind advection. Rain falls on a 1 m bare-earth LIDAR terrain with buildings raised as solid blocks, sewers remove 12 mm/h from paved ground and roofs, green areas infiltrate 20 mm/h, and excess roof runoff drops to the nearest ground cell.</p>
-      <div class="facts">
-        <div><div class="n">73.6 ha</div><div class="l">max depth above 10 cm</div></div>
-        <div><div class="n">21.0 ha</div><div class="l">above 30 cm</div></div>
-        <div><div class="n">0.59 m</div><div class="l">99th percentile ground depth</div></div>
-        <div><div class="n">−5.5 m³</div><div class="l">mass error on 401,000 m³</div></div>
-        <div><div class="n">17.8 min</div><div class="l">wall time, 75,053 steps at 1 m</div></div>
-      </div>
-      <div class="figs two">
-        <figure><img src="media/flood_max_depth_whole.jpg" alt="Maximum water depth over three hours across the whole domain" loading="lazy"><figcaption>Maximum depth over the 3 h event at 1 m. Water collects along streets into junctions, courtyards and park hollows; the Serpentine and Round Pond fill naturally, which checks the drainage directions.</figcaption></figure>
-        <figure><img src="media/flood_depth_evolution.gif" alt="Animation of water depth every 10 minutes through the event" loading="lazy"><figcaption>Depth every 10 min. Peak storage 236,000 m³ at 75 min, then recession at the sewer rate.</figcaption></figure>
-        <figure><img src="media/flood_time_series.png" alt="Rain intensity, stored volume, flooded area and point depths over time" loading="lazy"><figcaption>Rain, stored volume, flooded area and depth at points of interest.</figcaption></figure>
-        <figure><img src="media/flood_hazard.jpg" alt="Maximum speed and depth-times-speed hazard maps" loading="lazy"><figcaption>Maximum speed and h·v hazard. Street values mostly below 0.5 m²/s; the extremes sit on DTM cliffs under sub-millimetre films.</figcaption></figure>
-      </div>
-      <p>Solver verification covers a still lake with buildings (zero motion), a closed basin under rain (volume error 1.8e-8), Manning uniform flow (depth 0.18488 m against the same analytic value), and Stoker dam breaks, where the non-conservative momentum form is 0.7 % off for a mild jump but does not converge for a strong one. Urban depths are centimetres to decimetres, so that limit does not bite here.</p>
-      <div class="note"><b>Interpretation boundary</b>There are no observations of the 2021 event on this geometry. Rainfall, sewer capacity, infiltration and roughness are set values, and there is no pipe network. Real pits in the DTM (the railway cutting at South Kensington station, basements, light wells) collect most of the deepest water, so read the percentile and area metrics rather than the maximum.</div>
-    </div>
-  </article>
-</div></section>
-
-<!-- ================================================================ AGENTS -->
-<section class="block" id="agents"><div class="wrap">
-  <div class="section-head">
-    <div><div class="eyebrow">Module group</div><h2>Moving agents</h2></div>
-    <p>Three replay layers share the one-hour clock and the glTF world frame. They are simulations with audited evidence, not measurements: the traffic is rule-based SUMO on the repaired network, the deliveries come from an earlier NVMF run, and the birds are a flock model run against the same building voxels the wind uses.</p>
-  </div>
-
-  <article class="module" style="--c:var(--agent)" id="traffic">
-    <aside class="rail">
-      <span class="tag">Road traffic</span>
-      <dl>
-        <dt>Engine</dt><dd>Eclipse SUMO 1.27.1, run <code>netF2_3600</code></dd>
-        <dt>Package</dt><dd><code>agents/demo_rev02/</code> revision_02</dd>
-        <dt>Shipped</dt><dd>first 300 s of the replay; full hour is a separate drop-in</dd>
-        <dt>Evidence</dt><dd><code>agents/demo_rev02/evidence/</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>SUMO traffic on a repaired OSM network</h3>
-      <p>The first-version network left most of the city unreachable: its largest strongly connected component had 232 edges. Revision 02 re-qualified the lanes geometrically on the original OSM network, reopening 611 lanes and restoring 21 missing middle segments, and closed 65 short lanes on building-clearance evidence. Every one of the 851 signal heads reads the recorded state of its own connection. The result is a one-hour run that passes six release gates: integrity, identity, no teleports, on-drawn-road, signals, and native replay.</p>
-      <div class="tscroll">
-      <table>
-        <thead><tr><th>Metric</th><th class="num">First version</th><th class="num">Revision 02</th></tr></thead>
-        <tbody>
-          <tr><td>Largest connected component</td><td class="num">232 edges · 12.9 km</td><td class="num">1,369 edges · 94.9 km</td></tr>
-          <tr><td>Share of cars moving, hour mean</td><td class="num">20 %</td><td class="num">43 %</td></tr>
-          <tr><td>Cars ever stopped ≥ 600 s</td><td class="num">926</td><td class="num">16</td></tr>
-          <tr><td>Longest stop</td><td class="num">3,595 s</td><td class="num">962 s</td></tr>
-          <tr><td>Teleports / forced removals</td><td class="num">—</td><td class="num">0 / 0</td></tr>
-          <tr><td>Centres off drawn lanes</td><td class="num">—</td><td class="num">0</td></tr>
-        </tbody>
-      </table>
-      </div>
-      <div class="figs">
-        <figure><img src="media/traffic_map_after.jpg" alt="Map of the revision 02 road network with the largest connected component highlighted" loading="lazy"><figcaption>Revision 02 network: largest component in green, reopened lanes, gap fills in blue, junction patches and the one evidenced movement restriction.</figcaption></figure>
-        <figure><img src="media/traffic_map_diff.jpg" alt="Difference map between the first version and revision 02 networks" loading="lazy"><figcaption>What changed against the first version. No road was closed to improve the numbers.</figcaption></figure>
-      </div>
-      <div class="note"><b>Residual, stated</b>56 cars are still stopped for 180 s or more at the end, all on the westbound Kensington Road corridor with its closely spaced uncoordinated fixed-time signals, and one wall corner in Radley Mews where a car body overlaps by up to 0.3 m for about 30 s.</div>
-    </div>
-  </article>
-
-  <article class="module" style="--c:var(--agent)" id="uav">
-    <aside class="rail">
-      <span class="tag">UAV deliveries</span>
-      <dl>
-        <dt>Source</dt><dd>NVMF schedule replay, unchanged service times and battery</dd>
-        <dt>Scene</dt><dd>30 stations, hub bays, routes in <code>agents/demo_rev02/data/</code></dd>
-        <dt>Model</dt><dd><code>actors/hexacopter_cargo.glb</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>300 UAVs, 600 orders, one hour</h3>
-      <p>The delivery layer replays a schedule produced by the NVMF planner over rooftop stations and hubs. Revision 02 only touched the display timeline: same-station take-offs that shared a second are released 2 s apart using their waiting time, which collapsed 103 simultaneous groups to 7, and the original timeline stays switchable. Station positions are a demonstration design, and the replay says nothing about the planner's capability.</p>
-      <div class="facts">
-        <div><div class="n">300</div><div class="l">UAVs</div></div>
-        <div><div class="n">600</div><div class="l">deliveries spread over the hour</div></div>
-        <div><div class="n">30</div><div class="l">stations</div></div>
-        <div><div class="n">103 → 7</div><div class="l">same-second take-off groups</div></div>
-      </div>
-    </div>
-  </article>
-
-  <article class="module" style="--c:var(--agent)" id="birds">
-    <aside class="rail">
-      <span class="tag">Birds</span>
-      <dl>
-        <dt>Model</dt><dd>Akira's flock simulator, source unchanged</dd>
-        <dt>Geometry</dt><dd>4 m solid voxels cropped around the station, 25 × 176 × 175</dd>
-        <dt>Data</dt><dd><code>agents/demo_rev02/data/birds_southken/</code></dd>
-        <dt>Tools</dt><dd><code>agents/demo_rev02/tools/birds/</code></dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>A pigeon flock over South Kensington station</h3>
-      <p>One hundred birds run for an hour with a roost on the station roof and forage sites within 90 m. The geometry they avoid is the same 4 m building mask the wind field uses, cropped to the station district, which is the clearest small example of the shared frame: the flock file records the crop origin and spacing, and the viewer places it without any calibration. At the noon clock the model stays in its murmuration state for the whole hour, so no roosting or foraging trips appear. The bird tracker in the viewer follows the flock centroid or a single bird.</p>
-    </div>
-  </article>
-</div></section>
-
-<!-- ================================================================ VIEWER -->
-<section class="block" id="viewer"><div class="wrap">
-  <div class="section-head">
-    <div><div class="eyebrow">Integration</div><h2>The viewer</h2></div>
-    <p>A single three.js page reads every layer straight from the files on disk. Field frames are fetched by HTTP Range request from the float16 arrays and decoded in the browser, so a new run appears the moment its arrays are dropped into the folder. Nothing is tiled, converted or cached in advance.</p>
-  </div>
-
-  <div class="gallery">
-    <figure><img src="media/view_junction.jpg" alt="Close view of a signalised junction with cars and signal heads" loading="lazy"><figcaption><b>Junction.</b> The busiest signalised junction on the campus ring roads, signal heads reading recorded states.</figcaption></figure>
-    <figure><img src="media/view_traffic.jpg" alt="Near-vertical view over the roads with lanes, car dots and signals" loading="lazy"><figcaption><b>Traffic map.</b> Drivable lanes in blue, cars as moving or stopped dots, every signal as a red, amber or green dot.</figcaption></figure>
-    <figure><img src="media/view_uavs.jpg" alt="Wide view of the campus with UAV corridors and stations" loading="lazy"><figcaption><b>UAVs.</b> High orbit over the campus with the corridors and rooftop stations drawn.</figcaption></figure>
-    <figure><img src="media/view_birds.jpg" alt="The pigeon flock over South Kensington station" loading="lazy"><figcaption><b>Birds.</b> The flock tracker following the centroid.</figcaption></figure>
-    <figure><img src="media/view_wind.jpg" alt="Overhead wind speed heat map with buildings cut out" loading="lazy"><figcaption><b>Wind.</b> Speed at 8–12 m as a heat map, building cells cut out, optional streamline particles.</figcaption></figure>
-    <figure><img src="media/view_temp.jpg" alt="Overhead temperature heat map" loading="lazy"><figcaption><b>Temperature.</b> Ground heat map or isotherms every 0.1 °C, broken at walls.</figcaption></figure>
-    <figure><img src="media/view_solar.jpg" alt="Overhead view with 1 m building shadows draped on the streets" loading="lazy"><figcaption><b>Sunlight.</b> The 1 m shadow mask on the hour, or the 10-min irradiance, as a sun and shade wash over the streets; the scene light follows the real sun.</figcaption></figure>
-    <figure><img src="media/view_diurnal.jpg" alt="Overhead map of ground surface temperature relative to ambient air at 14:00" loading="lazy"><figcaption><b>Day cycle.</b> Solar-coupled 3-D temperature, hourly: surface or air layers, in °C or relative to the hour's ambient air.</figcaption></figure>
-    <figure><img src="media/view_poll.jpg" alt="Overhead translucent pollution layer" loading="lazy"><figcaption><b>Pollution.</b> Translucent concentration layer at 14 m with logarithmic opacity.</figcaption></figure>
-    <figure><img src="media/view_flood.jpg" alt="Overhead flood depth layer with the ground kept visible" loading="lazy"><figcaption><b>Flooding.</b> Water depth on the ground, roads and greens left visible under the water.</figcaption></figure>
-  </div>
-
-  <div class="module" style="--c:var(--flood);margin-top:36px;border-top:1px solid var(--rule)">
-    <aside class="rail">
-      <span class="tag" style="background:var(--ink)">viewer/3d/</span>
-      <dl>
-        <dt>Renderer</dt><dd>three.js 0.185.1, meshopt decoding, logarithmic depth buffer</dd>
-        <dt>Reader</dt><dd><code>viewer/npy.js</code>, Range requests, float16 in-browser</dd>
-        <dt>Server</dt><dd><code>serve.py</code>, system Python only</dd>
-        <dt>Code</dt><dd>about 1,400 lines across four modules</dd>
-      </dl>
-    </aside>
-    <div class="body">
-      <h3>How the page is put together</h3>
-      <ul>
-        <li><b>One loop, two halves.</b> A campus tour (overview, junction, traffic map, UAVs, birds) then an overhead pass that plays wind, temperature, sunlight, the day cycle, pollution and flooding one after another. Big tabs jump to any view; auto loop off holds the current one.</li>
-        <li><b>Field playback.</b> Sequential mode shows one field at a time at 12 steps per second; the flood, the hourly shadows and the day cycle run at 2 frames per second on their own clocks. Overlay mode lets layers be combined by hand.</li>
-        <li><b>1 m without preprocessing.</b> The hourly shadow frames are 8.7 MB each and are expanded in the browser into a 3072 × 2816 texture draped over the streets, so the 1 m result is shown at full resolution straight from the array.</li>
-        <li><b>Replay modules reused unchanged.</b> The traffic, UAV, signal and bird modules from the demo package are wrapped by <code>replay.js</code> rather than rewritten, so the colleague's package remains the source of truth.</li>
-        <li><b>Decoupled clocks.</b> The replay clock runs the full hour for UAVs and birds while the 300 s traffic sample loops inside it until the full-hour files are dropped in.</li>
-        <li><b>Deployment.</b> Served from the workstation and published through a Tailscale Funnel; remote viewers see roughly 20 Mbps, so the fields section can stutter until frames are pre-rendered to small textures, which is the next step.</li>
-      </ul>
-    </div>
-  </div>
-</div></section>
-
-<!-- ================================================================ CLAIM BOUNDARY -->
-<section class="block" id="boundary"><div class="wrap">
-  <div class="section-head">
-    <div><div class="eyebrow">Read before citing</div><h2>Claim boundary</h2></div>
-    <p>Every module keeps its own limitations next to its results. The short version, per layer:</p>
-  </div>
-  <ul class="claims">
-    <li style="--c:var(--city)"><b>Geometry</b>Added buildings and the station tile are estimates registered to the frame, not surveys. Physics fields were not recomputed after the 306 additions.</li>
-    <li style="--c:var(--wind)"><b>Wind</b>Transfer of a surrogate trained on a 1024 m case to new geometry, with no CFD or measurement reference. Time scale inherited, domain capped at 64 m.</li>
-    <li style="--c:var(--temp)"><b>Temperature</b>Experimental heat scenario against an adapted controlled solver. The recursive 3-D mode is reported as unusable; the 2-D model is a label model, not a heat budget. The solar-coupled day cycle has no observations and no ground heat storage.</li>
-    <li style="--c:var(--sun)"><b>Sunlight</b>Clear sky only; real irradiation is roughly half. Flat-topped building columns, no facade irradiance, trees only attenuate, one ground bounce.</li>
-    <li style="--c:var(--poll)"><b>Pollution</b>Idealised continuous line source with set strength. 4 m only. Hot spots inherit the wind field's convergence.</li>
-    <li style="--c:var(--flood)"><b>Flooding</b>No observed inundation for this geometry. Drainage is a uniform rate with no pipe network; DTM pits dominate the maxima.</li>
-    <li style="--c:var(--agent)"><b>Agents</b>Rule-based traffic with simulated signal timing, not TfL data. Deliveries replay an earlier planner run. Birds are a behavioural model with no observation.</li>
-  </ul>
-</div></section>
-
-<!-- ================================================================ RUN -->
-<section class="block" id="run"><div class="wrap">
-  <div class="section-head">
-    <div><div class="eyebrow">Reproduce</div><h2>Run it</h2></div>
-    <p>The viewer needs only the system Python. The large assets are kept out of git because of GitHub's file limits: the two city GLBs, the field arrays and the full-hour traffic replay are synced separately and placed as listed below.</p>
-  </div>
-  <div class="steps">
-    <div>
-      <h4>Start the viewer</h4>
-      <p>Static server with Range support; opens the 3-D page on the next free port.</p>
-<pre><code>cd UrbanWorldModelVisualizer
+    <!-- ================================================================ RUN -->
+    <section class="block" id="run">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Reproduce</div>
+            <h2>Run it</h2>
+          </div>
+          <p>
+            The viewer needs only the system Python. The large assets are kept out of git because of
+            GitHub's file limits: the two city GLBs, the field arrays and the full-hour traffic
+            replay are synced separately and placed as listed below.
+          </p>
+        </div>
+        <div class="steps">
+          <div>
+            <h4>Start the viewer</h4>
+            <p>Static server with Range support; opens the 3-D page on the next free port.</p>
+            <pre><code>cd UrbanWorldModelVisualizer
 python3 serve.py        # localhost:8787/viewer/3d/
 python3 serve.py 9000   # custom port</code></pre>
-    </div>
-    <div>
-      <h4>Place the large files</h4>
-      <p>Paths relative to the repository root.</p>
-<pre><code>south_kensington_core008_web.glb   254 MB
+          </div>
+          <div>
+            <h4>Place the large files</h4>
+            <p>Paths relative to the repository root.</p>
+            <pre><code>south_kensington_core008_web.glb   254 MB
 scenes/&lt;id&gt;/physics/*/ *.npy  field arrays (one folder per scene)
 agents/demo_rev02/data/traffic/replay/    full hour (optional)
 south_kensington_current.glb       180 MB (optional)</code></pre>
-    </div>
-    <div>
-      <h4>Useful URLs</h4>
-      <p>Jump straight to a view or fix a camera for screenshots.</p>
-<pre><code>viewer/3d/?pose=overhead&amp;phase=flood&amp;step=9
+          </div>
+          <div>
+            <h4>Useful URLs</h4>
+            <p>Jump straight to a view or fix a camera for screenshots.</p>
+            <pre><code>viewer/3d/?pose=overhead&amp;phase=flood&amp;step=9
 viewer/3d/?pose=campus&amp;shot=junction&amp;t=120&amp;hold=1
 viewer/3d/?cam=px,py,pz,tx,ty,tz
 viewer/3d/?tile=1</code></pre>
-    </div>
-    <div>
-      <h4>Re-run a field</h4>
-      <p>On the workstation, from the physics model folder.</p>
-<pre><code>python run_core008_scaled_latent.py   # wind
+          </div>
+          <div>
+            <h4>Re-run a field</h4>
+            <p>On the workstation, from the physics model folder.</p>
+            <pre><code>python run_core008_scaled_latent.py   # wind
 python run_core008_temperature2d_scaled_1024.py
 python run_core008_flood_swe.py \
     --cell 1 --frame_seconds 600</code></pre>
-    </div>
-  </div>
-</div></section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<!-- ================================================================ CREDITS -->
-<section class="block" id="credits"><div class="wrap">
-  <div class="section-head">
-    <div><div class="eyebrow">People and sources</div><h2>Credits</h2></div>
-    <p>Each module names its author in its own README; the viewer and the flood, wind and temperature runs on this page were produced within the Urban World Model group at Imperial College London.</p>
-  </div>
-  <div class="credits">
-    <p><b>City model core008</b><br>BoHan, first-version asset, unchanged.</p>
-    <p><b>Traffic and UAV demo package</b><br>uwm-group1 <code>demo_rev02</code>, SUMO run and audits.</p>
-    <p><b>Pollutant transport</b><br>Yuhang, <code>physical_transport.py</code>.</p>
-    <p><b>2-D and 3-D temperature models</b><br>Yi Qi, <code>south_kensington_temperature.py</code> and <code>south_kensington_temperature_3d.py</code>, run unchanged.</p>
-    <p><b>Sunlight model</b><br>ShadowNet / HorizonNet tensor layers in the NN4PDEs style, ASHRAE clear sky, NOAA sun position.</p>
-    <p><b>Flock model</b><br>Akira, bird simulator in the uwm-group1 repository.</p>
-    <p><b>Wind surrogate</b><br>SCALED-Tutorial published weights, latent domain decomposition adapted for a single GPU.</p>
-    <p><b>Flood method</b><br>Chen, Nadimy, Heaney, Sharifian, Via Estrem, Nicotina, Hilberts, Pain (2025), <i>Solving the discretised shallow water equations using neural networks</i>, Advances in Water Resources.</p>
-    <p><b>Terrain and footprints</b><br>Environment Agency LIDAR composite DTM 2022 (OGL). OpenStreetMap contributors, ODbL.</p>
-  </div>
-</div></section>
+    <!-- ================================================================ CREDITS -->
+    <section class="block" id="credits">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">People and sources</div>
+            <h2>Credits</h2>
+          </div>
+          <p>
+            Each module names its author in its own README; the viewer and the flood, wind and
+            temperature runs on this page were produced within the Urban World Model group at
+            Imperial College London.
+          </p>
+        </div>
+        <div class="credits">
+          <p><b>City model core008</b><br />BoHan, first-version asset, unchanged.</p>
+          <p>
+            <b>Traffic and UAV demo package</b><br />uwm-group1 <code>demo_rev02</code>, SUMO run
+            and audits.
+          </p>
+          <p><b>Pollutant transport</b><br />Yuhang, <code>physical_transport.py</code>.</p>
+          <p>
+            <b>2-D and 3-D temperature models</b><br />Yi Qi,
+            <code>south_kensington_temperature.py</code> and
+            <code>south_kensington_temperature_3d.py</code>, run unchanged.
+          </p>
+          <p>
+            <b>Sunlight model</b><br />ShadowNet / HorizonNet tensor layers in the NN4PDEs style,
+            ASHRAE clear sky, NOAA sun position.
+          </p>
+          <p><b>Flock model</b><br />Akira, bird simulator in the uwm-group1 repository.</p>
+          <p>
+            <b>Wind surrogate</b><br />SCALED-Tutorial published weights, latent domain
+            decomposition adapted for a single GPU.
+          </p>
+          <p>
+            <b>Flood method</b><br />Chen, Nadimy, Heaney, Sharifian, Via Estrem, Nicotina,
+            Hilberts, Pain (2025),
+            <i>Solving the discretised shallow water equations using neural networks</i>, Advances
+            in Water Resources.
+          </p>
+          <p>
+            <b>Terrain and footprints</b><br />Environment Agency LIDAR composite DTM 2022 (OGL).
+            OpenStreetMap contributors, ODbL.
+          </p>
+        </div>
+      </div>
+    </section>
 
-<footer><div class="wrap">
-  <span>Urban World Model · South Kensington core008 · page generated from the module READMEs, 2026-09-12</span>
-  <span><a href="#top">Back to top</a></span>
-</div></footer>
-
-</body>
+    <footer>
+      <div class="wrap">
+        <span
+          >Urban World Model · South Kensington core008 · page generated from the module READMEs,
+          2026-09-12</span
+        >
+        <span><a href="#top">Back to top</a></span>
+      </div>
+    </footer>
+  </body>
 </html>

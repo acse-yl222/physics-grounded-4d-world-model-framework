@@ -53,6 +53,7 @@ python -m urban_flow.paper_rotor.compare --out cache/windfarm/paper_rotor/my_run
 python -m urban_flow.paper_rotor.compare --out cache/windfarm/paper_rotor/my_run/refined --cell .05 --refine-only
 python -m urban_flow.paper_rotor.render --input cache/windfarm/paper_rotor/my_run --output cache/windfarm/paper_rotor_render/my_run
 ```
+
 Dependencies: torch, numpy, matplotlib, pillow; optional Triton for GPU backend comparison.
 
 The comparison defaults to a unique cache trial when `--out` is omitted. Rendering takes an explicit completed input directory and writes plots to a separate cache trial by default; importing either module starts no computation.

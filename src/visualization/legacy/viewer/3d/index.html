@@ -1,163 +1,333 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Urban World Model · 3D</title>
-<link rel="stylesheet" href="style.css">
-<script type="importmap">
-{ "imports": {
-  "three": "../../vendor/three/build/three.module.js",
-  "three/addons/": "../../vendor/three/examples/jsm/",
-  "three/addons/lines/": "../../vendor/three/examples/jsm/lines/"
-} }
-</script>
-<script type="module" src="../scene-navigation.js"></script>
-</head>
-<body>
-<canvas id="gl"></canvas>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Urban World Model · 3D</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "../../vendor/three/build/three.module.js",
+          "three/addons/": "../../vendor/three/examples/jsm/",
+          "three/addons/lines/": "../../vendor/three/examples/jsm/lines/"
+        }
+      }
+    </script>
+    <script type="module" src="../scene-navigation.js"></script>
+  </head>
+  <body>
+    <canvas id="gl"></canvas>
 
-<div class="hud top-left">
-  <div class="title-row"><a id="scene-home" class="scene-select" href="../../">Home</a> <select id="scene-select" class="scene-select" title="Scene" aria-label="Scene" disabled><option>Loading scenes…</option></select></div>
-  <div class="title" id="title">Urban World Model</div>
-  <div class="sub" id="stage">Loading the 3D model…</div>
-  <div class="sub info" id="info"></div>
-</div>
-
-<button id="panel-toggle" class="hud btn" title="Layers and settings" aria-expanded="false" aria-controls="layers">Layers</button>
-<nav class="hud top-tabs" id="tabs">
-  <label class="tab auto" title="Play the views one after another and loop"><input type="checkbox" id="auto" checked> Auto loop</label>
-</nav>
-
-<div class="hud top-right panel" id="layers">
-  <div class="row head">
-    <span>View settings</span>
-    <button id="replay" class="btn" title="Restart from the overview">Restart</button>
-  </div>
-  <label class="row head" for="geometry-quality"><span>Geometry quality</span><select id="geometry-quality"><option value="auto">Automatic</option><option value="lite">Lightweight</option><option value="full">Full detail</option></select></label>
-  <p class="quality-note">Full detail downloads a large model. Lightweight uses voxel geometry.</p>
-  <div class="row head" style="margin-top:8px">
-    <span>Physics fields</span>
-    <select id="mode" title="Playback mode"><option value="seq">One after another</option><option value="overlay">Overlay</option></select>
-  </div>
-  <label class="layer" data-layer="wind">
-    <input type="checkbox" id="l-wind" checked><span class="sw wind"></span><span id="lbl-wind">Wind speed</span>
-    <input type="range" id="o-wind" min="0" max="1" step="0.05" value="0.95">
-  </label>
-  <div class="legend" data-layer="wind"><span class="bar wind"></span><span id="lg-wind-lo">0</span><span id="lg-wind-unit">|V| m/s</span><span id="lg-wind-hi">1.6</span></div>
-  <label class="layer" data-layer="temp">
-    <input type="checkbox" id="l-temp" checked><span class="sw temp"></span><span id="lbl-temp">Temperature</span>
-    <select id="temp-mode" title="Temperature display"><option value="plane">Heat map on ground</option><option value="iso" id="temp-iso-option">Isotherms</option></select>
-    <input type="range" id="o-temp" min="0" max="1" step="0.05" value="0.9">
-  </label>
-  <div class="legend" data-layer="temp"><span class="bar temp"></span><span id="lg-temp-lo">31.2</span><span id="lg-temp-unit">°C</span><span id="lg-temp-hi">32.2</span></div>
-  <label class="layer" data-layer="solar">
-    <input type="checkbox" id="l-solar" checked><span class="sw solar"></span><span id="lbl-solar">Sunlight · clear-sky shadows and irradiance</span>
-    <select id="solar-date" title="Day"></select>
-    <select id="solar-mode" title="Sunlight display" style="grid-column:1 / span 3"><option value="ghi" id="solar-ghi-option">Irradiance</option><option value="shadow" id="solar-shadow-option">Shadows</option></select>
-    <input type="range" id="o-solar" min="0" max="1" step="0.05" value="0.9">
-  </label>
-  <div class="legend" data-layer="solar"><span class="bar solar"></span><span>shade</span><span>GHI W/m²</span><span id="solar-open">full sun</span></div>
-  <label class="layer" data-layer="diurnal">
-    <input type="checkbox" id="l-diurnal" checked><span class="sw diurnal"></span><span id="lbl-diurnal">Day cycle · solar-coupled 3-D temperature</span>
-    <select id="diurnal-mode" title="Diurnal display"><option value="groundRel">Ground surface · vs ambient air</option><option value="ground">Ground surface · °C</option><option value="air0Rel">Air 0–4 m · vs ambient air</option><option value="air0">Air 0–4 m · °C</option><option value="air12">Air 12–16 m · °C</option></select>
-    <input type="range" id="o-diurnal" min="0" max="1" step="0.05" value="0.9">
-  </label>
-  <div class="legend" data-layer="diurnal"><span class="bar diurnal"></span><span id="diurnal-lo">−12</span><span id="diurnal-unit">Δ°C vs ambient air</span><span id="diurnal-hi">+12</span></div>
-  <label class="layer" data-layer="poll">
-    <input type="checkbox" id="l-poll" checked><span class="sw poll"></span><span id="lbl-poll">Pollution</span>
-    <input type="range" id="o-poll" min="0" max="1" step="0.05" value="0.95">
-  </label>
-  <div class="legend" data-layer="poll"><span class="bar poll"></span><span id="lg-poll-lo">0.1</span><span id="lg-poll-unit">concentration (log)</span><span id="lg-poll-hi">1000</span></div>
-  <label class="layer" data-layer="flood">
-    <input type="checkbox" id="l-flood" checked><span class="sw flood"></span><span id="lbl-flood">Flooding · surface water depth</span>
-    <input type="range" id="o-flood" min="0" max="1" step="0.05" value="0.9">
-  </label>
-  <div class="legend" data-layer="flood"><span class="bar flood"></span><span id="lg-flood-lo">0.02</span><span id="lg-flood-unit">depth m</span><span id="lg-flood-hi">≥ 0.6</span></div>
-  <label class="layer small">
-    <input type="checkbox" id="l-model" checked><span class="sw model"></span>Buildings
-    <input type="checkbox" id="l-ground" checked><span class="sw ground"></span>Ground / roads
-  </label>
-  <label class="layer small" id="supplement-ctl" style="display:none"><input type="checkbox" id="l-supplement" checked><span class="sw model"></span><span id="supplement-label">Added buildings</span></label>
-  <div class="hint" id="lite-hint" style="display:none">Lite mode: buildings are voxel columns from the physics masks, because this device has limited memory. <a href="?lite=0" id="lite-link">Load the full model</a></div>
-  <label id="expansion-ctl" class="layer small" style="display:none" title="Mapped footprints with reference-informed architecture and estimated or imagined details. Uncheck to compare with the originals."><input type="checkbox" id="l-expansion" checked><span class="sw model"></span><span id="expansion-label">Building refinements</span></label>
-  <div class="hint" id="attribution-hint" style="display:none"><a href="../../geometry/expansion/docs/ATTRIBUTION.md" target="_blank" rel="noopener">Refinement references and attribution</a></div>
-  <div class="hint"><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors · ODbL</a></div>
-  <label class="layer small">
-    <input type="checkbox" id="l-trees" checked><span class="sw trees"></span>Trees / vegetation
-    <span id="tile-ctl" style="display:none"><input type="checkbox" id="l-tile" checked><span class="sw tile"></span>Station detail tile</span>
-  </label>
-  <label class="layer small" data-layer="wind">
-    <input type="checkbox" id="l-part"><span class="sw part"></span>Streamline particles
-    <input type="range" id="n-part" min="1000" max="12000" step="1000" value="4000" title="Particle count">
-  </label>
-  <div id="replay-ctl" style="display:none">
-    <div class="row head" style="margin-top:8px"><span>Traffic / UAVs (demo_rev02)</span></div>
-    <div class="grid2">
-      <label class="layer small"><input type="checkbox" id="l-cars" checked><span class="sw cars"></span>Cars</label>
-      <label class="layer small"><input type="checkbox" id="l-uavs" checked><span class="sw uavs"></span>UAVs</label>
-      <label class="layer small"><input type="checkbox" id="l-birds" checked><span class="sw birds"></span>Birds</label>
-      <label class="layer small"><input type="checkbox" id="l-signals" checked><span class="sw signals"></span>Signals</label>
-      <label class="layer small"><input type="checkbox" id="l-stations" checked><span class="sw stations"></span>Stations</label>
-      <label class="layer small"><input type="checkbox" id="l-roads" checked><span class="sw roads"></span>Lane surfaces</label>
-      <label class="layer small"><input type="checkbox" id="l-map"><span class="sw map"></span>Map markers</label>
+    <div class="hud top-left">
+      <div class="title-row">
+        <a id="scene-home" class="scene-select" href="../../">Home</a>
+        <select id="scene-select" class="scene-select" title="Scene" aria-label="Scene" disabled>
+          <option>Loading scenes…</option>
+        </select>
+      </div>
+      <div class="title" id="title">Urban World Model</div>
+      <div class="sub" id="stage">Loading the 3D model…</div>
+      <div class="sub info" id="info"></div>
     </div>
-  </div>
-  <div id="traffic-ctl" style="display:none">
-    <div class="row head" style="margin-top:8px"><span id="traffic-title">Traffic · SUMO replay</span><input type="checkbox" id="l-traffic" checked title="Show the traffic replay"></div>
-    <div class="grid2">
-      <label class="layer small"><input type="checkbox" id="l-tf-cars" checked><span class="sw cars"></span>Cars</label>
-      <label class="layer small"><input type="checkbox" id="l-tf-signals" checked><span class="sw signals"></span>Signals</label>
-      <label class="layer small"><input type="checkbox" id="l-tf-roads" checked><span class="sw roads"></span>Lane surfaces</label>
-      <label class="layer small"><input type="checkbox" id="l-tf-paths"><span class="sw map"></span>Signal paths</label>
-      <label class="layer small"><input type="checkbox" id="l-tf-map"><span class="sw map"></span>Map markers</label>
-    </div>
-    <div class="stats" id="traffic-stats"></div>
-  </div>
-  <div id="transport-ctl" style="display:none">
-    <div class="row head" style="margin-top:8px"><span id="transport-title">Transport · TfL</span><input type="checkbox" id="l-transport" checked title="Show the transport layer"></div>
-    <div class="grid2">
-      <label class="layer small"><input type="checkbox" id="l-tr-rail" checked><span class="sw rail"></span>Tube / rail lines</label>
-      <label class="layer small"><input type="checkbox" id="l-tr-bus" checked><span class="sw bus"></span>Bus routes</label>
-      <label class="layer small"><input type="checkbox" id="l-tr-stations" checked><span class="sw stations"></span>Stations</label>
-      <label class="layer small"><input type="checkbox" id="l-tr-stops" checked><span class="sw bus"></span>Bus stops</label>
-      <label class="layer small"><input type="checkbox" id="l-tr-disruptions" checked><span class="sw disruption"></span>Road disruptions</label>
-      <label class="layer small"><input type="checkbox" id="l-tr-cams" checked><span class="sw cam"></span>JamCams</label>
-    </div>
-    <div class="stats" id="transport-stats"></div>
-    <div class="grid2" style="margin-top:6px"><select id="tr-station" title="Live arrivals at"></select><span class="stats" id="tr-live" style="margin-top:0"></span></div>
-    <div class="stats" id="tr-arrivals"></div>
-    <div class="hint" id="transport-attribution"></div>
-  </div>
-  <div class="stats" id="stats"></div>
-  <div id="bird-tracker" style="display:none">
-    <div class="row head" style="margin-top:8px"><span>Bird tracker</span></div>
-    <div class="grid2">
-      <select id="bird-target" title="What the camera follows"><option value="">Not tracking</option><option value="flock">Whole flock (centroid)</option></select>
-      <select id="bird-mode" title="Camera behaviour"><option value="auto">Auto: orbit flock / behind bird</option><option value="free">Free orbit (moves with target)</option></select>
-    </div>
-    <div class="stats" id="bird-readout"></div>
-  </div>
-  <div class="hint limits" id="limits"></div>
-</div>
 
-<div class="hud readout" id="readout" hidden></div>
+    <button
+      id="panel-toggle"
+      class="hud btn"
+      title="Layers and settings"
+      aria-expanded="false"
+      aria-controls="layers"
+    >
+      Layers
+    </button>
+    <nav class="hud top-tabs" id="tabs">
+      <label class="tab auto" title="Play the views one after another and loop"
+        ><input type="checkbox" id="auto" checked /> Auto loop</label
+      >
+    </nav>
 
-<div class="hud bottom timebar">
-  <button id="play" class="btn icon" aria-label="Play or pause">▶</button>
-  <input aria-label="Simulation time" type="range" id="step" min="1" max="100" value="1">
-  <span class="time" id="time-label">Step 1</span>
-  <select id="rate" title="Playback speed"></select>
-</div>
+    <div class="hud top-right panel" id="layers">
+      <div class="row head">
+        <span>View settings</span>
+        <button id="replay" class="btn" title="Restart from the overview">Restart</button>
+      </div>
+      <label class="row head" for="geometry-quality"
+        ><span>Geometry quality</span
+        ><select id="geometry-quality">
+          <option value="auto">Automatic</option>
+          <option value="lite">Lightweight</option>
+          <option value="full">Full detail</option>
+        </select></label
+      >
+      <p class="quality-note">
+        Full detail downloads a large model. Lightweight uses voxel geometry.
+      </p>
+      <div class="row head" style="margin-top: 8px">
+        <span>Physics fields</span>
+        <select id="mode" title="Playback mode">
+          <option value="seq">One after another</option>
+          <option value="overlay">Overlay</option>
+        </select>
+      </div>
+      <label class="layer" data-layer="wind">
+        <input type="checkbox" id="l-wind" checked /><span class="sw wind"></span
+        ><span id="lbl-wind">Wind speed</span>
+        <input type="range" id="o-wind" min="0" max="1" step="0.05" value="0.95" />
+      </label>
+      <div class="legend" data-layer="wind">
+        <span class="bar wind"></span><span id="lg-wind-lo">0</span
+        ><span id="lg-wind-unit">|V| m/s</span><span id="lg-wind-hi">1.6</span>
+      </div>
+      <label class="layer" data-layer="temp">
+        <input type="checkbox" id="l-temp" checked /><span class="sw temp"></span
+        ><span id="lbl-temp">Temperature</span>
+        <select id="temp-mode" title="Temperature display">
+          <option value="plane">Heat map on ground</option>
+          <option value="iso" id="temp-iso-option">Isotherms</option>
+        </select>
+        <input type="range" id="o-temp" min="0" max="1" step="0.05" value="0.9" />
+      </label>
+      <div class="legend" data-layer="temp">
+        <span class="bar temp"></span><span id="lg-temp-lo">31.2</span
+        ><span id="lg-temp-unit">°C</span><span id="lg-temp-hi">32.2</span>
+      </div>
+      <label class="layer" data-layer="solar">
+        <input type="checkbox" id="l-solar" checked /><span class="sw solar"></span
+        ><span id="lbl-solar">Sunlight · clear-sky shadows and irradiance</span>
+        <select id="solar-date" title="Day"></select>
+        <select id="solar-mode" title="Sunlight display" style="grid-column: 1 / span 3">
+          <option value="ghi" id="solar-ghi-option">Irradiance</option>
+          <option value="shadow" id="solar-shadow-option">Shadows</option>
+        </select>
+        <input type="range" id="o-solar" min="0" max="1" step="0.05" value="0.9" />
+      </label>
+      <div class="legend" data-layer="solar">
+        <span class="bar solar"></span><span>shade</span><span>GHI W/m²</span
+        ><span id="solar-open">full sun</span>
+      </div>
+      <label class="layer" data-layer="diurnal">
+        <input type="checkbox" id="l-diurnal" checked /><span class="sw diurnal"></span
+        ><span id="lbl-diurnal">Day cycle · solar-coupled 3-D temperature</span>
+        <select id="diurnal-mode" title="Diurnal display">
+          <option value="groundRel">Ground surface · vs ambient air</option>
+          <option value="ground">Ground surface · °C</option>
+          <option value="air0Rel">Air 0–4 m · vs ambient air</option>
+          <option value="air0">Air 0–4 m · °C</option>
+          <option value="air12">Air 12–16 m · °C</option>
+        </select>
+        <input type="range" id="o-diurnal" min="0" max="1" step="0.05" value="0.9" />
+      </label>
+      <div class="legend" data-layer="diurnal">
+        <span class="bar diurnal"></span><span id="diurnal-lo">−12</span
+        ><span id="diurnal-unit">Δ°C vs ambient air</span><span id="diurnal-hi">+12</span>
+      </div>
+      <label class="layer" data-layer="poll">
+        <input type="checkbox" id="l-poll" checked /><span class="sw poll"></span
+        ><span id="lbl-poll">Pollution</span>
+        <input type="range" id="o-poll" min="0" max="1" step="0.05" value="0.95" />
+      </label>
+      <div class="legend" data-layer="poll">
+        <span class="bar poll"></span><span id="lg-poll-lo">0.1</span
+        ><span id="lg-poll-unit">concentration (log)</span><span id="lg-poll-hi">1000</span>
+      </div>
+      <label class="layer" data-layer="flood">
+        <input type="checkbox" id="l-flood" checked /><span class="sw flood"></span
+        ><span id="lbl-flood">Flooding · surface water depth</span>
+        <input type="range" id="o-flood" min="0" max="1" step="0.05" value="0.9" />
+      </label>
+      <div class="legend" data-layer="flood">
+        <span class="bar flood"></span><span id="lg-flood-lo">0.02</span
+        ><span id="lg-flood-unit">depth m</span><span id="lg-flood-hi">≥ 0.6</span>
+      </div>
+      <label class="layer small">
+        <input type="checkbox" id="l-model" checked /><span class="sw model"></span>Buildings
+        <input type="checkbox" id="l-ground" checked /><span class="sw ground"></span>Ground / roads
+      </label>
+      <label class="layer small" id="supplement-ctl" style="display: none"
+        ><input type="checkbox" id="l-supplement" checked /><span class="sw model"></span
+        ><span id="supplement-label">Added buildings</span></label
+      >
+      <div class="hint" id="lite-hint" style="display: none">
+        Lite mode: buildings are voxel columns from the physics masks, because this device has
+        limited memory. <a href="?lite=0" id="lite-link">Load the full model</a>
+      </div>
+      <label
+        id="expansion-ctl"
+        class="layer small"
+        style="display: none"
+        title="Mapped footprints with reference-informed architecture and estimated or imagined details. Uncheck to compare with the originals."
+        ><input type="checkbox" id="l-expansion" checked /><span class="sw model"></span
+        ><span id="expansion-label">Building refinements</span></label
+      >
+      <div class="hint" id="attribution-hint" style="display: none">
+        <a href="../../geometry/expansion/docs/ATTRIBUTION.md" target="_blank" rel="noopener"
+          >Refinement references and attribution</a
+        >
+      </div>
+      <div class="hint">
+        <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener"
+          >© OpenStreetMap contributors · ODbL</a
+        >
+      </div>
+      <label class="layer small">
+        <input type="checkbox" id="l-trees" checked /><span class="sw trees"></span>Trees /
+        vegetation
+        <span id="tile-ctl" style="display: none"
+          ><input type="checkbox" id="l-tile" checked /><span class="sw tile"></span>Station detail
+          tile</span
+        >
+      </label>
+      <label class="layer small" data-layer="wind">
+        <input type="checkbox" id="l-part" /><span class="sw part"></span>Streamline particles
+        <input
+          type="range"
+          id="n-part"
+          min="1000"
+          max="12000"
+          step="1000"
+          value="4000"
+          title="Particle count"
+        />
+      </label>
+      <div id="replay-ctl" style="display: none">
+        <div class="row head" style="margin-top: 8px"><span>Traffic / UAVs (demo_rev02)</span></div>
+        <div class="grid2">
+          <label class="layer small"
+            ><input type="checkbox" id="l-cars" checked /><span class="sw cars"></span>Cars</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-uavs" checked /><span class="sw uavs"></span>UAVs</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-birds" checked /><span class="sw birds"></span
+            >Birds</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-signals" checked /><span class="sw signals"></span
+            >Signals</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-stations" checked /><span class="sw stations"></span
+            >Stations</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-roads" checked /><span class="sw roads"></span>Lane
+            surfaces</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-map" /><span class="sw map"></span>Map markers</label
+          >
+        </div>
+      </div>
+      <div id="traffic-ctl" style="display: none">
+        <div class="row head" style="margin-top: 8px">
+          <span id="traffic-title">Traffic · SUMO replay</span
+          ><input type="checkbox" id="l-traffic" checked title="Show the traffic replay" />
+        </div>
+        <div class="grid2">
+          <label class="layer small"
+            ><input type="checkbox" id="l-tf-cars" checked /><span class="sw cars"></span
+            >Cars</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-tf-signals" checked /><span class="sw signals"></span
+            >Signals</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-tf-roads" checked /><span class="sw roads"></span>Lane
+            surfaces</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-tf-paths" /><span class="sw map"></span>Signal
+            paths</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-tf-map" /><span class="sw map"></span>Map markers</label
+          >
+        </div>
+        <div class="stats" id="traffic-stats"></div>
+      </div>
+      <div id="transport-ctl" style="display: none">
+        <div class="row head" style="margin-top: 8px">
+          <span id="transport-title">Transport · TfL</span
+          ><input type="checkbox" id="l-transport" checked title="Show the transport layer" />
+        </div>
+        <div class="grid2">
+          <label class="layer small"
+            ><input type="checkbox" id="l-tr-rail" checked /><span class="sw rail"></span>Tube /
+            rail lines</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-tr-bus" checked /><span class="sw bus"></span>Bus
+            routes</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-tr-stations" checked /><span class="sw stations"></span
+            >Stations</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-tr-stops" checked /><span class="sw bus"></span>Bus
+            stops</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-tr-disruptions" checked /><span
+              class="sw disruption"
+            ></span
+            >Road disruptions</label
+          >
+          <label class="layer small"
+            ><input type="checkbox" id="l-tr-cams" checked /><span class="sw cam"></span
+            >JamCams</label
+          >
+        </div>
+        <div class="stats" id="transport-stats"></div>
+        <div class="grid2" style="margin-top: 6px">
+          <select id="tr-station" title="Live arrivals at"></select
+          ><span class="stats" id="tr-live" style="margin-top: 0"></span>
+        </div>
+        <div class="stats" id="tr-arrivals"></div>
+        <div class="hint" id="transport-attribution"></div>
+      </div>
+      <div class="stats" id="stats"></div>
+      <div id="bird-tracker" style="display: none">
+        <div class="row head" style="margin-top: 8px"><span>Bird tracker</span></div>
+        <div class="grid2">
+          <select id="bird-target" title="What the camera follows">
+            <option value="">Not tracking</option>
+            <option value="flock">Whole flock (centroid)</option>
+          </select>
+          <select id="bird-mode" title="Camera behaviour">
+            <option value="auto">Auto: orbit flock / behind bird</option>
+            <option value="free">Free orbit (moves with target)</option>
+          </select>
+        </div>
+        <div class="stats" id="bird-readout"></div>
+      </div>
+      <div class="hint limits" id="limits"></div>
+    </div>
 
-<div class="overlay" id="loading">
-  <div class="box">
-    <div class="big" id="loading-title">Loading the 3D model</div>
-    <div class="bar"><span id="bar"></span></div>
-    <div class="small" id="pct">0 %</div>
-  </div>
-</div>
-<script>document.getElementById('panel-toggle').addEventListener('click', event => { const open = document.getElementById('layers').classList.toggle('open'); event.currentTarget.setAttribute('aria-expanded', String(open)); });</script>
-<script type="module" src="../bootstrap.js"></script>
-</body>
+    <div class="hud readout" id="readout" hidden></div>
+
+    <div class="hud bottom timebar">
+      <button id="play" class="btn icon" aria-label="Play or pause">▶</button>
+      <input aria-label="Simulation time" type="range" id="step" min="1" max="100" value="1" />
+      <span class="time" id="time-label">Step 1</span>
+      <select id="rate" title="Playback speed"></select>
+    </div>
+
+    <div class="overlay" id="loading">
+      <div class="box">
+        <div class="big" id="loading-title">Loading the 3D model</div>
+        <div class="bar"><span id="bar"></span></div>
+        <div class="small" id="pct">0 %</div>
+      </div>
+    </div>
+    <script>
+      document.getElementById('panel-toggle').addEventListener('click', (event) => {
+        const open = document.getElementById('layers').classList.toggle('open');
+        event.currentTarget.setAttribute('aria-expanded', String(open));
+      });
+    </script>
+    <script type="module" src="../bootstrap.js"></script>
+  </body>
 </html>

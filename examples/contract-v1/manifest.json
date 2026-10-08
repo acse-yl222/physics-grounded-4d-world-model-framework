@@ -23,24 +23,13 @@
       "vertical_datum": "synthetic"
     },
     "bounds_m": {
-      "min": [
-        0,
-        0,
-        0
-      ],
-      "max": [
-        10,
-        10,
-        10
-      ]
+      "min": [0, 0, 0],
+      "max": [10, 10, 10]
     }
   },
   "time": {
     "unit": "s",
-    "samples": [
-      0,
-      1
-    ]
+    "samples": [0, 1]
   },
   "layers": [
     {
@@ -51,9 +40,7 @@
       "sampling": "static",
       "display": {
         "widget": "mesh",
-        "capabilities": [
-          "pick"
-        ]
+        "capabilities": ["pick"]
       }
     },
     {
@@ -64,9 +51,7 @@
       "sampling": "linear",
       "display": {
         "widget": "scalar_field",
-        "capabilities": [
-          "pick"
-        ]
+        "capabilities": ["pick"]
       },
       "field": {
         "name": "temperature",
@@ -81,9 +66,7 @@
       "sampling": "linear",
       "display": {
         "widget": "vector_field",
-        "capabilities": [
-          "pick"
-        ]
+        "capabilities": ["pick"]
       },
       "field": {
         "name": "velocity",
@@ -98,9 +81,7 @@
       "sampling": "linear",
       "display": {
         "widget": "trajectories",
-        "capabilities": [
-          "pick"
-        ]
+        "capabilities": ["pick"]
       }
     },
     {
@@ -111,9 +92,7 @@
       "sampling": "linear",
       "display": {
         "widget": "time_series",
-        "capabilities": [
-          "pick"
-        ]
+        "capabilities": ["pick"]
       },
       "field": {
         "name": "temperature",

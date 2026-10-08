@@ -47,12 +47,8 @@ ORIGIN = (
 # ----------------------------------------------------------------------------
 # ORIENTATION / SELECTION CONFIG  (edit these if the ASCII preview looks wrong)
 # ----------------------------------------------------------------------------
-BUILDINGS_NAME_SUBSTR = (
-    "SB_"  # this GLB names its 252 building solids SB_* (not "Buildings_solid")
-)
-DROP_NAME_SUBSTR = (
-    "g.001"  # the g.001* meshes are the infrastructure (roads/trees/furniture)
-)
+BUILDINGS_NAME_SUBSTR = "SB_"  # this GLB names its 252 building solids SB_* (not "Buildings_solid")
+DROP_NAME_SUBSTR = "g.001"  # the g.001* meshes are the infrastructure (roads/trees/furniture)
 # BUILDINGS_NAME_SUBSTR = "building"   # case-insensitive substring to select the buildings mesh
 # DROP_NAME_SUBSTR      = "infrastructure"  # meshes containing this are ignored (roads/trees/furniture)
 
@@ -62,9 +58,7 @@ FLIP_X = False  # mirror east-west
 FLIP_Y = False  # mirror north-south
 RECENTER = "origin"  # "origin": trust model (0,0) = area center (email says so)
 # "bbox":   force-center on the footprint bbox midpoint instead
-SOLIDIFY_COLUMNS = (
-    True  # fill each occupied column ground->roof (buildings are extruded solids)
-)
+SOLIDIFY_COLUMNS = True  # fill each occupied column ground->roof (buildings are extruded solids)
 
 
 # ----------------------------------------------------------------------------
@@ -161,10 +155,7 @@ def convert(path, out_path=None, inspect_only=False):
         f"y:[{lo[1]:8.2f},{hi[1]:8.2f}]  "
         f"z:[{lo[2]:8.2f},{hi[2]:8.2f}]  (native GLB axes)"
     )
-    print(
-        f"[bbox]  extents (native): "
-        f"x={extents[0]:.1f}  y={extents[1]:.1f}  z={extents[2]:.1f}"
-    )
+    print(f"[bbox]  extents (native): x={extents[0]:.1f}  y={extents[1]:.1f}  z={extents[2]:.1f}")
 
     up = detect_up_axis(extents)
     ground_axes = [a for a in (0, 1, 2) if a != up]
@@ -214,10 +205,7 @@ def convert(path, out_path=None, inspect_only=False):
     )
 
     footprint_m = (gx.max() - gx.min(), gy.max() - gy.min())
-    print(
-        f"[extent] footprint after reorient: "
-        f"{footprint_m[0]:.0f} m x {footprint_m[1]:.0f} m"
-    )
+    print(f"[extent] footprint after reorient: {footprint_m[0]:.0f} m x {footprint_m[1]:.0f} m")
 
     # rebuild the reoriented mesh so we can run containment in world coords
     Vw = np.column_stack([gx, gy, gz])
@@ -230,10 +218,7 @@ def convert(path, out_path=None, inspect_only=False):
 
     geo = voxelize(mesh_w)
     occ = int(geo.sum())
-    print(
-        f"[voxel] occupied voxels = {occ:,} / {geo.size:,} "
-        f"({100.0 * occ / geo.size:.2f}%)"
-    )
+    print(f"[voxel] occupied voxels = {occ:,} / {geo.size:,} ({100.0 * occ / geo.size:.2f}%)")
 
     # top-down preview from the voxel grid (any occupied voxel in a column)
     column_occ = geo.any(axis=0)  # (NY, NX)
@@ -266,16 +251,10 @@ def _preview_from_mesh(mesh_w):
     """Cheap footprint preview without full voxelization (for --inspect-only)."""
     lo, hi = mesh_w.bounds
     # sample a coarse XY grid, mark columns whose vertical ray hits the mesh
-    xs = np.linspace(
-        ORIGIN[0] + SPACING_XY / 2, ORIGIN[0] + (NX - 0.5) * SPACING_XY, NX
-    )
-    ys = np.linspace(
-        ORIGIN[1] + SPACING_XY / 2, ORIGIN[1] + (NY - 0.5) * SPACING_XY, NY
-    )
+    xs = np.linspace(ORIGIN[0] + SPACING_XY / 2, ORIGIN[0] + (NX - 0.5) * SPACING_XY, NX)
+    ys = np.linspace(ORIGIN[1] + SPACING_XY / 2, ORIGIN[1] + (NY - 0.5) * SPACING_XY, NY)
     XX, YY = np.meshgrid(xs, ys)  # (NY, NX)
-    pts = np.column_stack(
-        [XX.ravel(), YY.ravel(), np.full(XX.size, (lo[2] + hi[2]) / 2)]
-    )
+    pts = np.column_stack([XX.ravel(), YY.ravel(), np.full(XX.size, (lo[2] + hi[2]) / 2)])
     inside = mesh_w.contains(pts).reshape(NY, NX)
     print("\n[preview] mid-height slice footprint (north up):\n")
     print(ascii_preview(inside))
@@ -307,9 +286,7 @@ def voxelize(mesh_w):
     iy = np.where((ys >= lo[1] - SPACING_XY) & (ys <= hi[1] + SPACING_XY))[0]
 
     if len(ix) == 0 or len(iy) == 0:
-        print(
-            "[voxel] WARNING: mesh bbox does not overlap the grid -- check origin/units"
-        )
+        print("[voxel] WARNING: mesh bbox does not overlap the grid -- check origin/units")
         return geo
 
     if SOLIDIFY_COLUMNS:

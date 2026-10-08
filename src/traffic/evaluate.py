@@ -1,7 +1,8 @@
 # Compatibility for direct source-script execution; package imports need no path changes.
-if __name__ == '__main__' and not __package__:
+if __name__ == "__main__" and not __package__:
     import sys
     from pathlib import Path
+
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from common.layout import scene_input
@@ -13,17 +14,25 @@ import os
 import glob
 
 from traffic.configs.default import (
-    VEHICLE_DIM, JACOBI_ITERS, HIST_STEPS,
+    VEHICLE_DIM,
+    JACOBI_ITERS,
+    HIST_STEPS,
     # Constant Velocity baseline
-    MAX_SPEED, DT, CELL_SIZE, PRED_STEPS, GRID_SIZE,
-    TRAIN_TRAJECTORIES, VAL_TRAJECTORIES, EVAL_SEED_OFFSET,
+    MAX_SPEED,
+    DT,
+    CELL_SIZE,
+    PRED_STEPS,
+    GRID_SIZE,
+    TRAIN_TRAJECTORIES,
+    VAL_TRAJECTORIES,
+    EVAL_SEED_OFFSET,
 )
 from traffic.models.particle_mlp import ParticleTrafficModel
 from traffic.data.generate_complex import generate_dataset
 
 
 def find_latest_model(date_filter=None):
-    train_dir = str(scene_input('south_ken','traffic','models'))
+    train_dir = str(scene_input("south_ken", "traffic", "models"))
     candidates = glob.glob(os.path.join(train_dir, "best_model_*.pt"))
     if date_filter is not None:
         candidates = [p for p in candidates if date_filter in os.path.basename(p)]
@@ -45,7 +54,7 @@ def vehicle_gt_from_tracks(win_tracks, t_last):
     for vt in win_tracks.values():
         anchor = None
         future = {}
-        for (t, row, col, vd, vc) in vt["positions"]:
+        for t, row, col, vd, vc in vt["positions"]:
             if t == t_last:
                 anchor = (row, col)
             elif t_last < t <= t_last + PRED_STEPS:
@@ -82,7 +91,8 @@ def evaluate(model_date=None, log=print):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = load_model(device, model_date, log=log)
     test_inputs, _, test_tracks, test_t_starts = generate_dataset(
-        n_trajectories=50, seed_offset=EVAL_SEED_OFFSET, return_tracks=True)
+        n_trajectories=50, seed_offset=EVAL_SEED_OFFSET, return_tracks=True
+    )
     log(f"Number of test samples: {test_inputs.shape[0]}")
 
     all_preds = []
@@ -93,7 +103,7 @@ def evaluate(model_date=None, log=print):
             grid = test_inputs[i].to(device)
             pred_grid = model.predict_full_grid(grid)
             t_last = test_t_starts[i] + HIST_STEPS - 1
-            for (r, c, target) in vehicle_gt_from_tracks(test_tracks[i], t_last):
+            for r, c, target in vehicle_gt_from_tracks(test_tracks[i], t_last):
                 all_preds.append(pred_grid[:, r, c, :].cpu())
                 all_targets.append(target)
 
@@ -112,7 +122,7 @@ def modify_regulation(grid, signal_mode=None, speed_factor=None):
     modified = grid.clone()
     for t in range(modified.shape[0]):
         frame = modified[t]
-        occupied = (frame[:, :, :VEHICLE_DIM].abs().sum(dim=-1) > 1e-6)
+        occupied = frame[:, :, :VEHICLE_DIM].abs().sum(dim=-1) > 1e-6
         if signal_mode is not None:
             if signal_mode == "invert":
                 frame[:, :, 5][occupied] = 1.0 - frame[:, :, 5][occupied]
@@ -129,10 +139,11 @@ def evaluate_counterfactual(model_date=None, log=print):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = load_model(device, model_date, log=log)
     test_inputs, _, test_tracks, test_t_starts = generate_dataset(
-        n_trajectories=50, seed_offset=EVAL_SEED_OFFSET, return_tracks=True)
+        n_trajectories=50, seed_offset=EVAL_SEED_OFFSET, return_tracks=True
+    )
     log(f"[Counterfactual] Number of test samples: {test_inputs.shape[0]}")
     scenarios = {
-        "original":   {"label": "Original Scenario", "signal": None, "speed": None},
+        "original": {"label": "Original Scenario", "signal": None, "speed": None},
         "signal_inv": {"label": "Signal reversal", "signal": "invert", "speed": None},
         "signal_red": {"label": "All red lights", "signal": "all_red", "speed": None},
         "speed_half": {"label": "Speed limit halved", "signal": None, "speed": 0.5},
@@ -152,7 +163,7 @@ def evaluate_counterfactual(model_date=None, log=print):
                 modified = modify_regulation(grid_orig, cfg["signal"], cfg["speed"])
                 scenario_preds[name] = model.predict_full_grid(modified.to(device), n_iters=1)
 
-            for (r, c, target) in gts:
+            for r, c, target in gts:
                 for name in scenarios:
                     all_preds[name].append(scenario_preds[name][:, r, c, :].cpu())
                 all_targets.append(target)
@@ -176,14 +187,17 @@ def evaluate_counterfactual(model_date=None, log=print):
         avg_per_step = disp_t.mean(dim=0)
         log(f"[{scenarios[name]['label']}]")
         log(f"  Average displacement of each step: {[f'{v:.4f}' for v in avg_per_step.tolist()]}")
-        log(f"  Average terminal displacement: {disp_t[:, -1].mean():.4f} (grid unit) "
-            f"≈ {disp_t[:, -1].mean() * GRID_SIZE * CELL_SIZE:.1f} m")
+        log(
+            f"  Average terminal displacement: {disp_t[:, -1].mean():.4f} (grid unit) "
+            f"≈ {disp_t[:, -1].mean() * GRID_SIZE * CELL_SIZE:.1f} m"
+        )
         log(f"  Proportion of affected vehicles: {(disp_t[:, -1] > 1e-4).float().mean():.2%}")
 
 
 def evaluate_cv(log=print):
     test_inputs, _, test_tracks, test_t_starts = generate_dataset(
-        n_trajectories=50, seed_offset=EVAL_SEED_OFFSET, return_tracks=True)
+        n_trajectories=50, seed_offset=EVAL_SEED_OFFSET, return_tracks=True
+    )
     log(f"[CV Baseline] Number of test samples: {test_inputs.shape[0]}")
     scale = MAX_SPEED * DT / (CELL_SIZE * GRID_SIZE)
     all_preds = []
@@ -194,7 +208,7 @@ def evaluate_cv(log=print):
             last_frame = grid[-1]
             t_last = test_t_starts[i] + HIST_STEPS - 1
 
-            for (r, c, target) in vehicle_gt_from_tracks(test_tracks[i], t_last):
+            for r, c, target in vehicle_gt_from_tracks(test_tracks[i], t_last):
                 x = last_frame[r, c, 0].item()
                 y = last_frame[r, c, 1].item()
                 vx = last_frame[r, c, 2].item()
@@ -219,7 +233,8 @@ def evaluate_single_vehicle(model_date=None, log=print):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = load_model(device, model_date, log=log)
     test_inputs, _, test_tracks, test_t_starts = generate_dataset(
-        n_trajectories=50, seed_offset=EVAL_SEED_OFFSET, return_tracks=True)
+        n_trajectories=50, seed_offset=EVAL_SEED_OFFSET, return_tracks=True
+    )
     log(f"[Single-vehicle] Number of test samples: {test_inputs.shape[0]}")
     all_preds = []
     all_targets = []
@@ -228,7 +243,7 @@ def evaluate_single_vehicle(model_date=None, log=print):
             grid = test_inputs[i].to(device)
             pred_grid = model.predict_full_grid(grid, mask_neighbors=True)
             t_last = test_t_starts[i] + HIST_STEPS - 1
-            for (r, c, target) in vehicle_gt_from_tracks(test_tracks[i], t_last):
+            for r, c, target in vehicle_gt_from_tracks(test_tracks[i], t_last):
                 all_preds.append(pred_grid[:, r, c, :].cpu())
                 all_targets.append(target)
     preds_t = torch.stack(all_preds)
@@ -241,7 +256,8 @@ def evaluate_no_iter(model_date=None, log=print):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = load_model(device, model_date, log=log)
     test_inputs, _, test_tracks, test_t_starts = generate_dataset(
-        n_trajectories=50, seed_offset=EVAL_SEED_OFFSET, return_tracks=True)
+        n_trajectories=50, seed_offset=EVAL_SEED_OFFSET, return_tracks=True
+    )
     log(f"[No-iteration] Number of test samples: {test_inputs.shape[0]}")
     all_preds = []
     all_targets = []
@@ -250,7 +266,7 @@ def evaluate_no_iter(model_date=None, log=print):
             grid = test_inputs[i].to(device)
             pred_grid = model.predict_full_grid(grid, n_iters=1)
             t_last = test_t_starts[i] + HIST_STEPS - 1
-            for (r, c, target) in vehicle_gt_from_tracks(test_tracks[i], t_last):
+            for r, c, target in vehicle_gt_from_tracks(test_tracks[i], t_last):
                 all_preds.append(pred_grid[:, r, c, :].cpu())
                 all_targets.append(target)
     preds_t = torch.stack(all_preds)
@@ -268,9 +284,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     date_str = os.environ.get("LOG_DATE", datetime.now().strftime("%m-%d_%H-%M-%S"))
-    log_dir = trial_root('south_ken','traffic_evaluation'); log_dir.mkdir(parents=True,exist_ok=True)
-    log_path = os.path.join(log_dir,
-                            f"eval_log_{date_str}.txt")
+    log_dir = trial_root("south_ken", "traffic_evaluation")
+    log_dir.mkdir(parents=True, exist_ok=True)
+    log_path = os.path.join(log_dir, f"eval_log_{date_str}.txt")
     log_file = open(log_path, "w", buffering=1)
 
     def log(msg):

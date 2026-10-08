@@ -7,8 +7,9 @@ from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import dijkstra
 from scipy.ndimage import map_coordinates
 
-_arrival_cache = {} # static field -> compute once per run
-_gradient_cache = {} # precomputed gradients of T, keyed same as _arrival_cache
+_arrival_cache = {}  # static field -> compute once per run
+_gradient_cache = {}  # precomputed gradients of T, keyed same as _arrival_cache
+
 
 def build_arrival_time_field(geo_data, origin, roost_centers, config, wind_time=0.0):
     """
@@ -35,11 +36,11 @@ def build_arrival_time_field(geo_data, origin, roost_centers, config, wind_time=
     Returns:
         T: (nz, ny, nx) array, minimum accumulated routing cost from each voxel to the nearest roost
     """
-    geo = geo_data['geometry'] # (nz, ny, nx) bool, True = solid
-    sp = geo_data['grid_spacing']
-    sp_z = geo_data['grid_spacing_z']
+    geo = geo_data["geometry"]  # (nz, ny, nx) bool, True = solid
+    sp = geo_data["grid_spacing"]
+    sp_z = geo_data["grid_spacing_z"]
     nz, ny, nx = geo.shape
-    
+
     # build the set of traversable voxels and assign each voxel a unique graph index
     # the routing problem is represented as a graph, free voxels are nodes, and neighboring free voxels are connected by directed flight edges
     free = ~geo
@@ -52,7 +53,7 @@ def build_arrival_time_field(geo_data, origin, roost_centers, config, wind_time=
     # mark additional cells below the simulated ground/floor as inaccessible
     # this must match the collision geometry used by the simulation so that the routing field does not guide birds into regions they cannot physically enter
     # i.e. -grad T never points into void a bird can't enter
-    column_has_solid = geo.any(axis=0) # (ny, nx)
+    column_has_solid = geo.any(axis=0)  # (ny, nx)
     blocked_floor = (~column_has_solid)[None, :, :] & (z_centers < config.floor_z)[:, None, None]
     free = free & ~blocked_floor
 
@@ -65,32 +66,34 @@ def build_arrival_time_field(geo_data, origin, roost_centers, config, wind_time=
     if need_fields:
         gx_c = origin[0] + (np.arange(nx) + 0.5) * sp
         gy_c = origin[1] + (np.arange(ny) + 0.5) * sp
-        gxx, gyy, gzz = np.meshgrid(gx_c, gy_c, z_centers, indexing='ij') # (nx,ny,nz)
+        gxx, gyy, gzz = np.meshgrid(gx_c, gy_c, z_centers, indexing="ij")  # (nx,ny,nz)
         cell_pos = np.stack([gxx, gyy, gzz], axis=-1).reshape(-1, 3)
 
     # pollution and noise modify the traversal cost but do not make a direction physically impossible (unlike wind, which can make a direction impossible)
     if config.route_use_pollution or config.route_use_noise:
         from urban_geometry.birds.sim.environment import get_environment
+
         env = get_environment(cell_pos, wind_time, config)
         if config.route_use_pollution:
-            poll = np.clip(env['pollution'], 0.0, 1.0).reshape(nx, ny, nz).transpose(2, 1, 0)
+            poll = np.clip(env["pollution"], 0.0, 1.0).reshape(nx, ny, nz).transpose(2, 1, 0)
             pref = pref * (1.0 + config.route_pollution_cost * poll)
         if config.route_use_noise:
-            noise = np.clip(env['noise'], 0.0, 1.0).reshape(nx, ny, nz).transpose(2, 1, 0)
+            noise = np.clip(env["noise"], 0.0, 1.0).reshape(nx, ny, nz).transpose(2, 1, 0)
             pref = pref * (1.0 + config.route_noise_cost * noise)
 
     # evaluate the wind field used by the Zermelo navigation model
     # unlike the isotropic preferences above, wind is directional = the travel time from A to B can differ from the travel time from B to A
     if config.route_use_wind:
         from urban_geometry.birds.sim.wind import get_wind
-        w = get_wind(cell_pos, wind_time, config) # (nx*ny*nz, 3)
-        w_grid = w.reshape(nx, ny, nz, 3).transpose(2, 1, 0, 3) # (nz,ny,nx,3) world x,y,z
+
+        w = get_wind(cell_pos, wind_time, config)  # (nx*ny*nz, 3)
+        w_grid = w.reshape(nx, ny, nz, 3).transpose(2, 1, 0, 3)  # (nz,ny,nx,3) world x,y,z
     else:
         w_grid = np.zeros((nz, ny, nx, 3))
-    
+
     # the bird's airspeed is fixed at v_air
     # the wind changes the resulting ground speed in each chosen direction, rather than changing the bird's airspeed
-    v_air = config.v_max # airspeed budget for routing
+    v_air = config.v_max  # airspeed budget for routing
 
     # construct the directed flight graph (26-connectivity directed Zermelo edges)
     # each free voxel is connected to its 26 neighboring voxels
@@ -100,32 +103,47 @@ def build_arrival_time_field(geo_data, origin, roost_centers, config, wind_time=
     # the same calculation is applied to every occurrence of this offset throughout the grid.
     def offset_edges(offset):
         dz, dy, dx = offset
-        disp = np.array([dx * sp, dy * sp, dz * sp_z]) # world (x,y,z) displacement
+        disp = np.array([dx * sp, dy * sp, dz * sp_z])  # world (x,y,z) displacement
         length = float(np.linalg.norm(disp))
-        d = disp / length # ground-direction unit vector
-        sa, sb = [], [] # array slices selecting start points, array slices selecting end points (all for the given offset)
-        for ax, o in enumerate(offset): # off is (z,y,x), matching geo axes
+        d = disp / length  # ground-direction unit vector
+        sa, sb = (
+            [],
+            [],
+        )  # array slices selecting start points, array slices selecting end points (all for the given offset)
+        for ax, o in enumerate(offset):  # off is (z,y,x), matching geo axes
             N = geo.shape[ax]
-            if o == 0:   sa.append(slice(0, N));     sb.append(slice(0, N))
-            elif o > 0:  sa.append(slice(0, N - 1)); sb.append(slice(1, N))
-            else:        sa.append(slice(1, N));     sb.append(slice(0, N - 1))
+            if o == 0:
+                sa.append(slice(0, N))
+                sb.append(slice(0, N))
+            elif o > 0:
+                sa.append(slice(0, N - 1))
+                sb.append(slice(1, N))
+            else:
+                sa.append(slice(1, N))
+                sb.append(slice(0, N - 1))
         sa, sb = tuple(sa), tuple(sb)
-        both_free = free[sa] & free[sb] # whether both endpoints of edge are free vs occupied
+        both_free = free[sa] & free[sb]  # whether both endpoints of edge are free vs occupied
 
         # approximate the wind along this edge using the average wind at its endpoints
         # this gives a single representative wind vector for the flight from A to B
-        wavg = 0.5 * (w_grid[sa] + w_grid[sb]) # (...,3)
+        wavg = 0.5 * (w_grid[sa] + w_grid[sb])  # (...,3)
 
         # decompose the wind into components parallel and perpendicular to the desired ground direction
         # the parallel component helps or opposes progress, the perpendicular component consumes part of the bird's available airspeed
         w_along = wavg @ d
 
         # Zermelo navigation: after accounting for the crosswind, compute the maximum ground speed achievable in direction d while maintaining airspeed v_air
-        budget = v_air ** 2 - (np.sum(wavg * wavg, axis=-1) - w_along ** 2) # airspeed left after crosswind
-        max_ground_speed = w_along + np.sqrt(np.maximum(budget, 0.0)) # max ground speed toward b (Zermelo)
+        budget = v_air**2 - (
+            np.sum(wavg * wavg, axis=-1) - w_along**2
+        )  # airspeed left after crosswind
+        max_ground_speed = w_along + np.sqrt(
+            np.maximum(budget, 0.0)
+        )  # max ground speed toward b (Zermelo)
 
         # an edge is usable only if the bird can overcome the crosswind and still make positive forward progress, otherwise that directed flight is impossible
-        feasible = both_free & (budget > 1e-6) & (max_ground_speed > 1e-3) # crosswind-beatable & net forward progress
+        feasible = (
+            both_free & (budget > 1e-6) & (max_ground_speed > 1e-3)
+        )  # crosswind-beatable & net forward progress
 
         # convert ground speed into travel time for this edge
         # the isotropic preference multiplier then increases or decreases the effective routing cost
@@ -134,14 +152,20 @@ def build_arrival_time_field(geo_data, origin, roost_centers, config, wind_time=
 
     # generate all directed edges for all 26 neighbor directions and collect them into sparse graph arrays
     ea, eb, ec = [], [], []
-    for offset in [(dz, dy, dx) for dz in (-1, 0, 1) for dy in (-1, 0, 1) for dx in (-1, 0, 1)
-                if (dz, dy, dx) != (0, 0, 0)]:
+    for offset in [
+        (dz, dy, dx)
+        for dz in (-1, 0, 1)
+        for dy in (-1, 0, 1)
+        for dx in (-1, 0, 1)
+        if (dz, dy, dx) != (0, 0, 0)
+    ]:
         a, b, c = offset_edges(offset)
-        ea.append(a); eb.append(b); ec.append(c)
+        ea.append(a)
+        eb.append(b)
+        ec.append(c)
     ea, eb, ec = np.concatenate(ea), np.concatenate(eb), np.concatenate(ec)
 
     n = nz * ny * nx
-
 
     # store the voxel graph as a sparse directed adjacency matrix
 
@@ -164,7 +188,7 @@ def build_arrival_time_field(geo_data, origin, roost_centers, config, wind_time=
 
 def get_arrival_time_field(geo_data, origin, roost_centers, config, time=0.0):
     """
-    Cached accessor 
+    Cached accessor
     - static geometry -> build once; if wind is in the cost, rebuild only when the wind frame changes (every scaled_dt), not every step
 
     Args:
@@ -181,9 +205,13 @@ def get_arrival_time_field(geo_data, origin, roost_centers, config, time=0.0):
     # cache the expensive global field:
     # with static routing costs, one field is sufficient
     # with time-varying wind, rebuild it only when the wind frame changes
-    frame = 0 if (not config.route_use_wind or config.route_wind_static) else int(time / config.scaled_dt)
+    frame = (
+        0
+        if (not config.route_use_wind or config.route_wind_static)
+        else int(time / config.scaled_dt)
+    )
     key = (
-        hash(geo_data['geometry'].tobytes()),
+        hash(geo_data["geometry"].tobytes()),
         tuple(tuple(c) for c in roost_centers),
         tuple(origin),
         config.v_max,
@@ -197,9 +225,12 @@ def get_arrival_time_field(geo_data, origin, roost_centers, config, time=0.0):
     # the cache key includes every parameter that changes the resulting routing field
     if key not in _arrival_cache:
         wind_time = frame * config.scaled_dt
-        _arrival_cache[key] = build_arrival_time_field(geo_data, origin, roost_centers, config, wind_time)
-        _gradient_cache.clear() # new T, old gradients are stale
+        _arrival_cache[key] = build_arrival_time_field(
+            geo_data, origin, roost_centers, config, wind_time
+        )
+        _gradient_cache.clear()  # new T, old gradients are stale
     return _arrival_cache[key]
+
 
 def get_gradient(T, sp, sp_z):
     """
@@ -217,17 +248,13 @@ def get_gradient(T, sp, sp_z):
     Returns:
         dT_dx, dT_dy, dT_dz: tuple of 3 (nz, ny, nx) array, spatial derivatives of T
     """
-    key = id(T) # T is cached in _arrival_cache, so its id remains stable while the field is active
+    key = id(T)  # T is cached in _arrival_cache, so its id remains stable while the field is active
 
     if key not in _gradient_cache:
         # replace unreachable voxels (inf) with a large finite value before differentiating
         # otherwise np.gradient would propagate inf/NaN
         reachable = np.isfinite(T)
-        fill_value = (
-            np.nanmax(np.where(reachable, T, np.nan)) * 2.0
-            if reachable.any()
-            else 1.0
-        )
+        fill_value = np.nanmax(np.where(reachable, T, np.nan)) * 2.0 if reachable.any() else 1.0
         T_filled = np.where(reachable, T, fill_value)
 
         # np.gradient returns derivatives in array-axis order i.e. axis 0 = z, axis 1 = y, axis 2 = x
@@ -268,23 +295,19 @@ def compute_wave_guidance(positions, T, origin, sp, sp_z):
 
     # convert world coordinates into voxel-grid coordinates for interpolation
     # map_coordinates expects coordinates in array-axis order (z, y, x), but the simulation stores positions in world order (x, y, z).
-    sample_coords = np.vstack([
-        (z - origin[2]) / sp_z,
-        (y - origin[1]) / sp,
-        (x - origin[0]) / sp,
-    ])
+    sample_coords = np.vstack(
+        [
+            (z - origin[2]) / sp_z,
+            (y - origin[1]) / sp,
+            (x - origin[0]) / sp,
+        ]
+    )
 
     # trilinearly interpolate the three gradient components at each bird's continuous position
     # this avoids restricting guidance to the nearest voxel and gives a smooth direction field between grid cells
-    sampled_dT_dx = map_coordinates(
-        dT_dx, sample_coords, order=1, mode='nearest'
-    )
-    sampled_dT_dy = map_coordinates(
-        dT_dy, sample_coords, order=1, mode='nearest'
-    )
-    sampled_dT_dz = map_coordinates(
-        dT_dz, sample_coords, order=1, mode='nearest'
-    )
+    sampled_dT_dx = map_coordinates(dT_dx, sample_coords, order=1, mode="nearest")
+    sampled_dT_dy = map_coordinates(dT_dy, sample_coords, order=1, mode="nearest")
+    sampled_dT_dz = map_coordinates(dT_dz, sample_coords, order=1, mode="nearest")
 
     # the gradient points toward increasing arrival time
     # birds  follow -grad(T), which points toward decreasing time-to-roost i.e. lower routing cost
@@ -295,4 +318,6 @@ def compute_wave_guidance(positions, T, origin, sp, sp_z):
 
     # normalize each guidance vector so the result represents direction only
     guidance_norm = np.linalg.norm(guidance, axis=-1, keepdims=True)
-    return guidance / np.maximum(guidance_norm, 1e-6) # small floor prevents division by zero in flat regions where |grad(T)| is approximately zero
+    return guidance / np.maximum(
+        guidance_norm, 1e-6
+    )  # small floor prevents division by zero in flat regions where |grad(T)| is approximately zero

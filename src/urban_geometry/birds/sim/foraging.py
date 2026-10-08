@@ -20,6 +20,7 @@ import numpy as np
 # ----
 # SPATIAL FOOD FIELD (per-site 2D grid)
 
+
 def init_food_field(site, config, site_index):
     """
     Create a 2D food-density grid for one site
@@ -40,7 +41,7 @@ def init_food_field(site, config, site_index):
     # seed per site so each gets its own repeatable food pattern
     rng = np.random.RandomState(config.seed + site_index)
 
-    size = site['size']
+    size = site["size"]
     area = float(size[0] * size[1])
 
     # number of blobs scales with site area, so bigger sites get more blobs (rather than the same number of bigger blobs)
@@ -59,11 +60,15 @@ def init_food_field(site, config, site_index):
     for _ in range(n_patches):
         patch_cx = rng.randint(0, resolution)
         patch_cy = rng.randint(0, resolution)
-        peak = 0.5 + rng.rand() * 0.5 # random peak density in [0.5, 1.0)
-        food += peak * np.exp(-(((xx - patch_cx) ** 2) / (2.0 * sigma_x ** 2) +
-                                ((yy - patch_cy) ** 2) / (2.0 * sigma_y ** 2)))
+        peak = 0.5 + rng.rand() * 0.5  # random peak density in [0.5, 1.0)
+        food += peak * np.exp(
+            -(
+                ((xx - patch_cx) ** 2) / (2.0 * sigma_x**2)
+                + ((yy - patch_cy) ** 2) / (2.0 * sigma_y**2)
+            )
+        )
 
-    return np.clip(food, 0.0, 1.0) # overlaps can exceed 1, cap to valid range
+    return np.clip(food, 0.0, 1.0)  # overlaps can exceed 1, cap to valid range
 
 
 def _world_to_grid(bird_xy, site_center, site_size, resolution):
@@ -123,6 +128,7 @@ def deplete_food(food_grid, bird_xy, site_center, site_size, amount):
     np.subtract.at(food_grid, (grid_y, grid_x), amount)
     np.clip(food_grid, 0.0, 1.0, out=food_grid)
 
+
 def _blend_heading(heading_a, heading_b, weight):
     """
     Blend two heading angles by `weight` using circular interpolation
@@ -132,16 +138,30 @@ def _blend_heading(heading_a, heading_b, weight):
     # convert angles to unit vectors before blending, so headings near +/-pi are treated as adjacent directions rather than numerically far apart
     ax, ay = np.cos(heading_a), np.sin(heading_a)
     bx, by = np.cos(heading_b), np.sin(heading_b)
-    return np.arctan2(ay * (1 - weight) + by * weight,
-                      ax * (1 - weight) + bx * weight)
+    return np.arctan2(ay * (1 - weight) + by * weight, ax * (1 - weight) + bx * weight)
 
 
 # ----
 # HOP-AND-DWELL AREA-RESTRICTED SEARCH (the main update)
 
-def update_forage(pos, new_pos, vel, forage_mask, forage_site, food_fields, surf_z,
-                  energy, heading, mode, giveup_counter, dwell_timer, hop_timer,
-                  config, rng):
+
+def update_forage(
+    pos,
+    new_pos,
+    vel,
+    forage_mask,
+    forage_site,
+    food_fields,
+    surf_z,
+    energy,
+    heading,
+    mode,
+    giveup_counter,
+    dwell_timer,
+    hop_timer,
+    config,
+    rng,
+):
     """
     Advance all FORAGE birds by one simulation timestep
     - birds alternate between:
@@ -175,8 +195,17 @@ def update_forage(pos, new_pos, vel, forage_mask, forage_site, food_fields, surf
 
     # nothing to update if there are no birds currently in FORAGE
     if not forage_mask.any():
-        return (new_pos, vel, food_fields, energy, heading, mode,
-                giveup_counter, dwell_timer, hop_timer)
+        return (
+            new_pos,
+            vel,
+            food_fields,
+            energy,
+            heading,
+            mode,
+            giveup_counter,
+            dwell_timer,
+            hop_timer,
+        )
 
     # work with the indices of FORAGE birds so the rest of the update can stay vectorized
     forage_idx = np.where(forage_mask)[0]
@@ -193,26 +222,25 @@ def update_forage(pos, new_pos, vel, forage_mask, forage_site, food_fields, surf
     dwelling = forage_mask & (hop_timer <= 0.0)
     dwell_timer[dwelling] -= config.dt
 
-    # START NEW HOPS 
+    # START NEW HOPS
     # birds whose dwell has expired are ready to choose a new hop
     # so choose the hop heading (based on turn + enhancement + boundary reflection)
     starting = dwelling & (dwell_timer <= 0.0)
     start_idx = np.where(starting)[0]
 
     if len(start_idx) > 0:
-
         # cache each starting bird's current search mode and site for the hop decision
         # mode 0 = extensive search; mode 1 = intensive search
         start_mode = mode[start_idx]
         start_site = forage_site[start_idx]
-        is_extensive = (start_mode == 0)
+        is_extensive = start_mode == 0
 
         # draw the turn from a zero-mean Gaussian: extensive search produces relatively straight hops, while intensive search produces wider turns
         turn_sigma = np.where(is_extensive, config.ars_turn_extensive, config.ars_turn_intensive)
         new_heading = heading[start_idx] + rng.randn(len(start_idx)) * turn_sigma
 
         # LOCAL ENHANCEMENT = extensive birds bias their hop heading toward feeding neighbours
-        for site_idx in range(len(food_fields)): # process each site separately
+        for site_idx in range(len(food_fields)):  # process each site separately
             feeders_here = forage_mask & (forage_site == site_idx) & (mode == 1)
             if not feeders_here.any():
                 continue
@@ -231,8 +259,9 @@ def update_forage(pos, new_pos, vel, forage_mask, forage_site, food_fields, surf
 
             # partially rotate the ARS-chosen heading toward the feeding group
             # ars_enhancement controls how strongly social information overrides the random turn
-            new_heading[biased] = _blend_heading(new_heading[biased], heading_to_group,
-                                                 config.ars_enhancement)
+            new_heading[biased] = _blend_heading(
+                new_heading[biased], heading_to_group, config.ars_enhancement
+            )
 
         # BOUNDARY
         # predict the landing point before committing to the hop, so we can reflect the heading if the full hop would cross the site boundary
@@ -242,21 +271,23 @@ def update_forage(pos, new_pos, vel, forage_mask, forage_site, food_fields, surf
 
         # check boundaries separately for each site because each site has its own rectangle
         for site_idx in range(len(food_fields)):
-            here = (start_site == site_idx)
+            here = start_site == site_idx
             if not here.any():
                 continue
             field = food_fields[site_idx]
-            cx, cy = field['center'][0], field['center'][1]
-            half_w, half_h = field['size'][0] * 0.5, field['size'][1] * 0.5
+            cx, cy = field["center"][0], field["center"][1]
+            half_w, half_h = field["size"][0] * 0.5, field["size"][1] * 0.5
 
             # identify hops whose predicted landing point crosses each pair of walls
             out_x = here & ((predicted_x < cx - half_w) | (predicted_x > cx + half_w))
             out_y = here & ((predicted_y < cy - half_h) | (predicted_y > cy + half_h))
-            new_heading[out_x] = np.pi - new_heading[out_x] # reflect across the x wall
-            new_heading[out_y] = -new_heading[out_y] # reflect across the y wall
+            new_heading[out_x] = np.pi - new_heading[out_x]  # reflect across the x wall
+            new_heading[out_y] = -new_heading[out_y]  # reflect across the y wall
 
-        heading[start_idx] = new_heading # commit the newly chosen heading and start the hop clock
-        hop_timer[start_idx] = config.ars_hop_duration # the heading then stays fixed for the duration of this ballistic hop
+        heading[start_idx] = new_heading  # commit the newly chosen heading and start the hop clock
+        hop_timer[start_idx] = (
+            config.ars_hop_duration
+        )  # the heading then stays fixed for the duration of this ballistic hop
 
     # ADVANCE ALL ACTIVE HOPS = move along heading + parabolic height arc
     # horizontal speed = hop_length / hop_duration; height = 4*h*t*(1-t) (peak mid-hop)
@@ -265,11 +296,10 @@ def update_forage(pos, new_pos, vel, forage_mask, forage_site, food_fields, surf
     hop_idx = np.where(hopping)[0]
 
     if len(hop_idx) > 0:
-
         # hop distance is determined by the search mode selected when the hop began
         hop_mode = mode[hop_idx]
         hop_length = np.where(hop_mode == 0, config.ars_hop_extensive, config.ars_hop_intensive)
-        hop_speed = hop_length / max(config.ars_hop_duration, 1e-6) # ground speed during the hop
+        hop_speed = hop_length / max(config.ars_hop_duration, 1e-6)  # ground speed during the hop
 
         # advance along the fixed hop heading by one simulation timestep
         step_dx = np.cos(heading[hop_idx]) * hop_speed * config.dt
@@ -279,20 +309,24 @@ def update_forage(pos, new_pos, vel, forage_mask, forage_site, food_fields, surf
 
         # ballistic height = progress t in [0,1] through the hop, parabola peaking mid-hop
         hop_timer[hop_idx] -= config.dt
-        progress = 1.0 - np.clip(hop_timer[hop_idx], 0.0, None) / config.ars_hop_duration # convert the remaining hop time into normalized elapsed progress [0, 1]
-        arc_height = config.ars_hop_height * 4.0 * progress * (1.0 - progress) # 4t(1-t) is zero at takeoff/landing and reaches 1 at the midpoint, giving the hop a smooth symmetric arc
+        progress = (
+            1.0 - np.clip(hop_timer[hop_idx], 0.0, None) / config.ars_hop_duration
+        )  # convert the remaining hop time into normalized elapsed progress [0, 1]
+        arc_height = (
+            config.ars_hop_height * 4.0 * progress * (1.0 - progress)
+        )  # 4t(1-t) is zero at takeoff/landing and reaches 1 at the midpoint, giving the hop a smooth symmetric arc
         new_pos[hop_idx, 2] = surf_z[hop_idx] + arc_height
 
         # velocity aligned with the hop so the viewer orients the bird along its jump
         vel[hop_idx, 0] = np.cos(heading[hop_idx]) * hop_speed
         vel[hop_idx, 1] = np.sin(heading[hop_idx]) * hop_speed
-        vel[hop_idx, 2] = 0.0 # no vertical velocity, so viewer applies no pitch
+        vel[hop_idx, 2] = 0.0  # no vertical velocity, so viewer applies no pitch
 
         # LANDINGS
         # birds whose hop timer reached zero have completed their hop and now make the next ARS search/feeding decision
         landed = hop_idx[hop_timer[hop_idx] <= 0.0]
         if len(landed) > 0:
-            new_pos[landed, 2] = surf_z[landed] # feet on the ground
+            new_pos[landed, 2] = surf_z[landed]  # feet on the ground
             vel[landed] = 0.0
 
             # record whether each landing finds food above the ARS threshold
@@ -300,27 +334,36 @@ def update_forage(pos, new_pos, vel, forage_mask, forage_site, food_fields, surf
             landed_site = forage_site[landed]
             landed_found = np.zeros(len(landed), dtype=bool)
             for site_idx in range(len(food_fields)):
-                here = (landed_site == site_idx)
+                here = landed_site == site_idx
                 if not here.any():
                     continue
                 field = food_fields[site_idx]
 
                 # probe food at the actual landing position, rather than at the bird's position before the hop.
                 xy = new_pos[landed[here], :2]
-                food_here = sample_food(field['grid'], xy, field['center'], field['size'])
+                food_here = sample_food(field["grid"], xy, field["center"], field["size"])
 
                 # landing counts as a food encounter only if density exceeds the ARS threshold
-                landed_found[here] = (food_here > config.ars_food_threshold)
-                deplete_food(field['grid'], xy, field['center'], field['size'],
-                             config.ars_depletion_per_probe) # probe the landing area and deplete some of its food
+                landed_found[here] = food_here > config.ars_food_threshold
+                deplete_food(
+                    field["grid"],
+                    xy,
+                    field["center"],
+                    field["size"],
+                    config.ars_depletion_per_probe,
+                )  # probe the landing area and deplete some of its food
 
             # giving-up bookkeeping + ARS mode switch (a landing = one search decision)
             # successful landings reset giving-up time
             # unsuccessful landings add one consecutive foodless hop to the counter
             giveup_counter[landed] = np.where(landed_found, 0, giveup_counter[landed] + 1)
-            went_intensive = (mode[landed] == 0) & landed_found # finding food switches an extensive-search bird into intensive search
+            went_intensive = (
+                mode[landed] == 0
+            ) & landed_found  # finding food switches an extensive-search bird into intensive search
             mode[landed[went_intensive]] = 1
-            went_extensive = (mode[landed] == 1) & (giveup_counter[landed] > config.ars_giveup_hops) # after enough consecutive foodless landings, an intensive bird gives up on the current patch and returns to extensive search
+            went_extensive = (
+                (mode[landed] == 1) & (giveup_counter[landed] > config.ars_giveup_hops)
+            )  # after enough consecutive foodless landings, an intensive bird gives up on the current patch and returns to extensive search
             mode[landed[went_extensive]] = 0
 
             # randomize the next dwell duration so nearby birds do not repeatedly synchronize their hop cycles
@@ -337,22 +380,39 @@ def update_forage(pos, new_pos, vel, forage_mask, forage_site, food_fields, surf
             continue
         field = food_fields[site_idx]
         xy = new_pos[feeders, :2]
-        food_here = sample_food(field['grid'], xy, field['center'], field['size'])
+        food_here = sample_food(field["grid"], xy, field["center"], field["size"])
 
         # share the available feeding opportunity among birds at the same site i.e. doubling the number of feeders reduces per-bird intake by sqrt(2)
-        interference = 1.0 / np.sqrt(n_feeding) # per-bird intake falls with crowding
+        interference = 1.0 / np.sqrt(n_feeding)  # per-bird intake falls with crowding
 
         # intake scales with local food density and is reduced by crowding, while energy remains bounded to the model's [0, 1] range
         energy[feeders] = np.clip(
-            energy[feeders] + config.ars_energy_intake * food_here * interference, 0.0, 1.0)
-        
-        deplete_food(field['grid'], xy, field['center'], field['size'],
-                     config.ars_depletion_per_probe * config.dt) # continuous feeding depletes the patch gradually while birds remain dwelling
+            energy[feeders] + config.ars_energy_intake * food_here * interference, 0.0, 1.0
+        )
+
+        deplete_food(
+            field["grid"],
+            xy,
+            field["center"],
+            field["size"],
+            config.ars_depletion_per_probe * config.dt,
+        )  # continuous feeding depletes the patch gradually while birds remain dwelling
 
     # FOOD PATCH RECOVERY
     # all food patches recover continuously each timestep, regardless of whether birds are currently feeding on them.
     for field in food_fields:
-        field['grid'] = np.clip(field['grid'] + config.ars_food_recovery * config.dt, 0.0, 1.0) # clip keeps recovery from pushing density above the valid [0, 1] range
+        field["grid"] = np.clip(
+            field["grid"] + config.ars_food_recovery * config.dt, 0.0, 1.0
+        )  # clip keeps recovery from pushing density above the valid [0, 1] range
 
-    return (new_pos, vel, food_fields, energy, heading, mode,
-            giveup_counter, dwell_timer, hop_timer)
+    return (
+        new_pos,
+        vel,
+        food_fields,
+        energy,
+        heading,
+        mode,
+        giveup_counter,
+        dwell_timer,
+        hop_timer,
+    )

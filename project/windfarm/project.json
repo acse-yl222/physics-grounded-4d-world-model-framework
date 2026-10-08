@@ -13,16 +13,8 @@
       "vertical_datum": "local engineering coordinates; geographic origin unrecorded"
     },
     "bounds_m": {
-      "min": [
-        -1776.0,
-        -992.0,
-        0
-      ],
-      "max": [
-        2320.0,
-        1056.0,
-        512.0
-      ]
+      "min": [-1776.0, -992.0, 0],
+      "max": [2320.0, 1056.0, 512.0]
     }
   },
   "inputs": [],

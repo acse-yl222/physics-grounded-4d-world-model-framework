@@ -3,10 +3,7 @@
   "scene_id": "south_ken",
   "title": "Geometry, wind and recorded traffic",
   "time_alignment": "relative",
-  "runs": [
-    "legacy_web",
-    "legacy_agents"
-  ],
+  "runs": ["legacy_web", "legacy_agents"],
   "layers": [
     {
       "run_id": "legacy_web",

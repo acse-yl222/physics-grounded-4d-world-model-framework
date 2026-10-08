@@ -3,9 +3,7 @@
   "scene_id": "south_ken",
   "title": "Geometry and wind",
   "time_alignment": "relative",
-  "runs": [
-    "legacy_web"
-  ],
+  "runs": ["legacy_web"],
   "layers": [
     {
       "run_id": "legacy_web",

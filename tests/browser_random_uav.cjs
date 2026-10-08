@@ -1,1 +1,75 @@
-(async()=>{const{default:puppeteer}=await import(process.env.PUPPETEER_MODULE||'puppeteer-core');const fs=require('fs');fs.mkdirSync('cache/framework',{recursive:true});const browser=await puppeteer.launch({executablePath:process.env.CHROME_PATH||'/opt/google/chrome/chrome',headless:true,args:['--no-sandbox','--enable-unsafe-swiftshader']});try{const page=await browser.newPage();await page.setViewport({width:1500,height:1000});const errors=[],requests=[];page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));page.on('console',m=>{if(m.type()==='error')console.log(m.text())});await page.goto(process.env.UWM_VIEWER_URL||'http://127.0.0.1:8773/src/visualization/legacy/viewer/3d/?scene=south_kensington&lite=1',{waitUntil:'domcontentloaded',timeout:60000});await page.waitForFunction(()=>window.viewer?.replay?.uavMode==='random_wavepde',{timeout:180000});const report=await page.evaluate(()=>{const r=viewer.replay;r.playing=false;r.update(60);const a=r.uavs.map(u=>[u.x,u.y,u.z]);r.update(80);const b=r.uavs.map(u=>[u.x,u.y,u.z]);r.update(60);return{mode:r.uavMode,count:r.uavs.length,routes:r.flightData.routes.length,stations:r.flightData.stations.length,maxStationHeight:Math.max(...r.flightData.stations.map(s=>s.y_m)),moved:a.some((p,i)=>p.some((v,k)=>v!==b[i][k])),seekReproducible:JSON.stringify(a)===JSON.stringify(r.uavs.map(u=>[u.x,u.y,u.z])),stats:r.stats};});if(requests.some(u=>/schedule.json|parking.json|hub-bays.json/.test(u)))throw Error('Legacy scheduling requested');if(!report.moved||!report.seekReproducible||report.count!==300||report.routes!==870||report.maxStationHeight>1)throw Error(JSON.stringify(report));const button=await page.$('[data-shot="uavs"]');if(button)await button.click();await new Promise(r=>setTimeout(r,3500));await page.screenshot({path:'cache/framework/random-uav-lite.png'});report.errors=errors;report.scheduleRequested=false;fs.writeFileSync('cache/framework/random-uav-lite-browser.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));if(errors.length)throw Error(errors.join('\n'));}finally{await browser.close();}})().catch(e=>{console.error(e);process.exit(1)});
+(async () => {
+  const { default: puppeteer } = await import(process.env.PUPPETEER_MODULE || 'puppeteer-core');
+  const fs = require('fs');
+  fs.mkdirSync('cache/framework', { recursive: true });
+  const browser = await puppeteer.launch({
+    executablePath: process.env.CHROME_PATH || '/opt/google/chrome/chrome',
+    headless: true,
+    args: ['--no-sandbox', '--enable-unsafe-swiftshader'],
+  });
+  try {
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1500, height: 1000 });
+    const errors = [],
+      requests = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    page.on('request', (r) => requests.push(r.url()));
+    page.on('console', (m) => {
+      if (m.type() === 'error') console.log(m.text());
+    });
+    await page.goto(
+      process.env.UWM_VIEWER_URL ||
+        'http://127.0.0.1:8773/src/visualization/legacy/viewer/3d/?scene=south_kensington&lite=1',
+      { waitUntil: 'domcontentloaded', timeout: 60000 },
+    );
+    await page.waitForFunction(() => window.viewer?.replay?.uavMode === 'random_wavepde', {
+      timeout: 180000,
+    });
+    const report = await page.evaluate(() => {
+      const r = viewer.replay;
+      r.playing = false;
+      r.update(60);
+      const a = r.uavs.map((u) => [u.x, u.y, u.z]);
+      r.update(80);
+      const b = r.uavs.map((u) => [u.x, u.y, u.z]);
+      r.update(60);
+      return {
+        mode: r.uavMode,
+        count: r.uavs.length,
+        routes: r.flightData.routes.length,
+        stations: r.flightData.stations.length,
+        maxStationHeight: Math.max(...r.flightData.stations.map((s) => s.y_m)),
+        moved: a.some((p, i) => p.some((v, k) => v !== b[i][k])),
+        seekReproducible: JSON.stringify(a) === JSON.stringify(r.uavs.map((u) => [u.x, u.y, u.z])),
+        stats: r.stats,
+      };
+    });
+    if (requests.some((u) => /schedule.json|parking.json|hub-bays.json/.test(u)))
+      throw Error('Legacy scheduling requested');
+    if (
+      !report.moved ||
+      !report.seekReproducible ||
+      report.count !== 300 ||
+      report.routes !== 870 ||
+      report.maxStationHeight > 1
+    )
+      throw Error(JSON.stringify(report));
+    const button = await page.$('[data-shot="uavs"]');
+    if (button) await button.click();
+    await new Promise((r) => setTimeout(r, 3500));
+    await page.screenshot({ path: 'cache/framework/random-uav-lite.png' });
+    report.errors = errors;
+    report.scheduleRequested = false;
+    fs.writeFileSync(
+      'cache/framework/random-uav-lite-browser.json',
+      JSON.stringify(report, null, 2),
+    );
+    console.log(JSON.stringify(report));
+    if (errors.length) throw Error(errors.join('\n'));
+  } finally {
+    await browser.close();
+  }
+})().catch((e) => {
+  console.error(e);
+  process.exit(1);
+});

@@ -60,12 +60,18 @@ def portable_fail_closed_backend(inputs: dict[str, Any]) -> dict[str, Any]:
 
 
 def _mean_field_backend_factory(
-    *, run_seed: int, device: str, initial_inputs: dict[str, Any], config_overrides: dict[str, Any] | None
+    *,
+    run_seed: int,
+    device: str,
+    initial_inputs: dict[str, Any],
+    config_overrides: dict[str, Any] | None,
 ) -> tuple[Callable[[dict[str, Any]], dict[str, Any]], np.ndarray, dict[str, Any]]:
     try:
         from bounded_studies.r3_global_mu_v3r4_batch_judge_v3 import inner
     except ModuleNotFoundError as exc:
-        raise RuntimeError("backend='mean_field' requires PyTorch; install the 'mean-field' optional dependency") from exc
+        raise RuntimeError(
+            "backend='mean_field' requires PyTorch; install the 'mean-field' optional dependency"
+        ) from exc
     cfg = dict(inner.C0)
     cfg.update(config_overrides or {})
     x_null, null_record = inner.null_solve(initial_inputs, cfg, run_seed, device=device)
@@ -141,10 +147,15 @@ def schedule(
     if backend == "portable_fail_closed":
         backend_fn = portable_fail_closed_backend
         x_null = _uniform_field(initial_inputs)
-        null_record = {"backend": "ANALYTIC_UNIFORM_DEMO_CONTROL", "mean_field_numerical_solver_executed": False}
+        null_record = {
+            "backend": "ANALYTIC_UNIFORM_DEMO_CONTROL",
+            "mean_field_numerical_solver_executed": False,
+        }
     elif backend == "mean_field":
         backend_fn, x_null, null_record = _mean_field_backend_factory(
-            run_seed=int(run_seed), device=device, initial_inputs=initial_inputs,
+            run_seed=int(run_seed),
+            device=device,
+            initial_inputs=initial_inputs,
             config_overrides=inner_config_overrides,
         )
     else:
@@ -176,7 +187,9 @@ def schedule(
     )
     stop = scheduler.run()
     if stop.get("stop") != "GLOBAL_CLOSURE":
-        raise SchedulingDidNotClose({"stop": stop, "closure": scheduler.closure_report(), "work_directory": str(work)})
+        raise SchedulingDidNotClose(
+            {"stop": stop, "closure": scheduler.closure_report(), "work_directory": str(work)}
+        )
     committed = scheduler.final_commit()
     journeys_raw = sorted(committed["committed_journeys"], key=lambda row: int(row["order_id"]))
     journey_by_order = {int(row["order_id"]): row for row in journeys_raw}
@@ -185,14 +198,16 @@ def schedule(
         oid = int(record["oid"])
         order = fx["orders"][oid - 1]
         provenance = scheduler.provisional[oid]["provenance"]
-        assignments.append({
-            "request_id": maps.order_external[oid - 1],
-            "uav_id": maps.uav_external[int(record["owner"])],
-            "collection_slot": int(order["k_p"]),
-            "dropoff_service_slot": int(record["k_serv"]),
-            "action_kind": journey_by_order[oid]["action_kind"],
-            "owner_provenance": provenance,
-        })
+        assignments.append(
+            {
+                "request_id": maps.order_external[oid - 1],
+                "uav_id": maps.uav_external[int(record["owner"])],
+                "collection_slot": int(order["k_p"]),
+                "dropoff_service_slot": int(record["k_serv"]),
+                "action_kind": journey_by_order[oid]["action_kind"],
+                "owner_provenance": provenance,
+            }
+        )
     provenance_counts = Counter(row.get("provenance") for row in scheduler.provisional.values())
     return {
         "schema_version": "mfmu.schedule-result.v1",
@@ -225,7 +240,9 @@ def schedule(
             "rounds": int(stop["rounds"]),
             "run_seed": int(run_seed),
             "input_sha256": scenario_digest,
-            "mean_field_policy_consumed_count": int(provenance_counts.get(readout.PROV_WEIGHTED, 0)),
+            "mean_field_policy_consumed_count": int(
+                provenance_counts.get(readout.PROV_WEIGHTED, 0)
+            ),
             "uniform_fail_closed_count": int(provenance_counts.get(readout.PROV_UNIFORM, 0)),
             "provenance_counts": dict(provenance_counts),
             "controller_counters": scheduler.counters,

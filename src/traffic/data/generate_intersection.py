@@ -3,9 +3,10 @@ Intersection Simulation Dataset
 """
 
 # Compatibility for direct source-script execution; package imports need no path changes.
-if __name__ == '__main__' and not __package__:
+if __name__ == "__main__" and not __package__:
     import sys
     from pathlib import Path
+
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import numpy as np
@@ -15,11 +16,23 @@ import os
 import pickle
 
 from traffic.configs.default import (
-    INTERSECTION_CENTER, ROAD_HALF_WIDTH, SIGNAL_CYCLE,
-    TURN_PROB_STRAIGHT, TURN_PROB_LEFT, TURN_PROB_RIGHT,
-    TURN_RADIUS_RIGHT, TURN_RADIUS_LEFT, GRID_SIZE,
-    CELL_SIZE, MAX_SPEED, DT, ARRIVAL_RATE,TOTAL_FEAT_DIM,
-    VEHICLE_DIM, HIST_STEPS, PRED_STEPS
+    INTERSECTION_CENTER,
+    ROAD_HALF_WIDTH,
+    SIGNAL_CYCLE,
+    TURN_PROB_STRAIGHT,
+    TURN_PROB_LEFT,
+    TURN_PROB_RIGHT,
+    TURN_RADIUS_RIGHT,
+    TURN_RADIUS_LEFT,
+    GRID_SIZE,
+    CELL_SIZE,
+    MAX_SPEED,
+    DT,
+    ARRIVAL_RATE,
+    TOTAL_FEAT_DIM,
+    VEHICLE_DIM,
+    HIST_STEPS,
+    PRED_STEPS,
 )
 
 
@@ -38,7 +51,7 @@ def get_intersection_geometry():
         "south": {
             "spawn_rows": (50, 55),
             "spawn_cols": (28, 29),
-            "direction": (-1, 0),   # north
+            "direction": (-1, 0),  # north
             "stop_line_row": h_road_rows[1] + 1,
             "stop_line_range": (h_road_rows[1] + 1, h_road_rows[1] + 2),
         },
@@ -68,15 +81,15 @@ def get_intersection_geometry():
     exits = {
         "north": (54, 28),
         "south": (1, 27),
-        "east":  (28, 54),
-        "west":  (27, 1),
+        "east": (28, 54),
+        "west": (27, 1),
     }
 
     turn_map = {
-        "south": {"straight": "north", "left": "west",  "right": "east"},
-        "north": {"straight": "south", "left": "east",  "right": "west"},
-        "east":  {"straight": "west",  "left": "south", "right": "north"},
-        "west":  {"straight": "east",  "left": "north", "right": "south"},
+        "south": {"straight": "north", "left": "west", "right": "east"},
+        "north": {"straight": "south", "left": "east", "right": "west"},
+        "east": {"straight": "west", "left": "south", "right": "north"},
+        "west": {"straight": "east", "left": "north", "right": "south"},
     }
 
     return {
@@ -94,11 +107,11 @@ def build_lane_centers(geometry):
     Precompute the lane centerline for each cell (ch9=row, ch10=col, normalized)
     Set values to 0 for the intersection core area and non-road surfaces
     """
-    hr0, hr1 = geometry['h_road_rows']  # [26, 29]
-    vc0, vc1 = geometry['v_road_cols']  # [26, 29]
+    hr0, hr1 = geometry["h_road_rows"]  # [26, 29]
+    vc0, vc1 = geometry["v_road_cols"]  # [26, 29]
     lane = np.zeros((GRID_SIZE, GRID_SIZE, 2), dtype=np.float32)
-    mid_h = hr0 + (hr1 - hr0 + 1) // 2   # First line of the second paragraph (28)
-    mid_v = vc0 + (vc1 - vc0 + 1) // 2   # First column of the right half (28)
+    mid_h = hr0 + (hr1 - hr0 + 1) // 2  # First line of the second paragraph (28)
+    mid_v = vc0 + (vc1 - vc0 + 1) // 2  # First column of the right half (28)
 
     for r in range(GRID_SIZE):
         for c in range(GRID_SIZE):
@@ -157,6 +170,7 @@ def assign_vehicle_mission(entry, geometry, perturb_range=2):
         "radius": radius,
     }
 
+
 def build_reference_path(entry, geometry, mission, num_waypoints=20):
     turn_type = mission["turn_type"]
     exit_name = mission["exit_name"]
@@ -191,80 +205,92 @@ def build_reference_path(entry, geometry, mission, num_waypoints=20):
     elif turn_type == "right":
         if entry == "south":
             cr, cc = corners["SE"]
-            arc_start = (float(cr), float(cc - radius))              # (29, 27)
-            arc_end   = (float(cr - radius), float(cc))              # (27, 29)
+            arc_start = (float(cr), float(cc - radius))  # (29, 27)
+            arc_end = (float(cr - radius), float(cc))  # (27, 29)
             angles = np.linspace(np.pi, np.pi / 2, num_waypoints // 3)
         elif entry == "north":
             cr, cc = corners["NW"]
-            arc_start = (float(cr), float(cc + radius))              # (26, 28)
-            arc_end   = (float(cr + radius), float(cc))              # (28, 26)
+            arc_start = (float(cr), float(cc + radius))  # (26, 28)
+            arc_end = (float(cr + radius), float(cc))  # (28, 26)
             angles = np.linspace(0, -np.pi / 2, num_waypoints // 3)
         elif entry == "east":
             cr, cc = corners["NE"]
-            arc_start = (float(cr + radius), float(cc))              # (28, 29)
-            arc_end   = (float(cr), float(cc - radius))              # (26, 27)
+            arc_start = (float(cr + radius), float(cc))  # (28, 29)
+            arc_end = (float(cr), float(cc - radius))  # (26, 27)
             angles = np.linspace(-np.pi / 2, 0, num_waypoints // 3)
         else:  # west
             cr, cc = corners["SW"]
-            arc_start = (float(cr - radius), float(cc))              # (27, 26)
-            arc_end   = (float(cr), float(cc + radius))              # (29, 28)
+            arc_start = (float(cr - radius), float(cc))  # (27, 26)
+            arc_end = (float(cr), float(cc + radius))  # (29, 28)
             angles = np.linspace(np.pi / 2, np.pi, num_waypoints // 3)
-        arc_pts = np.column_stack([
-            cr - radius * np.cos(angles),
-            cc + radius * np.sin(angles),
-        ])
+        arc_pts = np.column_stack(
+            [
+                cr - radius * np.cos(angles),
+                cc + radius * np.sin(angles),
+            ]
+        )
 
-        approach_start = (spawn_r if entry in ("south", "north") else h_center,
-                          v_center if entry in ("south", "north") else spawn_c)
+        approach_start = (
+            spawn_r if entry in ("south", "north") else h_center,
+            v_center if entry in ("south", "north") else spawn_c,
+        )
         exit_end = (float(dest_row), float(dest_col))
-        key_points = np.vstack([
-            [approach_start],
-            [arc_start],
-            arc_pts,
-            [arc_end],
-            [exit_end],
-        ])
+        key_points = np.vstack(
+            [
+                [approach_start],
+                [arc_start],
+                arc_pts,
+                [arc_end],
+                [exit_end],
+            ]
+        )
 
     else:
         if entry == "south":
             cr, cc = corners["SW"]
-            arc_start = (float(cr), float(cc + radius))              # (29, 29)
-            arc_end   = (float(cr - radius), float(cc))              # (26, 26)
+            arc_start = (float(cr), float(cc + radius))  # (29, 29)
+            arc_end = (float(cr - radius), float(cc))  # (26, 26)
             angles = np.linspace(np.pi, np.pi / 2, num_waypoints // 3)
         elif entry == "north":
             cr, cc = corners["NE"]
-            arc_start = (float(cr), float(cc - radius))              # (26, 26)
-            arc_end   = (float(cr + radius), float(cc))              # (29, 29)
+            arc_start = (float(cr), float(cc - radius))  # (26, 26)
+            arc_end = (float(cr + radius), float(cc))  # (29, 29)
             angles = np.linspace(0, -np.pi / 2, num_waypoints // 3)
         elif entry == "east":
             cr, cc = corners["SE"]
-            arc_start = (float(cr - radius), float(cc))              # (26, 29)
-            arc_end   = (float(cr), float(cc - radius))              # (29, 26)
+            arc_start = (float(cr - radius), float(cc))  # (26, 29)
+            arc_end = (float(cr), float(cc - radius))  # (29, 26)
             angles = np.linspace(-np.pi / 2, 0, num_waypoints // 3)
         else:  # west
             cr, cc = corners["NW"]
-            arc_start = (float(cr + radius), float(cc))              # (29, 26)
-            arc_end   = (float(cr), float(cc + radius))              # (26, 29)
+            arc_start = (float(cr + radius), float(cc))  # (29, 26)
+            arc_end = (float(cr), float(cc + radius))  # (26, 29)
             angles = np.linspace(np.pi / 2, np.pi, num_waypoints // 3)
 
-        arc_pts = np.column_stack([
-            cr - radius * np.cos(angles),
-            cc + radius * np.sin(angles),
-        ])
+        arc_pts = np.column_stack(
+            [
+                cr - radius * np.cos(angles),
+                cc + radius * np.sin(angles),
+            ]
+        )
 
-        approach_start = (spawn_r if entry in ("south", "north") else h_center,
-                          v_center if entry in ("south", "north") else spawn_c)
+        approach_start = (
+            spawn_r if entry in ("south", "north") else h_center,
+            v_center if entry in ("south", "north") else spawn_c,
+        )
         exit_end = (float(dest_row), float(dest_col))
-        key_points = np.vstack([
-            [approach_start],
-            [arc_start],
-            arc_pts,
-            [arc_end],
-            [exit_end],
-        ])
+        key_points = np.vstack(
+            [
+                [approach_start],
+                [arc_start],
+                arc_pts,
+                [arc_end],
+                [exit_end],
+            ]
+        )
     # Uniform Interpolation
     diffs = np.diff(key_points, axis=0)
-    seg_lengths = np.sqrt((diffs ** 2).sum(axis=1))
+    seg_lengths = np.sqrt((diffs**2).sum(axis=1))
     cumulative = np.concatenate([[0.0], np.cumsum(seg_lengths)])
     total_length = cumulative[-1]
     t_uniform = np.linspace(0, total_length, num_waypoints)
@@ -272,6 +298,7 @@ def build_reference_path(entry, geometry, mission, num_waypoints=20):
     for d in range(2):
         waypoints[:, d] = np.interp(t_uniform, cumulative, key_points[:, d])
     return waypoints
+
 
 def get_vehicle_lane(vehicle, geometry):
     """
@@ -283,7 +310,7 @@ def get_vehicle_lane(vehicle, geometry):
     dr, dc = entry_cfg["direction"]
     core_row_0, core_row_1 = geometry["h_road_rows"]
     core_col_0, core_col_1 = geometry["v_road_cols"]
-    if dr != 0:         # south / north
+    if dr != 0:  # south / north
         stop_pos = entry_cfg["stop_line_row"]
         along = row
         core_far = core_row_0 if dr < 0 else core_row_1
@@ -292,7 +319,7 @@ def get_vehicle_lane(vehicle, geometry):
         along = col
         core_far = core_col_0 if dc < 0 else core_col_1
 
-    heading_toward_origin = (dr < 0 or dc < 0)
+    heading_toward_origin = dr < 0 or dc < 0
 
     if heading_toward_origin:
         if along > stop_pos:
@@ -318,18 +345,20 @@ def get_vehicle_lane(vehicle, geometry):
         "at_stop_line": at_stop_line,
     }
 
+
 def find_lead_vehicle(ego, vehicles, geometry):
     """
     Find the closest vehicle ahead of the ego vehicle in the same lane
     """
     lane = get_vehicle_lane(ego, geometry)
     lane_id = lane["lane_id"]
-    same_lane = [v for v in vehicles if v is not ego
-                 and get_vehicle_lane(v, geometry)["lane_id"] == lane_id]
+    same_lane = [
+        v for v in vehicles if v is not ego and get_vehicle_lane(v, geometry)["lane_id"] == lane_id
+    ]
     if not same_lane:
         return None, None
     dr, dc = geometry["entries"][ego["entry"]]["direction"]
-    ego_proj = ego["row"] * dr + ego["col"] * dc # The larger the value, the higher the priority
+    ego_proj = ego["row"] * dr + ego["col"] * dc  # The larger the value, the higher the priority
     best_gap = float("inf")
     best_lead = None
     for v in same_lane:
@@ -341,10 +370,11 @@ def find_lead_vehicle(ego, vehicles, geometry):
     return (best_lead, best_gap) if best_lead else (None, None)
 
 
-S0 = 5.0       # Minimum Spacing (m)
-T_HW = 1.5     # Safety Time Interval (s)
-A_MAX = 2.0    # Maximum Acceleration (m/s²)
+S0 = 5.0  # Minimum Spacing (m)
+T_HW = 1.5  # Safety Time Interval (s)
+A_MAX = 2.0  # Maximum Acceleration (m/s²)
 B_COMFORT = 3.0  # comfortable braking deceleration (m/s²)
+
 
 def idm_acceleration(v, delta_v, gap, v_desired):
     """
@@ -361,6 +391,7 @@ def idm_acceleration(v, delta_v, gap, v_desired):
         return -B_COMFORT
     return acc
 
+
 def simulate_trajectory(total_steps=70, seed=None):
     if seed is not None:
         np.random.seed(seed)
@@ -373,17 +404,16 @@ def simulate_trajectory(total_steps=70, seed=None):
     limit_intersection = np.random.choice([15.0, 25.0, 35.0, 45.0]) / 3.6
     max_limit_mps = 70.0 / 3.6  # update
     arrival_rate = np.random.choice([0.1, 0.2, 0.3, 0.4, 0.5])
-    vehicles = []      # Active vehicles
+    vehicles = []  # Active vehicles
     vehicle_counter = 0
     vehicle_tracks = {}  # {vid: {'entry': str, 'positions': [(t, row, col), ...]}}
     next_spawn_step = {entry: 0 for entry in geometry["entries"]}
     mean_spawn_gap = 1.0 / (arrival_rate * DT + 1e-8)
-    trajectory = np.zeros((total_steps, GRID_SIZE, GRID_SIZE, TOTAL_FEAT_DIM),
-                          dtype=np.float32)
+    trajectory = np.zeros((total_steps, GRID_SIZE, GRID_SIZE, TOTAL_FEAT_DIM), dtype=np.float32)
     for t in range(total_steps):
         ns_green = (t % signal_cycle) < half_cycle
         # ew_green = not ns_green
-        
+
         # Generate new vehicles
         for entry_name, entry_cfg in geometry["entries"].items():
             if t >= next_spawn_step[entry_name]:
@@ -397,20 +427,22 @@ def simulate_trajectory(total_steps=70, seed=None):
                 ref_path = build_reference_path(entry_name, geometry, mission)
                 vid = vehicle_counter
                 vehicle_counter += 1
-                vehicles.append({
-                    "id":        vid,
-                    "row":       spawn_row,
-                    "col":       spawn_col,
-                    "speed":     init_speed,
-                    "dr":        dr,
-                    "dc":        dc,
-                    "entry":     entry_name,
-                    "mission":   mission,
-                    "ref_path":  ref_path,
-                    "wp_idx":    0,
-                    "arrived":   False,
-                })
-                vehicle_tracks[vid] = {'entry': entry_name, 'positions': []}
+                vehicles.append(
+                    {
+                        "id": vid,
+                        "row": spawn_row,
+                        "col": spawn_col,
+                        "speed": init_speed,
+                        "dr": dr,
+                        "dc": dc,
+                        "entry": entry_name,
+                        "mission": mission,
+                        "ref_path": ref_path,
+                        "wp_idx": 0,
+                        "arrived": False,
+                    }
+                )
+                vehicle_tracks[vid] = {"entry": entry_name, "positions": []}
         # Update vehicle status
         for v in vehicles:
             if v["arrived"]:
@@ -457,12 +489,12 @@ def simulate_trajectory(total_steps=70, seed=None):
                 target_r, target_c = ref[min(wp_idx, len(ref) - 1)]
                 dir_r = target_r - v["row"]
                 dir_c = target_c - v["col"]
-                norm = np.sqrt(dir_r ** 2 + dir_c ** 2) + 1e-8
+                norm = np.sqrt(dir_r**2 + dir_c**2) + 1e-8
                 move_dr = dir_r / norm
                 move_dc = dir_c / norm
                 v["row"] += v["speed"] * move_dr * DT / CELL_SIZE
                 v["col"] += v["speed"] * move_dc * DT / CELL_SIZE
-                # Update the actual movement direction 
+                # Update the actual movement direction
                 # fix the bug where dr/dc remains the entry direction after turning
                 v["dr"] = move_dr
                 v["dc"] = move_dc
@@ -483,14 +515,14 @@ def simulate_trajectory(total_steps=70, seed=None):
             dist_to_dest = np.sqrt((v["row"] - dest_r) ** 2 + (v["col"] - dest_c) ** 2)
             if dist_to_dest < 3.0:  # 9m
                 v["arrived"] = True  # Whether to reach the destination
-        
+
         vehicles = [v for v in vehicles if not v["arrived"]]  # remove arrived vehicles
 
         for v in vehicles:
             cell_r = int(np.clip(v["row"], 0, GRID_SIZE - 1))
             cell_c = int(np.clip(v["col"], 0, GRID_SIZE - 1))
             lane = get_vehicle_lane(v, geometry)
-            in_intersection = (lane["segment"] == "intersection")
+            in_intersection = lane["segment"] == "intersection"
             # Control
             # Unified normalization: speed limit / maximum speed limit, applicable to both road sections and intersections
             current_limit = limit_intersection if in_intersection else limit_approach
@@ -519,11 +551,18 @@ def simulate_trajectory(total_steps=70, seed=None):
             trajectory[t, cell_r, cell_c, 9] = lane_centers[cell_r, cell_c, 0]
             trajectory[t, cell_r, cell_c, 10] = lane_centers[cell_r, cell_c, 1]
 
-            vehicle_tracks[v["id"]]['positions'].append(
-                (t, v["row"], v["col"],
-                 v["speed"] * v["dr"] / MAX_SPEED, v["speed"] * v["dc"] / MAX_SPEED))
+            vehicle_tracks[v["id"]]["positions"].append(
+                (
+                    t,
+                    v["row"],
+                    v["col"],
+                    v["speed"] * v["dr"] / MAX_SPEED,
+                    v["speed"] * v["dc"] / MAX_SPEED,
+                )
+            )
 
     return trajectory, vehicle_tracks
+
 
 def generate_dataset(n_trajectories, total_steps=None, seed_offset=0, return_tracks=False):
     if total_steps is None:
@@ -549,9 +588,9 @@ def generate_dataset(n_trajectories, total_steps=None, seed_offset=0, return_tra
                 win_tracks = {}
                 t_end = t_start + window_len
                 for vid, vt in tracks.items():
-                    pos = [p for p in vt['positions'] if t_start <= p[0] < t_end]
+                    pos = [p for p in vt["positions"] if t_start <= p[0] < t_end]
                     if pos:
-                        win_tracks[vid] = {'entry': vt['entry'], 'positions': pos}
+                        win_tracks[vid] = {"entry": vt["entry"], "positions": pos}
                 all_tracks.append(win_tracks)
                 all_t_starts.append(t_start)
 
@@ -563,17 +602,16 @@ def generate_dataset(n_trajectories, total_steps=None, seed_offset=0, return_tra
         return inputs, labels, all_tracks, all_t_starts
     return inputs, labels
 
+
 if __name__ == "__main__":
     n_train = 2000
     n_validation = 200
-    train_inputs, train_labels = generate_dataset(
-        n_trajectories=2000, seed_offset=0
-    )
+    train_inputs, train_labels = generate_dataset(n_trajectories=2000, seed_offset=0)
     print(f"The training set has been generated ({n_train} trajectories)")
     val_inputs, val_labels = generate_dataset(
-        n_trajectories=200, seed_offset=2000    # Seed offset, no duplication with the training set
+        n_trajectories=200,
+        seed_offset=2000,  # Seed offset, no duplication with the training set
     )
     print(f"The validation set has been generated ({n_validation} trajectories)")
     print(f"training set: inputs {list(train_inputs.shape)}, labels {list(train_labels.shape)}")
     print(f"Validation set: inputs {list(val_inputs.shape)}, labels {list(val_labels.shape)}")
-

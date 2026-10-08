@@ -7,6 +7,7 @@
     trace.npz     (开 trace 时)中间产物:θ/|dx| 全序列 + 每 stride 个 sweep 的 x 快照
 Result.load(run_dir) 原样读回,供事后可视化/分析。
 """
+
 import json
 import os
 from dataclasses import dataclass, field
@@ -31,22 +32,24 @@ class TraceRecorder:
             self.snaps.append(x_np.copy())
 
     def arrays(self):
-        return dict(sweeps=np.asarray(self.sweeps),
-                    thetas=np.stack(self.thetas) if self.thetas else np.zeros((0, 0)),
-                    dxs=np.stack(self.dxs) if self.dxs else np.zeros((0, 0)),
-                    snap_sweeps=np.asarray(self.snap_sweeps),
-                    snaps=np.stack(self.snaps) if self.snaps else np.zeros((0,)))
+        return dict(
+            sweeps=np.asarray(self.sweeps),
+            thetas=np.stack(self.thetas) if self.thetas else np.zeros((0, 0)),
+            dxs=np.stack(self.dxs) if self.dxs else np.zeros((0, 0)),
+            snap_sweeps=np.asarray(self.snap_sweeps),
+            snaps=np.stack(self.snaps) if self.snaps else np.zeros((0,)),
+        )
 
 
 @dataclass
 class Result:
-    x: np.ndarray                      # (B,N,K,M) 软解
-    dx: np.ndarray                     # (B,) 末端 |dx|
+    x: np.ndarray  # (B,N,K,M) 软解
+    dx: np.ndarray  # (B,) 末端 |dx|
     seeds: list
-    params: dict = field(default_factory=dict)     # 场景+solver+版本快照
-    metrics: dict = field(default_factory=dict)    # experiments.audit 填充
-    legs: list = field(default_factory=list)       # 每 seed 的腿清单(transit 重建)
-    trace: dict = field(default_factory=dict)      # TraceRecorder.arrays() 或空
+    params: dict = field(default_factory=dict)  # 场景+solver+版本快照
+    metrics: dict = field(default_factory=dict)  # experiments.audit 填充
+    legs: list = field(default_factory=list)  # 每 seed 的腿清单(transit 重建)
+    trace: dict = field(default_factory=dict)  # TraceRecorder.arrays() 或空
 
     # ---------- 便捷读出 ----------
     def trajectories(self):
@@ -81,10 +84,14 @@ class Result:
             json.dump(self.params, f, indent=2, ensure_ascii=False, default=str)
         with open(os.path.join(run_dir, "metrics.json"), "w") as f:
             json.dump(self.metrics, f, indent=2, ensure_ascii=False, default=str)
-        np.savez_compressed(os.path.join(run_dir, "result.npz"),
-                            x=self.x, dx=self.dx, seeds=np.asarray(self.seeds),
-                            trajs=self.trajectories(),
-                            legs=np.asarray(json.dumps(self.legs)))
+        np.savez_compressed(
+            os.path.join(run_dir, "result.npz"),
+            x=self.x,
+            dx=self.dx,
+            seeds=np.asarray(self.seeds),
+            trajs=self.trajectories(),
+            legs=np.asarray(json.dumps(self.legs)),
+        )
         if self.trace:
             np.savez_compressed(os.path.join(run_dir, "trace.npz"), **self.trace)
         return run_dir
@@ -105,5 +112,12 @@ class Result:
             with np.load(t) as tz:
                 trace = {k: tz[k] for k in tz.files}
         legs = json.loads(str(z["legs"]))
-        return cls(x=z["x"], dx=z["dx"], seeds=list(z["seeds"]), params=params,
-                   metrics=metrics, legs=legs, trace=trace)
+        return cls(
+            x=z["x"],
+            dx=z["dx"],
+            seeds=list(z["seeds"]),
+            params=params,
+            metrics=metrics,
+            legs=legs,
+            trace=trace,
+        )

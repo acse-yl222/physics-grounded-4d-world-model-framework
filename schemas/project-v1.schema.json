@@ -45,12 +45,7 @@
               "minLength": 1
             }
           },
-          "required": [
-            "longitude",
-            "latitude",
-            "height_m",
-            "vertical_datum"
-          ]
+          "required": ["longitude", "latitude", "height_m", "vertical_datum"]
         },
         "bounds_m": {
           "type": "object",
@@ -73,21 +68,13 @@
               "maxItems": 3
             }
           },
-          "required": [
-            "min",
-            "max"
-          ]
+          "required": ["min", "max"]
         },
         "georeferenced": {
           "type": "boolean"
         }
       },
-      "required": [
-        "frame",
-        "units",
-        "origin",
-        "bounds_m"
-      ]
+      "required": ["frame", "units", "origin", "bounds_m"]
     },
     "inputs": {
       "type": "array",
@@ -116,13 +103,7 @@
             "minLength": 1
           }
         },
-        "required": [
-          "id",
-          "path",
-          "source",
-          "sha256",
-          "license"
-        ]
+        "required": ["id", "path", "source", "sha256", "license"]
       }
     },
     "default_view": {
@@ -130,13 +111,6 @@
       "pattern": "^[a-z][a-z0-9_]*$"
     }
   },
-  "required": [
-    "schema_version",
-    "scene_id",
-    "title",
-    "spatial",
-    "inputs",
-    "default_view"
-  ],
+  "required": ["schema_version", "scene_id", "title", "spatial", "inputs", "default_view"],
   "$schema": "https://json-schema.org/draft/2020-12/schema"
 }

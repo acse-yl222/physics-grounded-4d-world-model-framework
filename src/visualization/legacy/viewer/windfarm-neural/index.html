@@ -1,5 +1,194 @@
-<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Wind field · Neural Physics</title><style>
-body{margin:0;background:#101923;color:#e9f0f7;font:14px system-ui}main{max-width:1400px;margin:auto;padding:24px}h1{font-size:23px;margin:0 0 8px}p{color:#b4c7d6;line-height:1.7}.bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px;background:#1a2e3c;border-radius:8px}select,button{background:#294457;color:#fff;padding:8px;border:1px solid #55778b;border-radius:5px}input[type=range]{flex:1;min-width:220px;accent-color:#80dacf}.panels{display:grid;grid-template-columns:3fr 2fr;gap:16px;margin-top:18px}article{padding:16px;background:#182936;border-radius:8px;min-width:0}h2{font-size:16px}canvas{width:100%;display:block;cursor:crosshair}.legend{height:10px;background:linear-gradient(90deg,#263f83,#168ba6,#67c8a4,#f3dc69,#ed7445);margin:10px 0}.ticks{display:flex;justify-content:space-between;color:#b4c7d6;font-size:12px}.note{padding:12px;border-left:3px solid #e1bb65;background:#26303a}.good{color:#8fe1c9}.bad{color:#ffad9a}a{color:#8ad4ed}#status{font-size:16px}#terrain{margin-top:16px}table{width:100%;border-collapse:collapse;font-size:12px}td,th{padding:5px;border-bottom:1px solid #304554;text-align:right}td:first-child,th:first-child{text-align:left}@media(max-width:850px){.panels{grid-template-columns:1fr}main{padding:12px}}</style><main>
-<h1>All 23 turbines · Neural Physics solver · 4 m grid</h1><p>4096 × 2048 m horizontal domain · 4 m grid · Fixed PyTorch convolution operators, no trained weights</p><p id="status">Reading workstation run status…</p><div class="bar"><select id="scene"><option value="np4m_paper_lid">Paper force distribution · terrain-following lid (recommended)</option><option value="np4m_legacy_lid">Original force distribution · terrain-following lid</option><option value="np4m_paper">Paper force distribution · flat lid at 512 m</option><option value="np4m_legacy">Original force distribution · flat lid at 512 m</option><option value="np4m_paper_opentop">Paper force distribution · open top at 512 m</option></select><select id="focus"><option value="all">All turbines</option></select><button id="play">Play</button><input id="time" type="range" min="0" max="0" value="0"><span id="clock"></span><label><input type="checkbox" id="live" checked> Follow latest results</label></div>
-<div class="panels"><article><h2>Axial wind velocity at 80 m AGL</h2><canvas id="wind"></canvas><div class="legend"></div><div class="ticks"><span>0</span><span>u(m/s)</span><span>20</span></div><p id="readout">White segments mark rotors. Hover to inspect values, or select a turbine to zoom in.</p><p id="metrics" class="good"></p><p class="note">The pressure Poisson operator uses fixed Conv3d kernels, with pooling and upsampling for multigrid: a Neural Physics approach requiring no training. Turbine forces use the weighted actuator disk in Section 2.2 of Davidson et al. (2026). The fluid solver is not OpenFOAM, has no turbulence model and uses numerically dissipative first-order upwinding. Steady state and engineering accuracy remain unverified.</p></article><article><h2>Terrain and turbine locations</h2><canvas id="terrain"></canvas><p id="geometry"></p><h2>Disk-averaged velocity and thrust</h2><div style="max-height:330px;overflow:auto"><table><thead><tr><th>Turbine</th><th>m/s</th><th>kN</th></tr></thead><tbody id="rows"></tbody></table></div></article></div>
-<p>Assumes an upper-inlet wind speed of 8 m/s, all rotors facing +x, CT=0.75 (C′T=4/3), and axial σ=8 m. Terrain, towers and nacelles are retained, with axial actuator-disk forces but no resolved rotating blades, torque, power or turbulence closure. The original terrain DSM is about 30 m; computational refinement adds no measurement information.</p><p><a href="../windfarm-2m/">Earlier 2 m Triton results</a></p></main><script type="module" src="main.js"></script></html>
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><title>Wind field · Neural Physics</title
+  ><style>
+    body {
+      margin: 0;
+      background: #101923;
+      color: #e9f0f7;
+      font: 14px system-ui;
+    }
+    main {
+      max-width: 1400px;
+      margin: auto;
+      padding: 24px;
+    }
+    h1 {
+      font-size: 23px;
+      margin: 0 0 8px;
+    }
+    p {
+      color: #b4c7d6;
+      line-height: 1.7;
+    }
+    .bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      padding: 14px;
+      background: #1a2e3c;
+      border-radius: 8px;
+    }
+    select,
+    button {
+      background: #294457;
+      color: #fff;
+      padding: 8px;
+      border: 1px solid #55778b;
+      border-radius: 5px;
+    }
+    input[type='range'] {
+      flex: 1;
+      min-width: 220px;
+      accent-color: #80dacf;
+    }
+    .panels {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: 16px;
+      margin-top: 18px;
+    }
+    article {
+      padding: 16px;
+      background: #182936;
+      border-radius: 8px;
+      min-width: 0;
+    }
+    h2 {
+      font-size: 16px;
+    }
+    canvas {
+      width: 100%;
+      display: block;
+      cursor: crosshair;
+    }
+    .legend {
+      height: 10px;
+      background: linear-gradient(90deg, #263f83, #168ba6, #67c8a4, #f3dc69, #ed7445);
+      margin: 10px 0;
+    }
+    .ticks {
+      display: flex;
+      justify-content: space-between;
+      color: #b4c7d6;
+      font-size: 12px;
+    }
+    .note {
+      padding: 12px;
+      border-left: 3px solid #e1bb65;
+      background: #26303a;
+    }
+    .good {
+      color: #8fe1c9;
+    }
+    .bad {
+      color: #ffad9a;
+    }
+    a {
+      color: #8ad4ed;
+    }
+    #status {
+      font-size: 16px;
+    }
+    #terrain {
+      margin-top: 16px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    td,
+    th {
+      padding: 5px;
+      border-bottom: 1px solid #304554;
+      text-align: right;
+    }
+    td:first-child,
+    th:first-child {
+      text-align: left;
+    }
+    @media (max-width: 850px) {
+      .panels {
+        grid-template-columns: 1fr;
+      }
+      main {
+        padding: 12px;
+      }
+    }
+  </style>
+  <main>
+    <h1>All 23 turbines · Neural Physics solver · 4 m grid</h1>
+    <p>
+      4096 × 2048 m horizontal domain · 4 m grid · Fixed PyTorch convolution operators, no trained
+      weights
+    </p>
+    <p id="status">Reading workstation run status…</p>
+    <div class="bar">
+      <select id="scene">
+        <option value="np4m_paper_lid">
+          Paper force distribution · terrain-following lid (recommended)
+        </option>
+        <option value="np4m_legacy_lid">Original force distribution · terrain-following lid</option>
+        <option value="np4m_paper">Paper force distribution · flat lid at 512 m</option>
+        <option value="np4m_legacy">Original force distribution · flat lid at 512 m</option>
+        <option value="np4m_paper_opentop">
+          Paper force distribution · open top at 512 m
+        </option></select
+      ><select id="focus">
+        <option value="all">All turbines</option></select
+      ><button id="play">Play</button
+      ><input id="time" type="range" min="0" max="0" value="0" /><span id="clock"></span
+      ><label><input type="checkbox" id="live" checked /> Follow latest results</label>
+    </div>
+    <div class="panels">
+      <article>
+        <h2>Axial wind velocity at 80 m AGL</h2>
+        <canvas id="wind"></canvas>
+        <div class="legend"></div>
+        <div class="ticks"><span>0</span><span>u(m/s)</span><span>20</span></div>
+        <p id="readout">
+          White segments mark rotors. Hover to inspect values, or select a turbine to zoom in.
+        </p>
+        <p id="metrics" class="good"></p>
+        <p class="note">
+          The pressure Poisson operator uses fixed Conv3d kernels, with pooling and upsampling for
+          multigrid: a Neural Physics approach requiring no training. Turbine forces use the
+          weighted actuator disk in Section 2.2 of Davidson et al. (2026). The fluid solver is not
+          OpenFOAM, has no turbulence model and uses numerically dissipative first-order upwinding.
+          Steady state and engineering accuracy remain unverified.
+        </p>
+      </article>
+      <article>
+        <h2>Terrain and turbine locations</h2>
+        <canvas id="terrain"></canvas>
+        <p id="geometry"></p>
+        <h2>Disk-averaged velocity and thrust</h2>
+        <div style="max-height: 330px; overflow: auto">
+          <table>
+            <thead>
+              <tr>
+                <th>Turbine</th>
+                <th>m/s</th>
+                <th>kN</th>
+              </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+          </table>
+        </div>
+      </article>
+    </div>
+    <p>
+      Assumes an upper-inlet wind speed of 8 m/s, all rotors facing +x, CT=0.75 (C′T=4/3), and axial
+      σ=8 m. Terrain, towers and nacelles are retained, with axial actuator-disk forces but no
+      resolved rotating blades, torque, power or turbulence closure. The original terrain DSM is
+      about 30 m; computational refinement adds no measurement information.
+    </p>
+    <p><a href="../windfarm-2m/">Earlier 2 m Triton results</a></p>
+  </main>
+  <script type="module" src="main.js"></script>
+</html>

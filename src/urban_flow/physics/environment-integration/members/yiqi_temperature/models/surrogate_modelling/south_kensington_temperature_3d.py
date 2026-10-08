@@ -159,7 +159,9 @@ def air_density_kg_m3(temp_c: float, pressure_pa: float) -> float:
 
 
 def vapour_pressure_pa(temp_c: float, relative_humidity_pct: float) -> float:
-    return float((np.clip(relative_humidity_pct, 0.0, 100.0) / 100.0) * saturation_vapour_pressure_pa(temp_c))
+    return float(
+        (np.clip(relative_humidity_pct, 0.0, 100.0) / 100.0) * saturation_vapour_pressure_pa(temp_c)
+    )
 
 
 def estimate_downwelling_longwave_w_m2(
@@ -219,15 +221,16 @@ def build_ambient_temperature_series_c(
         + analysis_time_local.minute / 60.0
         + analysis_time_local.second / 3600.0
     )
-    schedule_hours = (
-        temp3d_config.background_temp_reference_hour_local
-        + np.asarray(temp3d_config.background_temp_delta_hours_local, dtype=np.float32)
+    schedule_hours = temp3d_config.background_temp_reference_hour_local + np.asarray(
+        temp3d_config.background_temp_delta_hours_local, dtype=np.float32
     )
     schedule_temps = temp3d_config.ambient_temp_c + np.asarray(
         temp3d_config.background_temp_delta_c,
         dtype=np.float32,
     )
-    elapsed_hours = np.arange(n_frames, dtype=np.float32) * float(temp3d_config.frame_duration_s) / 3600.0
+    elapsed_hours = (
+        np.arange(n_frames, dtype=np.float32) * float(temp3d_config.frame_duration_s) / 3600.0
+    )
     query_hours = start_hour_local + elapsed_hours
     return np.interp(
         query_hours,
@@ -331,7 +334,9 @@ def extract_full_3d_fields(
     building_mask_small = np.asarray(velocity_results["mask_resampled"], dtype=bool)
     height_field_small = np.asarray(velocity_results["height_resampled"], dtype=np.float32)
     land_cover = np.load(Path(velocity_config.static_dir) / "land_cover.npy")
-    land_cover = rotate_2d_field(land_cover, int(getattr(velocity_config, "geometry_rotation_deg", 0)))
+    land_cover = rotate_2d_field(
+        land_cover, int(getattr(velocity_config, "geometry_rotation_deg", 0))
+    )
     if land_cover.shape != building_mask_small.shape:
         land_cover = resize_nearest_2d(land_cover, building_mask_small.shape)
 
@@ -355,9 +360,15 @@ def extract_full_3d_fields(
         fill_value=0,
     ).astype(bool)
     study_area_mask_2d = embed_in_velocity_grid(
-        np.ones_like(building_mask_small, dtype=np.uint8), target_shape, offset_y, offset_x, fill_value=0
+        np.ones_like(building_mask_small, dtype=np.uint8),
+        target_shape,
+        offset_y,
+        offset_x,
+        fill_value=0,
     ).astype(bool)
-    open_ground_mask_2d = study_area_mask_2d & (~building_mask_2d) & (~vegetation_mask_2d) & (~urban_mask_2d)
+    open_ground_mask_2d = (
+        study_area_mask_2d & (~building_mask_2d) & (~vegetation_mask_2d) & (~urban_mask_2d)
+    )
 
     dz = float(velocity_config.height_scale_m)
     z_bottoms = np.arange(volume_shape[0], dtype=np.float32)[:, None, None] * dz
@@ -415,7 +426,11 @@ def extract_or_load_full_velocity_fields(
 ) -> tuple[dict[str, object], dict[str, np.ndarray], bool]:
     cached_fields = load_cached_full_velocity_fields(velocity_config, temp3d_config)
     if cached_fields is not None:
-        return {"config": velocity_config, "grid": {}, "cache_mode": "shared_velocity_3d_output"}, cached_fields, True
+        return (
+            {"config": velocity_config, "grid": {}, "cache_mode": "shared_velocity_3d_output"},
+            cached_fields,
+            True,
+        )
 
     velocity_results = run_pipeline(velocity_config)
     fields = extract_full_3d_fields(velocity_results, velocity_config)
@@ -480,22 +495,30 @@ def build_surface_temperature_fields(
     )
 
     urban_albedo = np.full(study_area_mask_2d.shape, temp3d_config.urban_albedo, dtype=np.float32)
-    urban_emissivity = np.full(study_area_mask_2d.shape, temp3d_config.urban_emissivity, dtype=np.float32)
+    urban_emissivity = np.full(
+        study_area_mask_2d.shape, temp3d_config.urban_emissivity, dtype=np.float32
+    )
     urban_storage_fraction = np.full(
         study_area_mask_2d.shape,
         temp3d_config.urban_storage_fraction,
         dtype=np.float32,
     )
 
-    open_albedo = np.full(study_area_mask_2d.shape, temp3d_config.open_ground_albedo, dtype=np.float32)
-    open_emissivity = np.full(study_area_mask_2d.shape, temp3d_config.open_ground_emissivity, dtype=np.float32)
+    open_albedo = np.full(
+        study_area_mask_2d.shape, temp3d_config.open_ground_albedo, dtype=np.float32
+    )
+    open_emissivity = np.full(
+        study_area_mask_2d.shape, temp3d_config.open_ground_emissivity, dtype=np.float32
+    )
     open_storage_fraction = np.full(
         study_area_mask_2d.shape,
         temp3d_config.open_ground_storage_fraction,
         dtype=np.float32,
     )
 
-    vegetation_albedo = np.full(study_area_mask_2d.shape, temp3d_config.vegetation_albedo, dtype=np.float32)
+    vegetation_albedo = np.full(
+        study_area_mask_2d.shape, temp3d_config.vegetation_albedo, dtype=np.float32
+    )
     vegetation_emissivity = np.full(
         study_area_mask_2d.shape,
         temp3d_config.vegetation_emissivity,
@@ -509,7 +532,9 @@ def build_surface_temperature_fields(
 
     urban_sw_abs = ((1.0 - urban_albedo) * ghi_w_m2 * local_radiation_factor).astype(np.float32)
     open_sw_abs = ((1.0 - open_albedo) * ghi_w_m2 * local_radiation_factor).astype(np.float32)
-    vegetation_sw_abs = ((1.0 - vegetation_albedo) * ghi_w_m2 * local_radiation_factor).astype(np.float32)
+    vegetation_sw_abs = ((1.0 - vegetation_albedo) * ghi_w_m2 * local_radiation_factor).astype(
+        np.float32
+    )
 
     latent_heat_flux_vegetation_w_m2 = (
         temp3d_config.vegetation_basal_crop_coefficient
@@ -573,13 +598,19 @@ def build_surface_temperature_fields(
 
     ground_surface_temperature_excess_c = np.zeros(study_area_mask_2d.shape, dtype=np.float32)
     ground_surface_temperature_excess_c[urban_mask_2d] = urban_surface_excess_c[urban_mask_2d]
-    ground_surface_temperature_excess_c[open_ground_mask_2d] = open_surface_excess_c[open_ground_mask_2d]
-    ground_surface_temperature_excess_c[vegetation_mask_2d] = vegetation_surface_excess_c[vegetation_mask_2d]
+    ground_surface_temperature_excess_c[open_ground_mask_2d] = open_surface_excess_c[
+        open_ground_mask_2d
+    ]
+    ground_surface_temperature_excess_c[vegetation_mask_2d] = vegetation_surface_excess_c[
+        vegetation_mask_2d
+    ]
     ground_surface_temperature_excess_c[building_mask_2d] = urban_surface_excess_c[building_mask_2d]
     ground_surface_temperature_excess_c[~study_area_mask_2d] = 0.0
 
     building_surface_temperature_excess_c = np.zeros(study_area_mask_2d.shape, dtype=np.float32)
-    building_surface_temperature_excess_c[building_mask_2d] = urban_surface_excess_c[building_mask_2d]
+    building_surface_temperature_excess_c[building_mask_2d] = urban_surface_excess_c[
+        building_mask_2d
+    ]
     roof_surface_temperature_excess_3d = np.zeros_like(fields["solid_mask_3d"], dtype=np.float32)
     roof_surface_temperature_excess_3d[fields["roof_mask_3d"]] = np.broadcast_to(
         building_surface_temperature_excess_c[None, :, :],
@@ -587,8 +618,12 @@ def build_surface_temperature_fields(
     )[fields["roof_mask_3d"]]
 
     ground_surface_temperature_c = ambient_temp_series_c[0] + ground_surface_temperature_excess_c
-    building_surface_temperature_2d = ambient_temp_series_c[0] + building_surface_temperature_excess_c
-    solid_temperature_3d = np.full(fields["solid_mask_3d"].shape, ambient_temp_series_c[0], dtype=np.float32)
+    building_surface_temperature_2d = (
+        ambient_temp_series_c[0] + building_surface_temperature_excess_c
+    )
+    solid_temperature_3d = np.full(
+        fields["solid_mask_3d"].shape, ambient_temp_series_c[0], dtype=np.float32
+    )
     solid_temperature_3d[fields["roof_mask_3d"]] = (
         ambient_temp_series_c[0] + roof_surface_temperature_excess_3d[fields["roof_mask_3d"]]
     )
@@ -607,9 +642,13 @@ def build_surface_temperature_fields(
 
     return {
         "ground_surface_temperature_c": ground_surface_temperature_c.astype(np.float32),
-        "ground_surface_temperature_excess_c": ground_surface_temperature_excess_c.astype(np.float32),
+        "ground_surface_temperature_excess_c": ground_surface_temperature_excess_c.astype(
+            np.float32
+        ),
         "solid_temperature_3d": solid_temperature_3d,
-        "building_surface_temperature_excess_c": building_surface_temperature_excess_c.astype(np.float32),
+        "building_surface_temperature_excess_c": building_surface_temperature_excess_c.astype(
+            np.float32
+        ),
         "roof_surface_temperature_excess_3d": roof_surface_temperature_excess_3d.astype(np.float32),
         "shade_field": shade_field.astype(np.float32),
         "local_radiation_factor": local_radiation_factor,
@@ -656,9 +695,12 @@ def impose_boundary_conditions_3d(
     study_area_3d = np.broadcast_to(fields["study_area_mask_2d"][None, :, :], temperature_c.shape)
     fluid_mask = (~solid_mask) & study_area_3d
 
-    current_solid_temperature_3d = np.full(temperature_c.shape, current_ambient_temp_c, dtype=np.float32)
+    current_solid_temperature_3d = np.full(
+        temperature_c.shape, current_ambient_temp_c, dtype=np.float32
+    )
     current_solid_temperature_3d[fields["roof_mask_3d"]] = (
-        current_ambient_temp_c + boundary_fields["roof_surface_temperature_excess_3d"][fields["roof_mask_3d"]]
+        current_ambient_temp_c
+        + boundary_fields["roof_surface_temperature_excess_3d"][fields["roof_mask_3d"]]
     )
     temperature_c[solid_mask] = current_solid_temperature_3d[solid_mask]
 
@@ -669,12 +711,22 @@ def impose_boundary_conditions_3d(
         temperature_c.shape[0],
         dtype=np.float32,
     )[:, None]
-    temperature_c[:, :, 0][left_fluid] = np.broadcast_to(vertical_profile, temperature_c[:, :, 0].shape)[left_fluid]
+    temperature_c[:, :, 0][left_fluid] = np.broadcast_to(
+        vertical_profile, temperature_c[:, :, 0].shape
+    )[left_fluid]
 
-    temperature_c[:, :, -1] = np.where(fluid_mask[:, :, -1], temperature_c[:, :, -2], temperature_c[:, :, -1])
-    temperature_c[:, 0, :] = np.where(fluid_mask[:, 0, :], temperature_c[:, 1, :], temperature_c[:, 0, :])
-    temperature_c[:, -1, :] = np.where(fluid_mask[:, -1, :], temperature_c[:, -2, :], temperature_c[:, -1, :])
-    temperature_c[-1, :, :] = np.where(fluid_mask[-1, :, :], current_ambient_temp_c, temperature_c[-1, :, :])
+    temperature_c[:, :, -1] = np.where(
+        fluid_mask[:, :, -1], temperature_c[:, :, -2], temperature_c[:, :, -1]
+    )
+    temperature_c[:, 0, :] = np.where(
+        fluid_mask[:, 0, :], temperature_c[:, 1, :], temperature_c[:, 0, :]
+    )
+    temperature_c[:, -1, :] = np.where(
+        fluid_mask[:, -1, :], temperature_c[:, -2, :], temperature_c[:, -1, :]
+    )
+    temperature_c[-1, :, :] = np.where(
+        fluid_mask[-1, :, :], current_ambient_temp_c, temperature_c[-1, :, :]
+    )
     outside_mask = ~study_area_3d
     temperature_c[outside_mask] = current_ambient_temp_c
 
@@ -725,8 +777,12 @@ def solve_temperature_fields_3d_numpy(
         u = np.where(fluid_mask, u_frames[frame_idx], 0.0)
         v = np.where(fluid_mask, v_frames[frame_idx], 0.0)
         w = np.where(fluid_mask, w_frames[frame_idx], 0.0)
-        current_ambient_temp_c = float(ambient_temp_series_c[min(frame_idx + 1, ambient_temp_series_c.shape[0] - 1)])
-        current_inflow_temp_c = float(inflow_temp_series_c[min(frame_idx + 1, inflow_temp_series_c.shape[0] - 1)])
+        current_ambient_temp_c = float(
+            ambient_temp_series_c[min(frame_idx + 1, ambient_temp_series_c.shape[0] - 1)]
+        )
+        current_inflow_temp_c = float(
+            inflow_temp_series_c[min(frame_idx + 1, inflow_temp_series_c.shape[0] - 1)]
+        )
         current_ground_surface_temperature_c = (
             current_ambient_temp_c + boundary_fields["ground_surface_temperature_excess_c"]
         ).astype(np.float32)
@@ -759,12 +815,11 @@ def solve_temperature_fields_3d_numpy(
             bottom_fluid = fluid_mask[0]
             for layer_idx in range(surface_forcing_layer_count):
                 layer_fluid = fluid_mask[layer_idx] & bottom_fluid
-                surface_exchange_term[layer_idx, layer_fluid] = (
-                    bottom_exchange_coeff[layer_fluid]
-                    * (
-                        current_ground_surface_temperature_c[layer_fluid]
-                        - temperature_c[layer_idx, layer_fluid]
-                    )
+                surface_exchange_term[layer_idx, layer_fluid] = bottom_exchange_coeff[
+                    layer_fluid
+                ] * (
+                    current_ground_surface_temperature_c[layer_fluid]
+                    - temperature_c[layer_idx, layer_fluid]
                 )
 
             next_temperature = temperature_c + dt * (
@@ -862,7 +917,9 @@ def impose_boundary_conditions_3d_torch(
     )
     temperature_c[-1, :, :] = torch.where(
         fluid_mask[-1, :, :],
-        torch.as_tensor(float(current_ambient_temp_c), dtype=temperature_c.dtype, device=temperature_c.device),
+        torch.as_tensor(
+            float(current_ambient_temp_c), dtype=temperature_c.dtype, device=temperature_c.device
+        ),
         temperature_c[-1, :, :],
     )
     temperature_c[~study_area_3d] = float(current_ambient_temp_c)
@@ -879,14 +936,22 @@ def solve_temperature_fields_3d_torch(
 
     requested_device = str(temp3d_config.temperature_solver_device)
     if requested_device.startswith("cuda") and not torch.cuda.is_available():
-        raise RuntimeError("temperature_solver_device requests CUDA, but torch.cuda.is_available() is False.")
-    device = torch.device(requested_device if requested_device != "auto" else ("cuda" if torch.cuda.is_available() else "cpu"))
+        raise RuntimeError(
+            "temperature_solver_device requests CUDA, but torch.cuda.is_available() is False."
+        )
+    device = torch.device(
+        requested_device
+        if requested_device != "auto"
+        else ("cuda" if torch.cuda.is_available() else "cpu")
+    )
 
     u_frames_np = (temp3d_config.velocity_scale * fields["u"]).astype(np.float32)
     v_frames_np = (temp3d_config.velocity_scale * fields["v"]).astype(np.float32)
     w_frames_np = (temp3d_config.velocity_scale * fields["w"]).astype(np.float32)
     solid_mask_np = fields["solid_mask_3d"].astype(bool)
-    study_area_3d_np = np.broadcast_to(fields["study_area_mask_2d"][None, :, :], solid_mask_np.shape).astype(bool)
+    study_area_3d_np = np.broadcast_to(
+        fields["study_area_mask_2d"][None, :, :], solid_mask_np.shape
+    ).astype(bool)
     fluid_mask_np = (~solid_mask_np) & study_area_3d_np
 
     dx = float(velocity_config.model_resolution_m)
@@ -904,7 +969,9 @@ def solve_temperature_fields_3d_torch(
     v_frames = torch.as_tensor(v_frames_np, dtype=torch.float32, device=device)
     w_frames = torch.as_tensor(w_frames_np, dtype=torch.float32, device=device)
     solid_mask = torch.as_tensor(solid_mask_np, dtype=torch.bool, device=device)
-    roof_mask = torch.as_tensor(fields["roof_mask_3d"].astype(bool), dtype=torch.bool, device=device)
+    roof_mask = torch.as_tensor(
+        fields["roof_mask_3d"].astype(bool), dtype=torch.bool, device=device
+    )
     study_area_3d = torch.as_tensor(study_area_3d_np, dtype=torch.bool, device=device)
     fluid_mask = (~solid_mask) & study_area_3d
     bottom_fluid = fluid_mask[0]
@@ -949,11 +1016,21 @@ def solve_temperature_fields_3d_torch(
 
     with torch.no_grad():
         for frame_idx in range(u_frames.shape[0]):
-            u = torch.where(fluid_mask, u_frames[frame_idx], torch.zeros((), dtype=torch.float32, device=device))
-            v = torch.where(fluid_mask, v_frames[frame_idx], torch.zeros((), dtype=torch.float32, device=device))
-            w = torch.where(fluid_mask, w_frames[frame_idx], torch.zeros((), dtype=torch.float32, device=device))
-            current_ambient_temp_c = float(ambient_temp_series_c[min(frame_idx + 1, ambient_temp_series_c.shape[0] - 1)])
-            current_inflow_temp_c = float(inflow_temp_series_c[min(frame_idx + 1, inflow_temp_series_c.shape[0] - 1)])
+            u = torch.where(
+                fluid_mask, u_frames[frame_idx], torch.zeros((), dtype=torch.float32, device=device)
+            )
+            v = torch.where(
+                fluid_mask, v_frames[frame_idx], torch.zeros((), dtype=torch.float32, device=device)
+            )
+            w = torch.where(
+                fluid_mask, w_frames[frame_idx], torch.zeros((), dtype=torch.float32, device=device)
+            )
+            current_ambient_temp_c = float(
+                ambient_temp_series_c[min(frame_idx + 1, ambient_temp_series_c.shape[0] - 1)]
+            )
+            current_inflow_temp_c = float(
+                inflow_temp_series_c[min(frame_idx + 1, inflow_temp_series_c.shape[0] - 1)]
+            )
             current_ground_surface_temperature_c = (
                 float(current_ambient_temp_c) + ground_surface_temperature_excess_c
             )
@@ -986,18 +1063,15 @@ def solve_temperature_fields_3d_torch(
                 surface_exchange_term = torch.zeros_like(temperature_c)
                 for layer_idx in range(surface_forcing_layer_count):
                     layer_fluid = fluid_mask[layer_idx] & bottom_fluid
-                    surface_exchange_term[layer_idx, layer_fluid] = (
-                        bottom_exchange_coeff[layer_fluid]
-                        * (
-                            current_ground_surface_temperature_c[layer_fluid]
-                            - temperature_c[layer_idx, layer_fluid]
-                        )
+                    surface_exchange_term[layer_idx, layer_fluid] = bottom_exchange_coeff[
+                        layer_fluid
+                    ] * (
+                        current_ground_surface_temperature_c[layer_fluid]
+                        - temperature_c[layer_idx, layer_fluid]
                     )
 
                 next_temperature = temperature_c + float(dt) * (
-                    -(adv_x + adv_y + adv_z)
-                    + diffusion_coeff * laplacian
-                    + surface_exchange_term
+                    -(adv_x + adv_y + adv_z) + diffusion_coeff * laplacian + surface_exchange_term
                 )
                 temperature_c[fluid_mask] = next_temperature[fluid_mask]
                 impose_boundary_conditions_3d_torch(
@@ -1037,14 +1111,24 @@ def solve_temperature_fields_3d(
 ) -> dict[str, object]:
     backend = str(getattr(temp3d_config, "temperature_solver_backend", "auto")).lower()
     if backend in {"cuda", "gpu", "torch"}:
-        return solve_temperature_fields_3d_torch(fields, boundary_fields, velocity_config, temp3d_config)
+        return solve_temperature_fields_3d_torch(
+            fields, boundary_fields, velocity_config, temp3d_config
+        )
     if backend in {"numpy", "cpu"}:
-        return solve_temperature_fields_3d_numpy(fields, boundary_fields, velocity_config, temp3d_config)
+        return solve_temperature_fields_3d_numpy(
+            fields, boundary_fields, velocity_config, temp3d_config
+        )
     if backend != "auto":
-        raise ValueError("temperature_solver_backend must be one of: auto, cuda, torch, numpy, cpu.")
+        raise ValueError(
+            "temperature_solver_backend must be one of: auto, cuda, torch, numpy, cpu."
+        )
     if TORCH_AVAILABLE and torch.cuda.is_available():
-        return solve_temperature_fields_3d_torch(fields, boundary_fields, velocity_config, temp3d_config)
-    return solve_temperature_fields_3d_numpy(fields, boundary_fields, velocity_config, temp3d_config)
+        return solve_temperature_fields_3d_torch(
+            fields, boundary_fields, velocity_config, temp3d_config
+        )
+    return solve_temperature_fields_3d_numpy(
+        fields, boundary_fields, velocity_config, temp3d_config
+    )
 
 
 def plot_temperature_3d_panels(
@@ -1058,14 +1142,22 @@ def plot_temperature_3d_panels(
         raise RuntimeError("matplotlib is required for plotting.")
 
     n_z = temperature_fields_c.shape[1]
-    safe_frame = min(max(frame_idx, 0), temperature_fields_c.shape[0] - 1) if frame_idx >= 0 else temperature_fields_c.shape[0] - 1
+    safe_frame = (
+        min(max(frame_idx, 0), temperature_fields_c.shape[0] - 1)
+        if frame_idx >= 0
+        else temperature_fields_c.shape[0] - 1
+    )
     safe_z = [min(max(int(z), 0), n_z - 1) for z in z_indices]
     volume = temperature_fields_c[safe_frame]
     fig, axes = plt.subplots(2, 3, figsize=(16, 9))
 
-    surface_temp = np.where(fields["study_area_mask_2d"], boundary_fields["ground_surface_temperature_c"], np.nan)
+    surface_temp = np.where(
+        fields["study_area_mask_2d"], boundary_fields["ground_surface_temperature_c"], np.nan
+    )
     shade_display = np.where(fields["study_area_mask_2d"], boundary_fields["shade_field"], np.nan)
-    building_display = np.where(fields["study_area_mask_2d"], fields["building_mask_2d"].astype(float), np.nan)
+    building_display = np.where(
+        fields["study_area_mask_2d"], fields["building_mask_2d"].astype(float), np.nan
+    )
 
     im0 = axes[0, 0].imshow(surface_temp, cmap="YlOrRd", origin="upper")
     axes[0, 0].set_title("Ground Surface Temperature")
@@ -1090,14 +1182,20 @@ def plot_temperature_3d_panels(
     return fig
 
 
-def show_vertical_temperature_section_animation(run_outputs: dict[str, object], section_y_idx: int | None = None) -> object:
+def show_vertical_temperature_section_animation(
+    run_outputs: dict[str, object], section_y_idx: int | None = None
+) -> object:
     if not MATPLOTLIB_AVAILABLE or HTML is None:
         raise RuntimeError("Animation output requires matplotlib and IPython.")
 
     frames = run_outputs["temperature_results"]["temperature_fields_masked_c"]
     solid_mask = run_outputs["fields"]["solid_mask_3d"]
     reference = frames[0]
-    safe_section_y = reference.shape[1] // 2 if section_y_idx is None else min(max(int(section_y_idx), 0), reference.shape[1] - 1)
+    safe_section_y = (
+        reference.shape[1] // 2
+        if section_y_idx is None
+        else min(max(int(section_y_idx), 0), reference.shape[1] - 1)
+    )
     sections = frames[:, :, safe_section_y, :].copy()
     solids = solid_mask[:, safe_section_y, :]
     sections[:, solids] = np.nan
@@ -1136,7 +1234,11 @@ def save_vertical_temperature_section_animation(
     frames = run_outputs["temperature_results"]["temperature_fields_masked_c"]
     solid_mask = run_outputs["fields"]["solid_mask_3d"]
     reference = frames[0]
-    safe_section_y = reference.shape[1] // 2 if section_y_idx is None else min(max(int(section_y_idx), 0), reference.shape[1] - 1)
+    safe_section_y = (
+        reference.shape[1] // 2
+        if section_y_idx is None
+        else min(max(int(section_y_idx), 0), reference.shape[1] - 1)
+    )
     sections = frames[:, :, safe_section_y, :].copy()
     solids = solid_mask[:, safe_section_y, :]
     sections[:, solids] = np.nan
@@ -1183,7 +1285,11 @@ def show_horizontal_temperature_slice_animation(
         raise RuntimeError("Animation output requires matplotlib and IPython.")
 
     frames = run_outputs["temperature_results"]["temperature_fields_masked_c"]
-    safe_z = min(3, frames.shape[1] - 1) if z_idx is None else min(max(int(z_idx), 0), frames.shape[1] - 1)
+    safe_z = (
+        min(3, frames.shape[1] - 1)
+        if z_idx is None
+        else min(max(int(z_idx), 0), frames.shape[1] - 1)
+    )
     slices = frames[:, safe_z, :, :]
 
     fig, ax = plt.subplots(figsize=(8, 6))
@@ -1217,7 +1323,11 @@ def save_horizontal_temperature_slice_animation(
     output_dir.mkdir(parents=True, exist_ok=True)
 
     frames = run_outputs["temperature_results"]["temperature_fields_masked_c"]
-    safe_z = min(3, frames.shape[1] - 1) if z_idx is None else min(max(int(z_idx), 0), frames.shape[1] - 1)
+    safe_z = (
+        min(3, frames.shape[1] - 1)
+        if z_idx is None
+        else min(max(int(z_idx), 0), frames.shape[1] - 1)
+    )
     slices = frames[:, safe_z, :, :]
 
     html_path = output_dir / f"{filename_prefix}_animation.html"
@@ -1264,15 +1374,29 @@ def save_results(
 ) -> dict[str, object]:
     out_dir = Path(temp3d_config.output_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    shared_cache_summary_path = save_shared_full_velocity_cache(fields, velocity_config, temp3d_config)
+    shared_cache_summary_path = save_shared_full_velocity_cache(
+        fields, velocity_config, temp3d_config
+    )
 
     np.save(out_dir / "temperature_fields_3d_c.npy", temperature_results["temperature_fields_c"])
-    np.save(out_dir / "temperature_fields_3d_masked_c.npy", temperature_results["temperature_fields_masked_c"])
-    np.save(out_dir / "ground_surface_temperature_c.npy", boundary_fields["ground_surface_temperature_c"])
-    np.save(out_dir / "building_surface_temperature_c.npy", boundary_fields["building_surface_temperature_c"])
+    np.save(
+        out_dir / "temperature_fields_3d_masked_c.npy",
+        temperature_results["temperature_fields_masked_c"],
+    )
+    np.save(
+        out_dir / "ground_surface_temperature_c.npy",
+        boundary_fields["ground_surface_temperature_c"],
+    )
+    np.save(
+        out_dir / "building_surface_temperature_c.npy",
+        boundary_fields["building_surface_temperature_c"],
+    )
     np.save(out_dir / "shade_field.npy", boundary_fields["shade_field"])
     np.save(out_dir / "local_radiation_factor.npy", boundary_fields["local_radiation_factor"])
-    np.save(out_dir / "surface_exchange_coeff_per_s.npy", boundary_fields["surface_exchange_coeff_per_s"])
+    np.save(
+        out_dir / "surface_exchange_coeff_per_s.npy",
+        boundary_fields["surface_exchange_coeff_per_s"],
+    )
     np.save(out_dir / "ambient_temp_series_c.npy", boundary_fields["ambient_temp_series_c"])
     np.save(out_dir / "frame_mean_temperature_c.npy", temperature_results["frame_means_c"])
 
@@ -1326,8 +1450,12 @@ def save_results(
         "substeps_per_frame": int(temperature_results["substeps_per_frame"]),
         "temperature_min_c": float(np.nanmin(temperature_results["temperature_fields_masked_c"])),
         "temperature_max_c": float(np.nanmax(temperature_results["temperature_fields_masked_c"])),
-        "ground_surface_temperature_min_c": float(np.nanmin(boundary_fields["ground_surface_temperature_c"])),
-        "ground_surface_temperature_max_c": float(np.nanmax(boundary_fields["ground_surface_temperature_c"])),
+        "ground_surface_temperature_min_c": float(
+            np.nanmin(boundary_fields["ground_surface_temperature_c"])
+        ),
+        "ground_surface_temperature_max_c": float(
+            np.nanmax(boundary_fields["ground_surface_temperature_c"])
+        ),
         "solar_elevation_deg": float(boundary_fields["solar_elevation_deg"][0]),
         "solar_azimuth_deg": float(boundary_fields["solar_azimuth_deg"][0]),
         "reference_wind_speed_m_s": float(temp3d_config.reference_wind_speed_m_s),
@@ -1366,9 +1494,13 @@ def run_temperature_3d_pipeline(
     velocity_config = velocity_config or SouthKensingtonConfig()
     temp3d_config = temp3d_config or Temperature3DScenarioConfig()
 
-    velocity_results, fields, cache_reused = extract_or_load_full_velocity_fields(velocity_config, temp3d_config)
+    velocity_results, fields, cache_reused = extract_or_load_full_velocity_fields(
+        velocity_config, temp3d_config
+    )
     boundary_fields = build_surface_temperature_fields(fields, velocity_config, temp3d_config)
-    temperature_results = solve_temperature_fields_3d(fields, boundary_fields, velocity_config, temp3d_config)
+    temperature_results = solve_temperature_fields_3d(
+        fields, boundary_fields, velocity_config, temp3d_config
+    )
     summary = save_results(
         velocity_results,
         fields,
@@ -1390,14 +1522,22 @@ def run_temperature_3d_pipeline(
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Generate a simplified 3D South Kensington temperature field from DIGIT 3D velocity.")
+    parser = argparse.ArgumentParser(
+        description="Generate a simplified 3D South Kensington temperature field from DIGIT 3D velocity."
+    )
     parser.add_argument("--timesteppings", type=int, default=50)
     parser.add_argument("--model-resolution-m", type=float, default=4.0)
     parser.add_argument("--z-dim", type=int, default=10)
     parser.add_argument("--height-scale-m", type=float, default=4.0)
     parser.add_argument("--ambient-temp-c", type=float, default=24.2)
-    parser.add_argument("--analysis-time-utc", default=Temperature3DScenarioConfig.analysis_time_utc)
-    parser.add_argument("--temperature-solver-backend", default="auto", choices=["auto", "cuda", "torch", "numpy", "cpu"])
+    parser.add_argument(
+        "--analysis-time-utc", default=Temperature3DScenarioConfig.analysis_time_utc
+    )
+    parser.add_argument(
+        "--temperature-solver-backend",
+        default="auto",
+        choices=["auto", "cuda", "torch", "numpy", "cpu"],
+    )
     parser.add_argument("--temperature-solver-device", default="cuda")
     parser.add_argument("--no-animation", action="store_true")
     parser.add_argument("--no-overview-figure", action="store_true")

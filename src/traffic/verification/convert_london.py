@@ -1,6 +1,7 @@
 from pathlib import Path
 from common.layout import scene_input
 from common.runtime import trial_root
+
 """
 Convert the GeoJSON of the real London map to the road network format for the simulator
 
@@ -17,8 +18,15 @@ import numpy as np
 CELL_SIZE = 3.0
 M_PER_DEG_LAT = 111320.0
 
-MAIN_HIGHWAYS = {'primary', 'secondary', 'trunk', 'tertiary',
-                 'trunk_link', 'primary_link', 'secondary_link'}
+MAIN_HIGHWAYS = {
+    "primary",
+    "secondary",
+    "trunk",
+    "tertiary",
+    "trunk_link",
+    "primary_link",
+    "secondary_link",
+}
 
 
 def _dist(a, b):
@@ -37,7 +45,7 @@ def _seg_length_m(seg, m_per_deg_lon):
     for a, b in zip(seg, seg[1:]):
         dlon = (b[0] - a[0]) * m_per_deg_lon
         dlat = (b[1] - a[1]) * M_PER_DEG_LAT
-        total += (dlon ** 2 + dlat ** 2) ** 0.5
+        total += (dlon**2 + dlat**2) ** 0.5
     return total
 
 
@@ -71,19 +79,23 @@ def merge_segments(segments, threshold_deg=0.0002):
         while True:
             extended = False
             # Extend backward first (append to the tail), then extend forward (prepend to the head)
-            for side in ('tail', 'head'):
+            for side in ("tail", "head"):
                 if len(chain) < 2:
                     anchor = chain[0]
                     dir_away = None
-                elif side == 'tail':
+                elif side == "tail":
                     anchor = chain[-1]
-                    dir_away = (chain[-1][0] - chain[-2][0],
-                                chain[-1][1] - chain[-2][1])     # Continue moving away from the end of the chain
+                    dir_away = (
+                        chain[-1][0] - chain[-2][0],
+                        chain[-1][1] - chain[-2][1],
+                    )  # Continue moving away from the end of the chain
                 else:
                     anchor = chain[0]
-                    dir_away = (chain[0][0] - chain[1][0],
-                                chain[0][1] - chain[1][1])       # Continue moving away from the chain head
-                best_j, best_d, best_rev = None, float('inf'), False
+                    dir_away = (
+                        chain[0][0] - chain[1][0],
+                        chain[0][1] - chain[1][1],
+                    )  # Continue moving away from the chain head
+                best_j, best_d, best_rev = None, float("inf"), False
                 for j in range(len(segs)):
                     if used[j]:
                         continue
@@ -97,7 +109,7 @@ def merge_segments(segments, threshold_deg=0.0002):
                         best_j, best_d, best_rev = j, d, rev
                 if best_j is not None:
                     s = segs[best_j]
-                    if side == 'tail':
+                    if side == "tail":
                         ss = s[::-1] if best_rev else s
                         chain = chain + ss[1:]
                     else:
@@ -128,14 +140,13 @@ def convert(geojson_path):
     with open(geojson_path) as f:
         data = json.load(f)
 
-    feats = [f for f in data['features']
-             if f['properties'].get('highway') in MAIN_HIGHWAYS]
+    feats = [f for f in data["features"] if f["properties"].get("highway") in MAIN_HIGHWAYS]
 
     byname = defaultdict(list)
     for f in feats:
-        byname[f['properties'].get('name', 'unnamed')].append(f)
+        byname[f["properties"].get("name", "unnamed")].append(f)
 
-    allpts = [p for f in feats for p in f['geometry']['coordinates']]
+    allpts = [p for f in feats for p in f["geometry"]["coordinates"]]
     min_lon = min(p[0] for p in allpts)
     max_lon = max(p[0] for p in allpts)
     min_lat = min(p[1] for p in allpts)
@@ -153,12 +164,12 @@ def convert(geojson_path):
 
     roads = []
     for name, fs in sorted(byname.items()):
-        oneway = Counter(f['properties'].get('oneway', 'no') for f in fs).most_common(1)[0][0]
-        lanes = int(Counter(f['properties'].get('lanes', '1') for f in fs).most_common(1)[0][0])
-        highway = Counter(f['properties'].get('highway') for f in fs).most_common(1)[0][0]
+        oneway = Counter(f["properties"].get("oneway", "no") for f in fs).most_common(1)[0][0]
+        lanes = int(Counter(f["properties"].get("lanes", "1") for f in fs).most_common(1)[0][0])
+        highway = Counter(f["properties"].get("highway") for f in fs).most_common(1)[0][0]
 
-        segs = [f['geometry']['coordinates'] for f in fs]
-        segs = [s for s in segs if _seg_length_m(s, m_per_deg_lon) >= 15]   # filter
+        segs = [f["geometry"]["coordinates"] for f in fs]
+        segs = [s for s in segs if _seg_length_m(s, m_per_deg_lon) >= 15]  # filter
         chains = merge_segments(segs)
         chains = [c for c in chains if len(c) >= 3]
         if not chains:
@@ -168,9 +179,8 @@ def convert(geojson_path):
             # Two-way arterial road
             pieces = [(mid_line(chains[0], chains[1]), True, max(1, lanes // 2), name)]
         elif len(chains) == 1:
-            two_way = (oneway != 'yes')
-            pieces = [(chains[0], two_way,
-                       max(1, lanes // 2) if two_way else lanes, name)]
+            two_way = oneway != "yes"
+            pieces = [(chains[0], two_way, max(1, lanes // 2) if two_way else lanes, name)]
         else:
             pieces = [(c, False, lanes, f"{name}#{k}") for k, c in enumerate(chains)]
 
@@ -180,13 +190,15 @@ def convert(geojson_path):
                 col = (lon - min_lon) * m_per_deg_lon / CELL_SIZE + PAD
                 row = (max_lat - lat) * M_PER_DEG_LAT / CELL_SIZE + PAD
                 centerline.append((round(row, 2), round(col, 2)))
-            roads.append({
-                "centerline": centerline,
-                "lanes_per_dir": lanes_per_dir,
-                "two_way": two_way,
-                "name": rname,
-                "highway": highway,
-            })
+            roads.append(
+                {
+                    "centerline": centerline,
+                    "lanes_per_dir": lanes_per_dir,
+                    "two_way": two_way,
+                    "name": rname,
+                    "highway": highway,
+                }
+            )
 
     # Coordinate transform: grid (row,col) <-> WGS84 (lon,lat); read by export_prediction.py.
     transform = {
@@ -207,20 +219,28 @@ def convert(geojson_path):
 
 
 if __name__ == "__main__":
-    path = sys.argv[1] if len(sys.argv) > 1 else \
-        str(scene_input('south_ken','traffic','roads.geojson'))
+    path = (
+        sys.argv[1]
+        if len(sys.argv) > 1
+        else str(scene_input("south_ken", "traffic", "roads.geojson"))
+    )
     roads, grid_size, transform = convert(path)
     print(f"Total {len(roads)} main roads:\n")
     for r in roads:
-        rows = [p[0] for p in r['centerline']]
-        cols = [p[1] for p in r['centerline']]
-        print(f"  {r['name']}: hw={r['highway']}, lanes_per_dir={r['lanes_per_dir']}, "
-              f"two_way={r['two_way']}, point={len(r['centerline'])}, "
-              f"row[{min(rows):.0f},{max(rows):.0f}], col[{min(cols):.0f},{max(cols):.0f}]")
+        rows = [p[0] for p in r["centerline"]]
+        cols = [p[1] for p in r["centerline"]]
+        print(
+            f"  {r['name']}: hw={r['highway']}, lanes_per_dir={r['lanes_per_dir']}, "
+            f"two_way={r['two_way']}, point={len(r['centerline'])}, "
+            f"row[{min(rows):.0f},{max(rows):.0f}], col[{min(cols):.0f},{max(cols):.0f}]"
+        )
 
-    out = sys.argv[2] if len(sys.argv) > 2 else \
-        str(trial_root('south_ken','traffic_map')/'london_roads.json')
-    Path(out).parent.mkdir(parents=True,exist_ok=True)
-    with open(out, 'w') as f:
+    out = (
+        sys.argv[2]
+        if len(sys.argv) > 2
+        else str(trial_root("south_ken", "traffic_map") / "london_roads.json")
+    )
+    Path(out).parent.mkdir(parents=True, exist_ok=True)
+    with open(out, "w") as f:
         json.dump({"grid_size": grid_size, "roads": roads, "transform": transform}, f, indent=2)
     print(f"\nGRID_SIZE={grid_size}, saved: {out}")

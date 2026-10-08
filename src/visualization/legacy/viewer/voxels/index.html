@@ -1,29 +1,176 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Region · Simulation voxel grid</title>
-<script type="importmap">{"imports":{"three":"../../vendor/three/build/three.module.js","three/addons/":"../../vendor/three/examples/jsm/"}}</script>
-<style>
-body{margin:0;background:#101b27;color:#e4edf5;font:14px system-ui}canvas{display:block;width:100vw;height:100vh}aside{position:absolute;top:20px;left:20px;width:300px;padding:20px;background:#152331ed;border:1px solid #395064;border-radius:14px;max-height:85vh;overflow:auto}h1{font-size:21px;margin:6px 0 12px}p{line-height:1.65;color:#b9cbd9}a{color:#81d8ed}label{display:block;margin:18px 0}input[type=range]{width:100%;accent-color:#63d7dc}button{background:#29465c;border:1px solid #4c6c83;color:white;padding:9px;border-radius:7px;cursor:pointer}small{color:#a0b3c4;line-height:1.6;display:block}#status{color:#8ce2cf} .sw{display:inline-block;width:10px;height:10px;margin-right:5px;background:#61b8ac}.orange{background:#f7b760}@media(max-width:600px){aside{top:8px;left:8px;width:240px;padding:12px;max-height:45vh}}
-</style></head><body><canvas id="view"></canvas><aside>
-<a href="../3d/?scene=region&lite=0">← Back to field viewer</a>
-<h1>Simulation voxel grid</h1><p>Region · Mountain wind farm<br><b>8 × 8 × 8 m per cell</b><br>768 × 512 × 64 · Fixed grid</p>
-<div id="status">Loading the workstation solid.npy grid…</div>
-<section style="margin-top:15px;border-top:1px solid #395064;border-bottom:1px solid #395064;padding-bottom:12px">
-<label><input id="wind-on" type="checkbox"> Show simulated wind</label>
-<label>Solver <select id="wind-source"><option value="ai4urban">AI4Urban · Neural Physics with fixed operators</option><option value="scaled">SCALED · Trained surrogate</option></select></label>
-<label>Target height above ground <select id="wind-height"><option value="40">40 m</option><option value="80" selected>80 m</option><option value="120">120 m</option></select></label>
-<label>Simulation step <output id="wind-step-value">100 / 100</output><input id="wind-step" type="range" min="1" max="100" value="100"></label>
-<button id="wind-play" disabled>Play simulation</button> <button id="wind-refresh">Load latest results</button>
-<p id="wind-status">SCALED neural network · Completed 100-step results</p>
-<div style="height:8px;background:linear-gradient(90deg,#417ee8,#44d8d0,#fae95a,#f07748);border-radius:4px"></div>
-<small style="display:flex;justify-content:space-between"><span>0</span><span>Wind speed m/s</span><span>≥ 2.5</span></small>
-<small id="wind-detail">Arrows indicate 3D wind direction. Waiting for the selected simulation results.</small>
-</section>
-<label>East–west slice <output id="x-value">100%</output><input id="x-cut" type="range" min="1" max="768" value="768"></label>
-<label>Height slice <output id="z-value">512 m</output><input id="z-cut" type="range" min="1" max="64" value="64"></label>
-<label><input id="padding" type="checkbox"> Show domain padding</label>
-<label><input id="edges" type="checkbox" checked> Show 8 m grid edges</label>
-<button id="overview">Overview</button> <button id="closeup">Turbine grid close-up</button> <button id="section">Terrain section</button>
-<p><span class="sw"></span>Terrain solids <span class="sw orange"></span>Static above-ground structures</p>
-<small>Drag to rotate; scroll to zoom; right-drag to pan. Only internal adjacent faces are hidden; grid resolution is preserved. Sliced faces also represent the actual cells.<br><br>Heights use the original model elevation minus 480 m. Thin towers and blades are limited by the 8 m grid; this is neither the original detailed geometry nor a turbine-rotation simulation.</small>
-</aside><script type="module" src="main.js"></script></body></html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Region · Simulation voxel grid</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "../../vendor/three/build/three.module.js",
+          "three/addons/": "../../vendor/three/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+      body {
+        margin: 0;
+        background: #101b27;
+        color: #e4edf5;
+        font: 14px system-ui;
+      }
+      canvas {
+        display: block;
+        width: 100vw;
+        height: 100vh;
+      }
+      aside {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        width: 300px;
+        padding: 20px;
+        background: #152331ed;
+        border: 1px solid #395064;
+        border-radius: 14px;
+        max-height: 85vh;
+        overflow: auto;
+      }
+      h1 {
+        font-size: 21px;
+        margin: 6px 0 12px;
+      }
+      p {
+        line-height: 1.65;
+        color: #b9cbd9;
+      }
+      a {
+        color: #81d8ed;
+      }
+      label {
+        display: block;
+        margin: 18px 0;
+      }
+      input[type='range'] {
+        width: 100%;
+        accent-color: #63d7dc;
+      }
+      button {
+        background: #29465c;
+        border: 1px solid #4c6c83;
+        color: white;
+        padding: 9px;
+        border-radius: 7px;
+        cursor: pointer;
+      }
+      small {
+        color: #a0b3c4;
+        line-height: 1.6;
+        display: block;
+      }
+      #status {
+        color: #8ce2cf;
+      }
+      .sw {
+        display: inline-block;
+        width: 10px;
+        height: 10px;
+        margin-right: 5px;
+        background: #61b8ac;
+      }
+      .orange {
+        background: #f7b760;
+      }
+      @media (max-width: 600px) {
+        aside {
+          top: 8px;
+          left: 8px;
+          width: 240px;
+          padding: 12px;
+          max-height: 45vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="view"></canvas>
+    <aside>
+      <a href="../3d/?scene=region&lite=0">← Back to field viewer</a>
+      <h1>Simulation voxel grid</h1>
+      <p>
+        Region · Mountain wind farm<br /><b>8 × 8 × 8 m per cell</b><br />768 × 512 × 64 · Fixed
+        grid
+      </p>
+      <div id="status">Loading the workstation solid.npy grid…</div>
+      <section
+        style="
+          margin-top: 15px;
+          border-top: 1px solid #395064;
+          border-bottom: 1px solid #395064;
+          padding-bottom: 12px;
+        "
+      >
+        <label><input id="wind-on" type="checkbox" /> Show simulated wind</label>
+        <label
+          >Solver
+          <select id="wind-source">
+            <option value="ai4urban">AI4Urban · Neural Physics with fixed operators</option>
+            <option value="scaled">SCALED · Trained surrogate</option>
+          </select></label
+        >
+        <label
+          >Target height above ground
+          <select id="wind-height">
+            <option value="40">40 m</option>
+            <option value="80" selected>80 m</option>
+            <option value="120">120 m</option>
+          </select></label
+        >
+        <label
+          >Simulation step <output id="wind-step-value">100 / 100</output
+          ><input id="wind-step" type="range" min="1" max="100" value="100"
+        /></label>
+        <button id="wind-play" disabled>Play simulation</button>
+        <button id="wind-refresh">Load latest results</button>
+        <p id="wind-status">SCALED neural network · Completed 100-step results</p>
+        <div
+          style="
+            height: 8px;
+            background: linear-gradient(90deg, #417ee8, #44d8d0, #fae95a, #f07748);
+            border-radius: 4px;
+          "
+        ></div>
+        <small style="display: flex; justify-content: space-between"
+          ><span>0</span><span>Wind speed m/s</span><span>≥ 2.5</span></small
+        >
+        <small id="wind-detail"
+          >Arrows indicate 3D wind direction. Waiting for the selected simulation results.</small
+        >
+      </section>
+      <label
+        >East–west slice <output id="x-value">100%</output
+        ><input id="x-cut" type="range" min="1" max="768" value="768"
+      /></label>
+      <label
+        >Height slice <output id="z-value">512 m</output
+        ><input id="z-cut" type="range" min="1" max="64" value="64"
+      /></label>
+      <label><input id="padding" type="checkbox" /> Show domain padding</label>
+      <label><input id="edges" type="checkbox" checked /> Show 8 m grid edges</label>
+      <button id="overview">Overview</button> <button id="closeup">Turbine grid close-up</button>
+      <button id="section">Terrain section</button>
+      <p>
+        <span class="sw"></span>Terrain solids <span class="sw orange"></span>Static above-ground
+        structures
+      </p>
+      <small
+        >Drag to rotate; scroll to zoom; right-drag to pan. Only internal adjacent faces are hidden;
+        grid resolution is preserved. Sliced faces also represent the actual cells.<br /><br />Heights
+        use the original model elevation minus 480 m. Thin towers and blades are limited by the 8 m
+        grid; this is neither the original detailed geometry nor a turbine-rotation
+        simulation.</small
+      >
+    </aside>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

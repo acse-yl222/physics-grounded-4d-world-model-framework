@@ -1,17 +1,18 @@
 """Resolve repository metadata, retained scene assets and disposable run workspaces."""
+
 from dataclasses import dataclass
 import json
 from pathlib import Path
 import re
 from .locations import workspace_root
 
-ALIASES = {'south_kensington': 'south_ken', 'core008': 'south_ken'}
+ALIASES = {"south_kensington": "south_ken", "core008": "south_ken"}
 
 
 def identifier(value, *, run=False):
-    pattern = r'[A-Za-z0-9][A-Za-z0-9_-]*' if run else r'[a-z][a-z0-9_]*'
+    pattern = r"[A-Za-z0-9][A-Za-z0-9_-]*" if run else r"[a-z][a-z0-9_]*"
     if not isinstance(value, str) or not re.fullmatch(pattern, value):
-        raise ValueError(f'Invalid {"run" if run else "scene/module"} identifier: {value!r}')
+        raise ValueError(f"Invalid {'run' if run else 'scene/module'} identifier: {value!r}")
     return value
 
 
@@ -23,7 +24,7 @@ def within(base, *parts):
     base = Path(base).resolve()
     target = base.joinpath(*parts).resolve()
     if not target.is_relative_to(base):
-        raise ValueError(f'Path escapes configured storage: {target}')
+        raise ValueError(f"Path escapes configured storage: {target}")
     return target
 
 
@@ -36,37 +37,54 @@ class Storage:
     @classmethod
     def load(cls, root=None):
         root = workspace_root(root)
-        config_path = root / 'storage.local.json'
+        config_path = root / "storage.local.json"
         config = json.loads(config_path.read_text()) if config_path.exists() else {}
-        if not isinstance(config, dict) or set(config) - {'data_root', 'cache_root'}:
-            raise ValueError('storage.local.json accepts only data_root and cache_root')
+        if not isinstance(config, dict) or set(config) - {"data_root", "cache_root"}:
+            raise ValueError("storage.local.json accepts only data_root and cache_root")
+
         def configured(key, default):
             value = config.get(key, str(default))
-            if not isinstance(value, str) or not value or not Path(value).expanduser().is_absolute():
-                raise ValueError(f'{key} must be an absolute path')
+            if (
+                not isinstance(value, str)
+                or not value
+                or not Path(value).expanduser().is_absolute()
+            ):
+                raise ValueError(f"{key} must be an absolute path")
             return Path(value).expanduser().resolve()
-        data = configured('data_root', root)
-        cache = configured('cache_root', root / 'cache')
+
+        data = configured("data_root", root)
+        cache = configured("cache_root", root / "cache")
         # Cache deletion must never encompass source or retained data.
-        if root.is_relative_to(cache) or data.is_relative_to(cache) or cache.is_relative_to(data / 'project'):
-            raise ValueError('cache_root must be separate from retained project data and must not contain the repository')
+        if (
+            root.is_relative_to(cache)
+            or data.is_relative_to(cache)
+            or cache.is_relative_to(data / "project")
+        ):
+            raise ValueError(
+                "cache_root must be separate from retained project data and must not contain the repository"
+            )
         return cls(root, data, cache)
 
     def metadata(self, scene):
-        return within(self.root, 'project', scene_id(scene))
+        return within(self.root, "project", scene_id(scene))
 
     def assets(self, scene, category):
-        if category not in {'input', 'geometry', 'runs'}:
-            raise ValueError(f'Unknown asset category: {category}')
-        return within(self.data_root, 'project', scene_id(scene), category)
+        if category not in {"input", "geometry", "runs"}:
+            raise ValueError(f"Unknown asset category: {category}")
+        return within(self.data_root, "project", scene_id(scene), category)
 
     def run(self, scene, run_id):
-        return within(self.assets(scene, 'runs'), identifier(run_id, run=True))
+        return within(self.assets(scene, "runs"), identifier(run_id, run=True))
 
     def scratch(self, scene, simulation, run_id):
-        return within(self.cache_root, scene_id(scene), identifier(simulation), identifier(run_id, run=True))
+        return within(
+            self.cache_root, scene_id(scene), identifier(simulation), identifier(run_id, run=True)
+        )
 
     def describe(self, scene):
-        return {'scene_id': scene_id(scene), 'metadata': str(self.metadata(scene)),
-                **{kind: str(self.assets(scene, kind)) for kind in ('input', 'geometry', 'runs')},
-                'cache_root': str(self.cache_root)}
+        return {
+            "scene_id": scene_id(scene),
+            "metadata": str(self.metadata(scene)),
+            **{kind: str(self.assets(scene, kind)) for kind in ("input", "geometry", "runs")},
+            "cache_root": str(self.cache_root),
+        }

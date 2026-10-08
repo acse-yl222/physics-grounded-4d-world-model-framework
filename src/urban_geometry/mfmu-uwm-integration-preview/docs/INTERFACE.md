@@ -10,11 +10,17 @@
 {
   "horizon_slots": 240,
   "stations": [
-    {"id": "hub-west", "x": 0.0, "y": 0.0, "role": "hub"},
-    {"id": "station-a", "x": 1.0, "y": 0.0, "role": "station"}
+    { "id": "hub-west", "x": 0.0, "y": 0.0, "role": "hub" },
+    { "id": "station-a", "x": 1.0, "y": 0.0, "role": "station" }
   ],
-  "travel_time_slots": [[0, 1], [1, 0]],
-  "distance_km": [[0.0, 0.8], [0.8, 0.0]]
+  "travel_time_slots": [
+    [0, 1],
+    [1, 0]
+  ],
+  "distance_km": [
+    [0.0, 0.8],
+    [0.8, 0.0]
+  ]
 }
 ```
 
@@ -26,9 +32,7 @@ Station and UAV identifiers may be strings. The adapter maps them to the one-bas
 
 ```json
 {
-  "fleet": [
-    {"id": "uav-01", "start_station": "hub-west", "initial_soc": 75}
-  ]
+  "fleet": [{ "id": "uav-01", "start_station": "hub-west", "initial_soc": 75 }]
 }
 ```
 

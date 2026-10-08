@@ -24,7 +24,9 @@ def find_bundle_root() -> Path:
     for candidate in candidates:
         if (candidate / "temperature_surrogate_3d.py").exists():
             return candidate.resolve()
-    raise FileNotFoundError("Could not find temperature_field_bundle with temperature_surrogate_3d.py")
+    raise FileNotFoundError(
+        "Could not find temperature_field_bundle with temperature_surrogate_3d.py"
+    )
 
 
 BUNDLE_ROOT = find_bundle_root()
@@ -94,7 +96,9 @@ COOL_SURFACE_VERTICAL_DECAY_LAYERS = 4.0
 SURFACE_MASK_CACHE: dict[tuple[str, str], np.ndarray] = {}
 
 
-def load_stats(checkpoint: dict[str, object], train_cases: list[Temperature3DCase]) -> SurrogateStats:
+def load_stats(
+    checkpoint: dict[str, object], train_cases: list[Temperature3DCase]
+) -> SurrogateStats:
     payload = checkpoint.get("stats")
     if payload:
         return SurrogateStats(**payload)
@@ -162,13 +166,19 @@ def crop_slices(
     return slice(z0, z0 + dz), slice(y0, y0 + dy), slice(x0, x0 + dx)
 
 
-def crop_slices_from_origin(origin: tuple[int, int, int], patch_size: tuple[int, int, int] = PATCH_SIZE) -> tuple[slice, slice, slice]:
+def crop_slices_from_origin(
+    origin: tuple[int, int, int], patch_size: tuple[int, int, int] = PATCH_SIZE
+) -> tuple[slice, slice, slice]:
     z0, y0, x0 = origin
     dz, dy, dx = patch_size
     return slice(z0, z0 + dz), slice(y0, y0 + dy), slice(x0, x0 + dx)
 
 
-def random_crop_origin(volume_shape: tuple[int, int, int], rng: random.Random, patch_size: tuple[int, int, int] = PATCH_SIZE) -> tuple[int, int, int]:
+def random_crop_origin(
+    volume_shape: tuple[int, int, int],
+    rng: random.Random,
+    patch_size: tuple[int, int, int] = PATCH_SIZE,
+) -> tuple[int, int, int]:
     starts = []
     for dim, patch in zip(volume_shape, patch_size):
         if patch > dim:
@@ -177,7 +187,9 @@ def random_crop_origin(volume_shape: tuple[int, int, int], rng: random.Random, p
     return tuple(starts)
 
 
-def crop_slices_for_case(case: Temperature3DCase, rng: random.Random, patch_size: tuple[int, int, int] = PATCH_SIZE) -> tuple[slice, slice, slice]:
+def crop_slices_for_case(
+    case: Temperature3DCase, rng: random.Random, patch_size: tuple[int, int, int] = PATCH_SIZE
+) -> tuple[slice, slice, slice]:
     origin = random_crop_origin(case.temperature.shape[1:], rng, patch_size=patch_size)
     return crop_slices_from_origin(origin, patch_size=patch_size)
 
@@ -194,7 +206,9 @@ def input_channel_count(history_steps: int = HISTORY_STEPS, include_speed: bool 
     return temperature_channels + velocity_window_channels + 8 + cool_surface_channels
 
 
-def adapt_state_dict_for_velocity_window(state_dict: dict[str, torch.Tensor], model: torch.nn.Module) -> dict[str, torch.Tensor]:
+def adapt_state_dict_for_velocity_window(
+    state_dict: dict[str, torch.Tensor], model: torch.nn.Module
+) -> dict[str, torch.Tensor]:
     model_state = model.state_dict()
     first_key = "encoders.0.block.0.weight"
     if first_key not in state_dict or first_key not in model_state:
@@ -245,7 +259,9 @@ def adapt_state_dict_for_velocity_window(state_dict: dict[str, torch.Tensor], mo
     return state_dict
 
 
-def masked_gradient_loss(prediction: torch.Tensor, target: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
+def masked_gradient_loss(
+    prediction: torch.Tensor, target: torch.Tensor, mask: torch.Tensor
+) -> torch.Tensor:
     losses = []
     for dim in (-3, -2, -1):
         pred_grad = prediction.diff(dim=dim)
@@ -256,7 +272,9 @@ def masked_gradient_loss(prediction: torch.Tensor, target: torch.Tensor, mask: t
             grad_mask = mask[..., :, 1:, :] * mask[..., :, :-1, :]
         else:
             grad_mask = mask[..., :, :, 1:] * mask[..., :, :, :-1]
-        losses.append((((pred_grad - target_grad) ** 2) * grad_mask).sum() / grad_mask.sum().clamp_min(1.0))
+        losses.append(
+            (((pred_grad - target_grad) ** 2) * grad_mask).sum() / grad_mask.sum().clamp_min(1.0)
+        )
     return sum(losses) / len(losses)
 
 
@@ -271,8 +289,12 @@ def masked_multiscale_loss(
         if any(size < factor for size in prediction.shape[-3:]):
             continue
         pooled_mask = F.avg_pool3d(mask, kernel_size=factor, stride=factor)
-        pred_pool = F.avg_pool3d(prediction * mask, kernel_size=factor, stride=factor) / pooled_mask.clamp_min(1e-6)
-        target_pool = F.avg_pool3d(target * mask, kernel_size=factor, stride=factor) / pooled_mask.clamp_min(1e-6)
+        pred_pool = F.avg_pool3d(
+            prediction * mask, kernel_size=factor, stride=factor
+        ) / pooled_mask.clamp_min(1e-6)
+        target_pool = F.avg_pool3d(
+            target * mask, kernel_size=factor, stride=factor
+        ) / pooled_mask.clamp_min(1e-6)
         valid = (pooled_mask > 0.25).to(prediction.dtype)
         losses.append((((pred_pool - target_pool) ** 2) * valid).sum() / valid.sum().clamp_min(1.0))
     if not losses:
@@ -280,18 +302,26 @@ def masked_multiscale_loss(
     return sum(losses) / len(losses)
 
 
-def masked_vertical_profile_loss(prediction: torch.Tensor, target: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
+def masked_vertical_profile_loss(
+    prediction: torch.Tensor, target: torch.Tensor, mask: torch.Tensor
+) -> torch.Tensor:
     valid = mask.sum(dim=(-2, -1)).clamp_min(1.0)
     pred_profile = (prediction * mask).sum(dim=(-2, -1)) / valid
     target_profile = (target * mask).sum(dim=(-2, -1)) / valid
     layer_valid = (mask.sum(dim=(-2, -1)) > 0).to(prediction.dtype)
     zdim = prediction.shape[-3]
-    z_weight = torch.linspace(1.0, 1.5, zdim, dtype=prediction.dtype, device=prediction.device).view(1, 1, zdim)
+    z_weight = torch.linspace(
+        1.0, 1.5, zdim, dtype=prediction.dtype, device=prediction.device
+    ).view(1, 1, zdim)
     weighted_valid = layer_valid * z_weight
-    return (((pred_profile - target_profile) ** 2) * weighted_valid).sum() / weighted_valid.sum().clamp_min(1.0)
+    return (
+        ((pred_profile - target_profile) ** 2) * weighted_valid
+    ).sum() / weighted_valid.sum().clamp_min(1.0)
 
 
-def masked_bias_loss(prediction: torch.Tensor, target: torch.Tensor, mask: torch.Tensor) -> torch.Tensor:
+def masked_bias_loss(
+    prediction: torch.Tensor, target: torch.Tensor, mask: torch.Tensor
+) -> torch.Tensor:
     bias = ((prediction - target) * mask).sum() / mask.sum().clamp_min(1.0)
     return bias * bias
 
@@ -304,15 +334,13 @@ def detail_aware_loss(
     base = masked_mse(prediction, target, mask)
     grad = masked_gradient_loss(prediction, target, mask)
     multiscale = masked_multiscale_loss(prediction, target, mask)
-    loss = (
-        base
-        + GRADIENT_LOSS_WEIGHT * grad
-        + MULTISCALE_LOSS_WEIGHT * multiscale
-    )
+    loss = base + GRADIENT_LOSS_WEIGHT * grad + MULTISCALE_LOSS_WEIGHT * multiscale
     if BIAS_LOSS_WEIGHT > 0.0:
         loss = loss + BIAS_LOSS_WEIGHT * masked_bias_loss(prediction, target, mask)
     if VERTICAL_PROFILE_LOSS_WEIGHT > 0.0:
-        loss = loss + VERTICAL_PROFILE_LOSS_WEIGHT * masked_vertical_profile_loss(prediction, target, mask)
+        loss = loss + VERTICAL_PROFILE_LOSS_WEIGHT * masked_vertical_profile_loss(
+            prediction, target, mask
+        )
     return loss
 
 
@@ -378,10 +406,7 @@ def build_rollout_input(
         w_next = np_to_device(case.w[next_velocity_t][crop], device) / stats.velocity_scale
         speed_next = torch.sqrt(u_next * u_next + v_next * v_next + w_next * w_next)
         velocity_channels.extend([u_next, v_next, w_next, speed_next])
-    static = [
-        np_to_device(channel, device)
-        for channel in helper._static_channels(case, crop, t)
-    ]
+    static = [np_to_device(channel, device) for channel in helper._static_channels(case, crop, t)]
     static.extend(cool_surface_channels(case, crop, device))
     mask = np_to_device(helper._fluid_mask(case, crop)[None, ...], device)
     temperature_channels = history + ([future_guess] if USE_IMPLICIT_FUTURE_GUESS else [])
@@ -389,7 +414,9 @@ def build_rollout_input(
     return torch.stack(channels, dim=0).unsqueeze(0), mask.unsqueeze(0), speed
 
 
-def initial_future_guess_from_stats(history: list[torch.Tensor], stats: SurrogateStats) -> torch.Tensor:
+def initial_future_guess_from_stats(
+    history: list[torch.Tensor], stats: SurrogateStats
+) -> torch.Tensor:
     if FUTURE_GUESS_MODE == "copy_current" or len(history) < 2:
         return history[-1].clone()
     if FUTURE_GUESS_MODE == "linear_extrapolation":
@@ -415,7 +442,9 @@ def impose_temperature_constraints(
 
     ambient_value = stats.temp_mean
     if case.ambient_temp_series is not None:
-        ambient_value = float(case.ambient_temp_series[min(t + 1, len(case.ambient_temp_series) - 1)])
+        ambient_value = float(
+            case.ambient_temp_series[min(t + 1, len(case.ambient_temp_series) - 1)]
+        )
     ambient = torch.as_tensor(ambient_value, dtype=constrained.dtype, device=constrained.device)
 
     z_slice, y_slice, x_slice = crop
@@ -439,7 +468,9 @@ def impose_temperature_constraints(
                 device=constrained.device,
             ).view(1, 1, zdim, 1)
             left = constrained[..., :, :, 0]
-            constrained[..., :, :, 0] = torch.where(left_fluid, vertical_profile.expand_as(left), left)
+            constrained[..., :, :, 0] = torch.where(
+                left_fluid, vertical_profile.expand_as(left), left
+            )
         if x_stop == full_x and constrained.shape[-1] > 1:
             right_fluid = mask[..., :, :, -1] > 0
             right = constrained[..., :, :, -1]
@@ -460,23 +491,28 @@ def impose_temperature_constraints(
     if USE_COOL_SURFACE_CHANNELS and USE_COOL_SURFACE_RELAXATION:
         vegetation, open_ground = cool_surface_masks(case, crop, constrained.device)
         cool_weight = (
-            COOL_SURFACE_RELAXATION * vegetation
-            + OPEN_GROUND_RELAXATION * open_ground
-        ).unsqueeze(0).unsqueeze(0)
+            (COOL_SURFACE_RELAXATION * vegetation + OPEN_GROUND_RELAXATION * open_ground)
+            .unsqueeze(0)
+            .unsqueeze(0)
+        )
         zdim = constrained.shape[-3]
         vertical_decay = torch.exp(
             -torch.arange(zdim, dtype=constrained.dtype, device=constrained.device)
             / float(COOL_SURFACE_VERTICAL_DECAY_LAYERS)
         ).view(1, 1, zdim, 1, 1)
         alpha = (cool_weight * vertical_decay * (mask > 0).to(constrained.dtype)).clamp(0.0, 0.6)
-        ground_surface = np_to_device(
-            TemperatureSurrogateDataset._broadcast_2d(
-                case.ground_surface_temperature,
-                case.temperature.shape[1:],
-                fill=ambient_value,
-            )[crop],
-            constrained.device,
-        ).unsqueeze(0).unsqueeze(0)
+        ground_surface = (
+            np_to_device(
+                TemperatureSurrogateDataset._broadcast_2d(
+                    case.ground_surface_temperature,
+                    case.temperature.shape[1:],
+                    fill=ambient_value,
+                )[crop],
+                constrained.device,
+            )
+            .unsqueeze(0)
+            .unsqueeze(0)
+        )
         cool_reference = torch.minimum(ground_surface, ambient + 0.5)
         constrained = constrained * (1.0 - alpha) + cool_reference * alpha
 
@@ -493,11 +529,15 @@ def sample_rollout_loss(
 ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
     max_start_t = case.n_training_steps - ROLLOUT_STEPS
     if max_start_t < HISTORY_STEPS - 1:
-        raise ValueError(f"{case.case_dir.name} has too few frames for rollout length {ROLLOUT_STEPS}.")
+        raise ValueError(
+            f"{case.case_dir.name} has too few frames for rollout length {ROLLOUT_STEPS}."
+        )
     start_t = rng.randint(HISTORY_STEPS - 1, max_start_t)
     patch_size = choose_patch_size(case.temperature.shape[1:], rng)
     crop = crop_slices_for_case(case, rng, patch_size=patch_size)
-    return rollout_loss_at(model, case, stats, helper, device, start_t, crop, rollout_steps=ROLLOUT_STEPS)
+    return rollout_loss_at(
+        model, case, stats, helper, device, start_t, crop, rollout_steps=ROLLOUT_STEPS
+    )
 
 
 def rollout_loss_at(
@@ -511,10 +551,12 @@ def rollout_loss_at(
     rollout_steps: int = ROLLOUT_STEPS,
 ) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
 
-    raw_history = np.asarray(case.temperature[start_t - HISTORY_STEPS + 1 : start_t + 1][(slice(None), *crop)], dtype=np.float32)
+    raw_history = np.asarray(
+        case.temperature[start_t - HISTORY_STEPS + 1 : start_t + 1][(slice(None), *crop)],
+        dtype=np.float32,
+    )
     history = [
-        (np_to_device(frame, device) - stats.temp_mean) / stats.temp_std
-        for frame in raw_history
+        (np_to_device(frame, device) - stats.temp_mean) / stats.temp_std for frame in raw_history
     ]
 
     total_loss = torch.zeros((), device=device)
@@ -532,7 +574,9 @@ def rollout_loss_at(
         for iteration in range(CORRECTION_ITERATIONS):
             guess_batch = future_guess.unsqueeze(0).unsqueeze(0)
             mask = np_to_device(helper._fluid_mask(case, crop)[None, ...], device).unsqueeze(0)
-            informed_guess = impose_temperature_constraints(guess_batch, case, stats, crop, t, history, mask)
+            informed_guess = impose_temperature_constraints(
+                guess_batch, case, stats, crop, t, history, mask
+            )
             x, mask, _speed = build_rollout_input(
                 helper,
                 case,
@@ -597,7 +641,8 @@ def make_fixed_validation_samples(
     rng = random.Random(seed)
     samples: list[dict[str, object]] = []
     valid_case_indices = [
-        idx for idx, case in enumerate(cases)
+        idx
+        for idx, case in enumerate(cases)
         if case.n_training_steps - rollout_steps >= HISTORY_STEPS - 1
     ]
     if not valid_case_indices:
@@ -608,8 +653,12 @@ def make_fixed_validation_samples(
         case = cases[case_index]
         max_start_t = case.n_training_steps - rollout_steps
         start_t = rng.randint(HISTORY_STEPS - 1, max_start_t)
-        sample_patch_size = patch_size or choose_patch_size(case.temperature.shape[1:], rng, patch_sizes=patch_sizes)
-        crop_origin = random_crop_origin(case.temperature.shape[1:], rng, patch_size=sample_patch_size)
+        sample_patch_size = patch_size or choose_patch_size(
+            case.temperature.shape[1:], rng, patch_sizes=patch_sizes
+        )
+        crop_origin = random_crop_origin(
+            case.temperature.shape[1:], rng, patch_size=sample_patch_size
+        )
         samples.append(
             {
                 "case_index": int(case_index),
@@ -641,7 +690,9 @@ def evaluate_fixed_rollout(
     for sample in fixed_samples:
         case = cases[int(sample["case_index"])]
         crop_origin = tuple(int(v) for v in sample["crop_origin"])
-        sample_patch_size = tuple(int(v) for v in sample.get("patch_size", patch_size or PATCH_SIZE))
+        sample_patch_size = tuple(
+            int(v) for v in sample.get("patch_size", patch_size or PATCH_SIZE)
+        )
         crop = crop_slices_from_origin(crop_origin, patch_size=sample_patch_size)
         loss, mae, bias = rollout_loss_at(
             model,
@@ -689,7 +740,11 @@ def evaluate_rollout(
         losses.append(float(loss.cpu()))
         maes.append(float(mae.cpu()))
         biases.append(float(bias.cpu()))
-    return {"loss": float(np.mean(losses)), "mae_c": float(np.mean(maes)), "bias_c": float(np.mean(biases))}
+    return {
+        "loss": float(np.mean(losses)),
+        "mae_c": float(np.mean(maes)),
+        "bias_c": float(np.mean(biases)),
+    }
 
 
 def main() -> None:
@@ -722,7 +777,9 @@ def main() -> None:
         base_channels=int(ckpt_config.get("base_channels", BASE_CHANNELS)),
         depth=int(ckpt_config.get("depth", DEPTH)),
     ).to(device)
-    model.load_state_dict(adapt_state_dict_for_velocity_window(checkpoint["model_state_dict"], model))
+    model.load_state_dict(
+        adapt_state_dict_for_velocity_window(checkpoint["model_state_dict"], model)
+    )
 
     helper = TemperatureSurrogateDataset(
         train_cases,
@@ -746,7 +803,9 @@ def main() -> None:
     )
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode="min", factor=0.5, patience=3)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode="min", factor=0.5, patience=3
+    )
     scaler = torch.amp.GradScaler("cuda", enabled=AMP and device.type == "cuda")
     train_rng = random.Random(SEED + 1)
     val_rng = random.Random(SEED + 2)
@@ -767,7 +826,9 @@ def main() -> None:
         rollout_steps=LONG_ROLLOUT_STEPS,
     )
     (RUN_DIR / "fixed_validation_samples.json").write_text(json.dumps(fixed_val_samples, indent=2))
-    (RUN_DIR / "fixed_long_validation_samples.json").write_text(json.dumps(fixed_long_val_samples, indent=2))
+    (RUN_DIR / "fixed_long_validation_samples.json").write_text(
+        json.dumps(fixed_long_val_samples, indent=2)
+    )
 
     best_val = float("inf")
     best_score = float("inf")
@@ -879,7 +940,10 @@ def main() -> None:
             train_maes.append(float(mae.detach().cpu()))
 
             if step % 64 == 0:
-                print(f"epoch {epoch:02d} step {step:04d}/{STEPS_PER_EPOCH}: loss={np.mean(train_losses[-64:]):.5f}, mae={np.mean(train_maes[-64:]):.3f} C", flush=True)
+                print(
+                    f"epoch {epoch:02d} step {step:04d}/{STEPS_PER_EPOCH}: loss={np.mean(train_losses[-64:]):.5f}, mae={np.mean(train_maes[-64:]):.3f} C",
+                    flush=True,
+                )
             del loss, mae, bias
 
         val_metrics = evaluate_fixed_rollout(
@@ -919,7 +983,9 @@ def main() -> None:
         history["long_val_drift_aware_score"].append(long_val_metrics["drift_aware_score"])
         (RUN_DIR / "rollout_training_history.json").write_text(json.dumps(history, indent=2))
 
-        selection_score = 0.5 * val_metrics["drift_aware_score"] + 0.5 * long_val_metrics["drift_aware_score"]
+        selection_score = (
+            0.5 * val_metrics["drift_aware_score"] + 0.5 * long_val_metrics["drift_aware_score"]
+        )
         is_best = selection_score < best_score
         if is_best:
             best_val = val_metrics["loss"]

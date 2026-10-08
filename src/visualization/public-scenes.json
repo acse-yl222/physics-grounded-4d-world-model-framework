@@ -8,9 +8,7 @@
       "tag": "Urban environment",
       "description": "Urban geometry, wind and heat, pollution, sunlight and flooding, with traffic and flight replays.",
       "viewer_url": "src/visualization/legacy/viewer/3d/?scene=south_kensington",
-      "resource_ids": [
-        "south_ken_geometry_models_v1"
-      ]
+      "resource_ids": ["south_ken_geometry_models_v1"]
     },
     {
       "scene_id": "white_city",
@@ -18,9 +16,7 @@
       "tag": "Urban environment",
       "description": "A 9 km\u00b2 White City scene with urban models, environmental fields and traffic information.",
       "viewer_url": "src/visualization/legacy/viewer/3d/?scene=white_city",
-      "resource_ids": [
-        "white_city_geometry_white_city_v2"
-      ]
+      "resource_ids": ["white_city_geometry_white_city_v2"]
     },
     {
       "scene_id": "windfarm",
@@ -28,10 +24,7 @@
       "tag": "Energy & flow",
       "description": "Terrain and turbines, 151 wind-field frames, wake-model comparisons and rotor animation.",
       "viewer_url": "src/visualization/legacy/viewer/windfarm-movie/",
-      "resource_ids": [
-        "windfarm_geometry_published_v1",
-        "windfarm_runs_published_movie_v1"
-      ]
+      "resource_ids": ["windfarm_geometry_published_v1", "windfarm_runs_published_movie_v1"]
     }
   ],
   "published_site": "https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/"
