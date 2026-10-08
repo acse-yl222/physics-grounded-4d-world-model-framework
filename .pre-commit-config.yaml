@@ -4,7 +4,10 @@ repos:
     hooks:
       - id: repository-format
         name: Format repository files
-        entry: python3 tools/format.py --write
-        language: system
+        entry: python tools/format.py --write
+        language: python
+        additional_dependencies:
+          - ruff==0.16.10
+          - shfmt-py==4.2.0
         types: [file]
         require_serial: true

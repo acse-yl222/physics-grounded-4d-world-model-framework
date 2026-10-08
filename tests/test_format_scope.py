@@ -58,6 +58,7 @@ class FormatScopeTests(unittest.TestCase):
             "examples/contract-v1/data/trajectories.json",
             "examples/contract-v1.1/frames.json",
             "src/urban_flow/physics/example/SOURCE_INFO.json",
+            "src/visualization/legacy/assets/index.json",
             "src/visualization/legacy/assets/actors/birds/pigeon_geometry_QA.json",
         ]
         for name in names:

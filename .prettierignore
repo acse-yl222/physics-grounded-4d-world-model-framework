@@ -28,5 +28,6 @@ docs/framework/*.json
 **/SOURCE.json
 **/SOURCE_INFO.json
 src/urban_geometry/uav/validation.json
+src/visualization/legacy/assets/index.json
 src/visualization/legacy/assets/actors/**/*_QA.json
 src/visualization/legacy/viewer/windfarm-movie/resources.json

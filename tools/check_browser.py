@@ -18,7 +18,7 @@ def main():
                 "node",
                 "--input-type=module",
                 "-e",
-                "import p from 'puppeteer'; console.log(p.executablePath());",
+                "import p from 'puppeteer'; console.log(await p.executablePath());",
             ],
             cwd=ROOT,
             text=True,
