@@ -23,6 +23,16 @@
       ]
     },
     {
+      "scene_id": "tower_hamlets",
+      "title": "Canary Wharf",
+      "tag": "Urban environment",
+      "description": "4 \u00d7 4 km: detailed Canary Wharf core, wind and temperature, recorded dense traffic and centre-to-periphery Wave PDE UAV routes.",
+      "viewer_url": "src/visualization/legacy/viewer/3d/?scene=tower_hamlets&lite=0",
+      "resource_ids": [
+        "tower_hamlets_geometry_city_activity025"
+      ]
+    },
+    {
       "scene_id": "windfarm",
       "title": "Wind farm",
       "tag": "Energy & flow",

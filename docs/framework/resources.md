@@ -49,3 +49,17 @@ next to its viewer. Old site asset routes remain available for compatibility.
 
 For code-only clones with no local run directories, `p4d serve` resolves homepage scene
 links to the published site. Local protocol scenes remain selectable in the unified viewer.
+
+## Canary Wharf city activity025
+
+The selected Canary Wharf 4 km city presentation publishes its byte-exact GLB in
+`tower_hamlets/geometry/city_activity025` in the resource repository. Its browser-only
+wind/temperature arrays, masks, dense SUMO replay and Wave PDE route preview live in
+`scenes/tower_hamlets/` on the framework Pages branch. `publication.json` records source
+run identity, per-file hashes and modelling limits. Solver inputs and source snapshots
+remain local. This is a presentation export, not a new solver run.
+
+Build with `tools/build_public_site.py <pages-checkout>`, then explicitly select these
+assets with `tools/package_canary_pages.py <pages-checkout> <resources-checkout>`.
+The latter rejects an existing version and never pushes either repository. Run the
+resource checksum checker and the browser activity test before publication.

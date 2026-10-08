@@ -35,13 +35,14 @@ def main():
         path=target/'scenes'/old/'scene.json'
         data=json.loads(path.read_text());data['model']['parts_manifest']=base+'project/'+canonical+'/manifest.json'
         path.write_text(json.dumps(data,indent=2)+'\n')
-    for name in ('scene-navigation.js','bootstrap.js','model-source.js'):
+    for name in ('scene-navigation.js','bootstrap.js','model-source.js','scene.js','recorded-clock.mjs'):
         shutil.copy2(ROOT/'src/visualization/legacy/viewer'/name,target/'viewer'/name)
-    for name in ('index.html','main.js','style.css','replay.js'):
+    for name in ('index.html','main.js','style.css','replay.js','traffic.js'):
         shutil.copy2(ROOT/'src/visualization/legacy/viewer/3d'/name,target/'viewer/3d'/name)
     movie=target/'viewer/windfarm-movie'
     shutil.copytree(ROOT/'src/visualization/legacy/viewer/windfarm-movie',movie,dirs_exist_ok=True)
-    (movie/'resources.json').write_text(json.dumps({'data_base':base+'project/windfarm/runs/published_movie_v1/','model':base+'project/windfarm/geometry/published_v1/region.glb'},indent=2)+'\n')
+    if not (movie/'resources.json').exists():
+        (movie/'resources.json').write_text(json.dumps({'data_base':base+'project/windfarm/runs/published_movie_v1/','model':base+'project/windfarm/geometry/published_v1/region.glb'},indent=2)+'\n')
     # Selected UAV route preview assets; do not copy unrelated local datasets.
     for name in ['random-uav.mjs', 'uav-layer.js']:
         shutil.copy2(ROOT/'src/visualization/legacy/viewer/3d'/name,target/'viewer/3d'/name)
