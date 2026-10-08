@@ -1,0 +1,638 @@
+{
+  "schema": "nvmf-vendored-source-v1",
+  "integration_date": "2026-10-08",
+  "source_label": "IRP-Final Codes/scheduler",
+  "source_authority": {
+    "frozen_commit": "fa1f47994659550586748888c9d6323ac9f1fa83",
+    "frozen_branch": "feature/r3-global-multiple-update-v3r4-batch-hard-judge-v3",
+    "frozen_bundle_sha256": "d85176bbf1c871e58352198c73e4ed53adb7c2dd684073cc305c7bde072c2c92",
+    "scope_note": "These identify the underlying frozen scientific source recorded in the source PROVENANCE.md. The source integration adapter was added separately; its exact imported bytes are recorded per file below."
+  },
+  "source_notice_sha256": "c41ab144346f7f03d11e4f4d89133cd0a4aad4f333b0c3c8a2d7fd872336a6c8",
+  "source_provenance_sha256": "01bfef1bc1de7d6b9ee5bfbf71a748e319ac340a689db2fa8e66514e4fb4c40a",
+  "namespace": "uav_scheduling._vendor",
+  "numerical_scope": "Active scheduling expressions, constraint checks, selection rules, random-number namespace strings, temperature control and closure conditions are preserved. Import isolation, removal of unused standalone helpers, and explicit rejection of unsupported legacy implicit calibration are recorded below.",
+  "new_files": [
+    {
+      "path": "_vendor/__init__.py",
+      "sha256": "942f5897d009cdcbcd67ba8a3908205d87765ca65a49e30b77cc5982b06dcaed",
+      "purpose": "Private package marker."
+    }
+  ],
+  "files": [
+    {
+      "source": "mfmu_scheduler/__init__.py",
+      "source_sha256": "6b00ab640bc78cd84d59349d4cd5ec3d34de56d4c3faa02a7d9b8fc3a96a945c",
+      "source_bytes": 175,
+      "destination": "_vendor/mfmu_scheduler/__init__.py",
+      "vendored_sha256": "067564960633c7aa8c46eb048d0b0da8af442aac91bbdb60ec9cdb4ebef98fc9",
+      "vendored_bytes": 174,
+      "transforms": [
+        {
+          "operation": "normalise_eof_blank_lines",
+          "reason": "Remove extra blank lines at EOF following helper removal or present in the original package marker; AST unchanged.",
+          "before_sha256": "6b00ab640bc78cd84d59349d4cd5ec3d34de56d4c3faa02a7d9b8fc3a96a945c",
+          "after_sha256": "067564960633c7aa8c46eb048d0b0da8af442aac91bbdb60ec9cdb4ebef98fc9",
+          "before_trailing_newlines": 2,
+          "after_trailing_newlines": 1
+        }
+      ]
+    },
+    {
+      "source": "mfmu_scheduler/__main__.py",
+      "source_sha256": "934f033f75da7bc2daa2b38ee21bd0f2bb9250def816a03e0c979b13d98f87fd",
+      "destination": null,
+      "excluded_reason": "The parent uav_scheduling package provides the public CLI; omit duplicate private CLI."
+    },
+    {
+      "source": "mfmu_scheduler/api.py",
+      "source_sha256": "f3647fd7933677ba33137d6c1c56563c92ec3ef036753ac946ee47d451c648d6",
+      "source_bytes": 9755,
+      "destination": "_vendor/mfmu_scheduler/api.py",
+      "vendored_sha256": "358543e9e538d33e2dc97ee43e84e3ae83e9e67954646dbfce8a5add8eade4f8",
+      "vendored_bytes": 9824,
+      "transforms": [
+        {
+          "operation": "regex_replace",
+          "pattern": "(?m)^(\\s*from )(?P<module>(?:src|bounded_studies|experiments|mfmu_scheduler)(?:\\.[A-Za-z_][A-Za-z_0-9]*)*)( import )",
+          "replacement": "group(1) + \"uav_scheduling._vendor.\" + group(\"module\") + group(3)",
+          "count": 3,
+          "reason": "Namespace internal absolute imports without modifying relative imports or algorithmic namespace strings."
+        }
+      ]
+    },
+    {
+      "source": "mfmu_scheduler/scenario.py",
+      "source_sha256": "7585390572562aa13533356ebd78dfd5a4a65c4601b25335b7d4b488ab51c2cc",
+      "source_bytes": 8335,
+      "destination": "_vendor/mfmu_scheduler/scenario.py",
+      "vendored_sha256": "53cab2cfd4dbd2958a48da9a0c173538f5925abf34b39aef085ba1b349b40794",
+      "vendored_bytes": 8358,
+      "transforms": [
+        {
+          "operation": "regex_replace",
+          "pattern": "(?m)^(\\s*from )(?P<module>(?:src|bounded_studies|experiments|mfmu_scheduler)(?:\\.[A-Za-z_][A-Za-z_0-9]*)*)( import )",
+          "replacement": "group(1) + \"uav_scheduling._vendor.\" + group(\"module\") + group(3)",
+          "count": 1,
+          "reason": "Namespace internal absolute imports without modifying relative imports or algorithmic namespace strings."
+        }
+      ]
+    },
+    {
+      "source": "bounded_studies/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_bytes": 0,
+      "destination": "_vendor/bounded_studies/__init__.py",
+      "vendored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendored_bytes": 0,
+      "transforms": []
+    },
+    {
+      "source": "bounded_studies/r3_global_mu_v3r4_batch_judge_v3/__init__.py",
+      "source_sha256": "18a6a9adee55cda12453029b0fd0a3ca2ba45fbd66e30cfd6a3327ef94cb1bc5",
+      "source_bytes": 77,
+      "destination": "_vendor/bounded_studies/r3_global_mu_v3r4_batch_judge_v3/__init__.py",
+      "vendored_sha256": "18a6a9adee55cda12453029b0fd0a3ca2ba45fbd66e30cfd6a3327ef94cb1bc5",
+      "vendored_bytes": 77,
+      "transforms": []
+    },
+    {
+      "source": "bounded_studies/r3_global_mu_v3r4_batch_judge_v3/batch_judge.py",
+      "source_sha256": "794b663c59948181e451e9db0fba503c307481433ca2770ddfee5acdce1a8b47",
+      "source_bytes": 46683,
+      "destination": "_vendor/bounded_studies/r3_global_mu_v3r4_batch_judge_v3/batch_judge.py",
+      "vendored_sha256": "a04aa17bf9a607c8c0c69e79fe868dd621b8d67cf22d9aa202cf8747773d5896",
+      "vendored_bytes": 26102,
+      "transforms": [
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 394,
+          "source_line_end": 600,
+          "symbol": "_selftest",
+          "removed_sha256": "184915a3c46389c7a4eb62b37801468cce20ab51612f944b66cbfe995deea497",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 603,
+          "source_line_end": 604,
+          "symbol": "__main__ guard",
+          "removed_sha256": "dc8c39dcd17fba34419ebd98b84e2b5a551ab341603ee127b240d22b8da17f8f",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "regex_replace",
+          "pattern": "(?m)^(\\s*from )(?P<module>(?:src|bounded_studies|experiments|mfmu_scheduler)(?:\\.[A-Za-z_][A-Za-z_0-9]*)*)( import )",
+          "replacement": "group(1) + \"uav_scheduling._vendor.\" + group(\"module\") + group(3)",
+          "count": 3,
+          "reason": "Namespace internal absolute imports without modifying relative imports or algorithmic namespace strings."
+        },
+        {
+          "operation": "normalise_eof_blank_lines",
+          "reason": "Remove extra blank lines at EOF following helper removal or present in the original package marker; AST unchanged.",
+          "before_sha256": "ddc8b396561d5916df703bfe60c0c5dfebb4d5dc5efd0a7ddc1c4320cbd20e45",
+          "after_sha256": "a04aa17bf9a607c8c0c69e79fe868dd621b8d67cf22d9aa202cf8747773d5896",
+          "before_trailing_newlines": 5,
+          "after_trailing_newlines": 1
+        }
+      ]
+    },
+    {
+      "source": "bounded_studies/r3_global_mu_v3r4_batch_judge_v3/controller.py",
+      "source_sha256": "18a069dc6f657a64d9671a7fe40e8f587a602c5811daea5ae3b701894cb076aa",
+      "source_bytes": 57157,
+      "destination": "_vendor/bounded_studies/r3_global_mu_v3r4_batch_judge_v3/controller.py",
+      "vendored_sha256": "a840d21683d009c6028d2fb75abe4fe827732e9a6c7d4fa93825d057584c118f",
+      "vendored_bytes": 54705,
+      "transforms": [
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 758,
+          "source_line_end": 787,
+          "symbol": "_selftest",
+          "removed_sha256": "3ce4f330c7fd796fe74e4b28c105165793d422763ffcd686925029624c2143cf",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 790,
+          "source_line_end": 791,
+          "symbol": "__main__ guard",
+          "removed_sha256": "dc8c39dcd17fba34419ebd98b84e2b5a551ab341603ee127b240d22b8da17f8f",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "regex_replace",
+          "pattern": "(?m)^(\\s*from )(?P<module>(?:src|bounded_studies|experiments|mfmu_scheduler)(?:\\.[A-Za-z_][A-Za-z_0-9]*)*)( import )",
+          "replacement": "group(1) + \"uav_scheduling._vendor.\" + group(\"module\") + group(3)",
+          "count": 2,
+          "reason": "Namespace internal absolute imports without modifying relative imports or algorithmic namespace strings."
+        },
+        {
+          "operation": "normalise_eof_blank_lines",
+          "reason": "Remove extra blank lines at EOF following helper removal or present in the original package marker; AST unchanged.",
+          "before_sha256": "dbd3a82405d6c75a8b899824a5550242585e152a4a476df277b0489ffdcbe588",
+          "after_sha256": "a840d21683d009c6028d2fb75abe4fe827732e9a6c7d4fa93825d057584c118f",
+          "before_trailing_newlines": 5,
+          "after_trailing_newlines": 1
+        }
+      ]
+    },
+    {
+      "source": "bounded_studies/r3_global_mu_v3r4_batch_judge_v3/equiv_backend.py",
+      "source_sha256": "a91f78b8f329bf99d114baeb64c79e4fcba3e714d0b2e604d4609278c184b907",
+      "source_bytes": 13595,
+      "destination": "_vendor/bounded_studies/r3_global_mu_v3r4_batch_judge_v3/equiv_backend.py",
+      "vendored_sha256": "d4a31aa14acbe65e2d3dc14c15cb90bf67d1217a8b469fab23415c41f31ef840",
+      "vendored_bytes": 9875,
+      "transforms": [
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 198,
+          "source_line_end": 247,
+          "symbol": "_selftest",
+          "removed_sha256": "2cef174d7d6da3ab5d604f49b1475f4352524a7523b1119d79436cce18237247",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 250,
+          "source_line_end": 251,
+          "symbol": "__main__ guard",
+          "removed_sha256": "dc8c39dcd17fba34419ebd98b84e2b5a551ab341603ee127b240d22b8da17f8f",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "normalise_eof_blank_lines",
+          "reason": "Remove extra blank lines at EOF following helper removal or present in the original package marker; AST unchanged.",
+          "before_sha256": "400cbac1ef6ace0694ab9dad246ae2cb385b8dd611409f55c4d7465be4ed316c",
+          "after_sha256": "d4a31aa14acbe65e2d3dc14c15cb90bf67d1217a8b469fab23415c41f31ef840",
+          "before_trailing_newlines": 5,
+          "after_trailing_newlines": 1
+        }
+      ]
+    },
+    {
+      "source": "bounded_studies/r3_global_mu_v3r4_batch_judge_v3/inner.py",
+      "source_sha256": "86ce16441cda47b7ce31b0a5f8ceca79f3565f158c12e8affe03995f3ac75614",
+      "source_bytes": 11015,
+      "destination": "_vendor/bounded_studies/r3_global_mu_v3r4_batch_judge_v3/inner.py",
+      "vendored_sha256": "6cfb39172e0f6c7c508a81de3ccfcf6424e226159a631b5d7d3190b90125dbf7",
+      "vendored_bytes": 8581,
+      "transforms": [
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 145,
+          "source_line_end": 175,
+          "symbol": "_selftest",
+          "removed_sha256": "a00e808947e33c8b9131320802077e95bb3e03be004c845fd3ef89b106dd4e75",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 178,
+          "source_line_end": 179,
+          "symbol": "__main__ guard",
+          "removed_sha256": "dc8c39dcd17fba34419ebd98b84e2b5a551ab341603ee127b240d22b8da17f8f",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "regex_replace",
+          "pattern": "(?m)^(\\s*from )(?P<module>(?:src|bounded_studies|experiments|mfmu_scheduler)(?:\\.[A-Za-z_][A-Za-z_0-9]*)*)( import )",
+          "replacement": "group(1) + \"uav_scheduling._vendor.\" + group(\"module\") + group(3)",
+          "count": 5,
+          "reason": "Namespace internal absolute imports without modifying relative imports or algorithmic namespace strings."
+        },
+        {
+          "operation": "normalise_eof_blank_lines",
+          "reason": "Remove extra blank lines at EOF following helper removal or present in the original package marker; AST unchanged.",
+          "before_sha256": "05a89a3e930225efb0c8eb784ec6ae491a09345b50aacdfbafb3971c2640869f",
+          "after_sha256": "6cfb39172e0f6c7c508a81de3ccfcf6424e226159a631b5d7d3190b90125dbf7",
+          "before_trailing_newlines": 5,
+          "after_trailing_newlines": 1
+        }
+      ]
+    },
+    {
+      "source": "bounded_studies/r3_global_mu_v3r4_batch_judge_v3/readout.py",
+      "source_sha256": "836e5ed991de94eafcdcef0f6a8c58ca7780b76910be6a28ccf0141243851ffc",
+      "source_bytes": 19025,
+      "destination": "_vendor/bounded_studies/r3_global_mu_v3r4_batch_judge_v3/readout.py",
+      "vendored_sha256": "23a22b2cb2d1abe4a534074dfd7820521e3d0c03816c822a3d0e0886ffca5097",
+      "vendored_bytes": 13317,
+      "transforms": [
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 240,
+          "source_line_end": 305,
+          "symbol": "_selftest",
+          "removed_sha256": "a84c4b4630587c8fb5dbb45c96bbcb46c717d8dacb20557e65a8b5a671c152e3",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 308,
+          "source_line_end": 309,
+          "symbol": "__main__ guard",
+          "removed_sha256": "dc8c39dcd17fba34419ebd98b84e2b5a551ab341603ee127b240d22b8da17f8f",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "normalise_eof_blank_lines",
+          "reason": "Remove extra blank lines at EOF following helper removal or present in the original package marker; AST unchanged.",
+          "before_sha256": "ee2ca6999894d09110ae21d03dba8e7fbbcc6fb6f5001032e2132af9d930f823",
+          "after_sha256": "23a22b2cb2d1abe4a534074dfd7820521e3d0c03816c822a3d0e0886ffca5097",
+          "before_trailing_newlines": 5,
+          "after_trailing_newlines": 1
+        }
+      ]
+    },
+    {
+      "source": "bounded_studies/r3_global_mu_v3r4_batch_judge_v3/resource_lottery.py",
+      "source_sha256": "359aa178eb9967dc12f04348929d4479abd80abdafb36bc55f658a32326b4e9f",
+      "source_bytes": 36671,
+      "destination": "_vendor/bounded_studies/r3_global_mu_v3r4_batch_judge_v3/resource_lottery.py",
+      "vendored_sha256": "2b5c6182fda49e7bec8cc2be8d441e7b44bd8c6bd6a47293d2ade12270a87c9d",
+      "vendored_bytes": 19245,
+      "transforms": [
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 322,
+          "source_line_end": 504,
+          "symbol": "_selftest",
+          "removed_sha256": "a0ee7137acacb577bf947f8eb9c4d4f72a6aadc8c9397f6a74576dfdf2a56009",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 507,
+          "source_line_end": 508,
+          "symbol": "__main__ guard",
+          "removed_sha256": "dc8c39dcd17fba34419ebd98b84e2b5a551ab341603ee127b240d22b8da17f8f",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "normalise_eof_blank_lines",
+          "reason": "Remove extra blank lines at EOF following helper removal or present in the original package marker; AST unchanged.",
+          "before_sha256": "e8a524e41588368f2a49ae0ab01667b71612307a86a806cccc25c42a48c3fd39",
+          "after_sha256": "2b5c6182fda49e7bec8cc2be8d441e7b44bd8c6bd6a47293d2ade12270a87c9d",
+          "before_trailing_newlines": 5,
+          "after_trailing_newlines": 1
+        }
+      ]
+    },
+    {
+      "source": "bounded_studies/r3_global_mu_v3r4_batch_judge_v3/rng.py",
+      "source_sha256": "1b885c463aa166654b0ac3f1785562f4aba2a16b48c4cb9c4bb5b00bb006b2f1",
+      "source_bytes": 14996,
+      "destination": "_vendor/bounded_studies/r3_global_mu_v3r4_batch_judge_v3/rng.py",
+      "vendored_sha256": "0fd3ae614d5a5b13ae1d5d60a37dce462fb08eba50856474c857ed3c6defe167",
+      "vendored_bytes": 10651,
+      "transforms": [
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 209,
+          "source_line_end": 260,
+          "symbol": "_selftest",
+          "removed_sha256": "f51046a5a87a94bdbadbc821be2cff1c7dac8e7822f2f8eb1894c1c95070a351",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 263,
+          "source_line_end": 264,
+          "symbol": "__main__ guard",
+          "removed_sha256": "dc8c39dcd17fba34419ebd98b84e2b5a551ab341603ee127b240d22b8da17f8f",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "normalise_eof_blank_lines",
+          "reason": "Remove extra blank lines at EOF following helper removal or present in the original package marker; AST unchanged.",
+          "before_sha256": "d17156da9ba467d56e7109147c10fdefa1016b756def485062f86af8fd5e3c7b",
+          "after_sha256": "0fd3ae614d5a5b13ae1d5d60a37dce462fb08eba50856474c857ed3c6defe167",
+          "before_trailing_newlines": 5,
+          "after_trailing_newlines": 1
+        }
+      ]
+    },
+    {
+      "source": "bounded_studies/r3_guidance_inner_v3r4_q10000_v1/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_bytes": 0,
+      "destination": "_vendor/bounded_studies/r3_guidance_inner_v3r4_q10000_v1/__init__.py",
+      "vendored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendored_bytes": 0,
+      "transforms": []
+    },
+    {
+      "source": "bounded_studies/r3_guidance_inner_v3r4_q10000_v1/guidance_inner.py",
+      "source_sha256": "c43e1bc1dba2fc2ec539310bc0268a41d1ef308356e654b2939c1ead7de3859d",
+      "source_bytes": 15687,
+      "destination": "_vendor/bounded_studies/r3_guidance_inner_v3r4_q10000_v1/guidance_inner.py",
+      "vendored_sha256": "d06b762199f099581cff9ee62d5ba909b96c181744690b4180fa5c4240a3477c",
+      "vendored_bytes": 15756,
+      "transforms": [
+        {
+          "operation": "regex_replace",
+          "pattern": "(?m)^(\\s*from )(?P<module>(?:src|bounded_studies|experiments|mfmu_scheduler)(?:\\.[A-Za-z_][A-Za-z_0-9]*)*)( import )",
+          "replacement": "group(1) + \"uav_scheduling._vendor.\" + group(\"module\") + group(3)",
+          "count": 3,
+          "reason": "Namespace internal absolute imports without modifying relative imports or algorithmic namespace strings."
+        }
+      ]
+    },
+    {
+      "source": "experiments/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_bytes": 0,
+      "destination": "_vendor/experiments/__init__.py",
+      "vendored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendored_bytes": 0,
+      "transforms": []
+    },
+    {
+      "source": "experiments/sh64_bat2_ledger.py",
+      "source_sha256": "7433ffacbabf94d4e3f0545cdd70baa8645f08bc71530e23f2349123171fb4e5",
+      "source_bytes": 28170,
+      "destination": "_vendor/experiments/sh64_bat2_ledger.py",
+      "vendored_sha256": "7433ffacbabf94d4e3f0545cdd70baa8645f08bc71530e23f2349123171fb4e5",
+      "vendored_bytes": 28170,
+      "transforms": []
+    },
+    {
+      "source": "experiments/sh64_bat3_journey.py",
+      "source_sha256": "eb6eced43c11759becd168f06e0b12a1ec9719e104f35809a7ae068c13e8550f",
+      "source_bytes": 27538,
+      "destination": "_vendor/experiments/sh64_bat3_journey.py",
+      "vendored_sha256": "eb6eced43c11759becd168f06e0b12a1ec9719e104f35809a7ae068c13e8550f",
+      "vendored_bytes": 27538,
+      "transforms": []
+    },
+    {
+      "source": "experiments/sh64_bat3_ledger.py",
+      "source_sha256": "91b7e8f3ef893f0358bb7e394b15319b57d2deb3e68fe019dc49a0e93628ab87",
+      "source_bytes": 9160,
+      "destination": "_vendor/experiments/sh64_bat3_ledger.py",
+      "vendored_sha256": "8813baa83fd83823274771eb6583b7442450005dc076008828df76eb31bfdd3c",
+      "vendored_bytes": 9104,
+      "transforms": [
+        {
+          "operation": "literal_replace",
+          "reason": "Remove historical path bootstrap; imports resolve through the vendored namespace.",
+          "old": "import copy, os, sys\nHERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.dirname(HERE))\n",
+          "new": "import copy\n",
+          "count": 1
+        },
+        {
+          "operation": "regex_replace",
+          "pattern": "(?m)^(\\s*from )(?P<module>(?:src|bounded_studies|experiments|mfmu_scheduler)(?:\\.[A-Za-z_][A-Za-z_0-9]*)*)( import )",
+          "replacement": "group(1) + \"uav_scheduling._vendor.\" + group(\"module\") + group(3)",
+          "count": 2,
+          "reason": "Namespace internal absolute imports without modifying relative imports or algorithmic namespace strings."
+        }
+      ]
+    },
+    {
+      "source": "src/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_bytes": 0,
+      "destination": "_vendor/src/__init__.py",
+      "vendored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendored_bytes": 0,
+      "transforms": []
+    },
+    {
+      "source": "src/ai4pde/__init__.py",
+      "source_sha256": "07f048c71d3a453ecd1329b699feadb82b61e26594c052ebbc3229223155276a",
+      "source_bytes": 317,
+      "destination": "_vendor/src/ai4pde/__init__.py",
+      "vendored_sha256": "07f048c71d3a453ecd1329b699feadb82b61e26594c052ebbc3229223155276a",
+      "vendored_bytes": 317,
+      "transforms": []
+    },
+    {
+      "source": "src/ai4pde/jacobi_cnn.py",
+      "source_sha256": "609ae375b90ed3e34b944f7cae5c90e3a1f1bd3c336c8eedb6c22e9954e7e071",
+      "source_bytes": 14425,
+      "destination": "_vendor/src/ai4pde/jacobi_cnn.py",
+      "vendored_sha256": "57d4c68c0c3ad3c92a15e21d3962086e19e82dc6eafa84cb418ed89147de9804",
+      "vendored_bytes": 14159,
+      "transforms": [
+        {
+          "operation": "literal_replace",
+          "reason": "Reject unused legacy implicit calibration explicitly instead of importing omitted src.core.scheduler. The active NVMF solver path is unchanged.",
+          "old": "    def theta_c(self):\n        if self._theta_c is None:\n            from src.core.scheduler import MeanFieldScheduler\n            last_err = None\n            for bk in (\"numba\", \"numpy\"):\n                try:\n                    self._theta_c = MeanFieldScheduler(\n                        self.D, self.Ccap, self.lam_cap, self.x0s, backend=bk,\n                        s=self.s, pins=self.pins).theta_c\n                    break\n                except Exception as e:                    # noqa: BLE001 后端缺失时按序回退\n                    last_err = e\n            if self._theta_c is None:\n                raise RuntimeError(f\"θc 委托测量失败(numba 与 numpy 均不可用):{last_err}\")\n        return self._theta_c\n",
+          "new": "    def theta_c(self):\n        \"\"\"Legacy implicit calibration is outside the bundled runtime closure.\"\"\"\n        raise NotImplementedError(\n            \"Implicit theta_c calibration is not included in this integration. \"\n            \"The public NVMF entry point uses theta_c_scalar_multi and explicit \"\n            \"theta0/theta_min; use that entry point instead.\"\n        )\n",
+          "count": 1
+        },
+        {
+          "operation": "regex_replace",
+          "pattern": "(?m)^(\\s*from )(?P<module>(?:src|bounded_studies|experiments|mfmu_scheduler)(?:\\.[A-Za-z_][A-Za-z_0-9]*)*)( import )",
+          "replacement": "group(1) + \"uav_scheduling._vendor.\" + group(\"module\") + group(3)",
+          "count": 4,
+          "reason": "Namespace internal absolute imports without modifying relative imports or algorithmic namespace strings."
+        }
+      ]
+    },
+    {
+      "source": "src/ai4pde/kernels.py",
+      "source_sha256": "12d7496fec5f07eaa6ba092d94ebc68d4750997e52f2973b5e9f444f7df26c3c",
+      "source_bytes": 1545,
+      "destination": "_vendor/src/ai4pde/kernels.py",
+      "vendored_sha256": "12d7496fec5f07eaa6ba092d94ebc68d4750997e52f2973b5e9f444f7df26c3c",
+      "vendored_bytes": 1545,
+      "transforms": []
+    },
+    {
+      "source": "src/core/__init__.py",
+      "source_sha256": "a469f81bcf8dc81be7c3fdbb09ba9a6f56562fdfe2b30fc528ccf8692eaae0bd",
+      "source_bytes": 226,
+      "destination": "_vendor/src/core/__init__.py",
+      "vendored_sha256": "a469f81bcf8dc81be7c3fdbb09ba9a6f56562fdfe2b30fc528ccf8692eaae0bd",
+      "vendored_bytes": 226,
+      "transforms": []
+    },
+    {
+      "source": "src/core/_frozen.py",
+      "source_sha256": "d4ce9c51a2ea74a92bed24f7548280eaa73b24630541fb1940cbeb05c5bfeea9",
+      "source_bytes": 994,
+      "destination": "_vendor/src/core/_frozen.py",
+      "vendored_sha256": "4423e59e812f4a32bdd767db7d31ae3fc1002dadfacee532375da7dc9847b18b",
+      "vendored_bytes": 601,
+      "transforms": [
+        {
+          "operation": "literal_replace",
+          "reason": "Replace historical path bootstrap with normal package imports.",
+          "old": "\"\"\"冻结层桥接:新框架访问 src/engines、src/validation(只读科学基准)的唯一入口。\n\n正典引擎与校验工具保持脚本式(无 __init__.py、靠 sys.path bootstrap),本模块把它们\n以受控方式引进包世界。新代码【只能】通过这里 import 冻结层符号,不得直接改 sys.path。\n\"\"\"\nimport os\nimport sys\n\n_SRC = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # src/\nfor _sub in (\"engines\", \"validation\"):\n    _p = os.path.join(_SRC, _sub)\n    _p in sys.path or sys.path.insert(0, _p)\n",
+          "new": "\"\"\"Namespaced access to the preserved numerical engine and energy routines.\"\"\"\n",
+          "count": 1
+        },
+        {
+          "operation": "literal_replace",
+          "reason": "Namespace the frozen engine import.",
+          "old": "from BoHan_Scheduler_Multi import (",
+          "new": "from uav_scheduling._vendor.src.engines.BoHan_Scheduler_Multi import (",
+          "count": 1
+        },
+        {
+          "operation": "literal_replace",
+          "reason": "Namespace the energy import.",
+          "old": "from compute_F_energy import compute_F",
+          "new": "from uav_scheduling._vendor.src.validation.compute_F_energy import compute_F",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "src/core/costs.py",
+      "source_sha256": "250faf1e666e1d902e9842b22ff7371095e04fcea499c18fbd90a13c0ee80564",
+      "source_bytes": 1921,
+      "destination": "_vendor/src/core/costs.py",
+      "vendored_sha256": "250faf1e666e1d902e9842b22ff7371095e04fcea499c18fbd90a13c0ee80564",
+      "vendored_bytes": 1921,
+      "transforms": []
+    },
+    {
+      "source": "src/core/result.py",
+      "source_sha256": "9d4ebfa2bff2536938ec0f2c1e2f0bdb904589fa534e7c000638f1682ee0b765",
+      "source_bytes": 4569,
+      "destination": "_vendor/src/core/result.py",
+      "vendored_sha256": "9d4ebfa2bff2536938ec0f2c1e2f0bdb904589fa534e7c000638f1682ee0b765",
+      "vendored_bytes": 4569,
+      "transforms": []
+    },
+    {
+      "source": "src/engines/BoHan_Scheduler_Multi.py",
+      "source_sha256": "74fff4d751427f53be99c7aa74572efaeb5d570a71fd763c7498848f31305131",
+      "source_bytes": 20918,
+      "destination": "_vendor/src/engines/BoHan_Scheduler_Multi.py",
+      "vendored_sha256": "12ddd70a174c65dd41a05e9a4fef09575686c3cec33ad3461ca067b28d83c134",
+      "vendored_bytes": 15864,
+      "transforms": [
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 285,
+          "source_line_end": 342,
+          "symbol": "visualize_multi",
+          "removed_sha256": "90d797c0b96763c9392727bb565ca59ebc831d7c974864ed9dbcd2f3f5aae31d",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 346,
+          "source_line_end": 371,
+          "symbol": "__main__ guard",
+          "removed_sha256": "0865e544d7f0ed4af1339dd9afa5e00a8d755484b303b2e5f0cfc1fe482c2e97",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "literal_replace",
+          "reason": "Remove path bootstrap and plotting-only output directory.",
+          "old": "import sys as _sys, os as _os                      # path bootstrap (folder reorg 2026-07-04)\n_ROOT = _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)))   # BoHan_From_Scratch/\nfor _sub in (\"engines\", \"validation\", \"labs\"):\n    _p = _os.path.join(_ROOT, _sub)\n    _p in _sys.path or _sys.path.insert(0, _p)\nOUT_DIR = _os.path.join(_ROOT, \"output\")                                  # all figures go here\n",
+          "new": "",
+          "count": 1
+        },
+        {
+          "operation": "literal_replace",
+          "reason": "Namespace the energy import.",
+          "old": "from compute_F_energy import compute_F",
+          "new": "from uav_scheduling._vendor.src.validation.compute_F_energy import compute_F",
+          "count": 1
+        },
+        {
+          "operation": "literal_replace",
+          "reason": "Remove unused plotting-only os import.",
+          "old": "import os\n",
+          "new": "",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "source": "src/engines/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_bytes": 0,
+      "destination": "_vendor/src/engines/__init__.py",
+      "vendored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendored_bytes": 0,
+      "transforms": []
+    },
+    {
+      "source": "src/validation/__init__.py",
+      "source_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "source_bytes": 0,
+      "destination": "_vendor/src/validation/__init__.py",
+      "vendored_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "vendored_bytes": 0,
+      "transforms": []
+    },
+    {
+      "source": "src/validation/compute_F_energy.py",
+      "source_sha256": "2f3ef4f559908fc8aaf5a08bcfae63868b8343a4d4549150fcfbf5b520c42ddd",
+      "source_bytes": 3832,
+      "destination": "_vendor/src/validation/compute_F_energy.py",
+      "vendored_sha256": "7e2539b3745b34758ada18e50d83258a6d43e8d16c58d434ec12defde750c4ff",
+      "vendored_bytes": 2983,
+      "transforms": [
+        {
+          "operation": "remove_source_lines",
+          "source_line_start": 57,
+          "source_line_end": 72,
+          "symbol": "__main__ guard",
+          "removed_sha256": "948f0d1c28aea4453103ba4c8551fde3955277be12cd13f8d2dc37e63b1ce19c",
+          "reason": "Historical standalone self-test or plotting helper; not called by the scheduling API."
+        },
+        {
+          "operation": "normalise_eof_blank_lines",
+          "reason": "Remove extra blank lines at EOF following helper removal or present in the original package marker; AST unchanged.",
+          "before_sha256": "46c94c4c18959ba10937e6dc079b83347af7d0d1205565dc7345a35356777be2",
+          "after_sha256": "7e2539b3745b34758ada18e50d83258a6d43e8d16c58d434ec12defde750c4ff",
+          "before_trailing_newlines": 3,
+          "after_trailing_newlines": 1
+        }
+      ]
+    }
+  ],
+  "source_tree_inventory_sha256": "763137d7f7dd22bebdfa0ecb57d4d0a3ac11dd9682bc194f688652f26b2db59e",
+  "excluded_material": "Source tests, examples, project documentation, packaging metadata, private historical fixtures, datasets, environments and archived experiment outputs are not runtime dependencies and are not copied here."
+}

@@ -99,6 +99,17 @@ these maintained entrypoints retain their documented environments.
 
 ## Run a simulation
 
+The **FieldFleet / NVMF scheduler** can also run independently of scene assets:
+
+```bash
+python -m pip install -e '.[scheduler]'
+nvmf-schedule examples/nvmf/minimal_scenario.json --device cpu
+```
+
+This runs the numerical mean-field solver, full-journey scheduling and validation
+on four synthetic requests. See the [scheduler guide](docs/framework/nvmf-scheduler.md)
+for the Python API, model assumptions and optional protocol export.
+
 Inspect a scene pipeline first:
 
 ```sh

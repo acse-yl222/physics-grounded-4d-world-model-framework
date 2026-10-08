@@ -10,6 +10,7 @@ Urban Geometry Model,Yueyan,Xinyang
 Traffic Model Xinran,bohan,Yueyan
 Bird Model Akria,Yueyan
 UAV Model Bohan, Yueyan
+FieldFleet / NVMF Scheduler: BoHan Ye (implementation, integration and experiments), Christopher C. Pain (mean-field framework), Yueyan Li (research guidance and collaboration).
 Wind Flow Model Zhongkai Yueyan/SCALED: Surrogate Model
 Temperature Model Yiqi Zhu, Zhongkai Yueyan/Nerual Physics
 Pollution model Yueyan, Yuhang Dai, Zhongkai/Nerual Physics

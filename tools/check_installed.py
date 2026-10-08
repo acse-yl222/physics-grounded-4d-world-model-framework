@@ -35,7 +35,7 @@ def check():
             if 'src/common/cli.py' not in names or any('site-packages' in name for name in names):
                 raise RuntimeError('Source snapshot includes the wrong installation tree')
             owned = ('src/common/', 'src/urban_geometry/', 'src/urban_flow/',
-                     'src/traffic/', 'src/uav_routing/', 'src/visualization/', 'schemas/')
+                     'src/traffic/', 'src/uav_routing/', 'src/uav_scheduling/', 'src/visualization/', 'schemas/')
             if any(not name.startswith(owned) and name not in ('AGENTS.md', 'pyproject.toml') for name in names):
                 raise RuntimeError('Source snapshot contains unrelated dependency packages')
             if 'src/visualization/widgets/index.mjs' not in names:

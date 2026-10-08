@@ -12,10 +12,14 @@ dependencies = ["jsonschema>=4.18,<5", "numpy>=1.24"]
 [project.scripts]
 p4d = "common.cli:main"
 uwm = "common.cli:main"
+nvmf-schedule = "uav_scheduling.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["common*", "urban_geometry*", "urban_flow*", "traffic*", "uav_routing*", "visualization.adapters*"]
+include = ["common*", "urban_geometry*", "urban_flow*", "traffic*", "uav_routing*", "uav_scheduling*", "visualization.adapters*"]
+
+[tool.setuptools.package-data]
+uav_scheduling = ["SOURCE_MANIFEST.json", "NOTICE.md"]
 
 [tool.setuptools.cmdclass]
 build_py = "common._build.BuildPy"
@@ -25,3 +29,4 @@ birds = ["scipy>=1.10", "matplotlib>=3.7", "trimesh", "rtree", "tqdm>=4.65"]
 traffic = ["torch>=2.1", "matplotlib>=3.7", "bayesian-optimization>=1.4"]
 geometry = ["numba", "Pillow", "DracoPy"]
 flow = ["torch>=2.1", "scipy>=1.10", "matplotlib>=3.7", "h5py>=3.10"]
+scheduler = ["numpy>=1.26,<3", "torch>=2.2"]

@@ -13,7 +13,7 @@ def snapshot_sources(root,destination):
     destination.parent.mkdir(parents=True,exist_ok=True)
     with tarfile.open(destination,'w:gz') as archive:
         sources = [(f'src/{name}', code_path(f'src/{name}')) for name in
-                   ('common', 'urban_geometry', 'urban_flow', 'traffic', 'uav_routing', 'visualization')]
+                   ('common', 'urban_geometry', 'urban_flow', 'traffic', 'uav_routing', 'uav_scheduling', 'visualization')]
         static = resource_path('src/visualization')
         if static != code_path('src/visualization'):
             sources.append(('src/visualization', static))
