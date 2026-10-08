@@ -1,0 +1,19 @@
+{
+  "scene_id": "nvmf_demo",
+  "slot_seconds": 60,
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "georeferenced": false,
+    "origin": {
+      "longitude": 0,
+      "latitude": 0,
+      "height_m": 0,
+      "vertical_datum": "Synthetic local engineering coordinates; origin is a placeholder, not a geographic location"
+    },
+    "bounds_m": {
+      "min": [0, 0, 0],
+      "max": [3000, 1, 0]
+    }
+  }
+}
