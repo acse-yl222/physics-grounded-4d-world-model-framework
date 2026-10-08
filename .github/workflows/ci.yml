@@ -16,7 +16,7 @@ concurrency:
 
 jobs:
   format:
-    name: Format
+    name: Format and JavaScript
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -35,6 +35,8 @@ jobs:
         env:
           PUPPETEER_SKIP_DOWNLOAD: 'true'
       - run: make format-check PYTHON=python
+      - run: make test-js
+        if: ${{ !cancelled() }}
 
   python:
     name: Python ${{ matrix.python }}
@@ -75,17 +77,6 @@ jobs:
       - run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
       - run: python -m pip install -e '.[birds,traffic,flow]'
       - run: python -m unittest discover -s tests -p test_package_imports.py -v
-
-  javascript:
-    name: JavaScript
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
-      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
-        with:
-          node-version-file: .nvmrc
-      - run: make test-js
 
   browser:
     name: Synthetic viewer
