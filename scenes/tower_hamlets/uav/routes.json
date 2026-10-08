@@ -1,0 +1,159 @@
+{
+  "schema_version": "wavepde-uav-preview-1",
+  "source_run": "canary_wharf_wavepde022",
+  "coordinate_frame": "world-y-up",
+  "record": [
+    "east_m",
+    "up_m",
+    "south_m",
+    "elapsed_s"
+  ],
+  "dtype": "<f4",
+  "binary": "routes.f32",
+  "sha256": "bff8b258fc372d228ef25f3034682b1fe959ddb9bbf0e2a6863c96394cccf334",
+  "stations": [
+    {
+      "station_id": "S1",
+      "id": 1,
+      "label": "S1",
+      "role": "hub",
+      "name": "Model ground site S1",
+      "x_m": -100.0,
+      "y_m": 0.15,
+      "z_m": -236.0
+    },
+    {
+      "station_id": "S2",
+      "id": 2,
+      "label": "S2",
+      "role": "dropoff",
+      "name": "Model ground site S2",
+      "x_m": -1476.0,
+      "y_m": 0.15,
+      "z_m": -1188.0
+    },
+    {
+      "station_id": "S3",
+      "id": 3,
+      "label": "S3",
+      "role": "dropoff",
+      "name": "Model ground site S3",
+      "x_m": 1196.0,
+      "y_m": 0.15,
+      "z_m": -1204.0
+    },
+    {
+      "station_id": "S4",
+      "id": 4,
+      "label": "S4",
+      "role": "dropoff",
+      "name": "Model ground site S4",
+      "x_m": -1444.0,
+      "y_m": 0.15,
+      "z_m": 948.0
+    },
+    {
+      "station_id": "S5",
+      "id": 5,
+      "label": "S5",
+      "role": "dropoff",
+      "name": "Model ground site S5",
+      "x_m": 1420.0,
+      "y_m": 0.15,
+      "z_m": 1196.0
+    },
+    {
+      "station_id": "S6",
+      "id": 6,
+      "label": "S6",
+      "role": "dropoff",
+      "name": "Model ground site S6",
+      "x_m": -156.0,
+      "y_m": 0.15,
+      "z_m": -1404.0
+    }
+  ],
+  "routes": [
+    {
+      "from_station": "S1",
+      "to_station": "S2",
+      "offset_records": 0,
+      "count": 211,
+      "duration_s": 135.08971984566222
+    },
+    {
+      "from_station": "S1",
+      "to_station": "S3",
+      "offset_records": 211,
+      "count": 204,
+      "duration_s": 132.0020743124324
+    },
+    {
+      "from_station": "S1",
+      "to_station": "S4",
+      "offset_records": 415,
+      "count": 233,
+      "duration_s": 148.2687633842694
+    },
+    {
+      "from_station": "S1",
+      "to_station": "S5",
+      "offset_records": 648,
+      "count": 274,
+      "duration_s": 170.10511657677367
+    },
+    {
+      "from_station": "S1",
+      "to_station": "S6",
+      "offset_records": 922,
+      "count": 147,
+      "duration_s": 101.10036562756254
+    },
+    {
+      "from_station": "S2",
+      "to_station": "S1",
+      "offset_records": 1069,
+      "count": 211,
+      "duration_s": 136.01571554993586
+    },
+    {
+      "from_station": "S3",
+      "to_station": "S1",
+      "offset_records": 1280,
+      "count": 205,
+      "duration_s": 132.53544601865832
+    },
+    {
+      "from_station": "S4",
+      "to_station": "S1",
+      "offset_records": 1485,
+      "count": 237,
+      "duration_s": 151.72282434352502
+    },
+    {
+      "from_station": "S5",
+      "to_station": "S1",
+      "offset_records": 1722,
+      "count": 269,
+      "duration_s": 167.77804261915898
+    },
+    {
+      "from_station": "S6",
+      "to_station": "S1",
+      "offset_records": 1991,
+      "count": 147,
+      "duration_s": 100.41775371348604
+    }
+  ],
+  "mode": "independent_random_routes",
+  "seed": 20261008,
+  "uav_count": 60,
+  "duration_s": 600,
+  "limitations": [
+    "No wind coupling, scheduling or inter-UAV avoidance.",
+    "Model-derived flat-plane stations; not surveyed landing facilities.",
+    "16m pooled native volume with16m horizontal dilation; all full segments independently checked in original8m closed voxels.",
+    "PDE arrival times are uncalibrated; displayed flighttimes integrate anisotropic15m/s horizontal,6up,4down model."
+  ],
+  "ascent_m": 48
+}

@@ -1,7 +1,20 @@
 {
   "default": "south_kensington",
   "scenes": [
-    { "id": "south_kensington", "title": "South Kensington core008", "short": "South Kensington" },
-    { "id": "white_city", "title": "White City 9 km²", "short": "White City" }
+    {
+      "id": "south_kensington",
+      "title": "South Kensington core008",
+      "short": "South Kensington"
+    },
+    {
+      "id": "white_city",
+      "title": "White City 9 km\u00b2",
+      "short": "White City"
+    },
+    {
+      "id": "tower_hamlets",
+      "title": "Canary Wharf \u00b7 city, traffic & UAVs",
+      "short": "Canary Wharf"
+    }
   ]
 }

@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "source_run": "sumo_20261008T223035Z_4fb631",
+  "source_manifest_sha256": "a710791dc767d62b1a7455de716ee2af0cc3c9e34fe68ac5fe31c2ac01747b58",
+  "frames_verified": 600,
+  "position_samples_verified": 343084,
+  "maximum_retained_position_error_m": 0.0,
+  "all_recorded_signal_states_exact": true,
+  "coordinate_transform": "SUMO projected coordinates -> WGS84 -> same AEQD ENU -> render(x,z,-y)",
+  "binary_quantization": "positions0.1m, yaw0.0001rad,speed0.01m/s; no overflow",
+  "samples_s": [
+    1.0,
+    600.0
+  ],
+  "no_frames_fabricated": true,
+  "binary_max_position_error_m": 0.049999963993286656
+}

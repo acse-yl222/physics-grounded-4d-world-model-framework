@@ -61,3 +61,8 @@ agents/demo_rev02/assets/city.glb
 
 # Tiny public protocol fixtures
 !examples/contract-v1.1/*.npy
+
+# Explicit Canary Wharf browser assets
+!scenes/tower_hamlets/physics/**/*.npy
+!scenes/tower_hamlets/physics/*.npy
+!scenes/tower_hamlets/uav/*.f32

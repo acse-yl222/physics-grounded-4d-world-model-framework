@@ -1,0 +1,6 @@
+{
+  "routes": "routes.json",
+  "mode": "independent_random_routes",
+  "uav_count": 60,
+  "seed": 20261008
+}

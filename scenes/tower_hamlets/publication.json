@@ -1,0 +1,129 @@
+{
+  "source_run": "canary_wharf_city_activity_025",
+  "source_manifest_sha256": "5550cd82f341374acf3b702482394bff503ba39d88a64e5d67be3d48b8bf306d",
+  "geometry_resource": "tower_hamlets_geometry_city_activity025",
+  "limits": [
+    "Controlled scenarios, not observed weather or live traffic.",
+    "Wind: uniform west-to-east 5 m/s inflow; 16 m grid; transient inviscid model.",
+    "Temperature: clear-sky 20 \u00b0C ambient and estimated uniform materials; 32 m grid; forced by frozen final wind.",
+    "Traffic: seeded passenger-car demand and inferred signal timings; flat bridge/tunnel elevations.",
+    "Wind particles illustrate the sampled flow; they are not recorded physical particles.",
+    "\u00a9 OpenStreetMap contributors; Overture Maps Foundation. Heights and architectural detail include estimates.",
+    "Wind colours saturate above 6 m/s; underlying recorded values are unchanged.",
+    "UAV stations are demonstration sites; canopy and real-world landing access are unverified. Aircraft share paths without fleet collision scheduling.",
+    "Wind speed \u00b7 24 m: 31 recorded frames, 0\u2013600 s; step sampling.",
+    "Air temperature \u00b7 8 m: 11 recorded frames, 0\u2013600 s; step sampling."
+  ],
+  "assets": [
+    {
+      "path": "physics/manifest.json",
+      "bytes": 965,
+      "sha256": "25316135b14913d0dfbe6e41061ae3c16096d9b7ad8a85b5b44ed21f9812c766"
+    },
+    {
+      "path": "physics/masks/lite_footprint.npy",
+      "bytes": 250128,
+      "sha256": "7cc3a1c7adc56fb5bd3913bdbd422bdd4f2a8b7597f891e224e62e122591ec81"
+    },
+    {
+      "path": "physics/masks/lite_height.npy",
+      "bytes": 1000128,
+      "sha256": "651aef5571c8d43b2e4a6a05370eb0dc88c9be53ecfd0c629463dbbce3800480"
+    },
+    {
+      "path": "physics/masks/temp_invalid.npy",
+      "bytes": 15753,
+      "sha256": "b9c1601a2121dba044e002fed599e9bae08f2ed6d39613a8a49bc3dfae284001"
+    },
+    {
+      "path": "physics/masks/wind_invalid.npy",
+      "bytes": 62628,
+      "sha256": "da45f41ec6fc7a9b3221f66bce88f37bbce9b9138583a74ebc6dfa10a2a7cde6"
+    },
+    {
+      "path": "physics/masks/wind_invalid_zyx.npy",
+      "bytes": 62628,
+      "sha256": "af3f10b5ea7e720d88a73cead96773529becbe164721f6a7b9bf8341d7fdbcd5"
+    },
+    {
+      "path": "physics/temp.npy",
+      "bytes": 687628,
+      "sha256": "95743756a9fdf05a016b784604127dec1b77d2a37bea1b65badbc64c58fd1373"
+    },
+    {
+      "path": "physics/web/index.json",
+      "bytes": 19,
+      "sha256": "a2156ca0a7e4e62f0c2b56e869c11356789dc6c20458fff5d58bdac4df29c37f"
+    },
+    {
+      "path": "physics/wind.npy",
+      "bytes": 23250128,
+      "sha256": "8bbe35cb27a2e791ba94019e120bf4cf040b24949690057e76596e0cdce77fff"
+    },
+    {
+      "path": "scene.json",
+      "bytes": 3783,
+      "sha256": "0ca91ce7e1bda8b6f904458c53a1aaa64a170ef37d43bd253e3154875c84dcec"
+    },
+    {
+      "path": "traffic/replay/frame_counts.json",
+      "bytes": 2375,
+      "sha256": "da3727e9a3d33ad06906f04ffec01bdab08d3bf48475616cb315dd2c58b4626b"
+    },
+    {
+      "path": "traffic/replay/id_map.json",
+      "bytes": 16439,
+      "sha256": "66171550f68327d3e11a0d2aaaa401d500b8d8e282a97760212bd91c351a5405"
+    },
+    {
+      "path": "traffic/replay/times_s.json",
+      "bytes": 3493,
+      "sha256": "7c3e582bc60213431af51beeebfa485b354216108719768df602e014de261255"
+    },
+    {
+      "path": "traffic/replay/tls_changes.json",
+      "bytes": 208194,
+      "sha256": "a4b6c060e87664e10dbe3cab4c375dde2d621bb0d1b025c0a99eceb8b2e568c6"
+    },
+    {
+      "path": "traffic/replay/traffic_flow.i16",
+      "bytes": 4117008,
+      "sha256": "c8b55ce78d1f5becc19cc4995c19cf04eb10fc63318b521c51afc34817d8eb0d"
+    },
+    {
+      "path": "traffic/replay.json",
+      "bytes": 424,
+      "sha256": "706732f3873ca09b6e016cf0436c384cd607d1db9fdfc3578efa85bc36cf04a2"
+    },
+    {
+      "path": "traffic/roads.json",
+      "bytes": 1696809,
+      "sha256": "6c792a6bc6076814537bbff5ada2c4de1a08b9c23bba844c8bd9a0e96e0b13a7"
+    },
+    {
+      "path": "traffic/signal_layer.json",
+      "bytes": 126572,
+      "sha256": "50f6d2602d7ce5d1ecf3e3820cea8f89247130729a387b0836de92bfca1877ad"
+    },
+    {
+      "path": "traffic/verification.json",
+      "bytes": 627,
+      "sha256": "b96e8ad65630043f0b6aa4260c7431f12dd310653a09131e3fc50db2a40912c0"
+    },
+    {
+      "path": "uav/routes.f32",
+      "bytes": 34208,
+      "sha256": "bff8b258fc372d228ef25f3034682b1fe959ddb9bbf0e2a6863c96394cccf334"
+    },
+    {
+      "path": "uav/routes.json",
+      "bytes": 3629,
+      "sha256": "2fc4a64d3e24f91250e0f8e0b8c8821c8c4f7095e76774b4dd834a9848363fbe"
+    },
+    {
+      "path": "uav/visualization.json",
+      "bytes": 108,
+      "sha256": "1e0e56b1e2c079bde7cc7ba0b536c39e834085b22ee3413217c3f5d979994196"
+    }
+  ]
+}

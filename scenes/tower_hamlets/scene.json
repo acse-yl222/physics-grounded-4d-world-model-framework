@@ -1,0 +1,136 @@
+{
+  "id": "tower_hamlets",
+  "title": "Canary Wharf \u00b7 city, traffic & UAVs",
+  "description": "Detailed Canary Wharf core, unified ground, recorded dense vehicle traffic and Wave PDE delivery routes.",
+  "grid": {
+    "cell_m": 16.0,
+    "cols": 250,
+    "rows": 250,
+    "x0": -2000,
+    "z_south": 2000,
+    "domain_origin_xy_m": [
+      -2000,
+      -2000
+    ],
+    "origin_label": "Local ENU",
+    "size_note": "4000 \u00d7 4000 m"
+  },
+  "model": {
+    "url": "models/canary_wharf_4km.glb",
+    "bytes": 391671560,
+    "building_ids_are_architecture": true,
+    "non_occluding_site_ground": true,
+    "plate_color": "#404b52",
+    "ground_color": "#737a77",
+    "parts_manifest": "https://acse-yl222.github.io/urban-world-model-models/project/tower_hamlets/geometry/city_activity025/manifest.json"
+  },
+  "lite": {
+    "footprint": "masks/lite_footprint.npy",
+    "roof": "masks/lite_height.npy",
+    "cell_m": 8
+  },
+  "masks": {
+    "footprint": {
+      "32": "masks/temp_invalid.npy"
+    },
+    "solid_wind": {
+      "file": "masks/wind_invalid_zyx.npy",
+      "layer": 0
+    }
+  },
+  "focus": {
+    "box": [
+      [
+        -600,
+        -600
+      ],
+      [
+        600,
+        600
+      ]
+    ],
+    "orbit_m": 1400,
+    "label": "Canary Wharf \u00b7 detailed core"
+  },
+  "timeline": {
+    "t0_s": 0.0,
+    "step_s": 20.0,
+    "steps": 31
+  },
+  "phase_order": [
+    "wind",
+    "temp"
+  ],
+  "layers": {
+    "wind": {
+      "file": "wind.npy",
+      "cell_m": 16.0,
+      "frames": 31,
+      "t0_s": 0.0,
+      "step_s": 20.0,
+      "range": [
+        0,
+        6
+      ],
+      "y": 24.0,
+      "rate": 3,
+      "label": "Wind speed \u00b7 24 m",
+      "title": "Wind speed \u00b7 24 m",
+      "legend": [
+        "0.0",
+        "m/s",
+        "6.0"
+      ]
+    },
+    "temp": {
+      "file": "temp.npy",
+      "cell_m": 32,
+      "frames": 11,
+      "t0_s": 0.0,
+      "step_s": 60.0,
+      "range": [
+        20.0,
+        43.0921630859375
+      ],
+      "y": 8.0,
+      "rate": 3,
+      "label": "Air temperature \u00b7 8 m",
+      "title": "Air temperature \u00b7 8 m",
+      "legend": [
+        "20.0",
+        "degC",
+        "43.1"
+      ],
+      "iso": {
+        "from": 20,
+        "step": 2,
+        "n": 13
+      },
+      "iso_y": 8.2,
+      "iso_label": "Isotherms (2 \u00b0C; display interpolation)",
+      "heat_label": "Heat map at 8 m"
+    }
+  },
+  "traffic": {
+    "dir": "traffic/",
+    "label": "Vehicle traffic \u00b7 5\u00d7 requested demand",
+    "start_s": 300
+  },
+  "limits": [
+    "Controlled scenarios, not observed weather or live traffic.",
+    "Wind: uniform west-to-east 5 m/s inflow; 16 m grid; transient inviscid model.",
+    "Temperature: clear-sky 20 \u00b0C ambient and estimated uniform materials; 32 m grid; forced by frozen final wind.",
+    "Traffic: seeded passenger-car demand and inferred signal timings; flat bridge/tunnel elevations.",
+    "Wind particles illustrate the sampled flow; they are not recorded physical particles.",
+    "\u00a9 OpenStreetMap contributors; Overture Maps Foundation. Heights and architectural detail include estimates.",
+    "Wind colours saturate above 6 m/s; underlying recorded values are unchanged.",
+    "UAV stations are demonstration sites; canopy and real-world landing access are unverified. Aircraft share paths without fleet collision scheduling.",
+    "Wind speed \u00b7 24 m: 31 recorded frames, 0\u2013600 s; step sampling.",
+    "Air temperature \u00b7 8 m: 11 recorded frames, 0\u2013600 s; step sampling."
+  ],
+  "uav": {
+    "enabled": true,
+    "description": "Centre hub + five peripheral sites \u00b7 48 m vertical takeoff/landing \u00b7 10 directed Wave PDE routes \u00b7 60 illustrative flights; no fleet scheduling.",
+    "config": "uav/visualization.json"
+  }
+}

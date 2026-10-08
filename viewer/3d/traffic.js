@@ -24,9 +24,11 @@ export async function createTraffic({ scene, base, elevated = [], onProgress = (
   const group = new THREE.Group(); group.name = 'SUMO traffic'; scene.add(group);
   const [roads, layer, counts, buffer, tlsChanges] = await Promise.all([readJSON(base + 'roads.json'), readJSON(base + 'signal_layer.json'), readJSON(base + 'replay/frame_counts.json'),
     fetch(base + 'replay/traffic_flow.i16').then(r => { if (!r.ok) throw new Error('traffic_flow.i16 ' + r.status); return r.arrayBuffer(); }), readJSON(base + 'replay/tls_changes.json')]);
+  const sampleTimes = manifest.sample_times ? await readJSON(base + manifest.sample_times) : counts.map((_,i)=>i);
+  if(sampleTimes.length!==counts.length||sampleTimes.some((t,i)=>!Number.isFinite(t)||(i&&t<=sampleTimes[i-1])))throw new Error('Invalid traffic sample times');
   // frame table from the per-second counts; signal rows expanded from the change points (one row per second, as signals-v2 expects)
-  const frames = []; let acc = 0; for (let i = 0; i < counts.length; i++) { frames.push({ t_s: i, offset: acc * REC, count: counts[i] }); acc += counts[i]; }
-  const tlsRows = []; { const ptr = {}, cur = {}; for (let t = 0; t < tlsChanges.seconds; t++) { for (const [k, rl] of Object.entries(tlsChanges.tls)) { ptr[k] ??= 0; while (ptr[k] < rl.length && rl[ptr[k]][0] <= t) { cur[k] = rl[ptr[k]][1]; ptr[k]++; } } tlsRows.push({ t, states: { ...cur } }); } }
+  const frames = []; let acc = 0; for (let i = 0; i < counts.length; i++) { frames.push({ t_s: sampleTimes[i], offset: acc * REC, count: counts[i] }); acc += counts[i]; }
+  const tlsRows = []; { const ptr = {}, cur = {}; for (const t of (tlsChanges.samples || Array.from({length:tlsChanges.seconds},(_,i)=>i))) { for (const [k, rl] of Object.entries(tlsChanges.tls)) { ptr[k] ??= 0; while (ptr[k] < rl.length && rl[ptr[k]][0] <= t) { cur[k] = rl[ptr[k]][1]; ptr[k]++; } } tlsRows.push({ t, states: { ...cur } }); } }
 
   // ---- elevated decks: lanes on a way the model lifts follow the deck top (one ray per lane vertex, once)
   const decks = new Map();   // OSM way id -> meshes of its deck
@@ -73,7 +75,9 @@ export async function createTraffic({ scene, base, elevated = [], onProgress = (
   const frameMap = fr => { const m = new Map(); if (!fr) return m; const o = fr.offset; for (let i = 0; i < fr.count; i++) { const k = o + i * REC; m.set(binary[k], binary.subarray(k + 1, k + REC)); } return m; };
   let cur = new Map(), curIdx = -1;
   function carsAt(t) {
-    const idx = Math.floor(t), a = frames[idx], b = frames[idx + 1], f = t - idx;
+    if(t<sampleTimes[0]||t>sampleTimes.at(-1))return [];
+    let idx=0;while(idx+1<sampleTimes.length&&sampleTimes[idx+1]<=t)idx++;
+    const a=frames[idx],b=frames[idx+1],f=b?(t-a.t_s)/(b.t_s-a.t_s):0;
     if (!a) return [];
     if (curIdx !== idx) { cur = frameMap(a); curIdx = idx; }
     const nxt = f > 0 ? frameMap(b) : new Map(), out = [];
@@ -116,9 +120,9 @@ export async function createTraffic({ scene, base, elevated = [], onProgress = (
   }
 
   const T = {
-    group, manifest, roadMesh, signals, actors, duration, t: 0, playing: true, speed: 1, count: 0, moving: 0, lifted,
+    group, manifest, roadMesh, signals, actors, duration, start: sampleTimes[0], end: sampleTimes.at(-1), t: sampleTimes[0], playing: true, speed: 1, count: 0, moving: 0, lifted,
     update(t) { const cars = carsAt(t); actors.updateCars(cars); signals.update(t); updateDots(t, cars); T.count = cars.length; T.moving = cars.filter(c => c.speed > 0.1).length; },
-    tick(now, dt) { if (T.playing) { T.t += dt * T.speed; if (T.t >= duration - 1) T.t = 0; } T.update(T.t); },
+    tick(now, dt) { if (T.playing) { T.t += dt * T.speed; if(manifest.loop===false){if(T.t>=T.end){T.t=T.end;T.playing=false;}}else if (T.t >= duration - 1) T.t = 0; } T.update(T.t); },
     setVisible(v) { group.visible = v; },
     applyLayers({ cars = true, signals: sig = true, roads: rd = true, paths = false, map = false } = {}) {
       actors.cars.group.visible = cars; signals.setVisible(sig); roadMesh.visible = rd; signals.setPathsVisible(paths);
@@ -128,6 +132,6 @@ export async function createTraffic({ scene, base, elevated = [], onProgress = (
     get stats() { return `SUMO replay · ${T.count} cars (${T.moving} moving) · ${layer.counts.tls} signalled junctions, ${layer.counts.heads} heads · ${roads.counts.lanes} lanes (${lifted} on elevated decks) · peak ${manifest.vehicles_peak} vehicles`; },
     get info() { return manifest.claim; },
   };
-  T.update(0);
+  T.update(T.t);
   return T;
 }

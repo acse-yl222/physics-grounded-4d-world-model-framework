@@ -4,9 +4,9 @@ import { loadRandomUav } from './random-uav.mjs';
 import { createActorLayer } from '../../agents/demo_rev02/actors/actor-layer.js';
 import { addStations } from '../../agents/demo_rev02/stations.js';
 
-export async function createUavLayer({ scene, sceneId }) {
+export async function createUavLayer({ scene, sceneId, configURL: selectedConfigURL }) {
   const prefix = import.meta.url.includes('/src/visualization/legacy/') ? '../../../../../' : '../../';
-  const configURL = new URL(`${prefix}project/${sceneId}/configs/uav_visualization.json`, import.meta.url);
+  const configURL = selectedConfigURL ? new URL(selectedConfigURL, import.meta.url) : new URL(`${prefix}project/${sceneId}/configs/uav_visualization.json`, import.meta.url);
   const response = await fetch(configURL);
   if (!response.ok) throw Error(`UAV configuration: ${response.status}`);
   const config = await response.json();
