@@ -1,13 +1,19 @@
 """Controlled single-phase pilot, NOT a reproduction of paper B.2 or FOWT.
 Compare fixed Conv3d PyTorch with Triton, and isolate rotor kernel changes.
 """
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 import sys,time,json,math,argparse
 from pathlib import Path
 import numpy as np
 import torch
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'windfarm_2m'))
-from mac_torch import MAC
-from rotor import WeightedRotor
+from urban_flow.solvers.mac_torch import MAC
+from urban_flow.solvers.rotor import WeightedRotor
 
 def run(out,h=.1,refine_only=False):
  torch.backends.cudnn.allow_tf32=False;torch.backends.cuda.matmul.allow_tf32=False
@@ -21,7 +27,7 @@ def run(out,h=.1,refine_only=False):
  cases=[('torch_paper',MAC,'paper'),('torch_legacy',MAC,'legacy')]
  if refine_only:cases=cases[:1]
  if device=='cuda' and not refine_only:
-  from mac import MAC as TritonMAC
+  from urban_flow.solvers.mac_triton import MAC as TritonMAC
   cases.append(('triton_paper',TritonMAC,'paper'))
  metadata=dict(status='single_phase_pilot_not_paper_validation',device=device,shape_zyx=shape,cell_m=h,domain_xyz_m=[9.6,3.2,3.2],hub_xyz_m=hub,rotor_diameter_m=.8,sigma_m=sigma,ct=.75,ct_prime=4/3,inlet_m_s=U,end_s=end,pressure_rtol=1e-5,explicit_turbulence_model=None,boundaries='fixed inlet, pressure outlet; slip sides/top/bottom',cases={})
  for name,cls,kernel in cases:
@@ -53,5 +59,6 @@ def run(out,h=.1,refine_only=False):
   metadata['cases'][name]=dict(steps=step,wall_seconds=elapsed,final_disc_speed_m_s=ud,final_thrust_N=thrust,final_divergence_rms=diag['divergence_rms'])
   (out/'comparison.json').write_text(json.dumps(metadata,indent=2));print(name,metadata['cases'][name],flush=True)
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('--out',type=Path,default=Path('output/paper_rotor'));p.add_argument('--cell',type=float,default=.1);p.add_argument('--refine-only',action='store_true');args=p.parse_args()
- with torch.inference_mode():run(args.out,args.cell,args.refine_only)
+ p=argparse.ArgumentParser();p.add_argument('--out',type=Path,default=None);p.add_argument('--cell',type=float,default=.1);p.add_argument('--refine-only',action='store_true');args=p.parse_args()
+ from common.runtime import trial_root
+ with torch.inference_mode():run(args.out or trial_root('windfarm', 'paper_rotor'),args.cell,args.refine_only)

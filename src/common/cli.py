@@ -11,7 +11,7 @@ from .storage import Storage
 
 def main(argv=None):
     parser = argparse.ArgumentParser(prog='p4d')
-    parser.add_argument('--root', type=Path, help='Repository root (or UWM_ROOT)')
+    parser.add_argument('--root', type=Path, help='Scene workspace (or P4D_ROOT/UWM_ROOT)')
     commands = parser.add_subparsers(dest='command', required=True)
     paths = commands.add_parser('paths', help='Show resolved scene paths without creating data')
     paths.add_argument('scene')
@@ -34,6 +34,9 @@ def main(argv=None):
     experiment.add_argument('options', nargs=argparse.REMAINDER)
     args = parser.parse_args(argv)
     try:
+        if args.command == 'validate':
+            print(f'VALID: {validate(args.manifest)} layers')
+            return 0
         storage = Storage.load(args.root)
         if args.command == 'paths':
             print(json.dumps(storage.describe(args.scene), indent=2))
@@ -45,20 +48,18 @@ def main(argv=None):
             print(json.dumps(scenes, indent=2))
         elif args.command == 'run':
             import os, subprocess
-            env = dict(os.environ, UWM_ROOT=str(storage.root))
-            env['PYTHONPATH'] = str(storage.root / 'src') + os.pathsep + env.get('PYTHONPATH', '')
+            env = dict(os.environ, P4D_ROOT=str(storage.root), UWM_ROOT=str(storage.root))
+            env['PYTHONPATH'] = str(Path(__file__).resolve().parents[1]) + os.pathsep + env.get('PYTHONPATH', '')
             return subprocess.call([args.python, '-m', 'common.pipeline.run_scene', args.scene, *args.options], cwd=storage.root, env=env)
         elif args.command == 'experiment':
             import os, subprocess
-            env=dict(os.environ,UWM_ROOT=str(storage.root))
-            env['PYTHONPATH']=str(storage.root/'src')+os.pathsep+env.get('PYTHONPATH','')
+            env=dict(os.environ,P4D_ROOT=str(storage.root),UWM_ROOT=str(storage.root))
+            env['PYTHONPATH']=str(Path(__file__).resolve().parents[1])+os.pathsep+env.get('PYTHONPATH','')
             if args.run_id:env['UWM_RUN_ID']=args.run_id
             return subprocess.call([args.python,'-m',f'urban_flow.scenarios.{args.simulation}.run',*args.options],cwd=storage.root,env=env)
         elif args.command == 'serve':
             from .server import serve
             serve(storage,args.host,args.port)
-        elif args.command == 'validate':
-            print(f'VALID: {validate(args.manifest)} layers')
         else:
             print(promote_bundle(storage,args.source) if (args.source/'bundle.json').is_file() else promote(storage,args.source))
     except (ValueError, OSError, ValidationError) as exc:

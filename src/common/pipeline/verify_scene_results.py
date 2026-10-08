@@ -1,7 +1,11 @@
 """Check completed scene output shapes, finite values, masks and frame counts."""
-from pathlib import Path as _UwmPath
-import sys as _uwm_sys
-_uwm_sys.path.insert(0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / 'common').is_dir())))
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 from common.layout import repo_root
 import argparse
 import json
@@ -10,8 +14,6 @@ import sys
 
 import numpy as np
 
-if __package__ in (None,''):
-    sys.path.insert(0,str(repo_root()))
 from common.pipeline.paths import project_path
 
 

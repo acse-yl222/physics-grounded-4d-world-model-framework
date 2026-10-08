@@ -1,16 +1,14 @@
 """Locate the checkout independently of a module's depth."""
-import os
 from pathlib import Path
+from .locations import code_path, workspace_root
 
 
 def repo_root():
-    value=os.environ.get('UWM_ROOT')
-    if value:return Path(value).expanduser().resolve()
-    return Path(__file__).resolve().parents[2]
+    return workspace_root()
 
 
 def agent_src():
-    return repo_root() / 'src/urban_geometry/agent'
+    return code_path('src/urban_geometry/agent')
 
 
 def authoring_path(relative=''):

@@ -1,7 +1,12 @@
 """Configured core008 solar simulation and plotting entry point."""
-from pathlib import Path as _UwmPath
-import sys as _uwm_sys
-_uwm_sys.path.insert(0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / 'common').is_dir())))
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from common.locations import code_path
 from common.layout import repo_root
 import argparse
 import json
@@ -24,10 +29,10 @@ def main():
     config = json.loads(project_path(args.config).read_text())
     output = project_path(config['output'])
     commands = {
-        'run': [sys.executable, str(ROOT / 'src/urban_flow/physics/run_core008_solar.py'),
+        'run': [sys.executable, str(code_path('src/urban_flow/physics/run_core008_solar.py')),
                 '--out', str(output), '--dates', ','.join(config['dates']),
                 '--minutes', str(config['minutes']), '--hourly_1m', str(config['hourly_1m'])],
-        'plot': [sys.executable, str(ROOT / 'src/urban_flow/physics/plot_core008_solar.py'), '--out', str(output)],
+        'plot': [sys.executable, str(code_path('src/urban_flow/physics/plot_core008_solar.py')), '--out', str(output)],
     }
     stages = ('run', 'plot') if args.stage == 'all' else (args.stage,)
     if not args.dry_run:

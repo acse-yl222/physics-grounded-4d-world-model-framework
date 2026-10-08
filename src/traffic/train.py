@@ -1,3 +1,9 @@
+# Compatibility for direct source-script execution; package imports need no path changes.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+
 from common.runtime import trial_root
 import torch
 import torch.nn as nn
@@ -7,14 +13,13 @@ import os
 import sys
 from datetime import datetime
 
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from configs.default import (
+from traffic.configs.default import (
     GRID_SIZE, WINDOW_SIZE, HIST_STEPS, PRED_STEPS,
     VEHICLE_DIM, BATCH_SIZE, LR, EPOCHS,
     TRAIN_TRAJECTORIES, VAL_TRAJECTORIES
 )
-from models.particle_mlp import ParticleTrafficModel
-from data.generate_complex import generate_dataset
+from traffic.models.particle_mlp import ParticleTrafficModel
+from traffic.data.generate_complex import generate_dataset
 
 
 def track_vehicle_targets(label, start_r, start_c, last_frame):
@@ -174,4 +179,6 @@ def train():
     log(f"Training completed. Best validation Loss: {best_val:.6f}")
 
 if __name__ == "__main__":
+    import argparse
+    argparse.ArgumentParser(description='Train the particle traffic model').parse_args()
     train()

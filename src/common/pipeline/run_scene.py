@@ -10,9 +10,14 @@ Each stage is idempotent: a finished stage is skipped, an interrupted wind run r
 checkpoint, and every stage writes its log to cache/<scene>/pipeline/<run_id>/logs/<stage>.log. The existing scene scripts
 are called unchanged through generated legacy configs in cache/<scene>/pipeline/<run_id>/configs/.
 """
-from pathlib import Path as _UwmPath
-import sys as _uwm_sys
-_uwm_sys.path.insert(0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / 'common').is_dir())))
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
+from common.locations import code_path, resource_path
 from common.layout import repo_root, scene_input
 import argparse
 import copy
@@ -29,8 +34,6 @@ import uuid
 from common.storage import Storage, scene_id, identifier
 from pathlib import Path
 
-if __package__ in (None, ''):
-    sys.path.insert(0, str(repo_root()))
 from common.pipeline.paths import ROOT, project_path
 from urban_geometry.voxelization.glb_plan import read_glb_header, local_bounds, plan_grid
 
@@ -46,8 +49,8 @@ DEFAULTS = {
                      'note': ''},
     'stages': STAGES,
     'wind': {'steps': 100, 'step_seconds': 50, 'coarse_factor': 4, 'min_free_gib': 2,
-             'scaled_repo': '/home/yl222/workspace/SCALED-Tutorial',
-             'temperature_checkpoint': str(scene_input('south_ken','models','temperature_one_step.pt'))},
+             'scaled_repo': None, 'weights_root': None,
+             'temperature_checkpoint': None},
     'thermal': {'ambient_c': 26.0, 'ground_c': 30.0, 'roof_c': 30.0,
                 'surface_exchange_per_s': 0.001, 'diffusivity_m2_s': 1.0,
                 'cfl_safety': 0.8, 'forcing_layers': 1,
@@ -90,6 +93,8 @@ def load_config(target):
         raise SystemExit(f'scene id must be lowercase letters, digits or underscores: {scene!r}')
     scene = scene_id(scene)
     cfg['scene'] = scene
+    if cfg['wind']['temperature_checkpoint'] is None:
+        cfg['wind']['temperature_checkpoint'] = str(storage.assets('south_ken', 'input') / 'models/temperature_one_step.pt')
     cell = cfg['domain']['cell_m']
     if cell not in (1, 2, 4, 8):
         raise SystemExit('domain.cell_m must be 1, 2, 4 or 8 (SCALED encoder tiles are 256 cells, wind depth 64 layers)')
@@ -110,7 +115,7 @@ def load_config(target):
     p['configs'] = p['out'] / 'configs'
     p['logs'] = p['out'] / 'logs'
     p['status'] = p['out'] / 'pipeline_status.json'
-    p['visualizer'] = ROOT / 'src/visualization/legacy'
+    p['visualizer'] = resource_path('src/visualization/legacy')
     p['scene_web'] = p['out'] / 'export'
     return cfg, p
 
@@ -129,7 +134,7 @@ def legacy_wind_config(cfg, p):
     thermal['factor'] = w['coarse_factor']
     thermal['wind_step_seconds'] = float(w['step_seconds'])
     return {'scene': cfg['scene'], 'geometry': rel(p['geometry']), 'output': rel(p['run']),
-            'scaled_repo': w['scaled_repo'], 'temperature_checkpoint': w['temperature_checkpoint'],
+            'scaled_repo': w['scaled_repo'], 'weights_root': w['weights_root'], 'temperature_checkpoint': w['temperature_checkpoint'],
             'cell_m': cell, 'wind_layers': cfg['domain']['wind_layers'], 'wind_steps': w['steps'],
             'step_seconds': w['step_seconds'], 'coarse_factor': w['coarse_factor'], 'min_free_gib': w['min_free_gib'],
             'thermal': thermal}
@@ -251,7 +256,7 @@ def status_of(stage, cfg, p, done):
     if stage == 'visualize':
         if 'geometry' not in done:
             return 'blocked', 'needs geometry'
-        if not (p['visualizer'] / 'serve.py').is_file():
+        if not (p['visualizer'] / 'viewer/3d/index.html').is_file():
             return 'blocked', 'visualizer/ (the web viewer repository) is missing'
         layers = sorted(s for s in ('wind', 'temperature3d', 'pollution', 'solar', 'flood') if s in done)
         manifest = read_json(p['scene_web'] / 'physics' / 'manifest.json', {})
@@ -265,7 +270,7 @@ def status_of(stage, cfg, p, done):
 def commands(stage, cfg, p, wind_cfg, surface_cfg):
     py = [sys.executable, '-u']
     if stage == 'geometry':
-        cmd = py + [str(ROOT / 'src/urban_geometry/voxelization/prepare_glb.py'), '--cell', str(cfg['domain']['cell_m']),
+        cmd = py + [str(code_path('src/urban_geometry/voxelization/prepare_glb.py')), '--cell', str(cfg['domain']['cell_m']),
                     '--source', str(p['source']), '--out', str(p['geometry']),
                     '--min-layers', str(cfg['domain']['wind_layers'])]
         crop = cfg['domain']['crop_local_m']
@@ -273,22 +278,22 @@ def commands(stage, cfg, p, wind_cfg, surface_cfg):
             cmd += ['--crop'] + [str(float(v)) for v in crop]
         return [cmd]
     if stage == 'wind':
-        return [py + [str(ROOT / 'src/common/pipeline/scene_scaled_latent.py'), '--config', str(wind_cfg), '--stage', 'wind']]
+        return [py + [str(code_path('src/common/pipeline/scene_scaled_latent.py')), '--config', str(wind_cfg), '--stage', 'wind']]
     if stage == 'temperature':
-        return [py + [str(ROOT / 'src/common/pipeline/scene_scaled_latent.py'), '--config', str(wind_cfg), '--stage', 'temperature']]
+        return [py + [str(code_path('src/common/pipeline/scene_scaled_latent.py')), '--config', str(wind_cfg), '--stage', 'temperature']]
     if stage == 'temperature3d':
-        return [py + [str(ROOT / 'src/common/pipeline/scene_temperature_physical.py'), '--config', str(wind_cfg),
+        return [py + [str(code_path('src/common/pipeline/scene_temperature_physical.py')), '--config', str(wind_cfg),
                       '--out', str(p['temperature3d']), '--frames', str(cfg['temperature3d']['frames'])]]
     if stage == 'pollution':
-        return [py + [str(ROOT / 'src/common/pipeline/scene_pollution.py'), '--config', str(wind_cfg)]]
+        return [py + [str(code_path('src/common/pipeline/scene_pollution.py')), '--config', str(wind_cfg)]]
     if stage in ('solar', 'flood'):
-        return [py + [str(ROOT / 'src/common/pipeline/scene_surface_physics.py'), '--config', str(surface_cfg), '--stage', stage]]
+        return [py + [str(code_path('src/common/pipeline/scene_surface_physics.py')), '--config', str(surface_cfg), '--stage', stage]]
     if stage == 'plot':
-        return [py + [str(ROOT / 'src/common/pipeline/plot_scene.py'), '--config', str(wind_cfg)]]
+        return [py + [str(code_path('src/common/pipeline/plot_scene.py')), '--config', str(wind_cfg)]]
     if stage == 'verify':
-        return [py + [str(ROOT / 'src/common/pipeline/verify_scene_results.py'), '--config', str(wind_cfg)]]
+        return [py + [str(code_path('src/common/pipeline/verify_scene_results.py')), '--config', str(wind_cfg)]]
     if stage == 'visualize':
-        return [py + [str(ROOT / 'src/common/pipeline/export_scene_web.py'), '--config', str(p['config_path'])]]
+        return [py + [str(code_path('src/common/pipeline/export_scene_web.py')), '--config', str(p['config_path'])]]
     raise KeyError(stage)
 
 

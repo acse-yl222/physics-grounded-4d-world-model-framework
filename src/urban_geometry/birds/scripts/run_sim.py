@@ -9,14 +9,16 @@ import argparse
 import json
 import numpy as np
 
-# add project root to path so imports work from scripts/ directory
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from sim.config import SimConfig
-from sim.integrator import init_state, step
-from sim.predator import init_predator, update_predator
-from sim.environment import get_environment
-from sim.environment import day_fraction
+from urban_geometry.birds.sim.config import SimConfig
+from urban_geometry.birds.sim.integrator import init_state, step
+from urban_geometry.birds.sim.predator import init_predator, update_predator
+from urban_geometry.birds.sim.environment import get_environment
+from urban_geometry.birds.sim.environment import day_fraction
 
 def main():
     # parse command-line overrides (if any)
@@ -27,8 +29,11 @@ def main():
     parser.add_argument('--wind_mode', type=str, default=None)
     parser.add_argument('--heading_noise', type=float, default=None)
     parser.add_argument('--seed', type=int, default=None)
-    parser.add_argument('--output', type=str, default='data/runs/latest.npz')
+    parser.add_argument('--output', type=str, default=None)
     args = parser.parse_args()
+    if args.output is None:
+        from common.runtime import trial_root
+        args.output = str(trial_root('south_ken', 'birds') / 'replay.npz')
     
     # create configuration
     config = SimConfig()

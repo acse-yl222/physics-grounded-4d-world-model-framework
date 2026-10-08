@@ -4,8 +4,8 @@ integrator.py = main simulation loop
 
 import numpy as np
 import os
-from sim.neighbors import find_topological_neighbors, compute_blind_angle_mask
-from sim.forces import (
+from urban_geometry.birds.sim.neighbors import find_topological_neighbors, compute_blind_angle_mask
+from urban_geometry.birds.sim.forces import (
     compute_separation, 
     compute_alignment, 
     compute_cohesion, 
@@ -15,15 +15,15 @@ from sim.forces import (
     compute_field_speed_modulation,
     compute_wind_response,
 )
-from sim.states import get_state_params, update_states, FORAGE, TRANSIT, MURMURATION, DESCENT, ROOST
-from sim.sites import get_site_heightmaps, sample_surface_height
-from sim.wind import get_wind
-from sim.environment import get_environment
-from sim.predator import compute_predator_avoidance
-from sim.config import INDIVIDUAL_TRAITS, AFFECT_GAINS, WIND_RESPONSE_GAIN, FIELD_RESPONSES, FIELD_RESPONSE_GAIN, WAVE_GUIDANCE_GAIN
-from sim.routing import get_arrival_time_field, compute_wave_guidance
-from sim.foraging import update_forage, init_food_field
-from sim.world_gen import generate_world
+from urban_geometry.birds.sim.states import get_state_params, update_states, FORAGE, TRANSIT, MURMURATION, DESCENT, ROOST
+from urban_geometry.birds.sim.sites import get_site_heightmaps, sample_surface_height
+from urban_geometry.birds.sim.wind import get_wind
+from urban_geometry.birds.sim.environment import get_environment
+from urban_geometry.birds.sim.predator import compute_predator_avoidance
+from urban_geometry.birds.sim.config import INDIVIDUAL_TRAITS, AFFECT_GAINS, WIND_RESPONSE_GAIN, FIELD_RESPONSES, FIELD_RESPONSE_GAIN, WAVE_GUIDANCE_GAIN
+from urban_geometry.birds.sim.routing import get_arrival_time_field, compute_wave_guidance
+from urban_geometry.birds.sim.foraging import update_forage, init_food_field
+from urban_geometry.birds.sim.world_gen import generate_world
 
 _geometry_cache = {}
 

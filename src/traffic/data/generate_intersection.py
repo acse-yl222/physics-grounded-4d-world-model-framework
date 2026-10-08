@@ -1,14 +1,20 @@
 """
 Intersection Simulation Dataset
 """
+
+# Compatibility for direct source-script execution; package imports need no path changes.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+
 import numpy as np
 import torch
 import sys
 import os
 import pickle
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from configs.default import (
+from traffic.configs.default import (
     INTERSECTION_CENTER, ROAD_HALF_WIDTH, SIGNAL_CYCLE,
     TURN_PROB_STRAIGHT, TURN_PROB_LEFT, TURN_PROB_RIGHT,
     TURN_RADIUS_RIGHT, TURN_RADIUS_LEFT, GRID_SIZE,

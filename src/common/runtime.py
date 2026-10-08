@@ -9,13 +9,18 @@ from .storage import Storage, identifier, within
 _TRIALS={}
 
 
-def source_path(name,*parts):
+def source_path(name,*parts,scene='windfarm'):
+    identifier(name)
     storage=Storage.load();path=storage.root/'sources.local.json'
     config=json.loads(path.read_text()) if path.exists() else {}
+    if not isinstance(config, dict):
+        raise ValueError('sources.local.json must be an object of named absolute paths')
     value=os.environ.get('UWM_SOURCE_'+name.upper()) or config.get(name)
     if value is None:
         # No implicit access to another checkout or old filesystem root.
-        return within(storage.root,'project','windfarm','input',name,*parts)
+        return within(storage.assets(scene, 'input'), name, *parts)
+    if not isinstance(value, str) or not value:
+        raise ValueError(f'External source {name} must be a nonempty absolute path')
     root=Path(value).expanduser()
     if not root.is_absolute():raise ValueError(f'External source {name} must be absolute')
     return within(root,*parts)

@@ -8,6 +8,7 @@ from pathlib import Path
 import re
 from urllib.parse import unquote, urlsplit
 from .storage import scene_id, within
+from .locations import resource_path
 
 
 class ViewerHandler(BaseHTTPRequestHandler):
@@ -48,18 +49,19 @@ class ViewerHandler(BaseHTTPRequestHandler):
             elif parts[:6]==legacy+('agents','demo_rev02','data'):
                 path=within(self.storage.run('south_ken','legacy_agents')/'data',*parts[6:])
             elif parts==('src','visualization','public-scenes.json'):
-                catalog=json.loads((self.storage.root/'src/visualization/public-scenes.json').read_text())
+                catalog=json.loads(resource_path('src/visualization/public-scenes.json').read_text())
                 for item in catalog['scenes']:
                     if not self.storage.assets(item['scene_id'],'runs').is_dir():
                         item['viewer_url']=catalog['published_site'].rstrip('/')+'/'+item['viewer_url'].removeprefix('src/visualization/legacy/')
                 return self.json_response(catalog,head)
             elif parts==('index.html',):
-                path=self.storage.root/'index.html'
+                path=resource_path('index.html')
             elif parts[:2]==('src','visualization') or parts[0] in ('examples','schemas'):
-                path=within(self.storage.root,*parts)
+                base=resource_path(parts[0])
+                path=within(base,*parts[1:])
             elif parts==('project','index.json'):
                 path=self.storage.root/'project/index.json'
-                catalog=json.loads(path.read_text())
+                catalog=json.loads(path.read_text()) if path.is_file() else {'default': None, 'scenes': []}
                 for item in catalog['scenes']:
                     views=[]
                     for name in item.get('views',[]):
@@ -77,7 +79,7 @@ class ViewerHandler(BaseHTTPRequestHandler):
                 path=within(base,*parts[3:])
             else:
                 self.send_error(HTTPStatus.NOT_FOUND);return
-            if path.is_dir():path=path/'index.html'
+            if path.is_dir():path=within(path, 'index.html')
             if not path.is_file():self.send_error(HTTPStatus.NOT_FOUND);return
             size=path.stat().st_size;start=0;end=size-1;status=HTTPStatus.OK
             requested=self.headers.get('Range')
@@ -105,6 +107,7 @@ class ViewerHandler(BaseHTTPRequestHandler):
                         if not chunk:break
                         self.wfile.write(chunk);remaining-=len(chunk)
         except (ValueError,KeyError):self.send_error(HTTPStatus.BAD_REQUEST)
+        except FileNotFoundError:self.send_error(HTTPStatus.NOT_FOUND)
         except (BrokenPipeError,ConnectionResetError):pass
 
     def bad_range(self,size):

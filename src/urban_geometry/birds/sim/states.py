@@ -3,9 +3,9 @@ states.py = bird behavioral states
 """
 
 import numpy as np
-from sim.sites import get_site_heightmaps, sample_surface_height
-from sim.config import STATE_PARAMS
-from sim.environment import day_phase
+from urban_geometry.birds.sim.sites import get_site_heightmaps, sample_surface_height
+from urban_geometry.birds.sim.config import STATE_PARAMS
+from urban_geometry.birds.sim.environment import day_phase
 
 # state constants
 FORAGE = 0 # TODO: add foraging state and appropriate transitions

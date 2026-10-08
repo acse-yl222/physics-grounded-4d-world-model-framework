@@ -1,10 +1,17 @@
-from common.runtime import source_path, trial_root
 """Plan and voxelize a crop containing all 23 turbines; remove static blades for actuator forces."""
+
+# Compatibility for direct source-script execution.
+if __name__ == '__main__' and not __package__:
+    import sys
+    from pathlib import Path
+    sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+
+from common.runtime import source_path, trial_root
 import argparse,json,math,sys,hashlib
 from pathlib import Path
 import numpy as np
 from scipy.ndimage import distance_transform_edt
-ROOT=Path.cwd();sys.path.insert(0,str(ROOT))
+
 from urban_geometry.voxelization.prepare_glb import read_primitive,raster
 from urban_geometry.voxelization.glb_plan import read_glb_header
 

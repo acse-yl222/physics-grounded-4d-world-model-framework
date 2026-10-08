@@ -45,4 +45,26 @@ class RegistryServerTests(unittest.TestCase):
         self.assertEqual(error.exception.code,416)
         with self.assertRaises(urllib.error.HTTPError):urllib.request.urlopen(f'http://127.0.0.1:{server.server_port}/.history/repositories/secrets')
 
+    def test_resources_are_independent_of_workspace_and_missing_catalogue_is_empty(self):
+        server=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(ViewerHandler,storage=self.storage))
+        thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+        self.addCleanup(server.server_close);self.addCleanup(server.shutdown)
+        base=f'http://127.0.0.1:{server.server_port}'
+        with urllib.request.urlopen(base+'/src/visualization/viewer/main.mjs') as response:
+            self.assertEqual(response.status,200)
+            self.assertIn(b'createWidget',response.read())
+        with urllib.request.urlopen(base+'/project/index.json') as response:
+            self.assertEqual(json.load(response),{'default':None,'scenes':[]})
+
+    def test_directory_index_symlink_cannot_escape_run(self):
+        run=self.storage.run('south_ken','synthetic_v1')
+        outside=Path(self.tmp.name)/'outside.html';outside.write_text('external fixture')
+        (run/'index.html').symlink_to(outside)
+        server=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(ViewerHandler,storage=self.storage))
+        thread=threading.Thread(target=server.serve_forever,daemon=True);thread.start()
+        self.addCleanup(server.server_close);self.addCleanup(server.shutdown)
+        with self.assertRaises(urllib.error.HTTPError) as error:
+            urllib.request.urlopen(f'http://127.0.0.1:{server.server_port}/project/south_ken/runs/synthetic_v1/')
+        self.assertEqual(error.exception.code,400)
+
 if __name__=='__main__':unittest.main()

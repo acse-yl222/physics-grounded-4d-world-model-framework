@@ -2,30 +2,29 @@
 
 This manual explains how to **use and reproduce** this code.
 
-All commands are run from the `project/` directory.
+Install this framework with `python -m pip install -e ".[traffic]"`. Package commands work from any directory. Set `P4D_ROOT` (or the legacy `UWM_ROOT`) to the scene workspace when using an installed wheel; an editable source checkout supplies the default workspace.
 
 ## 1. Environment Setup
 
-- Python 3.8+
+- Python 3.11+
 - Install dependencies:
 
 ```bash
-pip install -r ../requirements.txt
+python -m pip install -e ".[traffic]"
 ```
 
 ## 2. Quick Start
 
 ```bash
-cd project
 
 # ① Train a complex road-network model
-python train.py
+python -m traffic.train
 
 # ② Evaluate this model; pass the date obtained above to --model
-python evaluate.py --model <training date>
+python -m traffic.evaluate --model <training date>
 ```
 
-Training results appear in the `train/` directory: `best_model_{date}.pt` (model weights) and `train_log_{date}.txt` (training log), where the date defaults to the current time (see §3.2).
+Training results appear in a unique `cache/south_ken/traffic_training/<run_id>/` trial (or the configured cache root): `best_model_{date}.pt` (model weights) and `train_log_{date}.txt` (training log), where the date defaults to the current time (see §3.2).
 
 ## 3. Operation Details
 
@@ -35,30 +34,30 @@ For memory reasons, data is **generated on the fly during training/evaluation an
 
 | Scenario | Command | Description |
 |---|---|---|
-| Complex intersection | `python data/generate_complex.py` | 12 feature channels|
-| Single intersection | `python data/generate_intersection.py` | 11 feature channels|
+| Complex intersection | `python -m traffic.data.generate_complex` | 12 feature channels|
+| Single intersection | `python -m traffic.data.generate_intersection` | 11 feature channels|
 
 To adjust the data volume/scenario, edit `configs/default.py` (see §4).
 
 ### 3.2 Train the Model
 
 ```bash
-python train.py
+python -m traffic.train
 ```
 
 - **The filename date defaults to the current time** (format `MM-DD_HH-MM-SS`)
 - Set the environment variable `LOG_DATE` only when you want a fixed, predictable filename, for example:
   ```bash
-  LOG_DATE=08-27_00-00-00 python train.py
+  LOG_DATE=08-27_00-00-00 python -m traffic.train
   ```
-- Outputs: `train/best_model_{date}.pt` + `train/train_log_{date}.txt`.
+- Outputs: `best_model_{date}.pt` and `train_log_{date}.txt` in the training trial. Evaluation reads selected weights from `Storage.assets("south_ken", "input") / "traffic/models"`.
 - Trains 250 epochs by default, with 2000 training trajectories + 200 validation trajectories (changeable in `configs/default.py`).
 - On an HPC cluster you can submit via `train.pbs`.
 
 ### 3.3 Evaluate the Model
 
 ```bash
-python evaluate.py --model <the model date you want to evaluate>
+python -m traffic.evaluate --model <the model date you want to evaluate>
 ```
 
 - `--model` takes the **date portion** of the model file (e.g. `08-16_07-31-30`).
@@ -69,11 +68,11 @@ python evaluate.py --model <the model date you want to evaluate>
 
 ```bash
 # ① Convert the raw OSM road network (roads.geojson) into a grid representation usable by the model
-python verification/convert_london.py
+python -m traffic.verification.convert_london
 #    produces verification/london_roads.json
 
 # ② Use the trained model for single-window prediction and export as lon/lat trajectories
-python verification/export_prediction.py 0
+python -m traffic.verification.export_prediction 0
 #    produces verification/predictions.json
 ```
 
@@ -85,7 +84,7 @@ The `top_all.mp4` file under the `verification` folder is the 2D animation gener
 ### 3.5 Compute Emissions + Optimize Signal Control
 
 ```bash
-python emission.py --sample 0 --model <the model date to evaluate> --init 5 --iter 15
+python -m traffic.emission --sample 0 --model <the model date to evaluate> --init 5 --iter 15
 ```
 
 - Based on the VSP emission model + Bayesian optimization, it automatically searches for the optimal `speed_factor` (∈ [0.3, 1.0]) to minimize emissions.
@@ -98,9 +97,9 @@ python emission.py --sample 0 --model <the model date to evaluate> --init 5 --it
 
 ```bash
 # Static prediction image
-python visualization/visualize_simple_prediction.py -s 0 -m <single-intersection model date>
+python -m traffic.visualization.visualize_simple_prediction -s 0 -m <single-intersection model date>
 # Animation
-python visualization/visualize_simple_prediction.py -s 0 -m <single-intersection model date> -a
+python -m traffic.visualization.visualize_simple_prediction -s 0 -m <single-intersection model date> -a
 ```
 
 - Outputs: `plot_pred_s{sample}.png` (static), `anim_pred_s{sample}.gif` (animation).
@@ -110,9 +109,9 @@ python visualization/visualize_simple_prediction.py -s 0 -m <single-intersection
 
 ```bash
 # Static prediction image
-python visualization/visualize_complex_prediction.py -s 0 -m <complex model date>
+python -m traffic.visualization.visualize_complex_prediction -s 0 -m <complex model date>
 # Animation
-python visualization/visualize_complex_prediction.py -s 0 -m <complex model date> -a
+python -m traffic.visualization.visualize_complex_prediction -s 0 -m <complex model date> -a
 ```
 
 - Outputs: `complex_pred_s{sample}.png` (static), `complex_anim_s{sample}.gif` (animation).
@@ -153,7 +152,7 @@ After training your own model, to get the same kind of metrics as in the final r
 Source: `evaluate.py`
 
 ```bash
-python evaluate.py --model <your model date>
+python -m traffic.evaluate --model <your model date>
 ```
 
 The printed ADE/FDE are normalized values; multiply by `GRID_SIZE × CELL_SIZE` (=168) to get meters (see §3.3).
@@ -173,7 +172,7 @@ python analyze_turn_direction.py -m best_model_<date>.pt
 Source: `evaluate_counterfactual()` in `evaluate.py`
 
 ```bash
-python evaluate.py --model <your model date>
+python -m traffic.evaluate --model <your model date>
 ```
 
 - `∆ADE` = (intervention ADE − original ADE) / original ADE
@@ -181,7 +180,7 @@ python evaluate.py --model <your model date>
 ### Figure 2 - Complex road-network traffic flow
 
 ```bash
-python visualization/visualize_traffic_complex.py
+python -m traffic.visualization.visualize_traffic_complex
 ```
 
 ### Figure 3 - Training line chart (loss curve)
