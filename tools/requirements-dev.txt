@@ -1,0 +1,4 @@
+# Formatting tools are pinned so local hooks and CI produce the same changes.
+ruff==0.16.10
+pre-commit==4.6.2
+shfmt-py==4.2.0

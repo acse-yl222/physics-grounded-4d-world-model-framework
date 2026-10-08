@@ -1,0 +1,32 @@
+# Shared formatting boundary for tools/format.py and Prettier.
+# Third-party source, recovery material, local environments and generated output.
+**/vendor/
+.history/
+cache/
+.venv/
+**/__pycache__/
+**/*.egg-info/
+**/node_modules/
+**/dist/
+**/build/
+
+# Scene assets and retained runs are data, even when tracked JSON.
+project/*/input/
+project/*/geometry/
+project/*/runs/
+storage.local.json
+sources.local.json
+examples/*/data/
+examples/*/frames.json
+
+# Published/historical snapshots and immutable migration/provenance records.
+src/visualization/published-pages/
+src/visualization/legacy/agents/demo_rev02/
+docs/history/
+docs/cleanup/
+docs/framework/*.json
+**/SOURCE.json
+**/SOURCE_INFO.json
+src/urban_geometry/uav/validation.json
+src/visualization/legacy/assets/actors/**/*_QA.json
+src/visualization/legacy/viewer/windfarm-movie/resources.json

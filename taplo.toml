@@ -1,0 +1,15 @@
+# The unified runner additionally applies .prettierignore and Git exclusions.
+exclude = [
+    "**/vendor/**",
+    ".history/**",
+    "cache/**",
+    ".venv/**",
+    "**/node_modules/**",
+    "**/build/**",
+    "**/dist/**",
+]
+
+[formatting]
+indent_string = "    "
+column_width = 100
+reorder_keys = false
