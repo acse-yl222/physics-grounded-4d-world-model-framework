@@ -1,0 +1,58 @@
+{
+  "scene_id": "tower_hamlets",
+  "source_run": "sumo_20261009T003118Z_e3abe3",
+  "source_manifest_sha256": "d3cd8c881753710fa202b8e05c2420b0ba06a0c6cbf4ccece3a3367dcfa8ae97",
+  "assets": [
+    {
+      "path": "replay/frame_counts.json",
+      "bytes": 5570,
+      "sha256": "be1eeea4585b6468c3dc2c87caa482005b9f84fe2495fe117414f707f9019229"
+    },
+    {
+      "path": "replay/id_map.json",
+      "bytes": 46960,
+      "sha256": "5f27d8ed16cf9f2a07e648b86be24fa7a1209bfa1defdfb61ff480c3131b89c2"
+    },
+    {
+      "path": "replay/times_s.json",
+      "bytes": 7294,
+      "sha256": "276cf6cc80b11ae2152d798b4af308357a60941a4b585b47b02d8ad2cc60b740"
+    },
+    {
+      "path": "replay/tls_changes.json",
+      "bytes": 284002,
+      "sha256": "a20efbc9a41af791ed0e15a626f5e41c72734333c48346729f40f284759fcd9d"
+    },
+    {
+      "path": "replay/traffic_flow.i16",
+      "bytes": 19891764,
+      "sha256": "ad249ade39cac7771dfd783cf746d615ec7b6421e1890800758e58b69ca7811e"
+    },
+    {
+      "path": "replay.json",
+      "bytes": 429,
+      "sha256": "fe90666c5395a4d4850f55905a8b182ba660329befa3394d76c4913ec223a578"
+    },
+    {
+      "path": "roads.json",
+      "bytes": 1764261,
+      "sha256": "c9231f1f7e0129242f4d970ae832fc1aa2fb679d1a2f821125bb049841dd12ef"
+    },
+    {
+      "path": "signal_layer.json",
+      "bytes": 68698,
+      "sha256": "c0e6128703817f7165025ef86793d0419fb5dd6e840da52c91eb88191992534b"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 945,
+      "sha256": "8fcde748cc0019430ad2e71db0eebd14ab8e63fff41757e06b9b6720c35e8819"
+    }
+  ],
+  "limits": [
+    "Synthetic passenger demand, estimated traffic signals and unsurveyed road elevations; not measured traffic.",
+    "A small explicitly recorded set of model-unvalidated junction approaches is closed for this simulation only; road geometry remains visible.",
+    "1200-second traffic simulation: 3 recorded junction collision events and 0 teleports. Residual intersection behaviour is not validated.",
+    "Replay uses actual seconds 1\u20131200, starting at 600 s; traffic and environmental/UAV clocks are independent."
+  ]
+}

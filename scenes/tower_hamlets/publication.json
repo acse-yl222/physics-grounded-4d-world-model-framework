@@ -1,19 +1,6 @@
 {
-  "source_run": "canary_wharf_city_activity_025",
-  "source_manifest_sha256": "5550cd82f341374acf3b702482394bff503ba39d88a64e5d67be3d48b8bf306d",
-  "geometry_resource": "tower_hamlets_geometry_city_activity025",
-  "limits": [
-    "Controlled scenarios, not observed weather or live traffic.",
-    "Wind: uniform west-to-east 5 m/s inflow; 16 m grid; transient inviscid model.",
-    "Temperature: clear-sky 20 \u00b0C ambient and estimated uniform materials; 32 m grid; forced by frozen final wind.",
-    "Traffic: seeded passenger-car demand and inferred signal timings; flat bridge/tunnel elevations.",
-    "Wind particles illustrate the sampled flow; they are not recorded physical particles.",
-    "\u00a9 OpenStreetMap contributors; Overture Maps Foundation. Heights and architectural detail include estimates.",
-    "Wind colours saturate above 6 m/s; underlying recorded values are unchanged.",
-    "UAV stations are demonstration sites; canopy and real-world landing access are unverified. Aircraft share paths without fleet collision scheduling.",
-    "Wind speed \u00b7 24 m: 31 recorded frames, 0\u2013600 s; step sampling.",
-    "Air temperature \u00b7 8 m: 11 recorded frames, 0\u2013600 s; step sampling."
-  ],
+  "source_run": "canary_wharf_city_activity_026",
+  "source_manifest_sha256": "49a3f380ba94066979dd726c2c4bc464375ef8ef017bd8fa979e7ce409404032",
   "assets": [
     {
       "path": "physics/manifest.json",
@@ -62,8 +49,8 @@
     },
     {
       "path": "scene.json",
-      "bytes": 3783,
-      "sha256": "0ca91ce7e1bda8b6f904458c53a1aaa64a170ef37d43bd253e3154875c84dcec"
+      "bytes": 4716,
+      "sha256": "ab8ec259a0be2fcec47fbe54e4a9f2711091c4c2011b6c139ef06d42677bf65f"
     },
     {
       "path": "traffic/replay/frame_counts.json",
@@ -111,19 +98,69 @@
       "sha256": "b96e8ad65630043f0b6aa4260c7431f12dd310653a09131e3fc50db2a40912c0"
     },
     {
+      "path": "traffic_density026/publication.json",
+      "bytes": 2125,
+      "sha256": "aae22572c1771ee7bed02a007a468d48186e0ab42ae9def289f8891277aa8932"
+    },
+    {
+      "path": "traffic_density026/replay/frame_counts.json",
+      "bytes": 5570,
+      "sha256": "be1eeea4585b6468c3dc2c87caa482005b9f84fe2495fe117414f707f9019229"
+    },
+    {
+      "path": "traffic_density026/replay/id_map.json",
+      "bytes": 46960,
+      "sha256": "5f27d8ed16cf9f2a07e648b86be24fa7a1209bfa1defdfb61ff480c3131b89c2"
+    },
+    {
+      "path": "traffic_density026/replay/times_s.json",
+      "bytes": 7294,
+      "sha256": "276cf6cc80b11ae2152d798b4af308357a60941a4b585b47b02d8ad2cc60b740"
+    },
+    {
+      "path": "traffic_density026/replay/tls_changes.json",
+      "bytes": 284002,
+      "sha256": "a20efbc9a41af791ed0e15a626f5e41c72734333c48346729f40f284759fcd9d"
+    },
+    {
+      "path": "traffic_density026/replay/traffic_flow.i16",
+      "bytes": 19891764,
+      "sha256": "ad249ade39cac7771dfd783cf746d615ec7b6421e1890800758e58b69ca7811e"
+    },
+    {
+      "path": "traffic_density026/replay.json",
+      "bytes": 429,
+      "sha256": "fe90666c5395a4d4850f55905a8b182ba660329befa3394d76c4913ec223a578"
+    },
+    {
+      "path": "traffic_density026/roads.json",
+      "bytes": 1764261,
+      "sha256": "c9231f1f7e0129242f4d970ae832fc1aa2fb679d1a2f821125bb049841dd12ef"
+    },
+    {
+      "path": "traffic_density026/signal_layer.json",
+      "bytes": 68698,
+      "sha256": "c0e6128703817f7165025ef86793d0419fb5dd6e840da52c91eb88191992534b"
+    },
+    {
+      "path": "traffic_density026/verification.json",
+      "bytes": 945,
+      "sha256": "8fcde748cc0019430ad2e71db0eebd14ab8e63fff41757e06b9b6720c35e8819"
+    },
+    {
       "path": "uav/routes.f32",
-      "bytes": 34208,
-      "sha256": "bff8b258fc372d228ef25f3034682b1fe959ddb9bbf0e2a6863c96394cccf334"
+      "bytes": 212544,
+      "sha256": "ecf365275ab981d9797ef45b2e4108f40c698a567da37cd2570c5aee8882858b"
     },
     {
       "path": "uav/routes.json",
-      "bytes": 3629,
-      "sha256": "2fc4a64d3e24f91250e0f8e0b8c8821c8c4f7095e76774b4dd834a9848363fbe"
+      "bytes": 20496,
+      "sha256": "a24cf30cf9b67902fa07320665e7e3495c1510df7cba448f4c0cc70f681131c4"
     },
     {
       "path": "uav/visualization.json",
-      "bytes": 108,
-      "sha256": "1e0e56b1e2c079bde7cc7ba0b536c39e834085b22ee3413217c3f5d979994196"
+      "bytes": 185,
+      "sha256": "ee6fc75a4a449c6f7570c7abf42df5fac3dda043922fc4298f9fc09f8236a2c9"
     }
   ]
 }

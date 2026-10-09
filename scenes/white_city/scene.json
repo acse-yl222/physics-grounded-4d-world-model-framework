@@ -202,7 +202,11 @@
     "Temperature: controlled scenario (26 \u00b0C air, 30 \u00b0C surfaces), not measured White City temperatures.",
     "Pollution: assumed upstream line source, not measured concentrations.",
     "Flooding: the GLB ground mesh stands in for terrain; no surveyed elevation.",
-    "Transport: a TfL Unified API snapshot (routes, stops, road disruptions, JamCams); arrivals refresh live while online."
+    "Transport: a TfL Unified API snapshot (routes, stops, road disruptions, JamCams); arrivals refresh live while online.",
+    "Synthetic passenger demand, estimated traffic signals and unsurveyed road elevations; not measured traffic.",
+    "A small explicitly recorded set of model-unvalidated junction approaches is closed for this simulation only; road geometry remains visible.",
+    "1200-second traffic simulation: 0 recorded collisions and 0 teleports; this does not establish real-world traffic calibration.",
+    "Replay uses actual seconds 1\u20131200, starting at 600 s; traffic and environmental/UAV clocks are independent."
   ],
   "transport": {
     "file": "transport/transport.json",
@@ -211,9 +215,9 @@
   },
   "georeference": "georef.json",
   "traffic": {
-    "dir": "traffic/",
-    "label": "Traffic \u00b7 SUMO replay",
-    "note": "one-hour SUMO run on the OSM road network with guessed, actuated signals; synthetic demand"
+    "dir": "traffic_density026/",
+    "start_s": 600,
+    "label": "Vehicle traffic \u00b7 denser SUMO scenario"
   },
   "city_tools": "project/white_city/city-tools.json"
 }

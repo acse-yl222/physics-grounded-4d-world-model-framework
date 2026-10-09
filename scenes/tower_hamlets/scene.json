@@ -112,9 +112,9 @@
     }
   },
   "traffic": {
-    "dir": "traffic/",
-    "label": "Vehicle traffic \u00b7 5\u00d7 requested demand",
-    "start_s": 300
+    "dir": "traffic_density026/",
+    "start_s": 600,
+    "label": "Vehicle traffic \u00b7 denser SUMO scenario"
   },
   "limits": [
     "Controlled scenarios, not observed weather or live traffic.",
@@ -125,12 +125,19 @@
     "\u00a9 OpenStreetMap contributors; Overture Maps Foundation. Heights and architectural detail include estimates.",
     "Wind colours saturate above 6 m/s; underlying recorded values are unchanged.",
     "UAV stations are demonstration sites; canopy and real-world landing access are unverified. Aircraft share paths without fleet collision scheduling.",
+    "Traffic uses synthetic demand and inferred junctions with explicit temporary model closures, not observed road closures or measured flows.",
+    "Traffic replay covers actual simulation seconds 1\u20131200; default starts at 600 s. Environmental fields and UAV clocks remain independent.",
+    "Traffic has 3 recorded junction collision events and 0 teleports; intersection behaviour remains unvalidated.",
     "Wind speed \u00b7 24 m: 31 recorded frames, 0\u2013600 s; step sampling.",
-    "Air temperature \u00b7 8 m: 11 recorded frames, 0\u2013600 s; step sampling."
+    "Air temperature \u00b7 8 m: 11 recorded frames, 0\u2013600 s; step sampling.",
+    "Synthetic passenger demand, estimated traffic signals and unsurveyed road elevations; not measured traffic.",
+    "A small explicitly recorded set of model-unvalidated junction approaches is closed for this simulation only; road geometry remains visible.",
+    "1200-second traffic simulation: 3 recorded junction collision events and 0 teleports. Residual intersection behaviour is not validated.",
+    "Replay uses actual seconds 1\u20131200, starting at 600 s; traffic and environmental/UAV clocks are independent."
   ],
   "uav": {
     "enabled": true,
-    "description": "Centre hub + five peripheral sites \u00b7 48 m vertical takeoff/landing \u00b7 10 directed Wave PDE routes \u00b7 60 illustrative flights; no fleet scheduling.",
+    "description": "20 model ground stations \u00b7 100 directed Wave PDE routes \u00b7 48 m vertical takeoff/landing \u00b7 600 illustrative UAVs; no fleet scheduling.",
     "config": "uav/visualization.json"
   }
 }

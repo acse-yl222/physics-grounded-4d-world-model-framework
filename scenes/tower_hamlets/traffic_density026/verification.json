@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "source_run": "sumo_20261009T003118Z_e3abe3",
+  "source_manifest_sha256": "1ceddeb11e6a75fd37138292b97ef8c364a7914c2f878f21f2db30b8d9d8384f",
+  "frames_verified": 1200,
+  "position_samples_verified": 1657647,
+  "maximum_retained_position_error_m": 0.0,
+  "all_recorded_signal_states_exact": true,
+  "coordinate_transform": "SUMO projected coordinates -> WGS84 -> retained configured local ENU transform -> render(x,z,-y)",
+  "binary_quantization": "positions0.1m, yaw0.0001rad,speed0.01m/s; no overflow",
+  "samples_s": [
+    1.0,
+    1200.0
+  ],
+  "no_frames_fabricated": true,
+  "visible_and_moving": {
+    "300.0": {
+      "visible": 822,
+      "moving_over_0_1_m_s": 709
+    },
+    "600.0": {
+      "visible": 1402,
+      "moving_over_0_1_m_s": 766
+    },
+    "1200.0": {
+      "visible": 2610,
+      "moving_over_0_1_m_s": 495
+    }
+  },
+  "peak_moving": 891,
+  "source_manifest_asset": "../simulation_manifest.json"
+}

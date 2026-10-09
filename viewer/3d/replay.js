@@ -1,6 +1,7 @@
 // Traffic + UAV replay layer for the integrated page. Reuses demo_rev02's actor / signal / station /
 // follow-camera modules; UAVs use independent random Wave PDE ground-to-ground flights.
 import * as THREE from 'three';
+import { createFlightCorridors, scaleStationLabels } from './flight-corridors.js';
 import { createActorLayer, sumoHeadingToWorldYaw, carColorForId } from '../../agents/demo_rev02/actors/actor-layer.js';
 import { addStations, addRoadSurfaces } from '../../agents/demo_rev02/stations.js';
 import { createSignalLayerV2 } from '../../agents/demo_rev02/signals-v2.js';
@@ -33,7 +34,7 @@ export const SHOTS = {
   overview: { label: 'Imperial College campus · traffic and UAV overview', dur: 11, speed: 2 },
   junction: { label: 'Busiest signalised junction around the campus', dur: 14, speed: 1 },
   traffic: { label: 'Traffic · overhead (drivable lanes, cars, signals)', dur: 14, speed: 2 },
-  uavs: { label: 'UAVs · wide view (campus, nearby hubs and stations)', dur: 14, speed: 2 },
+  uavs: { label: 'UAVs · whole-area delivery network', dur: 14, speed: 2 },
   birds: { label: 'Birds · tracking the flock (Akira flock model replay)', dur: 16, speed: 1 },
 };
 export const SHOT_ORDER = ['overview', 'junction', 'traffic', 'uavs', 'birds'];
@@ -49,33 +50,33 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
   onProgress('Reading stations and routes…');
   const routeConfigURL = new URL((import.meta.url.includes('/src/visualization/legacy/') ? '../../../../../' : '../../') + 'project/south_ken/configs/uav_visualization.json', import.meta.url);
   const routeConfig = await readJSON(routeConfigURL);
-  const flightData = await loadRandomUav(new URL(routeConfig.routes, routeConfigURL), {count:routeConfig.uav_count,seed:routeConfig.seed});
+  const flightData = await loadRandomUav(new URL(routeConfig.routes, routeConfigURL), {count:routeConfig.uav_count,seed:routeConfig.seed,routeLimit:routeConfig.route_limit});
+  const trafficBase = routeConfig.traffic_replay ? new URL(routeConfig.traffic_replay, routeConfigURL).href : DEMO + 'data/traffic/';
+  const manifest = await readJSON(trafficBase + 'current_replay.json', true);
+  const carCapacity = Math.max(1800, manifest?.vehicles_peak ?? 0);
   stations = flightData.stations;
   const routes = {routes: flightData.routes};
   stations.forEach(s => stationById.set(s.station_id, s));
   for (const s of stations) if (Math.hypot(s.x_m - campusCentre.x, s.z_m - campusCentre.z) < 650) nearStations.add(s.station_id);
 
   onProgress('Cars, UAVs, stations, lanes…');
-  actors = await createActorLayer({ scene: group, carCapacity: 1800, uavCapacity: 300, uavURL: DEMO + 'assets/hexacopter_cargo.glb' });
+  actors = await createActorLayer({ scene: group, carCapacity, uavCapacity: flightData.model.count, uavURL: DEMO + 'assets/hexacopter_cargo.glb' });
   stationLayer = addStations(group, stations, parking);
   // screen-space dots for airborne UAVs (the demo does the same for far views)
   const markerGeom = new THREE.BufferGeometry();
-  markerGeom.setAttribute('position', new THREE.BufferAttribute(new Float32Array(300 * 3), 3));
-  markerGeom.setAttribute('color', new THREE.BufferAttribute(new Float32Array(300 * 3), 3));
+  markerGeom.setAttribute('position', new THREE.BufferAttribute(new Float32Array(flightData.model.count * 3), 3));
+  markerGeom.setAttribute('color', new THREE.BufferAttribute(new Float32Array(flightData.model.count * 3), 3));
   const dot = document.createElement('canvas'); dot.width = dot.height = 32;
   { const g = dot.getContext('2d'); g.beginPath(); g.arc(16, 16, 13, 0, Math.PI * 2); g.fillStyle = '#fff'; g.fill(); g.lineWidth = 4; g.strokeStyle = 'rgba(0,0,0,0.85)'; g.stroke(); }
   const dotTex = new THREE.CanvasTexture(dot); dotTex.colorSpace = THREE.SRGBColorSpace;
-  const markers = new THREE.Points(markerGeom, new THREE.PointsMaterial({ size: 13, sizeAttenuation: false, map: dotTex, alphaTest: 0.3, vertexColors: true, depthTest: false, transparent: true }));
+  const markers = new THREE.Points(markerGeom, new THREE.PointsMaterial({ size: 8, sizeAttenuation: false, map: dotTex, alphaTest: 0.3, vertexColors: true, depthTest: false, transparent: true }));
   markers.frustumCulled = false; markers.renderOrder = 20; markers.visible = false; group.add(markers);
   // flight corridors (the computed Wave PDE route centrelines) - shown only in the wide UAV shot
-  const corridorPos = [];
-  for (const r of routes.routes) for (let i = 1; i < r.points_m.length; i++) corridorPos.push(...r.points_m[i - 1], ...r.points_m[i]);
-  const corridorGeom = new THREE.BufferGeometry(); corridorGeom.setAttribute('position', new THREE.Float32BufferAttribute(corridorPos, 3));
-  const corridors = new THREE.LineSegments(corridorGeom, new THREE.LineBasicMaterial({ color: 0xffb347, transparent: true, opacity: 0.35, depthWrite: false }));
+  const corridors = createFlightCorridors(flightData.routes, routeConfig);
   corridors.visible = false; corridors.renderOrder = 19; group.add(corridors);
   let uavScale = 1;
   function setUavScale(k) { if (k === uavScale) return; for (const m of actors.uavs.meshes) m.geometry.scale(k / uavScale, k / uavScale, k / uavScale); uavScale = k; }
-  roadMesh = addRoadSurfaces(group, await readJSON(DEMO + 'data/roads.json'));
+  roadMesh = addRoadSurfaces(group, await readJSON(routeConfig.traffic_replay ? trafficBase + 'roads.json' : DEMO + 'data/roads.json'));
   // birds: Akira's flock model (demo_rev02 v3 wrapper), same clock as the traffic; low-poly pigeons, instanced.
   // data/birds_southken/ = our run focused on South Kensington station (roost on the station roof); data/birds/ = the colleague's campus run.
   onProgress('Birds (flock model replay)…');
@@ -94,6 +95,7 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
   // Cars retain the existing recorded replay; UAV random walks use their own paths.
   function trafficTime(t) {
     if (!traffic) return t;
+    if (!traffic.loop) return Math.max(traffic.firstTime,Math.min(traffic.lastTime,t));
     const span = traffic.lastTime - traffic.firstTime; if (span <= 0 || (t >= traffic.firstTime && t <= traffic.lastTime)) return t;
     return traffic.firstTime + ((((t - traffic.firstTime) % span) + span) % span);
   }
@@ -113,21 +115,20 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
   }
 
   onProgress('Traffic replay and signals…');
-  const manifest = await readJSON(DEMO + 'data/traffic/current_replay.json', true);
   if (manifest) {
-    const base = DEMO + 'data/traffic/replay/';
+    const base = trafficBase + 'replay/';
     const [frames, buffer] = await Promise.all([readJSON(base + 'frames_index.json'), fetch(base + 'traffic_flow.f32').then(r => r.arrayBuffer())]);
-    traffic = { frames: Array.isArray(frames) ? frames : frames.frames, binary: new Float32Array(buffer) };
+    traffic = { loop: manifest.loop !== false, frames: Array.isArray(frames) ? frames : frames.frames, binary: new Float32Array(buffer) };
     traffic.firstTime = traffic.frames[0].t_s; traffic.lastTime = traffic.frames[traffic.frames.length - 1].t_s;
     const identities = await readJSON(base + 'actors.json'); for (const [k, v] of Object.entries(identities)) carIdentities.set(Number(k), v);
-    const [layer, tlsText] = await Promise.all([readJSON(DEMO + 'data/traffic/signal_layer_v2.json'), fetch(base + 'tls_frames.jsonl').then(r => r.text())]);
+    const [layer, tlsText] = await Promise.all([readJSON(trafficBase + 'signal_layer_v2.json'), fetch(base + 'tls_frames.jsonl').then(r => r.text())]);
     signalLayer = createSignalLayerV2(group, layer, tlsText.trim().split('\n').filter(Boolean).map(l => JSON.parse(l)));
   }
   // ---- overhead "traffic map": screen-space dots for cars and signal heads, highlighted lane ribbons
   const ROAD_COLOR = roadMesh.material.color.clone();
   const carDotGeom = new THREE.BufferGeometry();
-  carDotGeom.setAttribute('position', new THREE.BufferAttribute(new Float32Array(1800 * 3), 3));
-  carDotGeom.setAttribute('color', new THREE.BufferAttribute(new Float32Array(1800 * 3), 3));
+  carDotGeom.setAttribute('position', new THREE.BufferAttribute(new Float32Array(carCapacity * 3), 3));
+  carDotGeom.setAttribute('color', new THREE.BufferAttribute(new Float32Array(carCapacity * 3), 3));
   const carDots = new THREE.Points(carDotGeom, new THREE.PointsMaterial({ size: 9, sizeAttenuation: false, map: dotTex, alphaTest: 0.3, vertexColors: true, depthTest: false, transparent: true }));
   carDots.frustumCulled = false; carDots.renderOrder = 21; carDots.visible = false; group.add(carDots);
   const heads = signalLayer?.heads ?? [];
@@ -157,9 +158,9 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
 
   // ---- state
   const R = {
-    group, traffic, duration: flightData.model.duration, t: traffic ? Math.min(traffic.lastTime, traffic.firstTime + 30) : 0, playing: false, speed: 1,
+    group, traffic, duration: traffic && !traffic.loop ? traffic.lastTime : flightData.model.duration, t: traffic ? Math.min(traffic.lastTime, routeConfig.traffic_start_s ?? traffic.firstTime + 30) : 0, playing: false, speed: 1,
     cars: [], uavs: [], lastDraw: -Infinity, followKind: null, followId: null, shot: null, shotUntil: 0, cycleDone: false, info: '', label: '', orbit: null,
-    stats: '', uavMode: 'random_wavepde', flightData,
+    actors, corridors, markers, stations: stationLayer, stats: '', uavMode: 'random_wavepde', flightData,
   };
   const followCamera = createFollowCamera({ camera, controls });
   
@@ -179,14 +180,15 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
     markerGeom.setDrawRange(0, n); markerGeom.attributes.position.needsUpdate = true; markerGeom.attributes.color.needsUpdate = true;
     if (carDots.visible) {
       const cp = carDotGeom.attributes.position.array, cc = carDotGeom.attributes.color.array; let m = 0;
-      for (const c of R.cars) { if (m >= 1800) break; cp[m * 3] = c.x; cp[m * 3 + 1] = c.y + 2; cp[m * 3 + 2] = c.z; const stopped = c.speed <= CAR_STOPPED; cc[m * 3] = 1; cc[m * 3 + 1] = stopped ? 0.62 : 1; cc[m * 3 + 2] = stopped ? 0.1 : 1; m++; }
+      for (const c of R.cars) { if (m >= carCapacity) break; cp[m * 3] = c.x; cp[m * 3 + 1] = c.y + 2; cp[m * 3 + 2] = c.z; const stopped = c.speed <= CAR_STOPPED; cc[m * 3] = 1; cc[m * 3 + 1] = stopped ? 0.62 : 1; cc[m * 3 + 2] = stopped ? 0.1 : 1; m++; }
       carDotGeom.setDrawRange(0, m); carDotGeom.attributes.position.needsUpdate = true; carDotGeom.attributes.color.needsUpdate = true;
     }
     if (sigDots.visible) updateSignalDots(trafficTime(t));
     const moving = R.cars.filter(c => c.speed > CAR_STOPPED).length;
     const near = R.cars.filter(c => Math.hypot(c.x - campusCentre.x, c.z - campusCentre.z) < 450).length;
     const air = R.uavs.filter(u => u.airborne).length;
-    R.stats = `Cars on the network ${R.cars.length} (${moving} moving) · ${near} within 450 m of campus\nUAVs ${air} · random Wave PDE flights · no scheduling` + (traffic && traffic.lastTime < 3600 ? `\nTraffic: ${traffic.lastTime - traffic.firstTime} s sample looping (at ${timeString(trafficTime(t))}); full-hour files not placed in demo_rev02` : '');
+    R.stats = `Cars on the network ${R.cars.length} (${moving} moving) · ${near} within 450 m of campus\nUAVs ${air} · random Wave PDE flights · no scheduling` + (traffic?.loop && traffic.lastTime < 3600 ? `\nTraffic: ${traffic.lastTime - traffic.firstTime} s sample looping (at ${timeString(trafficTime(t))}); full-hour files not placed in demo_rev02` : '');
+    if(routeConfig.traffic_note) R.stats += '\n'+routeConfig.traffic_note;
     if (birds && birds.present) { const names = ['foraging', 'transit', 'murmuration', 'descending', 'roosting']; R.stats += `\nBirds ${birds.present} (flock model replay): ` + birds.stateCounts.map((n, k) => n ? `${n} ${names[k]}` : '').filter(Boolean).join(' · '); }
   }
   function junctionCandidates(maxDist = JUNCTION_MAX_M) {
@@ -206,7 +208,7 @@ export async function createReplay({ scene, camera, controls, campusCentre, camp
     const e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
     const az = THREE.MathUtils.degToRad(o.az0 + (o.az1 - o.az0) * e), el = THREE.MathUtils.degToRad(o.el0 + (o.el1 - o.el0) * e), d = o.d0 + (o.d1 - o.d0) * e;
     const ty = o.y ?? campusCentre.y;
-    return { pos: new THREE.Vector3(campusCentre.x + d * Math.cos(el) * Math.sin(az), ty + d * Math.sin(el), campusCentre.z + d * Math.cos(el) * Math.cos(az)), target: new THREE.Vector3(campusCentre.x, ty, campusCentre.z) };
+    return { pos: new THREE.Vector3((o.x ?? campusCentre.x) + d * Math.cos(el) * Math.sin(az), ty + d * Math.sin(el), (o.z ?? campusCentre.z) + d * Math.cos(el) * Math.cos(az)), target: new THREE.Vector3(o.x ?? campusCentre.x, ty, o.z ?? campusCentre.z) };
   }
   function cancelCamera() {
     if (R.orbit) { R.orbit = null; controls.enabled = true; }
@@ -301,13 +303,16 @@ ${stateText(f.counts)}`;
     } else if (id === 'uavs') {
       // wide, high sweep over the campus: the nearby hubs (H2 north, H3 south) and rooftop stations come into view
       setUavScale(UAV_MACRO_SCALE); markers.visible = true; corridors.visible = true;
-      const orbit = { az0: -140, az1: -100, el0: 52, el1: 44, d0: 1000, d1: 820, y: 30 };
+      const bounds=new THREE.Box3().setFromPoints(stations.map(s=>new THREE.Vector3(s.x_m,s.y_m,s.z_m)));
+      const centre=bounds.getCenter(new THREE.Vector3()),size=bounds.getSize(new THREE.Vector3());
+      const distance=Math.max(size.x/camera.aspect,size.z)*.8/Math.tan(camera.fov*Math.PI/360);
+      const orbit = { az0: 0, az1: 0, el0: 65, el1: 65, d0: distance, d1: distance, x:centre.x,z:centre.z,y:30 };
       const start = orbitPose(orbit, 0), lead = 2600;
       const begin = () => { R.orbit = { ...orbit, t0: performance.now(), dur: shot.dur * 1000 - lead - 100 }; controls.enabled = false; };
       if (camera.position.distanceTo(start.pos) > 40) flyTo(start, lead, begin); else begin();
       const air = R.uavs.filter(u => u.airborne).length;
       const nearNames = [...nearStations].map(id => stationById.get(id)).filter(Boolean).map(st => st.label).join(' / ');
-      R.info = `${air} UAVs airborne (dots; models enlarged ${UAV_MACRO_SCALE}×; independent random destinations; no orders or scheduling) · thin orange lines are the flight corridors · stations near campus: ${nearNames}`;
+      R.info = `${air} UAVs airborne (dots; models enlarged ${UAV_MACRO_SCALE}×; independent random destinations; no orders or scheduling) · orange lines are the computed flight corridors · ${stations.length} ground stations · ${routes.routes.length} selected computed routes`;
     }
   }
   function nextShot() {
@@ -328,7 +333,7 @@ ${stateText(f.counts)}`;
     if (R.playing) {
       R.t += dt * R.speed;
       const end = R.duration || 3600;
-      if (R.t >= end) R.t = traffic ? traffic.firstTime + 10 : 0;   // full-hour illustrative random-flight loop; the traffic sample loops on its own inside carStates
+      if (R.t >= end) { if(traffic && !traffic.loop){R.t=end;update(R.t);R.playing=false;}else R.t = traffic ? traffic.firstTime + 10 : 0; }   // full-hour illustrative random-flight loop; the traffic sample loops on its own inside carStates
     }
     if ((R.playing && now - R.lastDraw >= 35) || R.lastDraw === -Infinity) { update(R.t); R.lastDraw = now; }
     if (R.playing) updateBirdTracking(dt);
@@ -337,12 +342,12 @@ ${stateText(f.counts)}`;
       camera.position.copy(p.pos); controls.target.copy(p.target); camera.lookAt(p.target);
       if (k >= 1) cancelCamera();
     }
-    for (const sprite of stationLayer.labels.children) { const mpp = 2 * camera.position.distanceTo(sprite.position) * Math.tan(camera.fov * Math.PI / 360) / window.innerHeight; sprite.scale.set(48 * mpp, 48 / (sprite.userData.aspect ?? (48 / 22)) * mpp, 1); }
+    scaleStationLabels(stationLayer,camera,routeConfig.station_label_px??48);
     if (R.playing && R.shot && now >= R.shotUntil) { nextShot(); return true; }
     return false;
   }
   function applyLayers({ cars = true, uavs = true, signals = true, stations = true, roads = true, trafficMap = false, birds = true } = {}) {
-    actors.setVisible({ cars, uavs }); signalLayer?.setVisible(signals); stationLayer.setVisible(stations); roadMesh.visible = roads; birdLayer?.setVisible(birds);
+    actors.setVisible({ cars, uavs }); markers.visible=uavs&&R.shot==='uavs';corridors.visible=uavs&&R.shot==='uavs'; signalLayer?.setVisible(signals); stationLayer.setVisible(stations); roadMesh.visible = roads; birdLayer?.setVisible(birds);
     mapManual = trafficMap; applyTrafficMap(); if (carDots.visible) update(R.t);
   }
   function setVisible(v) { group.visible = v; }

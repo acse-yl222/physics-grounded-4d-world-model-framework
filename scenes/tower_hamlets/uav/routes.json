@@ -1,6 +1,6 @@
 {
   "schema_version": "wavepde-uav-preview-1",
-  "source_run": "canary_wharf_wavepde022",
+  "source_run": "canary_wharf_wavepde026",
   "coordinate_frame": "world-y-up",
   "record": [
     "east_m",
@@ -10,7 +10,7 @@
   ],
   "dtype": "<f4",
   "binary": "routes.f32",
-  "sha256": "bff8b258fc372d228ef25f3034682b1fe959ddb9bbf0e2a6863c96394cccf334",
+  "sha256": "ecf365275ab981d9797ef45b2e4108f40c698a567da37cd2570c5aee8882858b",
   "stations": [
     {
       "station_id": "S1",
@@ -71,6 +71,146 @@
       "x_m": -156.0,
       "y_m": 0.15,
       "z_m": -1404.0
+    },
+    {
+      "station_id": "S7",
+      "id": 7,
+      "label": "S7",
+      "role": "dropoff",
+      "name": "Model ground site S7",
+      "x_m": -84.0,
+      "y_m": 0.15,
+      "z_m": 1180.0
+    },
+    {
+      "station_id": "S8",
+      "id": 8,
+      "label": "S8",
+      "role": "dropoff",
+      "name": "Model ground site S8",
+      "x_m": -1572.0,
+      "y_m": 0.15,
+      "z_m": -116.0
+    },
+    {
+      "station_id": "S9",
+      "id": 9,
+      "label": "S9",
+      "role": "dropoff",
+      "name": "Model ground site S9",
+      "x_m": 1108.0,
+      "y_m": 0.15,
+      "z_m": -244.0
+    },
+    {
+      "station_id": "S10",
+      "id": 10,
+      "label": "S10",
+      "role": "dropoff",
+      "name": "Model ground site S10",
+      "x_m": 660.0,
+      "y_m": 0.15,
+      "z_m": 1756.0
+    },
+    {
+      "station_id": "S11",
+      "id": 11,
+      "label": "S11",
+      "role": "dropoff",
+      "name": "Model ground site S11",
+      "x_m": -932.0,
+      "y_m": 0.15,
+      "z_m": 1716.0
+    },
+    {
+      "station_id": "S12",
+      "id": 12,
+      "label": "S12",
+      "role": "dropoff",
+      "name": "Model ground site S12",
+      "x_m": -820.0,
+      "y_m": 0.15,
+      "z_m": -660.0
+    },
+    {
+      "station_id": "S13",
+      "id": 13,
+      "label": "S13",
+      "role": "dropoff",
+      "name": "Model ground site S13",
+      "x_m": 1412.0,
+      "y_m": 0.15,
+      "z_m": 444.0
+    },
+    {
+      "station_id": "S14",
+      "id": 14,
+      "label": "S14",
+      "role": "dropoff",
+      "name": "Model ground site S14",
+      "x_m": 476.0,
+      "y_m": 0.15,
+      "z_m": -996.0
+    },
+    {
+      "station_id": "S15",
+      "id": 15,
+      "label": "S15",
+      "role": "dropoff",
+      "name": "Model ground site S15",
+      "x_m": 620.0,
+      "y_m": 0.15,
+      "z_m": 940.0
+    },
+    {
+      "station_id": "S16",
+      "id": 16,
+      "label": "S16",
+      "role": "dropoff",
+      "name": "Model ground site S16",
+      "x_m": -964.0,
+      "y_m": 0.15,
+      "z_m": 380.0
+    },
+    {
+      "station_id": "S17",
+      "id": 17,
+      "label": "S17",
+      "role": "dropoff",
+      "name": "Model ground site S17",
+      "x_m": 1756.0,
+      "y_m": 0.15,
+      "z_m": -1684.0
+    },
+    {
+      "station_id": "S18",
+      "id": 18,
+      "label": "S18",
+      "role": "dropoff",
+      "name": "Model ground site S18",
+      "x_m": -1660.0,
+      "y_m": 0.15,
+      "z_m": 1732.0
+    },
+    {
+      "station_id": "S19",
+      "id": 19,
+      "label": "S19",
+      "role": "dropoff",
+      "name": "Model ground site S19",
+      "x_m": -932.0,
+      "y_m": 0.15,
+      "z_m": -1660.0
+    },
+    {
+      "station_id": "S20",
+      "id": 20,
+      "label": "S20",
+      "role": "dropoff",
+      "name": "Model ground site S20",
+      "x_m": 892.0,
+      "y_m": 0.15,
+      "z_m": -1756.0
     }
   ],
   "routes": [
@@ -110,44 +250,674 @@
       "duration_s": 101.10036562756254
     },
     {
+      "from_station": "S1",
+      "to_station": "S7",
+      "offset_records": 1069,
+      "count": 184,
+      "duration_s": 124.94238572031684
+    },
+    {
+      "from_station": "S1",
+      "to_station": "S9",
+      "offset_records": 1253,
+      "count": 153,
+      "duration_s": 104.40683695999033
+    },
+    {
+      "from_station": "S1",
+      "to_station": "S12",
+      "offset_records": 1406,
+      "count": 108,
+      "duration_s": 78.62588662910022
+    },
+    {
+      "from_station": "S1",
+      "to_station": "S14",
+      "offset_records": 1514,
+      "count": 121,
+      "duration_s": 87.02072884427564
+    },
+    {
+      "from_station": "S1",
+      "to_station": "S15",
+      "offset_records": 1635,
+      "count": 187,
+      "duration_s": 126.74052411474517
+    },
+    {
+      "from_station": "S1",
+      "to_station": "S16",
+      "offset_records": 1822,
+      "count": 140,
+      "duration_s": 96.81874020377902
+    },
+    {
       "from_station": "S2",
       "to_station": "S1",
-      "offset_records": 1069,
+      "offset_records": 1962,
       "count": 211,
       "duration_s": 136.01571554993586
     },
     {
+      "from_station": "S2",
+      "to_station": "S6",
+      "offset_records": 2173,
+      "count": 168,
+      "duration_s": 112.91379376677939
+    },
+    {
+      "from_station": "S2",
+      "to_station": "S8",
+      "offset_records": 2341,
+      "count": 136,
+      "duration_s": 94.91921232332183
+    },
+    {
+      "from_station": "S2",
+      "to_station": "S12",
+      "offset_records": 2477,
+      "count": 106,
+      "duration_s": 78.56676457051739
+    },
+    {
+      "from_station": "S2",
+      "to_station": "S19",
+      "offset_records": 2583,
+      "count": 91,
+      "duration_s": 69.43590967382093
+    },
+    {
       "from_station": "S3",
       "to_station": "S1",
-      "offset_records": 1280,
+      "offset_records": 2674,
       "count": 205,
       "duration_s": 132.53544601865832
     },
     {
+      "from_station": "S3",
+      "to_station": "S6",
+      "offset_records": 2879,
+      "count": 174,
+      "duration_s": 115.56597288678556
+    },
+    {
+      "from_station": "S3",
+      "to_station": "S9",
+      "offset_records": 3053,
+      "count": 122,
+      "duration_s": 87.6931812438651
+    },
+    {
+      "from_station": "S3",
+      "to_station": "S14",
+      "offset_records": 3175,
+      "count": 95,
+      "duration_s": 71.65177731100823
+    },
+    {
+      "from_station": "S3",
+      "to_station": "S17",
+      "offset_records": 3270,
+      "count": 93,
+      "duration_s": 71.66550382832355
+    },
+    {
+      "from_station": "S3",
+      "to_station": "S20",
+      "offset_records": 3363,
+      "count": 80,
+      "duration_s": 64.56072604058926
+    },
+    {
       "from_station": "S4",
       "to_station": "S1",
-      "offset_records": 1485,
+      "offset_records": 3443,
       "count": 237,
       "duration_s": 151.72282434352502
     },
     {
+      "from_station": "S4",
+      "to_station": "S7",
+      "offset_records": 3680,
+      "count": 173,
+      "duration_s": 115.22312647286032
+    },
+    {
+      "from_station": "S4",
+      "to_station": "S8",
+      "offset_records": 3853,
+      "count": 135,
+      "duration_s": 94.32271674432526
+    },
+    {
+      "from_station": "S4",
+      "to_station": "S11",
+      "offset_records": 3988,
+      "count": 116,
+      "duration_s": 84.1460521976765
+    },
+    {
+      "from_station": "S4",
+      "to_station": "S16",
+      "offset_records": 4104,
+      "count": 94,
+      "duration_s": 72.0306246152577
+    },
+    {
+      "from_station": "S4",
+      "to_station": "S18",
+      "offset_records": 4198,
+      "count": 102,
+      "duration_s": 76.58178724470368
+    },
+    {
       "from_station": "S5",
       "to_station": "S1",
-      "offset_records": 1722,
+      "offset_records": 4300,
       "count": 269,
       "duration_s": 167.77804261915898
     },
     {
+      "from_station": "S5",
+      "to_station": "S10",
+      "offset_records": 4569,
+      "count": 119,
+      "duration_s": 85.79507800854651
+    },
+    {
+      "from_station": "S5",
+      "to_station": "S13",
+      "offset_records": 4688,
+      "count": 95,
+      "duration_s": 72.7867844075547
+    },
+    {
+      "from_station": "S5",
+      "to_station": "S15",
+      "offset_records": 4783,
+      "count": 107,
+      "duration_s": 79.38363992053232
+    },
+    {
       "from_station": "S6",
       "to_station": "S1",
-      "offset_records": 1991,
+      "offset_records": 4890,
       "count": 147,
       "duration_s": 100.41775371348604
+    },
+    {
+      "from_station": "S6",
+      "to_station": "S2",
+      "offset_records": 5037,
+      "count": 168,
+      "duration_s": 113.16068357704236
+    },
+    {
+      "from_station": "S6",
+      "to_station": "S3",
+      "offset_records": 5205,
+      "count": 172,
+      "duration_s": 114.89237982056062
+    },
+    {
+      "from_station": "S6",
+      "to_station": "S12",
+      "offset_records": 5377,
+      "count": 125,
+      "duration_s": 88.48440446629186
+    },
+    {
+      "from_station": "S6",
+      "to_station": "S14",
+      "offset_records": 5502,
+      "count": 95,
+      "duration_s": 72.48950665310728
+    },
+    {
+      "from_station": "S6",
+      "to_station": "S19",
+      "offset_records": 5597,
+      "count": 103,
+      "duration_s": 76.87036701307392
+    },
+    {
+      "from_station": "S6",
+      "to_station": "S20",
+      "offset_records": 5700,
+      "count": 139,
+      "duration_s": 96.32180446665147
+    },
+    {
+      "from_station": "S7",
+      "to_station": "S1",
+      "offset_records": 5839,
+      "count": 183,
+      "duration_s": 123.8637914216342
+    },
+    {
+      "from_station": "S7",
+      "to_station": "S4",
+      "offset_records": 6022,
+      "count": 173,
+      "duration_s": 115.40344513234189
+    },
+    {
+      "from_station": "S7",
+      "to_station": "S10",
+      "offset_records": 6195,
+      "count": 118,
+      "duration_s": 85.3492403413726
+    },
+    {
+      "from_station": "S7",
+      "to_station": "S11",
+      "offset_records": 6313,
+      "count": 126,
+      "duration_s": 89.75114719247408
+    },
+    {
+      "from_station": "S7",
+      "to_station": "S15",
+      "offset_records": 6439,
+      "count": 94,
+      "duration_s": 72.12966446867844
+    },
+    {
+      "from_station": "S7",
+      "to_station": "S16",
+      "offset_records": 6533,
+      "count": 150,
+      "duration_s": 102.70253101776417
+    },
+    {
+      "from_station": "S9",
+      "to_station": "S1",
+      "offset_records": 6683,
+      "count": 153,
+      "duration_s": 103.47398671561113
+    },
+    {
+      "from_station": "S9",
+      "to_station": "S3",
+      "offset_records": 6836,
+      "count": 122,
+      "duration_s": 87.9691358004781
+    },
+    {
+      "from_station": "S9",
+      "to_station": "S13",
+      "offset_records": 6958,
+      "count": 97,
+      "duration_s": 73.41431315406567
+    },
+    {
+      "from_station": "S9",
+      "to_station": "S14",
+      "offset_records": 7055,
+      "count": 124,
+      "duration_s": 88.73968397654546
+    },
+    {
+      "from_station": "S9",
+      "to_station": "S15",
+      "offset_records": 7179,
+      "count": 161,
+      "duration_s": 107.75416768625804
+    },
+    {
+      "from_station": "S12",
+      "to_station": "S1",
+      "offset_records": 7340,
+      "count": 108,
+      "duration_s": 80.47312365605609
+    },
+    {
+      "from_station": "S12",
+      "to_station": "S2",
+      "offset_records": 7448,
+      "count": 106,
+      "duration_s": 78.0746797321786
+    },
+    {
+      "from_station": "S12",
+      "to_station": "S6",
+      "offset_records": 7554,
+      "count": 125,
+      "duration_s": 88.14054718158658
+    },
+    {
+      "from_station": "S12",
+      "to_station": "S8",
+      "offset_records": 7679,
+      "count": 117,
+      "duration_s": 84.90600879566891
+    },
+    {
+      "from_station": "S12",
+      "to_station": "S14",
+      "offset_records": 7796,
+      "count": 168,
+      "duration_s": 112.14684952816754
+    },
+    {
+      "from_station": "S12",
+      "to_station": "S16",
+      "offset_records": 7964,
+      "count": 133,
+      "duration_s": 92.90829905818563
+    },
+    {
+      "from_station": "S12",
+      "to_station": "S19",
+      "offset_records": 8097,
+      "count": 126,
+      "duration_s": 88.77008960218716
+    },
+    {
+      "from_station": "S14",
+      "to_station": "S1",
+      "offset_records": 8223,
+      "count": 121,
+      "duration_s": 85.77088285512762
+    },
+    {
+      "from_station": "S14",
+      "to_station": "S3",
+      "offset_records": 8344,
+      "count": 95,
+      "duration_s": 72.70867584408023
+    },
+    {
+      "from_station": "S14",
+      "to_station": "S6",
+      "offset_records": 8439,
+      "count": 95,
+      "duration_s": 71.88551086099386
+    },
+    {
+      "from_station": "S14",
+      "to_station": "S9",
+      "offset_records": 8534,
+      "count": 124,
+      "duration_s": 88.66450068741217
+    },
+    {
+      "from_station": "S14",
+      "to_station": "S12",
+      "offset_records": 8658,
+      "count": 168,
+      "duration_s": 112.37471066358673
+    },
+    {
+      "from_station": "S14",
+      "to_station": "S20",
+      "offset_records": 8826,
+      "count": 109,
+      "duration_s": 80.4727062397103
+    },
+    {
+      "from_station": "S15",
+      "to_station": "S1",
+      "offset_records": 8935,
+      "count": 187,
+      "duration_s": 125.89216762666871
+    },
+    {
+      "from_station": "S15",
+      "to_station": "S5",
+      "offset_records": 9122,
+      "count": 107,
+      "duration_s": 79.02252645395205
+    },
+    {
+      "from_station": "S15",
+      "to_station": "S7",
+      "offset_records": 9229,
+      "count": 94,
+      "duration_s": 71.78768425059965
+    },
+    {
+      "from_station": "S15",
+      "to_station": "S9",
+      "offset_records": 9323,
+      "count": 162,
+      "duration_s": 109.13977564915905
+    },
+    {
+      "from_station": "S15",
+      "to_station": "S10",
+      "offset_records": 9485,
+      "count": 103,
+      "duration_s": 76.9506599830668
+    },
+    {
+      "from_station": "S15",
+      "to_station": "S13",
+      "offset_records": 9588,
+      "count": 118,
+      "duration_s": 84.74387528033522
+    },
+    {
+      "from_station": "S16",
+      "to_station": "S1",
+      "offset_records": 9706,
+      "count": 141,
+      "duration_s": 98.83250809339708
+    },
+    {
+      "from_station": "S16",
+      "to_station": "S4",
+      "offset_records": 9847,
+      "count": 94,
+      "duration_s": 72.10361818478091
+    },
+    {
+      "from_station": "S16",
+      "to_station": "S7",
+      "offset_records": 9941,
+      "count": 150,
+      "duration_s": 102.78854941024512
+    },
+    {
+      "from_station": "S16",
+      "to_station": "S8",
+      "offset_records": 10091,
+      "count": 99,
+      "duration_s": 74.80584079901237
+    },
+    {
+      "from_station": "S16",
+      "to_station": "S11",
+      "offset_records": 10190,
+      "count": 168,
+      "duration_s": 111.81715959174878
+    },
+    {
+      "from_station": "S16",
+      "to_station": "S12",
+      "offset_records": 10358,
+      "count": 133,
+      "duration_s": 93.41809610658592
+    },
+    {
+      "from_station": "S8",
+      "to_station": "S2",
+      "offset_records": 10491,
+      "count": 135,
+      "duration_s": 94.59547376145454
+    },
+    {
+      "from_station": "S8",
+      "to_station": "S4",
+      "offset_records": 10626,
+      "count": 135,
+      "duration_s": 94.35652495342813
+    },
+    {
+      "from_station": "S8",
+      "to_station": "S12",
+      "offset_records": 10761,
+      "count": 117,
+      "duration_s": 84.63019248048151
+    },
+    {
+      "from_station": "S8",
+      "to_station": "S16",
+      "offset_records": 10878,
+      "count": 99,
+      "duration_s": 74.77972944408175
+    },
+    {
+      "from_station": "S19",
+      "to_station": "S2",
+      "offset_records": 10977,
+      "count": 91,
+      "duration_s": 70.4950941951275
+    },
+    {
+      "from_station": "S19",
+      "to_station": "S6",
+      "offset_records": 11068,
+      "count": 103,
+      "duration_s": 76.91621990753944
+    },
+    {
+      "from_station": "S19",
+      "to_station": "S12",
+      "offset_records": 11171,
+      "count": 127,
+      "duration_s": 90.0774732242841
+    },
+    {
+      "from_station": "S17",
+      "to_station": "S3",
+      "offset_records": 11298,
+      "count": 93,
+      "duration_s": 71.58764608464696
+    },
+    {
+      "from_station": "S17",
+      "to_station": "S20",
+      "offset_records": 11391,
+      "count": 109,
+      "duration_s": 80.32955676779018
+    },
+    {
+      "from_station": "S20",
+      "to_station": "S3",
+      "offset_records": 11500,
+      "count": 80,
+      "duration_s": 64.38682239441917
+    },
+    {
+      "from_station": "S20",
+      "to_station": "S6",
+      "offset_records": 11580,
+      "count": 139,
+      "duration_s": 96.80920503003287
+    },
+    {
+      "from_station": "S20",
+      "to_station": "S14",
+      "offset_records": 11719,
+      "count": 109,
+      "duration_s": 80.34389000304067
+    },
+    {
+      "from_station": "S20",
+      "to_station": "S17",
+      "offset_records": 11828,
+      "count": 109,
+      "duration_s": 80.31216166722002
+    },
+    {
+      "from_station": "S11",
+      "to_station": "S4",
+      "offset_records": 11937,
+      "count": 116,
+      "duration_s": 84.13925469021876
+    },
+    {
+      "from_station": "S11",
+      "to_station": "S7",
+      "offset_records": 12053,
+      "count": 126,
+      "duration_s": 89.60527921947893
+    },
+    {
+      "from_station": "S11",
+      "to_station": "S16",
+      "offset_records": 12179,
+      "count": 168,
+      "duration_s": 112.470775153805
+    },
+    {
+      "from_station": "S11",
+      "to_station": "S18",
+      "offset_records": 12347,
+      "count": 92,
+      "duration_s": 70.86143015957003
+    },
+    {
+      "from_station": "S18",
+      "to_station": "S4",
+      "offset_records": 12439,
+      "count": 102,
+      "duration_s": 76.48820863574532
+    },
+    {
+      "from_station": "S18",
+      "to_station": "S11",
+      "offset_records": 12541,
+      "count": 92,
+      "duration_s": 70.83723660510177
+    },
+    {
+      "from_station": "S10",
+      "to_station": "S5",
+      "offset_records": 12633,
+      "count": 119,
+      "duration_s": 85.64929792910831
+    },
+    {
+      "from_station": "S10",
+      "to_station": "S7",
+      "offset_records": 12752,
+      "count": 119,
+      "duration_s": 85.68223206138403
+    },
+    {
+      "from_station": "S10",
+      "to_station": "S15",
+      "offset_records": 12871,
+      "count": 103,
+      "duration_s": 77.01901245677546
+    },
+    {
+      "from_station": "S13",
+      "to_station": "S5",
+      "offset_records": 12974,
+      "count": 95,
+      "duration_s": 72.9403688101138
+    },
+    {
+      "from_station": "S13",
+      "to_station": "S9",
+      "offset_records": 13069,
+      "count": 97,
+      "duration_s": 73.27108796215595
+    },
+    {
+      "from_station": "S13",
+      "to_station": "S15",
+      "offset_records": 13166,
+      "count": 118,
+      "duration_s": 85.95819092199744
     }
   ],
   "mode": "independent_random_routes",
-  "seed": 20261008,
-  "uav_count": 60,
+  "seed": 20261009,
+  "uav_count": 600,
   "duration_s": 600,
   "limitations": [
     "No wind coupling, scheduling or inter-UAV avoidance.",

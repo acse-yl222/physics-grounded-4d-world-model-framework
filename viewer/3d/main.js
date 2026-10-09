@@ -734,7 +734,7 @@ function flyTo(pose, dur, onDone) {
 }
 function updateFlight(now) {
   if (!flight) return;
-  const k = Math.min(1, (now - flight.t0) / flight.dur), e = ease(k);
+  const k = Math.max(0, Math.min(1, (now - flight.t0) / flight.dur)), e = ease(k);
   camera.position.lerpVectors(flight.from.pos, flight.to.pos, e);
   controls.target.lerpVectors(flight.from.target, flight.to.target, e);
   camera.lookAt(controls.target);
@@ -909,7 +909,6 @@ function animate(now) {
   if(document.hidden){last=now;return;}
   const elapsed = Math.max(0, now - last);
   const dt = Math.min(0.05, elapsed / 1000); last = now;
-  if (flight && section === 'campus' && replayLayer && !replayLayer.playing) flight.t0 += elapsed;
   const moving=Boolean((uavLayer?.group.visible && uavLayer.playing)||flight||(section==='campus'&&(replayLayer?replayLayer.playing:tour.active&&!tour.paused))||(traffic&&!replayLayer&&section!=='fields'&&traffic.group.visible&&traffic.playing));
   if (replayLayer && section === 'campus') {
     const boundary = replayLayer.tick(now, elapsed/1000);
@@ -1140,7 +1139,7 @@ async function boot() {
   }
   if (HAS_UAV_LAYER) {
     ui.pct.textContent = `${SCENE.title} UAV routes…`;
-    uavLayer = await createUavLayer({ scene, sceneId: SCENE.id, configURL: SCENE.uav?.config ? SCENE.url(SCENE.uav.config) : undefined });
+    uavLayer = await createUavLayer({ scene, camera, sceneId: SCENE.id, configURL: SCENE.uav?.config ? SCENE.url(SCENE.uav.config) : undefined });
     const query = new URLSearchParams(location.search);
     if (query.has('t')) uavLayer.update(+query.get('t'));
     applyReplayLayers();

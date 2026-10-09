@@ -1,0 +1,58 @@
+{
+  "scene_id": "white_city",
+  "source_run": "sumo_20261009T003518Z_dc240f",
+  "source_manifest_sha256": "fa2fe078adaf760d998f119173052dd0747ed87cc56f96bfa48967709b936b94",
+  "assets": [
+    {
+      "path": "replay/frame_counts.json",
+      "bytes": 5571,
+      "sha256": "140c045478f35d49538b6ea6c87e0b7514f18db459da7998d536101a53cf5c0c"
+    },
+    {
+      "path": "replay/id_map.json",
+      "bytes": 52650,
+      "sha256": "9097fefa81845f0a16ccdcc1bb6e527aa4a526f264adad070f3e910dbbf4cabc"
+    },
+    {
+      "path": "replay/times_s.json",
+      "bytes": 7294,
+      "sha256": "276cf6cc80b11ae2152d798b4af308357a60941a4b585b47b02d8ad2cc60b740"
+    },
+    {
+      "path": "replay/tls_changes.json",
+      "bytes": 476068,
+      "sha256": "1a30ae3cfefa1262c5911f71e3e30133343513c48f5b38357d42374e5ceff0f8"
+    },
+    {
+      "path": "replay/traffic_flow.i16",
+      "bytes": 18813624,
+      "sha256": "168401abaf012c8de068b0d0ec6890d63c1f7a7a9287937a7f3e9cb544990e81"
+    },
+    {
+      "path": "replay.json",
+      "bytes": 429,
+      "sha256": "d97f6eeec72fde5a0fcd867320e03e432eb20057166fd690ad9a3e8cb29ab380"
+    },
+    {
+      "path": "roads.json",
+      "bytes": 1395799,
+      "sha256": "a23579462b4dd79b1c5119f83fe7e5783aa26c386936d8343498e8c7c6c61896"
+    },
+    {
+      "path": "signal_layer.json",
+      "bytes": 92239,
+      "sha256": "0022b9f97cfe4a28242574f271d02222bcd7b2964d83b65bf48f7e0d8bd8e272"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 947,
+      "sha256": "f14929b9a5bff52155b4490b770a532cc970f2f4c84b0d676fc16099a73379e3"
+    }
+  ],
+  "limits": [
+    "Synthetic passenger demand, estimated traffic signals and unsurveyed road elevations; not measured traffic.",
+    "A small explicitly recorded set of model-unvalidated junction approaches is closed for this simulation only; road geometry remains visible.",
+    "1200-second traffic simulation: 0 recorded collisions and 0 teleports; this does not establish real-world traffic calibration.",
+    "Replay uses actual seconds 1\u20131200, starting at 600 s; traffic and environmental/UAV clocks are independent."
+  ]
+}

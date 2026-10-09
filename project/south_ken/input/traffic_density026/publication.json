@@ -1,0 +1,73 @@
+{
+  "scene_id": "south_ken",
+  "source_run": "sumo_20261009T003116Z_389cc2",
+  "source_manifest_sha256": "30d00c3bac1f0d835ae70d4cacbc3b24fe43c42ed24ebb80a3168df3cc608128",
+  "assets": [
+    {
+      "path": "current_replay.json",
+      "bytes": 429,
+      "sha256": "8bd9d0189e02ca05482385bdd269f9fd3c3491ee3c8ee775e27f929682be41db"
+    },
+    {
+      "path": "replay/actors.json",
+      "bytes": 429465,
+      "sha256": "f502f3efa3d0d37299b6f28e179930822d2fe59f587668054f30214271810621"
+    },
+    {
+      "path": "replay/frame_counts.json",
+      "bytes": 5631,
+      "sha256": "54804a2d14164d8be1e0a55723dd2a161a942c9278f07e0425ca1389802bf193"
+    },
+    {
+      "path": "replay/frames_index.json",
+      "bytes": 60054,
+      "sha256": "7934e7c9d1952d497656e919e0879706a897f44056ce564a3e99eb81752c8fc2"
+    },
+    {
+      "path": "replay/id_map.json",
+      "bytes": 58336,
+      "sha256": "cafba77460b147caef7d3c262f06dcc4324007d491f84724dd23eeb73f892f6f"
+    },
+    {
+      "path": "replay/times_s.json",
+      "bytes": 7294,
+      "sha256": "276cf6cc80b11ae2152d798b4af308357a60941a4b585b47b02d8ad2cc60b740"
+    },
+    {
+      "path": "replay/tls_changes.json",
+      "bytes": 623439,
+      "sha256": "81f885303529940528ae53732fae06ac79773e8511c8f5780ff23b6639524d34"
+    },
+    {
+      "path": "replay/tls_frames.jsonl",
+      "bytes": 4167693,
+      "sha256": "024987acd0921c337a3c244152f07081b4cb8ebaefc8508ce20f03a158228fba"
+    },
+    {
+      "path": "replay/traffic_flow.f32",
+      "bytes": 40660540,
+      "sha256": "8e5a30e62a01ededd77bb33ced55e4df96c9c47cf33d452b5ec8d95a71ee7764"
+    },
+    {
+      "path": "replay/traffic_flow.i16",
+      "bytes": 24396324,
+      "sha256": "2d9f709a2b5a943ad0bf506e4f6eb2854ad67888f364320383c90802e357bedf"
+    },
+    {
+      "path": "roads.json",
+      "bytes": 920693,
+      "sha256": "819edb3c5838a9012ba3d7b77088bd30ea549a66e6dcac88d5de484ef48c8ed8"
+    },
+    {
+      "path": "signal_layer_v2.json",
+      "bytes": 278844,
+      "sha256": "7c00463f0564ead346606cafa3918a29e4407b43541cab9538cd07328cf2b334"
+    }
+  ],
+  "limits": [
+    "Synthetic passenger demand, estimated traffic signals and unsurveyed road elevations; not measured traffic.",
+    "A small explicitly recorded set of model-unvalidated junction approaches is closed for this simulation only; road geometry remains visible.",
+    "1200-second traffic simulation: 5 recorded junction collision events and 0 teleports. Residual intersection behaviour is not validated.",
+    "Replay uses actual seconds 1\u20131200, starting at 600 s; traffic and environmental/UAV clocks are independent."
+  ]
+}
