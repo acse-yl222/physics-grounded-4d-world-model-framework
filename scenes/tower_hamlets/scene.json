@@ -1,11 +1,11 @@
 {
   "id": "tower_hamlets",
-  "title": "Canary Wharf \u00b7 city, traffic & UAVs",
-  "description": "Detailed Canary Wharf core, unified ground, recorded dense vehicle traffic and Wave PDE delivery routes.",
+  "title": "Canary Wharf \u00b7 near-ground city scenarios",
+  "description": "4 m inferred near-ground wind, controlled tracer, sunlight and terrain-limited flooding alongside recorded traffic and UAVs.",
   "grid": {
-    "cell_m": 16.0,
-    "cols": 250,
-    "rows": 250,
+    "cell_m": 4.0,
+    "cols": 1000,
+    "rows": 1000,
     "x0": -2000,
     "z_south": 2000,
     "domain_origin_xy_m": [
@@ -36,6 +36,12 @@
     "solid_wind": {
       "file": "masks/wind_invalid_zyx.npy",
       "layer": 0
+    },
+    "layer_invalid": {
+      "solar": "masks/solar_invalid.npy",
+      "shadow": "masks/shadow_invalid.npy",
+      "poll": "masks/poll_invalid.npy",
+      "flood": "masks/flood_invalid.npy"
     }
   },
   "focus": {
@@ -53,33 +59,44 @@
     "label": "Canary Wharf \u00b7 detailed core"
   },
   "timeline": {
-    "t0_s": 0.0,
-    "step_s": 20.0,
-    "steps": 31
+    "t0_s": 8000,
+    "step_s": 1000,
+    "steps": 3
   },
   "phase_order": [
     "wind",
-    "temp"
+    "temp",
+    "solar",
+    "poll",
+    "flood"
   ],
   "layers": {
     "wind": {
       "file": "wind.npy",
-      "cell_m": 16.0,
-      "frames": 31,
-      "t0_s": 0.0,
-      "step_s": 20.0,
+      "cell_m": 4.0,
+      "frames": 3,
+      "t0_s": 8000,
+      "step_s": 1000,
+      "own_clock": true,
+      "overlay_frame": 2,
+      "y": 2,
+      "rate": 2,
+      "label": "Wind \u00b7 2 m height \u00b7 4 m grid \u00b7 SCALED",
+      "title": "Wind \u00b7 2 m height \u00b7 4 m grid \u00b7 SCALED",
       "range": [
-        0,
-        6
+        0.0,
+        1.1904118061065674
       ],
-      "y": 24.0,
-      "rate": 3,
-      "label": "Wind speed \u00b7 24 m",
-      "title": "Wind speed \u00b7 24 m",
       "legend": [
-        "0.0",
+        "0",
         "m/s",
-        "6.0"
+        "1.19041"
+      ],
+      "particle_time_scale": 1,
+      "sample_labels": [
+        "Model step 80 \u00b7 interpreted time, not calibrated",
+        "Model step 90 \u00b7 interpreted time, not calibrated",
+        "Model step 100 \u00b7 interpreted time, not calibrated"
       ]
     },
     "temp": {
@@ -88,18 +105,20 @@
       "frames": 11,
       "t0_s": 0.0,
       "step_s": 60.0,
+      "own_clock": true,
+      "overlay_frame": 10,
+      "y": 8.0,
+      "rate": 2,
+      "label": "Air temperature \u00b7 8 m",
+      "title": "Air temperature \u00b7 8 m",
       "range": [
         20.0,
         43.0921630859375
       ],
-      "y": 8.0,
-      "rate": 3,
-      "label": "Air temperature \u00b7 8 m",
-      "title": "Air temperature \u00b7 8 m",
       "legend": [
-        "20.0",
+        "20",
         "degC",
-        "43.1"
+        "43.0922"
       ],
       "iso": {
         "from": 20,
@@ -107,8 +126,86 @@
         "n": 13
       },
       "iso_y": 8.2,
-      "iso_label": "Isotherms (2 \u00b0C; display interpolation)",
       "heat_label": "Heat map at 8 m"
+    },
+    "solar": {
+      "file": "solar.npy",
+      "cell_m": 4,
+      "frames": 11,
+      "t0_s": 0,
+      "step_s": 60,
+      "own_clock": true,
+      "overlay_frame": 10,
+      "y": 0.2,
+      "rate": 2,
+      "label": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
+      "title": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
+      "range": [
+        0,
+        935.1410522460938
+      ],
+      "legend": [
+        "0",
+        "W/m\u00b2",
+        "935.141"
+      ],
+      "dates": {
+        "20260621": {
+          "label": "21 June \u00b7 noon \u00b7 clear sky",
+          "ghi": "solar.npy",
+          "shadow": "shadow.npy"
+        }
+      },
+      "shadow_cell_m": 4,
+      "shadow_packed": false,
+      "ghi_rate": 2,
+      "shadow_rate": 2,
+      "ghi_label": "Irradiance \u00b7 4 m",
+      "shadow_label": "Shadows \u00b7 4 m"
+    },
+    "poll": {
+      "file": "poll.npy",
+      "cell_m": 4.0,
+      "frames": 21,
+      "t0_s": 0.0,
+      "step_s": 30.0,
+      "own_clock": true,
+      "overlay_frame": 20,
+      "y": 2,
+      "rate": 2,
+      "label": "Pollution \u00b7 planar road tracer \u00b7 2 m \u00b7 arbitrary units",
+      "title": "Pollution \u00b7 planar road tracer \u00b7 2 m \u00b7 arbitrary units",
+      "range": [
+        0.001,
+        33.38339364235496
+      ],
+      "legend": [
+        "0.001",
+        "a.u.",
+        "33.3834"
+      ]
+    },
+    "flood": {
+      "file": "flood.npy",
+      "cell_m": 4,
+      "frames": 11,
+      "t0_s": 0.0,
+      "step_s": 60.0,
+      "own_clock": true,
+      "overlay_frame": 10,
+      "y": 0.2,
+      "rate": 2,
+      "label": "Flooding \u00b7 measured terrain core \u00b7 4 m grid",
+      "title": "Flooding \u00b7 measured terrain core \u00b7 4 m grid",
+      "range": [
+        0,
+        0.4144992232322693
+      ],
+      "legend": [
+        "0",
+        "m",
+        "0.414499"
+      ]
     }
   },
   "traffic": {
@@ -118,26 +215,51 @@
   },
   "limits": [
     "Controlled scenarios, not observed weather or live traffic.",
-    "Wind: uniform west-to-east 5 m/s inflow; 16 m grid; transient inviscid model.",
-    "Temperature: clear-sky 20 \u00b0C ambient and estimated uniform materials; 32 m grid; forced by frozen final wind.",
     "Traffic: seeded passenger-car demand and inferred signal timings; flat bridge/tunnel elevations.",
-    "Wind particles illustrate the sampled flow; they are not recorded physical particles.",
     "\u00a9 OpenStreetMap contributors; Overture Maps Foundation. Heights and architectural detail include estimates.",
-    "Wind colours saturate above 6 m/s; underlying recorded values are unchanged.",
     "UAV stations are demonstration sites; canopy and real-world landing access are unverified. Aircraft share paths without fleet collision scheduling.",
     "Traffic uses synthetic demand and inferred junctions with explicit temporary model closures, not observed road closures or measured flows.",
     "Traffic replay covers actual simulation seconds 1\u20131200; default starts at 600 s. Environmental fields and UAV clocks remain independent.",
     "Traffic has 3 recorded junction collision events and 0 teleports; intersection behaviour remains unvalidated.",
-    "Wind speed \u00b7 24 m: 31 recorded frames, 0\u2013600 s; step sampling.",
-    "Air temperature \u00b7 8 m: 11 recorded frames, 0\u2013600 s; step sampling.",
-    "Synthetic passenger demand, estimated traffic signals and unsurveyed road elevations; not measured traffic.",
-    "A small explicitly recorded set of model-unvalidated junction approaches is closed for this simulation only; road geometry remains visible.",
-    "1200-second traffic simulation: 3 recorded junction collision events and 0 teleports. Residual intersection behaviour is not validated.",
-    "Replay uses actual seconds 1\u20131200, starting at 600 s; traffic and environmental/UAV clocks are independent."
+    "Wind is SCALED inference on a true 4 m source grid, sampled at local height 2 m; particle motion uses 1\u00d7 vector speed.",
+    "Wind model steps are not calibrated physical time; each scenario uses an independent clock. Overlay shows the selected final independent field frames.",
+    "Temperature remains the earlier 32 m controlled result forced by the earlier wind; it has not been recomputed from the new inferred wind.",
+    "Pollution is a 2-D conservative passive tracer with arbitrary uniform road emissions, not a calibrated pollutant forecast.",
+    "Flooding uses measured EA terrain only within the core; blank cells have no valid model result, not zero hazard. Depth is shown on a flat display plane, not surveyed 3-D flood surface.",
+    "Pretrained surrogate inference, not converged CFD or a measured forecast.",
+    "100seconds/modelstep is inherited interpretation, not calibrated physical time.",
+    "Actual4m sourcegeometry sampling; no8mto4m upsampling.",
+    "Forcedgroundlayercenter\u22122m permits firstfluidcenter2m; shifted modeldomain alignment explicitly unvalidated.",
+    "Native256mverticaldepth runs from\u22124to252m; tallest235m building leaves17m topclearance.",
+    "Estimated architecturalgeometry and flatunsurveyed terrain; sub4mfeaturesunresolved.",
+    "Controlled clear-sky and20C ambient, not observed weather.",
+    "Existing first-order advection/diffusion/linearized radiative balance, not calibrated urban heat model.",
+    "Uniform land material/storage/exchange parameters; OSM water prescribed20C, no vegetation evaporation, water thermal inertia or wall radiation.",
+    "32m thermal column approximation fills undercrofts; no temperature values in occupied air cells.",
+    "Roof conduction is diffusion from prescribed hot solid cells; separate bottom exchange applies only ground-fluid columns, so no duplicate roof exchange.",
+    "Advection masks solid upwind interfaces; scalar is advective-form, not a conservative finite-volume heat budget.",
+    "Boundary zero-gradient copying is restricted to fluid neighbours; blocked boundary uses ambient.",
+    "Frozen wind is a specified controlled forcing, not fabricated intermediate wind observations.",
+    "Sky-view factor set1 for diffuse component; geometry shadows only direct component.",
+    "Controlledclear sky, not measuredweather.",
+    "4m actualgeometryheights; horizontal topsurface irradiance, not facadeirradiance.",
+    "16azimuth/5degree sampledskyview; no treecanopy or clouds.",
+    "Flatlocalground outsidebuildinggeometry; terrainnotintegratedintosolar.",
+    "Controlled 2-D near-ground passive tracer, not 3-D dispersion or calibrated pollution/health exposure.",
+    "Uniform arbitrary source rate on mapped road cells, not measured emissions or emissions derived from vehicle counts.",
+    "Frozen final SCALED near-ground horizontal wind; no vertical exchange, chemistry or deposition.",
+    "Scalar-conservative first-order upwind transport with isotropic diffusion; zero exterior inflow concentration and impermeable building faces.",
+    "Controlled50mm/h600s rain, no measuredhazardforecast.",
+    "OnlylicensedEA DTMcoveragevalid; outsideunknown andinvalid.",
+    "EA ODNbed usedunchanged; overlaydepth doesnotclaimlocalgeometryverticalregistration.",
+    "Buildings impermeable, no roofrunofftransfer, sewers/infiltration/tides/bathymetry.",
+    "OSMwaterexcluded; validterrainboundarydrains, artificialboundaryaffectslocalresults.",
+    "UniformManning.035; dryinitialsurface."
   ],
   "uav": {
     "enabled": true,
     "description": "20 model ground stations \u00b7 100 directed Wave PDE routes \u00b7 48 m vertical takeoff/landing \u00b7 600 illustrative UAVs; no fleet scheduling.",
     "config": "uav/visualization.json"
-  }
+  },
+  "physics_dir": "physics027/"
 }

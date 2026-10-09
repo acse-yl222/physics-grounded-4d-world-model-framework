@@ -70,3 +70,7 @@ agents/demo_rev02/assets/city.glb
 # Selected South Kensington dense recorded traffic
 !project/south_ken/input/traffic_density026/replay/*.f32
 !project/south_ken/input/traffic_density026/replay/*.jsonl
+
+# Recorded Canary near-ground scenario fields
+!scenes/tower_hamlets/physics027/**/*.npy
+!scenes/tower_hamlets/physics027/*.npy

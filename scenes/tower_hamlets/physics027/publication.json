@@ -1,0 +1,91 @@
+{
+  "source_run": "canary_wharf_city_fields027",
+  "source_manifest_sha256": "8e324bc36e2e12a9268f06c4772ffca52189375a57576fbf5b9a88284fcbcd57",
+  "assets": [
+    {
+      "path": "flood.npy",
+      "bytes": 44000128,
+      "sha256": "0c48c18f04aa73305aaf5d33860b2f83db0f4c9ffd6466e7e3b70305038e5711"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 3705,
+      "sha256": "5ff8e45f9bdbbd5d089e36e541754c9eab32d165ebd5b5c2483f5883f179f36b"
+    },
+    {
+      "path": "masks/flood_invalid.npy",
+      "bytes": 1000128,
+      "sha256": "3772e469b9c33d9014c2b374fe46fa14646e2ff39ca140f55e0fbbb724596423"
+    },
+    {
+      "path": "masks/lite_footprint.npy",
+      "bytes": 250128,
+      "sha256": "7cc3a1c7adc56fb5bd3913bdbd422bdd4f2a8b7597f891e224e62e122591ec81"
+    },
+    {
+      "path": "masks/lite_height.npy",
+      "bytes": 1000128,
+      "sha256": "651aef5571c8d43b2e4a6a05370eb0dc88c9be53ecfd0c629463dbbce3800480"
+    },
+    {
+      "path": "masks/poll_invalid.npy",
+      "bytes": 1000128,
+      "sha256": "a7653e5e586a1503e4904fec9b9d80bef3042773772b75d834390e9c02e521b8"
+    },
+    {
+      "path": "masks/shadow_invalid.npy",
+      "bytes": 1000128,
+      "sha256": "a295e8e4ceae746205f22fdfa0f179f7cd676a8294bfc1d10d5adb762ea63c60"
+    },
+    {
+      "path": "masks/solar_invalid.npy",
+      "bytes": 1000128,
+      "sha256": "a295e8e4ceae746205f22fdfa0f179f7cd676a8294bfc1d10d5adb762ea63c60"
+    },
+    {
+      "path": "masks/temp_invalid.npy",
+      "bytes": 15753,
+      "sha256": "b9c1601a2121dba044e002fed599e9bae08f2ed6d39613a8a49bc3dfae284001"
+    },
+    {
+      "path": "masks/wind_invalid.npy",
+      "bytes": 1000128,
+      "sha256": "a7653e5e586a1503e4904fec9b9d80bef3042773772b75d834390e9c02e521b8"
+    },
+    {
+      "path": "masks/wind_invalid_zyx.npy",
+      "bytes": 1000128,
+      "sha256": "5db40360d285ba36867329111446f72672c3308803a90622a25109b843c07afa"
+    },
+    {
+      "path": "poll.npy",
+      "bytes": 84000128,
+      "sha256": "b53eb6864a1cacabc1e6ddf5655486abaf237d401fafecd95e98db649bf7de0b"
+    },
+    {
+      "path": "shadow.npy",
+      "bytes": 44000128,
+      "sha256": "7365ebbfad25d53b2a9ebb82932a3e702c48ecab205972757c59e5366fb3a286"
+    },
+    {
+      "path": "solar.npy",
+      "bytes": 44000128,
+      "sha256": "15ccabca55c36adef90d736f12379681ab33f1c0841677c4723fb0246b97967d"
+    },
+    {
+      "path": "temp.npy",
+      "bytes": 687628,
+      "sha256": "95743756a9fdf05a016b784604127dec1b77d2a37bea1b65badbc64c58fd1373"
+    },
+    {
+      "path": "web/index.json",
+      "bytes": 19,
+      "sha256": "a2156ca0a7e4e62f0c2b56e869c11356789dc6c20458fff5d58bdac4df29c37f"
+    },
+    {
+      "path": "wind.npy",
+      "bytes": 36000128,
+      "sha256": "5332c8fcd87162cfeccbda3f6fed0901e2c72e162199ca57f926c1d8d28b4223"
+    }
+  ]
+}

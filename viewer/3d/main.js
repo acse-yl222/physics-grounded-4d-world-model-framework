@@ -202,6 +202,7 @@ const fadeOf = p => p ? p.fade : 0;
 function uploadShadow(u8) {
   const d = shadowPlane.data, n = LG.shadow.w * LG.shadow.h;
   for (let i = 0, o = 0; i < n; i++, o += 4) {
+    if (layerInvalid.shadow?.[i]) { d[o + 3] = 0; continue; }
     if (u8[i]) { d[o] = 18; d[o + 1] = 28; d[o + 2] = 96; d[o + 3] = 158; } else { d[o] = 255; d[o + 1] = 234; d[o + 2] = 150; d[o + 3] = 80; }   // shade: blue-violet veil; sun: warm wash
   }
   shadowPlane.tex.needsUpdate = true;
@@ -213,6 +214,7 @@ function unpackBits(packed, g) {
   return out;
 }
 
+const layerInvalid = {};
 const footprints = {};   // building footprint masks by cell size (metres): each layer is masked at its own resolution
 const fpFor = g => footprints[g.cell] ?? null;
 let solidWind = null, studyArea = null;
@@ -309,7 +311,7 @@ function paintFlood(vals) {
   const g = LG.flood, footprint = fpFor(g), d = floodPlane.data, inv = 255 / (FLOOD_RANGE[1] - FLOOD_RANGE[0]);
   for (let i = 0; i < g.w * g.h; i++) {
     const o = i * 4, h = vals[i];
-    if (!(h > FLOOD_RANGE[0]) || (footprint && footprint[i])) { d[o + 3] = 0; continue; }
+    if (layerInvalid.flood?.[i] || !(h > FLOOD_RANGE[0]) || (footprint && footprint[i])) { d[o + 3] = 0; continue; }
     let k = (h - FLOOD_RANGE[0]) * inv; k = k > 255 ? 255 : k | 0;
     d[o] = FLOOD_LUT[k * 3]; d[o + 1] = FLOOD_LUT[k * 3 + 1]; d[o + 2] = FLOOD_LUT[k * 3 + 2]; d[o + 3] = (150 + k * 0.4) | 0;
   }
@@ -324,6 +326,7 @@ function paintSolar(vals) {
   const dusk = solarOpen < 15, inv = dusk ? 0 : 1 / solarOpen;
   for (let i = 0; i < n; i++) {
     const o = i * 4;
+    if (layerInvalid.solar?.[i]) { d[o + 3] = 0; continue; }
     let sh = dusk ? 1 : 1 - vals[i] * inv; sh = sh < 0 ? 0 : sh > 1 ? 1 : sh;
     // same look as the fine shadow layer: warm wash where the cell sees the full sky, blue-violet veil scaled by the shade fraction
     if (sh > 0.08) { const t = Math.pow(sh, 0.8); d[o] = 18; d[o + 1] = 28; d[o + 2] = 96; d[o + 3] = (158 * t) | 0; }
@@ -350,10 +353,11 @@ function paintDiurnal(vals) {
 }
 function paintPollution(vals) {
   const g = LG.poll, d = pollPlane.data;
+  const [lo, hi] = LAYERS.poll.range ?? [0.1, 1000];
   for (let i = 0; i < g.w * g.h; i++) {
     const o = i * 4, c = vals[i];
-    if (!(c > 0.1)) { d[o + 3] = 0; continue; }
-    let f = (Math.log10(c) + 1) / 4; f = f > 1 ? 1 : f;   // 0.1 -> 0, 1000 -> 1
+    if (layerInvalid.poll?.[i] || !(c > lo)) { d[o + 3] = 0; continue; }
+    let f = (Math.log10(c) - Math.log10(lo)) / Math.log10(hi / lo); f = f > 1 ? 1 : f;   // 0.1 -> 0, 1000 -> 1
     const k = (f * 255) | 0;
     d[o] = PURPLES[k * 3]; d[o + 1] = PURPLES[k * 3 + 1]; d[o + 2] = PURPLES[k * 3 + 2];
     d[o + 3] = Math.min(255, 40 + f * 260) | 0;
@@ -386,14 +390,14 @@ function respawn(i, randomAge) {
 function stepParticles(dtSec) {
   if (!wind.uv) return;
   const n = WG.w * WG.h, uv = wind.uv, pos = wind.geom.attributes.position.array, col = wind.geom.attributes.color.array;
-  const vis = dtSec * 60;             // visual seconds of physical time per real second, in cells: (m/s) * s / cell
+  const vis = dtSec * (LAYERS.wind?.particle_time_scale ?? 60);             // visual seconds of physical time per real second, in cells: (m/s) * s / cell
   const invR = 1 / (WIND_RANGE[1] - WIND_RANGE[0]);
   for (let i = 0; i < wind.n; i++) {
     let x = wind.x[i], y = wind.y[i];
     const c = x | 0, r = y | 0, idx = r * WG.w + c;
     const u = uv[idx], v = uv[n + idx], sp = Math.hypot(u, v);
     wind.age[i]++;
-    if (sp < 0.03 || wind.age[i] > 160) { respawn(i, false); continue; }
+    if (solidWind?.[idx] || sp < 0.03 || wind.age[i] > 160) { respawn(i, false); continue; }
     x += u * vis / WG.cell; y += v * vis / WG.cell;
     if (x < 0 || x >= WG.w || y < 0 || y >= WG.h) { respawn(i, false); continue; }
     // shift history
@@ -466,7 +470,7 @@ function frameIndex(step) {
   for (const k of Object.keys(LAYERS)) {
     const L = LAYERS[k];
     if (k === 'solar') fi.solar = Math.min(PHASES.solar.end - 1, Math.max(0, step - 1));               // overlay: the timeline runs through the day
-    else if (L.own_clock) fi[k] = own(k) ? Math.min(L.frames - 1, step - 1) : (L.max ? null : mapped(L, step));   // null = static maximum map
+    else if (L.own_clock) fi[k] = own(k) ? Math.min(L.frames - 1, step - 1) : (L.max ? null : (L.overlay_frame ?? mapped(L, step)));   // null = static maximum map
     else fi[k] = mapped(L, step);
   }
   return fi;
@@ -536,6 +540,11 @@ async function loadStepInner(step) {
   } else if (seqMode() && state.phase === 'diurnal') {
     const k = fi.diurnal, dm = diurnalSeries(), hr = dm?.hours_local?.[k], amb = dm?.ambient_c?.[k];
     ui.timeLabel.textContent = `${LAYERS.diurnal.day_label ?? ''} · ${hr !== undefined ? String(hr).padStart(2, '0') + ':00' : `hour ${k + 1}`} local · ambient ${amb !== undefined ? amb.toFixed(1) + ' °C' : '–'} · ${k + 1} / ${ph.end}`;
+  } else if (seqMode() && LAYERS[state.phase].sample_labels) {
+    ui.timeLabel.textContent = `${ph.label} · ${LAYERS[state.phase].sample_labels[fi[state.phase]]}`;
+  } else if (seqMode() && LAYERS[state.phase].own_clock) {
+    const layer = LAYERS[state.phase];
+    ui.timeLabel.textContent = `${ph.label} · t = ${layer.t0_s + fi[state.phase] * layer.step_s} s`;
   } else ui.timeLabel.textContent = seqMode()
     ? `${ph.label} · frame ${fi[state.phase] + 1} / ${LAYERS[state.phase].frames} · t = ${timelineTime(TL, step)} s`
     : `Step ${step} · t = ${timelineTime(TL, step)} s` + (has('temp') && step < PHASES.temp?.start ? ' · temperature run not started' : '') + (act.flood && LAYERS.flood?.max ? ' · flood layer = maximum depth of the event' : '');
@@ -891,10 +900,10 @@ renderer.domElement.addEventListener('pointermove', e => {
   if (c < 0 || c >= W || r < 0 || r >= H) { ui.readout.hidden = true; return; }
   const f = state.fields, [ox, oy] = G.domain_origin_xy_m ?? [0, 0];
   const lines = [...(tInfo ? [tInfo, ''] : []), `${G.origin_label ?? 'Domain'} x ${ox + c * CELL} m, y ${oy + r * CELL} m · cell (${c}, ${r})`];
-  if (f.wind) { const i = cellOf(LG.wind), n = LG.wind.w * LG.wind.h; if (i >= 0) { const u = f.wind[i], v = f.wind[n + i], w = f.wind[2 * n + i]; lines.push(`Wind |V| ${Math.hypot(u, v, w).toFixed(2)} m/s  (u ${u.toFixed(2)}, v ${v.toFixed(2)}, w ${w.toFixed(2)})`); } }
+  if (f.wind) { const i = cellOf(LG.wind), n = LG.wind.w * LG.wind.h; if (i >= 0 && !solidWind?.[i]) { const u = f.wind[i], v = f.wind[n + i], w = f.wind[2 * n + i]; lines.push(`Wind |V| ${Math.hypot(u, v, w).toFixed(2)} m/s  (u ${u.toFixed(2)}, v ${v.toFixed(2)}, w ${w.toFixed(2)})`); } }
   if (f.temp) { const i = cellOf(LG.temp), fp = fpFor(LG.temp); if (i >= 0) lines.push(`Temperature ${f.temp[i].toFixed(2)} °C` + (fp && fp[i] ? ' (building cell)' : '')); }
-  if (f.poll) { const i = cellOf(LG.poll); if (i >= 0) lines.push(`Concentration ${f.poll[i] < 10 ? f.poll[i].toFixed(2) : f.poll[i].toFixed(0)}`); }
-  if (f.flood) { const i = cellOf(LG.flood); if (i >= 0) lines.push(`Flood depth ${f.flood[i] > FLOOD_RANGE[0] ? f.flood[i].toFixed(2) + ' m' : 'dry'}` + (seqMode() && state.phase === 'flood' ? '' : ' (maximum of the event)')); }
+  if (f.poll) { const i = cellOf(LG.poll); if (i >= 0 && !layerInvalid.poll?.[i]) lines.push(`Concentration ${f.poll[i] < 10 ? f.poll[i].toFixed(2) : f.poll[i].toFixed(0)}`); }
+  if (f.flood) { const i = cellOf(LG.flood); if (i >= 0 && layerInvalid.flood?.[i]) lines.push('Flood depth: no valid terrain / excluded cell'); else if (i >= 0) lines.push(`Flood depth ${f.flood[i] > FLOOD_RANGE[0] ? f.flood[i].toFixed(2) + ' m' : 'dry'}` + (seqMode() && state.phase === 'flood' ? '' : (LAYERS.flood.max ? ' (maximum of the event)' : ' (independent recorded frame)'))); }
   if (f.solar) { const i = cellOf(LG.solar); if (i >= 0) lines.push(`Sunlight GHI ${f.solar[i].toFixed(0)} W/m²` + (solarOpen >= 15 ? ` (${(100 * f.solar[i] / solarOpen).toFixed(0)} % of open sky)` : '')); }
   if (f.shadow) { const i = cellOf(LG.shadow); if (i >= 0) lines.push(`Sunlight · ${LG.shadow.cell} m cell ${f.shadow[i] ? 'in shadow' : 'sunlit'}`); }
   if (f.diurnal) { const i = cellOf(LG.diurnal); const amb = diurnalAmbient(frameIndex(state.step).diurnal); if (i >= 0) lines.push(`Day cycle ${({ ground: 'ground surface', air0: 'air 0–4 m', air12: 'air 12–16 m' })[ui.diurnalMode.value.replace('Rel', '')]} ${f.diurnal[i].toFixed(1)} °C` + (amb !== undefined ? ` (${(f.diurnal[i] - amb >= 0 ? '+' : '')}${(f.diurnal[i] - amb).toFixed(1)} vs ambient ${amb.toFixed(1)})` : '')); }
@@ -976,7 +985,11 @@ async function boot() {
     for (const [cell, file] of Object.entries(M.footprint ?? {})) footprints[+cell] = await loadMask(file);
     if (M.solid_wind && has('wind')) solidWind = await npy(M.solid_wind.file).read(M.solid_wind.layer ?? 0);
     if (M.study_area) studyArea = await loadMask(M.study_area);
-    await loadStepInner(Math.round(STEPS * 0.6));
+    for (const [key, file] of Object.entries(M.layer_invalid ?? {})) {
+      layerInvalid[key] = await loadMask(file);
+      if (layerInvalid[key].length !== LG[key].w * LG[key].h) throw new Error(`Invalid ${key} mask dimensions`);
+    }
+    await loadStepInner(Math.max(1, Math.round(STEPS * 0.6)));
   })().catch(e => { dataError = e; });
 
   const loader = new GLTFLoader();
