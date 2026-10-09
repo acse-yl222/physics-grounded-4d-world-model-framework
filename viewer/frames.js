@@ -21,7 +21,7 @@ let canvas = null, ctx = null;
 
 async function decode(key, k) {
   const meta = index.layers[key], [h, w] = meta.shape_yx;
-  const url = `${BASE}${key}/${String(k).padStart(3, '0')}.png`;
+  const url = `${BASE}${key}/${String(k).padStart(3, '0')}.${meta.extension ?? 'png'}`;
   const r = await fetch(url); if (!r.ok) throw new Error('frame missing: ' + url);
   const bmp = await createImageBitmap(await r.blob(), { colorSpaceConversion: 'none', premultiplyAlpha: 'none' });
   if (!canvas || canvas.width !== w || canvas.height !== h) { canvas = typeof OffscreenCanvas !== 'undefined' ? new OffscreenCanvas(w, h) : Object.assign(document.createElement('canvas'), { width: w, height: h }); ctx = canvas.getContext('2d', { willReadFrequently: true }); }
@@ -30,8 +30,8 @@ async function decode(key, k) {
   if (meta.kind === 'bit') { const out = new Uint8Array(n); for (let i = 0; i < n; i++) out[i] = px[i * 4] > 127 ? 1 : 0; return out; }
   const [lo, hi] = meta.range, s = (hi - lo) / 255;
   if (meta.kind === 'rgb3') { const out = new Float32Array(3 * n); for (let i = 0; i < n; i++) { const o = i * 4; out[i] = lo + px[o] * s; out[n + i] = lo + px[o + 1] * s; out[2 * n + i] = lo + px[o + 2] * s; } return out; }
-  const out = new Float32Array(n), log = key === 'poll';
-  for (let i = 0; i < n; i++) { const v = lo + px[i * 4] * s; out[i] = log ? Math.pow(10, v) : v; }
+  const out = new Float32Array(n), log = meta.value_transform === 'log10' || (meta.value_transform == null && key === 'poll');
+  for (let i = 0; i < n; i++) { const v = lo + px[i * 4] * s; out[i] = meta.value_transform === 'log1p' ? meta.value_scale * (Math.pow(10, v) - 1) : log ? Math.pow(10, v) : v; }
   return out;
 }
 

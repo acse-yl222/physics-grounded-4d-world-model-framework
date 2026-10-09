@@ -1,6 +1,6 @@
 {
-  "source_run": "canary_wharf_city_fields027",
-  "source_manifest_sha256": "8e324bc36e2e12a9268f06c4772ffca52189375a57576fbf5b9a88284fcbcd57",
+  "source_run": "canary_wharf_city_fields031",
+  "source_manifest_sha256": "2eaf9466ae24405f6d7db259363b5eec27bdb78a01fe3b3d221a1a663ef820ee",
   "assets": [
     {
       "path": "physics/manifest.json",
@@ -138,9 +138,2189 @@
       "sha256": "5332c8fcd87162cfeccbda3f6fed0901e2c72e162199ca57f926c1d8d28b4223"
     },
     {
+      "path": "physics031/manifest.json",
+      "bytes": 25470,
+      "sha256": "370dfdb66ed16d8d926dc8bd1277c4d017a8ced65120b8cf84c74e0725d6be87"
+    },
+    {
+      "path": "physics031/masks/temp_invalid.npy",
+      "bytes": 15753,
+      "sha256": "19a881df11308a8e54714c9be8448cb34f5d5d5614847e7b84895eb90d41b4a4"
+    },
+    {
+      "path": "physics031/publication.json",
+      "bytes": 70097,
+      "sha256": "6d085ee932035eb3b16536ad9f16e615b5e573a47905c63a87751403dca798cd"
+    },
+    {
+      "path": "physics031/web/flood/000.png",
+      "bytes": 1049,
+      "sha256": "f4db4cfa27fdb6d263a7249e026bac9d1e8679020f216f094f19f4078e4c59a8"
+    },
+    {
+      "path": "physics031/web/flood/001.png",
+      "bytes": 1049,
+      "sha256": "f4db4cfa27fdb6d263a7249e026bac9d1e8679020f216f094f19f4078e4c59a8"
+    },
+    {
+      "path": "physics031/web/flood/002.png",
+      "bytes": 1073,
+      "sha256": "69f61abec784d7c3a3e1b0a31b88a08c53db2dfe4c94a15ef40d89aa682594ba"
+    },
+    {
+      "path": "physics031/web/flood/003.png",
+      "bytes": 1091,
+      "sha256": "9bf47599e72a74eea83a158f26882b3b11198d5465eb7bdcd8ec769057873534"
+    },
+    {
+      "path": "physics031/web/flood/004.png",
+      "bytes": 1150,
+      "sha256": "da3f7ad013a4f2cb46281c615ac73797232cd5c714f8344daaa998ba4885f426"
+    },
+    {
+      "path": "physics031/web/flood/005.png",
+      "bytes": 1215,
+      "sha256": "2ddf2b3beacb0a76af06f4d8e4ba6d9dc6e49db32ff55c1fb258fb52b28855eb"
+    },
+    {
+      "path": "physics031/web/flood/006.png",
+      "bytes": 1357,
+      "sha256": "c066d0899ae196f682144f0d53489c1fa1a9a0abb54955ebfe1a8e5c27ecb68f"
+    },
+    {
+      "path": "physics031/web/flood/007.png",
+      "bytes": 1751,
+      "sha256": "968d56bfb5c4cd1ae75b118ea3274e4a9a4a4af3a5ca04ff9d5674902456997b"
+    },
+    {
+      "path": "physics031/web/flood/008.png",
+      "bytes": 3286,
+      "sha256": "19c7aeaf02944e6e209ed88f83c898fc594573f9dc974592d5584942407a9a53"
+    },
+    {
+      "path": "physics031/web/flood/009.png",
+      "bytes": 5742,
+      "sha256": "d61ea34c7632e99bec4a5250dff7e492b3cf8980d87c29fd34a363ece98b7031"
+    },
+    {
+      "path": "physics031/web/flood/010.png",
+      "bytes": 8375,
+      "sha256": "45abbc1ea3ea5df142ea8019571e7cac7391cf33b35eb17c691bad501b54f637"
+    },
+    {
+      "path": "physics031/web/flood/011.png",
+      "bytes": 10739,
+      "sha256": "0896b16cc285ef480aea0e09bf38f3e2f732485c2a0cde605b75f7b0c48ced01"
+    },
+    {
+      "path": "physics031/web/flood/012.png",
+      "bytes": 12710,
+      "sha256": "355ec6b277e93f94aff39d82a2ebe28adf7ee8b68a2772cf6d332b0b3e7a6f4b"
+    },
+    {
+      "path": "physics031/web/flood/013.png",
+      "bytes": 13274,
+      "sha256": "1de36b278562773c3be23019a4681c195c1466942c8dfd9f5d53327d4be14817"
+    },
+    {
+      "path": "physics031/web/flood/014.png",
+      "bytes": 13489,
+      "sha256": "ec04939464866b542b884240a19b1629d0fd492a73ef7b974e034884d6bca89f"
+    },
+    {
+      "path": "physics031/web/flood/015.png",
+      "bytes": 13836,
+      "sha256": "517245c62f0ae021d79fc6cc1b3aee528e8d60dd54a9bbb8f6b346167ca7c29c"
+    },
+    {
+      "path": "physics031/web/flood/016.png",
+      "bytes": 14176,
+      "sha256": "724dcadc8bf64257785c96e3cf7c760729bd97a2bdfd22d1d433a9b1678af89a"
+    },
+    {
+      "path": "physics031/web/flood/017.png",
+      "bytes": 14531,
+      "sha256": "d34a8f90437c259afa0598d19f5cbe70d32968908e05c13604c6853a0a70a12b"
+    },
+    {
+      "path": "physics031/web/flood/018.png",
+      "bytes": 14956,
+      "sha256": "7be326f357d409cb7a47c68c448626687fdd519225e289997ade6b2ebb61c2a2"
+    },
+    {
+      "path": "physics031/web/flood/019.png",
+      "bytes": 15390,
+      "sha256": "5f8d6fbe47a9b6b9bcc05d669ecea5fc36bc8531a3ad60f5b85d8a59ee067b6f"
+    },
+    {
+      "path": "physics031/web/flood/020.png",
+      "bytes": 15803,
+      "sha256": "62492bdfb85e58c3711d60a5207096c46d515acf785b1aac03614677621cba54"
+    },
+    {
+      "path": "physics031/web/flood/021.png",
+      "bytes": 16159,
+      "sha256": "6cda272d9bd790d9d9f7428cbf25df407287bedb16ea7d96cb3f3a857d0c62b6"
+    },
+    {
+      "path": "physics031/web/flood/022.png",
+      "bytes": 16555,
+      "sha256": "0f8c737bf25d0d98c65143d5d7380d04371b02108abbab7e138af34fdbde4e25"
+    },
+    {
+      "path": "physics031/web/flood/023.png",
+      "bytes": 16966,
+      "sha256": "3866cd21fc1ca403b78c7e0b93e23bc035b20c281b72ed9d7e0c5e4da9bca32d"
+    },
+    {
+      "path": "physics031/web/flood/024.png",
+      "bytes": 17317,
+      "sha256": "b756bb53539e0b9d1ac585300cd0cf9c802abed1c08aa740d32691ffeb00c735"
+    },
+    {
+      "path": "physics031/web/flood/025.png",
+      "bytes": 17649,
+      "sha256": "93ecf321ab3d178b22d07713399e81bcfe791efad9e4dfafa7a2468dd9ef830e"
+    },
+    {
+      "path": "physics031/web/flood/026.png",
+      "bytes": 17911,
+      "sha256": "5f2e50fb6182c557bb284fade24d1a03d543d7aced705024331d4d0f15d51e5b"
+    },
+    {
+      "path": "physics031/web/flood/027.png",
+      "bytes": 18234,
+      "sha256": "cde36dceeefadffa39b1cc8a61163535214446583b46b2bce79ab19034c2036a"
+    },
+    {
+      "path": "physics031/web/flood/028.png",
+      "bytes": 18542,
+      "sha256": "24ff1df89b843174ce4c2d790422ab66af2cebe5032f8cd60c835bd958f4525e"
+    },
+    {
+      "path": "physics031/web/flood/029.png",
+      "bytes": 18826,
+      "sha256": "307c2a8e37bb935bf06089571d07d67a9a2bf443a81db4a6c828b867ac507fe8"
+    },
+    {
+      "path": "physics031/web/flood/030.png",
+      "bytes": 19067,
+      "sha256": "4f9ea8ff1d23719298e513a144675fb36ced1a31ef876f7977ba9f9a3d265527"
+    },
+    {
+      "path": "physics031/web/flood/031.png",
+      "bytes": 19317,
+      "sha256": "f98ed6b917adb4f5efe87492ae725145c5fbed9eeafc60c77d01a4e9415cfef3"
+    },
+    {
+      "path": "physics031/web/flood/032.png",
+      "bytes": 19536,
+      "sha256": "db55f84e6b1d9467561830e93ee589ba1d3de6de2f9eb340ac26defb9ff687b6"
+    },
+    {
+      "path": "physics031/web/flood/033.png",
+      "bytes": 19683,
+      "sha256": "ad9bb5e1ec9fa706fc7168cdf25b34a627e7daa8d3a27bdf64042b4047222f6f"
+    },
+    {
+      "path": "physics031/web/flood/034.png",
+      "bytes": 19909,
+      "sha256": "4b30f7c8f4b6b8f26baa12a3355f313f7cce4455de33939e972c839b3322ea34"
+    },
+    {
+      "path": "physics031/web/flood/035.png",
+      "bytes": 20111,
+      "sha256": "7850c40ac2edeeec2a245ac227ea4aa80fde8a69701e749830038e128bbdd965"
+    },
+    {
+      "path": "physics031/web/flood/036.png",
+      "bytes": 20259,
+      "sha256": "2fb1c9d674637b98b3abf53bb538c06ce872e8a619d09fa0f5ff0abde3491f54"
+    },
+    {
+      "path": "physics031/web/flood/037.png",
+      "bytes": 20414,
+      "sha256": "20802e939a19f075549d70bc35d2096494602c6338741038e6230fde8bbf0843"
+    },
+    {
+      "path": "physics031/web/flood/038.png",
+      "bytes": 20485,
+      "sha256": "c0f2985f4136386a45d1042d0a1ec795e952de67e9f1866f004209dd0e03e795"
+    },
+    {
+      "path": "physics031/web/flood/039.png",
+      "bytes": 20629,
+      "sha256": "b10e26b41765df2e7b902b711812c4992c23bab918bc1541d40d279f1fc56b6b"
+    },
+    {
+      "path": "physics031/web/flood/040.png",
+      "bytes": 20735,
+      "sha256": "c5cee1b71f550db4805fc4c5bfc03bc402959880733d1bfbc8e47a420c0d7190"
+    },
+    {
+      "path": "physics031/web/flood/041.png",
+      "bytes": 20868,
+      "sha256": "5163e2e45c151f69f456d157e4f2d4e16e4bfd6a20572c4a58e0438566bde97e"
+    },
+    {
+      "path": "physics031/web/flood/042.png",
+      "bytes": 20955,
+      "sha256": "67c1043606bc4f3e8f40e107ecae9e896fa7fbb3a87cad98c523ce9df58a1938"
+    },
+    {
+      "path": "physics031/web/flood/043.png",
+      "bytes": 21006,
+      "sha256": "7d126e14cc5a75e357c041f99d6366423c7377d8c8da2c0b590af3437cc66d74"
+    },
+    {
+      "path": "physics031/web/flood/044.png",
+      "bytes": 21061,
+      "sha256": "aaeb01e70438e5a6760558b1170f7d5283321f6482bd5927cdf2bc371b744781"
+    },
+    {
+      "path": "physics031/web/flood/045.png",
+      "bytes": 21127,
+      "sha256": "9c56e8ca65e7da75071ee66433cf771ced919fcf5176dcc82ab2d5c6c3103081"
+    },
+    {
+      "path": "physics031/web/flood/046.png",
+      "bytes": 21181,
+      "sha256": "e8e2ef0bb3feb51c15242ec9e76bec385f709155746dabfe4f68da514eee36f8"
+    },
+    {
+      "path": "physics031/web/flood/047.png",
+      "bytes": 21255,
+      "sha256": "b34190384e01cb9ac3ab02f69081b43af1f746ce703af447e62fb2b85a2ac07b"
+    },
+    {
+      "path": "physics031/web/flood/048.png",
+      "bytes": 21262,
+      "sha256": "abe3a309102f7cec96a40da2e6486f761f2c45ecfb7c3b165f3b3bf02586ed49"
+    },
+    {
+      "path": "physics031/web/flood/049.png",
+      "bytes": 21318,
+      "sha256": "9ec5e3237aae59f7970a792d4c959a7e201604124767aee053789b2233b3dce5"
+    },
+    {
+      "path": "physics031/web/flood/050.png",
+      "bytes": 21372,
+      "sha256": "64e84c6c66e6a488cb612512c2f15003ef578095facbcb74b6d1d41e2029c608"
+    },
+    {
+      "path": "physics031/web/flood/051.png",
+      "bytes": 21452,
+      "sha256": "e292e51ed3be67e5d6657b185d9e261b379ae477785496c445f94e3f043bc7d1"
+    },
+    {
+      "path": "physics031/web/flood/052.png",
+      "bytes": 21450,
+      "sha256": "196d916487207b1372db62a0fd7793e0d7ffacd424e5614d744e3a17bb8c113b"
+    },
+    {
+      "path": "physics031/web/flood/053.png",
+      "bytes": 21514,
+      "sha256": "8f221dfa55802f2ba8af959401d0e5c05ae125f509d370dd240b223672d1f0bd"
+    },
+    {
+      "path": "physics031/web/flood/054.png",
+      "bytes": 21573,
+      "sha256": "a05e8ffb189076ff07c82d20eea2d4f5fc4b03df69b3b0223180554054bc6eed"
+    },
+    {
+      "path": "physics031/web/flood/055.png",
+      "bytes": 21630,
+      "sha256": "acf085d0f5883a77d7bdcb62410cca5797fa2864d3351f09b820fc840750b811"
+    },
+    {
+      "path": "physics031/web/flood/056.png",
+      "bytes": 21622,
+      "sha256": "45916799306a617af8be8fd1ba201903a12acb195510323ebc65fd67c882d98d"
+    },
+    {
+      "path": "physics031/web/flood/057.png",
+      "bytes": 21683,
+      "sha256": "e6c08be2f1425809d3a36c1e7b3eb1c804fe04ac166f9d84f0577e8a26b15d55"
+    },
+    {
+      "path": "physics031/web/flood/058.png",
+      "bytes": 21774,
+      "sha256": "5bcf144ab41a9beda1a77913711a6fb6e30ca7d110057dcc124586d2b5034eed"
+    },
+    {
+      "path": "physics031/web/flood/059.png",
+      "bytes": 21908,
+      "sha256": "46601a82c462a9578243f3190a71707a3b1b448dc80bc43b12b67a6649ec81f0"
+    },
+    {
+      "path": "physics031/web/flood/060.png",
+      "bytes": 21951,
+      "sha256": "38b854df5e4126236589930eb042f191a1651ebb904e864bdd3b5b15b5dd0378"
+    },
+    {
+      "path": "physics031/web/flood/061.png",
+      "bytes": 21990,
+      "sha256": "9d6a993b527d47dacea0cf69478a60bde92491630de0126ac7d16879119dbf9b"
+    },
+    {
+      "path": "physics031/web/flood/062.png",
+      "bytes": 22044,
+      "sha256": "96ad297a8a7e027da97c2d3c4573947e85d17c19b823fb95f134d110a5e2dcd2"
+    },
+    {
+      "path": "physics031/web/flood/063.png",
+      "bytes": 22053,
+      "sha256": "626abd719a875ebbd75b8987e567371c4c370f4c07e629c710ecf85fb7c109d5"
+    },
+    {
+      "path": "physics031/web/flood/064.png",
+      "bytes": 22106,
+      "sha256": "7c2d7b9ef4a56a378df5dbc490e680933c848161b0818d6f36536c948d20219c"
+    },
+    {
+      "path": "physics031/web/flood/065.png",
+      "bytes": 22170,
+      "sha256": "6d278fa2a69ea10fef084e65ef71e8d3e40f950c23fd86c933cbc6df1d5ec39d"
+    },
+    {
+      "path": "physics031/web/flood/066.png",
+      "bytes": 22154,
+      "sha256": "79e70c6cb1e27a1554c5c1a34197177c94828863e1abfb55b0562c21aeb8cae0"
+    },
+    {
+      "path": "physics031/web/flood/067.png",
+      "bytes": 22197,
+      "sha256": "e342afc929c1620af43becfefca14186c04a6a5eb90597c777ca001e6469e5b2"
+    },
+    {
+      "path": "physics031/web/flood/068.png",
+      "bytes": 22250,
+      "sha256": "4b254d6996022a0c229c3b5ffedc423f0b9814f7f89fa3a732276a1fdd8324e6"
+    },
+    {
+      "path": "physics031/web/flood/069.png",
+      "bytes": 22268,
+      "sha256": "e54c400775b9810c062f574acb89e252a070dab733bb8467b86178e2df89bd10"
+    },
+    {
+      "path": "physics031/web/flood/070.png",
+      "bytes": 22280,
+      "sha256": "3d47431964fe191116d1a8e3723aaba49533582889e55b887bfbcf28eddfec25"
+    },
+    {
+      "path": "physics031/web/flood/071.png",
+      "bytes": 22346,
+      "sha256": "c07b225887582ffec1a7622a2af0402576a14a47ed252feb0a4b30842b98c5b6"
+    },
+    {
+      "path": "physics031/web/flood/072.png",
+      "bytes": 22375,
+      "sha256": "1fb8079939a88553d100755715c2c8852803a355c6282f41f101aef392d04579"
+    },
+    {
+      "path": "physics031/web/flood/073.png",
+      "bytes": 22441,
+      "sha256": "68aac87e5fef46edb1d5ddcc3fa768008d9f282edd6825bbd45c7043294e4298"
+    },
+    {
+      "path": "physics031/web/flood/074.png",
+      "bytes": 22514,
+      "sha256": "811b072c680add86f5a46187bcd36220b1e4efe440e7b79c8a1c34fff87ef9f3"
+    },
+    {
+      "path": "physics031/web/flood/075.png",
+      "bytes": 22561,
+      "sha256": "1973de1f78337917e41deff7d8243acf379cf734989f16c782cb251f07737a47"
+    },
+    {
+      "path": "physics031/web/flood/076.png",
+      "bytes": 22619,
+      "sha256": "1bf1bc678433ae6d7f28edaea15c868c4a8b7aaeee3cde6af4510fc662d6026c"
+    },
+    {
+      "path": "physics031/web/flood/077.png",
+      "bytes": 22663,
+      "sha256": "24401439b460f5e58a4b26811578e759b4535aa076f9641e219d7c9d66093109"
+    },
+    {
+      "path": "physics031/web/flood/078.png",
+      "bytes": 22723,
+      "sha256": "4d7ec4e4043c63b3ee7c5755bb17b4b10b1fa04e027bc7b9ca161bcb1999c60f"
+    },
+    {
+      "path": "physics031/web/flood/079.png",
+      "bytes": 22792,
+      "sha256": "818422d5d906c61d13245c4916104de528ac5573180ed1a36faaed7ea2d1d374"
+    },
+    {
+      "path": "physics031/web/flood/080.png",
+      "bytes": 22859,
+      "sha256": "07eae876a544955b06c2c14653471fa165f345a27caed51e64bd23c07e12e293"
+    },
+    {
+      "path": "physics031/web/flood/081.png",
+      "bytes": 22910,
+      "sha256": "dba140be38254dfc02e8f8e81175795de80f941f413b31531cd68ef37f0f04e9"
+    },
+    {
+      "path": "physics031/web/flood/082.png",
+      "bytes": 22941,
+      "sha256": "1fd360034fb667bfcf473f5666a2d0de7d577cc5a8f7252ed33602d09d94cd7f"
+    },
+    {
+      "path": "physics031/web/flood/083.png",
+      "bytes": 22975,
+      "sha256": "251cc1b18762148050edee9d2d13e0f0445c08ce9c167075f94357997432e879"
+    },
+    {
+      "path": "physics031/web/flood/084.png",
+      "bytes": 22998,
+      "sha256": "7b2fdbe586851cea61967613f6be301a32f44e4eaf221efc9d3e3855bf453c35"
+    },
+    {
+      "path": "physics031/web/flood/085.png",
+      "bytes": 23063,
+      "sha256": "724c94e43c0060e6663e3b6f9b5d6d0723f2a296e238087c55ca9d0cb7dc20e8"
+    },
+    {
+      "path": "physics031/web/flood/086.png",
+      "bytes": 23079,
+      "sha256": "9d6ef897dde0376e29bece8f7470b64a5ecda38a3192fe8a5296f04f08f8392c"
+    },
+    {
+      "path": "physics031/web/flood/087.png",
+      "bytes": 23169,
+      "sha256": "2bfa686b8e8c519335fd09c48a88bc69b7f54499d92d341f81edc1be2b1b0aac"
+    },
+    {
+      "path": "physics031/web/flood/088.png",
+      "bytes": 23197,
+      "sha256": "577c58fdf9b13059f22da8c001fc05cdb4865a643115e4d6c0b3064b627968d5"
+    },
+    {
+      "path": "physics031/web/flood/089.png",
+      "bytes": 23227,
+      "sha256": "8cb5c7b2610f23ae7c98ce4face46d0639d6e9e2d7740d2f8c9eab9f72708081"
+    },
+    {
+      "path": "physics031/web/flood/090.png",
+      "bytes": 23289,
+      "sha256": "90b697265b8e16629c52b679b94ae24543e8a080a42c5021775b64861f36ac6d"
+    },
+    {
+      "path": "physics031/web/flood/091.png",
+      "bytes": 23318,
+      "sha256": "97cebb5e394203276b339051e928b562c0c3406ff1adec1a75a699130594ddd2"
+    },
+    {
+      "path": "physics031/web/flood/092.png",
+      "bytes": 23384,
+      "sha256": "cf9eac0e81389dc97f79d367b4c5e6f7050bf98bf7ec369abe25142e307132c2"
+    },
+    {
+      "path": "physics031/web/flood/093.png",
+      "bytes": 23439,
+      "sha256": "538057604d8d31bc4f41143a108acb3c9082ffe13086164b6c8d0e4f7a840097"
+    },
+    {
+      "path": "physics031/web/flood/094.png",
+      "bytes": 23466,
+      "sha256": "0b0ddaf9efd28c14c6332878eed7c14b6a124108454915d3424d58a31514a842"
+    },
+    {
+      "path": "physics031/web/flood/095.png",
+      "bytes": 23504,
+      "sha256": "64ce915e979614ce0807550a873012af3bfb2af50bc7797576ddf8f6813b4afb"
+    },
+    {
+      "path": "physics031/web/flood/096.png",
+      "bytes": 23564,
+      "sha256": "0cd24d910351e413174b88d42bbd4c512539725e947bac7d3aa7859205e6e78f"
+    },
+    {
+      "path": "physics031/web/flood/097.png",
+      "bytes": 23572,
+      "sha256": "daa2753b38f7ef6fcc420f2cc8bcdf91484ac69d65cd83b90e33a3b244f9cdf7"
+    },
+    {
+      "path": "physics031/web/flood/098.png",
+      "bytes": 23645,
+      "sha256": "d722fd274d54cb3052d3608263615321d48559a8d79e5735e7cd181f341375d2"
+    },
+    {
+      "path": "physics031/web/flood/099.png",
+      "bytes": 23677,
+      "sha256": "6129b22f666fbbbbe33758134cafdd73f1e181c24a1413f3957f714bc9ea2b0a"
+    },
+    {
+      "path": "physics031/web/index.json",
+      "bytes": 1707,
+      "sha256": "86d4d0dc2f2852c7bf73b4e7aeac8f3a324f40b54516a4be34b1d00f6684d57d"
+    },
+    {
+      "path": "physics031/web/poll/000.png",
+      "bytes": 1049,
+      "sha256": "f4db4cfa27fdb6d263a7249e026bac9d1e8679020f216f094f19f4078e4c59a8"
+    },
+    {
+      "path": "physics031/web/poll/001.png",
+      "bytes": 326334,
+      "sha256": "a33a2bd270f7a647c529c287c76e545e4655b905fa1a41280a0759ced629f000"
+    },
+    {
+      "path": "physics031/web/poll/002.png",
+      "bytes": 351262,
+      "sha256": "a13e998fcaf24239dc705ee33f8f2ba12f62540624b134ec353c4a961dcbd304"
+    },
+    {
+      "path": "physics031/web/poll/003.png",
+      "bytes": 365199,
+      "sha256": "68a8b4b0f439cc381e0dc44f0df784c12501e97e2c0f208139230105332375dd"
+    },
+    {
+      "path": "physics031/web/poll/004.png",
+      "bytes": 374080,
+      "sha256": "59f4c8cb817c741268f20f28e62faffc077bd18d4652faa49b296b86c6d8679d"
+    },
+    {
+      "path": "physics031/web/poll/005.png",
+      "bytes": 380488,
+      "sha256": "3516cf26b4c47edf07014dee31b7d092f97dbc341cc9bbcb0d2c2c766f84df20"
+    },
+    {
+      "path": "physics031/web/poll/006.png",
+      "bytes": 384952,
+      "sha256": "72b22aaa3b51c63d2f271dcf195c2ba8b1c6513db74a038a42fe586cab493233"
+    },
+    {
+      "path": "physics031/web/poll/007.png",
+      "bytes": 388446,
+      "sha256": "1292d1d3dde00f709168042cc6857f9b01753e5784b84a11c88ce1d79d55685b"
+    },
+    {
+      "path": "physics031/web/poll/008.png",
+      "bytes": 391504,
+      "sha256": "19cdec696713702c2f62e3c029bfbedf7b35600f6a543a50dd5b9de0794303da"
+    },
+    {
+      "path": "physics031/web/poll/009.png",
+      "bytes": 393816,
+      "sha256": "4ae1188e3ca795329e6a8068271de6bd7b398f499c095aacde3f8fd627de59f2"
+    },
+    {
+      "path": "physics031/web/poll/010.png",
+      "bytes": 396092,
+      "sha256": "f4cde190aa149ab0e9a0b287a56cf2cc1f9824a1afb81f7caf27188b2d12f2d1"
+    },
+    {
+      "path": "physics031/web/poll/011.png",
+      "bytes": 398116,
+      "sha256": "d5e43fb3d1f9f3cf090abe4fa825ee973ef5d2a4c774412f88c937393b783cf1"
+    },
+    {
+      "path": "physics031/web/poll/012.png",
+      "bytes": 400307,
+      "sha256": "1133f5e74aa80a01fac9800407b2ad43f8babb09152314909cd0d1678b124b72"
+    },
+    {
+      "path": "physics031/web/poll/013.png",
+      "bytes": 401950,
+      "sha256": "f1c04c78c52f29aa004238d35249c77fe18bd07dcc8ac6a8505f913e5a093dc4"
+    },
+    {
+      "path": "physics031/web/poll/014.png",
+      "bytes": 403892,
+      "sha256": "0e449b9e21a3dca02abbee5d82d762a17526136dec931ec4e943f19d617f28e4"
+    },
+    {
+      "path": "physics031/web/poll/015.png",
+      "bytes": 405405,
+      "sha256": "6159574342780a53f2e48b917db1bcec5b46e0e02ceca38f5b6721b28631b6be"
+    },
+    {
+      "path": "physics031/web/poll/016.png",
+      "bytes": 406725,
+      "sha256": "1a9c79dbbef688c2fcac5d680e72d23dd0590a33121f8a44bd1f50cf76b4be6c"
+    },
+    {
+      "path": "physics031/web/poll/017.png",
+      "bytes": 408204,
+      "sha256": "a03585a5a1d4a3441d86036c01210f538073b4a0cc62545da2205d9694ca27b5"
+    },
+    {
+      "path": "physics031/web/poll/018.png",
+      "bytes": 409212,
+      "sha256": "3d64ff8bf327b7af6a5f4d4dd4925656f4706932d8647347b35ce57e49790d5f"
+    },
+    {
+      "path": "physics031/web/poll/019.png",
+      "bytes": 410476,
+      "sha256": "8bcaabef1582374e1ab43a5ff90399e19c1e12c1537bdbeb54a945a629c021ff"
+    },
+    {
+      "path": "physics031/web/poll/020.png",
+      "bytes": 411472,
+      "sha256": "0ce114391eaeb2fc6bb96164a8ac05722348c84ca21d4d1e409dc2f3b913bdb5"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/000.png",
+      "bytes": 29779,
+      "sha256": "67e44cdedac671c1edbf24a8358d36948514e0b9954eabe7e76caec976450013"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/001.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/002.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/003.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/004.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/005.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/006.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/007.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/008.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/009.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/010.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/011.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/012.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/013.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/014.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/015.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/016.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/017.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/018.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/019.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/020.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/021.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/022.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/023.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/024.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/025.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/026.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/027.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/028.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/029.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/030.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/031.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/032.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/033.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/034.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/035.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/036.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/037.png",
+      "bytes": 29721,
+      "sha256": "6b51aa46fa4265515b0b3624add549fd27245ecf995ecc9cd6001c4ccc9c7480"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/038.png",
+      "bytes": 29806,
+      "sha256": "5ba161324f8f083d0082871750aed8b542d3c99f3f30d3354f97e10b7a7ec0de"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/039.png",
+      "bytes": 29815,
+      "sha256": "29ead99710957f69859ecc70bc287bb373cc0ce410f0241fd6b499555cf160f4"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/040.png",
+      "bytes": 29822,
+      "sha256": "3a30e7d5b555b3e804aa4e06e46c96c0970b1e622d1d08195464c666a5577eba"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/041.png",
+      "bytes": 29969,
+      "sha256": "63f5f7cf7a8775ccb298f04d1795e0f7f26285bd7434df4b99b0e8161c430b50"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/042.png",
+      "bytes": 30021,
+      "sha256": "52c89a6a961e2f8ae306179df98cf10bb50ebd1cea090d0ff0a86705978a0e93"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/043.png",
+      "bytes": 30011,
+      "sha256": "1657e497a8eddc3483ffe7cb5a0e74d78b3115277415374cc56204ee00414c97"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/044.png",
+      "bytes": 30015,
+      "sha256": "6622aa68c76ab439fe216384206e5be5856e1b4d3915a7e40604161662d6756a"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/045.png",
+      "bytes": 30015,
+      "sha256": "6622aa68c76ab439fe216384206e5be5856e1b4d3915a7e40604161662d6756a"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/046.png",
+      "bytes": 30015,
+      "sha256": "55ba4d51885360956d473109bdd518082fbdec0d680b22bb90930bc2316bd2aa"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/047.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/048.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/049.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/050.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/051.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/052.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/053.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/054.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/055.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/056.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/057.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/058.png",
+      "bytes": 30013,
+      "sha256": "454544be547eb8e0eeb51f31588ca92fd65e8a0bf8c979194bc3ef0564536c1f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/059.png",
+      "bytes": 30004,
+      "sha256": "aa73fe01dbf3e0771fe2f764285064af75042a527aca4ee2b8437f8614c89f80"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/060.png",
+      "bytes": 30004,
+      "sha256": "aa73fe01dbf3e0771fe2f764285064af75042a527aca4ee2b8437f8614c89f80"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/061.png",
+      "bytes": 30004,
+      "sha256": "aa73fe01dbf3e0771fe2f764285064af75042a527aca4ee2b8437f8614c89f80"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/062.png",
+      "bytes": 29980,
+      "sha256": "7459baa059427b27b21af43bae4c391ed3afbf1f7c7c3b3dbe76a140207bec5f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/063.png",
+      "bytes": 29980,
+      "sha256": "7459baa059427b27b21af43bae4c391ed3afbf1f7c7c3b3dbe76a140207bec5f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/064.png",
+      "bytes": 29980,
+      "sha256": "7459baa059427b27b21af43bae4c391ed3afbf1f7c7c3b3dbe76a140207bec5f"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/065.png",
+      "bytes": 30006,
+      "sha256": "be545dd8db532fe556b46d6f75ec366defb0e26c28ea687e9e2bc5f7e9c812d4"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/066.png",
+      "bytes": 30006,
+      "sha256": "be545dd8db532fe556b46d6f75ec366defb0e26c28ea687e9e2bc5f7e9c812d4"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/067.png",
+      "bytes": 30006,
+      "sha256": "be545dd8db532fe556b46d6f75ec366defb0e26c28ea687e9e2bc5f7e9c812d4"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/068.png",
+      "bytes": 30006,
+      "sha256": "be545dd8db532fe556b46d6f75ec366defb0e26c28ea687e9e2bc5f7e9c812d4"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/069.png",
+      "bytes": 30005,
+      "sha256": "a3deef929506145c2e9654a31dce2071abb2c7cabe96778fbd657ed424399b06"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/070.png",
+      "bytes": 30005,
+      "sha256": "a3deef929506145c2e9654a31dce2071abb2c7cabe96778fbd657ed424399b06"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/071.png",
+      "bytes": 29998,
+      "sha256": "b166231de8170c9abd6eb4e00b0615f7b82b42a5fe8ff5f4e18aa2247c0323ba"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/072.png",
+      "bytes": 29998,
+      "sha256": "b166231de8170c9abd6eb4e00b0615f7b82b42a5fe8ff5f4e18aa2247c0323ba"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/073.png",
+      "bytes": 30018,
+      "sha256": "114ae4c76b738aa0b2bc1dc26804ca5404221fbf44da9a2e2963f04004cfe6ca"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/074.png",
+      "bytes": 30018,
+      "sha256": "114ae4c76b738aa0b2bc1dc26804ca5404221fbf44da9a2e2963f04004cfe6ca"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/075.png",
+      "bytes": 30019,
+      "sha256": "caa569bd61e336ff7796d528cb8cbf4ea93f1cbac548d92fa018ebe10e821082"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/076.png",
+      "bytes": 30034,
+      "sha256": "831fa542352cfc1230714561c7b247ea9eaaade1f61574948c7e35d0107a2680"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/077.png",
+      "bytes": 30035,
+      "sha256": "9bd1c8869e4c43a07adda10be0a412ba1ffa89facd596fb9a75f8e30f257b34b"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/078.png",
+      "bytes": 30035,
+      "sha256": "9bd1c8869e4c43a07adda10be0a412ba1ffa89facd596fb9a75f8e30f257b34b"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/079.png",
+      "bytes": 29997,
+      "sha256": "e3782afe0658decf85f07a6d1cca02b14a10d7344c0ea14614d4ca390ee3faa1"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/080.png",
+      "bytes": 29997,
+      "sha256": "e3782afe0658decf85f07a6d1cca02b14a10d7344c0ea14614d4ca390ee3faa1"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/081.png",
+      "bytes": 29996,
+      "sha256": "9f79f041f0dc6d87a6212ad6dc1b69ac987d18a040dc11c833af39833712417b"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/082.png",
+      "bytes": 29995,
+      "sha256": "47e1a0aefc007b022f6bb0f7658145a274b020e34f88c7a02b0f7a2acecf2eb6"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/083.png",
+      "bytes": 29996,
+      "sha256": "7c13e4eff0badf4b8a3ca56ba78f39c9c68888281254ab83f95485a821671eda"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/084.png",
+      "bytes": 29998,
+      "sha256": "ad071009abb7385ed022bf397082301bec2815b80738e394acad2d25a99fea31"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/085.png",
+      "bytes": 30004,
+      "sha256": "5ba2b4b2ff917591d05a5337f12052fea979ddb31ed266b244e82f8553650e47"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/086.png",
+      "bytes": 30036,
+      "sha256": "485b28979c7f983c0e3f0bb20b9dcb4108c5c71827ec4ba24111f081d251833c"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/087.png",
+      "bytes": 30036,
+      "sha256": "0b01507f27f1b0fc86d9cc208e26d4b2b9d545c50c16e4eb5fd3e591b438f728"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/088.png",
+      "bytes": 30036,
+      "sha256": "0b01507f27f1b0fc86d9cc208e26d4b2b9d545c50c16e4eb5fd3e591b438f728"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/089.png",
+      "bytes": 30037,
+      "sha256": "6a25d76f3a28f335e3cd62c5a20114a0f9150c42037d709b16c4c0cfc0d791c6"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/090.png",
+      "bytes": 30029,
+      "sha256": "89f3e52db48d8906c4fc3484c8dc67c3df0111028044b7e120267a2611396cf4"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/091.png",
+      "bytes": 30029,
+      "sha256": "89f3e52db48d8906c4fc3484c8dc67c3df0111028044b7e120267a2611396cf4"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/092.png",
+      "bytes": 30029,
+      "sha256": "89f3e52db48d8906c4fc3484c8dc67c3df0111028044b7e120267a2611396cf4"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/093.png",
+      "bytes": 30051,
+      "sha256": "3aee84ab835a4e17f8e27ecef49f1aa147315a8ddee64d960c77e429b92ff1d0"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/094.png",
+      "bytes": 30051,
+      "sha256": "3aee84ab835a4e17f8e27ecef49f1aa147315a8ddee64d960c77e429b92ff1d0"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/095.png",
+      "bytes": 30050,
+      "sha256": "2ddbbefda2d2824d25a83ee41e7e220bc841e7fcd84151a07f167e0946cbfb5c"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/096.png",
+      "bytes": 30056,
+      "sha256": "1b80f140b3db6f13fea5083a1efd22dd65deda26be6ef076a64abd49b5809c89"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/097.png",
+      "bytes": 30061,
+      "sha256": "f36f1f0627a9eed1cffc66bde0ed32d5e5be65de74b24ee2c812763772fcf9a9"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/098.png",
+      "bytes": 30064,
+      "sha256": "83080a065c9879e6452b95053fa87bc9a0df4a6edfa1cf1930b7e51c4060d189"
+    },
+    {
+      "path": "physics031/web/shadow_20260621/099.png",
+      "bytes": 30064,
+      "sha256": "83080a065c9879e6452b95053fa87bc9a0df4a6edfa1cf1930b7e51c4060d189"
+    },
+    {
+      "path": "physics031/web/solar_20260621/000.png",
+      "bytes": 240626,
+      "sha256": "c98f6aad8b195a6154f14d40a10b3116bd8969de2e755e4a6ec4696f3c3d1513"
+    },
+    {
+      "path": "physics031/web/solar_20260621/001.png",
+      "bytes": 240416,
+      "sha256": "cb753ff7676cdb264c302727494aa1eaa0034913f4923fae3de7d304e999b1f1"
+    },
+    {
+      "path": "physics031/web/solar_20260621/002.png",
+      "bytes": 240389,
+      "sha256": "39189895122726b3ed3205ddd7487a3b25013f6413a2dc87db496bbbac196ffb"
+    },
+    {
+      "path": "physics031/web/solar_20260621/003.png",
+      "bytes": 240249,
+      "sha256": "3c0ac7da1b31df6a45088c6e1eac3ae6cb5eb8b848b5d528968378aaa68543ec"
+    },
+    {
+      "path": "physics031/web/solar_20260621/004.png",
+      "bytes": 240223,
+      "sha256": "b2d60b587a2ca9a3a8683c1879ff7a8805a9a1d0637e3106204aee76ea4f3fdf"
+    },
+    {
+      "path": "physics031/web/solar_20260621/005.png",
+      "bytes": 240312,
+      "sha256": "68cb35200af25b5d8d2408db1d8055d4be23a518cd664d6197bc761028680f06"
+    },
+    {
+      "path": "physics031/web/solar_20260621/006.png",
+      "bytes": 240353,
+      "sha256": "e282ab8bdb37bbb5fedbc65e20e8015d8bd95c201a4fdf1903385b5df4d45cf0"
+    },
+    {
+      "path": "physics031/web/solar_20260621/007.png",
+      "bytes": 240372,
+      "sha256": "1eceb6d21ed4c2b2a425ecab1a8b8ba9b2a800c92257d0b5ad7e5c0f0fcbe091"
+    },
+    {
+      "path": "physics031/web/solar_20260621/008.png",
+      "bytes": 240368,
+      "sha256": "55c75d6aaa9b62d8a86671829ccd5905f17584c213edf478a0cbedcda33d8998"
+    },
+    {
+      "path": "physics031/web/solar_20260621/009.png",
+      "bytes": 240359,
+      "sha256": "9b2e89a6132a6d3f57b5466928d8c0e44707bc81c8ac31915da9a84e70a42e33"
+    },
+    {
+      "path": "physics031/web/solar_20260621/010.png",
+      "bytes": 240365,
+      "sha256": "a2a7fb096a452b618e5c25fb52dc3709c435ff48572637fa37af5cf08feeec01"
+    },
+    {
+      "path": "physics031/web/solar_20260621/011.png",
+      "bytes": 240360,
+      "sha256": "4c02a2ccd7aac31426bb0d7115b2762cb7b996fc3c2f9f011eb4b2678561daf2"
+    },
+    {
+      "path": "physics031/web/solar_20260621/012.png",
+      "bytes": 240357,
+      "sha256": "46c86219d3193f35d317720692f1f86a9ea0f25cc6c88d92a0435d8d8810705c"
+    },
+    {
+      "path": "physics031/web/solar_20260621/013.png",
+      "bytes": 240354,
+      "sha256": "787c05ca8501a7538cc628ab22252a8dc6475fce31bad0c6f0ac2efa79341328"
+    },
+    {
+      "path": "physics031/web/solar_20260621/014.png",
+      "bytes": 240354,
+      "sha256": "78bfd08e163891d70f11700e9ba7d0bc3f3aa16a2ef44868a7010d3f0676c800"
+    },
+    {
+      "path": "physics031/web/solar_20260621/015.png",
+      "bytes": 240376,
+      "sha256": "6ed875471ca5abfe6e15e5cd3eae8ef17cb6b4ac1bdec8e63d46365a711853e9"
+    },
+    {
+      "path": "physics031/web/solar_20260621/016.png",
+      "bytes": 240375,
+      "sha256": "18a7a350d76e361705760135949b6ffa24e7c3a55070de150a686496f84f9898"
+    },
+    {
+      "path": "physics031/web/solar_20260621/017.png",
+      "bytes": 240388,
+      "sha256": "bd66a9166c833c790adf9645adbf6a49aeaa60fb954356946ca6e821925afd50"
+    },
+    {
+      "path": "physics031/web/solar_20260621/018.png",
+      "bytes": 240390,
+      "sha256": "957482a4969d238b63a9e19ce8a188b4a92031e2ba9a90b9e966eb3c894df90e"
+    },
+    {
+      "path": "physics031/web/solar_20260621/019.png",
+      "bytes": 240391,
+      "sha256": "9ef8ff335d8656923e4913f87dd0430cd067e306b898b5386f65c6f7be4c2b10"
+    },
+    {
+      "path": "physics031/web/solar_20260621/020.png",
+      "bytes": 240390,
+      "sha256": "957482a4969d238b63a9e19ce8a188b4a92031e2ba9a90b9e966eb3c894df90e"
+    },
+    {
+      "path": "physics031/web/solar_20260621/021.png",
+      "bytes": 240386,
+      "sha256": "008f9c74d15a5517ddfdc47fa9410fecbe829ce5c8cbf0be04612167e7ddd6dd"
+    },
+    {
+      "path": "physics031/web/solar_20260621/022.png",
+      "bytes": 240373,
+      "sha256": "aafdb490c5cdb76dfe9a9937939125b1e209e498db30361bac127adc8d49631b"
+    },
+    {
+      "path": "physics031/web/solar_20260621/023.png",
+      "bytes": 240368,
+      "sha256": "e9017e61e315b6220a15280039296a2946444b570ba6ed85f7c05e11d79b094d"
+    },
+    {
+      "path": "physics031/web/solar_20260621/024.png",
+      "bytes": 240352,
+      "sha256": "bb0259f695791dbf465738e230f16a2dde9c0ed04a4372fb1e9861f69e123454"
+    },
+    {
+      "path": "physics031/web/solar_20260621/025.png",
+      "bytes": 240355,
+      "sha256": "713b9432f32503d4b228908150fa2b89a01fb8c97d883e36d75f5cc3ff949e83"
+    },
+    {
+      "path": "physics031/web/solar_20260621/026.png",
+      "bytes": 240360,
+      "sha256": "aeddc7644b9cb6a98ae36122757891dd5bcc1e1f2df9c2aae34c4175415204a4"
+    },
+    {
+      "path": "physics031/web/solar_20260621/027.png",
+      "bytes": 240358,
+      "sha256": "1ec6898c4be939aeff828e981eff29ce53ced6e2ac78c5199b125aea4bc23670"
+    },
+    {
+      "path": "physics031/web/solar_20260621/028.png",
+      "bytes": 240362,
+      "sha256": "5f67ea20bb868efe220220c54aaeaa2f426117f877a403134c6610e2b143ec82"
+    },
+    {
+      "path": "physics031/web/solar_20260621/029.png",
+      "bytes": 240364,
+      "sha256": "70b76fdc8156d4744acc463cb4e5890031d524d779e35a4bf5a62c9214cc1f61"
+    },
+    {
+      "path": "physics031/web/solar_20260621/030.png",
+      "bytes": 240365,
+      "sha256": "5c7e019048d34e1f9d3665c4cbb7d5a777732281405ad9d55f88281c18b71082"
+    },
+    {
+      "path": "physics031/web/solar_20260621/031.png",
+      "bytes": 240371,
+      "sha256": "82ea83a7fa8cd655d7fdfc95bdee72d4580a113a8b1f42ccd210bfe3ae6bd69d"
+    },
+    {
+      "path": "physics031/web/solar_20260621/032.png",
+      "bytes": 240328,
+      "sha256": "8070746cecb53d45b895730865f157f1c8f326b81ff5473859dcef0c2346de26"
+    },
+    {
+      "path": "physics031/web/solar_20260621/033.png",
+      "bytes": 240237,
+      "sha256": "bfeaae1855e4ae34492523ec0b168347c48946fb4e1e541b0af6d11596d33c54"
+    },
+    {
+      "path": "physics031/web/solar_20260621/034.png",
+      "bytes": 240245,
+      "sha256": "9aa2a9a411fa81b5d3e8f25708f55fefce226402fd5e45d8ded1ad6545ea4a8d"
+    },
+    {
+      "path": "physics031/web/solar_20260621/035.png",
+      "bytes": 240268,
+      "sha256": "4661fb84053d5788d83e282140e3fae283d839327ef7734a076144b4d7385e1c"
+    },
+    {
+      "path": "physics031/web/solar_20260621/036.png",
+      "bytes": 240380,
+      "sha256": "734688f0c117981e1495cf2cd4bd3e8116950043e02221fa84c6ae1e50d3f712"
+    },
+    {
+      "path": "physics031/web/solar_20260621/037.png",
+      "bytes": 240426,
+      "sha256": "b3af64d7a616050069447941126055df88632bb875e33a87596c380aa8fcf602"
+    },
+    {
+      "path": "physics031/web/solar_20260621/038.png",
+      "bytes": 240756,
+      "sha256": "ce87c6f9814a1b7fb7811c18eb46e1ccd5e75b2a5a12f50a018bc19daf6a39cd"
+    },
+    {
+      "path": "physics031/web/solar_20260621/039.png",
+      "bytes": 240875,
+      "sha256": "51a8a69c25f9b860d047160721d16a8610bf6577cfb03bd0fb3cb2f33454b60f"
+    },
+    {
+      "path": "physics031/web/solar_20260621/040.png",
+      "bytes": 240985,
+      "sha256": "900f8c9d04186a3ee42afc1a4b2d1ab0ddadd2eee6493493a7e8836b49f8c338"
+    },
+    {
+      "path": "physics031/web/solar_20260621/041.png",
+      "bytes": 241313,
+      "sha256": "5d9120a045de4a38cae90232546fd908829d007e4bce5c51bf151504223d52c2"
+    },
+    {
+      "path": "physics031/web/solar_20260621/042.png",
+      "bytes": 241267,
+      "sha256": "9aceb29d17f891739c3389da899902584458e575be31a7f2e13f9f63899d8d8e"
+    },
+    {
+      "path": "physics031/web/solar_20260621/043.png",
+      "bytes": 241265,
+      "sha256": "a56908aa7e5631bb26c85b7c559751a3c2e8233f61d730719acd9dd94cae8f7b"
+    },
+    {
+      "path": "physics031/web/solar_20260621/044.png",
+      "bytes": 241272,
+      "sha256": "dd65d40523e16fb83449120b3f29ec80333e7013c912519df61c94b2d6ab4feb"
+    },
+    {
+      "path": "physics031/web/solar_20260621/045.png",
+      "bytes": 241238,
+      "sha256": "cb25cce1f4a4112ccfae9e579a458b303d3b40e4b639f4eb4205885ab21cc8d2"
+    },
+    {
+      "path": "physics031/web/solar_20260621/046.png",
+      "bytes": 241223,
+      "sha256": "6d0a2ef8e283aa1b9c6a4833eeb1a848b2ccf8816991bdb91a34cb1da98989ef"
+    },
+    {
+      "path": "physics031/web/solar_20260621/047.png",
+      "bytes": 241208,
+      "sha256": "a8b74912592791c35be7c680231a92576a5d40cc9426f4d3c37710174f8364d4"
+    },
+    {
+      "path": "physics031/web/solar_20260621/048.png",
+      "bytes": 241201,
+      "sha256": "70a460a48038ebc3fb471482a158f1b0ef38e549f05baa07f44dac21c31a8911"
+    },
+    {
+      "path": "physics031/web/solar_20260621/049.png",
+      "bytes": 241172,
+      "sha256": "42ce4dc2f89a651851227c9a4d854e8f799cdae913fc8be2ca4257629bb24a6e"
+    },
+    {
+      "path": "physics031/web/solar_20260621/050.png",
+      "bytes": 241157,
+      "sha256": "973fc5effbf2f1682e23fc888c1086ffdb65ab512dc6c2d7acbb483256174c14"
+    },
+    {
+      "path": "physics031/web/solar_20260621/051.png",
+      "bytes": 241199,
+      "sha256": "557d8ae6dd2dd055ecc335f77b4bbafb2d616e2b5c6c25e27952fc39d072deeb"
+    },
+    {
+      "path": "physics031/web/solar_20260621/052.png",
+      "bytes": 241133,
+      "sha256": "01b47616e00f2406efcee189ac2df6cd85813702c34eb3a5679f393bbaad0d63"
+    },
+    {
+      "path": "physics031/web/solar_20260621/053.png",
+      "bytes": 241207,
+      "sha256": "a9917ed961955e3c51391b3c8ffac8c700852eabe786dda219bb6ece58da6f92"
+    },
+    {
+      "path": "physics031/web/solar_20260621/054.png",
+      "bytes": 241292,
+      "sha256": "72a1aed6829bdcc2be38a4478e4b7a4e55cfb99abea4206d08fef5f159497ad1"
+    },
+    {
+      "path": "physics031/web/solar_20260621/055.png",
+      "bytes": 241420,
+      "sha256": "41d1cff9eabd7d0882d2e7585b9033bcf21961371110d7dfb4e1affd9276299c"
+    },
+    {
+      "path": "physics031/web/solar_20260621/056.png",
+      "bytes": 241471,
+      "sha256": "3536d23a2ddd23f59359da6e7ee93e5bd3cc2eb3c5672ba9fd01ae7abc040552"
+    },
+    {
+      "path": "physics031/web/solar_20260621/057.png",
+      "bytes": 241450,
+      "sha256": "581721d7953f1b3916200adb1096c790d6fbf3ed2aa0c5d729565f67e7d77ba8"
+    },
+    {
+      "path": "physics031/web/solar_20260621/058.png",
+      "bytes": 241389,
+      "sha256": "8ff23d96298453b45f370f3fc2e500a06d434698927066f4e78aee2ca330e02e"
+    },
+    {
+      "path": "physics031/web/solar_20260621/059.png",
+      "bytes": 241275,
+      "sha256": "d2ecf11c75fef3e16cdcc6f11dfde1d8d0f92443934a370f6dbcbadf8549bc99"
+    },
+    {
+      "path": "physics031/web/solar_20260621/060.png",
+      "bytes": 241258,
+      "sha256": "8fbbc2bc634cde578271b4f933ea1e471d5781e19b6da3785614d1bf5d4b4b04"
+    },
+    {
+      "path": "physics031/web/solar_20260621/061.png",
+      "bytes": 241263,
+      "sha256": "3b785c79455b658d84d39a27ebc55b9954b458973a2cc80d06ba7d980bc7fad2"
+    },
+    {
+      "path": "physics031/web/solar_20260621/062.png",
+      "bytes": 241250,
+      "sha256": "e520cc3c32f1c9bbbf69e2c04987db5b3c50c586bcb32fce052b05663b6a9d66"
+    },
+    {
+      "path": "physics031/web/solar_20260621/063.png",
+      "bytes": 241345,
+      "sha256": "5f9695f5ec40d1931db3475694880283adb383bac5be051bc2ff4ffb762dfd0c"
+    },
+    {
+      "path": "physics031/web/solar_20260621/064.png",
+      "bytes": 241504,
+      "sha256": "5a45cbd251ce6e91b389c8760625281f191b7a32f5f0e91645b23efbf5b6450c"
+    },
+    {
+      "path": "physics031/web/solar_20260621/065.png",
+      "bytes": 241611,
+      "sha256": "f80dc0d7356c2392e62e5960c4edeca00463f57ab5471d376531c92d3e389b77"
+    },
+    {
+      "path": "physics031/web/solar_20260621/066.png",
+      "bytes": 241714,
+      "sha256": "32d20ca0bada7fec73db7a04754e5f0d888a0c7f953e4c4514a17d87090e3d60"
+    },
+    {
+      "path": "physics031/web/solar_20260621/067.png",
+      "bytes": 241736,
+      "sha256": "9055c55515b09b3b484502d62b611d076cc3ebc7b1ecec82496f84ac11b31fd6"
+    },
+    {
+      "path": "physics031/web/solar_20260621/068.png",
+      "bytes": 241656,
+      "sha256": "7c106d889dc7fde5786795d61a37454ae1225e1d9239f48d3ad00e3208177d8e"
+    },
+    {
+      "path": "physics031/web/solar_20260621/069.png",
+      "bytes": 241685,
+      "sha256": "0d52c4b91c8d14492c1be03a67d38cb88f9d00f33089d3294023f8df0e8013ac"
+    },
+    {
+      "path": "physics031/web/solar_20260621/070.png",
+      "bytes": 241576,
+      "sha256": "4ca9e558aaad0f8493542486563cadf9bda5ef5675a80bfecbb1a203000ae4a2"
+    },
+    {
+      "path": "physics031/web/solar_20260621/071.png",
+      "bytes": 241589,
+      "sha256": "1f9ed6c2ee190d12bde696f305500f77b8c796dbbb9f836c2d3c3477ea803637"
+    },
+    {
+      "path": "physics031/web/solar_20260621/072.png",
+      "bytes": 241559,
+      "sha256": "3279831e9a65914d76aeb9fe154989981cdc41171e15b04b1e95ed039d08ec30"
+    },
+    {
+      "path": "physics031/web/solar_20260621/073.png",
+      "bytes": 241710,
+      "sha256": "2af8fdd8f517ef96521df3bf7a597a080b4cf1c7198e9a0fd98f3c35c40f102c"
+    },
+    {
+      "path": "physics031/web/solar_20260621/074.png",
+      "bytes": 241735,
+      "sha256": "6a6a6ad6b5c8d737a356f96a798a453191370b5e4a74908e8fa5be65729ccfa7"
+    },
+    {
+      "path": "physics031/web/solar_20260621/075.png",
+      "bytes": 241756,
+      "sha256": "091203b24228bff61a333c43bf121bbd46d1aced77ae43db48733cb4f0fa7330"
+    },
+    {
+      "path": "physics031/web/solar_20260621/076.png",
+      "bytes": 241726,
+      "sha256": "2069469871b368af1ba318db4b5ce3cd503fafcc343344b95b569d1d566a4713"
+    },
+    {
+      "path": "physics031/web/solar_20260621/077.png",
+      "bytes": 241634,
+      "sha256": "2e8bf17c79075fccf8ca3c084bd2b53f71113157486003416bae9213d9f1e098"
+    },
+    {
+      "path": "physics031/web/solar_20260621/078.png",
+      "bytes": 241623,
+      "sha256": "9088ddd27dfe33902dd913e8050a3b7310955f6b126a434d3e57a4e8704a36f0"
+    },
+    {
+      "path": "physics031/web/solar_20260621/079.png",
+      "bytes": 241624,
+      "sha256": "b3e26a7ae63484ad7aed73aa5f6e6d4c628594ca057364a7cfc68ef95eba3863"
+    },
+    {
+      "path": "physics031/web/solar_20260621/080.png",
+      "bytes": 241622,
+      "sha256": "e07299f22f10334144def629f64049e2e3c70af941642f4bcaa6a45b2c40eb8d"
+    },
+    {
+      "path": "physics031/web/solar_20260621/081.png",
+      "bytes": 241903,
+      "sha256": "e00968115e999dd092c9f37606ce99a99886dfbcae1e8723166a2cd80baae221"
+    },
+    {
+      "path": "physics031/web/solar_20260621/082.png",
+      "bytes": 241928,
+      "sha256": "70fdd61b1c9c95cc3ab3f60d04e78aa16574ee2776af6f059702968932b2d02e"
+    },
+    {
+      "path": "physics031/web/solar_20260621/083.png",
+      "bytes": 241872,
+      "sha256": "9ba28c2caa1e488752896bc1a01ff35a0249ea7182696cb7aa2d3e09406c02f7"
+    },
+    {
+      "path": "physics031/web/solar_20260621/084.png",
+      "bytes": 241845,
+      "sha256": "e1148d583932c2a3171edcf673f57961c28320cb164a29d8de48721df8f17440"
+    },
+    {
+      "path": "physics031/web/solar_20260621/085.png",
+      "bytes": 241834,
+      "sha256": "a2f9ddb0e6aa9f7f8196e0e2bb9a808843c782e86841d8f42e914d6b12e10bef"
+    },
+    {
+      "path": "physics031/web/solar_20260621/086.png",
+      "bytes": 241880,
+      "sha256": "7e063647d1b253efbd5db68c2b0789209805267efa753776f06d0eecc898c434"
+    },
+    {
+      "path": "physics031/web/solar_20260621/087.png",
+      "bytes": 241940,
+      "sha256": "9b7981d825ba5713e19e22efdb22bec9d2197f52900cd9e93e52cc82d0ce41c6"
+    },
+    {
+      "path": "physics031/web/solar_20260621/088.png",
+      "bytes": 241887,
+      "sha256": "13d091070191306bfd0ae67e5d5d10150460492ec4f81e2786362f4b11183c89"
+    },
+    {
+      "path": "physics031/web/solar_20260621/089.png",
+      "bytes": 241803,
+      "sha256": "b3f3fbacadb62d289cc78127f05677e2c7dea9bcc23a5dd97d76b7a75d249994"
+    },
+    {
+      "path": "physics031/web/solar_20260621/090.png",
+      "bytes": 241802,
+      "sha256": "740ef6d7a365046ea4df67cc34e834584e5cab3d4f60824ab3fcd4848c9c3a79"
+    },
+    {
+      "path": "physics031/web/solar_20260621/091.png",
+      "bytes": 241725,
+      "sha256": "88448f056012c61eb942d7cf6a7e9bd8907c4578239153d43bdeaef59edd1196"
+    },
+    {
+      "path": "physics031/web/solar_20260621/092.png",
+      "bytes": 241724,
+      "sha256": "2beb2d13546f72477687b15416fb1b2805e511ab7a54c2f723ce620eb693c0df"
+    },
+    {
+      "path": "physics031/web/solar_20260621/093.png",
+      "bytes": 241926,
+      "sha256": "5c62fb0ddcc47b403dd4c7a93d9d32bb3ede94ac039f5b12c98041cc386b704e"
+    },
+    {
+      "path": "physics031/web/solar_20260621/094.png",
+      "bytes": 241888,
+      "sha256": "8cb75c58b64ad7624821165d226a43220c2c208779b8cab803882c4f3a6555d5"
+    },
+    {
+      "path": "physics031/web/solar_20260621/095.png",
+      "bytes": 241799,
+      "sha256": "8862c78065b36f0bcc7b7afc6c3c0be0b18b6a68eddeaa5c22547ac3b414c7e8"
+    },
+    {
+      "path": "physics031/web/solar_20260621/096.png",
+      "bytes": 241704,
+      "sha256": "ea9a3c47d0d22771ace38f448d1bc0968f38d9975fbac87e380074c191c72cce"
+    },
+    {
+      "path": "physics031/web/solar_20260621/097.png",
+      "bytes": 241646,
+      "sha256": "6e264a038ab50ffe49b49966dd36da4881b98c2707393c3eb81b7385e7907474"
+    },
+    {
+      "path": "physics031/web/solar_20260621/098.png",
+      "bytes": 241486,
+      "sha256": "e5e3ec618f537061a340d52dd278c192aa4a6afb282359cbd2896bdd614bdc27"
+    },
+    {
+      "path": "physics031/web/solar_20260621/099.png",
+      "bytes": 241656,
+      "sha256": "7a57e05cb3dd1a8bd3d6a2c67617612570c4183f57969045e1e33d499eae07e6"
+    },
+    {
+      "path": "physics031/web/temp/000.png",
+      "bytes": 95,
+      "sha256": "1febd153c4ef8cd2a030631b8087f14b5a114edfaf9c3bb55c8f24d15d25ebe5"
+    },
+    {
+      "path": "physics031/web/temp/001.png",
+      "bytes": 7504,
+      "sha256": "d691009c0213a0a5373f4eebd90ae6d9663e2ef702104c057db8f7c595d10f1d"
+    },
+    {
+      "path": "physics031/web/temp/002.png",
+      "bytes": 8557,
+      "sha256": "9a226fe6a9bc984037cf7559ef31d62ff531a90acf95ef54649753d6b85ea21d"
+    },
+    {
+      "path": "physics031/web/temp/003.png",
+      "bytes": 8856,
+      "sha256": "882dfe1ed8c6dc46b201954532f36116ca947e934f71ad7c479c15a671dffb7b"
+    },
+    {
+      "path": "physics031/web/temp/004.png",
+      "bytes": 9091,
+      "sha256": "9dd04314b506c1632a45aad77f4033e500871fd55d80573385cd2606db029b69"
+    },
+    {
+      "path": "physics031/web/temp/005.png",
+      "bytes": 9286,
+      "sha256": "e3c9485a6f88f3b11ecdc4904dc4d377bb6052238a582132615eefa97b877309"
+    },
+    {
+      "path": "physics031/web/temp/006.png",
+      "bytes": 9357,
+      "sha256": "bb0535d70f83cfab0b85c939b404b8c4accfc0ab9a28ab3e401f78c933d7dcda"
+    },
+    {
+      "path": "physics031/web/temp/007.png",
+      "bytes": 9400,
+      "sha256": "da1c6192eecd9a76f76499d4c909086958282ed68f75e4391ac30721d8ad4d35"
+    },
+    {
+      "path": "physics031/web/temp/008.png",
+      "bytes": 9425,
+      "sha256": "de4a92605c2bde71e406c4bb6e26091372a2105903b761d24c7745cb7ca4d463"
+    },
+    {
+      "path": "physics031/web/temp/009.png",
+      "bytes": 9451,
+      "sha256": "8b2f84f5c85ba1709d5c670334140812aef14672f3c80aafdc06fe3daf4e8b84"
+    },
+    {
+      "path": "physics031/web/temp/010.png",
+      "bytes": 9436,
+      "sha256": "6cac634426243d0eba89ec3051af326c50c9adb01ca3779d5cfeebe7d9a34c8a"
+    },
+    {
+      "path": "physics031/web/wind/000.webp",
+      "bytes": 220742,
+      "sha256": "d76242593f36ab0962b195aa59831d827698e24f3f931a78d5ed3038704a25e8"
+    },
+    {
+      "path": "physics031/web/wind/001.webp",
+      "bytes": 507104,
+      "sha256": "d38d87f43644f559a2e8c0ebbda583d245ff253293bf4cc5296d45b196128a04"
+    },
+    {
+      "path": "physics031/web/wind/002.webp",
+      "bytes": 614440,
+      "sha256": "5b0c012c059e5f02ae66607b0c070301d09b4c932159efbb9b00d7b975399714"
+    },
+    {
+      "path": "physics031/web/wind/003.webp",
+      "bytes": 625034,
+      "sha256": "47be63ed3d2e806654998b1fd5b552f398db96d4b839e638b32eb46b6958f5c4"
+    },
+    {
+      "path": "physics031/web/wind/004.webp",
+      "bytes": 625026,
+      "sha256": "9fa10055a77e82280f5c28c6a7dabc23f8b0abd79b968a58416b5de34da2dfbb"
+    },
+    {
+      "path": "physics031/web/wind/005.webp",
+      "bytes": 622436,
+      "sha256": "8c015303ceae4a6cb08caa86cd3a00d50e57099a8d4f75425ff94c67af279aa1"
+    },
+    {
+      "path": "physics031/web/wind/006.webp",
+      "bytes": 615684,
+      "sha256": "224a0d9444fd28ea30282debfa5fa5d7f25dd5a781e628c5bcf9afecedd6e425"
+    },
+    {
+      "path": "physics031/web/wind/007.webp",
+      "bytes": 610854,
+      "sha256": "fa0f7934ef22dda5201da1850193c180ae3c2272582941ca31ec5f1f0a3208f9"
+    },
+    {
+      "path": "physics031/web/wind/008.webp",
+      "bytes": 607022,
+      "sha256": "982c5abe26d2ee6505c55e460e224906ff715a0086e8159d0f8c1a1d481d97bd"
+    },
+    {
+      "path": "physics031/web/wind/009.webp",
+      "bytes": 602598,
+      "sha256": "5016ec19a0f09a27063f32acf39c2eba69831dab8e5fe10d48ae22aec05282a7"
+    },
+    {
+      "path": "physics031/web/wind/010.webp",
+      "bytes": 599674,
+      "sha256": "23ce4e433f8640e5aa04df2a29b6b32e05f1a178f4244b7736c4df36d259927a"
+    },
+    {
+      "path": "physics031/web/wind/011.webp",
+      "bytes": 595392,
+      "sha256": "fb789c702fcc29dcfe2eba5b67761c56e2383d1c7d8cf6d87e9f3a5b034f4559"
+    },
+    {
+      "path": "physics031/web/wind/012.webp",
+      "bytes": 592500,
+      "sha256": "5f65c4c6d5f556701deb3289ca4c982cd26e4ba3d3970e32019970fb03d15637"
+    },
+    {
+      "path": "physics031/web/wind/013.webp",
+      "bytes": 588732,
+      "sha256": "0ff2b6c1f709ca963861f3716a2d8ca7e5e2fed401edf043cf585be2bef75845"
+    },
+    {
+      "path": "physics031/web/wind/014.webp",
+      "bytes": 585992,
+      "sha256": "35fa546a9fcaf04330c5ee782f14c68d5c7ab4094d54ee31a5a950f66f038af3"
+    },
+    {
+      "path": "physics031/web/wind/015.webp",
+      "bytes": 582834,
+      "sha256": "4b77a93dead237f0f7392519229a7e0d141eb96f993a182412ac37d35f128db9"
+    },
+    {
+      "path": "physics031/web/wind/016.webp",
+      "bytes": 580728,
+      "sha256": "b61d298af21dcecdfa4ad2dd5ff9dae3d74843df8a13b6134c36e6e52eda2f2e"
+    },
+    {
+      "path": "physics031/web/wind/017.webp",
+      "bytes": 579208,
+      "sha256": "ff823ae5d109cd85dbf4d50db26130e01536d1f0982b4bcee3932cc90d0b5aac"
+    },
+    {
+      "path": "physics031/web/wind/018.webp",
+      "bytes": 576548,
+      "sha256": "f59cbd9b5393bb0a3a47d7e55d86dbdad0761ccbc9cc2c4e8746bb55c738a91a"
+    },
+    {
+      "path": "physics031/web/wind/019.webp",
+      "bytes": 575120,
+      "sha256": "570147fe45d559249665d74dfc1c32027c6a717254b2be6242d95e79b0cb888c"
+    },
+    {
+      "path": "physics031/web/wind/020.webp",
+      "bytes": 574134,
+      "sha256": "23961f62d0f3d20bea42e615acce5ea5d33e6a5b691be1fc9af316b6aaa1e446"
+    },
+    {
+      "path": "physics031/web/wind/021.webp",
+      "bytes": 574878,
+      "sha256": "9f24824a301f8a9855c885d9e2cf50726de192e54edefbb33ffb928ef49b3822"
+    },
+    {
+      "path": "physics031/web/wind/022.webp",
+      "bytes": 574144,
+      "sha256": "bd38fc5bb8ad296cecb115ff0c8bb6385a92842d051a3887b70f1d45da12a765"
+    },
+    {
+      "path": "physics031/web/wind/023.webp",
+      "bytes": 573778,
+      "sha256": "ebf4c0b28c0fa740ac3940e209df64c4de7a0f2ba60e83216adbbdc37c19347b"
+    },
+    {
+      "path": "physics031/web/wind/024.webp",
+      "bytes": 574746,
+      "sha256": "5d82c371257c50879a7f2613bade5b9d38b51f3f5eddf093ba2c04cc5399faea"
+    },
+    {
+      "path": "physics031/web/wind/025.webp",
+      "bytes": 574978,
+      "sha256": "d7a6091ff9eedb4064dda502db8beb48d993a8829a063d9f2f83501cd214bd29"
+    },
+    {
+      "path": "physics031/web/wind/026.webp",
+      "bytes": 575296,
+      "sha256": "dd1f8306c0695cefcc78402e42fcee342f30184fb7584e5664fd5175a628dc04"
+    },
+    {
+      "path": "physics031/web/wind/027.webp",
+      "bytes": 575982,
+      "sha256": "80f2d1f5aa486eeb31d149ae8ca2a76e43e2f17e4218c3ac54e3c3b3145db0d9"
+    },
+    {
+      "path": "physics031/web/wind/028.webp",
+      "bytes": 575984,
+      "sha256": "529df57e9194318c04a85e254a3f31cdc3b1084dd7f41af80b44c161e5704f59"
+    },
+    {
+      "path": "physics031/web/wind/029.webp",
+      "bytes": 575844,
+      "sha256": "296899810e3355932c1e02268565871fc4482f0940bfc6cc188d04a1c026201e"
+    },
+    {
+      "path": "physics031/web/wind/030.webp",
+      "bytes": 574730,
+      "sha256": "d9d565e1454e5cf05fa4ee190fc9ffba8313d0b04c3223a2a5b9171f09c3e739"
+    },
+    {
+      "path": "physics031/web/wind/031.webp",
+      "bytes": 572960,
+      "sha256": "c88cfbaaa1e99090ee08b64793a47a157cc3398d5a312d43d16a9dbfe5d30560"
+    },
+    {
+      "path": "physics031/web/wind/032.webp",
+      "bytes": 571958,
+      "sha256": "065130fc004b7e1a6d50ca956796783f0508b857789c5714b84061105acc3c3a"
+    },
+    {
+      "path": "physics031/web/wind/033.webp",
+      "bytes": 571208,
+      "sha256": "960f9c7b4fa7e72fd55ce2654a74c083d11f6f0ae2d46d949bb53f58b419143d"
+    },
+    {
+      "path": "physics031/web/wind/034.webp",
+      "bytes": 569430,
+      "sha256": "075e770cb9c4edcff9012db994aae69cda6e34e151f69a7ad8f39b2726433f1d"
+    },
+    {
+      "path": "physics031/web/wind/035.webp",
+      "bytes": 568000,
+      "sha256": "15ef0d1858ed16911b3b493600fc938d3464ae59c6711ca01a0b4a1c4b9c6bc2"
+    },
+    {
+      "path": "physics031/web/wind/036.webp",
+      "bytes": 566674,
+      "sha256": "47e60caefe6f5ec54138f3c799b0bbe4a4bd7ebda8fa92b010a1ab73b8108a20"
+    },
+    {
+      "path": "physics031/web/wind/037.webp",
+      "bytes": 566100,
+      "sha256": "66b96fb6d5c95b29294c96b19b9f2c67943bd0dff65f179916f335aca0b87d32"
+    },
+    {
+      "path": "physics031/web/wind/038.webp",
+      "bytes": 565696,
+      "sha256": "f323abdedcb982db13bd6eaee33b31895ceb27da999ab4133c67bc40f414c5d9"
+    },
+    {
+      "path": "physics031/web/wind/039.webp",
+      "bytes": 565120,
+      "sha256": "050d0f1fd3184b882cd280bbbeb4b273d997c6d9e488fbd5c3333f30190bc75d"
+    },
+    {
+      "path": "physics031/web/wind/040.webp",
+      "bytes": 564122,
+      "sha256": "cead2e08e8135d825d29b9f62c8c33260f276337bc3c5fe94aae84b758f41d45"
+    },
+    {
+      "path": "physics031/web/wind/041.webp",
+      "bytes": 562956,
+      "sha256": "aef23b579da4fe5097c05fc6b4ce751f5975cb46f4c5282375cebee2a5b80f24"
+    },
+    {
+      "path": "physics031/web/wind/042.webp",
+      "bytes": 562694,
+      "sha256": "0ba8b4de7f02686b2b288a6ff3a60a1d17cfa1d04217f437fc9bc984467b3431"
+    },
+    {
+      "path": "physics031/web/wind/043.webp",
+      "bytes": 562060,
+      "sha256": "d724b9a9c9aa2e2fc7a68de33a82ba5f10dec61a4fbc732b6c5df3915ea549bf"
+    },
+    {
+      "path": "physics031/web/wind/044.webp",
+      "bytes": 560944,
+      "sha256": "0e1796dc9f3d48b4c57ce8d07da1a71a8e9a2817073c1799c4069ae59339598e"
+    },
+    {
+      "path": "physics031/web/wind/045.webp",
+      "bytes": 561024,
+      "sha256": "15fbcbebf63c94af601c038ffb42568193641e0268a5abcda5392b71a254cab3"
+    },
+    {
+      "path": "physics031/web/wind/046.webp",
+      "bytes": 561582,
+      "sha256": "d3c2a92d912511e9d533377f287ec11d2fbd33d8675aa08ce7f6b44a84302d02"
+    },
+    {
+      "path": "physics031/web/wind/047.webp",
+      "bytes": 562460,
+      "sha256": "f5a02865e86cf996205cea5f82fd9ee68236eb33aa23b847c85bf59624db3603"
+    },
+    {
+      "path": "physics031/web/wind/048.webp",
+      "bytes": 563188,
+      "sha256": "d5af67c35252b78a163bc425d3cd1a0ce9c795b2680f1c621c86e857d88fee09"
+    },
+    {
+      "path": "physics031/web/wind/049.webp",
+      "bytes": 564566,
+      "sha256": "06c2a8765422b1ede4893fb820cdea2bd9471a8bc3165b932ed68bee8dcd4a20"
+    },
+    {
+      "path": "physics031/web/wind/050.webp",
+      "bytes": 566044,
+      "sha256": "3daf4f8447a6e9af4a36c0f811e5b0abd0e637c7ab6060ca7d7ab8114bb3953d"
+    },
+    {
+      "path": "physics031/web/wind/051.webp",
+      "bytes": 567640,
+      "sha256": "5eb8cfc0cabef2871a98b2f3641e92628864c9ebea23fb46bba57747d0656ae2"
+    },
+    {
+      "path": "physics031/web/wind/052.webp",
+      "bytes": 568306,
+      "sha256": "0e2c8eec52a0cfddb20c27e2ee4988b8311daff046a4abf9b38fd12694adcec9"
+    },
+    {
+      "path": "physics031/web/wind/053.webp",
+      "bytes": 568814,
+      "sha256": "daf1ce4bc40d30740fb4606065101ea874ba3c0ea414068257c0f331d2a779a1"
+    },
+    {
+      "path": "physics031/web/wind/054.webp",
+      "bytes": 569586,
+      "sha256": "d2cfdf5eecb146962356afa67854d5183a1288f9d12c8e19a380c0314c91e977"
+    },
+    {
+      "path": "physics031/web/wind/055.webp",
+      "bytes": 570308,
+      "sha256": "c6334893fa249507ed9a6481ed88f73586c445b29a37a7701cf8adb6621d3e64"
+    },
+    {
+      "path": "physics031/web/wind/056.webp",
+      "bytes": 569578,
+      "sha256": "8f8fa8de9afc1e5c8aae5a5cad9b28368d4c97a07150232c34c5d867a2d46d63"
+    },
+    {
+      "path": "physics031/web/wind/057.webp",
+      "bytes": 569172,
+      "sha256": "442d59958d59a50d36a9e1868b8a4c1d3ad7e0aca2b1bf8c90efe21d900f98db"
+    },
+    {
+      "path": "physics031/web/wind/058.webp",
+      "bytes": 568118,
+      "sha256": "1e108fa63a3e2130c6cb5adee1f555baef02dc9a9c5abca713a306e9bdc74475"
+    },
+    {
+      "path": "physics031/web/wind/059.webp",
+      "bytes": 567864,
+      "sha256": "8d3251d7e57be10717697bc4a72f84189d7d400f7ff6543f091e2ed0c8ddcb30"
+    },
+    {
+      "path": "physics031/web/wind/060.webp",
+      "bytes": 566652,
+      "sha256": "a2286e0ba23d1a13452b47d2e90738d790b08cff3e6a60a27387fe652d50f334"
+    },
+    {
+      "path": "physics031/web/wind/061.webp",
+      "bytes": 565980,
+      "sha256": "1707995e601721fc52b934eb8a49ad9f7a508ffa32d0443c91c2d83e3c23a848"
+    },
+    {
+      "path": "physics031/web/wind/062.webp",
+      "bytes": 565558,
+      "sha256": "3588ce6628ef966c2643de87ca15f029cd907724292f22b285fff7bedee32241"
+    },
+    {
+      "path": "physics031/web/wind/063.webp",
+      "bytes": 565592,
+      "sha256": "3274c35870a5500ddf1cb117a65cd8c027c6605bf0f27eb0c7f1b09c618abc17"
+    },
+    {
+      "path": "physics031/web/wind/064.webp",
+      "bytes": 565464,
+      "sha256": "75009447ead86bb5eda00123cef1c7c1ef5e2142991028c79ce007b1514afdd5"
+    },
+    {
+      "path": "physics031/web/wind/065.webp",
+      "bytes": 564832,
+      "sha256": "07b999359275f1f053a85bfc94ba8c71d92e0b842dacc2f8c31f418efc45799d"
+    },
+    {
+      "path": "physics031/web/wind/066.webp",
+      "bytes": 563864,
+      "sha256": "331a56e4778d2c9507698a3a0c973373a95897a1dd4efbf83c2bfc78d7bb325d"
+    },
+    {
+      "path": "physics031/web/wind/067.webp",
+      "bytes": 562922,
+      "sha256": "95a4379280c56cff93481d6bfe8267d3e3e3d1c174607742454974214e30f31f"
+    },
+    {
+      "path": "physics031/web/wind/068.webp",
+      "bytes": 563064,
+      "sha256": "df49610f6066295edf9099eef8935c6e214825fc14be1b8f72172fd0dedadb2b"
+    },
+    {
+      "path": "physics031/web/wind/069.webp",
+      "bytes": 562238,
+      "sha256": "06ac560b729cbc8fb95976c438fc4933bbab2e9c3e250cd5768bfe4a3f20f0cb"
+    },
+    {
+      "path": "physics031/web/wind/070.webp",
+      "bytes": 561768,
+      "sha256": "d1d61a9c0b453e0b6b6f3bb7b77aaa898c9c6519f536581b6da09b3327c59985"
+    },
+    {
+      "path": "physics031/web/wind/071.webp",
+      "bytes": 561352,
+      "sha256": "40cf347a8c06467d5206653fd763d93cdeb1564dcd22b802b0d809a2bceb9a4a"
+    },
+    {
+      "path": "physics031/web/wind/072.webp",
+      "bytes": 561112,
+      "sha256": "9c6f840f24af68fe51b5eae8eba8bc7db08018a562aff571ac0897e0dea69e8f"
+    },
+    {
+      "path": "physics031/web/wind/073.webp",
+      "bytes": 561780,
+      "sha256": "80cf3609f8f792b8481b78acd706e079cd5912b27e8ebab9efa1ee4f19004044"
+    },
+    {
+      "path": "physics031/web/wind/074.webp",
+      "bytes": 561954,
+      "sha256": "75a4d31e3d97226091792434fea23ba50bbc1b3cca0a4b90a731721b569d1d5d"
+    },
+    {
+      "path": "physics031/web/wind/075.webp",
+      "bytes": 561688,
+      "sha256": "dd8695a8b0296031ba66dfca7cc0ee6c358d7a663fc14eabd8c5d61b350dd9cd"
+    },
+    {
+      "path": "physics031/web/wind/076.webp",
+      "bytes": 561594,
+      "sha256": "56d0c91cb6758f911d7f80b31e802fa2e238cf90cb3625fae090972bfdd9338f"
+    },
+    {
+      "path": "physics031/web/wind/077.webp",
+      "bytes": 561784,
+      "sha256": "042b4e946995fb4f0b2be0e0c9ad8ae40ec532a17ccffcb9f7a1e983f5ccd6b1"
+    },
+    {
+      "path": "physics031/web/wind/078.webp",
+      "bytes": 562480,
+      "sha256": "f3406d537b97cdb6045e81fee8fca6e9c47b1a8fdc3eac51fc5127fc5b856c99"
+    },
+    {
+      "path": "physics031/web/wind/079.webp",
+      "bytes": 563376,
+      "sha256": "b2ed9876ef81337e5c58893fd9ebf0c1d52d300ed281b44d2fc4b5fdcba072dd"
+    },
+    {
+      "path": "physics031/web/wind/080.webp",
+      "bytes": 563994,
+      "sha256": "608f5c8c2fad8c3a10ea9cf4601bb81fdd93d6cc30bbfd34d1e8b00f54b4de4b"
+    },
+    {
+      "path": "physics031/web/wind/081.webp",
+      "bytes": 564118,
+      "sha256": "307650df0612460dc517fbd69cb3e243d01e760d9a31d0d8f04b64c2cc4577b3"
+    },
+    {
+      "path": "physics031/web/wind/082.webp",
+      "bytes": 564324,
+      "sha256": "bc420eab72a5bab2412d02dfac5e07bd7cf54c6a9856142be9fba2ef56146d34"
+    },
+    {
+      "path": "physics031/web/wind/083.webp",
+      "bytes": 563660,
+      "sha256": "7fc4ffe2a89e88bd54336afb7bed385feb2fd271501ad028888293142714b0bd"
+    },
+    {
+      "path": "physics031/web/wind/084.webp",
+      "bytes": 564652,
+      "sha256": "b6e53a67a317a50c65079638df5f32cd69156c6e036f9719c34f0062163ba1b5"
+    },
+    {
+      "path": "physics031/web/wind/085.webp",
+      "bytes": 565330,
+      "sha256": "c216f750ff951a62fe52952a0fe6932b62b01a1a4fa923f2cdeac2d1f66e6da4"
+    },
+    {
+      "path": "physics031/web/wind/086.webp",
+      "bytes": 564878,
+      "sha256": "f4060be27ec3d241577d9381070143eb0a8db3787cf43ae41fb740a67af072da"
+    },
+    {
+      "path": "physics031/web/wind/087.webp",
+      "bytes": 565466,
+      "sha256": "d749faf4fb9ca2d9fce3415bfcd46016cf18767cb48a95bd430596a9d4756682"
+    },
+    {
+      "path": "physics031/web/wind/088.webp",
+      "bytes": 564958,
+      "sha256": "0ab268ce81d95104d94188f31d4e23e7e934a803805102df104b331e5c6d7d02"
+    },
+    {
+      "path": "physics031/web/wind/089.webp",
+      "bytes": 564642,
+      "sha256": "223fa5de83a7652b88e48ed637c279b2404ded2bf80bcc060d41c2cfa509875b"
+    },
+    {
+      "path": "physics031/web/wind/090.webp",
+      "bytes": 565042,
+      "sha256": "0cd58ea71835a2171fc34e05a9aef6cfdfa0e2e6ac480cf8c71d66f46d3a8bbf"
+    },
+    {
+      "path": "physics031/web/wind/091.webp",
+      "bytes": 565048,
+      "sha256": "ec38f8f9fa0d4189cd25afaea187b4952855083ba183025fdf545af583079fb1"
+    },
+    {
+      "path": "physics031/web/wind/092.webp",
+      "bytes": 564744,
+      "sha256": "f477cb0533dab48ec192a4ea6d64b0895045333e86fbbf395d930a529d90ca00"
+    },
+    {
+      "path": "physics031/web/wind/093.webp",
+      "bytes": 564452,
+      "sha256": "556b879071806824159bd2ac64382373fcb6904ff81982cbdb501337318208a3"
+    },
+    {
+      "path": "physics031/web/wind/094.webp",
+      "bytes": 564218,
+      "sha256": "789806f83fc87817cd861b379a1e39565c34622faedfa28d337510bc9af252e9"
+    },
+    {
+      "path": "physics031/web/wind/095.webp",
+      "bytes": 563262,
+      "sha256": "1f3e1bbbf92df5189cce8ea36324fac8bdaa8fa87f235f97fc168f1b6234c379"
+    },
+    {
+      "path": "physics031/web/wind/096.webp",
+      "bytes": 562742,
+      "sha256": "77e118437e229f3f3571434a741d0e9f912690e1da1f12e304b51ace51871059"
+    },
+    {
+      "path": "physics031/web/wind/097.webp",
+      "bytes": 562174,
+      "sha256": "138bc0c932fee1c66dec0cf4b1d37f996977bfce8f1c2c60dde6350bd7776f6c"
+    },
+    {
+      "path": "physics031/web/wind/098.webp",
+      "bytes": 561916,
+      "sha256": "15017f1ce674e18876b3916dc44f1ec915cea3badd65c4f8a4677a03c008f164"
+    },
+    {
+      "path": "physics031/web/wind/099.webp",
+      "bytes": 562254,
+      "sha256": "05b560d557adfacfb1f4020ac8251bcae992c221f119b67b95445aec73499476"
+    },
+    {
       "path": "scene.json",
-      "bytes": 9702,
-      "sha256": "522e0daf02bf5fea2988720a74a561963d6c0d907bc06f85448c390a7e8adb0f"
+      "bytes": 17856,
+      "sha256": "148e9b549b1dee8101a55b7d46e39a67288ae5af57facb68899a307f72357a32"
     },
     {
       "path": "traffic/replay/frame_counts.json",

@@ -1,0 +1,107 @@
+{
+ "generated": "2026-10-09T05:34",
+ "scene": "tower_hamlets",
+ "encoding": "png; value = lo + v/255*(hi-lo); rgb3 = (u,v,w); bit = mask",
+ "layers": {
+  "wind": {
+   "source": "wind.npy",
+   "kind": "rgb3",
+   "range": [
+    -2.5,
+    2.5
+   ],
+   "frames": 100,
+   "shape_yx": [
+    1000,
+    1000
+   ],
+   "note": "u, v, w (m/s)",
+   "bytes": 56807262,
+   "avg_kb": 554.8,
+   "extension": "webp"
+  },
+  "temp": {
+   "source": "temp.npy",
+   "kind": "gray",
+   "range": [
+    20,
+    55
+   ],
+   "frames": 11,
+   "shape_yx": [
+    125,
+    125
+   ],
+   "note": "temperature C",
+   "bytes": 90458,
+   "avg_kb": 8.0,
+   "extension": "png"
+  },
+  "poll": {
+   "source": "poll.npy",
+   "kind": "gray",
+   "range": [
+    0,
+    4.523543492590745
+   ],
+   "frames": 21,
+   "shape_yx": [
+    1000,
+    1000
+   ],
+   "note": "log10(1 + concentration/scale); preserves zero",
+   "bytes": 7808981,
+   "avg_kb": 363.1,
+   "value_transform": "log1p",
+   "value_scale": 0.001
+  },
+  "flood": {
+   "source": "flood.npy",
+   "kind": "gray",
+   "range": [
+    0,
+    0.5
+   ],
+   "frames": 100,
+   "shape_yx": [
+    1000,
+    1000
+   ],
+   "note": "water depth m (values above the range saturate)",
+   "bytes": 1862130,
+   "avg_kb": 18.2
+  },
+  "solar_20260621": {
+   "source": "solar.npy",
+   "kind": "gray",
+   "range": [
+    0,
+    1200
+   ],
+   "frames": 100,
+   "shape_yx": [
+    1000,
+    1000
+   ],
+   "note": "GHI W/m2",
+   "bytes": 24107857,
+   "avg_kb": 235.4
+  },
+  "shadow_20260621": {
+   "source": "shadow.npy",
+   "kind": "bit",
+   "range": [
+    0,
+    1
+   ],
+   "frames": 100,
+   "shape_yx": [
+    1000,
+    1000
+   ],
+   "note": "shadow mask, 1 = shaded",
+   "bytes": 2989854,
+   "avg_kb": 29.2
+  }
+ }
+}

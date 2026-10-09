@@ -74,3 +74,6 @@ agents/demo_rev02/assets/city.glb
 # Recorded Canary near-ground scenario fields
 !scenes/tower_hamlets/physics027/**/*.npy
 !scenes/tower_hamlets/physics027/*.npy
+
+# Selected physics031 masks
+!scenes/tower_hamlets/physics031/masks/*.npy

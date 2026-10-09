@@ -1,7 +1,7 @@
 {
   "id": "tower_hamlets",
-  "title": "Canary Wharf \u00b7 near-ground city scenarios",
-  "description": "4 m inferred near-ground wind, controlled tracer, sunlight and terrain-limited flooding alongside recorded traffic and UAVs.",
+  "title": "Canary Wharf \u00b7 updated city scenarios",
+  "description": "100 direct 4 m surrogate wind frames; updated temperature, pollution, sunlight and flooding.",
   "grid": {
     "cell_m": 4.0,
     "cols": 1000,
@@ -25,8 +25,8 @@
     "parts_manifest": "https://acse-yl222.github.io/urban-world-model-models/project/tower_hamlets/geometry/city_activity025/manifest.json"
   },
   "lite": {
-    "footprint": "masks/lite_footprint.npy",
-    "roof": "masks/lite_height.npy",
+    "footprint": "../physics027/masks/lite_footprint.npy",
+    "roof": "../physics027/masks/lite_height.npy",
     "cell_m": 8
   },
   "masks": {
@@ -34,14 +34,14 @@
       "32": "masks/temp_invalid.npy"
     },
     "solid_wind": {
-      "file": "masks/wind_invalid_zyx.npy",
+      "file": "../physics027/masks/wind_invalid_zyx.npy",
       "layer": 0
     },
     "layer_invalid": {
-      "solar": "masks/solar_invalid.npy",
-      "shadow": "masks/shadow_invalid.npy",
-      "poll": "masks/poll_invalid.npy",
-      "flood": "masks/flood_invalid.npy"
+      "solar": "../physics027/masks/solar_invalid.npy",
+      "shadow": "../physics027/masks/shadow_invalid.npy",
+      "poll": "../physics027/masks/poll_invalid.npy",
+      "flood": "../physics027/masks/flood_invalid.npy"
     }
   },
   "focus": {
@@ -59,9 +59,9 @@
     "label": "Canary Wharf \u00b7 detailed core"
   },
   "timeline": {
-    "t0_s": 8000,
-    "step_s": 1000,
-    "steps": 3
+    "t0_s": 100,
+    "step_s": 100,
+    "steps": 100
   },
   "phase_order": [
     "wind",
@@ -74,30 +74,132 @@
     "wind": {
       "file": "wind.npy",
       "cell_m": 4.0,
-      "frames": 3,
-      "t0_s": 8000,
-      "step_s": 1000,
+      "frames": 100,
+      "t0_s": 100,
+      "step_s": 100,
       "own_clock": true,
-      "overlay_frame": 2,
-      "y": 2,
-      "rate": 2,
-      "label": "Wind \u00b7 2 m height \u00b7 4 m grid \u00b7 SCALED",
-      "title": "Wind \u00b7 2 m height \u00b7 4 m grid \u00b7 SCALED",
+      "overlay_frame": 99,
+      "y": 2.0,
+      "rate": 12,
+      "label": "Wind speed \u00b7 2 m \u00b7 4 m inference grid",
+      "title": "Wind speed \u00b7 2 m \u00b7 4 m inference grid",
       "range": [
-        0.0,
-        1.1904118061065674
+        0,
+        1.6
       ],
       "legend": [
         "0",
-        "m/s",
-        "1.19041"
+        "|V| m/s",
+        "1.6"
       ],
-      "particle_time_scale": 1,
+      "particle_time_scale": 60,
+      "web_range": [
+        -2.5,
+        2.5
+      ],
       "sample_labels": [
-        "Model step 80 \u00b7 interpreted time, not calibrated",
-        "Model step 90 \u00b7 interpreted time, not calibrated",
-        "Model step 100 \u00b7 interpreted time, not calibrated"
-      ]
+        "Model step 1 / 100 \u00b7 scaled interpreted t = 100 s",
+        "Model step 2 / 100 \u00b7 scaled interpreted t = 200 s",
+        "Model step 3 / 100 \u00b7 scaled interpreted t = 300 s",
+        "Model step 4 / 100 \u00b7 scaled interpreted t = 400 s",
+        "Model step 5 / 100 \u00b7 scaled interpreted t = 500 s",
+        "Model step 6 / 100 \u00b7 scaled interpreted t = 600 s",
+        "Model step 7 / 100 \u00b7 scaled interpreted t = 700 s",
+        "Model step 8 / 100 \u00b7 scaled interpreted t = 800 s",
+        "Model step 9 / 100 \u00b7 scaled interpreted t = 900 s",
+        "Model step 10 / 100 \u00b7 scaled interpreted t = 1000 s",
+        "Model step 11 / 100 \u00b7 scaled interpreted t = 1100 s",
+        "Model step 12 / 100 \u00b7 scaled interpreted t = 1200 s",
+        "Model step 13 / 100 \u00b7 scaled interpreted t = 1300 s",
+        "Model step 14 / 100 \u00b7 scaled interpreted t = 1400 s",
+        "Model step 15 / 100 \u00b7 scaled interpreted t = 1500 s",
+        "Model step 16 / 100 \u00b7 scaled interpreted t = 1600 s",
+        "Model step 17 / 100 \u00b7 scaled interpreted t = 1700 s",
+        "Model step 18 / 100 \u00b7 scaled interpreted t = 1800 s",
+        "Model step 19 / 100 \u00b7 scaled interpreted t = 1900 s",
+        "Model step 20 / 100 \u00b7 scaled interpreted t = 2000 s",
+        "Model step 21 / 100 \u00b7 scaled interpreted t = 2100 s",
+        "Model step 22 / 100 \u00b7 scaled interpreted t = 2200 s",
+        "Model step 23 / 100 \u00b7 scaled interpreted t = 2300 s",
+        "Model step 24 / 100 \u00b7 scaled interpreted t = 2400 s",
+        "Model step 25 / 100 \u00b7 scaled interpreted t = 2500 s",
+        "Model step 26 / 100 \u00b7 scaled interpreted t = 2600 s",
+        "Model step 27 / 100 \u00b7 scaled interpreted t = 2700 s",
+        "Model step 28 / 100 \u00b7 scaled interpreted t = 2800 s",
+        "Model step 29 / 100 \u00b7 scaled interpreted t = 2900 s",
+        "Model step 30 / 100 \u00b7 scaled interpreted t = 3000 s",
+        "Model step 31 / 100 \u00b7 scaled interpreted t = 3100 s",
+        "Model step 32 / 100 \u00b7 scaled interpreted t = 3200 s",
+        "Model step 33 / 100 \u00b7 scaled interpreted t = 3300 s",
+        "Model step 34 / 100 \u00b7 scaled interpreted t = 3400 s",
+        "Model step 35 / 100 \u00b7 scaled interpreted t = 3500 s",
+        "Model step 36 / 100 \u00b7 scaled interpreted t = 3600 s",
+        "Model step 37 / 100 \u00b7 scaled interpreted t = 3700 s",
+        "Model step 38 / 100 \u00b7 scaled interpreted t = 3800 s",
+        "Model step 39 / 100 \u00b7 scaled interpreted t = 3900 s",
+        "Model step 40 / 100 \u00b7 scaled interpreted t = 4000 s",
+        "Model step 41 / 100 \u00b7 scaled interpreted t = 4100 s",
+        "Model step 42 / 100 \u00b7 scaled interpreted t = 4200 s",
+        "Model step 43 / 100 \u00b7 scaled interpreted t = 4300 s",
+        "Model step 44 / 100 \u00b7 scaled interpreted t = 4400 s",
+        "Model step 45 / 100 \u00b7 scaled interpreted t = 4500 s",
+        "Model step 46 / 100 \u00b7 scaled interpreted t = 4600 s",
+        "Model step 47 / 100 \u00b7 scaled interpreted t = 4700 s",
+        "Model step 48 / 100 \u00b7 scaled interpreted t = 4800 s",
+        "Model step 49 / 100 \u00b7 scaled interpreted t = 4900 s",
+        "Model step 50 / 100 \u00b7 scaled interpreted t = 5000 s",
+        "Model step 51 / 100 \u00b7 scaled interpreted t = 5100 s",
+        "Model step 52 / 100 \u00b7 scaled interpreted t = 5200 s",
+        "Model step 53 / 100 \u00b7 scaled interpreted t = 5300 s",
+        "Model step 54 / 100 \u00b7 scaled interpreted t = 5400 s",
+        "Model step 55 / 100 \u00b7 scaled interpreted t = 5500 s",
+        "Model step 56 / 100 \u00b7 scaled interpreted t = 5600 s",
+        "Model step 57 / 100 \u00b7 scaled interpreted t = 5700 s",
+        "Model step 58 / 100 \u00b7 scaled interpreted t = 5800 s",
+        "Model step 59 / 100 \u00b7 scaled interpreted t = 5900 s",
+        "Model step 60 / 100 \u00b7 scaled interpreted t = 6000 s",
+        "Model step 61 / 100 \u00b7 scaled interpreted t = 6100 s",
+        "Model step 62 / 100 \u00b7 scaled interpreted t = 6200 s",
+        "Model step 63 / 100 \u00b7 scaled interpreted t = 6300 s",
+        "Model step 64 / 100 \u00b7 scaled interpreted t = 6400 s",
+        "Model step 65 / 100 \u00b7 scaled interpreted t = 6500 s",
+        "Model step 66 / 100 \u00b7 scaled interpreted t = 6600 s",
+        "Model step 67 / 100 \u00b7 scaled interpreted t = 6700 s",
+        "Model step 68 / 100 \u00b7 scaled interpreted t = 6800 s",
+        "Model step 69 / 100 \u00b7 scaled interpreted t = 6900 s",
+        "Model step 70 / 100 \u00b7 scaled interpreted t = 7000 s",
+        "Model step 71 / 100 \u00b7 scaled interpreted t = 7100 s",
+        "Model step 72 / 100 \u00b7 scaled interpreted t = 7200 s",
+        "Model step 73 / 100 \u00b7 scaled interpreted t = 7300 s",
+        "Model step 74 / 100 \u00b7 scaled interpreted t = 7400 s",
+        "Model step 75 / 100 \u00b7 scaled interpreted t = 7500 s",
+        "Model step 76 / 100 \u00b7 scaled interpreted t = 7600 s",
+        "Model step 77 / 100 \u00b7 scaled interpreted t = 7700 s",
+        "Model step 78 / 100 \u00b7 scaled interpreted t = 7800 s",
+        "Model step 79 / 100 \u00b7 scaled interpreted t = 7900 s",
+        "Model step 80 / 100 \u00b7 scaled interpreted t = 8000 s",
+        "Model step 81 / 100 \u00b7 scaled interpreted t = 8100 s",
+        "Model step 82 / 100 \u00b7 scaled interpreted t = 8200 s",
+        "Model step 83 / 100 \u00b7 scaled interpreted t = 8300 s",
+        "Model step 84 / 100 \u00b7 scaled interpreted t = 8400 s",
+        "Model step 85 / 100 \u00b7 scaled interpreted t = 8500 s",
+        "Model step 86 / 100 \u00b7 scaled interpreted t = 8600 s",
+        "Model step 87 / 100 \u00b7 scaled interpreted t = 8700 s",
+        "Model step 88 / 100 \u00b7 scaled interpreted t = 8800 s",
+        "Model step 89 / 100 \u00b7 scaled interpreted t = 8900 s",
+        "Model step 90 / 100 \u00b7 scaled interpreted t = 9000 s",
+        "Model step 91 / 100 \u00b7 scaled interpreted t = 9100 s",
+        "Model step 92 / 100 \u00b7 scaled interpreted t = 9200 s",
+        "Model step 93 / 100 \u00b7 scaled interpreted t = 9300 s",
+        "Model step 94 / 100 \u00b7 scaled interpreted t = 9400 s",
+        "Model step 95 / 100 \u00b7 scaled interpreted t = 9500 s",
+        "Model step 96 / 100 \u00b7 scaled interpreted t = 9600 s",
+        "Model step 97 / 100 \u00b7 scaled interpreted t = 9700 s",
+        "Model step 98 / 100 \u00b7 scaled interpreted t = 9800 s",
+        "Model step 99 / 100 \u00b7 scaled interpreted t = 9900 s",
+        "Model step 100 / 100 \u00b7 scaled interpreted t = 10000 s"
+      ],
+      "web_format": "webp"
     },
     "temp": {
       "file": "temp.npy",
@@ -109,16 +211,20 @@
       "overlay_frame": 10,
       "y": 8.0,
       "rate": 2,
-      "label": "Air temperature \u00b7 8 m",
-      "title": "Air temperature \u00b7 8 m",
+      "label": "Air temperature \u00b7 8 m \u00b7 32 m grid",
+      "title": "Air temperature \u00b7 8 m \u00b7 32 m grid",
       "range": [
         20.0,
-        43.0921630859375
+        43.04052734375
       ],
       "legend": [
         "20",
         "degC",
-        "43.0922"
+        "43.0405"
+      ],
+      "web_range": [
+        20,
+        55
       ],
       "iso": {
         "from": 20,
@@ -131,23 +237,27 @@
     "solar": {
       "file": "solar.npy",
       "cell_m": 4,
-      "frames": 11,
-      "t0_s": 0,
-      "step_s": 60,
+      "frames": 100,
+      "t0_s": 0.0,
+      "step_s": 6.0606060606060606,
       "own_clock": true,
-      "overlay_frame": 10,
+      "overlay_frame": 99,
       "y": 0.2,
       "rate": 2,
       "label": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
       "title": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
       "range": [
         0,
-        935.1410522460938
+        935.14111328125
       ],
       "legend": [
         "0",
         "W/m\u00b2",
         "935.141"
+      ],
+      "web_range": [
+        0,
+        1200
       ],
       "dates": {
         "20260621": {
@@ -171,7 +281,7 @@
       "step_s": 30.0,
       "own_clock": true,
       "overlay_frame": 20,
-      "y": 2,
+      "y": 2.0,
       "rate": 2,
       "label": "Pollution \u00b7 planar road tracer \u00b7 2 m \u00b7 arbitrary units",
       "title": "Pollution \u00b7 planar road tracer \u00b7 2 m \u00b7 arbitrary units",
@@ -183,28 +293,38 @@
         "0.001",
         "a.u.",
         "33.3834"
+      ],
+      "web_encoding": "log1p",
+      "web_scale": 0.001,
+      "web_range": [
+        0,
+        4.523543492590745
       ]
     },
     "flood": {
       "file": "flood.npy",
       "cell_m": 4,
-      "frames": 11,
+      "frames": 100,
       "t0_s": 0.0,
-      "step_s": 60.0,
+      "step_s": 6.0606060606060606,
       "own_clock": true,
-      "overlay_frame": 10,
+      "overlay_frame": 99,
       "y": 0.2,
       "rate": 2,
       "label": "Flooding \u00b7 measured terrain core \u00b7 4 m grid",
       "title": "Flooding \u00b7 measured terrain core \u00b7 4 m grid",
       "range": [
         0,
-        0.4144992232322693
+        0.41449758410453796
       ],
       "legend": [
         "0",
         "m",
-        "0.414499"
+        "0.414498"
+      ],
+      "web_range": [
+        0,
+        0.5
       ]
     }
   },
@@ -221,17 +341,21 @@
     "Traffic uses synthetic demand and inferred junctions with explicit temporary model closures, not observed road closures or measured flows.",
     "Traffic replay covers actual simulation seconds 1\u20131200; default starts at 600 s. Environmental fields and UAV clocks remain independent.",
     "Traffic has 3 recorded junction collision events and 0 teleports; intersection behaviour remains unvalidated.",
-    "Wind is SCALED inference on a true 4 m source grid, sampled at local height 2 m; particle motion uses 1\u00d7 vector speed.",
     "Wind model steps are not calibrated physical time; each scenario uses an independent clock. Overlay shows the selected final independent field frames.",
-    "Temperature remains the earlier 32 m controlled result forced by the earlier wind; it has not been recomputed from the new inferred wind.",
     "Pollution is a 2-D conservative passive tracer with arbitrary uniform road emissions, not a calibrated pollutant forecast.",
     "Flooding uses measured EA terrain only within the core; blank cells have no valid model result, not zero hazard. Depth is shown on a flat display plane, not surveyed 3-D flood surface.",
-    "Pretrained surrogate inference, not converged CFD or a measured forecast.",
-    "100seconds/modelstep is inherited interpretation, not calibrated physical time.",
-    "Actual4m sourcegeometry sampling; no8mto4m upsampling.",
-    "Forcedgroundlayercenter\u22122m permits firstfluidcenter2m; shifted modeldomain alignment explicitly unvalidated.",
-    "Native256mverticaldepth runs from\u22124to252m; tallest235m building leaves17m topclearance.",
-    "Estimated architecturalgeometry and flatunsurveyed terrain; sub4mfeaturesunresolved.",
+    "Streamline particles follow SouthKen 60\u00d7 visual advection, not real-time physical trajectories.",
+    "Wind uses a 1 m-trained surrogate directly on 4 m cells, with interpreted dt scaled 4\u00d7 to 100 s. This is a user-selected scale-transfer assumption, not validated physical similarity.",
+    "Wind records all 100 model steps; default sample height is 2 m. Numerical ground is at -2 m; vertical domain extends to 252 m.",
+    "Temperature uses a 32 m horizontal / 16 m vertical physical grid, forced by the frozen final wind029 snapshot; its 600 s clock is independent of the scaled surrogate time.",
+    "Pollution uses the frozen final wind029 2 m slice over its own 600 s transport experiment; source rates are arbitrary, not observed emissions.",
+    "Sunlight and flooding each record 100 computed states across their independent 600 s scenarios; they do not inherit wind model time.",
+    "Model trained at1m applied directly at4m peruser assumption; no4\u00b3 reduction or upsampling.",
+    "Time interpreted100s/modelstep by spatialscale x4; physicalsimilarity notvalidated.",
+    "All100 modelsteps independently decoded; no repeated or interpolated frames.",
+    "Numericalgroundindex0center\u22122m solid; firstfluidcenter2m, domainshift unvalidated.",
+    "4mgrid256mdepth reaches252m; sourcegeometry unchanged.",
+    "Pretrained surrogate not calibrated CFD or measuredweather.",
     "Controlled clear-sky and20C ambient, not observed weather.",
     "Existing first-order advection/diffusion/linearized radiative balance, not calibrated urban heat model.",
     "Uniform land material/storage/exchange parameters; OSM water prescribed20C, no vegetation evaporation, water thermal inertia or wall radiation.",
@@ -239,8 +363,9 @@
     "Roof conduction is diffusion from prescribed hot solid cells; separate bottom exchange applies only ground-fluid columns, so no duplicate roof exchange.",
     "Advection masks solid upwind interfaces; scalar is advective-form, not a conservative finite-volume heat budget.",
     "Boundary zero-gradient copying is restricted to fluid neighbours; blocked boundary uses ambient.",
-    "Frozen wind is a specified controlled forcing, not fabricated intermediate wind observations.",
+    "Frozen wind is specified controlled forcing, not fabricated intermediate wind observations; inherited sourcewind limitations recorded in wind_forcing.",
     "Sky-view factor set1 for diffuse component; geometry shadows only direct component.",
+    "Temperature resolution32mXY/16mZ, not4m; wind0294m decoded velocity sampled tothermalgrid. Surrogate1m-to4m scaling andinterpretedsourceclock unvalidated.",
     "Controlledclear sky, not measuredweather.",
     "4m actualgeometryheights; horizontal topsurface irradiance, not facadeirradiance.",
     "16azimuth/5degree sampledskyview; no treecanopy or clouds.",
@@ -248,18 +373,20 @@
     "Controlled 2-D near-ground passive tracer, not 3-D dispersion or calibrated pollution/health exposure.",
     "Uniform arbitrary source rate on mapped road cells, not measured emissions or emissions derived from vehicle counts.",
     "Frozen final SCALED near-ground horizontal wind; no vertical exchange, chemistry or deposition.",
+    "Frozen final surrogate snapshot: interpreted10000s/modelstep100; not calibrated physicaltime. Tracer0\u2013600s is a separate controlled transport clock.",
     "Scalar-conservative first-order upwind transport with isotropic diffusion; zero exterior inflow concentration and impermeable building faces.",
-    "Controlled50mm/h600s rain, no measuredhazardforecast.",
+    "Controlled 50mm/h rain for 600s; no measured hazard forecast.",
     "OnlylicensedEA DTMcoveragevalid; outsideunknown andinvalid.",
     "EA ODNbed usedunchanged; overlaydepth doesnotclaimlocalgeometryverticalregistration.",
     "Buildings impermeable, no roofrunofftransfer, sewers/infiltration/tides/bathymetry.",
     "OSMwaterexcluded; validterrainboundarydrains, artificialboundaryaffectslocalresults.",
-    "UniformManning.035; dryinitialsurface."
+    "UniformManning.035; dryinitialsurface.",
+    "Browser fields use declared PNG quantization; complete scientific float32 outputs remain in retained runs."
   ],
   "uav": {
     "enabled": true,
     "description": "20 model ground stations \u00b7 100 directed Wave PDE routes \u00b7 48 m vertical takeoff/landing \u00b7 600 illustrative UAVs; no fleet scheduling.",
     "config": "uav/visualization.json"
   },
-  "physics_dir": "physics027/"
+  "physics_dir": "physics031/"
 }
