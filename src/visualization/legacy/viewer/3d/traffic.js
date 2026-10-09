@@ -57,7 +57,7 @@ export async function createTraffic({ scene, base, elevated = [], onProgress = (
   signals.setPathsVisible(false);
   const binary = new Int16Array(buffer);
   const peak = Math.max(1, ...frames.map(f => f.count));
-  const actors = await createActorLayer({ scene: group, carURL: DEMO + 'actors/sedan_4p5m.glb', uavURL: DEMO + 'assets/hexacopter_cargo.glb', carCapacity: Math.min(4000, peak + 50), uavCapacity: 1 });
+  const actors = await createActorLayer({ scene: group, carURL: DEMO + 'actors/sedan_4p5m.glb', uavURL: DEMO + 'assets/hexacopter_cargo.glb', carCapacity: peak, uavCapacity: 1 });
   actors.uavs.group.visible = false;
   const duration = manifest.seconds;
 
@@ -91,7 +91,7 @@ export async function createTraffic({ scene, base, elevated = [], onProgress = (
   }
 
   // ---- overhead "traffic map": screen-space dots for cars (white moving / amber stopped) and signal heads (red / amber / green)
-  const tex = dotTexture(), cap = Math.min(4000, peak + 50);
+  const tex = dotTexture(), cap = peak;
   const carDotGeom = new THREE.BufferGeometry();
   carDotGeom.setAttribute('position', new THREE.BufferAttribute(new Float32Array(cap * 3), 3));
   carDotGeom.setAttribute('color', new THREE.BufferAttribute(new Float32Array(cap * 3), 3));

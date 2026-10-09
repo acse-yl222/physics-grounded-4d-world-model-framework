@@ -87,3 +87,19 @@ The UAV tab shares the viewer's playback controls; route lines appear in this ta
 and the layer hides in physics views. Full buildings: `?scene=white_city&lite=0&pose=campus&shot=uavs&hold=1`.
 Browser check: `node tests/browser_white_city_uav.cjs` with `PUPPETEER_MODULE`,
 `CHROME_PATH` and optionally `UWM_VIEWER_URL` set for the test environment.
+
+## Dense presentation (2026-10-09)
+
+Current South Kensington and White City configs display 600 independent UAVs on
+100 selected computed routes covering all 30 existing stations. The original 870
+routes remain immutable. `flight-network.mjs` selects a bidirectional station ring
+then fills the remaining budget with shorter existing directed routes; it never
+synthesizes a path or changes a recorded vertex. Set `route_limit` to null to use
+all original routes. Camera framing and 48-pixel labels expose the full network.
+
+Canary Wharf's `canary_wharf_wavepde026` is a new actual Wave PDE computation:
+20 model ground sites, 100 directed routes, and 48 m vertical legs. Its preview
+uses 600 illustrative UAVs. All three scenes render route centrelines with a
+2.5-pixel line width instead of implementation-dependent WebGL thin lines.
+These are independently moving demonstration aircraft, not a fleet collision
+avoidance or scheduling simulation.

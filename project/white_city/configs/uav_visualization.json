@@ -1,6 +1,10 @@
 {
   "routes": "../input/uav_routes_ground_20261007/routes.json",
   "mode": "independent_random_routes",
-  "uav_count": 300,
-  "seed": 20261007
+  "uav_count": 600,
+  "seed": 20261007,
+  "route_limit": 100,
+  "route_width_px": 2.5,
+  "route_opacity": 0.55,
+  "station_label_px": 48
 }

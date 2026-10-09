@@ -25,5 +25,7 @@ test('vertical segments use elapsed model time, not uniform path-length speed',(
 });
 test('invalid timing and disconnected routes are rejected',()=>{
  assert.throws(()=>randomFlights([{...routes[0],times_s:[0,5,5]}]));
- assert.throws(()=>randomFlights([routes[0]]));assert.throws(()=>randomFlights(routes,{count:301}));
+ assert.throws(()=>randomFlights([routes[0]]));assert.throws(()=>randomFlights(routes,{count:2001}));
 });
+
+test("600 UAVs have unique actor indices and reproducible finite positions",()=>{const m=randomFlights(routes,{count:600,duration:300});const a=m.sample(75);assert.equal(new Set(a.map(x=>x.idIndex)).size,600);assert.ok(a.every(x=>[x.x,x.y,x.z].every(Number.isFinite)));assert.deepEqual(a,m.sample(75));});

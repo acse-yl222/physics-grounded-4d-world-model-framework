@@ -63,6 +63,11 @@ class ViewerHandler(BaseHTTPRequestHandler):
                 pair=aliases.get(old,('windfarm',old.removeprefix('windfarm_')) if old.startswith('windfarm_') else None)
                 if pair is None:self.send_error(HTTPStatus.NOT_FOUND);return
                 path=within(self.storage.run(*pair),*parts[5:])
+                overrides=self.storage.metadata(pair[0])/'configs/city_viewer_overrides.json'
+                if parts[5:]==('scene.json',) and overrides.is_file():
+                    metadata=json.loads(path.read_text())
+                    metadata.update(json.loads(overrides.read_text()))
+                    return self.json_response(metadata,head)
             elif parts[:4]==legacy+('geometry',):
                 path=within(self.storage.assets('south_ken','geometry')/'legacy_visualizer',*parts[4:])
             elif parts[:6]==legacy+('agents','demo_rev02','data'):

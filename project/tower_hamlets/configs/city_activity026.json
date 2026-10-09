@@ -1,0 +1,51 @@
+{
+  "scene_id": "tower_hamlets",
+  "title": "Canary Wharf \u00b7 city, traffic & UAVs",
+  "description": "Detailed Canary Wharf core, unified ground, recorded dense vehicle traffic and Wave PDE delivery routes.",
+  "outer_run": "canary_wharf_outer4km_geometry_021",
+  "fields": {
+    "wind": {
+      "run_id": "canary_wharf_wind021_4km_display_20261008",
+      "layer_id": "wind_z24_0m",
+      "label": "Wind speed \u00b7 24 m",
+      "display_range": [
+        0,
+        6
+      ]
+    },
+    "temp": {
+      "run_id": "canary_wharf_temperature021_4km_accepted",
+      "layer_id": "air_temperature_8m",
+      "label": "Air temperature \u00b7 8 m"
+    }
+  },
+  "limits": [
+    "Controlled scenarios, not observed weather or live traffic.",
+    "Wind: uniform west-to-east 5 m/s inflow; 16 m grid; transient inviscid model.",
+    "Temperature: clear-sky 20 \u00b0C ambient and estimated uniform materials; 32 m grid; forced by frozen final wind.",
+    "Traffic: seeded passenger-car demand and inferred signal timings; flat bridge/tunnel elevations.",
+    "Wind particles illustrate the sampled flow; they are not recorded physical particles.",
+    "\u00a9 OpenStreetMap contributors; Overture Maps Foundation. Heights and architectural detail include estimates.",
+    "Wind colours saturate above 6 m/s; underlying recorded values are unchanged.",
+    "UAV stations are demonstration sites; canopy and real-world landing access are unverified. Aircraft share paths without fleet collision scheduling.",
+    "Traffic uses synthetic demand and inferred junctions with explicit temporary model closures, not observed road closures or measured flows.",
+    "Traffic replay covers actual simulation seconds 1\u20131200; default starts at 600 s. Environmental fields and UAV clocks remain independent.",
+    "Traffic has 3 recorded junction collision events and 0 teleports; intersection behaviour remains unvalidated."
+  ],
+  "model_options": {
+    "ground_color": "#737a77"
+  },
+  "traffic_options": {
+    "start_s": 600,
+    "label": "Vehicle traffic \u00b7 denser SUMO scenario"
+  },
+  "uav": {
+    "enabled": true,
+    "description": "20 model ground stations \u00b7 100 directed Wave PDE routes \u00b7 48 m vertical takeoff/landing \u00b7 600 illustrative UAVs; no fleet scheduling.",
+    "config": "uav/visualization.json"
+  },
+  "additional_source_runs": {
+    "traffic": "sumo_20261009T003118Z_e3abe3",
+    "uav": "canary_wharf_wavepde026"
+  }
+}

@@ -63,4 +63,20 @@ class RegistryServerTests(unittest.TestCase):
             self.assertEqual(entry['base_url'],'/project/south_ken/runs/synthetic_v1/')
             self.assertEqual(entry['id'],'south_ken')
 
+    def test_legacy_activity_override_preserves_retained_metadata(self):
+        original=self.root/'project/south_ken/runs/legacy_web/scene.json'
+        original.parent.mkdir(parents=True)
+        original.write_text(json.dumps({'title':'Original','model':{'url':'city.glb'}}))
+        overrides=self.root/'project/south_ken/configs/city_viewer_overrides.json'
+        overrides.parent.mkdir()
+        overrides.write_text(json.dumps({'traffic':{'dir':'/project/south_ken/runs/new/replay/'}}))
+        server=ThreadingHTTPServer(('127.0.0.1',0),functools.partial(ViewerHandler,storage=self.storage))
+        threading.Thread(target=server.serve_forever,daemon=True).start()
+        self.addCleanup(server.server_close);self.addCleanup(server.shutdown)
+        url=f'http://127.0.0.1:{server.server_port}/src/visualization/legacy/scenes/south_kensington/scene.json'
+        with urllib.request.urlopen(url) as response:result=json.load(response)
+        self.assertEqual(result['model'],{'url':'city.glb'})
+        self.assertEqual(result['traffic']['dir'],'/project/south_ken/runs/new/replay/')
+        self.assertNotIn('traffic',json.loads(original.read_text()))
+
 if __name__=='__main__':unittest.main()

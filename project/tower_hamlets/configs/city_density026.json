@@ -1,0 +1,19 @@
+{
+  "scene_id": "tower_hamlets",
+  "traffic_run": "sumo_20261009T003118Z_e3abe3",
+  "traffic_export": "project/tower_hamlets/runs/sumo_20261009T003118Z_e3abe3/viewer_traffic",
+  "label": "Vehicle traffic \u00b7 denser SUMO scenario",
+  "start_s": 600,
+  "visible_at_600": 1402,
+  "vehicles_peak": 2610,
+  "previous_vehicles_peak": 1055,
+  "collision_events": 3,
+  "teleports": 0,
+  "limits": [
+    "Synthetic passenger demand, estimated traffic signals and unsurveyed road elevations; not measured traffic.",
+    "A small explicitly recorded set of model-unvalidated junction approaches is closed for this simulation only; road geometry remains visible.",
+    "1200-second traffic simulation: 3 recorded junction collision events and 0 teleports. Residual intersection behaviour is not validated.",
+    "Replay uses actual seconds 1\u20131200, starting at 600 s; traffic and environmental/UAV clocks are independent."
+  ],
+  "moving_at_600": 766
+}

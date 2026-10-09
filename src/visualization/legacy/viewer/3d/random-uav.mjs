@@ -1,6 +1,7 @@
+import { selectFlightNetwork } from './flight-network.mjs';
 // Independent random walks on directed Wave PDE paths. No orders or scheduler.
 export function randomFlights(routes, {count=300,seed=20261007,duration=3600}={}) {
-  if (!routes.length || !Number.isInteger(count) || count<1 || count>300) throw Error('Invalid random UAV configuration');
+  if (!routes.length || !Number.isInteger(count) || count<1 || count>2000) throw Error('Invalid random UAV configuration');
   let state=seed>>>0;
   const random=()=>{state=(Math.imul(state,1664525)+1013904223)>>>0;return state/4294967296;};
   const outgoing=new Map();
@@ -41,7 +42,7 @@ export async function loadRandomUav(url,options={}){
   const buffer=await r.arrayBuffer();
   if(buffer.byteLength%16)throw Error('Truncated route records');
   const view=new DataView(buffer),records=buffer.byteLength/16;
-  const routes=data.routes.map(route=>{
+  const routes=selectFlightNetwork(data.routes,options.routeLimit).map(route=>{
     if(!Number.isInteger(route.offset_records)||!Number.isInteger(route.count)||route.count<2||route.offset_records<0||route.offset_records+route.count>records)throw Error('Invalid route bounds');
     const points_m=[],times_s=[];
     for(let i=0;i<route.count;i++){const o=(route.offset_records+i)*16;const p=[0,4,8].map(k=>view.getFloat32(o+k,true));const t=view.getFloat32(o+12,true);if(!p.every(Number.isFinite)||!Number.isFinite(t))throw Error('Invalid route sample');points_m.push(p);times_s.push(t);}

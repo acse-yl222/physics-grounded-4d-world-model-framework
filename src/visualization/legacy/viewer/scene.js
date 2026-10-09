@@ -14,7 +14,7 @@ export async function loadScene() {
   if (!r.ok) throw new Error(`scene ${id}: ${base}scene.json is missing (HTTP ${r.status})`);
   const scene = await r.json();
   scene.id = id; scene.base = base; scene.physics = base + 'physics/'; scene.index = index;
-  scene.url = rel => /^https?:/.test(rel) ? rel : base + rel;
+  scene.url = rel => new URL(rel, base).href;
   return scene;
 }
 

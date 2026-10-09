@@ -40,6 +40,11 @@ def configuration(storage, scene):
 
 def lonlat_to_scene(lonlat, transform):
     points = np.asarray(lonlat, dtype=float)
+    if transform.get('kind') == 'projected_affine':
+        from pyproj import Transformer
+        projection = Transformer.from_crs('EPSG:4326', transform['crs'], always_xy=True)
+        projected = np.column_stack(projection.transform(points[:,0], points[:,1]))
+        return projected @ np.asarray(transform['matrix']).T + transform['offset']
     if transform.get('kind') == 'aeqd':
         from pyproj import Transformer
         projection = Transformer.from_crs('EPSG:4326', transform['crs'], always_xy=True)
@@ -51,6 +56,11 @@ def lonlat_to_scene(lonlat, transform):
 
 
 def scene_to_lonlat(xy, transform):
+    if transform.get('kind') == 'projected_affine':
+        from pyproj import Transformer
+        points = (np.asarray(xy) - transform['offset']) @ np.linalg.inv(np.asarray(transform['matrix'])).T
+        projection = Transformer.from_crs(transform['crs'], 'EPSG:4326', always_xy=True)
+        return np.column_stack(projection.transform(points[:,0], points[:,1]))
     if transform.get('kind') == 'aeqd':
         from pyproj import Transformer
         points = np.asarray(xy, dtype=float)
@@ -180,10 +190,15 @@ def validate_settings(cfg):
         raise ValueError('Random trips cannot be labelled calibrated')
 
 
-def run(storage, scene, *, duration=None, speed_factor=None, retain=False, seed=None, demand_period=None):
+def run(storage, scene, *, duration=None, speed_factor=None, retain=False, seed=None, demand_period=None, simulation_step=None, safe_following=False, osm_snapshot=None, transform_json=None, separate_junctions=False, closures_json=None, demand_trips=None):
     import sumolib
     import traci
     cfg = configuration(storage, scene)
+    cfg['separate_junctions'] = separate_junctions
+    if demand_trips: cfg['fixed_demand_input']={'source':str(demand_trips),'sha256':digest(Path(demand_trips)),'note':'Same seeded origin/destination/departure requests rerouted around conservative closures; unreachable trips omitted and reported by duarouter.'}
+    if closures_json: cfg['conservative_closures'] = json.loads(Path(closures_json).read_text())
+    if osm_snapshot is not None: cfg['osm_snapshot'] = osm_snapshot
+    if transform_json is not None: cfg['transform'] = json.loads(Path(transform_json).read_text())
     if duration is not None: cfg['duration_s'] = duration
     if speed_factor is not None: cfg['intervention']['speed_factor'] = speed_factor
     if seed is not None: cfg['seed'] = seed
@@ -191,6 +206,10 @@ def run(storage, scene, *, duration=None, speed_factor=None, retain=False, seed=
         cfg['demand']['period_s'] = demand_period
         cfg['limitations'] = [x for x in cfg.get('limitations',[]) if 'requested trips' not in x]
         cfg['limitations'].append(f"{cfg['duration_s']:g}s seeded passenger demand with {math.ceil(cfg['duration_s']/demand_period)} requested trips; not measured.")
+    if simulation_step is not None:
+        if simulation_step<=0 or simulation_step>cfg['step_s']: raise ValueError('Invalid simulation step')
+        cfg['simulation_step_s']=simulation_step
+    if safe_following: cfg['car_following']={'tau':'2','minGap':'3','sigma':'0.2','decel':'4.5','emergencyDecel':'9','jmTimegapMinor':'2','jmCrossingGap':'10','impatience':'0','jmAdvance':'0','jmExtraGap':'5','jmStoplineGap':'3'}
     validate_settings(cfg)
     raw = within(storage.assets(scene, 'input'), cfg['osm_snapshot'])
     raw_meta = raw.with_suffix('.provenance.json')
@@ -213,8 +232,19 @@ def run(storage, scene, *, duration=None, speed_factor=None, retain=False, seed=
              '--tls.default-type', 'actuated', '--keep-edges.by-vclass', 'passenger',
              '--keep-edges.in-geo-boundary', ','.join(map(str,source_meta['bbox_wgs84'])),
              '--remove-edges.isolated', '--no-turnarounds.except-deadend']
+    if separate_junctions: build = [arg for arg in build if arg not in ('--junctions.join','--tls.join')]
     try:
         command(build, out, 'netconvert'); commands.append([str(x) for x in build])
+        geometry_net = sumolib.net.readNet(str(netfile))
+        if cfg.get('conservative_closures'):
+            shutil.copy2(netfile,out/'network_before_closures.net.xml')
+            tree=ET.parse(netfile);closed=set(cfg['conservative_closures']['edge_ids']);found=set()
+            for edge in tree.getroot().findall('edge'):
+                if edge.get('id') in closed:
+                    found.add(edge.get('id'))
+                    for lane in edge.findall('lane'): lane.attrib.pop('disallow',None);lane.set('allow','authority')
+            if found != closed: raise ValueError('Closure edge IDs missing from rebuilt network')
+            tree.write(netfile,encoding='utf-8',xml_declaration=True)
         net = sumolib.net.readNet(str(netfile))
         if ET.parse(netfile).getroot().get('lefthand') != 'true':
             raise ValueError('Network is not marked left-hand')
@@ -224,12 +254,20 @@ def run(storage, scene, *, duration=None, speed_factor=None, retain=False, seed=
                  '-p', str(d['period_s']), '--seed', str(cfg['seed']), '--validate',
                  '--fringe-factor', str(d['fringe_factor']), '--min-distance', str(d['min_distance_m']),
                  '--vehicle-class', 'passenger', '--vclass', 'passenger', '--prefix', 'v']
+        if demand_trips:
+            shutil.copy2(demand_trips,out/'trips.xml')
+            trips=[home/'bin/duarouter','--net-file',netfile.name,'--route-files','trips.xml','--output-file','routes.rou.xml','--seed',str(cfg['seed']),'--ignore-errors','--no-step-log']
         command(trips, out, 'demand'); commands.append([str(x) for x in trips])
+        if cfg.get('car_following'):
+            tree=ET.parse(out/'routes.rou.xml')
+            for kind in tree.getroot().findall('vType'):
+                for key,value in cfg['car_following'].items(): kind.set(key,value)
+            tree.write(out/'routes.rou.xml',encoding='utf-8',xml_declaration=True)
         config = ET.Element('configuration')
         groups = {'input': {'net-file': netfile.name, 'route-files': 'routes.rou.xml'},
-                  'time': {'begin': 0, 'end': cfg['duration_s'], 'step-length': cfg['step_s']},
+                  'time': {'begin': 0, 'end': cfg['duration_s'], 'step-length': cfg.get('simulation_step_s',cfg['step_s'])},
                   'random_number': {'seed': cfg['seed']},
-                  'processing': {'time-to-teleport': -1, 'collision.action': 'warn', 'collision.check-junctions': 'true'},
+                  'processing': {'time-to-teleport': -1, 'ignore-junction-blocker': -1, 'collision.action': 'warn', 'collision.check-junctions': 'true'},
                   'output': {'tripinfo-output': 'tripinfo.xml', 'tripinfo-output.write-unfinished': 'true',
                              'summary-output': 'summary.xml', 'statistic-output': 'statistics.xml'},
                   'report': {'no-step-log': 'true', 'error-log': 'sumo_errors.log'}}
@@ -248,7 +286,7 @@ def run(storage, scene, *, duration=None, speed_factor=None, retain=False, seed=
             project['spatial']['bounds_m'] = cfg['bounds_m']
         bounds=project['spatial']['bounds_m']
         def inside(xy):return (xy[:,0]>=bounds['min'][0])&(xy[:,0]<=bounds['max'][0])&(xy[:,1]>=bounds['min'][1])&(xy[:,1]<=bounds['max'][1])
-        write(out/'roads.json', network_mesh(net, to_xy,bounds))
+        write(out/'roads.json', network_mesh(geometry_net, to_xy,bounds))
         write(out/'project.json', project)
         frames, full_frames, times, signal_records, metrics = [], [], [], [], []
         launch = [str(home/'bin/sumo'), '-c', str(out/'run.sumocfg')]
@@ -270,16 +308,20 @@ def run(storage, scene, *, duration=None, speed_factor=None, retain=False, seed=
                     endpoints = [connection.lane.getShape(lane)[-1] for lane in sorted(set(lanes))]
                     center = to_xy(endpoints).mean(axis=0)
                     signal_positions.append([float(center[0]), float(center[1]), 3.])
-                for _ in range(round(cfg['duration_s']/cfg['step_s'])):
-                    connection.simulationStep()
+                subscribed=set()
+                for sample_index in range(round(cfg['duration_s']/cfg['step_s'])):
+                    connection.simulationStep((sample_index+1)*cfg['step_s'])
                     t = connection.simulation.getTime(); ids = sorted(connection.vehicle.getIDList())
-                    xy = to_xy([connection.vehicle.getPosition(i) for i in ids]) if ids else np.empty((0, 2))
+                    for vehicle in set(ids)-subscribed:
+                        connection.vehicle.subscribe(vehicle,[traci.constants.VAR_POSITION,traci.constants.VAR_SPEED]);subscribed.add(vehicle)
+                    observations=connection.vehicle.getAllSubscriptionResults()
+                    xy = to_xy([observations[i][traci.constants.VAR_POSITION] for i in ids]) if ids else np.empty((0, 2))
                     full_frames.append({'ids': ids, 'positions': [[float(x), float(y), .275] for x, y in xy]})
                     keep=inside(xy)
                     frames.append({'ids':[i for i,k in zip(ids,keep) if k], 'positions':[[float(x),float(y),.275] for x,y in xy[keep]]})
                     times.append(t)
                     signal_records.append({i: connection.trafficlight.getRedYellowGreenState(i) for i in tls_ids})
-                    speeds = [connection.vehicle.getSpeed(i) for i in ids]
+                    speeds = [observations[i][traci.constants.VAR_SPEED] for i in ids]
                     metrics.append({'time_s': t, 'active': len(ids), 'halted': sum(v < .1 for v in speeds),
                                     'mean_speed_m_s': float(np.mean(speeds)) if speeds else 0.,
                                     'arrived': connection.simulation.getArrivedNumber(),
@@ -301,6 +343,8 @@ def run(storage, scene, *, duration=None, speed_factor=None, retain=False, seed=
         finished = [x for x in trips_xml if float(x.get('arrival', '-1')) >= 0]
         generated = len(ET.parse(out/'routes.rou.xml').getroot().findall('vehicle'))
         totals = {k: sum(m[k] for m in metrics) for k in ('arrived', 'departed', 'collisions', 'teleports')}
+        stats = ET.parse(out/'statistics.xml').getroot()
+        totals.update(arrived=len(finished), departed=len(trips_xml), collisions=int(stats.find('safety').get('collisions')), teleports=int(stats.find('teleports').get('total')), safety_count_basis='Final SUMO aggregate across every internal step; collision events, not sampled colliding-vehicle counts')
         totals.update(generated=generated, requested=math.ceil(cfg['duration_s']/d['period_s']),
                       finished_mean_duration_s=float(np.mean([float(x.get('duration')) for x in finished])) if finished else None,
                       unfinished=sum(float(x.get('arrival', '-1')) < 0 for x in trips_xml),
@@ -356,10 +400,16 @@ def main():
     parser.add_argument('scene', type=scene_id)
     parser.add_argument('--duration', type=float); parser.add_argument('--speed-factor', type=float)
     parser.add_argument('--demand-period', type=float, help='Assumed seconds between requested trips; uncalibrated'); parser.add_argument('--seed', type=int); parser.add_argument('--retain', action='store_true')
+    parser.add_argument('--demand-trips',help='Replay fixed seeded OD/departure requests for conservative rerouting')
+    parser.add_argument('--closures-json',help='Explicit conservative traffic-only edge restrictions with diagnostic provenance')
+    parser.add_argument('--separate-junctions',action='store_true',help='Preserve separate OSM junctions instead of heuristic merging')
+    parser.add_argument('--transform-json', help='Explicit runtime coordinate mapping with provenance; does not mutate project configuration')
+    parser.add_argument('--osm-snapshot',help='Retained relative input snapshot override; no scene config mutation')
+    parser.add_argument('--simulation-step',type=float); parser.add_argument('--safe-following',action='store_true')
     parser.add_argument('--endpoint', default='https://api.openstreetmap.org/api/0.6/map')
     args = parser.parse_args(); storage = Storage.load()
     if args.action == 'fetch': result = fetch_osm(storage, args.scene, args.endpoint)
-    else: result = run(storage, args.scene, duration=args.duration, speed_factor=args.speed_factor, seed=args.seed, retain=args.retain, demand_period=args.demand_period)
+    else: result = run(storage, args.scene, duration=args.duration, speed_factor=args.speed_factor, seed=args.seed, retain=args.retain, demand_period=args.demand_period, simulation_step=args.simulation_step, safe_following=args.safe_following, osm_snapshot=args.osm_snapshot, transform_json=args.transform_json, separate_junctions=args.separate_junctions, closures_json=args.closures_json, demand_trips=args.demand_trips)
     print(result)
 
 

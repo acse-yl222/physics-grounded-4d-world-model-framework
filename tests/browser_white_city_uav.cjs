@@ -23,7 +23,7 @@
       return {scene:viewer.SCENE.id,count:r.uavs.length,instances:r.actors.uavs.activeCount,routes:r.flightData.routes.length,stations:r.flightData.stations.length,maxStationHeight:Math.max(...r.flightData.stations.map(s=>s.y_m)),moved:JSON.stringify(a)!==JSON.stringify(b),seekReproducible:JSON.stringify(a)===JSON.stringify(r.uavs.map(u=>[u.x,u.y,u.z])),stationOne:r.flightData.stations[0],corridorsVisible:r.corridors.visible,stats:r.stats};
     });
     if(requests.some(u=>/schedule.json|parking.json|hub-bays.json|data\/birds|data\/traffic\/current_replay/.test(u)))throw Error('Cross-scene or scheduling request');
-    if(report.scene!=='white_city'||report.count!==300||report.instances!==300||report.routes!==870||!report.moved||!report.seekReproducible||report.maxStationHeight>1)throw Error(JSON.stringify(report));
+    if(report.scene!=='white_city'||report.count!==600||report.instances!==600||report.routes!==100||!report.moved||!report.seekReproducible||report.maxStationHeight>1)throw Error(JSON.stringify(report));
     console.log('Flight data validated', JSON.stringify(report));
     await page.click('[data-shot="uavs"]');await new Promise(r=>setTimeout(r,3500));
     await page.evaluate(()=>{const r=viewer.uavs;r.playing=false;document.querySelector('#l-uavs').click();if(r.markers.visible||r.corridors.visible||r.actors.uavs.group.visible)throw Error('UAV toggle failed');document.querySelector('#l-uavs').click();});

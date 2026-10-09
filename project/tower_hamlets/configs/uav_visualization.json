@@ -1,6 +1,9 @@
 {
-  "routes": "../runs/canary_wharf_wavepde022/uav_visualization/routes.json",
+  "routes": "../runs/canary_wharf_wavepde026/uav_visualization/routes.json",
   "mode": "independent_random_routes",
-  "uav_count": 60,
-  "seed": 20261008
+  "uav_count": 600,
+  "seed": 20261009,
+  "route_width_px": 2.5,
+  "route_opacity": 0.55,
+  "station_label_px": 48
 }

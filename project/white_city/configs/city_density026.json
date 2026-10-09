@@ -1,0 +1,19 @@
+{
+  "scene_id": "white_city",
+  "traffic_run": "sumo_20261009T003518Z_dc240f",
+  "traffic_export": "project/white_city/runs/sumo_20261009T003518Z_dc240f/viewer_traffic",
+  "label": "Vehicle traffic \u00b7 denser SUMO scenario",
+  "start_s": 600,
+  "visible_at_600": 1373,
+  "vehicles_peak": 2396,
+  "previous_vehicles_peak": 1060,
+  "collision_events": 0,
+  "teleports": 0,
+  "limits": [
+    "Synthetic passenger demand, estimated traffic signals and unsurveyed road elevations; not measured traffic.",
+    "A small explicitly recorded set of model-unvalidated junction approaches is closed for this simulation only; road geometry remains visible.",
+    "1200-second traffic simulation: 0 recorded collisions and 0 teleports; this does not establish real-world traffic calibration.",
+    "Replay uses actual seconds 1\u20131200, starting at 600 s; traffic and environmental/UAV clocks are independent."
+  ],
+  "moving_at_600": 1034
+}

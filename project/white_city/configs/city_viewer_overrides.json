@@ -1,0 +1,19 @@
+{
+  "limits": [
+    "Georeferenced by fitting 939 named OSM buildings to the GLB (median residual 1.6 m): local +y points 2.2\u00b0 east of true north (UTM grid north). The sun model assumed local +y = north, a 2\u00b0 azimuth error.",
+    "Wind: SCALED surrogate transferred to new geometry, no CFD or measured validation; 50 s per step is a grid-scaled interpretation.",
+    "Temperature: controlled scenario (26 \u00b0C air, 30 \u00b0C surfaces), not measured White City temperatures.",
+    "Pollution: assumed upstream line source, not measured concentrations.",
+    "Flooding: the GLB ground mesh stands in for terrain; no surveyed elevation.",
+    "Transport: a TfL Unified API snapshot (routes, stops, road disruptions, JamCams); arrivals refresh live while online.",
+    "Synthetic passenger demand, estimated traffic signals and unsurveyed road elevations; not measured traffic.",
+    "A small explicitly recorded set of model-unvalidated junction approaches is closed for this simulation only; road geometry remains visible.",
+    "1200-second traffic simulation: 0 recorded collisions and 0 teleports; this does not establish real-world traffic calibration.",
+    "Replay uses actual seconds 1\u20131200, starting at 600 s; traffic and environmental/UAV clocks are independent."
+  ],
+  "traffic": {
+    "dir": "/project/white_city/runs/sumo_20261009T003518Z_dc240f/viewer_traffic/",
+    "start_s": 600,
+    "label": "Vehicle traffic \u00b7 denser SUMO scenario"
+  }
+}

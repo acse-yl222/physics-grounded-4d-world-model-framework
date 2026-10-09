@@ -1,0 +1,759 @@
+{
+  "solid_path": "project/tower_hamlets/runs/canary_wharf_outer4km_geometry_021/solver_grid8m/solid.npy",
+  "origin_enu_m": [
+    -2000,
+    -2000,
+    0
+  ],
+  "source_cell_m": 8,
+  "pool_factor": 2,
+  "stations": [
+    {
+      "id": "S1",
+      "enu_m": [
+        -100.0,
+        236.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -100.0,
+        236.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 41.95051766360582,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S2",
+      "enu_m": [
+        -1476.0,
+        1188.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -1476.0,
+        1188.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 43.15598381727292,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S3",
+      "enu_m": [
+        1196.0,
+        1204.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        1196.0,
+        1204.0,
+        48.15
+      ],
+      "building_water_clearance_m": 75.8946638440411,
+      "mapped_passenger_lane_clearance_m": 98.97846547519723,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S4",
+      "enu_m": [
+        -1444.0,
+        -948.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -1444.0,
+        -948.0,
+        48.15
+      ],
+      "building_water_clearance_m": 48.662100242385755,
+      "mapped_passenger_lane_clearance_m": 21.10031222881193,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S5",
+      "enu_m": [
+        1420.0,
+        -1196.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        1420.0,
+        -1196.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 102.31164882517513,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S6",
+      "enu_m": [
+        -156.0,
+        1404.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -156.0,
+        1404.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 27.17878479633862,
+      "status": "model-derived flatground; canopyunknown; not surveyed"
+    },
+    {
+      "id": "S7",
+      "enu_m": [
+        -84.0,
+        -1180.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -84.0,
+        -1180.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 49.8620847765403,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S8",
+      "enu_m": [
+        -1572.0,
+        116.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -1572.0,
+        116.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 61.11468407028249,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S9",
+      "enu_m": [
+        1108.0,
+        244.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        1108.0,
+        244.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 88.95694089930193,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S10",
+      "enu_m": [
+        660.0,
+        -1756.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        660.0,
+        -1756.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 23.773155798089405,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S11",
+      "enu_m": [
+        -932.0,
+        -1716.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -932.0,
+        -1716.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 23.685731340136197,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S12",
+      "enu_m": [
+        -820.0,
+        660.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -820.0,
+        660.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 36.45218124431021,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S13",
+      "enu_m": [
+        1412.0,
+        -444.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        1412.0,
+        -444.0,
+        48.15
+      ],
+      "building_water_clearance_m": 43.08131845707603,
+      "mapped_passenger_lane_clearance_m": 30.87179899174373,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S14",
+      "enu_m": [
+        476.0,
+        996.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        476.0,
+        996.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.792156108742276,
+      "mapped_passenger_lane_clearance_m": 20.203567493741616,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S15",
+      "enu_m": [
+        620.0,
+        -940.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        620.0,
+        -940.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 23.1158348658109,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S16",
+      "enu_m": [
+        -964.0,
+        -380.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -964.0,
+        -380.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 42.48734884356299,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S17",
+      "enu_m": [
+        1756.0,
+        1684.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        1756.0,
+        1684.0,
+        48.15
+      ],
+      "building_water_clearance_m": 48.662100242385755,
+      "mapped_passenger_lane_clearance_m": 21.970720631042838,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S18",
+      "enu_m": [
+        -1660.0,
+        -1732.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -1660.0,
+        -1732.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 27.905550515752015,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S19",
+      "enu_m": [
+        -932.0,
+        1660.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        -932.0,
+        1660.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.0,
+      "mapped_passenger_lane_clearance_m": 20.147332989163694,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    },
+    {
+      "id": "S20",
+      "enu_m": [
+        892.0,
+        1756.0,
+        0.15
+      ],
+      "gate_enu_m": [
+        892.0,
+        1756.0,
+        48.15
+      ],
+      "building_water_clearance_m": 40.792156108742276,
+      "mapped_passenger_lane_clearance_m": 36.6092339418064,
+      "status": "model-derived flat ground; canopy unknown; not surveyed"
+    }
+  ],
+  "routes": [
+    [
+      "S1",
+      "S2"
+    ],
+    [
+      "S2",
+      "S1"
+    ],
+    [
+      "S1",
+      "S3"
+    ],
+    [
+      "S3",
+      "S1"
+    ],
+    [
+      "S1",
+      "S4"
+    ],
+    [
+      "S4",
+      "S1"
+    ],
+    [
+      "S1",
+      "S5"
+    ],
+    [
+      "S5",
+      "S1"
+    ],
+    [
+      "S1",
+      "S6"
+    ],
+    [
+      "S6",
+      "S1"
+    ],
+    [
+      "S1",
+      "S7"
+    ],
+    [
+      "S7",
+      "S1"
+    ],
+    [
+      "S1",
+      "S9"
+    ],
+    [
+      "S9",
+      "S1"
+    ],
+    [
+      "S1",
+      "S12"
+    ],
+    [
+      "S12",
+      "S1"
+    ],
+    [
+      "S1",
+      "S14"
+    ],
+    [
+      "S14",
+      "S1"
+    ],
+    [
+      "S1",
+      "S15"
+    ],
+    [
+      "S15",
+      "S1"
+    ],
+    [
+      "S1",
+      "S16"
+    ],
+    [
+      "S16",
+      "S1"
+    ],
+    [
+      "S2",
+      "S6"
+    ],
+    [
+      "S6",
+      "S2"
+    ],
+    [
+      "S2",
+      "S8"
+    ],
+    [
+      "S8",
+      "S2"
+    ],
+    [
+      "S2",
+      "S12"
+    ],
+    [
+      "S12",
+      "S2"
+    ],
+    [
+      "S2",
+      "S19"
+    ],
+    [
+      "S19",
+      "S2"
+    ],
+    [
+      "S3",
+      "S6"
+    ],
+    [
+      "S6",
+      "S3"
+    ],
+    [
+      "S3",
+      "S9"
+    ],
+    [
+      "S9",
+      "S3"
+    ],
+    [
+      "S3",
+      "S14"
+    ],
+    [
+      "S14",
+      "S3"
+    ],
+    [
+      "S3",
+      "S17"
+    ],
+    [
+      "S17",
+      "S3"
+    ],
+    [
+      "S3",
+      "S20"
+    ],
+    [
+      "S20",
+      "S3"
+    ],
+    [
+      "S4",
+      "S7"
+    ],
+    [
+      "S7",
+      "S4"
+    ],
+    [
+      "S4",
+      "S8"
+    ],
+    [
+      "S8",
+      "S4"
+    ],
+    [
+      "S4",
+      "S11"
+    ],
+    [
+      "S11",
+      "S4"
+    ],
+    [
+      "S4",
+      "S16"
+    ],
+    [
+      "S16",
+      "S4"
+    ],
+    [
+      "S4",
+      "S18"
+    ],
+    [
+      "S18",
+      "S4"
+    ],
+    [
+      "S5",
+      "S10"
+    ],
+    [
+      "S10",
+      "S5"
+    ],
+    [
+      "S5",
+      "S13"
+    ],
+    [
+      "S13",
+      "S5"
+    ],
+    [
+      "S5",
+      "S15"
+    ],
+    [
+      "S15",
+      "S5"
+    ],
+    [
+      "S6",
+      "S12"
+    ],
+    [
+      "S12",
+      "S6"
+    ],
+    [
+      "S6",
+      "S14"
+    ],
+    [
+      "S14",
+      "S6"
+    ],
+    [
+      "S6",
+      "S19"
+    ],
+    [
+      "S19",
+      "S6"
+    ],
+    [
+      "S6",
+      "S20"
+    ],
+    [
+      "S20",
+      "S6"
+    ],
+    [
+      "S7",
+      "S10"
+    ],
+    [
+      "S10",
+      "S7"
+    ],
+    [
+      "S7",
+      "S11"
+    ],
+    [
+      "S11",
+      "S7"
+    ],
+    [
+      "S7",
+      "S15"
+    ],
+    [
+      "S15",
+      "S7"
+    ],
+    [
+      "S7",
+      "S16"
+    ],
+    [
+      "S16",
+      "S7"
+    ],
+    [
+      "S8",
+      "S12"
+    ],
+    [
+      "S12",
+      "S8"
+    ],
+    [
+      "S8",
+      "S16"
+    ],
+    [
+      "S16",
+      "S8"
+    ],
+    [
+      "S9",
+      "S13"
+    ],
+    [
+      "S13",
+      "S9"
+    ],
+    [
+      "S9",
+      "S14"
+    ],
+    [
+      "S14",
+      "S9"
+    ],
+    [
+      "S9",
+      "S15"
+    ],
+    [
+      "S15",
+      "S9"
+    ],
+    [
+      "S10",
+      "S15"
+    ],
+    [
+      "S15",
+      "S10"
+    ],
+    [
+      "S11",
+      "S16"
+    ],
+    [
+      "S16",
+      "S11"
+    ],
+    [
+      "S11",
+      "S18"
+    ],
+    [
+      "S18",
+      "S11"
+    ],
+    [
+      "S12",
+      "S14"
+    ],
+    [
+      "S14",
+      "S12"
+    ],
+    [
+      "S12",
+      "S16"
+    ],
+    [
+      "S16",
+      "S12"
+    ],
+    [
+      "S12",
+      "S19"
+    ],
+    [
+      "S19",
+      "S12"
+    ],
+    [
+      "S13",
+      "S15"
+    ],
+    [
+      "S15",
+      "S13"
+    ],
+    [
+      "S14",
+      "S20"
+    ],
+    [
+      "S20",
+      "S14"
+    ],
+    [
+      "S17",
+      "S20"
+    ],
+    [
+      "S20",
+      "S17"
+    ]
+  ],
+  "wave": {
+    "c0": 15,
+    "cz_up": 6,
+    "cz_down": 4,
+    "dt": 0.4,
+    "n_steps": 1200,
+    "pulse_t0_steps": 30,
+    "pulse_tau_steps": 8,
+    "source_sigma_cells": 1.5,
+    "sponge_layers": 4,
+    "min_peak_amp": 1e-08,
+    "reg_low_factor": 1,
+    "reg_z_low": -2,
+    "reg_z_full": -1
+  },
+  "preview_all_routes": true,
+  "uav_count": 600,
+  "seed": 20261009,
+  "selection": {
+    "method": "Retain6 original; deterministic farthest-point candidates with40m native-building/water and20m mappedpassenger-lane setback; connected50undirected pairs",
+    "water_path": "project/tower_hamlets/input/expanded4km_20261008/water/water_8m.npy",
+    "roads_path": "cache/tower_hamlets/city_presentation022/traffic/roads.json",
+    "canopy": "unknown",
+    "ground": "estimated flat context, not surveyed landing facilities"
+  }
+}

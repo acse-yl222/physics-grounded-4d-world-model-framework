@@ -63,3 +63,11 @@ Build with `tools/build_public_site.py <pages-checkout>`, then explicitly select
 assets with `tools/package_canary_pages.py <pages-checkout> <resources-checkout>`.
 The latter rejects an existing version and never pushes either repository. Run the
 resource checksum checker and the browser activity test before publication.
+
+The three-scene density update uses `tools/package_city_density.py` after the
+site build. Scene-specific `city_density026.json` files select retained traffic
+exports; only browser replay assets are published. South Kensington's historical
+five-float replay adapter keeps its camera/bird integrations, while White City and
+Canary Wharf use the compact recorded replay adapter. Both preserve actual sample
+times. Geometry chunks and environmental fields are unchanged. Runtime traffic
+closures and residual validation limitations belong in the scene/run metadata.
