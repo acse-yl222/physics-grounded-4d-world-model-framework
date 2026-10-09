@@ -22,3 +22,7 @@ Validate protocol examples with `python3 tools/check_contract.py examples/contra
 Install its dependencies from `tools/requirements-contract.txt` if needed. Additional
 behavioral checks depend on the simulation/widget being changed. Publication of future
 runs or changes requires authorization for that task; this file grants none.
+
+All changes must pass the `E2E smoke` CI check. Use `make test-e2e` for the local
+equivalent; setup, coverage and required merge-rule configuration are documented in
+`docs/framework/e2e-ci.md`. Keep this check unconditional for pull requests.

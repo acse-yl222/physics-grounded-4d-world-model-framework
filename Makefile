@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: format format-check test test-python test-js test-browser
+.PHONY: format format-check test test-python test-js test-browser test-e2e
 
 format:
 	$(PYTHON) tools/format.py --write
@@ -20,3 +20,6 @@ test-js:
 
 test-browser:
 	$(PYTHON) tools/check_browser.py
+
+test-e2e:
+	$(PYTHON) tools/check_e2e.py
