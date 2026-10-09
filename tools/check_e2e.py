@@ -12,6 +12,7 @@ import time
 
 import numpy as np
 from e2e_fixture import create_workspace
+from check_browser import chrome_path, viewer_server
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -74,6 +75,77 @@ def check_pipeline(base, output):
     return workspace
 
 
+def retain_binary_fixture(base, workspace, output):
+    source = base / "binary-bundle"
+    run = source / "synthetic_masked_grid"
+    shutil.copytree(ROOT / "examples/contract-v1.1", run)
+    manifest = json.loads((run / "manifest.json").read_text())
+    layer = manifest["layers"][0]
+    frames = np.concatenate([np.load(run / name) for name in layer["encoding"]["frame_assets"]])
+    np.save(run / "flow.npy", frames)
+    full = json.loads(json.dumps(layer))
+    full.update(id="flow_full", format="npy", asset="flow.npy")
+    full["encoding"].pop("frame_assets")
+    manifest["layers"].append(full)
+    (run / "manifest.json").write_text(json.dumps(manifest))
+    project = json.loads((workspace / "project/south_ken/project.json").read_text())
+    (source / "bundle.json").write_text(
+        json.dumps(
+            {
+                "scene_id": "south_ken",
+                "view_id": "binary_check",
+                "project": project,
+                "runs": [manifest["run_id"]],
+                "view": {
+                    "schema_version": "1.1.0",
+                    "scene_id": "south_ken",
+                    "title": "E2E binary data",
+                    "time_alignment": "relative",
+                    "runs": [manifest["run_id"]],
+                    "layers": [
+                        {"run_id": manifest["run_id"], "layer_id": item["id"], "visible": True}
+                        for item in manifest["layers"]
+                    ],
+                },
+            }
+        )
+    )
+    run_cli(workspace, output, "retain", source)
+    mask = np.load(run / "mask.npy")
+    heights = np.load(run / "height.npy")
+    indices = np.flatnonzero(mask.ravel() == 0)
+    expected = {
+        "indices": indices.tolist(),
+        "positions": [
+            [float(i % 5 + 0.5), float(i // 5 + 0.5), float(1 + heights.ravel()[i])]
+            for i in indices
+        ],
+        "values": ((frames[0] + frames[1]) / 2).reshape(3, -1)[:, indices].T.tolist(),
+    }
+    (output / "binary-expected.json").write_text(json.dumps(expected))
+    shutil.rmtree(source)
+
+
+def check_browser(workspace, output):
+    chrome = chrome_path()
+    with viewer_server(workspace, output) as url:
+        env = dict(os.environ, CHROME_PATH=chrome, UWM_BROWSER_OUTPUT=str(output))
+        for script, target in (
+            (
+                "browser_contract.cjs",
+                "src/visualization/viewer/?manifest=/examples/contract-v1/manifest.json",
+            ),
+            ("browser_e2e.cjs", "src/visualization/viewer/?scene=south_ken&view=run_e2e_smoke"),
+        ):
+            env["UWM_VIEWER_URL"] = url + target
+            env["UWM_BROWSER_OUTPUT"] = str(
+                output / "json" if script == "browser_contract.cjs" else output
+            )
+            subprocess.run(
+                ["node", str(ROOT / "tests" / script)], cwd=ROOT, env=env, check=True, timeout=60
+            )
+
+
 def main():
     output = ROOT / "cache/framework/e2e"
     output.mkdir(parents=True, exist_ok=True)
@@ -82,7 +154,10 @@ def main():
     report = {"passed": False}
     try:
         with tempfile.TemporaryDirectory() as directory:
-            check_pipeline(Path(directory), output)
+            base = Path(directory)
+            workspace = check_pipeline(base, output)
+            retain_binary_fixture(base, workspace, output)
+            check_browser(workspace, output)
         report["passed"] = True
     except Exception as exc:
         report["error"] = str(exc)

@@ -9,8 +9,9 @@
     headless: true,
     args: ['--no-sandbox', '--enable-unsafe-swiftshader'],
   });
+  let page;
   try {
-    const page = await browser.newPage();
+    page = await browser.newPage();
     await page.setViewport({ width: 1440, height: 900 });
     const errors = [];
     page.on('pageerror', (e) => errors.push(e.message));
@@ -53,7 +54,7 @@
     if (await page.evaluate(() => urbanViewer.widgets[1].group.visible))
       throw Error('Visibility toggle failed');
     await page.click('#layers .layer:nth-child(2) input[type=checkbox]');
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await page.waitForFunction(() => urbanViewer.widgets[1].group.visible);
     await page.screenshot({ path: path.join(output, 'unified-viewer.png') });
     const after = await page.evaluate(() => {
       urbanViewer.setTime(99);
@@ -71,6 +72,9 @@
     const report = { initial, selected, mid, outOfRange: after, disposal, errors };
     fs.writeFileSync(path.join(output, 'report.json'), JSON.stringify(report, null, 2));
     console.log(JSON.stringify(report, null, 2));
+  } catch (error) {
+    await page?.screenshot({ path: path.join(output, 'failure.png') }).catch(() => {});
+    throw error;
   } finally {
     await browser.close();
   }
