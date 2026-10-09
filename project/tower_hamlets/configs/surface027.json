@@ -1,0 +1,10 @@
+{
+  "geometry": "project/tower_hamlets/runs/canary_wharf_geometry4m027/full",
+  "terrain": "cache/tower_hamlets/surface027/terrain",
+  "cell_m": 4,
+  "duration_s": 600,
+  "snapshot_s": 60,
+  "rain_mm_h": 50,
+  "epoch_utc": "2026-06-21T12:00:00Z",
+  "mode": "controlled scenario, not measured weather/hazard"
+}

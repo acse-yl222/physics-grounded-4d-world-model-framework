@@ -1,0 +1,63 @@
+{
+  "scene_id": "tower_hamlets",
+  "base_run": "canary_wharf_city_activity_026",
+  "title": "Canary Wharf \u00b7 near-ground city scenarios",
+  "description": "4 m inferred near-ground wind, controlled tracer, sunlight and terrain-limited flooding alongside recorded traffic and UAVs.",
+  "fields": {
+    "wind": {
+      "run_id": "canary_wharf_wind4m027",
+      "layer_id": "wind_z2m",
+      "label": "Wind \u00b7 2 m height \u00b7 4 m grid \u00b7 SCALED",
+      "display_options": {
+        "particle_time_scale": 1,
+        "sample_labels": [
+          "Model step 80 \u00b7 interpreted time, not calibrated",
+          "Model step 90 \u00b7 interpreted time, not calibrated",
+          "Model step 100 \u00b7 interpreted time, not calibrated"
+        ]
+      }
+    },
+    "temp": {
+      "run_id": "canary_wharf_temperature021_4km_accepted",
+      "layer_id": "air_temperature_8m",
+      "label": "Air temperature \u00b7 8 m"
+    },
+    "solar": {
+      "run_id": "canary_wharf_sunlight027",
+      "layer_id": "sunlight",
+      "label": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
+      "sun_positions_asset": "raw/sun_positions.json"
+    },
+    "shadow": {
+      "run_id": "canary_wharf_sunlight027",
+      "layer_id": "shadow",
+      "label": "Sunlight \u00b7 geometry shadows"
+    },
+    "poll": {
+      "run_id": "canary_wharf_pollution027",
+      "layer_id": "near_ground_tracer",
+      "label": "Pollution \u00b7 planar road tracer \u00b7 2 m \u00b7 arbitrary units"
+    },
+    "flood": {
+      "run_id": "canary_wharf_flood027",
+      "layer_id": "flooding",
+      "label": "Flooding \u00b7 measured terrain core \u00b7 4 m grid"
+    }
+  },
+  "solar_date": "20260621",
+  "solar_label": "21 June \u00b7 noon \u00b7 clear sky",
+  "limits": [
+    "Controlled scenarios, not observed weather or live traffic.",
+    "Traffic: seeded passenger-car demand and inferred signal timings; flat bridge/tunnel elevations.",
+    "\u00a9 OpenStreetMap contributors; Overture Maps Foundation. Heights and architectural detail include estimates.",
+    "UAV stations are demonstration sites; canopy and real-world landing access are unverified. Aircraft share paths without fleet collision scheduling.",
+    "Traffic uses synthetic demand and inferred junctions with explicit temporary model closures, not observed road closures or measured flows.",
+    "Traffic replay covers actual simulation seconds 1\u20131200; default starts at 600 s. Environmental fields and UAV clocks remain independent.",
+    "Traffic has 3 recorded junction collision events and 0 teleports; intersection behaviour remains unvalidated.",
+    "Wind is SCALED inference on a true 4 m source grid, sampled at local height 2 m; particle motion uses 1\u00d7 vector speed.",
+    "Wind model steps are not calibrated physical time; each scenario uses an independent clock. Overlay shows the selected final independent field frames.",
+    "Temperature remains the earlier 32 m controlled result forced by the earlier wind; it has not been recomputed from the new inferred wind.",
+    "Pollution is a 2-D conservative passive tracer with arbitrary uniform road emissions, not a calibrated pollutant forecast.",
+    "Flooding uses measured EA terrain only within the core; blank cells have no valid model result, not zero hazard. Depth is shown on a flat display plane, not surveyed 3-D flood surface."
+  ]
+}

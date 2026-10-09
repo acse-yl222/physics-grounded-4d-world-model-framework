@@ -1,0 +1,12 @@
+{
+  "scene_id": "tower_hamlets",
+  "run_id": "canary_wharf_pollution027",
+  "wind_run": "canary_wharf_wind4m027",
+  "wind_layer": "wind_z2m",
+  "traffic_run": "sumo_20261009T003118Z_e3abe3",
+  "source_rate_au_s": 0.01,
+  "diffusion_m2_s": 1.0,
+  "duration_s": 600,
+  "save_interval_s": 30,
+  "scenario": "Controlled planar near-ground road tracer with frozen inferred wind; arbitrary emissions and concentration units, not measured pollution."
+}

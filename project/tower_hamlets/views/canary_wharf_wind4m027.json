@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "tower_hamlets",
+  "title": "Canary Wharf \u00b7 4 m SCALED wind \u00b7 2 m near-ground layer",
+  "time_alignment": "relative",
+  "runs": [
+    "canary_wharf_geometry4m027",
+    "canary_wharf_wind4m027"
+  ],
+  "layers": [
+    {
+      "run_id": "canary_wharf_geometry4m027",
+      "layer_id": "geometry",
+      "visible": true
+    },
+    {
+      "run_id": "canary_wharf_wind4m027",
+      "layer_id": "wind_z2m",
+      "visible": true
+    },
+    {
+      "run_id": "canary_wharf_wind4m027",
+      "layer_id": "wind_z6m",
+      "visible": false
+    },
+    {
+      "run_id": "canary_wharf_wind4m027",
+      "layer_id": "wind_z10m",
+      "visible": false
+    },
+    {
+      "run_id": "canary_wharf_wind4m027",
+      "layer_id": "wind_z26m",
+      "visible": false
+    }
+  ],
+  "camera": {
+    "position": [
+      850,
+      -1050,
+      900
+    ],
+    "target": [
+      0,
+      0,
+      35
+    ]
+  }
+}

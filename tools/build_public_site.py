@@ -49,7 +49,11 @@ def main():
     for scene in ['south_ken', 'white_city']:
         config=Path(f'project/{scene}/configs/uav_visualization.json')
         (target/config).parent.mkdir(parents=True,exist_ok=True)
-        shutil.copy2(ROOT/config,target/config)
+        previous=json.loads((target/config).read_text()) if (target/config).exists() else {}
+        selected=json.loads((ROOT/config).read_text())
+        if selected.get('traffic_replay','').startswith('../runs/') and previous.get('traffic_replay'):
+            selected['traffic_replay']=previous['traffic_replay']
+        (target/config).write_text(json.dumps(selected,indent=2)+'\n')
         routes=Path(f'project/{scene}/input/uav_routes_ground_20261007')
         shutil.copytree(ROOT/routes,target/routes,dirs_exist_ok=True)
     print(f'Built public viewer at {target}; existing legacy routes preserved.')

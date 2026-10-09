@@ -13,7 +13,7 @@ export async function loadScene() {
   const r = await fetch(base + 'scene.json', { cache: 'no-cache' });
   if (!r.ok) throw new Error(`scene ${id}: ${base}scene.json is missing (HTTP ${r.status})`);
   const scene = await r.json();
-  scene.id = id; scene.base = base; scene.physics = base + 'physics/'; scene.index = index;
+  scene.id = id; scene.base = base; scene.physics = new URL(scene.physics_dir ?? 'physics/', base).href; scene.index = index;
   scene.url = rel => new URL(rel, base).href;
   return scene;
 }

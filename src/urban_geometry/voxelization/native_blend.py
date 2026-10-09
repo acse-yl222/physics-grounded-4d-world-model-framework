@@ -69,7 +69,7 @@ def selftest():
 
 def main():
     ap=argparse.ArgumentParser();ap.add_argument('--source',type=Path,required=True);ap.add_argument('--out',type=Path,required=True);ap.add_argument('--spacing',type=float,default=8);ap.add_argument('--origin',nargs=3,type=float,default=[-1120,-1008,0]);ap.add_argument('--shape',nargs=3,type=int,default=[64,256,256]);args=ap.parse_args(sys.argv[sys.argv.index('--')+1:]);start=time.time();args.out.mkdir(parents=True,exist_ok=True)
-    tests=selftest();tests.update(surface.selftest(box));sourcehash=hashlib.file_digest(args.source.open('rb'),'sha256').hexdigest();bpy.ops.wm.open_mainfile(filepath=str(args.source));origin=np.array(args.origin);nz,ny,nx=args.shape;cell=args.spacing;solid=np.zeros((nz,ny,nx),bool);centres=[origin[i]+(np.arange([nx,ny,nz][i])+.5)*cell for i in range(3)];counts=collections.Counter();bad=[];records=[];sampleproof=[]
+    tests=selftest();tests.update(surface.selftest(box));sourcehash=hashlib.file_digest(args.source.open('rb'),'sha256').hexdigest();bpy.ops.wm.open_mainfile(filepath=str(args.source));origin=np.array(args.origin);nz,ny,nx=args.shape;cell=args.spacing;solid=np.zeros((nz,ny,nx),bool);surface_height=np.zeros((ny,nx),np.float32);centres=[origin[i]+(np.arange([nx,ny,nz][i])+.5)*cell for i in range(3)];counts=collections.Counter();bad=[];records=[];sampleproof=[]
     for oi,ob in enumerate(bpy.data.objects):
         if ob.type!='MESH':continue
         owner=ob.get('building_id');name=ob.name
@@ -86,6 +86,18 @@ def main():
         for p in ob.data.polygons:
             ids=[int(inv[i])for i in p.vertices];faces.append(ids)
             for j in ids[1:]:a,b=find(ids[0]),find(j);parent[b]=a
+        # Direct top intersections at the requested XY centres, independent of
+        # vertical voxel origin/quantization and usable by surface physics.
+        lo_all=vs.min(0);hi_all=vs.max(0)
+        hx=np.where((centres[0]>=lo_all[0])&(centres[0]<=hi_all[0]))[0]
+        hy=np.where((centres[1]>=lo_all[1])&(centres[1]<=hi_all[1]))[0]
+        if len(hx) and len(hy):
+            roof_tree=BVHTree.FromPolygons(vs.tolist(),faces)
+            for iy in hy:
+                for ix in hx:
+                    hit,_,_,_=roof_tree.ray_cast(Vector((float(centres[0][ix]),float(centres[1][iy]),float(hi_all[2]+1))),Vector((0,0,-1)),float(hi_all[2]-lo_all[2]+2))
+                    if hit is not None:surface_height[iy,ix]=max(surface_height[iy,ix],float(hit.z))
+            del roof_tree
         groups=collections.defaultdict(list)
         for f in faces:groups[find(f[0])].append(f)
         # Retain native closed solids separately; weld only unresolved surface
@@ -186,6 +198,6 @@ def main():
     counts['six_axis_enclosure_recovered_voxels']=sum(x['recovered_centres']for x in recovery)
     (args.out/'query_normal_corrections.json').write_text(json.dumps(normal_corrections,indent=2))
     (args.out/'material_split_enclosure_recovery.json').write_text(json.dumps(recovery,indent=2))
-    np.save(args.out/'solid.npy',solid,allow_pickle=False);np.save(args.out/'height_m.npy',np.max(np.where(solid,(np.arange(nz)[:,None,None]+1)*cell,0),axis=0).astype(np.float32));assert solid.any();assert not solid[-1].any()
-    meta={'source':str(args.source.resolve()),'source_sha256':sourcehash,'shape_zyx':list(solid.shape),'axis_order':'zyx','spacing_xyz_m':[cell]*3,'source_region_origin_xyz_m':args.origin,'origin_xyz_m':args.origin,'frame':'ENU','geographic_origin':{'longitude':-.0188,'latitude':51.5053,'height_m':0,'vertical_datum':'Unsurveyed flat local z=0, not ODN'},'cell_centres':'ENU_xyz=origin_xyz+(index_xyz+0.5)*spacing_xyz','ground_boundary':'flat z=0; source ground/water excluded from building occupancy','method':'Closed-component even-odd ray interval union; diagnosed large open/material-split owners additionally require actual outward-facing boundaries along all six axes per centre; world transforms applied','counts':dict(counts),'occupied_voxels':int(solid.sum()),'top_layer_empty':bool(not solid[-1].any()),'self_tests':tests,'seconds':time.time()-start,'limits':[f'{cell:g}m centre sampling misses subgrid equipment/walls; no claim conservative surface voxelization.','Open/nonmanifold components enumerated; large owner enclosures recovered only by six actual outward boundary hits, never column-filled.',f'Diagnosed material-split tier shells use owner-local conservative triangle-cell surfaces and enclosed-air fill; sub-{cell:g}m openings may close.', 'Mask represents estimated source exterior, not surveyed buildings.','Padding has no supplied geometry and is not evidence of empty real surroundings.']};(args.out/'metadata.json').write_text(json.dumps(meta,indent=2));(args.out/'diagnostics.json').write_text(json.dumps({'objects':records,'issues':bad,'native_interval_probes':sampleproof},indent=2));shutil.copy2(__file__,args.out/'native_blend_source.py');shutil.copy2(surface.__file__,args.out/'native_volume_surface.py');print(json.dumps(meta),flush=True)
+    np.save(args.out/'solid.npy',solid,allow_pickle=False);np.save(args.out/'height_m.npy',np.max(np.where(solid,origin[2]+(np.arange(nz)[:,None,None]+1)*cell,0),axis=0).astype(np.float32));np.save(args.out/'surface_height_m.npy',surface_height,allow_pickle=False);assert solid.any();assert not solid[-1].any()
+    meta={'source':str(args.source.resolve()),'source_sha256':sourcehash,'shape_zyx':list(solid.shape),'axis_order':'zyx','spacing_xyz_m':[cell]*3,'source_region_origin_xyz_m':args.origin,'origin_xyz_m':args.origin,'frame':'ENU','geographic_origin':{'longitude':-.0188,'latitude':51.5053,'height_m':0,'vertical_datum':'Unsurveyed flat local z=0, not ODN'},'cell_centres':'ENU_xyz=origin_xyz+(index_xyz+0.5)*spacing_xyz','surface_height_semantics':'Highest actual native triangle intersection at each requested XY cell centre, not occupancy upsampling or voxel ceiling','ground_boundary':'flat z=0; source ground/water excluded from building occupancy','method':'Closed-component even-odd ray interval union; diagnosed large open/material-split owners additionally require actual outward-facing boundaries along all six axes per centre; world transforms applied','counts':dict(counts),'occupied_voxels':int(solid.sum()),'top_layer_empty':bool(not solid[-1].any()),'self_tests':tests,'seconds':time.time()-start,'limits':[f'{cell:g}m centre sampling misses subgrid equipment/walls; no claim conservative surface voxelization.','Open/nonmanifold components enumerated; large owner enclosures recovered only by six actual outward boundary hits, never column-filled.',f'Diagnosed material-split tier shells use owner-local conservative triangle-cell surfaces and enclosed-air fill; sub-{cell:g}m openings may close.', 'Mask represents estimated source exterior, not surveyed buildings.','Padding has no supplied geometry and is not evidence of empty real surroundings.']};(args.out/'metadata.json').write_text(json.dumps(meta,indent=2));(args.out/'diagnostics.json').write_text(json.dumps({'objects':records,'issues':bad,'native_interval_probes':sampleproof},indent=2));shutil.copy2(__file__,args.out/'native_blend_source.py');shutil.copy2(surface.__file__,args.out/'native_volume_surface.py');print(json.dumps(meta),flush=True)
 if __name__=='__main__':main()
