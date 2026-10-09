@@ -93,6 +93,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      - run: python -m pip install -e .
       - run: make test-browser PYTHON=python
       - name: Upload synthetic viewer report
         if: always()
@@ -102,5 +103,6 @@ jobs:
           path: |
             cache/framework/browser/report.json
             cache/framework/browser/unified-viewer.png
+            cache/framework/browser/server.log
           if-no-files-found: ignore
           retention-days: 7
