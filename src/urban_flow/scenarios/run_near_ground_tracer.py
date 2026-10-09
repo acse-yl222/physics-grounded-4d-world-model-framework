@@ -48,12 +48,14 @@ def run(config_path):
     data.flush();del data
     np.save(out/'data/invalid.npy',invalid.astype('u1'));np.save(out/'provenance/source_rate.npy',source.astype('<f4'))
     np.save(out/'provenance/frozen_wind_enu.npy',uv)
+    write(out/'provenance/wind_snapshot.json',{'run_id':cfg['wind_run'],'layer_id':cfg['wind_layer'],'frame_index':len(wm['time']['samples'])-1,'recorded_time_s':wm['time']['samples'][-1],'height_m':z,'wind_asset_sha256':digest(wr/layer['asset']),'mask_asset_sha256':digest(wr/enc['mask_asset']),'time_semantics':cfg.get('wind_time_semantics','Frozen final recorded wind; independent tracer time.')})
     shutil.copy2(roads,out/'provenance/roads.json');shutil.copy2(config_path,out/'provenance/config.json')
     write(out/'provenance/mass_balance.json',rows)
     revision=snapshot_sources(storage.root,out/'source_snapshot.tar.gz')
     limits=['Controlled 2-D near-ground passive tracer, not 3-D dispersion or calibrated pollution/health exposure.',
             'Uniform arbitrary source rate on mapped road cells, not measured emissions or emissions derived from vehicle counts.',
             'Frozen final SCALED near-ground horizontal wind; no vertical exchange, chemistry or deposition.',
+            cfg.get('wind_time_semantics','Wind snapshot time and controlled tracer elapsed time are independent.'),
             'Scalar-conservative first-order upwind transport with isotropic diffusion; zero exterior inflow concentration and impermeable building faces.']
     artifacts=[{'id':'source_snapshot' if p.name=='source_snapshot.tar.gz' else p.relative_to(out).as_posix(),'asset':p.relative_to(out).as_posix(),'sha256':digest(p),'media_type':'application/octet-stream'} for p in sorted(out.rglob('*')) if p.is_file() and not p.is_relative_to(out/'data')]
     manifest={'schema_version':'1.1.0','scene_id':scene,'simulation':'pollution','run_id':cfg['run_id'],'status':'complete','created_at':datetime.now(timezone.utc).isoformat(),'spatial':wm['spatial'],'time':{'unit':'s','samples':times},'provenance':{'code_revision':revision,'dirty':True,'parameters':{'config':cfg,'limitations':limits,'source_cells':int(np.count_nonzero(source))},'inputs':[{'id':'wind_manifest','sha256':digest(wr/'manifest.json')},{'id':'roads','sha256':digest(roads)}]},'layers':[{'id':'near_ground_tracer','kind':'scalar_field','format':'npy','asset':'data/concentration.npy','sampling':'step','field':{'name':'Near-ground planar road tracer','unit':'a.u.'},'encoding':{'coordinate_frame':'ENU','dtype':'<f4','shape':[len(times),ny,nx],'axes':'TYX','origin_m':[x0,y0,z],'spacing_m':[dx,dx],'sample_location':'cell_center','byte_order':'little','compression':'none','mask_asset':'data/invalid.npy','mask_dtype':'|u1','mask_semantics':'invalid_nonzero'},'display':{'widget':'scalar_field','capabilities':['pick','legend','opacity'],'range':[.001,max(.01,float(model.c.max()))]}}],'artifacts':artifacts}

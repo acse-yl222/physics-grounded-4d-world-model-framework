@@ -36,7 +36,13 @@ if 'wind' in L:
 if 'temp' in L:
     t = L['temp']; LAYERS['temp'] = (t['file'], 'gray', t.get('web_range', t['range']), 'temperature C')
 if 'poll' in L:
-    LAYERS['poll'] = (L['poll']['file'], 'log10', [-1.0, 4.0], 'log10 concentration, range [-1, 4] (0.1 .. 1e4); stored log10(max(c, 0.1))')
+    p = L['poll']
+    if p.get('web_encoding') == 'log1p':
+        LAYERS['poll'] = (p['file'], 'log1p', p['web_range'], 'log10(1 + concentration/scale); preserves zero')
+    elif p.get('web_encoding') == 'linear':
+        LAYERS['poll'] = (p['file'], 'gray', p['web_range'], 'linear concentration; preserves zero')
+    else:
+        LAYERS['poll'] = (p['file'], 'log10', [-1.0, 4.0], 'log10 concentration, range [-1, 4] (0.1 .. 1e4); stored log10(max(c, 0.1))')
 if 'flood' in L:
     f = L['flood']; r = f.get('web_range', [0.0, 2.0])
     LAYERS['flood'] = (f['file'], 'gray', r, 'water depth m (values above the range saturate)')
@@ -72,7 +78,9 @@ for key, (rel, kind, rng, note) in LAYERS.items():
     for k in range(frames):
         fr = arr if static else arr[k]
         p = os.path.join(d, f'{k:03d}.png')
-        if kind == 'log10':
+        if kind == 'log1p':
+            img = q(np.log10(1 + np.maximum(fr.astype(np.float32), 0) / L['poll']['web_scale']), rng[0], rng[1]); Image.fromarray(img, 'L').save(p, optimize=True)
+        elif kind == 'log10':
             img = q(np.log10(np.maximum(fr.astype(np.float32), 0.1)), rng[0], rng[1]); Image.fromarray(img, 'L').save(p, optimize=True)
         elif kind == 'gray':
             img = q(fr, rng[0], rng[1]); Image.fromarray(img, 'L').save(p, optimize=True)
@@ -84,8 +92,19 @@ for key, (rel, kind, rng, note) in LAYERS.items():
             img = (m > 0).astype(np.uint8) * 255; Image.fromarray(img, 'L').convert('1').save(p, optimize=True)
         shape = list(img.shape[:2])
         total += os.path.getsize(p)
+    extension = L.get(key, {}).get('web_format', 'png')
+    if extension == 'webp':
+        total = 0
+        for k in range(frames):
+            p = os.path.join(d, f'{k:03d}.png'); qpath = os.path.join(d, f'{k:03d}.webp')
+            Image.open(p).save(qpath, lossless=True, method=6); os.remove(p); total += os.path.getsize(qpath)
+    elif extension != 'png': raise ValueError('Unsupported browser image format')
     rng_used = rng if rng is not None else [0, 1]
-    meta = {'source': rel, 'kind': 'gray' if kind == 'log10' else kind, 'range': rng_used, 'frames': frames, 'shape_yx': shape, 'note': note, 'bytes': total, 'avg_kb': round(total / frames / 1024, 1)}
+    meta = {'source': rel, 'kind': 'gray' if kind in ('log10', 'log1p') else kind, 'range': rng_used, 'frames': frames, 'shape_yx': shape, 'note': note, 'bytes': total, 'avg_kb': round(total / frames / 1024, 1)}
+    meta['extension'] = extension
+    if key == 'poll':
+        meta['value_transform'] = kind if kind in ('log10', 'log1p') else 'linear'
+        if kind == 'log1p': meta['value_scale'] = L['poll']['web_scale']
     index['layers'][key] = meta
     print(f'{key:16s} {frames:4d} frames  {total/1e6:6.1f} MB  {meta["avg_kb"]:6.1f} KB/frame  {time.time()-t0:5.1f} s', flush=True)
 json.dump(index, open(os.path.join(OUT, 'index.json'), 'w'), indent=1)

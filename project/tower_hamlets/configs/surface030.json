@@ -1,0 +1,11 @@
+{
+  "geometry": "project/tower_hamlets/runs/canary_wharf_geometry4m027/full",
+  "terrain": "project/tower_hamlets/runs/canary_wharf_flood027/terrain_inputs",
+  "cell_m": 4,
+  "duration_s": 600,
+  "rain_mm_h": 50,
+  "epoch_utc": "2026-06-21T12:00:00Z",
+  "mode": "controlled scenario, not measured weather/hazard",
+  "snapshot_count": 100,
+  "scenario_id": "surface030_independent_controlled"
+}

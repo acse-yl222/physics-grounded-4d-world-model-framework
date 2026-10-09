@@ -1,0 +1,205 @@
+{
+  "scene_id": "tower_hamlets",
+  "base_run": "canary_wharf_city_fields029",
+  "title": "Canary Wharf \u00b7 updated city scenarios",
+  "description": "100 direct 4 m surrogate wind frames; updated temperature, pollution, sunlight and flooding.",
+  "fields": {
+    "wind": {
+      "run_id": "canary_wharf_wind4m029",
+      "layer_id": "wind_z2_0m",
+      "label": "Wind speed \u00b7 2 m \u00b7 4 m inference grid",
+      "display_range": [
+        0,
+        1.6
+      ],
+      "display_options": {
+        "particle_time_scale": 60,
+        "rate": 12,
+        "web_range": [
+          -2.5,
+          2.5
+        ],
+        "legend": [
+          "0",
+          "|V| m/s",
+          "1.6"
+        ],
+        "sample_labels": [
+          "Model step 1 / 100 \u00b7 scaled interpreted t = 100 s",
+          "Model step 2 / 100 \u00b7 scaled interpreted t = 200 s",
+          "Model step 3 / 100 \u00b7 scaled interpreted t = 300 s",
+          "Model step 4 / 100 \u00b7 scaled interpreted t = 400 s",
+          "Model step 5 / 100 \u00b7 scaled interpreted t = 500 s",
+          "Model step 6 / 100 \u00b7 scaled interpreted t = 600 s",
+          "Model step 7 / 100 \u00b7 scaled interpreted t = 700 s",
+          "Model step 8 / 100 \u00b7 scaled interpreted t = 800 s",
+          "Model step 9 / 100 \u00b7 scaled interpreted t = 900 s",
+          "Model step 10 / 100 \u00b7 scaled interpreted t = 1000 s",
+          "Model step 11 / 100 \u00b7 scaled interpreted t = 1100 s",
+          "Model step 12 / 100 \u00b7 scaled interpreted t = 1200 s",
+          "Model step 13 / 100 \u00b7 scaled interpreted t = 1300 s",
+          "Model step 14 / 100 \u00b7 scaled interpreted t = 1400 s",
+          "Model step 15 / 100 \u00b7 scaled interpreted t = 1500 s",
+          "Model step 16 / 100 \u00b7 scaled interpreted t = 1600 s",
+          "Model step 17 / 100 \u00b7 scaled interpreted t = 1700 s",
+          "Model step 18 / 100 \u00b7 scaled interpreted t = 1800 s",
+          "Model step 19 / 100 \u00b7 scaled interpreted t = 1900 s",
+          "Model step 20 / 100 \u00b7 scaled interpreted t = 2000 s",
+          "Model step 21 / 100 \u00b7 scaled interpreted t = 2100 s",
+          "Model step 22 / 100 \u00b7 scaled interpreted t = 2200 s",
+          "Model step 23 / 100 \u00b7 scaled interpreted t = 2300 s",
+          "Model step 24 / 100 \u00b7 scaled interpreted t = 2400 s",
+          "Model step 25 / 100 \u00b7 scaled interpreted t = 2500 s",
+          "Model step 26 / 100 \u00b7 scaled interpreted t = 2600 s",
+          "Model step 27 / 100 \u00b7 scaled interpreted t = 2700 s",
+          "Model step 28 / 100 \u00b7 scaled interpreted t = 2800 s",
+          "Model step 29 / 100 \u00b7 scaled interpreted t = 2900 s",
+          "Model step 30 / 100 \u00b7 scaled interpreted t = 3000 s",
+          "Model step 31 / 100 \u00b7 scaled interpreted t = 3100 s",
+          "Model step 32 / 100 \u00b7 scaled interpreted t = 3200 s",
+          "Model step 33 / 100 \u00b7 scaled interpreted t = 3300 s",
+          "Model step 34 / 100 \u00b7 scaled interpreted t = 3400 s",
+          "Model step 35 / 100 \u00b7 scaled interpreted t = 3500 s",
+          "Model step 36 / 100 \u00b7 scaled interpreted t = 3600 s",
+          "Model step 37 / 100 \u00b7 scaled interpreted t = 3700 s",
+          "Model step 38 / 100 \u00b7 scaled interpreted t = 3800 s",
+          "Model step 39 / 100 \u00b7 scaled interpreted t = 3900 s",
+          "Model step 40 / 100 \u00b7 scaled interpreted t = 4000 s",
+          "Model step 41 / 100 \u00b7 scaled interpreted t = 4100 s",
+          "Model step 42 / 100 \u00b7 scaled interpreted t = 4200 s",
+          "Model step 43 / 100 \u00b7 scaled interpreted t = 4300 s",
+          "Model step 44 / 100 \u00b7 scaled interpreted t = 4400 s",
+          "Model step 45 / 100 \u00b7 scaled interpreted t = 4500 s",
+          "Model step 46 / 100 \u00b7 scaled interpreted t = 4600 s",
+          "Model step 47 / 100 \u00b7 scaled interpreted t = 4700 s",
+          "Model step 48 / 100 \u00b7 scaled interpreted t = 4800 s",
+          "Model step 49 / 100 \u00b7 scaled interpreted t = 4900 s",
+          "Model step 50 / 100 \u00b7 scaled interpreted t = 5000 s",
+          "Model step 51 / 100 \u00b7 scaled interpreted t = 5100 s",
+          "Model step 52 / 100 \u00b7 scaled interpreted t = 5200 s",
+          "Model step 53 / 100 \u00b7 scaled interpreted t = 5300 s",
+          "Model step 54 / 100 \u00b7 scaled interpreted t = 5400 s",
+          "Model step 55 / 100 \u00b7 scaled interpreted t = 5500 s",
+          "Model step 56 / 100 \u00b7 scaled interpreted t = 5600 s",
+          "Model step 57 / 100 \u00b7 scaled interpreted t = 5700 s",
+          "Model step 58 / 100 \u00b7 scaled interpreted t = 5800 s",
+          "Model step 59 / 100 \u00b7 scaled interpreted t = 5900 s",
+          "Model step 60 / 100 \u00b7 scaled interpreted t = 6000 s",
+          "Model step 61 / 100 \u00b7 scaled interpreted t = 6100 s",
+          "Model step 62 / 100 \u00b7 scaled interpreted t = 6200 s",
+          "Model step 63 / 100 \u00b7 scaled interpreted t = 6300 s",
+          "Model step 64 / 100 \u00b7 scaled interpreted t = 6400 s",
+          "Model step 65 / 100 \u00b7 scaled interpreted t = 6500 s",
+          "Model step 66 / 100 \u00b7 scaled interpreted t = 6600 s",
+          "Model step 67 / 100 \u00b7 scaled interpreted t = 6700 s",
+          "Model step 68 / 100 \u00b7 scaled interpreted t = 6800 s",
+          "Model step 69 / 100 \u00b7 scaled interpreted t = 6900 s",
+          "Model step 70 / 100 \u00b7 scaled interpreted t = 7000 s",
+          "Model step 71 / 100 \u00b7 scaled interpreted t = 7100 s",
+          "Model step 72 / 100 \u00b7 scaled interpreted t = 7200 s",
+          "Model step 73 / 100 \u00b7 scaled interpreted t = 7300 s",
+          "Model step 74 / 100 \u00b7 scaled interpreted t = 7400 s",
+          "Model step 75 / 100 \u00b7 scaled interpreted t = 7500 s",
+          "Model step 76 / 100 \u00b7 scaled interpreted t = 7600 s",
+          "Model step 77 / 100 \u00b7 scaled interpreted t = 7700 s",
+          "Model step 78 / 100 \u00b7 scaled interpreted t = 7800 s",
+          "Model step 79 / 100 \u00b7 scaled interpreted t = 7900 s",
+          "Model step 80 / 100 \u00b7 scaled interpreted t = 8000 s",
+          "Model step 81 / 100 \u00b7 scaled interpreted t = 8100 s",
+          "Model step 82 / 100 \u00b7 scaled interpreted t = 8200 s",
+          "Model step 83 / 100 \u00b7 scaled interpreted t = 8300 s",
+          "Model step 84 / 100 \u00b7 scaled interpreted t = 8400 s",
+          "Model step 85 / 100 \u00b7 scaled interpreted t = 8500 s",
+          "Model step 86 / 100 \u00b7 scaled interpreted t = 8600 s",
+          "Model step 87 / 100 \u00b7 scaled interpreted t = 8700 s",
+          "Model step 88 / 100 \u00b7 scaled interpreted t = 8800 s",
+          "Model step 89 / 100 \u00b7 scaled interpreted t = 8900 s",
+          "Model step 90 / 100 \u00b7 scaled interpreted t = 9000 s",
+          "Model step 91 / 100 \u00b7 scaled interpreted t = 9100 s",
+          "Model step 92 / 100 \u00b7 scaled interpreted t = 9200 s",
+          "Model step 93 / 100 \u00b7 scaled interpreted t = 9300 s",
+          "Model step 94 / 100 \u00b7 scaled interpreted t = 9400 s",
+          "Model step 95 / 100 \u00b7 scaled interpreted t = 9500 s",
+          "Model step 96 / 100 \u00b7 scaled interpreted t = 9600 s",
+          "Model step 97 / 100 \u00b7 scaled interpreted t = 9700 s",
+          "Model step 98 / 100 \u00b7 scaled interpreted t = 9800 s",
+          "Model step 99 / 100 \u00b7 scaled interpreted t = 9900 s",
+          "Model step 100 / 100 \u00b7 scaled interpreted t = 10000 s"
+        ],
+        "web_format": "webp"
+      }
+    },
+    "temp": {
+      "run_id": "canary_wharf_temperature030",
+      "layer_id": "air_temperature_8m",
+      "label": "Air temperature \u00b7 8 m \u00b7 32 m grid",
+      "display_options": {
+        "web_range": [
+          20,
+          55
+        ]
+      }
+    },
+    "solar": {
+      "run_id": "canary_wharf_sunlight030",
+      "layer_id": "sunlight",
+      "label": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
+      "sun_positions_asset": "raw/sun_positions.json",
+      "display_options": {
+        "web_range": [
+          0,
+          1200
+        ]
+      }
+    },
+    "shadow": {
+      "run_id": "canary_wharf_sunlight030",
+      "layer_id": "shadow",
+      "label": "Sunlight \u00b7 geometry shadows"
+    },
+    "poll": {
+      "run_id": "canary_wharf_pollution030",
+      "layer_id": "near_ground_tracer",
+      "label": "Pollution \u00b7 planar road tracer \u00b7 2 m \u00b7 arbitrary units",
+      "display_options": {
+        "web_encoding": "log1p",
+        "web_scale": 0.001,
+        "web_range": [
+          0,
+          4.523543492590745
+        ]
+      }
+    },
+    "flood": {
+      "run_id": "canary_wharf_flood030",
+      "layer_id": "flooding",
+      "label": "Flooding \u00b7 measured terrain core \u00b7 4 m grid",
+      "display_options": {
+        "web_range": [
+          0,
+          0.5
+        ]
+      }
+    }
+  },
+  "solar_date": "20260621",
+  "solar_label": "21 June \u00b7 noon \u00b7 clear sky",
+  "limits": [
+    "Controlled scenarios, not observed weather or live traffic.",
+    "Traffic: seeded passenger-car demand and inferred signal timings; flat bridge/tunnel elevations.",
+    "\u00a9 OpenStreetMap contributors; Overture Maps Foundation. Heights and architectural detail include estimates.",
+    "UAV stations are demonstration sites; canopy and real-world landing access are unverified. Aircraft share paths without fleet collision scheduling.",
+    "Traffic uses synthetic demand and inferred junctions with explicit temporary model closures, not observed road closures or measured flows.",
+    "Traffic replay covers actual simulation seconds 1\u20131200; default starts at 600 s. Environmental fields and UAV clocks remain independent.",
+    "Traffic has 3 recorded junction collision events and 0 teleports; intersection behaviour remains unvalidated.",
+    "Wind model steps are not calibrated physical time; each scenario uses an independent clock. Overlay shows the selected final independent field frames.",
+    "Pollution is a 2-D conservative passive tracer with arbitrary uniform road emissions, not a calibrated pollutant forecast.",
+    "Flooding uses measured EA terrain only within the core; blank cells have no valid model result, not zero hazard. Depth is shown on a flat display plane, not surveyed 3-D flood surface.",
+    "Streamline particles follow SouthKen 60\u00d7 visual advection, not real-time physical trajectories.",
+    "Wind uses a 1 m-trained surrogate directly on 4 m cells, with interpreted dt scaled 4\u00d7 to 100 s. This is a user-selected scale-transfer assumption, not validated physical similarity.",
+    "Wind records all 100 model steps; default sample height is 2 m. Numerical ground is at -2 m; vertical domain extends to 252 m.",
+    "Temperature uses a 32 m horizontal / 16 m vertical physical grid, forced by the frozen final wind029 snapshot; its 600 s clock is independent of the scaled surrogate time.",
+    "Pollution uses the frozen final wind029 2 m slice over its own 600 s transport experiment; source rates are arbitrary, not observed emissions.",
+    "Sunlight and flooding each record 100 computed states across their independent 600 s scenarios; they do not inherit wind model time."
+  ]
+}

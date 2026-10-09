@@ -1,0 +1,15 @@
+{
+  "scene_id": "tower_hamlets",
+  "run_id": "canary_wharf_pollution030",
+  "wind_run": "canary_wharf_wind4m029",
+  "wind_layer": "wind_z2_0m",
+  "traffic_run": "sumo_20261009T003118Z_e3abe3",
+  "source_rate_au_s": 0.01,
+  "diffusion_m2_s": 1.0,
+  "duration_s": 600,
+  "save_interval_s": 30,
+  "scenario": "Controlled planar road tracer using frozen final029 inferred2mwind; arbitraryemissions/concentration, not measuredpollution.",
+  "wind_frame_index": -1,
+  "wind_snapshot_model_step": 100,
+  "wind_time_semantics": "Frozen final surrogate snapshot: interpreted10000s/modelstep100; not calibrated physicaltime. Tracer0\u2013600s is a separate controlled transport clock."
+}

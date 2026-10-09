@@ -1,0 +1,43 @@
+{
+  "geometry": "project/tower_hamlets/runs/canary_wharf_geometry4m027/full/solid.npy",
+  "output": "cache/tower_hamlets/scaled029",
+  "scaled_repository": "/home/yl222/workspace/SCALED/SCALED-Tutorial",
+  "shape_zyx": [
+    64,
+    1024,
+    1024
+  ],
+  "origin_enu_m": [
+    -2048,
+    -2048,
+    -4
+  ],
+  "fine_cell_m": 4,
+  "output_cell_m": 4,
+  "sample_coarse_indices": [
+    1,
+    2,
+    3
+  ],
+  "seed": 0,
+  "limitations": [
+    "Model trained at1m applied directly at4m peruser assumption; no4\u00b3 reduction or upsampling.",
+    "Time interpreted100s/modelstep by spatialscale x4; physicalsimilarity notvalidated.",
+    "All100 modelsteps independently decoded; no repeated or interpolated frames.",
+    "Numericalgroundindex0center\u22122m solid; firstfluidcenter2m, domainshift unvalidated.",
+    "4mgrid256mdepth reaches252m; sourcegeometry unchanged.",
+    "Pretrained surrogate not calibrated CFD or measuredweather."
+  ],
+  "scene_bounds_xy_m": [
+    -2000,
+    -2000,
+    2000,
+    2000
+  ],
+  "interpreted_seconds_per_model_step": 100,
+  "sample_heights_m": [
+    2.0,
+    6.0,
+    10.0
+  ]
+}

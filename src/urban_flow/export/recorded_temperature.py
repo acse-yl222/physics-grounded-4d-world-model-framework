@@ -16,7 +16,7 @@ def main():
  for f in raw.iterdir():
   if f.is_file():
    target=O/'provenance'/f.name;shutil.copy2(f,target);artifacts.append({'id':f.name,'asset':str(target.relative_to(O)),'sha256':sha(target),'media_type':'application/octet-stream'})
- sources=[Path(x)for x in read(raw/'runtime_identity.json')['source_hashes']];sources+=[Path(__file__).resolve(),st.metadata(a.scene)/'configs/temperature021.json']
+ sources=[Path(x)for x in read(raw/'runtime_identity.json')['source_hashes']];sources+=[Path(__file__).resolve(),raw/'config.json']
  with zipfile.ZipFile(O/'source_snapshot.zip','w',zipfile.ZIP_DEFLATED)as z:
   for f in sources:
    if not f.is_absolute():f=st.root/f
