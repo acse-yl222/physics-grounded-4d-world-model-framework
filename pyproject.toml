@@ -51,3 +51,30 @@ quote-style = "double"
 indent-style = "space"
 line-ending = "lf"
 docstring-code-format = false
+
+# `make lint` applies Ruff's default rule set to the files tools/format.py selects.
+[tool.ruff.lint]
+# Frozen upstream sources, research handoffs and member code keep their recorded text.
+exclude = [
+    "src/urban_geometry/mfmu-uwm-integration-preview/**",
+    "src/urban_flow/physics/environment-integration/**",
+    "src/urban_flow/physics/wind_pollution_code/**",
+    "src/urban_flow/physics/wind_temperature_teacher/**",
+    "src/urban_flow/reference_public/**",
+    "src/urban_flow/scenarios/region/AI4Urban_reference.py",
+]
+
+[tool.ruff.lint.flake8-comprehensions]
+# dict(key=value) is the repository's idiom for JSON records.
+allow-dict-calls-with-keyword-arguments = true
+
+[tool.ruff.lint.per-file-ignores]
+# Building modules import only math; zip(ring, ring[1:]) names polygon edges.
+"src/urban_geometry/agent/buildings/*.py" = ["B023", "RUF007"]
+# Geometry and plotting helpers here are defined per loop iteration and called only within
+# that iteration, so the loop variables they read cannot be bound late.
+"src/urban_geometry/agent/entry_supports.py" = ["B023"]
+"src/urban_geometry/agent/public_realm_crossings.py" = ["B023"]
+"src/urban_geometry/agent/public_realm_fixtures.py" = ["B023"]
+"src/urban_geometry/agent/urban_building.py" = ["B023"]
+"src/urban_flow/physics/plot_core008_solar.py" = ["B023"]
