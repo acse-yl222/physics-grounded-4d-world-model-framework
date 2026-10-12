@@ -1,0 +1,30 @@
+{
+  "total_bytes": 90633868,
+  "sha256": "a544c260c99f78069f9c74c42e116477f7768016497d7aa8c696ddb8e8828702",
+  "parts": [
+    {
+      "file": "0000.gz",
+      "bytes": 33554432,
+      "compressed_bytes": 5991429,
+      "sha256": "767c3162def1fbe8395a1d8475fd5f1249f8c151353da8941af67a4d9d2a3afa",
+      "offset": 0,
+      "encoding": "gzip"
+    },
+    {
+      "file": "0001.gz",
+      "bytes": 33554432,
+      "compressed_bytes": 4450019,
+      "sha256": "0d4aa496c78c42bb2f81ca60e198e7c2976f037ebdde8cb3a700009c5d1fc3c2",
+      "offset": 33554432,
+      "encoding": "gzip"
+    },
+    {
+      "file": "0002.gz",
+      "bytes": 23525004,
+      "compressed_bytes": 3292069,
+      "sha256": "58d20cb09e13e9b8e6ebc6c9437fa2c76b6df0679326b12fb5afc6af1b1736a1",
+      "offset": 67108864,
+      "encoding": "gzip"
+    }
+  ]
+}

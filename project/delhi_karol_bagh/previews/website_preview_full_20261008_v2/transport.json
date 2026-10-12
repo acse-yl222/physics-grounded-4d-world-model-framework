@@ -1,0 +1,307 @@
+{
+  "schema_version": "1.0.0",
+  "encoding": "lossless-gzip-chunks",
+  "npy": {
+    "masks/asphalt_8m_yx.npy": {
+      "total_bytes": 49280,
+      "sha256": "d88c417d718ae0707ce3550a028776f71a43820e46d5944ef6c39d0c018a4674",
+      "parts": [
+        {
+          "file": "packed/masks/asphalt_8m_yx.npy/0000.gz",
+          "bytes": 49280,
+          "compressed_bytes": 1236,
+          "sha256": "937604fd7cb3bf6510033aba545c72756dff25c6d7bd534ed8022c60a8ab49a6",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|b1",
+        "shape": [
+          256,
+          192
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 192
+      }
+    },
+    "masks/building_footprint_2m_yx.npy": {
+      "total_bytes": 786560,
+      "sha256": "c2e6aae177fb63f58ec316ca91877b286e3502cdd1daa2b82be97dfec7d965f8",
+      "parts": [
+        {
+          "file": "packed/masks/building_footprint_2m_yx.npy/0000.gz",
+          "bytes": 786560,
+          "compressed_bytes": 6857,
+          "sha256": "0a4f7bc287fba4e677cf67a6dd47178005a292bdaa4e3406d27fc1375e2f54f0",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|b1",
+        "shape": [
+          1024,
+          768
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 768
+      }
+    },
+    "masks/building_footprint_8m_yx.npy": {
+      "total_bytes": 49280,
+      "sha256": "f01abc319e873db7471887500d3d911a679e5c8cda0941a628016ef201697a9c",
+      "parts": [
+        {
+          "file": "packed/masks/building_footprint_8m_yx.npy/0000.gz",
+          "bytes": 49280,
+          "compressed_bytes": 661,
+          "sha256": "1937b9fac661a02ae8ae5374be8b9915c321f0c0bbd3d4f3740a3d1164047b9d",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|b1",
+        "shape": [
+          256,
+          192
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 192
+      }
+    },
+    "masks/canopy_8m_yx.npy": {
+      "total_bytes": 49280,
+      "sha256": "bb829b1d42920fe13d5e036aca3f624357b88d743f328819f67b7ccbc724cfd7",
+      "parts": [
+        {
+          "file": "packed/masks/canopy_8m_yx.npy/0000.gz",
+          "bytes": 49280,
+          "compressed_bytes": 808,
+          "sha256": "de1f9a36ed5e02e8d73b9ec27a6c12ee5e2dc5345de58bdc96db53fd2c93cdc2",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|b1",
+        "shape": [
+          256,
+          192
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 192
+      }
+    },
+    "masks/grass_8m_yx.npy": {
+      "total_bytes": 49280,
+      "sha256": "f447d76af6d8d7020ea1fd4e1dbece460a0625e7b5f75dead43a1d65b1ece886",
+      "parts": [
+        {
+          "file": "packed/masks/grass_8m_yx.npy/0000.gz",
+          "bytes": 49280,
+          "compressed_bytes": 167,
+          "sha256": "85899441feee3920809b8f1b1def54dd91b1f62768e566d75c26066a75a14e4b",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|b1",
+        "shape": [
+          256,
+          192
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 192
+      }
+    },
+    "masks/paving_8m_yx.npy": {
+      "total_bytes": 49280,
+      "sha256": "3cbe60bfa9524a763922873edbf5944c43672ea7194234a1d14c0bed24f91c9a",
+      "parts": [
+        {
+          "file": "packed/masks/paving_8m_yx.npy/0000.gz",
+          "bytes": 49280,
+          "compressed_bytes": 1199,
+          "sha256": "bbf129b9760a2e5adc5261581376e079f6fd1395ada61835a0e91cdf5ade146a",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|b1",
+        "shape": [
+          256,
+          192
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 192
+      }
+    },
+    "masks/roof_height_m_2m_yx.npy": {
+      "total_bytes": 1572992,
+      "sha256": "41558b7198266ee891fa6f9e07f3cbf04598710387fa3dc3f2f838b5865a34ce",
+      "parts": [
+        {
+          "file": "packed/masks/roof_height_m_2m_yx.npy/0000.gz",
+          "bytes": 1572992,
+          "compressed_bytes": 26672,
+          "sha256": "817705a7b1beea54fcc613f8878d03940f58e28bc065e10f503b113608d98367",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          1024,
+          768
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 768
+      }
+    },
+    "masks/solid_8m_zyx.npy": {
+      "total_bytes": 786560,
+      "sha256": "fbce8343957959883f0737d4fc3459c30ff77bb7574cff2fdd7f370a35fff705",
+      "parts": [
+        {
+          "file": "packed/masks/solid_8m_zyx.npy/0000.gz",
+          "bytes": 786560,
+          "compressed_bytes": 1738,
+          "sha256": "b92102a908e91433a89bcdfcd03dde88f9142fea9ce8c5dca2bf0f7a83403e5a",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|b1",
+        "shape": [
+          16,
+          256,
+          192
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 49152
+      }
+    },
+    "pollution/concentration_8m_z8-16m_tyx.npy": {
+      "total_bytes": 9830528,
+      "sha256": "28145b7a192f6984d61ad873f4347f309e9437c89d7c918021a441f63bc71bb6",
+      "parts": [
+        {
+          "file": "packed/pollution/concentration_8m_z8-16m_tyx.npy/0000.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 3560580,
+          "sha256": "a22c4707abfcf25e1e361c905480ad90d82bc8fa1e386d915e0e7208a277b5a4",
+          "offset": 0,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/pollution/concentration_8m_z8-16m_tyx.npy/0001.gz",
+          "bytes": 1441920,
+          "compressed_bytes": 706656,
+          "sha256": "64ee54adede4e5dc5bd617865a7b4967d07bcfc157a10c805a075972e5412104",
+          "offset": 8388608,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          100,
+          256,
+          192
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 49152
+      }
+    },
+    "temperature/temperature_8m_z8-16m_tyx.npy": {
+      "total_bytes": 2064512,
+      "sha256": "f470a106ea1301ddbfa51dc94ff713c373ce70abfaf0778d6597eb2f21524e1d",
+      "parts": [
+        {
+          "file": "packed/temperature/temperature_8m_z8-16m_tyx.npy/0000.gz",
+          "bytes": 2064512,
+          "compressed_bytes": 135455,
+          "sha256": "6be84927fa0b000ad135a3fc1e26574e6f5621c64b1062a044dc9f34e9af6b99",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          21,
+          256,
+          192
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 49152
+      }
+    },
+    "wind/uvw_8m_z8-16m_tcyx.npy": {
+      "total_bytes": 29491328,
+      "sha256": "c51c35d48b50e9d8839d27a95e7b490cf665cfa3b4c30f7d62140164adf8ca34",
+      "parts": [
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0000.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5622027,
+          "sha256": "14769974bbb319b8083afbce9c223467572b783ba48c8b1feb60ac2ef2efd2dc",
+          "offset": 0,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0001.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5530927,
+          "sha256": "dff12d093eeb062ce42147a48520e6760a016691c440b8df5426b7ca0a110671",
+          "offset": 8388608,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0002.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5594402,
+          "sha256": "ba622418d4507a89df78c0a06586137b7582eab238cfea9d0c7a4e09ec19bb73",
+          "offset": 16777216,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0003.gz",
+          "bytes": 4325504,
+          "compressed_bytes": 3065792,
+          "sha256": "79c38106efc2eb9f3082c398671995b49872545cd3c2f88066d31ee0c8e62956",
+          "offset": 25165824,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          100,
+          3,
+          256,
+          192
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 147456
+      }
+    }
+  }
+}

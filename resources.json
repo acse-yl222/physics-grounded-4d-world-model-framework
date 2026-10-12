@@ -1,0 +1,614 @@
+{
+  "schema_version": "1.0.0",
+  "title": "Delhi and Thapar published presentation resources",
+  "framework": "https://github.com/acse-yl222/physics-grounded-4d-world-model-framework",
+  "base_url": "Immutable raw GitHub revision URLs on codex/city-presentations-20261012",
+  "resources": [
+    {
+      "id": "delhi_karol_bagh_previews_website_preview_full_20261008_v2",
+      "scene_id": "delhi_karol_bagh",
+      "title": "Delhi Karol Bagh \u00b7 physical fields",
+      "category": "previews",
+      "version": "website_preview_full_20261008_v2",
+      "format": "city_presentation_gzip_v1",
+      "entry": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/scene.json",
+      "transport": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/transport.json",
+      "model_manifest": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/model/manifest.json",
+      "coordinate_frame": "glTF-y-up",
+      "units": "m",
+      "provenance": {
+        "repository": "acse-yl222/physics-grounded-4d-world-model-framework",
+        "revision": "f50bac2e489923626595537eb38fc40561e60392",
+        "original_path": "project/delhi_karol_bagh/runs/website_preview_full_20261008_v2",
+        "source_manifest_sha256": "fa6d2b5777ceba66484e57938429d25040f6ab758dd840a58757be241298a892",
+        "publication": "User explicitly authorized deployment on 2026-10-12; lossless transport, no new simulation"
+      },
+      "license": "User-authorized publication; preserve the input licensing/source notes in framework project metadata. No blanket licence asserted.",
+      "assets": [
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/model/0000.gz",
+          "bytes": 5991429,
+          "sha256": "767c3162def1fbe8395a1d8475fd5f1249f8c151353da8941af67a4d9d2a3afa"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/model/0001.gz",
+          "bytes": 4450019,
+          "sha256": "0d4aa496c78c42bb2f81ca60e198e7c2976f037ebdde8cb3a700009c5d1fc3c2"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/model/0002.gz",
+          "bytes": 3292069,
+          "sha256": "58d20cb09e13e9b8e6ebc6c9437fa2c76b6df0679326b12fb5afc6af1b1736a1"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/model/manifest.json",
+          "bytes": 819,
+          "sha256": "feed66e704827e971f76fd0ba0fb29e32a979879e79fbbfb088f2a0a06a19f07"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/manifest.json",
+          "bytes": 5932,
+          "sha256": "3d3f779493e33c6df967f8c96836bed52d3f36e3a5e88f3f131b26a8baf574a6"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/masks/asphalt_8m_yx.npy/0000.gz",
+          "bytes": 1236,
+          "sha256": "937604fd7cb3bf6510033aba545c72756dff25c6d7bd534ed8022c60a8ab49a6"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/masks/building_footprint_2m_yx.npy/0000.gz",
+          "bytes": 6857,
+          "sha256": "0a4f7bc287fba4e677cf67a6dd47178005a292bdaa4e3406d27fc1375e2f54f0"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/masks/building_footprint_8m_yx.npy/0000.gz",
+          "bytes": 661,
+          "sha256": "1937b9fac661a02ae8ae5374be8b9915c321f0c0bbd3d4f3740a3d1164047b9d"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/masks/canopy_8m_yx.npy/0000.gz",
+          "bytes": 808,
+          "sha256": "de1f9a36ed5e02e8d73b9ec27a6c12ee5e2dc5345de58bdc96db53fd2c93cdc2"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/masks/grass_8m_yx.npy/0000.gz",
+          "bytes": 167,
+          "sha256": "85899441feee3920809b8f1b1def54dd91b1f62768e566d75c26066a75a14e4b"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/masks/paving_8m_yx.npy/0000.gz",
+          "bytes": 1199,
+          "sha256": "bbf129b9760a2e5adc5261581376e079f6fd1395ada61835a0e91cdf5ade146a"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/masks/roof_height_m_2m_yx.npy/0000.gz",
+          "bytes": 26672,
+          "sha256": "817705a7b1beea54fcc613f8878d03940f58e28bc065e10f503b113608d98367"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/masks/solid_8m_zyx.npy/0000.gz",
+          "bytes": 1738,
+          "sha256": "b92102a908e91433a89bcdfcd03dde88f9142fea9ce8c5dca2bf0f7a83403e5a"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/pollution/concentration_8m_z8-16m_tyx.npy/0000.gz",
+          "bytes": 3560580,
+          "sha256": "a22c4707abfcf25e1e361c905480ad90d82bc8fa1e386d915e0e7208a277b5a4"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/pollution/concentration_8m_z8-16m_tyx.npy/0001.gz",
+          "bytes": 706656,
+          "sha256": "64ee54adede4e5dc5bd617865a7b4967d07bcfc157a10c805a075972e5412104"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/temperature/temperature_8m_z8-16m_tyx.npy/0000.gz",
+          "bytes": 135455,
+          "sha256": "6be84927fa0b000ad135a3fc1e26574e6f5621c64b1062a044dc9f34e9af6b99"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0000.gz",
+          "bytes": 5622027,
+          "sha256": "14769974bbb319b8083afbce9c223467572b783ba48c8b1feb60ac2ef2efd2dc"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0001.gz",
+          "bytes": 5530927,
+          "sha256": "dff12d093eeb062ce42147a48520e6760a016691c440b8df5426b7ca0a110671"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0002.gz",
+          "bytes": 5594402,
+          "sha256": "ba622418d4507a89df78c0a06586137b7582eab238cfea9d0c7a4e09ec19bb73"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0003.gz",
+          "bytes": 3065792,
+          "sha256": "79c38106efc2eb9f3082c398671995b49872545cd3c2f88066d31ee0c8e62956"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/provenance/presentation_config.json",
+          "bytes": 610,
+          "sha256": "fea8a46e83f51aa78f3eec46279d0c3663529eada3cbb9cc623143777135bc3e"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/provenance/source_manifest.json",
+          "bytes": 6462,
+          "sha256": "fa6d2b5777ceba66484e57938429d25040f6ab758dd840a58757be241298a892"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/scene.json",
+          "bytes": 6947,
+          "sha256": "19005b8234bd90eff1b11876399c8e2499dc75978a8b9f1e07d229d3a969490e"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/transport.json",
+          "bytes": 8501,
+          "sha256": "af723d964050662dd9d872cbd333651d9201011cea3295ca5e41180bc85e9825"
+        },
+        {
+          "path": "project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/provenance/project.json",
+          "bytes": 1307,
+          "sha256": "81516a550b29c2e88dc751a1475061617adc2d069aad3a552a0c5bc9f6ceb859"
+        }
+      ]
+    },
+    {
+      "id": "thapar_university_previews_website_preview_full_20261009_v1",
+      "scene_id": "thapar_university",
+      "title": "Thapar University \u00b7 complete detailed scene",
+      "category": "previews",
+      "version": "website_preview_full_20261009_v1",
+      "format": "city_presentation_gzip_v1",
+      "entry": "project/thapar_university/previews/website_preview_full_20261009_v1/scene.json",
+      "transport": "project/thapar_university/previews/website_preview_full_20261009_v1/transport.json",
+      "model_manifest": "project/thapar_university/previews/website_preview_full_20261009_v1/model/manifest.json",
+      "coordinate_frame": "glTF-y-up",
+      "units": "m",
+      "provenance": {
+        "repository": "acse-yl222/physics-grounded-4d-world-model-framework",
+        "revision": "f50bac2e489923626595537eb38fc40561e60392",
+        "original_path": "project/thapar_university/runs/website_preview_full_20261009_v1",
+        "source_manifest_sha256": "a9aac9b62e4215c2e3694b160fa05280c184664f3d337dbf35d54028575566e0",
+        "publication": "User explicitly authorized deployment on 2026-10-12; lossless transport, no new simulation"
+      },
+      "license": "User-authorized publication; preserve the input licensing/source notes in framework project metadata. No blanket licence asserted.",
+      "assets": [
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0000.gz",
+          "bytes": 3396571,
+          "sha256": "bef8d6cafc540b4ff5d1121428e2757e0a5f722dae4c4140035713cc13e2a083"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0001.gz",
+          "bytes": 6188587,
+          "sha256": "d0b4d0dcb6eca14a13daa7e5f23205d623089fdd336149d696326a353a098a91"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0002.gz",
+          "bytes": 5850327,
+          "sha256": "807d681541f6e97d1b698e86873f2fc2ed51f066e630616328a37600d89d7f2e"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0003.gz",
+          "bytes": 6213258,
+          "sha256": "6ee2bb39d654c34f54bca1ed30c1762d4a81623f024c1daf93778e6ecc15ef9c"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0004.gz",
+          "bytes": 6165432,
+          "sha256": "738eb8aabcc15fb1ca4c19b7f11ff14faec981e770580437d7da65505abb34e2"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0005.gz",
+          "bytes": 6276461,
+          "sha256": "8e14993eb084024381c96703baacd96ea44925bfb76497c7ceb07377d9754846"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0006.gz",
+          "bytes": 6248546,
+          "sha256": "e78a96465f5ee5771d3d8ceb38d47ee8cf0b80d8273697cfd6a37d05e25f0711"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0007.gz",
+          "bytes": 6260423,
+          "sha256": "a553a5b9dd98395a1c639fbbcd40112b86472ce2791099f62ac5479ee9539404"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0008.gz",
+          "bytes": 6259887,
+          "sha256": "8e74f9b7f11472c04d203f18e13b7b329b2f4c68dde13aa656b6fef9ed0a5b5f"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0009.gz",
+          "bytes": 6375656,
+          "sha256": "a2c5f069d6cd75bad5a1f0152dcf28674cb3a114178f8fafebb2d7adcbb8fd26"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0010.gz",
+          "bytes": 6180970,
+          "sha256": "ebaf5a54663aa8fc66c2da585a192563c25f656254f99a98bd122fc6288e40dc"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0011.gz",
+          "bytes": 6052111,
+          "sha256": "fa8017a6d45fd93afdeff71eed864ef3d59d797807b593368ab1cf8f133390ff"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0012.gz",
+          "bytes": 6177577,
+          "sha256": "ebf8dba30a06b3acca6f0900de844f405ee6302c17e0c1d1e34218e9837a679c"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0013.gz",
+          "bytes": 6014175,
+          "sha256": "55bba502e687c3415d6d3993186a39437bcfaa5bed24e78cdc760828398d76d3"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0014.gz",
+          "bytes": 6184590,
+          "sha256": "a2cbb6d3ae15e51601aeffaed443db0172cc072b6e37ad2d869ad0e6399fb7aa"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0015.gz",
+          "bytes": 6168510,
+          "sha256": "0c03cb850dcf5a58a6e20ecaa5790fd260976516c8bbef9c3e63c1be7a0576e2"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0016.gz",
+          "bytes": 6076662,
+          "sha256": "7dcb3e6818fd7dc221e777fbc1c63a1d2ca285eda70a1b7556185d462da8c028"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0017.gz",
+          "bytes": 6039233,
+          "sha256": "46d818f8b2064067876adaf89c46a3b62d056ed5a46cfcf20c4e9aa706c8de30"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0018.gz",
+          "bytes": 6145671,
+          "sha256": "42d5d66a65cadf199e416de1a7ad4ba2c5b242eccfe133fa787afff046f80bad"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0019.gz",
+          "bytes": 6037044,
+          "sha256": "6c895510a9fc4bf89e15c404adfae46a2a3a955e9e8f970f8b80260a11dfd3da"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0020.gz",
+          "bytes": 6076894,
+          "sha256": "b61e62a398a71534d6902bf6821ed9bda6d194a0549122208d25c0013699c9fa"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0021.gz",
+          "bytes": 5911329,
+          "sha256": "1fb29a990625a9cc8887497983543fd2d76824d7aeebfabf68d7edbe0d6005f3"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0022.gz",
+          "bytes": 5960283,
+          "sha256": "093291a7053a9c26cb4406e3ad3546097f94e75dfc12d2f79a4251a1e3759bb3"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0023.gz",
+          "bytes": 6004929,
+          "sha256": "fa6a1f31f0797dc458baf909437abcd8a9a449d366665790d25c989b2cb1036e"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0024.gz",
+          "bytes": 6149218,
+          "sha256": "e02784099a22d2c09a6088a498e99a1fa5b81a8f057e995a1cf105d205e324d9"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0025.gz",
+          "bytes": 6159745,
+          "sha256": "5fbd1db65b0c193eef9d646edb5c7ceaeb38723f996f3f89714ab027c7ad9ded"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0026.gz",
+          "bytes": 6050499,
+          "sha256": "ead69d291c7db961781cee885b112526fee21a421643055e5909733debb36c57"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0027.gz",
+          "bytes": 5954097,
+          "sha256": "c9a4408cd433983df7c58acd48df7fe6517ae856bf328401d9ba768a0954fbba"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0028.gz",
+          "bytes": 5992313,
+          "sha256": "3c0b718d40b37d7bad9b6bcdc37e40ea10c308dfbd56f3d2af42394549ab25f9"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0029.gz",
+          "bytes": 6083318,
+          "sha256": "143f0a2582a35f318f5560fd4a83073b9f2af16a66df9ac6162d947f11063d77"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0030.gz",
+          "bytes": 6093186,
+          "sha256": "5e30af2900b5c10c33d2beea51236e3ff9670b0e4ec45265fc88e230a8acbe65"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0031.gz",
+          "bytes": 6000081,
+          "sha256": "647685ef6355a2bbc0008c982efeda2921772acd77b3fcbe28003b83d0622b96"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0032.gz",
+          "bytes": 6338349,
+          "sha256": "459f6347485c3211a4a011af3b3d6ab9f9530e03d9550769f2eaf6a59bf04e1e"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0033.gz",
+          "bytes": 6079802,
+          "sha256": "8be5914bb529aedba663079bf27963c22de3ce1a80a3f9e0754209227d460176"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0034.gz",
+          "bytes": 6086697,
+          "sha256": "dd04aeaad0cc0d6e500bcf4b4bbf9c761e3938b644496891600bb65639223600"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0035.gz",
+          "bytes": 6129846,
+          "sha256": "fb133a865836cf80297fa08f6e412570b7c7ae691d6ec0997c6e9dfa28c098ce"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/0036.gz",
+          "bytes": 3458390,
+          "sha256": "233b0e46f77b92ad0fc487c1f34d6e7c42400d6d51d0bccb8be3a22d721a0a0c"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/model/manifest.json",
+          "bytes": 8784,
+          "sha256": "2aee3f4ef17482a9db1fd636d831432a27e8edbade84dbbb099a89db01844402"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/manifest.json",
+          "bytes": 27079,
+          "sha256": "e37b9bd487ed48d362ecb72ed4364531096f073e5ef5cfcd9da95b1cbd1eb2db"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/masks/building_footprint_4m_yx.npy/0000.gz",
+          "bytes": 47753,
+          "sha256": "1a143202945fb2d9d6c6c5ba47a92c3ae3b5e5f6a466aa401b26a9dcee54220b"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/masks/building_footprint_8m_yx.npy/0000.gz",
+          "bytes": 17247,
+          "sha256": "59f0e449ed3509558a03c82c56aeb458dfef6519ab83c95892eb9b8b0e5f8093"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/masks/roof_height_m_4m_yx.npy/0000.gz",
+          "bytes": 64989,
+          "sha256": "56edec1345c1ceb2a118b7edffe3960c2daa3f5164273d5a427d2fe3dd8ae83e"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/masks/solid_8m_zyx.npy/0000.gz",
+          "bytes": 26761,
+          "sha256": "b2d01bbfa7edb667a2b1f93e20364b2332105cf97750d19989303e7045459f03"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/masks/solid_8m_zyx.npy/0001.gz",
+          "bytes": 24,
+          "sha256": "57d7ccbdb80092bd7ef74e3c5dea88c5f199b5647483fc08cb4c218eecc5ce7d"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/pollution/concentration_8m_z8-16m_tyx.npy/0000.gz",
+          "bytes": 773053,
+          "sha256": "059f07f80d59455fae7c3c1269fbf675e2d5ec50e30c1796c742efa99a18b0d9"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/pollution/concentration_8m_z8-16m_tyx.npy/0001.gz",
+          "bytes": 1920012,
+          "sha256": "c8d08dc25840975f2c5dfd37a52ac63571a18926f83fef7691afb72a5dd64fbe"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/pollution/concentration_8m_z8-16m_tyx.npy/0002.gz",
+          "bytes": 3071524,
+          "sha256": "a9b54b8c81854fb9442c33dd3f064fe295e1c10e88ebead6d5d43e7557a41a8d"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/pollution/concentration_8m_z8-16m_tyx.npy/0003.gz",
+          "bytes": 4376726,
+          "sha256": "b9d8813fa819eee20269745c3a8f35574d04b302f4c390036e65f761c29fed02"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/pollution/concentration_8m_z8-16m_tyx.npy/0004.gz",
+          "bytes": 5228413,
+          "sha256": "829d78b53cf0dc8745dfe0e06b1c793655246aa387cadf542fe4980f60b36cde"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/pollution/concentration_8m_z8-16m_tyx.npy/0005.gz",
+          "bytes": 5276266,
+          "sha256": "e86b6e052cf4f936606f4ddd321e8b908bc6b97b97214edea303bc706b62eda2"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/pollution/concentration_8m_z8-16m_tyx.npy/0006.gz",
+          "bytes": 1326431,
+          "sha256": "ce8b2072c0999324635424770d9e50291d55e8cbd8fe431c28ff42614c1a4e14"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/solar/daily_irradiation_kwh_m2_20250621_yx.npy/0000.gz",
+          "bytes": 507629,
+          "sha256": "2152dc7e617565731ff039f39b8e7a298b7a0deb093a13cc79453fe6bf8a2320"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/solar/daily_irradiation_kwh_m2_20251221_yx.npy/0000.gz",
+          "bytes": 712958,
+          "sha256": "01602decc095fdfe1d255abb16a0250c5e1a24f278d478a6d1db38752faa25c2"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/solar/ghi_16m_20250621_tyx.npy/0000.gz",
+          "bytes": 2552849,
+          "sha256": "1931dbe3c8937b0387a8dab4a979e042ff14cb8b1a69a16797e8025850708b7c"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/solar/ghi_16m_20250621_tyx.npy/0001.gz",
+          "bytes": 936014,
+          "sha256": "f01782062680971aa416a97dbf607492ed4914402138a7e5ace1ec46ab955f3f"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/solar/ghi_16m_20251221_tyx.npy/0000.gz",
+          "bytes": 2983030,
+          "sha256": "ddbe9fbf1cd675fc4c27cf84767543750e9d0c623348becabd824fcf110c5c9b"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/solar/shadow_4m_20250621_packed_tyx.npy/0000.gz",
+          "bytes": 1516193,
+          "sha256": "49fcbe5263b080da7aa9903cc3bd5b62525704b2fa6972f6814edf33d116b5d5"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/solar/shadow_4m_20250621_packed_tyx.npy/0001.gz",
+          "bytes": 839362,
+          "sha256": "def8baedaa28e43a3856165c96aff1d46606afaee710dbe6319383bbffba998c"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/solar/shadow_4m_20251221_packed_tyx.npy/0000.gz",
+          "bytes": 2676642,
+          "sha256": "24819d96a53c4d081c68910385a83e3456ae7fed0d642d324614947ac8faf3d5"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/solar/sky_view_factor_4m_yx.npy/0000.gz",
+          "bytes": 782503,
+          "sha256": "f2ea1fc66b4e4cd81029e3be24913491ea6ee44ce610839168283323ac8aa4ad"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/temperature/temperature_8m_z8-16m_tyx.npy/0000.gz",
+          "bytes": 1648824,
+          "sha256": "475dbba95f237510e10acd4661c9aeefe9756783452b0a4e6eee1dcc1711f871"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/temperature/temperature_8m_z8-16m_tyx.npy/0001.gz",
+          "bytes": 522487,
+          "sha256": "fc1a4637bc203af36c250b8e96deb5f9fa7f6ccd5c9e1b0904964597fead8866"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0000.gz",
+          "bytes": 5501457,
+          "sha256": "d68c108344039cb79185e3f67e3bc84dfb470a6797b078e7750b4c2bb2f0353a"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0001.gz",
+          "bytes": 5622963,
+          "sha256": "b3503182000ba6dd7d868ed1e793964c659c1dcaa50969cf07dcab7b59f1192a"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0002.gz",
+          "bytes": 5833538,
+          "sha256": "3ae6fe1d300f4ed2844bc5d59abcd3da18b48b4d8b4c682d1211f72da75e637c"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0003.gz",
+          "bytes": 5713130,
+          "sha256": "be1ce945cdfa7106a04bcb92e20ec324be81d143065ff507a1c4dad0df230cfd"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0004.gz",
+          "bytes": 5759848,
+          "sha256": "25bab045c808e3910ed6a748f717c5867dbe5b5a0bd0987fb4dfe39f1ad2f604"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0005.gz",
+          "bytes": 5777909,
+          "sha256": "4a30f582eed779ef3fa1fc51334ab6007f35435830d9dcee0048ba5fdca8b417"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0006.gz",
+          "bytes": 5720528,
+          "sha256": "858759765019bac32e82db7ddd95068c7aa2b410b4b66933905a3ac6f95f9a60"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0007.gz",
+          "bytes": 5850885,
+          "sha256": "13b695f97d1b1a603f2d110b34bf41814d84e839497d336786600015de6276ae"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0008.gz",
+          "bytes": 5862532,
+          "sha256": "cc5ed26e5e10b6ac49e5dcc6e6bfd4e6d36c62f355c487a63f2821b0c36aeb58"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0009.gz",
+          "bytes": 5762410,
+          "sha256": "ff7122d60810c95d380fc439d7cf6dc2719cafef605d1e8921b1285b93740ad4"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0010.gz",
+          "bytes": 5875067,
+          "sha256": "ff6662cf876816fe37140e57f77eccc528492dab99af120d76d71887ec3604d6"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0011.gz",
+          "bytes": 5904603,
+          "sha256": "947e727a5a1fae1bdde3f771151c8fe5f9c4107d4e16d098897470e659f84f58"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0012.gz",
+          "bytes": 5824983,
+          "sha256": "90e86298fcd98acebf24f7e0df78015469759d37e0fd72d10d353b793ad5a79b"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0013.gz",
+          "bytes": 5933398,
+          "sha256": "28cb3b49edcf4c39aa024f2bc3459299667b0958fe0062ffd5f181c47a8b92c7"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0014.gz",
+          "bytes": 5947801,
+          "sha256": "5289abef099162641bfdb4ae4d80c2bac505cf9e148fc3925f6fa35b5e3f4de0"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0015.gz",
+          "bytes": 5860416,
+          "sha256": "6b81e562a56774c85696f37c0242a33c99a03017cb9bae269a62432caeba8317"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0016.gz",
+          "bytes": 5970963,
+          "sha256": "4c6e4e2848422782b5f4f9b63136085a76e10cc2df07124a7daea43b19bb21a9"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0017.gz",
+          "bytes": 6000781,
+          "sha256": "076f1acd01cc19535372f8e066bece0f0d1fafbc7f7c8264ad9293f69d467e82"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/physics/packed/wind/uvw_8m_z8-16m_tcyx.npy/0018.gz",
+          "bytes": 4494895,
+          "sha256": "df7959f77a1711b1256aa28e6e66c1c3df3e64e11170540152921a02accbc9f5"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/provenance/presentation_config.json",
+          "bytes": 1039,
+          "sha256": "c327a525b0c5035cc1dc54a07eb1589844552bbe7aa208270af94f5c68f3b83f"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/provenance/source_manifest.json",
+          "bytes": 7923,
+          "sha256": "a9aac9b62e4215c2e3694b160fa05280c184664f3d337dbf35d54028575566e0"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/scene.json",
+          "bytes": 7946,
+          "sha256": "7a74e5847225c0dc01874926d0c24cf56a287aa6680a4f5e4695b09b10d4cf67"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/transport.json",
+          "bytes": 18020,
+          "sha256": "a7615c33c3293c2ceae180c2a548112d2f60cc1f09f5d29e0da78e71c1603368"
+        },
+        {
+          "path": "project/thapar_university/previews/website_preview_full_20261009_v1/provenance/project.json",
+          "bytes": 1475,
+          "sha256": "3d4cc53011f8ff6c1e1158a06e3cb2dbf00b49cae01b062d284bbdf315ea4396"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "Resource catalogue, not a simulation run manifest.",
+    "City fields/replays and auxiliary legacy assets remain hosted by the framework Pages branch.",
+    "Compatibility model manifests resolve canonical part paths. Direct historical part URLs are superseded."
+  ]
+}

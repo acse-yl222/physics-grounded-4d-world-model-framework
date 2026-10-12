@@ -1,0 +1,236 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "thapar_university",
+  "run_id": "website_preview_full_20261009_v1",
+  "simulation": "city_presentation",
+  "status": "complete",
+  "created_at": "2026-10-09T11:09:35.125215+00:00",
+  "provenance": {
+    "code_revision": "f50bac2e489923626595537eb38fc40561e60392",
+    "dirty": true,
+    "parameters": {
+      "source_view": "run_full_20261009_v1",
+      "source_runs": [
+        "full_20261009_v1_geometry",
+        "full_20261009_v1_wind",
+        "full_20261009_v1_temp",
+        "full_20261009_v1_poll",
+        "full_20261009_v1_solar_20250621",
+        "full_20261009_v1_solar_20251221"
+      ],
+      "renderer": "Existing legacy/viewer/3d; raw NPY data, continuous planes and velocity-driven trails",
+      "new_simulation": false,
+      "recorded_times_preserved": true
+    },
+    "inputs": [
+      {
+        "id": "geometry_source_manifest",
+        "sha256": "2a0fc07e7cd6d9a0d6f1c412abc2fdfb0a76a310580cc42a07a5419f22eb4aef"
+      },
+      {
+        "id": "geometry_data",
+        "sha256": "ba76e450896b56fb4a2981e3c9b4d532422bea839512e7af90021fc6e7c50274"
+      },
+      {
+        "id": "wind_source_manifest",
+        "sha256": "7c77fccd2734451c4eb6a96e0fe7f7affef4208f431dd077e92a7849d88ad8bc"
+      },
+      {
+        "id": "wind_data",
+        "sha256": "89f7ba85e294dd855df558bd9a1501431ffd82464302750830e07ba405ae9c47"
+      },
+      {
+        "id": "temp_source_manifest",
+        "sha256": "295fa1f5f5b7f63e32936d160215bf9683b7aa0c96b0631092a3260bcf3623c5"
+      },
+      {
+        "id": "temp_data",
+        "sha256": "4fb80e2084deedb476eb5281fb8563245e41350e581431a2851397f0a9df7cc1"
+      },
+      {
+        "id": "poll_source_manifest",
+        "sha256": "36385d55e46cc4894532f8fcff58b1e2075af0c6b416b61a4b1f2da8392271b2"
+      },
+      {
+        "id": "poll_data",
+        "sha256": "cf2a4b5000a0fb28d97192bfeedc9b2bd33673983df85255a956442f7380bd61"
+      },
+      {
+        "id": "solar_20250621_manifest",
+        "sha256": "f51c06a25a73c19e74dce230724fff047cc60b25cb7cd6adc7dce67e8824dbf9"
+      },
+      {
+        "id": "solar_20250621_data",
+        "sha256": "a510560b397cd34e32d41665cd09f020f64499b6a9efa227bad734d22bb51c8c"
+      },
+      {
+        "id": "solar_20251221_manifest",
+        "sha256": "fa3827c5be67dff1654b18c249bf0abbf58e453ec03b99d761a27ac53d6c5699"
+      },
+      {
+        "id": "solar_20251221_data",
+        "sha256": "a7d6da9c5f7e992b4d0dfa0d1aa84c246524261a1fd0fc5a7164963a4795d4d4"
+      },
+      {
+        "id": "presentation_config",
+        "sha256": "c327a525b0c5035cc1dc54a07eb1589844552bbe7aa208270af94f5c68f3b83f"
+      }
+    ]
+  },
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "georeferenced": true,
+    "origin": {
+      "longitude": 76.36621,
+      "latitude": 30.35447,
+      "height_m": 0,
+      "vertical_datum": "Author-provided AEQD local ENU; ground and most building heights are assumed, not surveyed"
+    },
+    "bounds_m": {
+      "min": [
+        -2032.0,
+        -2040.0,
+        -0.019999999552965164
+      ],
+      "max": [
+        2064.0,
+        2056.0,
+        256
+      ]
+    }
+  },
+  "time": {
+    "unit": "s",
+    "samples": []
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "kind": "mesh",
+      "format": "glb",
+      "asset": "data/models/thapar_university.glb",
+      "sampling": "static",
+      "encoding": {
+        "coordinate_frame": "glTF-y-up"
+      },
+      "display": {
+        "widget": "mesh",
+        "capabilities": [
+          "pick",
+          "opacity"
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "source_snapshot",
+      "asset": "provenance/source_snapshot.tar.gz",
+      "sha256": "51649b70e9a561652cccd2b3f4a75c29f89f30166f79997f730b52331897484d",
+      "media_type": "application/gzip"
+    },
+    {
+      "id": "presentation_configuration",
+      "asset": "provenance/presentation_config.json",
+      "sha256": "c327a525b0c5035cc1dc54a07eb1589844552bbe7aa208270af94f5c68f3b83f",
+      "media_type": "application/json"
+    },
+    {
+      "id": "presentation_asset_3",
+      "asset": "data/physics/manifest.json",
+      "sha256": "e37b9bd487ed48d362ecb72ed4364531096f073e5ef5cfcd9da95b1cbd1eb2db",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_5",
+      "asset": "data/physics/masks/building_footprint_4m_yx.npy",
+      "sha256": "aed55ea7f016ee168cb233015fa54d29a0a7017917a9468c5602ba3aca13f828",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_6",
+      "asset": "data/physics/masks/building_footprint_8m_yx.npy",
+      "sha256": "b6ff81305313ada1700ce54b7b48ebd9ba5b7ee0b23d1474183af33deca3382a",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_7",
+      "asset": "data/physics/masks/roof_height_m_4m_yx.npy",
+      "sha256": "3b2ebba46de288b180d8826511041c33348c96eff48408039a52acd93566e4a9",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_8",
+      "asset": "data/physics/masks/solid_8m_zyx.npy",
+      "sha256": "49e134485f63a26d541bbd038eeb964c6207e39d38316ca8146487c44f8c2e75",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_10",
+      "asset": "data/physics/pollution/concentration_8m_z8-16m_tyx.npy",
+      "sha256": "cf2a4b5000a0fb28d97192bfeedc9b2bd33673983df85255a956442f7380bd61",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_12",
+      "asset": "data/physics/solar/daily_irradiation_kwh_m2_20250621_yx.npy",
+      "sha256": "d053ee6f306cfbdabfba41f734c89ec473ce2190fe22b8acaf987ddce10c56bb",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_13",
+      "asset": "data/physics/solar/daily_irradiation_kwh_m2_20251221_yx.npy",
+      "sha256": "ef0e5c02b89aa7138341b1af1a18a0f76b265ad5ad0dd908c6d6e63ba87953bb",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_14",
+      "asset": "data/physics/solar/ghi_16m_20250621_tyx.npy",
+      "sha256": "a510560b397cd34e32d41665cd09f020f64499b6a9efa227bad734d22bb51c8c",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_15",
+      "asset": "data/physics/solar/ghi_16m_20251221_tyx.npy",
+      "sha256": "a7d6da9c5f7e992b4d0dfa0d1aa84c246524261a1fd0fc5a7164963a4795d4d4",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_16",
+      "asset": "data/physics/solar/shadow_4m_20250621_packed_tyx.npy",
+      "sha256": "b68af7552672e51d46500a8e54a7bce9763bd16bf0fb267a400dfafda00c3b2d",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_17",
+      "asset": "data/physics/solar/shadow_4m_20251221_packed_tyx.npy",
+      "sha256": "f4c4413ff6221ff2c0d1b2831fbc3f052370facd3d0aae2586b926f975b7abe6",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_18",
+      "asset": "data/physics/solar/sky_view_factor_4m_yx.npy",
+      "sha256": "d631b81a7a19432fa7d958ef2473393399377c5c943cfe4af2275ecb5ddf9923",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_20",
+      "asset": "data/physics/temperature/temperature_8m_z8-16m_tyx.npy",
+      "sha256": "4fb80e2084deedb476eb5281fb8563245e41350e581431a2851397f0a9df7cc1",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_22",
+      "asset": "data/physics/wind/uvw_8m_z8-16m_tcyx.npy",
+      "sha256": "89f7ba85e294dd855df558bd9a1501431ffd82464302750830e07ba405ae9c47",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "city_scene",
+      "asset": "data/scene.json",
+      "sha256": "b6ffd4c8567be41df5b05288e26da444056e8b6828d668944331c7fa6f12b8d2",
+      "media_type": "application/octet-stream"
+    }
+  ]
+}

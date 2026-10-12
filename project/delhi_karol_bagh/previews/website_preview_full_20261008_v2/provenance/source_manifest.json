@@ -1,0 +1,200 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "delhi_karol_bagh",
+  "run_id": "website_preview_full_20261008_v2",
+  "simulation": "city_presentation",
+  "status": "complete",
+  "created_at": "2026-10-08T16:00:15.762577+00:00",
+  "provenance": {
+    "code_revision": "f50bac2e489923626595537eb38fc40561e60392",
+    "dirty": true,
+    "parameters": {
+      "source_view": "run_full_20261008_rebased_v1",
+      "source_runs": [
+        "full_20261008_rebased_v1_geometry",
+        "full_20261008_rebased_v1_wind",
+        "full_20261008_rebased_v1_temp",
+        "full_20261008_rebased_v1_poll"
+      ],
+      "renderer": "Existing legacy/viewer/3d; raw NPY data, continuous planes and velocity-driven trails",
+      "new_simulation": false,
+      "recorded_times_preserved": true
+    },
+    "inputs": [
+      {
+        "id": "geometry_source_manifest",
+        "sha256": "ff0a84e3a2195f3454261015445475b5ecee1bf1014d12d6fe35162ed187d65a"
+      },
+      {
+        "id": "geometry_data",
+        "sha256": "a544c260c99f78069f9c74c42e116477f7768016497d7aa8c696ddb8e8828702"
+      },
+      {
+        "id": "wind_source_manifest",
+        "sha256": "b5cf561a0ec9a56d26f20b9a4e05f64cfe0d1f448ad00255843db1313516cdea"
+      },
+      {
+        "id": "wind_data",
+        "sha256": "c51c35d48b50e9d8839d27a95e7b490cf665cfa3b4c30f7d62140164adf8ca34"
+      },
+      {
+        "id": "temp_source_manifest",
+        "sha256": "4ba75c3509a5152632ed65bcd1a48c3190e28435910549b0f45e4550ac6c1afa"
+      },
+      {
+        "id": "temp_data",
+        "sha256": "f470a106ea1301ddbfa51dc94ff713c373ce70abfaf0778d6597eb2f21524e1d"
+      },
+      {
+        "id": "poll_source_manifest",
+        "sha256": "a9e6d7cca19bb139f8ad1cc507c5d2e5ced432731a74fa240a737342879b8295"
+      },
+      {
+        "id": "poll_data",
+        "sha256": "28145b7a192f6984d61ad873f4347f309e9437c89d7c918021a441f63bc71bb6"
+      },
+      {
+        "id": "presentation_config",
+        "sha256": "fea8a46e83f51aa78f3eec46279d0c3663529eada3cbb9cc623143777135bc3e"
+      }
+    ]
+  },
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "georeferenced": false,
+    "origin": {
+      "longitude": 0,
+      "latitude": 0,
+      "height_m": 0,
+      "vertical_datum": "Local GLB height; geographic origin and north unrecorded, not surveyed"
+    },
+    "bounds_m": {
+      "min": [
+        -928.0,
+        -928.0,
+        -0.7199997901916504
+      ],
+      "max": [
+        608.0,
+        1120.0,
+        128.0
+      ]
+    }
+  },
+  "time": {
+    "unit": "s",
+    "samples": []
+  },
+  "layers": [
+    {
+      "id": "geometry",
+      "kind": "mesh",
+      "format": "glb",
+      "asset": "data/models/delhi_karol_bagh.glb",
+      "sampling": "static",
+      "encoding": {
+        "coordinate_frame": "glTF-y-up"
+      },
+      "display": {
+        "widget": "mesh",
+        "capabilities": [
+          "pick",
+          "opacity"
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "source_snapshot",
+      "asset": "provenance/source_snapshot.tar.gz",
+      "sha256": "0ca9fd269d9ea7d67c19c9007c1efc6aa1e09e4b4675c1e2ae5bfbfa16d0a10c",
+      "media_type": "application/gzip"
+    },
+    {
+      "id": "presentation_configuration",
+      "asset": "provenance/presentation_config.json",
+      "sha256": "fea8a46e83f51aa78f3eec46279d0c3663529eada3cbb9cc623143777135bc3e",
+      "media_type": "application/json"
+    },
+    {
+      "id": "presentation_asset_3",
+      "asset": "data/physics/manifest.json",
+      "sha256": "3d3f779493e33c6df967f8c96836bed52d3f36e3a5e88f3f131b26a8baf574a6",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_5",
+      "asset": "data/physics/masks/asphalt_8m_yx.npy",
+      "sha256": "d88c417d718ae0707ce3550a028776f71a43820e46d5944ef6c39d0c018a4674",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_6",
+      "asset": "data/physics/masks/building_footprint_2m_yx.npy",
+      "sha256": "c2e6aae177fb63f58ec316ca91877b286e3502cdd1daa2b82be97dfec7d965f8",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_7",
+      "asset": "data/physics/masks/building_footprint_8m_yx.npy",
+      "sha256": "f01abc319e873db7471887500d3d911a679e5c8cda0941a628016ef201697a9c",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_8",
+      "asset": "data/physics/masks/canopy_8m_yx.npy",
+      "sha256": "bb829b1d42920fe13d5e036aca3f624357b88d743f328819f67b7ccbc724cfd7",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_9",
+      "asset": "data/physics/masks/grass_8m_yx.npy",
+      "sha256": "f447d76af6d8d7020ea1fd4e1dbece460a0625e7b5f75dead43a1d65b1ece886",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_10",
+      "asset": "data/physics/masks/paving_8m_yx.npy",
+      "sha256": "3cbe60bfa9524a763922873edbf5944c43672ea7194234a1d14c0bed24f91c9a",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_11",
+      "asset": "data/physics/masks/roof_height_m_2m_yx.npy",
+      "sha256": "41558b7198266ee891fa6f9e07f3cbf04598710387fa3dc3f2f838b5865a34ce",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_12",
+      "asset": "data/physics/masks/solid_8m_zyx.npy",
+      "sha256": "fbce8343957959883f0737d4fc3459c30ff77bb7574cff2fdd7f370a35fff705",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_14",
+      "asset": "data/physics/pollution/concentration_8m_z8-16m_tyx.npy",
+      "sha256": "28145b7a192f6984d61ad873f4347f309e9437c89d7c918021a441f63bc71bb6",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_16",
+      "asset": "data/physics/temperature/temperature_8m_z8-16m_tyx.npy",
+      "sha256": "f470a106ea1301ddbfa51dc94ff713c373ce70abfaf0778d6597eb2f21524e1d",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "presentation_asset_18",
+      "asset": "data/physics/wind/uvw_8m_z8-16m_tcyx.npy",
+      "sha256": "c51c35d48b50e9d8839d27a95e7b490cf665cfa3b4c30f7d62140164adf8ca34",
+      "media_type": "application/octet-stream"
+    },
+    {
+      "id": "city_scene",
+      "asset": "data/scene.json",
+      "sha256": "f9556fd7f61c43b6f196af00380143b892c2590d8596879e0d800cf074fc8dcf",
+      "media_type": "application/octet-stream"
+    }
+  ]
+}

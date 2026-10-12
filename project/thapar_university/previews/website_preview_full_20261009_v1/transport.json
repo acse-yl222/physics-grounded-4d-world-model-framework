@@ -1,0 +1,575 @@
+{
+  "schema_version": "1.0.0",
+  "encoding": "lossless-gzip-chunks",
+  "npy": {
+    "masks/building_footprint_4m_yx.npy": {
+      "total_bytes": 1048704,
+      "sha256": "aed55ea7f016ee168cb233015fa54d29a0a7017917a9468c5602ba3aca13f828",
+      "parts": [
+        {
+          "file": "packed/masks/building_footprint_4m_yx.npy/0000.gz",
+          "bytes": 1048704,
+          "compressed_bytes": 47753,
+          "sha256": "1a143202945fb2d9d6c6c5ba47a92c3ae3b5e5f6a466aa401b26a9dcee54220b",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|b1",
+        "shape": [
+          1024,
+          1024
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 1024
+      }
+    },
+    "masks/building_footprint_8m_yx.npy": {
+      "total_bytes": 262272,
+      "sha256": "b6ff81305313ada1700ce54b7b48ebd9ba5b7ee0b23d1474183af33deca3382a",
+      "parts": [
+        {
+          "file": "packed/masks/building_footprint_8m_yx.npy/0000.gz",
+          "bytes": 262272,
+          "compressed_bytes": 17247,
+          "sha256": "59f0e449ed3509558a03c82c56aeb458dfef6519ab83c95892eb9b8b0e5f8093",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|b1",
+        "shape": [
+          512,
+          512
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 512
+      }
+    },
+    "masks/roof_height_m_4m_yx.npy": {
+      "total_bytes": 2097280,
+      "sha256": "3b2ebba46de288b180d8826511041c33348c96eff48408039a52acd93566e4a9",
+      "parts": [
+        {
+          "file": "packed/masks/roof_height_m_4m_yx.npy/0000.gz",
+          "bytes": 2097280,
+          "compressed_bytes": 64989,
+          "sha256": "56edec1345c1ceb2a118b7edffe3960c2daa3f5164273d5a427d2fe3dd8ae83e",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          1024,
+          1024
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 1024
+      }
+    },
+    "masks/solid_8m_zyx.npy": {
+      "total_bytes": 8388736,
+      "sha256": "49e134485f63a26d541bbd038eeb964c6207e39d38316ca8146487c44f8c2e75",
+      "parts": [
+        {
+          "file": "packed/masks/solid_8m_zyx.npy/0000.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 26761,
+          "sha256": "b2d01bbfa7edb667a2b1f93e20364b2332105cf97750d19989303e7045459f03",
+          "offset": 0,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/masks/solid_8m_zyx.npy/0001.gz",
+          "bytes": 128,
+          "compressed_bytes": 24,
+          "sha256": "57d7ccbdb80092bd7ef74e3c5dea88c5f199b5647483fc08cb4c218eecc5ce7d",
+          "offset": 8388608,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|b1",
+        "shape": [
+          32,
+          512,
+          512
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 262144
+      }
+    },
+    "pollution/concentration_8m_z8-16m_tyx.npy": {
+      "total_bytes": 52428928,
+      "sha256": "cf2a4b5000a0fb28d97192bfeedc9b2bd33673983df85255a956442f7380bd61",
+      "parts": [
+        {
+          "file": "packed/pollution/concentration_8m_z8-16m_tyx.npy/0000.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 773053,
+          "sha256": "059f07f80d59455fae7c3c1269fbf675e2d5ec50e30c1796c742efa99a18b0d9",
+          "offset": 0,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/pollution/concentration_8m_z8-16m_tyx.npy/0001.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 1920012,
+          "sha256": "c8d08dc25840975f2c5dfd37a52ac63571a18926f83fef7691afb72a5dd64fbe",
+          "offset": 8388608,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/pollution/concentration_8m_z8-16m_tyx.npy/0002.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 3071524,
+          "sha256": "a9b54b8c81854fb9442c33dd3f064fe295e1c10e88ebead6d5d43e7557a41a8d",
+          "offset": 16777216,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/pollution/concentration_8m_z8-16m_tyx.npy/0003.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 4376726,
+          "sha256": "b9d8813fa819eee20269745c3a8f35574d04b302f4c390036e65f761c29fed02",
+          "offset": 25165824,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/pollution/concentration_8m_z8-16m_tyx.npy/0004.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5228413,
+          "sha256": "829d78b53cf0dc8745dfe0e06b1c793655246aa387cadf542fe4980f60b36cde",
+          "offset": 33554432,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/pollution/concentration_8m_z8-16m_tyx.npy/0005.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5276266,
+          "sha256": "e86b6e052cf4f936606f4ddd321e8b908bc6b97b97214edea303bc706b62eda2",
+          "offset": 41943040,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/pollution/concentration_8m_z8-16m_tyx.npy/0006.gz",
+          "bytes": 2097280,
+          "compressed_bytes": 1326431,
+          "sha256": "ce8b2072c0999324635424770d9e50291d55e8cbd8fe431c28ff42614c1a4e14",
+          "offset": 50331648,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          100,
+          512,
+          512
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 262144
+      }
+    },
+    "solar/daily_irradiation_kwh_m2_20250621_yx.npy": {
+      "total_bytes": 2097280,
+      "sha256": "d053ee6f306cfbdabfba41f734c89ec473ce2190fe22b8acaf987ddce10c56bb",
+      "parts": [
+        {
+          "file": "packed/solar/daily_irradiation_kwh_m2_20250621_yx.npy/0000.gz",
+          "bytes": 2097280,
+          "compressed_bytes": 507629,
+          "sha256": "2152dc7e617565731ff039f39b8e7a298b7a0deb093a13cc79453fe6bf8a2320",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          1024,
+          1024
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 1024
+      }
+    },
+    "solar/daily_irradiation_kwh_m2_20251221_yx.npy": {
+      "total_bytes": 2097280,
+      "sha256": "ef0e5c02b89aa7138341b1af1a18a0f76b265ad5ad0dd908c6d6e63ba87953bb",
+      "parts": [
+        {
+          "file": "packed/solar/daily_irradiation_kwh_m2_20251221_yx.npy/0000.gz",
+          "bytes": 2097280,
+          "compressed_bytes": 712958,
+          "sha256": "01602decc095fdfe1d255abb16a0250c5e1a24f278d478a6d1db38752faa25c2",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          1024,
+          1024
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 1024
+      }
+    },
+    "solar/ghi_16m_20250621_tyx.npy": {
+      "total_bytes": 11010176,
+      "sha256": "a510560b397cd34e32d41665cd09f020f64499b6a9efa227bad734d22bb51c8c",
+      "parts": [
+        {
+          "file": "packed/solar/ghi_16m_20250621_tyx.npy/0000.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 2552849,
+          "sha256": "1931dbe3c8937b0387a8dab4a979e042ff14cb8b1a69a16797e8025850708b7c",
+          "offset": 0,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/solar/ghi_16m_20250621_tyx.npy/0001.gz",
+          "bytes": 2621568,
+          "compressed_bytes": 936014,
+          "sha256": "f01782062680971aa416a97dbf607492ed4914402138a7e5ace1ec46ab955f3f",
+          "offset": 8388608,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          84,
+          256,
+          256
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 65536
+      }
+    },
+    "solar/ghi_16m_20251221_tyx.npy": {
+      "total_bytes": 7995520,
+      "sha256": "a7d6da9c5f7e992b4d0dfa0d1aa84c246524261a1fd0fc5a7164963a4795d4d4",
+      "parts": [
+        {
+          "file": "packed/solar/ghi_16m_20251221_tyx.npy/0000.gz",
+          "bytes": 7995520,
+          "compressed_bytes": 2983030,
+          "sha256": "ddbe9fbf1cd675fc4c27cf84767543750e9d0c623348becabd824fcf110c5c9b",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          61,
+          256,
+          256
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 65536
+      }
+    },
+    "solar/shadow_4m_20250621_packed_tyx.npy": {
+      "total_bytes": 11010176,
+      "sha256": "b68af7552672e51d46500a8e54a7bce9763bd16bf0fb267a400dfafda00c3b2d",
+      "parts": [
+        {
+          "file": "packed/solar/shadow_4m_20250621_packed_tyx.npy/0000.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 1516193,
+          "sha256": "49fcbe5263b080da7aa9903cc3bd5b62525704b2fa6972f6814edf33d116b5d5",
+          "offset": 0,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/solar/shadow_4m_20250621_packed_tyx.npy/0001.gz",
+          "bytes": 2621568,
+          "compressed_bytes": 839362,
+          "sha256": "def8baedaa28e43a3856165c96aff1d46606afaee710dbe6319383bbffba998c",
+          "offset": 8388608,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|u1",
+        "shape": [
+          84,
+          1024,
+          128
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 131072
+      }
+    },
+    "solar/shadow_4m_20251221_packed_tyx.npy": {
+      "total_bytes": 7995520,
+      "sha256": "f4c4413ff6221ff2c0d1b2831fbc3f052370facd3d0aae2586b926f975b7abe6",
+      "parts": [
+        {
+          "file": "packed/solar/shadow_4m_20251221_packed_tyx.npy/0000.gz",
+          "bytes": 7995520,
+          "compressed_bytes": 2676642,
+          "sha256": "24819d96a53c4d081c68910385a83e3456ae7fed0d642d324614947ac8faf3d5",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "|u1",
+        "shape": [
+          61,
+          1024,
+          128
+        ],
+        "itemsize": 1,
+        "offset": 128,
+        "block": 131072
+      }
+    },
+    "solar/sky_view_factor_4m_yx.npy": {
+      "total_bytes": 2097280,
+      "sha256": "d631b81a7a19432fa7d958ef2473393399377c5c943cfe4af2275ecb5ddf9923",
+      "parts": [
+        {
+          "file": "packed/solar/sky_view_factor_4m_yx.npy/0000.gz",
+          "bytes": 2097280,
+          "compressed_bytes": 782503,
+          "sha256": "f2ea1fc66b4e4cd81029e3be24913491ea6ee44ce610839168283323ac8aa4ad",
+          "offset": 0,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          1024,
+          1024
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 1024
+      }
+    },
+    "temperature/temperature_8m_z8-16m_tyx.npy": {
+      "total_bytes": 11010176,
+      "sha256": "4fb80e2084deedb476eb5281fb8563245e41350e581431a2851397f0a9df7cc1",
+      "parts": [
+        {
+          "file": "packed/temperature/temperature_8m_z8-16m_tyx.npy/0000.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 1648824,
+          "sha256": "475dbba95f237510e10acd4661c9aeefe9756783452b0a4e6eee1dcc1711f871",
+          "offset": 0,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/temperature/temperature_8m_z8-16m_tyx.npy/0001.gz",
+          "bytes": 2621568,
+          "compressed_bytes": 522487,
+          "sha256": "fc1a4637bc203af36c250b8e96deb5f9fa7f6ccd5c9e1b0904964597fead8866",
+          "offset": 8388608,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          21,
+          512,
+          512
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 262144
+      }
+    },
+    "wind/uvw_8m_z8-16m_tcyx.npy": {
+      "total_bytes": 157286528,
+      "sha256": "89f7ba85e294dd855df558bd9a1501431ffd82464302750830e07ba405ae9c47",
+      "parts": [
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0000.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5501457,
+          "sha256": "d68c108344039cb79185e3f67e3bc84dfb470a6797b078e7750b4c2bb2f0353a",
+          "offset": 0,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0001.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5622963,
+          "sha256": "b3503182000ba6dd7d868ed1e793964c659c1dcaa50969cf07dcab7b59f1192a",
+          "offset": 8388608,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0002.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5833538,
+          "sha256": "3ae6fe1d300f4ed2844bc5d59abcd3da18b48b4d8b4c682d1211f72da75e637c",
+          "offset": 16777216,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0003.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5713130,
+          "sha256": "be1ce945cdfa7106a04bcb92e20ec324be81d143065ff507a1c4dad0df230cfd",
+          "offset": 25165824,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0004.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5759848,
+          "sha256": "25bab045c808e3910ed6a748f717c5867dbe5b5a0bd0987fb4dfe39f1ad2f604",
+          "offset": 33554432,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0005.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5777909,
+          "sha256": "4a30f582eed779ef3fa1fc51334ab6007f35435830d9dcee0048ba5fdca8b417",
+          "offset": 41943040,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0006.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5720528,
+          "sha256": "858759765019bac32e82db7ddd95068c7aa2b410b4b66933905a3ac6f95f9a60",
+          "offset": 50331648,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0007.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5850885,
+          "sha256": "13b695f97d1b1a603f2d110b34bf41814d84e839497d336786600015de6276ae",
+          "offset": 58720256,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0008.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5862532,
+          "sha256": "cc5ed26e5e10b6ac49e5dcc6e6bfd4e6d36c62f355c487a63f2821b0c36aeb58",
+          "offset": 67108864,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0009.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5762410,
+          "sha256": "ff7122d60810c95d380fc439d7cf6dc2719cafef605d1e8921b1285b93740ad4",
+          "offset": 75497472,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0010.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5875067,
+          "sha256": "ff6662cf876816fe37140e57f77eccc528492dab99af120d76d71887ec3604d6",
+          "offset": 83886080,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0011.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5904603,
+          "sha256": "947e727a5a1fae1bdde3f771151c8fe5f9c4107d4e16d098897470e659f84f58",
+          "offset": 92274688,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0012.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5824983,
+          "sha256": "90e86298fcd98acebf24f7e0df78015469759d37e0fd72d10d353b793ad5a79b",
+          "offset": 100663296,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0013.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5933398,
+          "sha256": "28cb3b49edcf4c39aa024f2bc3459299667b0958fe0062ffd5f181c47a8b92c7",
+          "offset": 109051904,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0014.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5947801,
+          "sha256": "5289abef099162641bfdb4ae4d80c2bac505cf9e148fc3925f6fa35b5e3f4de0",
+          "offset": 117440512,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0015.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5860416,
+          "sha256": "6b81e562a56774c85696f37c0242a33c99a03017cb9bae269a62432caeba8317",
+          "offset": 125829120,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0016.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 5970963,
+          "sha256": "4c6e4e2848422782b5f4f9b63136085a76e10cc2df07124a7daea43b19bb21a9",
+          "offset": 134217728,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0017.gz",
+          "bytes": 8388608,
+          "compressed_bytes": 6000781,
+          "sha256": "076f1acd01cc19535372f8e066bece0f0d1fafbc7f7c8264ad9293f69d467e82",
+          "offset": 142606336,
+          "encoding": "gzip"
+        },
+        {
+          "file": "packed/wind/uvw_8m_z8-16m_tcyx.npy/0018.gz",
+          "bytes": 6291584,
+          "compressed_bytes": 4494895,
+          "sha256": "df7959f77a1711b1256aa28e6e66c1c3df3e64e11170540152921a02accbc9f5",
+          "offset": 150994944,
+          "encoding": "gzip"
+        }
+      ],
+      "meta": {
+        "descr": "<f2",
+        "shape": [
+          100,
+          3,
+          512,
+          512
+        ],
+        "itemsize": 2,
+        "offset": 128,
+        "block": 786432
+      }
+    }
+  }
+}

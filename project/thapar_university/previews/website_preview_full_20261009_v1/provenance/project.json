@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "thapar_university",
+  "title": "Thapar University \u00b7 detailed campus and neighbourhoods",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "georeferenced": true,
+    "origin": {
+      "longitude": 76.36621,
+      "latitude": 30.35447,
+      "height_m": 0,
+      "vertical_datum": "Author-provided AEQD local ENU; ground and most building heights are assumed, not surveyed"
+    },
+    "bounds_m": {
+      "min": [-2032.0, -2040.0, -0.019999999552965164],
+      "max": [2064.0, 2056.0, 256]
+    }
+  },
+  "inputs": [
+    {
+      "id": "original_glb",
+      "path": "input/original/thapar_university_detailed.glb",
+      "source": "User-specified detailed model; source author describes Overture/OSM footprints and historical facade references",
+      "sha256": "ba76e450896b56fb4a2981e3c9b4d532422bea839512e7af90021fc6e7c50274",
+      "license": "Source project identifies ODbL footprints and CC BY-SA facade references; this local copy is not published"
+    },
+    {
+      "id": "solver_glb",
+      "path": "input/solver_v1/solver.glb",
+      "source": "World-baked original geometry, static material classification from configs/geometry_semantics.json",
+      "sha256": "7d6b569138e275df6da62b5f231945386bf0444cff6a3f65460ac6aa7ed31c97",
+      "license": "Source project identifies ODbL footprints and CC BY-SA facade references; this local copy is not published"
+    }
+  ],
+  "default_view": "run_full_20261009_v1"
+}
