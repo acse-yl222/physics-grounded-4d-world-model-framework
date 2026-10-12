@@ -25,6 +25,30 @@
       "description": "Terrain and turbines, 151 wind-field frames, wake-model comparisons and rotor animation.",
       "viewer_url": "src/visualization/legacy/viewer/windfarm-movie/",
       "resource_ids": ["windfarm_geometry_published_v1", "windfarm_runs_published_movie_v1"]
+    },
+    {
+      "title": "Delhi Karol Bagh",
+      "tag": "Urban environment",
+      "description": "Explore Karol Bagh's detailed streets and buildings, with evolving wind patterns, physical temperature and tracer dispersion.",
+      "scene_id": "delhi_karol_bagh",
+      "viewer_url": "src/visualization/legacy/viewer/3d/?scene=delhi_karol_bagh&presentation=website_preview_full_20261008_v2&pose=campus&fields=1&mode=seq&phase=wind&step=100&lite=0",
+      "resource_ids": ["delhi_karol_bagh_previews_website_preview_full_20261008_v2"],
+      "presentation": {
+        "version": "website_preview_full_20261008_v2",
+        "descriptor": "https://raw.githubusercontent.com/acse-yl222/physics-grounded-4d-world-model-framework/13cf53180f9dc269e9dbee0aa1de09050306eb01/project/delhi_karol_bagh/previews/website_preview_full_20261008_v2/scene.json"
+      }
+    },
+    {
+      "title": "Thapar University",
+      "tag": "Campus environment",
+      "description": "Explore the campus and surrounding Patiala neighbourhoods, with wind, heat, tracer dispersion and summer\u2013winter sunlight.",
+      "scene_id": "thapar_university",
+      "viewer_url": "src/visualization/legacy/viewer/3d/?scene=thapar_university&presentation=website_preview_full_20261009_v1&pose=campus&fields=1&mode=seq&phase=wind&step=100&lite=0",
+      "resource_ids": ["thapar_university_previews_website_preview_full_20261009_v1"],
+      "presentation": {
+        "version": "website_preview_full_20261009_v1",
+        "descriptor": "https://raw.githubusercontent.com/acse-yl222/physics-grounded-4d-world-model-framework/13cf53180f9dc269e9dbee0aa1de09050306eb01/project/thapar_university/previews/website_preview_full_20261009_v1/scene.json"
+      }
     }
   ],
   "published_site": "https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/"

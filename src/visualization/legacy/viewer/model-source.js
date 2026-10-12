@@ -33,7 +33,10 @@ export async function fetchCityModel(manifestUrl, onProgress = () => {}) {
         if (part.sha256) url.searchParams.set('v', part.sha256.slice(0, 12));
         const r = await fetch(url, { signal: controller.signal });
         if (!r.ok) throw new Error(`Model part ${part.file}: HTTP ${r.status}`);
-        const reader = r.body.getReader();
+        if (part.encoding && part.encoding !== 'gzip') throw new Error('Unknown model transport');
+        const body =
+          part.encoding === 'gzip' ? r.body.pipeThrough(new DecompressionStream('gzip')) : r.body;
+        const reader = body.getReader();
         try {
           for (;;) {
             const { done, value } = await reader.read();

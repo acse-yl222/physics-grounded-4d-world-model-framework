@@ -90,7 +90,11 @@ def load_web_catalog(storage):
                 type(error).__name__,
             )
             continue
-        if item is not None and item["scene_id"] not in known:
+        if item is not None and item["scene_id"] in known:
+            for index, published in enumerate(catalog["scenes"]):
+                if published["scene_id"] == item["scene_id"] and published.get("presentation"):
+                    catalog["scenes"][index] = item
+        elif item is not None:
             catalog["scenes"].append(item)
             known.add(item["scene_id"])
     return catalog

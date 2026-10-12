@@ -56,6 +56,9 @@ def main():
         "model-source.js",
         "scene.js",
         "scene-run.js",
+        "scene-public.js",
+        "compressed-assets.js",
+        "npy.js",
     ):
         shutil.copy2(ROOT / "src/visualization/legacy/viewer" / name, target / "viewer" / name)
     for name in ("index.html", "main.js", "style.css", "replay.js"):
