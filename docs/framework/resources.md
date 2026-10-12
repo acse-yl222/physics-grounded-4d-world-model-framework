@@ -64,3 +64,13 @@ and simulation settings retain their original behavior. Packaging is available t
 `python -m common.pipeline.package_city_preview --help`; it verifies source field/model
 hashes and retains a self-contained bundle with provenance. Publishing these local entries
 and datasets requires a separate resource selection and deployment.
+
+The 2026-10-12 deployment explicitly selects Delhi and Thapar for publication. Their
+lossless website transport is indexed on the framework repository's separate
+`codex/city-presentations-20261012` resource branch; public descriptors use immutable raw GitHub revision
+URLs. This avoids expanding the existing Pages resource site. Compressed chunks preserve
+all original GLB and NPY bytes and are verified by the resource checksum checker. This
+resource transport is separate from protocol run encoding: source manifests are retained
+as provenance, and the original complete runs remain unchanged. The viewer enables it only
+for catalogue-selected `presentation` URLs; existing city and windfarm URLs retain their
+renderers and data paths. `tools/build_city_publication.py` creates these immutable versions.

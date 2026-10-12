@@ -212,7 +212,7 @@ It runs a generated GLB through the real CLI geometry and visualize stages, rete
 
 [Repository CI](.github/workflows/ci.yml) runs six jobs on every pull request (including stacked PRs), pushes to `main` and manual dispatch: format and Node unit tests, Python 3.11/3.12/3.14 tests with isolated wheel validation, CPU domain imports, and `E2E smoke`. Every change must pass `E2E smoke`; it has no path filter or conditional skip. Tool versions are pinned, npm uses its lockfile, Actions use full commit SHAs, and the workflow has read-only repository permissions. E2E artifacts contain only the synthetic fixture's logs, report and screenshots. A repository administrator can make the job checks required for merging through branch protection or a ruleset.
 
-The pure formatting and automatic lint-fix commits are listed in [`.git-blame-ignore-revs`](.git-blame-ignore-revs). To hide those commits when investigating code history:
+The pure formatting commit is listed in [`.git-blame-ignore-revs`](.git-blame-ignore-revs). To hide that commit when investigating code history:
 
 ```sh
 git blame --ignore-revs-file .git-blame-ignore-revs path/to/file.py

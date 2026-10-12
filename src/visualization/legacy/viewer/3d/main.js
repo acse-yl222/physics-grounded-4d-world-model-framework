@@ -35,7 +35,7 @@ import { recordedFrame } from '../scene-run.js';
 // the masks, the field layers (files, frame counts, clocks, display ranges) and the camera focus. South Kensington also
 // switches on the traffic / UAV / bird replay, the station tile, the OSM supplement and the building refinements.
 const SCENE = await loadScene();
-setDataBase(SCENE.physics);
+setDataBase(SCENE.physics, SCENE.protocol_display?.npy_transport);
 document.title = `${SCENE.title} · 3D`;
 // Lite mode: phones, tablets and low-memory machines get a proxy city extruded from the voxel masks instead of the
 // full model (which needs 1.5-2 GB of browser memory). ?lite=1 forces it, ?lite=0 forces the full model.
@@ -2324,7 +2324,7 @@ async function boot() {
     }
   } else {
     await new Promise((resolve, reject) => {
-      if (ON_PAGES && MODEL.parts_manifest)
+      if (MODEL.parts_manifest && (ON_PAGES || SCENE.protocol_display?.published))
         fetchCityModel(MODEL.parts_manifest, onCityProgress)
           .then((buf) => loader.parse(buf, '', (gltf) => onCity(gltf, resolve), reject))
           .catch(reject); // GitHub Pages: parts from the models repository

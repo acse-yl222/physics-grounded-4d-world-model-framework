@@ -1,4 +1,2 @@
 # Pure repository formatting baseline; no solver logic changes.
 b8e6dc7d98b01a51e055cb529e252288f58c3632
-# Automatic Ruff lint fixes (import sorting, removed int() and noqa); no logic changes.
-247fd30579ba9b5c389f19364ec3fc7132965964

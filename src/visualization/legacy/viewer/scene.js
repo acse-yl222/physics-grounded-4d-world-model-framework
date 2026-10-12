@@ -4,6 +4,10 @@ export const ROOT = new URL('../', import.meta.url).href; // repository root (vi
 
 export async function loadScene() {
   const params = new URLSearchParams(location.search);
+  if (params.has('presentation')) {
+    const { loadPublishedScene } = await import('./scene-public.js');
+    return loadPublishedScene(params, new URL(ROOT));
+  }
   if (params.has('run')) {
     const { loadRunScene } = await import('./scene-run.js');
     return loadRunScene(params, new URL(ROOT));
