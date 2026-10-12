@@ -176,7 +176,6 @@ def build_mfmu_scenario(stations, dist_km, T_slots, requests=None):
     If no requests are provided, generates synthetic COLLECTION→DROPOFF
     deliveries evenly spaced across the time horizon.
     """
-    n = len(stations)
 
     # ── stations ──────────────────────────────────────────────────────────────
     # MFMU uses role "hub" or "station" (not COLLECTION/DROPOFF).

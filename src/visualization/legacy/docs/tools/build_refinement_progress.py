@@ -113,7 +113,8 @@ def evidence_for(batch_dir, slug):
 
 
 def mtime(path):
-    return dt.datetime.fromtimestamp(os.path.getmtime(path))
+    # Naive local times: the chart compares them with now() below.
+    return dt.datetime.fromtimestamp(os.path.getmtime(path))  # noqa: DTZ006
 
 
 progress = load(os.path.join(GE, "progress.json"))
@@ -221,11 +222,11 @@ osm = load(os.path.join(ROOT, "geometry", "completion", "sources", "osm_building
 osm_by_id = {}
 for e in osm["elements"]:
     if e["type"] == "way" and "geometry" in e:
-        osm_by_id["way-%d" % e["id"]] = [utm30(p["lat"], p["lon"]) for p in e["geometry"]]
+        osm_by_id[f"way-{e['id']:d}"] = [utm30(p["lat"], p["lon"]) for p in e["geometry"]]
     elif e["type"] == "relation":
         outer = [m for m in e.get("members", []) if m.get("role") == "outer" and "geometry" in m]
         if outer:
-            osm_by_id["relation-%d" % e["id"]] = [
+            osm_by_id[f"relation-{e['id']:d}"] = [
                 utm30(p["lat"], p["lon"]) for p in outer[0]["geometry"]
             ]
 pending_recs = []
@@ -256,7 +257,7 @@ for rec in delivered:
 # base map: OSM footprints in the window
 x0, y0, x1, y1 = WINDOW
 base = []
-for oid, ring in osm_by_id.items():
+for ring in osm_by_id.values():
     xs = [p[0] for p in ring]
     ys = [p[1] for p in ring]
     if max(xs) < x0 or min(xs) > x1 or max(ys) < y0 or min(ys) > y1:
@@ -295,7 +296,7 @@ min_per = (cp["goal_elapsed_seconds"] / 60 / cp["completed_refinement_ids"]) if 
 ev_photos = sum(1 for r in delivered if r["evidence"]["photos"] > 0)
 ev_texts = sum(1 for r in delivered if r["evidence"]["texts"] > 0)
 ev_none = sum(1 for r in delivered if r["evidence"]["sources"] == 0)
-now = dt.datetime.now()
+now = dt.datetime.now()  # noqa: DTZ005 - naive local time, matching mtime()
 
 # ------------------------------------------------------------------ SVG helpers
 W, H = 660, 720
@@ -308,7 +309,7 @@ def px(p):
 
 
 def poly(ring):
-    return " ".join("%g,%g" % px(p) for p in ring)
+    return " ".join("{:g},{:g}".format(*px(p)) for p in ring)
 
 
 order = sorted(delivered, key=lambda r: batches[r["batch"]]["delivered"])

@@ -1,3 +1,4 @@
+from itertools import pairwise
 from pathlib import Path
 
 from common.layout import scene_input
@@ -36,7 +37,7 @@ def _dist(a, b):
 
 def _seg_length_m(seg, m_per_deg_lon):
     total = 0.0
-    for a, b in zip(seg, seg[1:]):
+    for a, b in pairwise(seg):
         dlon = (b[0] - a[0]) * m_per_deg_lon
         dlat = (b[1] - a[1]) * M_PER_DEG_LAT
         total += (dlon**2 + dlat**2) ** 0.5

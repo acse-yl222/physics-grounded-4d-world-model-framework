@@ -134,7 +134,7 @@ def main():
     out = Path(a.out) if a.out else RUN / f"flood/run_{cell}m"
     out.mkdir(parents=True, exist_ok=True)
     (out / "frames").mkdir(exist_ok=True)
-    fh = open(out / "run.log", "a")
+    fh = open(out / "run.log", "a")  # noqa: SIM115 - closed at the end of main
     dev = torch.device("cuda")
     dt_max = a.dt_max or {4: 0.5, 2: 0.3, 1: 0.15}[cell]
     t_start = time.time()

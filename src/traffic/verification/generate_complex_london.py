@@ -274,7 +274,7 @@ def _detect_intersections(roads):
     result = []
     for g in groups:
         center = (np.mean([p[0] for p in g]), np.mean([p[1] for p in g]))
-        involved = tuple(sorted(set(idx for p in g for idx in (p[2], p[3]))))
+        involved = tuple(sorted({idx for p in g for idx in (p[2], p[3])}))
         is_double_endpoint = True
         for p in g:
             for idx in (p[2], p[3]):
@@ -556,9 +556,6 @@ def simulate_trajectory(total_steps=70, seed=None, initial_vehicles=None, allow_
                 continue
             poly = _road_path(roads, v["road"], v["direction"])
             center, tangent, normal = _poly_interp(poly, v["wp_idx"])
-
-            move_dr = tangent[0]
-            move_dc = tangent[1]
 
             # Traffic light
             red = False

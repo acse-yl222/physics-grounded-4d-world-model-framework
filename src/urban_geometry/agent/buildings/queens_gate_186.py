@@ -11,7 +11,6 @@ def build(ctx, feature):
     roofmat = ctx.material("186 QG grey slate", (0.16, 0.19, 0.20), 0.81)
     glass = ctx.material("186 QG recessed glass", (0.065, 0.105, 0.12), 0.24, 0, 0.18)
     wood = ctx.material("186 QG dark timber", (0.12, 0.061, 0.028), 0.71)
-    iron = ctx.material("186 QG dark railings", (0.025, 0.029, 0.027), 0.48, 0.65)
     shell = ctx.mesh("mapped stucco and actual window apertures")
     roof = ctx.mesh("segmented main and rear roof")
     detail = ctx.mesh("major frames cornices balcony and portico")
@@ -148,7 +147,7 @@ def build(ctx, feature):
             if i == 0:
                 centers = [1.7, 5.0, 8.3]
             elif i == 1:
-                centers = [2.0, 11.5, 15.3] if high <= 18 else [2.0, 11.5, 15.3]
+                centers = [2.0, 11.5, 15.3]
             elif i in (3, 5):
                 centers = [length / 2] if length > 3.5 and high <= 14.2 else []
             else:
@@ -170,10 +169,9 @@ def build(ctx, feature):
                     )
                 )
             # Trim bands where the declining rear roof is lower than a storey.
-            if min(H(aa[1]), H(bb[1])) < high:
-                # No upper storey windows in uncertain rear, complete separately below.
-                if i not in (0, 1):
-                    continue
+            # No upper storey windows in uncertain rear, complete separately below.
+            if min(H(aa[1]), H(bb[1])) < high and i not in (0, 1):
+                continue
             wall(aa, bb, ops, top=lambda v, h=high: min(h, H(v)), bottom=low)
         # Complete above normal main cornice, or rear with simple estimated blank wall.
         if i in (0, 1):

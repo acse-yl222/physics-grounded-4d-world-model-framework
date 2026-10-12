@@ -24,7 +24,6 @@ def build(ctx, feature):
     L = math.dist(a, b)
     tx, ty = (b[0] - a[0]) / L, (b[1] - a[1]) / L
     nx, ny = ty, -tx
-    ang = math.atan2(ty, tx)
     entrances = []
     nopen = 0
 

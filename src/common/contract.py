@@ -1,11 +1,11 @@
 """Validate protocol v1 manifests and the minimum JSON asset encoding."""
 
-#!/usr/bin/env python3
 import argparse
 import hashlib
 import json
 import math
 import sys
+from itertools import pairwise
 from pathlib import Path, PurePosixPath
 
 from jsonschema import Draft202012Validator, FormatChecker
@@ -101,7 +101,7 @@ def validate(path):
     bounds = manifest["spatial"]["bounds_m"]
     require(all(a <= b for a, b in zip(bounds["min"], bounds["max"])), "reversed spatial bounds")
     samples = manifest["time"]["samples"]
-    require(all(a < b for a, b in zip(samples, samples[1:])), "time samples must strictly increase")
+    require(all(a < b for a, b in pairwise(samples)), "time samples must strictly increase")
     ids = [layer["id"] for layer in manifest["layers"]]
     require(len(ids) == len(set(ids)), "duplicate layer IDs")
     dynamic = any(layer["sampling"] != "static" for layer in manifest["layers"])
@@ -247,7 +247,7 @@ def main():
     args = parser.parse_args()
     try:
         layers = validate(args.manifest)
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 - every rejection is reported as INVALID
         print(f"INVALID: {exc}", file=sys.stderr)
         return 1
     print(f"VALID: {args.manifest} ({layers} layers; declared assets checked)")

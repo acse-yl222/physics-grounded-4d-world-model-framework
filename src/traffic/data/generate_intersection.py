@@ -170,7 +170,6 @@ def assign_vehicle_mission(entry, geometry, perturb_range=2):
 
 def build_reference_path(entry, geometry, mission, num_waypoints=20):
     turn_type = mission["turn_type"]
-    exit_name = mission["exit_name"]
     dest_row, dest_col = mission["dest_cell"]
     radius = mission["radius"]
 

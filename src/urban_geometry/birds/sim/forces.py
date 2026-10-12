@@ -39,7 +39,6 @@ def compute_separation(
     Returns:
         force: (N, 3) array, separation force vectors
     """
-    N = neighbor_indices.shape[0]
 
     # halved Gaussian falloff (shared by both modes)
     sigma = (r_separation - r_hard_sphere) / np.sqrt(-np.log(separation_gaussian_floor))
@@ -395,7 +394,6 @@ def compute_obstacle_avoidance(
         force: (N, 3) array, avoidance force vectors
     """
 
-    N = positions.shape[0]
     origin = np.array(grid_origin)
     _gz, _gy, _gx = (
         geometry.shape

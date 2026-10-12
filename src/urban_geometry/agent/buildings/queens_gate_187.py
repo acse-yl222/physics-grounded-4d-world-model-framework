@@ -11,7 +11,6 @@ def build(ctx, feature):
     roofmat = ctx.material("187 QG grey slate", (0.16, 0.19, 0.20), 0.81)
     glass = ctx.material("187 QG recessed glass", (0.065, 0.105, 0.12), 0.24, 0, 0.18)
     wood = ctx.material("187 QG dark timber", (0.12, 0.061, 0.028), 0.71)
-    iron = ctx.material("187 QG dark railings", (0.025, 0.029, 0.027), 0.48, 0.65)
     shell = ctx.mesh("mapped stucco and actual window apertures")
     roof = ctx.mesh("segmented main and rear roof")
     detail = ctx.mesh("major frames cornices balcony and portico")

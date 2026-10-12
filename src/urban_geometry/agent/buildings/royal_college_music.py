@@ -93,7 +93,6 @@ def build(ctx, feature):
     m = ctx.mesh("mapped exterior and recessed openings")
     base = float(feature.get("base_m", 0))
     entrances = []
-    masonry_joint = ctx.material("RCM masonry joints", (0.19, 0.10, 0.055), 0.95)
     metal = ctx.material("RCM ironwork", (0.055, 0.055, 0.045), 0.5, 0.65)
     # Stable north window axes from the inspected photograph, projected onto
     # each mapped edge rather than resetting the pitch at every GIS vertex.
@@ -421,7 +420,7 @@ def build(ctx, feature):
                         db = (d[0] - c[0]) * (b[1] - c[1]) - (d[1] - c[1]) * (b[0] - c[0])
                         if da * db < 0:
                             cuts.append(da / (da - db))
-                cuts = sorted(set(round(t, 12) for t in cuts))
+                cuts = sorted({round(t, 12) for t in cuts})
 
                 def at(t):
                     return tuple(a[k] + t * (b[k] - a[k]) for k in range(2))

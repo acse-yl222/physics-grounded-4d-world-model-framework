@@ -115,7 +115,7 @@ def category(name, material):
         return "asphalt"
     if "paving" in m or "public limestone" in m:
         return "paving"
-    if n.startswith("concept public realm") or n.startswith("surrounding public realm"):
+    if n.startswith(("concept public realm", "surrounding public realm")):
         return "excluded"
     return "building"
 

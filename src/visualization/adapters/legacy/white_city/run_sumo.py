@@ -19,6 +19,8 @@ import numpy as np
 import sumo
 
 sys.path.append(os.path.join(sumo.SUMO_HOME, "tools"))
+from pathlib import Path
+
 import traci
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -66,9 +68,9 @@ subprocess.run(
     capture_output=True,
 )
 cfg = os.path.join(T, "sim", "white_city.sumocfg")
-open(
-    cfg, "w"
-).write(f'''<configuration><input><net-file value="{net}"/><route-files value="{trips}"/></input>
+Path(
+    cfg
+).write_text(f'''<configuration><input><net-file value="{net}"/><route-files value="{trips}"/></input>
 <time><begin value="0"/><end value="{a.seconds}"/><step-length value="1"/></time>
 <processing><ignore-route-errors value="true"/><time-to-teleport value="120"/><collision.action value="warn"/></processing>
 <report><no-warnings value="true"/><no-step-log value="true"/></report></configuration>''')
@@ -76,9 +78,8 @@ sumo_bin = os.path.join(sumo.SUMO_HOME, "bin", "sumo")
 traci.start([sumo_bin, "-c", cfg, "--seed", str(a.seed), "--threads", "4"])
 tls_ids = traci.trafficlight.getIDList()
 links = {t: traci.trafficlight.getControlledLinks(t) for t in tls_ids}
-json.dump(
-    {t: [[list(l[0]) if l else None for l in lk] for lk in links[t]] for t in tls_ids},
-    open(os.path.join(T, "sim", "tls_links.json"), "w"),
+Path(T, "sim", "tls_links.json").write_text(
+    json.dumps({t: [[list(l[0]) if l else None for l in lk] for lk in links[t]] for t in tls_ids})
 )
 traci.simulation.subscribe([traci.constants.VAR_DEPARTED_VEHICLES_IDS])
 ids_all, xs, ys, angs, sps, offsets, lanes = [], [], [], [], [], [0], []
@@ -135,19 +136,19 @@ np.savez_compressed(
     offsets=np.array(offsets, np.int64),
     lane=np.array(lanes, np.int32),
 )
-json.dump(
-    [k for k, _ in sorted(lane_index.items(), key=lambda kv: kv[1])],
-    open(os.path.join(T, "sim", "lane_ids.json"), "w"),
+Path(T, "sim", "lane_ids.json").write_text(
+    json.dumps([k for k, _ in sorted(lane_index.items(), key=lambda kv: kv[1])])
 )
-json.dump(
-    {
-        "seconds": a.seconds,
-        "period": a.period,
-        "seed": a.seed,
-        "peak_vehicles": peak,
-        "tls": tls_states,
-    },
-    open(os.path.join(T, "sim", "tls.json"), "w"),
+Path(T, "sim", "tls.json").write_text(
+    json.dumps(
+        {
+            "seconds": a.seconds,
+            "period": a.period,
+            "seed": a.seed,
+            "peak_vehicles": peak,
+            "tls": tls_states,
+        }
+    )
 )
 print(
     "done: frames",

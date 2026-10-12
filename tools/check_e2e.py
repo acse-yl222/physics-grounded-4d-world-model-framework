@@ -26,7 +26,13 @@ def run_cli(workspace, output, *args, expected=0):
         log.write("\n$ " + " ".join(command) + "\n")
         log.flush()
         result = subprocess.run(
-            command, cwd=workspace, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=90
+            command,
+            cwd=workspace,
+            env=env,
+            stdout=log,
+            stderr=subprocess.STDOUT,
+            timeout=90,
+            check=False,
         )
     if result.returncode != expected:
         raise RuntimeError(

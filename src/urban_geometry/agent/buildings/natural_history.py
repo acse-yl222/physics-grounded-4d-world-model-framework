@@ -229,7 +229,7 @@ def build_roofs(ctx, feature, z, slate, glass, stone, blue):
                             for q in breaks
                             if 0 < (q - a[axis]) / (b[axis] - a[axis]) < 1
                         )
-                cuts = sorted(set(round(t, 12) for t in cuts))
+                cuts = sorted({round(t, 12) for t in cuts})
 
                 def at(t):
                     return tuple(a[k] + t * (b[k] - a[k]) for k in range(2))
@@ -794,7 +794,7 @@ def build(ctx, feature):
                     for v in lines
                     if 0 < (v - p[axis]) / (q[axis] - p[axis]) < 1
                 )
-        cuts = sorted(set(round(t, 12) for t in cuts))
+        cuts = sorted({round(t, 12) for t in cuts})
         groups = []
         for lo, hi in zip(cuts, cuts[1:]):
             t = (lo + hi) / 2

@@ -52,6 +52,9 @@ def snapshot_sources(root, destination):
     if checkout is None:
         return "installed-package"
     result = subprocess.run(
-        ["git", "-C", str(checkout), "rev-parse", "HEAD"], capture_output=True, text=True
+        ["git", "-C", str(checkout), "rev-parse", "HEAD"],
+        capture_output=True,
+        text=True,
+        check=False,
     )
     return result.stdout.strip() if result.returncode == 0 else "unversioned-checkout"

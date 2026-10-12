@@ -58,7 +58,6 @@ def main():
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.set_num_threads(8)
     name = a.tag or f"np4m_{a.kernel}" + ("_opentop" if a.open_top else "")
-    root = Path.cwd()
     out = trial_root("windfarm", name)
     web = out / "export"
     out.mkdir(parents=True, exist_ok=True)

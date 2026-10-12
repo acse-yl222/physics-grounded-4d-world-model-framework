@@ -178,7 +178,6 @@ def build(ctx, feature):
         m.box(*P(u, d, z), w, dep, h, mat, angle)
 
     door_u = 5.8
-    door_width = 1.6
     for zi, z in enumerate(ZONES):
         ring = z["outer"]
         signed = sum(A[0] * B[1] - B[0] * A[1] for A, B in zip(ring, ring[1:] + ring[:1]))

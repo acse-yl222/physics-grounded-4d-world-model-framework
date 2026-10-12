@@ -119,14 +119,12 @@ def build(ctx, feature):
     ux, uy = (b[0] - a[0]) / L, (b[1] - a[1]) / L
 
     def rh(x, y):
-        v = -(x - a[0]) * uy + (y - a[1]) * ux
         return 22.8
 
     plaster = ctx.material("QGT26to28 pale stucco", (0.73, 0.71, 0.65), 0.86)
     trimat = ctx.material("QGT26to28 pale dressings", (0.79, 0.77, 0.71), 0.72)
     slate = ctx.material("QGT26to28 dark slate roof", (0.12, 0.14, 0.15), 0.84)
     glass = ctx.material("QGT26to28 blue grey glass", (0.14, 0.20, 0.22), 0.2, 0, 0.28)
-    iron = ctx.material("QGT26to28 painted black metal", (0.025, 0.03, 0.03), 0.44, 0.65)
     timber = ctx.material("QGT26to28 estimated dark timber", (0.09, 0.045, 0.027), 0.69)
     stone = ctx.material("QGT26to28 estimated threshold stone", (0.52, 0.50, 0.45), 0.87)
     wall = ctx.mesh("complete footprint party walls and real openings")

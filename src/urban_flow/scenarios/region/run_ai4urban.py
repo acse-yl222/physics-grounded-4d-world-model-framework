@@ -62,7 +62,8 @@ def build_model(solid, cell, device, dt=0.5, ub=-1.0, re=0.15):
         ratio_x=nx // nz,
         ratio_y=ny // nz,
     )
-    exec(compile(ast.Module(body=selected, type_ignores=[]), str(REFERENCE), "exec"), ns)
+    # Runs the selected definitions of the frozen upstream reference script.
+    exec(compile(ast.Module(body=selected, type_ignores=[]), str(REFERENCE), "exec"), ns)  # noqa: S102
     ns["diag"] = float(ns["wA"][0, 0, 1, 1, 1])
     model = ns["AI4Urban"]().to(device).eval().requires_grad_(False)
     # Original inflow/outflow u ghost cells also force air through underground

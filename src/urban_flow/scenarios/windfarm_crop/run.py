@@ -30,7 +30,6 @@ def main():
     torch.set_num_threads(8)
     torch.backends.cudnn.allow_tf32 = False
     torch.backends.cuda.matmul.allow_tf32 = False
-    root = Path.cwd()
     geom = source_path("legacy_output", "region_crop/geometry")
     web = trial_root("windfarm", "crop")
     out = web / a.case

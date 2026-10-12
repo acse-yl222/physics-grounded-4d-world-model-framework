@@ -3,6 +3,8 @@ Only replaces new context-road triangles in a small campus-coordinate rectangle.
 Inherited campus meshes/materials are read-only. No external geometry packages.
 """
 
+from itertools import pairwise
+
 import bpy
 from mathutils import Vector
 
@@ -151,8 +153,8 @@ def build(root=None, road=None, inherited_road=None, scene=None):
         h = max(0, (y - 257.25) / 2.75)
         return (west + (east - west) * f, y, 0.045 * (1 - h) + endz * h)
 
-    for ya, yb in zip(ys, ys[1:]):
-        for fa, fb in zip(fractions, fractions[1:]):
+    for ya, yb in pairwise(ys):
+        for fa, fb in pairwise(fractions):
             emit([point(fa, ya), point(fb, ya), point(fb, yb), point(fa, yb)], mi)
     mesh = bpy.data.meshes.new("Jay north seam repaired context roads")
     mesh.from_pydata(vertices, [], faces)

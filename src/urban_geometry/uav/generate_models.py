@@ -99,16 +99,16 @@ def multirotor(count, arm, prop):
         t = 2 * math.pi * i / count + math.pi / 4 if count == 4 else 2 * math.pi * i / count
         x, y = arm * math.cos(t), arm * math.sin(t)
         rod(
-            "Arm_%02d" % i,
+            f"Arm_{i:02d}",
             (x * 0.22, y * 0.22, 0.32),
             (x, y, 0.34),
             0.022 if count == 4 else 0.03,
             carbon,
         )
-        rod("Motor_%02d" % i, (x, y, 0.325), (x, y, 0.389), 0.034, metal)
-        rotor("Rotor_%02d" % i, (x, y, 0.408), prop, t + 0.25)
+        rod(f"Motor_{i:02d}", (x, y, 0.325), (x, y, 0.389), 0.034, metal)
+        rotor(f"Rotor_{i:02d}", (x, y, 0.408), prop, t + 0.25)
         ellipsoid(
-            "Navigation_light_%02d" % i,
+            f"Navigation_light_{i:02d}",
             (x, y, 0.321),
             (0.018, 0.018, 0.01),
             red if y < 0 else green,

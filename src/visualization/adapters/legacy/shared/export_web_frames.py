@@ -14,6 +14,7 @@ import json
 import os
 import sys
 import time
+from pathlib import Path
 
 import numpy as np
 from PIL import Image
@@ -24,7 +25,7 @@ if not arg:
     sys.exit(__doc__)
 SCENE = arg[0] if os.path.isdir(arg[0]) else os.path.join(HERE, "..", arg[0])
 SCENE = os.path.abspath(SCENE)
-scene = json.load(open(os.path.join(SCENE, "scene.json")))
+scene = json.loads(Path(SCENE, "scene.json").read_text())
 PHYS = os.path.join(SCENE, "physics")
 OUT = os.path.join(PHYS, "web")
 only = None
@@ -77,7 +78,7 @@ index = {
     "layers": {},
 }
 if os.path.exists(os.path.join(OUT, "index.json")):
-    index["layers"] = json.load(open(os.path.join(OUT, "index.json")))["layers"]
+    index["layers"] = json.loads(Path(OUT, "index.json").read_text())["layers"]
 os.makedirs(OUT, exist_ok=True)
 
 
@@ -136,5 +137,5 @@ for key, (rel, kind, rng, note) in LAYERS.items():
         f"{key:16s} {frames:4d} frames  {total / 1e6:6.1f} MB  {meta['avg_kb']:6.1f} KB/frame  {time.time() - t0:5.1f} s",
         flush=True,
     )
-json.dump(index, open(os.path.join(OUT, "index.json"), "w"), indent=1)
+Path(OUT, "index.json").write_text(json.dumps(index, indent=1))
 print("wrote", os.path.join(OUT, "index.json"))

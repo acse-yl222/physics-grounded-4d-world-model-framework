@@ -102,7 +102,6 @@ def build(ctx, feature):
     trimat = ctx.material("Hotel pale dressings", (0.79, 0.77, 0.71), 0.72)
     slate = ctx.material("Hotel dark slate roof", (0.12, 0.14, 0.15), 0.84)
     glass = ctx.material("Hotel blue grey glass", (0.14, 0.20, 0.22), 0.2, 0, 0.28)
-    iron = ctx.material("Hotel painted black metal", (0.025, 0.03, 0.03), 0.44, 0.65)
     timber = ctx.material("Hotel estimated dark timber", (0.09, 0.045, 0.027), 0.69)
     stone = ctx.material("Hotel estimated threshold stone", (0.52, 0.50, 0.45), 0.87)
     wall = ctx.mesh("complete footprint party walls and real openings")

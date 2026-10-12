@@ -9,11 +9,12 @@ import json
 import math
 import os
 import re
+from pathlib import Path
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCENE = os.path.abspath(os.path.join(HERE, ".."))
 RAW = os.path.join(SCENE, "transport", "raw")
-geo = json.load(open(os.path.join(SCENE, "georef.json")))
+geo = json.loads(Path(SCENE, "georef.json").read_text())
 R = 6378137.0
 lat0, lon0 = geo["lat0"], geo["lon0"]
 s = geo["scale"]
@@ -79,12 +80,12 @@ MODE_COLOUR = {
     "bus": "#E32017",
     "tram": "#84B817",
 }
-stops = json.load(open(os.path.join(RAW, "stops.json")))
-routes = json.load(open(os.path.join(RAW, "routes.json")))
-lines = json.load(open(os.path.join(RAW, "lines.json")))
-status = {l["id"]: l for l in json.load(open(os.path.join(RAW, "line_status.json")))}
+stops = json.loads(Path(RAW, "stops.json").read_text())
+routes = json.loads(Path(RAW, "routes.json").read_text())
+lines = json.loads(Path(RAW, "lines.json").read_text())
+status = {l["id"]: l for l in json.loads(Path(RAW, "line_status.json").read_text())}
 out = {
-    "snapshot": json.load(open(os.path.join(RAW, "snapshot.json"))),
+    "snapshot": json.loads(Path(RAW, "snapshot.json").read_text()),
     "georeference": {
         k: geo[k] for k in ("method", "median_residual_m", "n_pairs", "rotation_deg", "scale")
     },
@@ -172,13 +173,13 @@ for lid, r in routes.items():
         }
     )
 out["routes"].sort(key=lambda r: (r["mode"] == "bus", r["name"]))
-for d in json.load(open(os.path.join(RAW, "road_disruptions.json"))):
+for d in json.loads(Path(RAW, "road_disruptions.json").read_text()):
     g = d.get("geography") or {}
     pt = d.get("point")
     if isinstance(pt, str):
         try:
             pt = json.loads(pt)
-        except Exception:
+        except (TypeError, ValueError):
             pt = None
     geom = None
     if g.get("type") == "Point":
@@ -205,7 +206,7 @@ for d in json.load(open(os.path.join(RAW, "road_disruptions.json"))):
             "geometry": geom,
         }
     )
-for c in json.load(open(os.path.join(RAW, "jamcams.json"))):
+for c in json.loads(Path(RAW, "jamcams.json").read_text()):
     x, z = to_model(c["lon"], c["lat"])
     if not inside((x, z)):
         continue
@@ -233,7 +234,7 @@ for l in status.values():
                 "status": [x.get("statusSeverityDescription") for x in l.get("lineStatuses", [])],
             }
         )
-for sid, arr in json.load(open(os.path.join(RAW, "arrivals.json"))).items():
+for sid, arr in json.loads(Path(RAW, "arrivals.json").read_text()).items():
     if sid in seen:
         out["arrivals"][sid] = [
             {
@@ -246,7 +247,7 @@ for sid, arr in json.load(open(os.path.join(RAW, "arrivals.json"))).items():
             for a in sorted(arr, key=lambda a: a.get("timeToStation", 0))[:12]
         ]
 p = os.path.join(SCENE, "transport", "transport.json")
-json.dump(out, open(p, "w"), separators=(",", ":"))
+Path(p).write_text(json.dumps(out, separators=(",", ":")))
 print(
     "stops",
     len(out["stops"]),

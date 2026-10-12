@@ -94,8 +94,6 @@ def pick_buildings(scene):
     if isinstance(scene, trimesh.Trimesh):
         return scene, ["<single-mesh GLB>"]
 
-    all_names = list(scene.geometry.keys())
-
     # 1) by name substring, dropping infrastructure
     mesh, names = extract_world_mesh(scene, BUILDINGS_NAME_SUBSTR, DROP_NAME_SUBSTR)
     if mesh is not None and len(mesh.faces) > 0:
@@ -124,7 +122,6 @@ def ascii_preview(occupied_xy, width=64):
     # downsample to <= width columns
     step = max(1, nx // width)
     ss = occupied_xy[::step, ::step]
-    chars = " .:-=+*#%@"
     # normalize to char ramp by local density (here it's boolean, so simple)
     lines = []
     # print north at top: flip y so higher y (north) is on top
@@ -232,19 +229,17 @@ def convert(path, out_path=None, inspect_only=False):
     )
 
     if out_path:
-        # np.save(out_path, geo)
-        if out_path:
-            if out_path.endswith(".npz"):
-                np.savez_compressed(
-                    out_path,
-                    geometry=geo,
-                    grid_spacing=SPACING_XY,
-                    grid_spacing_z=SPACING_Z,
-                    grid_origin=np.array(ORIGIN),
-                )
-            else:
-                np.save(out_path, geo)
-            print(f"\n[save]  wrote {out_path}  shape={geo.shape} dtype={geo.dtype}")
+        if out_path.endswith(".npz"):
+            np.savez_compressed(
+                out_path,
+                geometry=geo,
+                grid_spacing=SPACING_XY,
+                grid_spacing_z=SPACING_Z,
+                grid_origin=np.array(ORIGIN),
+            )
+        else:
+            np.save(out_path, geo)
+        print(f"\n[save]  wrote {out_path}  shape={geo.shape} dtype={geo.dtype}")
     return geo
 
 

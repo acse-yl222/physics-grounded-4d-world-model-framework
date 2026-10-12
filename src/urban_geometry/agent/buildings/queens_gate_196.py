@@ -125,7 +125,6 @@ def build(ctx, feature):
     trimat = ctx.material("196 brick dressings", (0.57, 0.255, 0.15), 0.72)
     slate = ctx.material("196 dark slate roof", (0.12, 0.14, 0.15), 0.84)
     glass = ctx.material("196 blue grey glass", (0.14, 0.20, 0.22), 0.2, 0, 0.28)
-    iron = ctx.material("196 painted black metal", (0.025, 0.03, 0.03), 0.44, 0.65)
     timber = ctx.material("196 estimated dark timber", (0.09, 0.045, 0.027), 0.69)
     stone = ctx.material("196 estimated threshold stone", (0.52, 0.50, 0.45), 0.87)
     wall = ctx.mesh("complete footprint party walls and real openings")

@@ -346,9 +346,10 @@ def main():
         }
         phase_order.append("solar")
         man["exported_stages"].append("solar")
+        assumed = scfg["assumptions"]
         man["limits"].append(
-            "Sunlight: assumed latitude %.4f / longitude %.4f and north = local +y."
-            % (scfg["assumptions"]["latitude_deg"], scfg["assumptions"]["longitude_deg"])
+            f"Sunlight: assumed latitude {assumed['latitude_deg']:.4f} / longitude "
+            f"{assumed['longitude_deg']:.4f} and north = local +y."
         )
 
     # ---- flood
@@ -373,8 +374,9 @@ def main():
             time_s=time_s,
             rain_mm_h=rain,
             max_depth_m=[round(s["max_depth_m"], 3) for s in series][: len(files)],
-            note="semi-implicit shallow-water solver on the GLB ground mesh (not surveyed terrain); design storm %s mm/h per 15 min, sewer %s mm/h"
-            % (rain15, fcfg["flood"]["sewer_mm_h"]),
+            note="semi-implicit shallow-water solver on the GLB ground mesh (not surveyed "
+            f"terrain); design storm {rain15} mm/h per 15 min, sewer "
+            f"{fcfg['flood']['sewer_mm_h']} mm/h",
         )
         max_name = f"flood/max_depth_{cell}m_yx.npy"
         save(

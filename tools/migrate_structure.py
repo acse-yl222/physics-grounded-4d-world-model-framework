@@ -92,7 +92,7 @@ def main():
         needs_root = False
         pattern = r"Path\(__file__\)\.resolve\(\)\.(?:parents\[(\d+)\]|(parent))"
 
-        def ancestor(match):
+        def ancestor(match, old_path=old_path, path=path):
             nonlocal needs_root
             index = int(match[1]) if match[1] else 0
             original = old_path.parents[index]

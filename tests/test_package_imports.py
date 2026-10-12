@@ -29,6 +29,7 @@ class PackageImportTests(unittest.TestCase):
                 capture_output=True,
                 text=True,
                 timeout=60,
+                check=False,
             )
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
 

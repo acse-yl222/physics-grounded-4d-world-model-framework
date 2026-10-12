@@ -108,7 +108,7 @@ def build(ctx, feature):
             cuts.extend([max(0, min(L, c - r)), max(0, min(L, c + r))])
             if arched:
                 cuts.extend(max(0, min(L, c + r * math.cos(j * math.pi / 32))) for j in range(33))
-        cuts = sorted(set(round(x, 9) for x in cuts))
+        cuts = sorted({round(x, 9) for x in cuts})
 
         def top(c, r, sp, u, arched):
             return sp + math.sqrt(max(0, r * r - (u - c) ** 2)) if arched else sp

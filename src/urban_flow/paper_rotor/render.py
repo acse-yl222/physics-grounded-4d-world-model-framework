@@ -40,7 +40,6 @@ def main():
         else trial_root("windfarm", "paper_rotor_render")
     )
     destination.mkdir(parents=True, exist_ok=True)
-    meta = json.loads((out / "comparison.json").read_text())
     a = np.load(out / "torch_paper.npz")
     b = np.load(out / "torch_legacy.npz")
     c = np.load(out / "triton_paper.npz")

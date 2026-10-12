@@ -143,7 +143,7 @@ class SimConfig:
 
     # WORLD LAYOUT
     # all spatial features e.g. roosts, roads, point sources of pollution/noise
-    geometry_path: str = None  # path to separate geometry .npz from glb_to_geo.py; None = use geometry from scaled_wind_path
+    # path to separate geometry .npz from glb_to_geo.py; None = use geometry from scaled_wind_path
     geometry_path: str = field(
         default_factory=lambda: str(scene_input("south_ken", "birds", "geometry.npz"))
     )

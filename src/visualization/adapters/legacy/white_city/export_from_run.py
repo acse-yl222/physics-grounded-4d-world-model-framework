@@ -15,6 +15,7 @@ import glob
 import json
 import os
 import time
+from pathlib import Path
 
 import numpy as np
 
@@ -88,17 +89,12 @@ for k in ("grass", "asphalt", "paving", "canopy"):
 ys, xs = np.nonzero(h2 > 40)
 if len(xs):
     print(
-        "tall cluster (>40 m) local x %.0f..%.0f, y %.0f..%.0f m; gltf Z = -y"
-        % (
-            -1492 + xs.min() * 2,
-            -1492 + xs.max() * 2 + 2,
-            -2548 + ys.min() * 2,
-            -2548 + ys.max() * 2 + 2,
-        )
+        f"tall cluster (>40 m) local x {-1492 + xs.min() * 2:.0f}..{-1492 + xs.max() * 2 + 2:.0f}, "
+        f"y {-2548 + ys.min() * 2:.0f}..{-2548 + ys.max() * 2 + 2:.0f} m; gltf Z = -y"
     )
     print(
-        "tallest cell: x %.0f y %.0f (%.1f m)"
-        % (-1492 + np.argmax(h2.max(0)) * 2, -2548 + np.argmax(h2.max(1)) * 2, h2.max())
+        f"tallest cell: x {-1492 + np.argmax(h2.max(0)) * 2:.0f} "
+        f"y {-2548 + np.argmax(h2.max(1)) * 2:.0f} ({h2.max():.1f} m)"
     )
 
 # ---- wind: SCALED 8 m coarse frames, one vertical layer, steps 1..100 (frame 000 is the initial state)
@@ -118,7 +114,7 @@ save(
 # ---- temperature: 3-D physical solver, 8 m, 21 frames over 1000 s
 T = os.path.join(RUN, "physics", "temperature3d_physical")
 tz = np.load(os.path.join(T, "temperature_c_tzyx.npy"), mmap_mode="r")
-cfg = json.load(open(os.path.join(T, "run_config.json")))
+cfg = json.loads(Path(T, "run_config.json").read_text())
 save(
     f"temperature/temperature_8m_z{LZ * 8}-{LZ * 8 + 8}m_tyx.npy",
     np.asarray(tz[:, LZ]).astype(np.float16),
@@ -149,7 +145,7 @@ save(
 
 # ---- sunlight: experimental run (assumed georeferencing), 8 m GHI every 10 min + 2 m shadow masks (packed bits)
 S = os.path.join(RUN, "physics", "solar_experimental")
-scfg = json.load(open(os.path.join(S, "run_config.json")))["config"]
+scfg = json.loads(Path(S, "run_config.json").read_text())["config"]
 man["solar"] = {
     "assumptions": scfg["assumptions"],
     "dates": scfg["solar"]["dates"],
@@ -158,7 +154,7 @@ man["solar"] = {
 for date in scfg["solar"]["dates"]:
     d = os.path.join(S, date)
     tag = date.replace("-", "")
-    frames = json.load(open(os.path.join(d, "frames.json")))
+    frames = json.loads(Path(d, "frames.json").read_text())
     meta = dict(
         time_local=[f["local_time"][11:16] for f in frames],
         time_utc=[f["utc"] for f in frames],
@@ -189,8 +185,8 @@ if os.path.exists(svf):
 
 # ---- flood: experimental shallow-water run on the GLB ground, 2 m, every 5 min for 3 h
 F = os.path.join(RUN, "physics", "flood_experimental")
-fcfg = json.load(open(os.path.join(F, "run_config.json")))["config"]
-series = json.load(open(os.path.join(F, "series.json")))
+fcfg = json.loads(Path(F, "run_config.json").read_text())["config"]
+series = json.loads(Path(F, "series.json").read_text())
 files = sorted(glob.glob(os.path.join(F, "depth_*.npz")))
 depth = np.empty((len(files), 1792, 1792), np.float16)
 for i, f in enumerate(files):
@@ -205,9 +201,8 @@ save(
     time_s=time_s,
     rain_mm_h=rain,
     max_depth_m=[round(s["max_depth_m"], 3) for s in series][: len(files)],
-    note="semi-implicit shallow-water solver on the GLB ground mesh (not surveyed terrain); design storm "
-    + str(rain15)
-    + " mm/h per 15 min, sewer %s mm/h" % fcfg["flood"]["sewer_mm_h"],
+    note="semi-implicit shallow-water solver on the GLB ground mesh (not surveyed terrain); "
+    f"design storm {rain15} mm/h per 15 min, sewer {fcfg['flood']['sewer_mm_h']} mm/h",
 )
 save(
     "flood/max_depth_2m_yx.npy",
@@ -217,12 +212,15 @@ save(
 )
 man["flood"] = {"assumptions": fcfg["assumptions"], **fcfg["flood"]}
 man["limits"] = [
-    "Not georeferenced: north assumed local +y, assumed latitude %.4f / longitude %.4f for the sun."
-    % (scfg["assumptions"]["latitude_deg"], scfg["assumptions"]["longitude_deg"]),
+    (
+        "Not georeferenced: north assumed local +y, assumed latitude "
+        f"{scfg['assumptions']['latitude_deg']:.4f} / longitude "
+        f"{scfg['assumptions']['longitude_deg']:.4f} for the sun."
+    ),
     "Wind: SCALED surrogate transfer, no CFD or measured validation.",
     "Temperature: controlled scenario.",
     "Pollution: assumed line source.",
     "Flood: GLB ground mesh as terrain.",
 ]
-json.dump(man, open(os.path.join(OUT, "manifest.json"), "w"), indent=1)
+Path(OUT, "manifest.json").write_text(json.dumps(man, indent=1))
 print("wrote", os.path.join(OUT, "manifest.json"))

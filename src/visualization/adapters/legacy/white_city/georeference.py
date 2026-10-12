@@ -7,6 +7,7 @@ Step 2: match them to named OSM buildings (Overpass) and fit a similarity transf
 """
 
 import sys
+from pathlib import Path
 
 MODE = sys.argv.pop(1) if len(sys.argv) > 1 else "fit"
 if MODE == "names":
@@ -81,7 +82,7 @@ if MODE == "names":
             "dx": b[3] - b[0],
             "dz": b[5] - b[2],
         }
-    json.dump(out, open("glb_named.json", "w"), indent=1)
+    Path("glb_named.json").write_text(json.dumps(out, indent=1))
     print(len(by), "names,", len(out), "named buildings")
     for k in list(out)[:60]:
         print(repr(k), {kk: round(v, 1) for kk, v in out[k].items()})
@@ -95,7 +96,7 @@ else:
 
     import numpy as np
 
-    glb = json.load(open("glb_named.json"))
+    glb = json.loads(Path("glb_named.json").read_text())
     q = '[out:json][timeout:90];(way["building"]["name"](51.492,-0.252,51.538,-0.192);relation["building"]["name"](51.492,-0.252,51.538,-0.192););out center tags;'
     data = urllib.request.urlopen(
         urllib.request.Request(
@@ -109,7 +110,7 @@ else:
         timeout=120,
     ).read()
     osm = json.loads(data)["elements"]
-    json.dump(osm, open("osm_named.json", "w"))
+    Path("osm_named.json").write_text(json.dumps(osm))
     print("osm named buildings", len(osm))
     norm = lambda s: re.sub(
         r"\s+", " ", s.lower().replace("’", "'").replace("saint ", "st ")
@@ -177,8 +178,9 @@ else:
         ] / R * 180 / math.pi
 
     out = {
-        "method": "similarity fit of %d named OSM buildings (Overpass, way/relation centres) to GLB node bounding-box centres, local equirectangular projection around (%.4f, %.4f)"
-        % (len(pairs), lat0, lon0),
+        "method": f"similarity fit of {len(pairs)} named OSM buildings (Overpass, way/relation "
+        "centres) to GLB node bounding-box centres, local equirectangular projection around "
+        f"({lat0:.4f}, {lon0:.4f})",
         "lat0": lat0,
         "lon0": lon0,
         "scale": float(s),
@@ -192,5 +194,5 @@ else:
         "grid_sw_corner_lonlat": to_lonlat(-1492, 2548),
         "grid_ne_corner_lonlat": to_lonlat(2092, -1036),
     }
-    json.dump(out, open("georef.json", "w"), indent=1)
+    Path("georef.json").write_text(json.dumps(out, indent=1))
     print(json.dumps(out, indent=1))

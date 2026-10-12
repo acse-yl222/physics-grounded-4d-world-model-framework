@@ -56,7 +56,7 @@ class NumericalExitTests(unittest.TestCase):
                 ):
                     for index, name in enumerate(cases):
 
-                        def check(name=name, index=index):
+                        def check(name=name, index=index, report=report, failed=failed):
                             report[name] = {"pass": np.bool_(not (failed and index == 0))}
 
                         check.__name__ = name
@@ -97,6 +97,7 @@ runpy.run_path(script, run_name='__main__')
                     capture_output=True,
                     text=True,
                     timeout=60,
+                    check=False,
                 )
                 self.assertEqual(result.returncode, 1 if fail == "yes" else 0, result.stderr)
                 report = json.loads(result.stdout)

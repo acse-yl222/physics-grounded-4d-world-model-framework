@@ -281,11 +281,11 @@ if __name__ == "__main__":
     parser.add_argument("--model", "-m", type=str, default=None)
     args = parser.parse_args()
 
-    date_str = os.environ.get("LOG_DATE", datetime.now().strftime("%m-%d_%H-%M-%S"))
+    date_str = os.environ.get("LOG_DATE", datetime.now().astimezone().strftime("%m-%d_%H-%M-%S"))
     log_dir = trial_root("south_ken", "traffic_evaluation")
     log_dir.mkdir(parents=True, exist_ok=True)
     log_path = os.path.join(log_dir, f"eval_log_{date_str}.txt")
-    log_file = open(log_path, "w", buffering=1)
+    log_file = open(log_path, "w", buffering=1)  # noqa: SIM115 - run-long log
 
     def log(msg):
         print(msg)

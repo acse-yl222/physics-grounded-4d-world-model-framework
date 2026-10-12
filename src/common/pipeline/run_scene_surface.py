@@ -39,6 +39,7 @@ def main():
                     cwd=ROOT,
                     stdout=log,
                     stderr=subprocess.STDOUT,
+                    check=False,
                 )
             if result.returncode:
                 save_json(

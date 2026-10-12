@@ -72,7 +72,7 @@ def main():
     a = ap.parse_args()
     out = Path(a.out) if a.out else ROOT / "output/core008/physics/scaled_latent/solar"
     out.mkdir(parents=True, exist_ok=True)
-    fh = open(out / "run.log", "a")
+    fh = open(out / "run.log", "a")  # noqa: SIM115 - closed at the end of main
     dev = torch.device("cuda")
     t0 = time.time()
 
@@ -133,7 +133,6 @@ def main():
             )
         )
         log(fh, f"svf done in {time.time() - ts:.0f} s: ground mean {float(svf[g].mean()):.3f}")
-    svf4 = svf.reshape(ny // 4, 4, nx // 4, 4).mean(dim=(1, 3))
     foot_t = torch.as_tensor(foot, device=dev)
 
     for date in a.dates.split(","):
@@ -150,7 +149,6 @@ def main():
         energy_direct = torch.zeros((ny, nx), device=dev)
         frames = []
         ghi4 = []
-        shadow_frac = []
         for hu in hours_utc:
             alt, az = sun_position(lat, lon, y, m, d, float(hu))
             if alt <= 0:

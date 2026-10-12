@@ -7,6 +7,7 @@ Cross-direction/cross-building coplanar overlaps use exact convex polygon subtra
 """
 
 import math
+from itertools import pairwise
 
 EPS = 1e-7
 
@@ -173,11 +174,11 @@ def plan(reports, threshold_max=0.15, bottom_z=-0.05):
         if g["index"] in deferred:
             continue
         rs = g["rectangles"]
-        us = sorted(set([r[k] for r in rs for k in ["u0", "u1"]]))
-        vs = sorted(set([r[k] for r in rs for k in ["v0", "v1"]]))
+        us = sorted({r[k] for r in rs for k in ["u0", "u1"]})
+        vs = sorted({r[k] for r in rs for k in ["v0", "v1"]})
         cells = set()
-        for i, (a, b) in enumerate(zip(us, us[1:])):
-            for j, (c, d) in enumerate(zip(vs, vs[1:])):
+        for i, (a, b) in enumerate(pairwise(us)):
+            for j, (c, d) in enumerate(pairwise(vs)):
                 if (
                     b - a > EPS
                     and d - c > EPS
@@ -303,7 +304,7 @@ def plan(reports, threshold_max=0.15, bottom_z=-0.05):
                                 if 0 < u < 1:
                                     cuts.append(u)
                 cuts = sorted(set(cuts))
-                for u, v in zip(cuts, cuts[1:]):
+                for u, v in pairwise(cuts):
                     if (v - u) * length < EPS:
                         continue
                     mid = [
@@ -390,8 +391,8 @@ def plan(reports, threshold_max=0.15, bottom_z=-0.05):
                 z,
             ]
 
-        for a, b in zip(xx, xx[1:]):
-            for c, d in zip(zz, zz[1:]):
+        for a, b in pairwise(xx):
+            for c, d in pairwise(zz):
                 if (
                     b - a > EPS
                     and d - c > EPS
@@ -426,7 +427,6 @@ def build(ctx, reports, threshold_max=0.15, bottom_z=-0.05):
     for surface in result["surfaces"]:
         m = ctx.mesh(surface["id"])
         z = surface["top_z"]
-        bottom = surface["bottom_z"]
         for tri in surface["top_triangles_xy"]:
             # Local (t,n) frame has determinant -1; reverse for upward normal.
             m.face([(x, y, z) for x, y in reversed(tri)], mat)

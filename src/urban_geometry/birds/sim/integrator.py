@@ -456,7 +456,6 @@ def step(state, config, predator=None):
     # BERDAHL FIELD SPEED-MODULATION (orthokinesis)
     # modulate target speed by the local scalar fields each bird senses
     if env is not None:
-        wind_mag = np.linalg.norm(wind, axis=-1) / config.v_max  # |wind| normalized to ~0-1
         field_values = {
             "pollution": env["pollution"],
             "noise": env["noise"],
@@ -610,13 +609,15 @@ def step(state, config, predator=None):
 
     # per-bird roost surface height from heightmap (used for ROOST ground clamping)
     # computed once before sub-stepping, not per sub-step
+    # NOTE: roost_surface_z_arr is not read below, so no sub-step clamps ROOST birds to it.
     roost_hmaps = get_site_heightmaps(
         config, config.world["roosts"], geo_data, geo_data["grid_origin"]
     )
     if roost_hmaps:
         roost_surface_z_arr, _ = sample_surface_height(roost_hmaps, pos)
     else:
-        roost_surface_z_arr = np.full(N, 0.5)  # if no roosts, then ground level fallback
+        # if no roosts, then ground level fallback
+        roost_surface_z_arr = np.full(N, 0.5)  # noqa: F841
 
     # ROOST friction per sub-step = computed so total friction per dt is consistent regardless of how many sub-steps we use
     roost_friction_per_substep = 0.15 ** (

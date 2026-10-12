@@ -667,7 +667,7 @@ def main():
                 )
                 handle.flush()
                 code = subprocess.run(
-                    cmd, cwd=ROOT, stdout=handle, stderr=subprocess.STDOUT
+                    cmd, cwd=ROOT, stdout=handle, stderr=subprocess.STDOUT, check=False
                 ).returncode
                 if code:
                     break

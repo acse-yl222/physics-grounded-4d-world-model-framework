@@ -201,7 +201,7 @@ def package_export(storage, source, config, run_id, source_snapshot=None, code_r
             utc = info.get("time_utc")
             times = info.get("time_s")
             if times is None and utc:
-                parsed = [datetime.fromisoformat(t.replace("Z", "+00:00")) for t in utc]
+                parsed = [datetime.fromisoformat(t) for t in utc]
                 times = [(t - parsed[0]).total_seconds() for t in parsed]
             if times is None:
                 raise ValueError("Solar export is missing its time axis")

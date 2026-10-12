@@ -57,7 +57,7 @@ result = {
     "origin_projected_m": origin,
     "source_id": "osm-public-realm-20260909",
     "geometry_authored": False,
-    "counts": {k: sum(r["kind"] == k for r in rows) for k in sorted(set(r["kind"] for r in rows))},
+    "counts": {k: sum(r["kind"] == k for r in rows) for k in sorted({r["kind"] for r in rows})},
     "inside_building_count": sum(r["inside_mapped_building"] for r in rows),
     "records": rows,
 }

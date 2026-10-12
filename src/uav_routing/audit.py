@@ -8,6 +8,7 @@ import shutil
 import subprocess
 import tarfile
 from datetime import UTC, datetime
+from itertools import pairwise
 from pathlib import Path
 
 import matplotlib
@@ -26,7 +27,7 @@ def dump(path, obj):
 
 def check_polyline(points, mask, spacing):
     """Independent NumPy grid-plane traversal including both sides of closed faces."""
-    for a, b in zip(points[:-1], points[1:]):
+    for a, b in pairwise(points):
         delta = b - a
         times = [0.0, 1.0]
         for axis in range(3):
@@ -190,7 +191,7 @@ def main():
             if r["source"] != s["label"]:
                 continue
             p = np.load(out / r["path"])
-            for a, b in zip(p[:-1], p[1:]):
+            for a, b in pairwise(p):
                 tangent = b[:2] - a[:2]
                 norm = np.linalg.norm(tangent)
                 side = (

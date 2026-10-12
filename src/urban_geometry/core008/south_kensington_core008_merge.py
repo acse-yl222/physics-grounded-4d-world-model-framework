@@ -2,6 +2,7 @@ import json
 import math
 import sys
 import time
+from pathlib import Path
 
 import bpy
 import numpy as np
@@ -49,9 +50,9 @@ def bounds(objs):
 
 bpy.ops.wm.open_mainfile(filepath=REGION)
 log("opened region", len(bpy.data.objects))
-scope = json.load(open(SCOPE))
+scope = json.loads(Path(SCOPE).read_text())
 ids = set(scope["building_ids"])
-rec = {b["id"]: b for b in json.load(open(GEOMJSON))["buildings"]}
+rec = {b["id"]: b for b in json.loads(Path(GEOMJSON).read_text())["buildings"]}
 region_before = {
     "objects": len([o for o in bpy.data.objects if o.type == "MESH"]),
     "triangles": sum(tris(o) for o in bpy.data.objects),
@@ -211,7 +212,8 @@ for key, objs in groups.items():
     r = min(max(r, 0.8), 0.6 * H)
     trunk_h = 0.45 * H
     trunk_r = min(max(0.035 * H, 0.12), 0.6)
-    props = {k: objs[0][k] for k in objs[0].keys() if not k.startswith("_")}
+    # Blender ID custom properties: iterate keys() explicitly.
+    props = {k: objs[0][k] for k in objs[0].keys() if not k.startswith("_")}  # noqa: SIM118
     h = int(hashlib.sha1(key.encode()).hexdigest(), 16)
     canopy = bpy.data.objects.new(
         key + " | simplified canopy", canopy_meshes[h % len(canopy_meshes)]
@@ -337,8 +339,8 @@ if plinth and plinth.use_nodes:
 log("ground unified", len(unified), [u["object"] for u in unified][:6])
 
 # ---- traffic layer: OSM road attributes (75 ways) + simulated vehicle tracks, both already in the region frame ----
-road_json = json.load(open(TRAFFIC_ROADS))
-veh_json = json.load(open(TRAFFIC_VEH))
+road_json = json.loads(Path(TRAFFIC_ROADS).read_text())
+veh_json = json.loads(Path(TRAFFIC_VEH).read_text())
 tcol = bpy.data.collections.new("Traffic | OSM roads and simulated vehicles (South Kensington)")
 bpy.context.scene.collection.children.link(tcol)
 HW_COL = {
@@ -397,7 +399,7 @@ def ribbon_mesh(name, pts, width, z):
 
 ROAD_Z = ZLIFT + 0.20
 road_objs = []
-region_roads = json.load(open(REGION_ROADS))
+region_roads = json.loads(Path(REGION_ROADS).read_text())
 road_json["roads"] = region_roads["roads"]
 for r in road_json["roads"]:
     hw = r["highway"]
@@ -531,7 +533,7 @@ log(
 )
 
 # ---- traffic model predictions: per vehicle per 5 s window, 3 s horizon, shown only during their window ----
-pred_json = json.load(open(TRAFFIC_PRED))
+pred_json = json.loads(Path(TRAFFIC_PRED).read_text())
 pm = pred_json["meta"]
 pred_mat = traffic_mat("Traffic | model prediction (3 s horizon)", (0.95, 0.15, 0.75, 1), 0.8)
 PRED_Z = ZLIFT + 1.6
@@ -718,34 +720,35 @@ except TypeError as e:
     )
 log("exported", OUT_GLB)
 
-json.dump(
-    {
-        "region_source": REGION,
-        "core008_source": GLB008,
-        "zlift_m": ZLIFT,
-        "campus_to_region_matrix": [list(map(float, row)) for row in T],
-        "region_before": region_before,
-        "removed": removed,
-        "imported_008": {
-            "objects": len(new),
-            "triangles": sum(tris(o) for o in new),
-            "bounds": b008,
+Path(REPORT).write_text(
+    json.dumps(
+        {
+            "region_source": REGION,
+            "core008_source": GLB008,
+            "zlift_m": ZLIFT,
+            "campus_to_region_matrix": [list(map(float, row)) for row in T],
+            "region_before": region_before,
+            "removed": removed,
+            "imported_008": {
+                "objects": len(new),
+                "triangles": sum(tris(o) for o in new),
+                "bounds": b008,
+            },
+            "checks": checks,
+            "merged": stats,
+            "ground_unification": {
+                "rule": "region site meshes re-materialed with the 008 authored tiles using world-XY planar UVs",
+                "tiles_m": TILE,
+                "objects": unified,
+                "plinth_material_recoloured_to_stone_mean": True,
+            },
+            "tree_simplification": tree_stats,
+            "traffic_layer": traffic_stats,
+            "birds_layer": bird_stats,
         },
-        "checks": checks,
-        "merged": stats,
-        "ground_unification": {
-            "rule": "region site meshes re-materialed with the 008 authored tiles using world-XY planar UVs",
-            "tiles_m": TILE,
-            "objects": unified,
-            "plinth_material_recoloured_to_stone_mean": True,
-        },
-        "tree_simplification": tree_stats,
-        "traffic_layer": traffic_stats,
-        "birds_layer": bird_stats,
-    },
-    open(REPORT, "w"),
-    indent=1,
-    ensure_ascii=False,
+        indent=1,
+        ensure_ascii=False,
+    )
 )
 log("report written")
 
@@ -818,10 +821,10 @@ def render_all(engine):
 
 try:
     render_all("BLENDER_WORKBENCH")
-except Exception as e:
+except Exception as e:  # noqa: BLE001 - fall back to Cycles
     log("workbench failed", e)
     try:
         render_all("CYCLES")
-    except Exception as e2:
+    except Exception as e2:  # noqa: BLE001 - previews are optional
         log("cycles failed", e2)
 log("DONE")

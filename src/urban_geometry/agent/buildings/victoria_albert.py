@@ -92,7 +92,6 @@ def _roof_h(u, v):
 
 def build(ctx, feature):
     base = float(feature.get("base_m", 0))
-    height = 24.0
     stone = ctx.material("VA Portland stone", (0.68, 0.63, 0.52), 0.8)
     brick = ctx.material("VA rear estimated brick", (0.40, 0.17, 0.11), 0.85)
     glass = ctx.material("VA recessed glazing", (0.055, 0.095, 0.12), 0.27)

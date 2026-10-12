@@ -158,7 +158,6 @@ def main():
     # 2. maps at selected hours: ground surface and air 0-4 m, core
     picks = [h for h in (6, 9, 12, 15, 18, 21) if h in hours]
     Wp = 300
-    rows = []
     lo_s, hi_s = (
         float(np.floor(np.percentile(surf[:, study], 1))),
         float(np.ceil(np.percentile(surf[:, study], 99))),

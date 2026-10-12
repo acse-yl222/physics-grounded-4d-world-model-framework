@@ -97,7 +97,7 @@ def build(ctx, feature):
         portal = L * 0.5
         if door:
             portal = L * 0.76 if pavilion else L * 0.50
-            width = 2.25 if pavilion else 2.25
+            width = 2.25
             lo = 0.05 if pavilion else 0.25
             hi = 3.25 if pavilion else 4.3
             holes = [

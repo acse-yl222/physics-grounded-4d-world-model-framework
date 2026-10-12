@@ -109,7 +109,6 @@ def build(ctx, feature):
             length = math.dist(aa, bb)
             sx, sy = (bb[0] - aa[0]) / length, (bb[1] - aa[1]) / length
             # Polygon ordering may be clockwise. Original boundary identifies outward normal unambiguously.
-            midpoint = ((aa[0] + bb[0]) / 2, (aa[1] + bb[1]) / 2)
             # derive outward with original ring orientation (source is counterclockwise)
             ring = feature["geometry"][0]["outer"]
             if edge >= 0:

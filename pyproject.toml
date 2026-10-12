@@ -63,6 +63,8 @@ exclude = [
     "src/urban_flow/reference_public/**",
     "src/urban_flow/scenarios/region/AI4Urban_reference.py",
 ]
+# A parsed document with the wrong JSON shape is invalid data, reported as ValueError.
+ignore = ["TRY004"]
 
 [tool.ruff.lint.flake8-comprehensions]
 # dict(key=value) is the repository's idiom for JSON records.

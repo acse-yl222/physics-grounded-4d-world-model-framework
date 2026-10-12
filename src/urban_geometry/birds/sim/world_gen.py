@@ -459,7 +459,6 @@ def _place_ground_roosts(column_height, ground_mask, geo_data, grid_origin, coun
     Fallback: place roosts on the largest open ground patches when no flat rooftops exist.
     Used when geometry has no suitable elevated surfaces.
     """
-    spacing_xy = geo_data["grid_spacing"]
 
     # reuse the forage candidate finder for open ground, but with smaller minimum
     candidates = _find_forage_candidates(

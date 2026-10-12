@@ -5,6 +5,7 @@ global preference edits, file IO or automatic scene clearing occurs here.
 """
 
 import math
+from itertools import pairwise
 
 import bpy
 from mathutils import Vector
@@ -86,7 +87,7 @@ class Mesh:
             ]
             for r, h in profile
         ]
-        for a, b in zip(rings, rings[1:]):
+        for a, b in pairwise(rings):
             for j in range(n):
                 self.face([a[j], a[(j + 1) % n], b[(j + 1) % n], b[j]], material)
         self.face(list(reversed(rings[0])), material)

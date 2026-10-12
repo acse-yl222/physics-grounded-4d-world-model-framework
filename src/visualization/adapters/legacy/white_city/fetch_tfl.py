@@ -9,6 +9,7 @@ import sys
 import time
 import urllib.parse
 import urllib.request
+from pathlib import Path
 
 os.makedirs(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "transport", "raw"),
@@ -28,14 +29,14 @@ def get(path, **params):
                 timeout=60,
             ) as r:
                 return json.loads(r.read())
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001 - retry any network or decode failure
             print("retry", url, e, file=sys.stderr)
             time.sleep(3 + 5 * attempt)
     return None
 
 
 def save(name, obj):
-    json.dump(obj, open(os.path.join(OUT, name), "w"))
+    Path(OUT, name).write_text(json.dumps(obj))
     print(name, len(obj) if hasattr(obj, "__len__") else "")
 
 

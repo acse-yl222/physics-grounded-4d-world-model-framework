@@ -90,9 +90,9 @@ def train():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     save_dir = str(trial_root("south_ken", "traffic_training"))
     os.makedirs(save_dir, exist_ok=True)
-    date_str = os.environ.get("LOG_DATE", datetime.now().strftime("%m-%d_%H-%M-%S"))
+    date_str = os.environ.get("LOG_DATE", datetime.now().astimezone().strftime("%m-%d_%H-%M-%S"))
     log_path = os.path.join(save_dir, f"train_log_{date_str}.txt")
-    log_file = open(log_path, "w", buffering=1)
+    log_file = open(log_path, "w", buffering=1)  # noqa: SIM115 - run-long log
 
     def log(msg):
         print(msg)

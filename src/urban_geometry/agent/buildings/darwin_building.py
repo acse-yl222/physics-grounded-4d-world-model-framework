@@ -53,7 +53,6 @@ def build(ctx, feature):
             mesh.face(clean, mat)
 
     rings = [[UV(p) for p in q["outer"]] for q in feature["geometry"]]
-    door_edge = None
     interfaces = []
     for ri, ring in enumerate(rings):
         for ei, (aa, bb) in enumerate(zip(ring, ring[1:] + ring[:1])):

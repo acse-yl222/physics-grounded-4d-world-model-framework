@@ -37,7 +37,7 @@ def get_wind(positions, time, config):
 
     elif mode == "sinusoidal":
         # spatially + temporally varying wind (sinusoidal)
-        x, y, z = positions[:, 0], positions[:, 1], positions[:, 2]  # z unused for now
+        x, y = positions[:, 0], positions[:, 1]
 
         # base flow (mean wind)
         base = np.array(config.wind_direction, dtype=float)

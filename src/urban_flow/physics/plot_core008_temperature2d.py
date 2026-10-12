@@ -68,13 +68,12 @@ def main():
     T = np.load(OUT / "temperature_fields_masked_c.npy", mmap_mode="r")
     building = np.load(OUT / "building_mask.npy")
     study = np.load(OUT / "study_area_mask.npy")
-    veg = np.load(OUT / "vegetation_mask.npy")
     source = np.load(OUT / "source_c_per_hour.npy")
     speed = np.load(OUT / "velocity_speed_slice.npy", mmap_mode="r")
     n = T.shape[0]
     frame_s = summary["temperature_config"]["frame_duration_s"]
     c = lambda a: crop(a, study)
-    b, s, v = c(building), c(study), c(veg)
+    b, s = c(building), c(study)
     outside = ~s
     fields = [np.asarray(c(T[k]), np.float32) for k in (0, n // 2, n - 1)]
     vals = np.concatenate([f[s & ~b] for f in fields])

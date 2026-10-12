@@ -147,7 +147,6 @@ def solar_ratio_fields(alt, az, month, cloud, ghi_model):
     """Per-4 m-cell ratio of received GHI to open-sky GHI (domain orientation), from 1 m ShadowNet + SVF."""
     dev = torch.device("cuda")
     H = np.load(TERRAIN / "bed_block_1m_yx.npy")
-    foot1 = np.load(TERRAIN / "footprint_1m_yx.npy")
     ny1, nx1 = H.shape
     oy, ox = int(Y0 // CELL), int(X0 // CELL)
     canopy4 = np.load(LANDCOVER / "canopy_4m_yx.npy")[oy : oy + ny1 // 4, ox : ox + nx1 // 4]

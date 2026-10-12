@@ -17,6 +17,7 @@ import math
 import os
 import sys
 import time
+from pathlib import Path
 
 import numpy as np
 import sumo
@@ -27,7 +28,7 @@ import sumolib
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCENE = os.path.abspath(os.path.join(HERE, ".."))
 T = os.path.join(SCENE, "traffic")
-geo = json.load(open(os.path.join(SCENE, "georef.json")))
+geo = json.loads(Path(SCENE, "georef.json").read_text())
 R = 6378137.0
 lat0, lon0 = geo["lat0"], geo["lon0"]
 s = geo["scale"]
@@ -74,16 +75,17 @@ for e in net.getEdges(withInternal=False):
                 "world_xyz": [[round(x, 2), GROUND_Y, round(z, 2)] for x, z in pts],
             }
         )
-json.dump(
-    {
-        "schema": "UWM_WHITE_CITY_TRAFFIC_ROADS_V1",
-        "coordinate_frame": "glTF world XYZ (X east, Z south, Y up); lanes drawn at Y=0.26 m",
-        "source": "OSM highways (Overpass 2026-09-16) -> netconvert 1.27.1",
-        "counts": {"lanes": len(lanes)},
-        "lanes": lanes,
-    },
-    open(os.path.join(T, "roads.json"), "w"),
-    separators=(",", ":"),
+Path(T, "roads.json").write_text(
+    json.dumps(
+        {
+            "schema": "UWM_WHITE_CITY_TRAFFIC_ROADS_V1",
+            "coordinate_frame": "glTF world XYZ (X east, Z south, Y up); lanes drawn at Y=0.26 m",
+            "source": "OSM highways (Overpass 2026-09-16) -> netconvert 1.27.1",
+            "counts": {"lanes": len(lanes)},
+            "lanes": lanes,
+        },
+        separators=(",", ":"),
+    )
 )
 print("lanes", len(lanes), f"{time.time() - t0:.0f} s")
 
@@ -183,24 +185,25 @@ for tls, lk in links.items():
                     ],
                 }
             )
-json.dump(
-    {
-        "schema": "UWM_WHITE_CITY_SIGNAL_LAYER_V1",
-        "coordinate_frame": "glTF world XYZ (X east, Z south, Y up); ground Y=0.26 m",
-        "timing_interface": "state = latest tls_frames.jsonl row with t <= replay t, states[tls_id][link_index]; r/R red, y/Y amber, g/G green",
-        "claim": "Synthetic SUMO signal programmes (netconvert guessed signals, actuated default); pole and head positions are demo placements at SUMO stop lines, not surveyed TfL signal poles.",
-        "counts": {
-            "tls": len(links),
-            "poles": len(poles),
-            "heads": len(heads),
-            "movements": len(movements),
+Path(T, "signal_layer.json").write_text(
+    json.dumps(
+        {
+            "schema": "UWM_WHITE_CITY_SIGNAL_LAYER_V1",
+            "coordinate_frame": "glTF world XYZ (X east, Z south, Y up); ground Y=0.26 m",
+            "timing_interface": "state = latest tls_frames.jsonl row with t <= replay t, states[tls_id][link_index]; r/R red, y/Y amber, g/G green",
+            "claim": "Synthetic SUMO signal programmes (netconvert guessed signals, actuated default); pole and head positions are demo placements at SUMO stop lines, not surveyed TfL signal poles.",
+            "counts": {
+                "tls": len(links),
+                "poles": len(poles),
+                "heads": len(heads),
+                "movements": len(movements),
+            },
+            "movements": movements,
+            "poles": poles,
+            "heads": heads,
         },
-        "movements": movements,
-        "poles": poles,
-        "heads": heads,
-    },
-    open(os.path.join(T, "signal_layer.json"), "w"),
-    separators=(",", ":"),
+        separators=(",", ":"),
+    )
 )
 print(
     "signals: tls",
@@ -216,7 +219,7 @@ print(
 
 # ---- vehicle frames
 sim = np.load(os.path.join(T, "sim", "frames.npz"))
-meta = json.load(open(os.path.join(T, "sim", "tls.json")))
+meta = json.loads(Path(T, "sim", "tls.json").read_text())
 ids, xs, ys, ang, sp, off = (
     sim["ids"],
     sim["x"],
@@ -225,7 +228,7 @@ ids, xs, ys, ang, sp, off = (
     sim["speed"],
     sim["offsets"],
 )
-lane_ids = json.load(open(os.path.join(T, "sim", "lane_ids.json")))
+lane_ids = json.loads(Path(T, "sim", "lane_ids.json").read_text())
 lane_pos = {l["id"]: i for i, l in enumerate(lanes)}
 lane_map = np.array([lane_pos.get(lid, -1) for lid in lane_ids], np.int32)
 lane_rec = lane_map[sim["lane"]]  # record -> index into roads.json lanes (-1 = unknown)
@@ -273,12 +276,10 @@ for f in ("traffic_flow.f32", "frames_index.json", "tls_frames.jsonl"):
     if os.path.exists(os.path.join(T, "replay", f)):
         os.remove(os.path.join(T, "replay", f))
 rec.tofile(os.path.join(T, "replay", "traffic_flow.i16"))
-json.dump(counts.tolist(), open(os.path.join(T, "replay", "frame_counts.json"), "w"))
+Path(T, "replay", "frame_counts.json").write_text(json.dumps(counts.tolist()))
 # signal states as change points: {tls: [[t, state], ...]}; the viewer expands them
-json.dump(
-    {"seconds": meta["seconds"], "tls": meta["tls"]},
-    open(os.path.join(T, "replay", "tls_changes.json"), "w"),
-    separators=(",", ":"),
+Path(T, "replay", "tls_changes.json").write_text(
+    json.dumps({"seconds": meta["seconds"], "tls": meta["tls"]}, separators=(",", ":"))
 )
 man = {
     "schema": "UWM_WHITE_CITY_TRAFFIC_REPLAY_V2",
@@ -295,5 +296,5 @@ man = {
     "method": "SUMO 1.27.1 (eclipse-sumo pip), OSM highways -> netconvert (--tls.guess-signals, actuated default programmes), randomTrips (fringe factor 5, min distance 400 m), 1 s steps, TraCI recording",
     "claim": "Synthetic demand and synthetic signal timings on the OSM network; not observed White City traffic.",
 }
-json.dump(man, open(os.path.join(T, "replay.json"), "w"), indent=1)
+Path(T, "replay.json").write_text(json.dumps(man, indent=1))
 print("frames", len(counts), "records", len(rec), "bytes", rec.nbytes, f"{time.time() - t0:.0f} s")

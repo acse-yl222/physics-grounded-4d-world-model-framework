@@ -221,7 +221,7 @@ def main():
     out = BASE / f"diurnal_{a.date}"
     out.mkdir(parents=True, exist_ok=True)
     (out / "hourly").mkdir(exist_ok=True)
-    fh = open(out / "run.log", "a")
+    fh = open(out / "run.log", "a")  # noqa: SIM115 - closed at the end of main
     t0 = time.time()
     _y, mo, _d = map(int, a.date.split("-"))
     h0, h1 = map(int, a.hours.split("-"))

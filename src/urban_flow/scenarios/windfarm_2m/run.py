@@ -39,7 +39,6 @@ def main():
     a = p.parse_args()
     from urban_flow.solvers.mac_triton import MAC
 
-    root = Path.cwd()
     geom = source_path("legacy_output", "region_crop_2m/geometry")
     out = trial_root("windfarm", "mac_2m")
     web = out / "export"
