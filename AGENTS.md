@@ -12,7 +12,7 @@ canonical scene IDs; translate legacy IDs at adapter boundaries.
 
 Main source directories have moved into `src/`; scene assets are under `project/`.
 The legacy `pipelines/`, `input/`, `configs/`, `expansion/`, and `visualizer/` roots no
-longer exist. Read `docs/framework/implementation-status.md` for remaining migrations.
+longer exist. Read `docs/architecture.md` for the current structure and entry points.
 Original repository histories, status records and patches are retained under `.history/`;
 this is recovery material, not disposable cache. Do not publish it or discard it.
 The canonical viewer supports GLB, NPY, JSON and sparse recorded trajectories.

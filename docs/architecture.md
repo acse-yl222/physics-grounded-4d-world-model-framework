@@ -1,8 +1,7 @@
 # 框架结构与运行流程
 
 本文描述当前代码结构和运行入口。目录约定、数据保留规则和结果清单格式以
-[仿真与可视化协议](framework/protocol-v1.md) 为准；迁移进度和已执行的验证见
-[实施记录](framework/implementation-status.md)。
+[仿真与可视化协议](framework/protocol-v1.md) 为准。
 
 ## 职责划分
 
