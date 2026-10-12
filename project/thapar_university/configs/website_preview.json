@@ -1,0 +1,23 @@
+{
+  "title": "Thapar University \u00b7 complete detailed scene",
+  "description": "Recorded 4 m wind, 8 m physical temperature and tracer, summer/winter clear-sky sunlight",
+  "presentation": {
+    "wind_particles": true,
+    "particle_count": 10000
+  },
+  "limits": [
+    "Author-provided AEQD local east/north coordinates at 30.35447 N, 76.36621 E. Most building heights and flat terrain are assumptions.",
+    "Wind and tracer use model time; temperature is a separate controlled restart with 35.4 C air and 40 C surfaces.",
+    "Sunlight uses 2025 summer/winter days and Asia/Kolkata local time; clear-sky model, not observed irradiance.",
+    "Surrogate wind and tracer are not calibrated against measured campus conditions."
+  ],
+  "focus": {
+    "box": [
+      [32.56719970703125, -209.18883419036865],
+      [732.5671997070312, 490.81116580963135]
+    ],
+    "orbit_m": 950,
+    "label": "Campus landmarks",
+    "note": "Opening camera based on the named campus landmark bounds; full surrounding geometry remains available."
+  }
+}

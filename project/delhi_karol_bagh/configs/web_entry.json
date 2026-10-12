@@ -1,0 +1,14 @@
+{
+  "title": "Delhi Karol Bagh",
+  "tag": "Urban environment",
+  "description": "Explore Karol Bagh's detailed streets and buildings, with evolving wind patterns, physical temperature and tracer dispersion.",
+  "run_id": "website_preview_full_20261008_v2",
+  "launch": {
+    "pose": "campus",
+    "fields": "1",
+    "mode": "seq",
+    "phase": "wind",
+    "step": "100",
+    "lite": "0"
+  }
+}

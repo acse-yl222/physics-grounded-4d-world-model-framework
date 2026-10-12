@@ -1,0 +1,11 @@
+{
+  "title": "Delhi Karol Bagh · physical fields",
+  "description": "Recorded simulation fields · continuous colour maps and wind trails",
+  "presentation": { "wind_particles": true, "particle_count": 10000 },
+  "limits": [
+    "Local model coordinates; geographic origin and true north are unverified.",
+    "Wind and tracer use model time; temperature is a separate controlled thermal restart.",
+    "Wind: surrogate transfer without CFD validation. Temperature: assumed 26 °C air and 30 °C surfaces.",
+    "Pollution: arbitrary tracer units and assumed emission source; not observed air quality."
+  ]
+}

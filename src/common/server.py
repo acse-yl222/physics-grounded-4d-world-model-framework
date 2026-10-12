@@ -10,6 +10,7 @@ import re
 from urllib.parse import unquote, urlsplit
 from .storage import scene_id, within
 from .locations import resource_path
+from .web_catalog import load_web_catalog
 
 
 class ViewerHandler(BaseHTTPRequestHandler):
@@ -81,17 +82,7 @@ class ViewerHandler(BaseHTTPRequestHandler):
             elif parts[:6] == legacy + ("agents", "demo_rev02", "data"):
                 path = within(self.storage.run("south_ken", "legacy_agents") / "data", *parts[6:])
             elif parts == ("src", "visualization", "public-scenes.json"):
-                catalog = json.loads(
-                    resource_path("src/visualization/public-scenes.json").read_text()
-                )
-                for item in catalog["scenes"]:
-                    if not self.storage.assets(item["scene_id"], "runs").is_dir():
-                        item["viewer_url"] = (
-                            catalog["published_site"].rstrip("/")
-                            + "/"
-                            + item["viewer_url"].removeprefix("src/visualization/legacy/")
-                        )
-                return self.json_response(catalog, head)
+                return self.json_response(load_web_catalog(self.storage), head)
             elif parts == ("index.html",):
                 path = resource_path("index.html")
             elif parts[:2] == ("src", "visualization") or parts[0] in ("examples", "schemas"):

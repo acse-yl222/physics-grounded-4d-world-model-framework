@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "delhi_karol_bagh",
+  "title": "Delhi Karol Bagh \u00b7 local model",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "georeferenced": false,
+    "origin": {
+      "longitude": 0,
+      "latitude": 0,
+      "height_m": 0,
+      "vertical_datum": "Local GLB height; geographic origin and north unrecorded, not surveyed"
+    },
+    "bounds_m": {
+      "min": [-928.0, -928.0, -0.7199997901916504],
+      "max": [608.0, 1120.0, 128.0]
+    }
+  },
+  "inputs": [
+    {
+      "id": "original_glb",
+      "path": "input/original/delhi_karol_bagh.glb",
+      "source": "User-provided delhi_karol_bagh.glb; original preserved",
+      "sha256": "a544c260c99f78069f9c74c42e116477f7768016497d7aa8c696ddb8e8828702",
+      "license": "User-provided local input; redistribution permission unrecorded"
+    },
+    {
+      "id": "solver_glb",
+      "path": "input/solver_v2/solver.glb",
+      "source": "World transforms baked and static surfaces selected by configs/geometry_semantics.json",
+      "sha256": "25b0abb76820c55b61c8700b7ab4b017fb9477d621364f0dcec835d2842eb9bb",
+      "license": "Derived local solver input; not selected for publication"
+    }
+  ],
+  "default_view": "run_short_20261008_v3"
+}

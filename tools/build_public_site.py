@@ -50,7 +50,13 @@ def main():
         data = json.loads(path.read_text())
         data["model"]["parts_manifest"] = base + "project/" + canonical + "/manifest.json"
         path.write_text(json.dumps(data, indent=2) + "\n")
-    for name in ("scene-navigation.js", "bootstrap.js", "model-source.js"):
+    for name in (
+        "scene-navigation.js",
+        "bootstrap.js",
+        "model-source.js",
+        "scene.js",
+        "scene-run.js",
+    ):
         shutil.copy2(ROOT / "src/visualization/legacy/viewer" / name, target / "viewer" / name)
     for name in ("index.html", "main.js", "style.css", "replay.js"):
         shutil.copy2(

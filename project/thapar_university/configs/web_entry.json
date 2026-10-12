@@ -1,0 +1,14 @@
+{
+  "title": "Thapar University",
+  "tag": "Campus environment",
+  "description": "Explore the campus and surrounding Patiala neighbourhoods, with wind, heat, tracer dispersion and summer–winter sunlight.",
+  "run_id": "website_preview_full_20261009_v1",
+  "launch": {
+    "pose": "campus",
+    "fields": "1",
+    "mode": "seq",
+    "phase": "wind",
+    "step": "100",
+    "lite": "0"
+  }
+}

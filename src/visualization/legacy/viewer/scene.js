@@ -3,6 +3,11 @@
 export const ROOT = new URL('../', import.meta.url).href; // repository root (viewer/../)
 
 export async function loadScene() {
+  const params = new URLSearchParams(location.search);
+  if (params.has('run')) {
+    const { loadRunScene } = await import('./scene-run.js');
+    return loadRunScene(params, new URL(ROOT));
+  }
   const index = await (await fetch(ROOT + 'scenes/index.json', { cache: 'no-cache' })).json();
   const qs = new URLSearchParams(location.search);
   let id = qs.get('scene') || index.default;

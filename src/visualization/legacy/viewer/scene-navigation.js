@@ -16,6 +16,12 @@ try {
   const response = await fetch(catalogue, { cache: 'no-cache' });
   if (!response.ok) throw new Error(`Scene catalogue: HTTP ${response.status}`);
   const { scenes } = await response.json();
+  if (query.has('run') && !scenes.some((s) => s.scene_id === current)) {
+    const metadata = await fetch(new URL(`project/${current}/project.json`, root)).then((r) =>
+      r.json(),
+    );
+    scenes.push({ scene_id: current, title: metadata.title, viewer_url: location.href });
+  }
   select.replaceChildren(
     ...scenes.map((scene) => {
       const option = document.createElement('option');

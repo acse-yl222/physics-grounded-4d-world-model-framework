@@ -28,6 +28,7 @@ import {
 import { EXPANSION_BATCHES, installExpansion } from './expansion.js';
 import { createTransport } from './transport.js';
 import { createTraffic } from './traffic.js';
+import { recordedFrame } from '../scene-run.js';
 
 // ------------------------------------------------------------------ scene (scenes/<id>/scene.json)
 // Everything site-specific comes from the scene file: the field grid and its placement in the model frame, the city model,
@@ -180,6 +181,13 @@ const ui = {
 };
 // scene-driven page chrome: title, scene switcher, tabs, layer rows and legends
 function setupSceneUI() {
+  if (SCENE.protocol_display && SCENE.presentation?.wind_particles) {
+    ui.lPart.checked = true;
+    if (Number.isFinite(SCENE.presentation.particle_count))
+      ui.nPart.value = String(
+        Math.max(+ui.nPart.min, Math.min(+ui.nPart.max, SCENE.presentation.particle_count)),
+      );
+  }
   $('title').textContent = SCENE.title;
   $('title').title = SCENE.description ?? '';
   $('loading-title').textContent = `Loading the ${SCENE.title} 3D model`;
@@ -880,7 +888,9 @@ function stepParticles(dtSec) {
 // in overlay mode they follow the timeline (flood shows its static maximum-depth map instead).
 const clamp = (v, lo, hi) => (v < lo ? lo : v > hi ? hi : v);
 const mapped = (L, step) =>
-  clamp(Math.floor((step * STEP_S - L.t0_s) / L.step_s + 1e-6), 0, L.frames - 1);
+  SCENE.protocol_display?.strict_time
+    ? recordedFrame(L, step * STEP_S)
+    : clamp(Math.floor((step * STEP_S - L.t0_s) / L.step_s + 1e-6), 0, L.frames - 1);
 function phaseSpan(key) {
   const L = LAYERS[key];
   if (key === 'solar') return { start: 1, end: L.frames ?? 99 };
@@ -941,6 +951,7 @@ function frame(key, file, k, raw = false) {
   );
 }
 function prefetch(key, file, k) {
+  if (SCENE.protocol_display?.strict_time && (k === null || k === undefined)) return;
   if (hasLayer(key)) getFrameF32(key, k);
   else getFrame(file, k);
 }
@@ -1000,7 +1011,10 @@ function activeLayers() {
     },
     act = {};
   for (const k of Object.keys(chk))
-    act[k] = has(k) && (seqMode() ? state.phase === k : chk[k].checked);
+    act[k] =
+      has(k) &&
+      (seqMode() ? state.phase === k : chk[k].checked) &&
+      (!SCENE.protocol_display?.strict_time || frameIndex(state.step)[k] !== null);
   return act;
 }
 function repaint() {
@@ -1045,15 +1059,35 @@ async function loadStep(step) {
 async function loadStepInner(step) {
   const token = ++state.token,
     fi = frameIndex(step);
+  if (SCENE.protocol_display?.strict_time) {
+    for (const [key, index] of Object.entries(fi))
+      if (index === null) {
+        state.fields[key] = null;
+        if (planes[key]) {
+          planes[key].fade = planes[key].target = 0;
+          planes[key].mesh.visible = false;
+        }
+        if (key === 'wind') wind.uv = null;
+      }
+  }
   const act = activeLayers();
   const wantFlood = has('flood') && (act.flood || floodPlane.fade > 0),
     wantSolar = has('solar') && (act.solar || solarPlane.fade > 0),
     wantDiurnal = has('diurnal') && (act.diurnal || diurnalPlane.fade > 0);
   const shadowMode = ui.solarMode.value === 'shadow';
   // fetch only what is shown or fading (plus a first frame of each field for the readout); every other layer keeps its last frame
-  const wantWind = has('wind') && (act.wind || windPlane.fade > 0 || !state.fields.wind),
-    wantPoll = has('poll') && (act.poll || pollPlane.fade > 0 || !state.fields.poll),
-    wantTemp = has('temp') && (act.temp || tempPlane.fade > 0 || !state.fields.temp);
+  const wantWind =
+      has('wind') &&
+      (!SCENE.protocol_display?.strict_time || fi.wind !== null) &&
+      (act.wind || windPlane.fade > 0 || !state.fields.wind),
+    wantPoll =
+      has('poll') &&
+      (!SCENE.protocol_display?.strict_time || fi.poll !== null) &&
+      (act.poll || pollPlane.fade > 0 || !state.fields.poll),
+    wantTemp =
+      has('temp') &&
+      (!SCENE.protocol_display?.strict_time || fi.temp !== null) &&
+      (act.temp || tempPlane.fade > 0 || !state.fields.temp);
   state.loading = true;
   const dKey = 'diurnal_' + ui.diurnalMode.value.replace('Rel', '');
   const [wr, pr, tr, fr, sr, dr] = await Promise.all([
@@ -1112,10 +1146,16 @@ async function loadStepInner(step) {
       hr = dm?.hours_local?.[k],
       amb = dm?.ambient_c?.[k];
     ui.timeLabel.textContent = `${LAYERS.diurnal.day_label ?? ''} · ${hr !== undefined ? String(hr).padStart(2, '0') + ':00' : `hour ${k + 1}`} local · ambient ${amb !== undefined ? amb.toFixed(1) + ' °C' : '–'} · ${k + 1} / ${ph.end}`;
+  } else if (seqMode() && SCENE.protocol_display?.strict_time) {
+    const time = LAYERS[state.phase].time_s[fi[state.phase]];
+    ui.timeLabel.textContent = `${ph.label} · frame ${fi[state.phase] + 1} / ${LAYERS[state.phase].frames} · t = ${time} s`;
   } else
     ui.timeLabel.textContent = seqMode()
       ? `${ph.label} · frame ${step - ph.start + 1} / ${ph.end - ph.start + 1} · t = ${step * STEP_S} s`
       : `Step ${step} · t = ${step * STEP_S} s` +
+        (SCENE.protocol_display?.strict_time && has('temp') && fi.temp === null
+          ? ' · temperature: no data at this time'
+          : '') +
         (has('temp') && step < PHASES.temp?.start ? ' · temperature run not started' : '') +
         (act.flood && LAYERS.flood?.max ? ' · flood layer = maximum depth of the event' : '');
   for (let k = 1; k <= 4; k++) {
@@ -1135,6 +1175,7 @@ function setStep(s) {
   const lo = seqMode() ? PHASES[state.phase].start : 1,
     hi = seqMode() ? PHASES[state.phase].end : STEPS;
   state.step = Math.max(lo, Math.min(hi, s));
+  if (SCENE.protocol_display?.strict_time) applyLayers();
   ui.step.min = lo;
   ui.step.max = hi;
   ui.step.value = state.step;
@@ -2142,7 +2183,7 @@ async function boot() {
   const M = SCENE.masks ?? {};
   let dataError = null;
   const dataReady = (async () => {
-    await initFrames();
+    if (!SCENE.protocol_display) await initFrames();
     console.log('field frames:', framesInfo());
     for (const [cell, file] of Object.entries(M.footprint ?? {}))
       footprints[+cell] = await loadMask(file);

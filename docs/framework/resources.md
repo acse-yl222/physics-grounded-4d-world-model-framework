@@ -49,3 +49,18 @@ next to its viewer. Old site asset routes remain available for compatibility.
 
 For code-only clones with no local run directories, `p4d serve` resolves homepage scene
 links to the published site. Local protocol scenes remain selectable in the unified viewer.
+
+Completed local city presentations can opt into the same homepage and scene switcher with
+`project/<scene>/configs/web_entry.json`. It names a retained `city_presentation` run,
+display text and launch preferences. Entries are added only when their declared assets
+exist; a missing or malformed local entry cannot replace or break the published entries.
+The Delhi and Thapar configurations select their retained full-run presentations. Their
+datasets are stored separately and are not included in code-only clones or static builds.
+
+The presentation adapter preserves recorded field times and uses the existing city
+renderer. Its strict time bounds, temperature clock and particle defaults apply only to
+explicit retained-run URLs. Existing South Kensington, White City and windfarm rendering
+and simulation settings retain their original behavior. Packaging is available through
+`python -m common.pipeline.package_city_preview --help`; it verifies source field/model
+hashes and retains a self-contained bundle with provenance. Publishing these local entries
+and datasets requires a separate resource selection and deployment.
