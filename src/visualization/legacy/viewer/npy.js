@@ -1,8 +1,11 @@
 /* Minimal .npy reader over HTTP Range requests (ES module), used by the 3-D page. Paths are relative to the scene's
    physics/ folder (DATA, set by main.js from scene.json before any read). */
+import { readCompressedRange } from './compressed-assets.js';
 export let DATA = '';
-export function setDataBase(url) {
+let transport = null;
+export function setDataBase(url, compressed = null) {
   DATA = url;
+  transport = compressed;
 }
 
 const F16 = new Float32Array(65536);
@@ -31,6 +34,7 @@ export class Npy {
   }
   async header() {
     if (this.meta) return this.meta;
+    if (transport?.[this.path]) return (this.meta = transport[this.path].meta);
     if (!this._hdr)
       this._hdr = (async () => {
         const r = await fetch(DATA + this.path, { headers: { Range: 'bytes=0-511' } });
@@ -80,6 +84,12 @@ export class Npy {
     return this._fetch(m, start, start + m.block * m.itemsize - 1);
   }
   async _fetch(m, start, end) {
+    if (transport?.[this.path]) {
+      const buf = await readCompressedRange(DATA, transport[this.path], start, end);
+      if (m.itemsize === 2) return new Uint16Array(buf);
+      if (m.itemsize === 1) return new Uint8Array(buf);
+      return new Float32Array(buf);
+    }
     const r = await fetch(DATA + this.path, { headers: { Range: `bytes=${start}-${end}` } });
     if (r.status !== 206) throw new Error('Range request failed: ' + this.path);
     const buf = await r.arrayBuffer();
