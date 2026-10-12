@@ -45,7 +45,7 @@ Current applications span urban environments, wind farms and rotor experiments. 
 3. **Work locally.** Install the framework to inspect scene configurations, serve available data and run a configured simulation pipeline.
 4. **Add your own simulation.** Export results through the [integration protocol](docs/framework/protocol-v1.md) and connect them to visualization widgets.
 
-Published scenes currently use their existing specialized viewers. The unified viewer supports protocol-based layers and local scene views; the [architecture overview](docs/architecture.md) describes the current structure and entry points.
+Published scenes currently use their existing specialized viewers. The unified viewer supports protocol-based layers and local scene views; migration progress and validation scope are tracked in the [implementation status](docs/framework/implementation-status.md).
 
 ## Requirements
 
@@ -219,7 +219,7 @@ git blame --ignore-revs-file .git-blame-ignore-revs path/to/file.py
 
 **A Levistone project.** Developed by the authors listed above, affiliated with **Imperial College London**. Module contributions are recorded in [Contribution.md](Contribution.md).
 
-The framework began as UrbanWorldModel and now targets geometry- and physics-grounded environments across scales. `p4d` is the primary command; `uwm` and `UWM_ROOT` remain available for compatibility.
+The framework began as UrbanWorldModel and now targets geometry- and physics-grounded environments across scales. `p4d` is the primary command; `uwm` and `UWM_ROOT` remain available for compatibility. The [original project overview](docs/history/README-before-framework.md) preserves the earlier context.
 
 ### UAV routes and random flight
 

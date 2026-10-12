@@ -13,3 +13,4 @@
 太阳与洪水核心实现已按领域分包，solar_np.py、flood_swe.py 保留兼容导入。
 其他交付包维持原位，保留内部依赖与来源记录。
 新入口：项目根目录运行 python -m pipelines.core008 --dry-run --stage all。
+[MODEL_INVENTORY.md](MODEL_INVENTORY.md) 是历史盘点，不表示当前任务状态。
