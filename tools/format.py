@@ -3,6 +3,7 @@
 The shared boundary is .prettierignore plus the repository's Git ignore rules.
 Untracked, non-ignored source files are included so a new file is checked before
 its first commit. Explicit filenames from pre-commit use the same boundary.
+--lint runs Ruff's linter, without fixes, over the Python files in that boundary.
 """
 
 import argparse
@@ -68,15 +69,19 @@ def main(argv=None):
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--write", action="store_true", help="Apply formatting")
     mode.add_argument("--check", action="store_true", help="Check formatting (the default)")
+    mode.add_argument("--lint", action="store_true", help="Lint Python files without fixing")
     parser.add_argument("files", nargs="*", help="Optional repository-relative filenames")
     args = parser.parse_args(argv)
     groups = formatter_groups(selected_files(args.files))
+    if args.lint:
+        groups = {"ruff": groups["ruff"]}
     executable_path = os.pathsep.join(
         (str(Path(sys.executable).parent), os.environ.get("PATH", ""))
     )
     shfmt = shutil.which("shfmt", path=executable_path) or "shfmt"
+    ruff = ["check", "--no-fix"] if args.lint else ["format", *([] if args.write else ["--check"])]
     commands = {
-        "ruff": [sys.executable, "-m", "ruff", "format", *([] if args.write else ["--check"])],
+        "ruff": [sys.executable, "-m", "ruff", *ruff],
         "prettier": [
             str(ROOT / "node_modules/.bin/prettier"),
             "--write" if args.write else "--check",

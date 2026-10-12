@@ -11,3 +11,11 @@ repos:
           - shfmt-py==4.2.0
         types: [file]
         require_serial: true
+      - id: repository-lint
+        name: Lint Python files
+        entry: python tools/format.py --lint
+        language: python
+        additional_dependencies:
+          - ruff==0.16.10
+        types: [python]
+        require_serial: true

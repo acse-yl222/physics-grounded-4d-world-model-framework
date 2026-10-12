@@ -2,9 +2,11 @@
 
 import importlib.util
 import subprocess
+import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("repository_format", ROOT / "tools/format.py")
@@ -82,6 +84,22 @@ class FormatScopeTests(unittest.TestCase):
         data = self.write("project/south_ken/input/routes.json")
         self.assertEqual(formatter.selected_files([owned, data], root=self.root), [owned])
         self.assertNotIn(other, formatter.selected_files([owned], root=self.root))
+
+    def test_lint_checks_only_python_files_without_fixing(self):
+        calls = []
+
+        def run(command, **kwargs):
+            calls.append(command)
+            return subprocess.CompletedProcess(command, 0)
+
+        selected = ["src/common/example.py", "src/viewer.js", "taplo.toml"]
+        with (
+            mock.patch.object(formatter, "selected_files", return_value=selected),
+            mock.patch.object(formatter.subprocess, "run", side_effect=run),
+        ):
+            self.assertEqual(formatter.main(["--lint"]), 0)
+        command = [sys.executable, "-m", "ruff", "check", "--no-fix", "--", selected[0]]
+        self.assertEqual(calls, [command])
 
 
 if __name__ == "__main__":

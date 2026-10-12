@@ -34,6 +34,8 @@ jobs:
         env:
           PUPPETEER_SKIP_DOWNLOAD: 'true'
       - run: make format-check PYTHON=python
+      - run: make lint PYTHON=python
+        if: ${{ !cancelled() }}
       - run: make test-js
         if: ${{ !cancelled() }}
 

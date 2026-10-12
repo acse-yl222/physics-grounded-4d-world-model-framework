@@ -73,6 +73,6 @@ windfarm_neural），结果写入 `common.runtime.trial_root` 给出的 cache �
 
 ## 检查
 
-`make format-check`、`make test` 和 `make test-e2e` 分别对应 CI 中的格式、单元测试和
-`E2E smoke`；所有改动都必须通过 `E2E smoke`，说明见 [e2e-ci.md](framework/e2e-ci.md)。
+`make format-check`、`make lint`、`make test` 和 `make test-e2e` 分别对应 CI 中的格式、lint、
+单元测试和 `E2E smoke`；所有改动都必须通过 `E2E smoke`，说明见 [e2e-ci.md](framework/e2e-ci.md)。
 CUDA 求解、训练、Blender 建模和真实城市数据的检查需要各自环境，不在 CI 中运行。

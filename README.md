@@ -188,12 +188,15 @@ The same entry points run locally, in the commit hook and in CI:
 ```sh
 make format        # Apply formatting to all owned files
 make format-check  # Check without changing files
+make lint          # Ruff lint of the same Python files, without fixing them
 make test          # Both protocol examples, Python tests and all Node unit tests
-pre-commit install # Optional: format staged files before each commit
+pre-commit install # Optional: format and lint staged files before each commit
 pre-commit run --all-files
 ```
 
-Ruff formats Python and Notebook code cells; Prettier handles JavaScript, HTML, CSS, JSON, YAML and Markdown; Taplo handles TOML; shfmt handles shell scripts. Formatting uses a 100-column width for Python, Prettier and TOML, four-space Python/TOML indentation and two-space web/shell indentation. Markdown prose is not rewrapped. Notebook output and metadata are retained. This baseline does not introduce lint fixes or import sorting.
+Ruff formats Python and Notebook code cells; Prettier handles JavaScript, HTML, CSS, JSON, YAML and Markdown; Taplo handles TOML; shfmt handles shell scripts. Formatting uses a 100-column width for Python, Prettier and TOML, four-space Python/TOML indentation and two-space web/shell indentation. Markdown prose is not rewrapped. Notebook output and metadata are retained.
+
+Ruff also lints Python with its default rule set, which includes import sorting. `make lint`, the commit hook and CI report findings without changing files; apply fixes deliberately with `ruff check --fix <files>` and review them. Frozen upstream sources, research handoffs and member code are excluded from linting, and the few project-wide exceptions are explained in the `[tool.ruff.lint]` section of `pyproject.toml`.
 
 [`tools/format.py`](tools/format.py) selects tracked files and new, non-ignored files, then applies the shared [`.prettierignore`](.prettierignore) boundary and Git exclusions. Maintained legacy code, scene configuration and view files are included. Third-party vendors, `.history/`, `cache/`, scene inputs/geometry/runs, synthetic data payloads, published snapshots and recorded provenance are excluded even when tracked. The legacy asset inventory is a generated record and stays unchanged. Unsupported binary formats are never passed to a formatter. Run the unified commands rather than formatting every JSON file recursively. After changing formatting configuration or exclusions, run `make format` and `make format-check` over the whole repository.
 
@@ -209,7 +212,7 @@ It runs a generated GLB through the real CLI geometry and visualize stages, rete
 
 [Repository CI](.github/workflows/ci.yml) runs six jobs on every pull request (including stacked PRs), pushes to `main` and manual dispatch: format and Node unit tests, Python 3.11/3.12/3.14 tests with isolated wheel validation, CPU domain imports, and `E2E smoke`. Every change must pass `E2E smoke`; it has no path filter or conditional skip. Tool versions are pinned, npm uses its lockfile, Actions use full commit SHAs, and the workflow has read-only repository permissions. E2E artifacts contain only the synthetic fixture's logs, report and screenshots. A repository administrator can make the job checks required for merging through branch protection or a ruleset.
 
-The pure formatting commit is listed in [`.git-blame-ignore-revs`](.git-blame-ignore-revs). To hide that commit when investigating code history:
+The pure formatting and automatic lint-fix commits are listed in [`.git-blame-ignore-revs`](.git-blame-ignore-revs). To hide those commits when investigating code history:
 
 ```sh
 git blame --ignore-revs-file .git-blame-ignore-revs path/to/file.py

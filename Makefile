@@ -1,12 +1,15 @@
 PYTHON ?= python3
 
-.PHONY: format format-check test test-python test-js test-browser test-e2e
+.PHONY: format format-check lint test test-python test-js test-browser test-e2e
 
 format:
 	$(PYTHON) tools/format.py --write
 
 format-check:
 	$(PYTHON) tools/format.py --check
+
+lint:
+	$(PYTHON) tools/format.py --lint
 
 test: test-python test-js
 
