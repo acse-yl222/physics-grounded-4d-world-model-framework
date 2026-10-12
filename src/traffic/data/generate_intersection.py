@@ -12,8 +12,6 @@ if __name__ == "__main__" and not __package__:
 import numpy as np
 import torch
 import sys
-import os
-import pickle
 
 from traffic.configs.default import (
     INTERSECTION_CENTER,
@@ -21,14 +19,12 @@ from traffic.configs.default import (
     SIGNAL_CYCLE,
     TURN_PROB_STRAIGHT,
     TURN_PROB_LEFT,
-    TURN_PROB_RIGHT,
     TURN_RADIUS_RIGHT,
     TURN_RADIUS_LEFT,
     GRID_SIZE,
     CELL_SIZE,
     MAX_SPEED,
     DT,
-    ARRIVAL_RATE,
     TOTAL_FEAT_DIM,
     VEHICLE_DIM,
     HIST_STEPS,

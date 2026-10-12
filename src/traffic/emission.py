@@ -16,7 +16,6 @@ if __name__ == "__main__" and not __package__:
 import numpy as np
 import torch
 import sys
-import os
 import argparse
 
 from traffic.configs.default import (

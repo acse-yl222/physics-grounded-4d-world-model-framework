@@ -8,7 +8,6 @@ if __name__ == "__main__" and not __package__:
 from common.layout import scene_input
 from common.runtime import trial_root
 import torch
-import numpy as np
 import sys
 import os
 import glob
@@ -23,8 +22,6 @@ from traffic.configs.default import (
     CELL_SIZE,
     PRED_STEPS,
     GRID_SIZE,
-    TRAIN_TRAJECTORIES,
-    VAL_TRAJECTORIES,
     EVAL_SEED_OFFSET,
 )
 from traffic.models.particle_mlp import ParticleTrafficModel

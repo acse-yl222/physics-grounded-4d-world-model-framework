@@ -27,7 +27,7 @@ on a voxel heightmap. Site quality scores are assigned by relative area rank.
 """
 
 import numpy as np
-from scipy.ndimage import label, distance_transform_edt
+from scipy.ndimage import distance_transform_edt
 
 
 # ── public entry point ────────────────────────────────────────────────

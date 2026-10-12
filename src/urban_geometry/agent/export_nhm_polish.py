@@ -4,9 +4,8 @@ import sys as _uwm_sys
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root, agent_src, authoring_path
+from common.layout import agent_src, authoring_path
 import bpy, sys, json, math, importlib
-from pathlib import Path
 from mathutils import Matrix, Vector
 
 root = authoring_path()

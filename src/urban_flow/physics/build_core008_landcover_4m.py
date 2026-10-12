@@ -15,7 +15,6 @@ _uwm_sys.path.insert(
 from common.layout import repo_root
 import json
 import time
-from pathlib import Path
 
 import numpy as np
 import trimesh

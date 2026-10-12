@@ -8,12 +8,10 @@ if __name__ == "__main__" and not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from common.runtime import source_path, trial_root
-from common.layout import repo_root
 import argparse, json, math, sys, time
 from pathlib import Path
 import numpy as np
 import torch
-import h5py
 from urban_flow.scenarios.region.run_ai4urban import build_model, allocate, advance, write_json
 
 

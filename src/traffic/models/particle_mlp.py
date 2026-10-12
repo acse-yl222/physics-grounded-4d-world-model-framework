@@ -4,19 +4,15 @@ Particle Interaction MLP Model + Jacobi Iteration
 
 import torch
 import torch.nn as nn
-import sys
-import os
 
 from traffic.configs.default import (
     WINDOW_SIZE,
     HIST_STEPS,
     PRED_STEPS,
     VEHICLE_DIM,
-    REGULATION_DIM,
     TOTAL_FEAT_DIM,
     HIDDEN_DIM,
     EGO_HIDDEN_DIM,
-    N_HIDDEN_LAYERS,
     JACOBI_ITERS,
     GRID_SIZE,
 )

@@ -4,7 +4,6 @@ import argparse
 import hashlib
 import json
 from datetime import datetime, timezone
-from pathlib import Path
 import numpy as np
 from common.storage import Storage
 from common.contract import validate

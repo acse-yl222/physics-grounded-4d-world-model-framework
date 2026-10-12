@@ -6,10 +6,9 @@ import sys as _uwm_sys
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root, agent_src, authoring_path
-import bpy, json, sys, hashlib, struct, math, argparse
+from common.layout import authoring_path
+import bpy, json, sys, hashlib, struct, argparse
 import numpy as np
-from pathlib import Path
 from mathutils import Vector
 
 ROOT = authoring_path()

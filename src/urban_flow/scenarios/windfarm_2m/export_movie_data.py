@@ -1,7 +1,6 @@
 from common.storage import Storage
 from common.runtime import trial_root
 import json, numpy as np
-from pathlib import Path
 
 base = Storage.load().run("windfarm", "mac_2m")
 out = trial_root("windfarm", "movie")

@@ -6,9 +6,8 @@ import sys as _uwm_sys
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root, agent_src, authoring_path
+from common.layout import authoring_path
 import json
-from pathlib import Path
 import numpy as np
 from pyproj import Transformer
 import matplotlib

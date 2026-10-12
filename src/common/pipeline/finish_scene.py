@@ -7,7 +7,6 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from common.layout import repo_root
 import argparse
 import json
 import os

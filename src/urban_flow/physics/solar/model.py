@@ -15,7 +15,6 @@ Arrays: [ny, nx], row 0 = south, col 0 = west, metres. Azimuth: degrees clockwis
 import math
 
 import torch
-import torch.nn.functional as F
 
 NEG = -1.0e4
 
@@ -210,14 +209,3 @@ def clear_sky(altitude_deg, month):
     A, B, C = ASHRAE[month]
     dni = A * math.exp(-B / math.sin(math.radians(altitude_deg)))
     return dni, C * dni
-
-
-def ground_irradiance(shadow, svf, altitude_deg, month, canopy_transmittance=None, albedo=0.2):
-    """Global horizontal irradiance on each cell: direct (unshaded) + diffuse * SVF + ground-reflected from the obstructed sky part."""
-    dni, dhi = clear_sky(altitude_deg, month)
-    direct = (~shadow).float() * dni * math.sin(math.radians(altitude_deg))
-    if canopy_transmittance is not None:
-        direct = direct * canopy_transmittance
-    ghi_open = dni * math.sin(math.radians(altitude_deg)) + dhi
-    reflected = albedo * ghi_open * (1.0 - svf)
-    return direct + dhi * svf + reflected, dni, dhi

@@ -7,5 +7,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 from common.contract import main, validate
 
+__all__ = ["main", "validate"]  # tests/test_contract.py loads this file and calls validate.
+
 if __name__ == "__main__":
     sys.exit(main())

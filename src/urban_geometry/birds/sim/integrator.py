@@ -20,7 +20,6 @@ from urban_geometry.birds.sim.states import (
     update_states,
     FORAGE,
     TRANSIT,
-    MURMURATION,
     DESCENT,
     ROOST,
 )

@@ -2,7 +2,6 @@ from common.storage import Storage
 
 """Export standalone maps of the paired windfarm crop experiment."""
 import json
-from pathlib import Path
 import numpy as np
 import matplotlib
 

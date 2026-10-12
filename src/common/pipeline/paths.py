@@ -12,11 +12,3 @@ ROOT = (
 def project_path(value):
     path = Path(value).expanduser()
     return path.resolve() if path.is_absolute() else (workspace_root() / path).resolve()
-
-
-def scene_physics(scene, *parts):
-    """Legacy convenience function; computation belongs in the current cache trial."""
-    from common.runtime import trial_root
-    from common.storage import within
-
-    return within(trial_root(scene, "pipeline"), "physics", *parts)

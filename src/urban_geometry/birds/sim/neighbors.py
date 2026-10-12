@@ -42,30 +42,6 @@ def find_topological_neighbors(positions, k):
     return neighbor_indices, neighbor_distances
 
 
-def find_metric_neighbors(positions, radius):
-    """
-    Find all neighbors within a fixed radius for every bird.
-
-    Args:
-        positions: (N, 3) array, bird positions in 3D space (meters)
-        radius: float, interaction radius in meters
-
-    Returns:
-        neighbor_lists: list of N arrays, each containing the indices of the neighbors within the radius
-    """
-    tree = cKDTree(positions)
-
-    neighbor_lists = tree.query_ball_point(
-        positions, radius
-    )  # query_ball_point returns a list (birds) of lists (that bird's neighbors). Variable length per bird
-
-    # remove self from each list
-    for i in range(len(neighbor_lists)):
-        neighbor_lists[i] = [j for j in neighbor_lists[i] if j != i]
-
-    return neighbor_lists
-
-
 def compute_blind_angle_mask(positions, velocities, neighbor_indices, blind_angle):
     """
     Compute visibility mask excluding neighbors in the rear blind cone.

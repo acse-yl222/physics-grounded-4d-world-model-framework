@@ -3,7 +3,6 @@ Authoring UTM only. No roads, curbs, islands, poles or tactile pads invented.
 Caller supplies surface elevation/gradient; final master ray/dedup required.
 """
 
-import math
 from detailed_common import BuildingContext
 
 

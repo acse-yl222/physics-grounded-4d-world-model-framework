@@ -13,12 +13,10 @@ if __name__ == "__main__" and not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from common.locations import code_path
-from common.layout import repo_root
 import argparse
 import hashlib
 import json
 import math
-import os
 from pathlib import Path
 import shutil
 import sys
@@ -27,7 +25,7 @@ import time
 import numpy as np
 import torch
 
-from common.pipeline.paths import ROOT, project_path
+from common.pipeline.paths import project_path
 
 
 def digest(path):

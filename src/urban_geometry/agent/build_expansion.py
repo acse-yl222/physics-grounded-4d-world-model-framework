@@ -8,9 +8,7 @@ _uwm_sys.path.insert(
 )
 from common.layout import repo_root, agent_src, authoring_path
 import bpy, json, sys, math, hashlib, argparse, importlib, shutil
-from pathlib import Path
 from mathutils import Matrix, Vector
-import numpy as np
 
 ROOT = authoring_path()
 sys.path.insert(0, str(agent_src()))

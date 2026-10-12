@@ -9,7 +9,6 @@ _uwm_sys.path.insert(
 from common.layout import repo_root
 import json
 import sys
-from pathlib import Path
 
 import numpy as np
 from PIL import Image, ImageDraw

@@ -11,7 +11,6 @@ Clear instructions and objectives were provided to ensure all code modified by A
 """
 import json
 import sys
-import os
 from collections import defaultdict, Counter
 import numpy as np
 
@@ -31,13 +30,6 @@ MAIN_HIGHWAYS = {
 
 def _dist(a, b):
     return ((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2) ** 0.5
-
-
-def _backwards(dir_chain, s):
-    if dir_chain is None or len(s) < 2:
-        return False
-    dir_s = (s[1][0] - s[0][0], s[1][1] - s[0][1])
-    return dir_chain[0] * dir_s[0] + dir_chain[1] * dir_s[1] < 0
 
 
 def _seg_length_m(seg, m_per_deg_lon):

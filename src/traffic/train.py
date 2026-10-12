@@ -30,39 +30,6 @@ from traffic.models.particle_mlp import ParticleTrafficModel
 from traffic.data.generate_complex import generate_dataset
 
 
-def track_vehicle_targets(label, start_r, start_c, last_frame):
-    """
-    Read the real position as the target instead of reading the zero value of the fixed cell (r,c)
-    """
-    target = torch.zeros(PRED_STEPS, VEHICLE_DIM)
-    ref_pos = last_frame[start_r, start_c, :2].clone()
-
-    for k in range(PRED_STEPS):
-        frame = label[k]
-        occ = frame[:, :, :VEHICLE_DIM].abs().sum(dim=-1) > 1e-6
-        occ_cells = occ.nonzero()
-        if occ_cells.shape[0] == 0:
-            break
-        best_dist = float("inf")
-        best_cell = None
-        for idx in range(occ_cells.shape[0]):
-            rr, cc = occ_cells[idx, 0].item(), occ_cells[idx, 1].item()
-            pos = frame[rr, cc, :2]
-            dist = ((pos[0] - ref_pos[0]) ** 2 + (pos[1] - ref_pos[1]) ** 2).item()
-            if dist < best_dist:
-                best_dist = dist
-                best_cell = (rr, cc)
-        if best_cell is None:
-            break
-        rr, cc = best_cell
-        target[k] = frame[rr, cc, :]
-        ref_pos = frame[rr, cc, :2].clone()
-
-    if target[:, :2].abs().sum() < 1e-8:
-        return None
-    return target
-
-
 class WindowDataset(Dataset):
     def __init__(self, inputs, tracks, t_starts):
         # inputs: (N, HIST_STEPS, GRID_SIZE, GRID_SIZE, TOTAL_FEAT_DIM)

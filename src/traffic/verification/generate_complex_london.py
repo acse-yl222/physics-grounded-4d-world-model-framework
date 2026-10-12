@@ -16,7 +16,6 @@ if __name__ == "__main__" and not __package__:
 import numpy as np
 import torch
 import sys
-import os
 
 from traffic.configs.default import (
     GRID_SIZE,
@@ -292,10 +291,6 @@ def _detect_intersections(roads):
 
     _INTERSECTIONS_CACHE = result
     return result
-
-
-def get_intersections(roads):
-    return [pos for pos, _ in _detect_intersections(roads)]
 
 
 def get_traffic_lights(roads):

@@ -18,7 +18,6 @@ if __name__ == "__main__" and not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from common.locations import code_path
-from common.layout import repo_root
 import argparse
 import glob
 import json
@@ -31,7 +30,6 @@ from pathlib import Path
 
 import numpy as np
 
-from common.pipeline.paths import ROOT
 from urban_geometry.voxelization.glb_plan import read_glb_header
 from common.pipeline.run_scene import load_config, read_json, rel
 

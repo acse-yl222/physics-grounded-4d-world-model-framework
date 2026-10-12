@@ -8,7 +8,6 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 import numpy as np
-import sys
 import os
 
 from traffic.configs.default import GRID_SIZE

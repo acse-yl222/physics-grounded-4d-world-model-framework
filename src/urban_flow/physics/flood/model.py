@@ -17,8 +17,6 @@ Equations (depth h, surface eta = z_b + h, unit width discharge q = H_f u at fac
 Arrays are [ny, nx] with row 0 = south, col 0 = west; u at interior x-faces [ny, nx-1], v at [ny-1, nx].
 """
 
-import math
-
 import torch
 import torch.nn.functional as F
 

@@ -1,7 +1,6 @@
 """Coordinator integration for the visually deduplicated Thurloe crossing only."""
 
 import json
-from pathlib import Path
 import bpy
 from mathutils import Vector, Matrix
 from public_realm_crossings import build

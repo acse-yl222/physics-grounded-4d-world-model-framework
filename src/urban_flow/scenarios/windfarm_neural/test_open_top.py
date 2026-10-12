@@ -5,7 +5,7 @@ if __name__ == "__main__" and not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 """Checks for the open-top option of mac_torch.MAC (closed-lid behaviour must be unchanged)."""
-import sys, json, math
+import sys, json
 from pathlib import Path
 import torch
 

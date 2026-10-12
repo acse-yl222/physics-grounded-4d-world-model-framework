@@ -5,7 +5,7 @@ using georef.json (similarity fit of 939 named OSM buildings to the GLB, median 
     python3 scenes/white_city/tools/build_transport.py
 """
 
-import json, math, os, re, time
+import json, math, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SCENE = os.path.abspath(os.path.join(HERE, ".."))
