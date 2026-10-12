@@ -60,7 +60,7 @@ The first headless browser launch was blocked by the default command sandbox and
 
 These actors only display supplied replay positions. They do not create traffic-rule compliance, collision avoidance, a flight model, or scheduler results.
 
-## Pigeon display model (revision_02 v3)
+## Pigeon display model (added 2026-09-11, revision_02 v3)
 
 - `pigeon.glb` is original procedural geometry written by `build_pigeon.mjs` (run `node build_pigeon.mjs` in this folder; no external asset, no textures). Real feral-pigeon scale: **length 0.38 m beak-to-tail, wingspan 0.66 m**, 1,376 triangles, 12 flat materials (blue-grey body, white rump, green/purple neck sheen, two black wing bars, black tail band, orange eyes and feet). `pigeon_geometry_QA.json` records the measured extents.
 - Three named nodes: `body` (origin at the body centre, +Z forward, +Y up) and `wing_L` / `wing_R`, whose node translations are the shoulder pivots (±0.042, 0.034, 0.02). `birds.js` builds one `InstancedMesh` per primitive per node and composes `bodyMatrix × (pivot · foldOrFlap)` for each wing per frame, so 100 birds flap independently from one draw call per primitive.

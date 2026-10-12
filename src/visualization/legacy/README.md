@@ -1,3 +1,7 @@
+## Geometry expansion (2026-09-13)
+
+35 refined building assets are integrated locally with reversible **Building refinements** comparison. [Current status and artifacts](geometry/expansion/docs/STATUS.md). A user-authorized continuous Codex goal is extending the adjacent frontier; no independent local daemon is installed. Facades without confirmed target references remain artistic estimates.
+
 # Urban World Model Visualiser
 
 Interactive 3-D web page for the urban world model scenes. Each scene is one folder under `scenes/` (city model, physics
@@ -9,7 +13,7 @@ fields, masks, optional transport / replay layers) described by a `scene.json`; 
 | `south_kensington` (default) | South Kensington core008: wind, temperature, sunlight, day cycle, pollution and flooding on the 4 m grid (768 × 704 cells), the packed city model with the OSM supplement and the building refinements, and the traffic / UAV / bird replay from `agents/demo_rev02/`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
 | `white_city`                 | White City 9 km² (Television Centre, Westfield, the Imperial White City campus): 2 m voxel geometry from the uploaded GLB, SCALED wind (8 m frames, 100 steps of 50 s), 3-D physical temperature (21 frames), tracer pollution (100 frames), sunlight (8 m irradiance every 10 min, 2 m shadows) and flooding (37 frames of a 3 h cloudburst) from the workstation run `output/white_city`, plus a **TfL transport layer** (tube / rail lines, bus routes, stations with live arrivals, bus stops, road disruptions and JamCam cameras from the TfL Unified API, placed with a georeference fitted on 939 named OSM buildings, median residual 1.6 m) and a **SUMO traffic replay** (one hour of random trips on the OSM road network with guessed actuated signals: cars, signal heads and lane ribbons, `scenes/white_city/traffic/`) |
 
-## Layout
+## Layout (scenes since 2026-09-16)
 
 | Folder                                | Content                                                                                                                                                                                                                                      | Size         |
 | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
@@ -92,7 +96,7 @@ its own clock; depth ≤ 0.02 m is dry, colour 0.02–0.6 m; in overlay mode the
 flood phase keeps the ground / roads and the green areas / trees visible under the water (the other fields hide them). The 1 m
 static maps (max depth / speed / hazard, arrival time, DTM, footprint) are in the folder too; the 329 MB `depth_1m_tyx.npy`
 was left on the workstation. The big tabs at the top jump to any view or to the physics fields;
-Sunlight (`scenes/south_kensington/physics/solar/`): the clear-sky solar model (1 m direct-beam shadows from ShadowNet, sky-view
+Sunlight (`scenes/south_kensington/physics/solar/`, added 2026-09-12): the clear-sky solar model (1 m direct-beam shadows from ShadowNet, sky-view
 factor, ASHRAE irradiance) for the summer and winter solstice, shown with the ground and trees visible as a sun / shade wash:
 **Irradiance · 4 m, every 10 min** paints 1 − GHI / open-sky GHI as a blue-violet veil (99 frames on 21 June, 47 on 21 December,
 12 frames/s), **Shadows · 1 m, on the hour** drapes the 1 m shadow mask (17 / 7 frames, 2 frames/s; 8.7 MB per frame, expanded into a
@@ -108,7 +112,7 @@ Alignment between the grid and the model (top of `viewer/3d/main.js`): model X =
 Y up; i.e. the manifest's region coordinates are the model's (X, −Z). Verified against the building extent in the README of the
 data. SUMO → world: X = x − 2912.594719173, Z = 1704.705026026 − y (from the demo_rev02 README).
 
-## South Kensington station detail tile
+## South Kensington station detail tile (2026-09-12)
 
 **Off by default** (the user found its colours too jarring next to the main model); add `?tile=1` to the page URL to load it.
 `south_kensington_current.glb` (180 MB, Blender export) is a detailed model of a 390 × 400 m plate around South Kensington
@@ -121,7 +125,8 @@ paths (and the dark base plate) are clipped away (clipping planes), its copies o
 planting, parked cars and other street items are hidden, and the three buildings only the main model has stay; outside
 the plate the tile is clipped. The tile's illustrative parked cars stay hidden because the SUMO replay already draws the
 traffic. **Station detail tile** in the panel switches all of this off and restores the main model.
-`?cam=px,py,pz,tx,ty,tz` puts a fixed free camera anywhere (used for screenshots).
+`?cam=px,py,pz,tx,ty,tz` puts a fixed free camera anywhere (used for screenshots). The earlier
+`south_kensington_paused_20260910.glb` is no longer used.
 
 ## Deployment on the workstation (ESE-YL222)
 
@@ -153,10 +158,12 @@ cd ~/workspace/UrbanWorldModelVisualizer && ./start_server.sh      # 0.0.0.0:878
   `temperature3d_solar/` hold only the arrays the viewer plays (the 1 m SVF / sunlit-hours / daily-irradiation maps and the
   single-time native-vs-coupled comparison stay on the workstation copy)
 - `docs/` — GitHub Pages project page (`docs/index.html`, figures in `docs/media/`)
-- `agents/demo_rev02/` — traffic / UAV replay package; `birds.js`, `actors/pigeon.glb` and `data/birds/` come from the
-  `demo-rev02` branch of `UrbanWorldModel/uwm-group1` (bird layer), the rest from the earlier revision
+- `agents/demo_rev02/` — traffic / UAV replay package; `birds.js`, `actors/pigeon.glb` and `data/birds/` were updated from the
+  `demo-rev02` branch of `UrbanWorldModel/uwm-group1` on 2026-09-12 (bird layer), the rest is still the earlier revision
 
-## Missing-building supplement
+## Missing-building supplement (2026-09-12)
+
+**2026-09-13 expansion update:** three further buildings—25 Kensington Gore, 41–45 Jay Mews and 29 Exhibition Road—are integrated locally. **Building refinements · 4** compares all four refined buildings with their originals. This batch uses building/street photographs and official architectural descriptions, with estimated and artistically completed details recorded explicitly. [Batch 02 status, renders and editable files](geometry/expansion/batch02/docs/STATUS.md).
 
 The local viewer also includes a one-building expansion pilot at **23 Kensington Gore**. **23 Kensington Gore · imagined detail** compares the new model with its original exterior; `?expansion=0` starts with the original. This retains the mapped footprint and existing entry position but artistically completes facade/roof details using neighbourhood references. See [pilot status and checks](geometry/expansion/docs/STATUS.md) and [render](geometry/expansion/output/kensington_gore_23_v1/front.png). Physics fields are unchanged. Which buildings are authored, procedural, supplemented or refined is recorded in `geometry/building_record.md` (and `.json`), not shown in the viewer.
 
