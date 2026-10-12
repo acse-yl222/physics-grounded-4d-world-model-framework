@@ -1,15 +1,16 @@
 """Local viewer server with explicit project mounts and bounded HTTP range reads."""
 
+import json
+import mimetypes
+import re
 from functools import partial
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-import json
-import mimetypes
 from pathlib import Path
-import re
 from urllib.parse import unquote, urlsplit
-from .storage import scene_id, within
+
 from .locations import resource_path
+from .storage import scene_id, within
 from .web_catalog import load_web_catalog
 
 

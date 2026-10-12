@@ -4,12 +4,14 @@ Legacy metadata remains at its original path. New self-contained protocol runs u
 hardlinks (copy fallback), so specialized viewers and raw scientific records survive.
 """
 
-from datetime import datetime, timezone
 import hashlib
 import json
 import os
 import shutil
+from datetime import UTC, datetime
+
 import numpy as np
+
 from common.contract import validate
 from common.runs import refresh_catalog
 from common.storage import Storage
@@ -100,7 +102,7 @@ def import_run(storage, scene, name, metadata, files, geometry=None):
         "run_id": target.name,
         "simulation": "urban_flow",
         "status": "complete",
-        "created_at": datetime.fromtimestamp(metadata.stat().st_mtime, timezone.utc).isoformat(),
+        "created_at": datetime.fromtimestamp(metadata.stat().st_mtime, UTC).isoformat(),
         "spatial": spatial,
         "time": {"unit": "s", "samples": times},
         "layers": [layer],

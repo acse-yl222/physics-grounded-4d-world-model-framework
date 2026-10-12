@@ -1,13 +1,13 @@
 """Run the synthetic viewer smoke test through the installed framework CLI."""
 
-from contextlib import contextmanager
 import os
-from pathlib import Path
-from queue import Queue, Empty
 import subprocess
 import sys
 import tempfile
 import threading
+from contextlib import contextmanager
+from pathlib import Path
+from queue import Empty, Queue
 
 ROOT = Path(__file__).resolve().parents[1]
 

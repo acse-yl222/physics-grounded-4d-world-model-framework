@@ -11,13 +11,12 @@ Usage: python run_core008_temperature3d_solar.py [--frames 81-100] [--time 2025-
 Outputs: output/core008/physics/scaled_latent/temperature3d_solar/{velocity_cache, native, solar_coupled, compare}
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import argparse
 import importlib.util
 import json
@@ -28,6 +27,8 @@ from dataclasses import asdict
 
 import numpy as np
 import torch
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 RUN = ROOT / "output/core008/physics/scaled_latent"
@@ -46,13 +47,13 @@ for d in (OUT, CACHE):
 sys.path.insert(0, str(MODEL_DIR))
 sys.path.insert(0, str(MODEL_DIR.parent / "velocity_calculation"))
 sys.path.insert(0, str(ROOT / "src/common/pipeline/physics"))
-import south_kensington_jupyter as _skj  # noqa: E402
+import south_kensington_jupyter as _skj
 
 if not hasattr(
     _skj, "rotate_2d_field"
 ):  # newer 3-D model expects this helper; only used in the bypassed geometry extraction
     _skj.rotate_2d_field = lambda field, deg: (
-        np.rot90(field, k=int(round(deg / 90.0)) % 4) if deg % 360 else field
+        np.rot90(field, k=round(deg / 90.0) % 4) if deg % 360 else field
     )
 spec = importlib.util.spec_from_file_location(
     "south_kensington_temperature_3d", MODEL_DIR / "south_kensington_temperature_3d.py"
@@ -60,8 +61,8 @@ spec = importlib.util.spec_from_file_location(
 M3 = importlib.util.module_from_spec(spec)
 sys.modules["south_kensington_temperature_3d"] = M3
 spec.loader.exec_module(M3)
-from south_kensington_jupyter import SouthKensingtonConfig  # noqa: E402
-from solar_np import ShadowNet, clear_sky, sun_position  # noqa: E402
+from solar_np import ShadowNet, clear_sky, sun_position
+from south_kensington_jupyter import SouthKensingtonConfig
 
 CELL = 4.0
 X0, Y0 = 480, 640

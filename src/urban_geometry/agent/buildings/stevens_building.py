@@ -237,7 +237,7 @@ def build(ctx, feature):
                 s = s0 + (j + 0.5) * (s1 - s0) / n
                 ww = min(1.6, (s1 - s0) / n * 0.55) if historic else (s1 - s0) / n * 0.78
                 for row, z in enumerate(
-                    ([1.3, 5.4, 9.9, 14.2, 18.2] if historic else [1.0, 4.8, 8.7, 12.6])
+                    [1.3, 5.4, 9.9, 14.2, 18.2] if historic else [1.0, 4.8, 8.7, 12.6]
                 ):
                     hh = 2.9 if historic and row < 3 else 2.45
                     if z + hh > H - 0.45:

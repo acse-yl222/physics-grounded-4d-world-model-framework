@@ -4,18 +4,19 @@ Usage: python export_web2d.py --dir output/core008/physics/scaled_latent --out o
 All arrays are in the domain orientation (row 0 = south, col 0 = west), 4 m cells, float16 unless noted.
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
 import shutil
 import sys
 
 import numpy as np
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 args = sys.argv[1:]

@@ -1,22 +1,25 @@
 """Read-only native-resolution roof evidence; never mutates authored geometry."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import authoring_path
 import json
+
+import matplotlib
 import numpy as np
 import rasterio
-from rasterio.windows import from_bounds, transform as window_transform
-from rasterio.features import geometry_mask
-from pyproj.transformer import TransformerGroup
 from pyproj import datadir
+from pyproj.transformer import TransformerGroup
+from rasterio.features import geometry_mask
+from rasterio.windows import from_bounds
+from rasterio.windows import transform as window_transform
 from shapely.geometry import Polygon, mapping
 from shapely.ops import transform
-import matplotlib
+
+from common.layout import authoring_path
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt

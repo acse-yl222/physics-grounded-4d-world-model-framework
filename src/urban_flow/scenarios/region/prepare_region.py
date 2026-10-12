@@ -7,17 +7,17 @@ Static geometry only: no rotor motion, actuator disk, power or wake calibration.
 import hashlib
 import json
 import math
-from pathlib import Path
 import struct
 import sys
+from pathlib import Path
 
 import numpy as np
 from scipy.ndimage import distance_transform_edt
 
 ROOT = Path.cwd()
 sys.path.insert(0, str(ROOT))
-from pipelines.geometry.voxelization.prepare_glb import read_primitive, raster
-from pipelines.geometry.voxelization.glb_plan import read_glb_header, local_bounds, plan_grid
+from pipelines.geometry.voxelization.glb_plan import local_bounds, plan_grid, read_glb_header
+from pipelines.geometry.voxelization.prepare_glb import raster, read_primitive
 
 
 def main():
@@ -117,10 +117,10 @@ def main():
                     if not valid.any():
                         # Resolve subcell towers conservatively using their AABB.
                         low, high = points.min(axis=0), points.max(axis=0)
-                        x0 = max(0, int(math.floor((low[0] - ox) / 8)))
-                        x1 = min(nx, int(math.floor((high[0] - ox) / 8)) + 1)
-                        y0 = max(0, int(math.floor((-high[2] - oy) / 8)))
-                        y1 = min(ny, int(math.floor((-low[2] - oy) / 8)) + 1)
+                        x0 = max(0, math.floor((low[0] - ox) / 8))
+                        x1 = min(nx, math.floor((high[0] - ox) / 8) + 1)
+                        y0 = max(0, math.floor((-high[2] - oy) / 8))
+                        y1 = min(ny, math.floor((-low[2] - oy) / 8) + 1)
                         hi[y0:y1, x0:x1] = high[1]
                         lo_neg[y0:y1, x0:x1] = -low[1]
                         valid = np.isfinite(hi)

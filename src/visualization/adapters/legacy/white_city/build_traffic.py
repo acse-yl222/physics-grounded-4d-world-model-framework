@@ -12,7 +12,12 @@ the scene's georeference (UTM net coordinates -> lon/lat -> model):
     cd scenes/white_city && uv run --with eclipse-sumo,numpy,pyproj python3 tools/build_traffic.py
 """
 
-import json, math, os, sys, time
+import json
+import math
+import os
+import sys
+import time
+
 import numpy as np
 import sumo
 
@@ -280,7 +285,7 @@ man = {
     "generated": time.strftime("%Y-%m-%dT%H:%M"),
     "seconds": meta["seconds"],
     "frames": len(counts),
-    "records": int(len(rec)),
+    "records": len(rec),
     "binary": "replay/traffic_flow.i16: int16 x 6 per record [id, x*10, z*10, yaw*10000, speed*100, lane_index]; frame_counts.json gives the records per second in order",
     "signals": "replay/tls_changes.json: {tls: [[t, state], ...]} change points",
     "coordinate_frame": "glTF world XYZ; records are vehicle centres; yaw about +Y (pi - SUMO angle)",

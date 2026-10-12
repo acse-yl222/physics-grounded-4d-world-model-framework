@@ -9,10 +9,16 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-import sys, time, json, math, argparse
+import argparse
+import json
+import math
+import sys
+import time
 from pathlib import Path
+
 import numpy as np
 import torch
+
 from urban_flow.solvers.mac_torch import MAC
 from urban_flow.solvers.rotor import WeightedRotor
 

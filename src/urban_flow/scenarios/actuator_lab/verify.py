@@ -1,7 +1,9 @@
-from common.storage import Storage
 import json
-import numpy as np
+
 import matplotlib
+import numpy as np
+
+from common.storage import Storage
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt

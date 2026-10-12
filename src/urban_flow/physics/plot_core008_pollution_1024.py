@@ -1,17 +1,18 @@
 """Figures for a pollution folder (PIL only). Usage: python plot_core008_pollution_1024.py [--dir output/core008/physics/scaled_latent]"""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
 import sys
 
 import numpy as np
 from PIL import Image, ImageDraw
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 RUN = ROOT / (
@@ -54,7 +55,7 @@ def main():
     vmax = float(np.percentile(c[c > 0], 99.5)) if (c > 0).any() else 1.0
     width = 620
     layers = (1, 3, 6, 12) if c.shape[0] > 12 else (1, 3, 6, 10)
-    h_px = int(round(width * c.shape[1] / c.shape[2]))
+    h_px = round(width * c.shape[1] / c.shape[2])
     canvas = Image.new("RGB", (2 * width + 60, 2 * (h_px + 40) + 80), BG)
     d = ImageDraw.Draw(canvas)
     d.text(

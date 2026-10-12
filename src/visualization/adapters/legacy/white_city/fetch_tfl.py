@@ -3,7 +3,12 @@
 python3 scenes/white_city/tools/fetch_tfl.py      # writes transport/raw/*.json; then run build_transport.py
 """
 
-import json, time, urllib.request, urllib.parse, os, sys
+import json
+import os
+import sys
+import time
+import urllib.parse
+import urllib.request
 
 os.makedirs(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "transport", "raw"),

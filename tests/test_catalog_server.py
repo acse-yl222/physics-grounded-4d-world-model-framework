@@ -1,20 +1,20 @@
 import functools
-from http.server import ThreadingHTTPServer
 import json
-from pathlib import Path
 import shutil
 import sys
 import tempfile
 import threading
 import unittest
-import urllib.request
 import urllib.error
+import urllib.request
+from http.server import ThreadingHTTPServer
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from common.storage import Storage
-from common.server import ViewerHandler
 from common.catalog import view
+from common.server import ViewerHandler
+from common.storage import Storage
 
 
 class RegistryServerTests(unittest.TestCase):

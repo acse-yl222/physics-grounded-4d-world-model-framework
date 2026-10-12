@@ -1,13 +1,15 @@
 """Standalone vector inventory map from licensed footprint data."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
+import html
+import json
+
 from common.layout import authoring_path
-import json, html
 
 root = authoring_path()
 d = json.loads((root / "geometry.json").read_text())

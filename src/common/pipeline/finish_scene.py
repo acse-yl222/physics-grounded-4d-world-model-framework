@@ -10,10 +10,10 @@ if __name__ == "__main__" and not __package__:
 import argparse
 import json
 import os
-from pathlib import Path
 import subprocess
 import sys
 import time
+from pathlib import Path
 
 from common.pipeline.paths import ROOT, project_path
 from common.pipeline.scene_scaled_latent import save_json

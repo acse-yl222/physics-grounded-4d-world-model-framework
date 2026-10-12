@@ -5,8 +5,10 @@ Terrain is re-thresholded from the averaged ground height with the same rule as
 windfarm_2m/prepare.py (cell bottom <= ground). Towers and nacelles are kept if any
 2 m child is solid, so thin structures do not disappear at 4 m.
 """
-import json, argparse
+import argparse
+import json
 from pathlib import Path
+
 import numpy as np
 
 

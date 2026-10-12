@@ -4,19 +4,20 @@ import argparse
 import hashlib
 import itertools
 import json
-from pathlib import Path
 import shutil
 import subprocess
 import tarfile
-from datetime import datetime, timezone
-from common.locations import code_path
+from datetime import UTC, datetime
+from pathlib import Path
 
 import matplotlib
 
+from common.locations import code_path
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.collections import LineCollection
 import numpy as np
+from matplotlib.collections import LineCollection
 
 
 def dump(path, obj):
@@ -142,7 +143,7 @@ def main():
             )
         )
         for s in stations:
-            x, y, z = s["gate_enu_m"]
+            x, y, _z = s["gate_enu_m"]
             ax.scatter(x, y, c=colors[s["role"]], s=26, zorder=4)
             ax.annotate(
                 s["label"], (x, y), xytext=(4, 3), textcoords="offset points", fontsize=7, zorder=5
@@ -336,7 +337,7 @@ def main():
         simulation="wavepde",
         run_id=run_id,
         status="complete",
-        created_at=datetime.now(timezone.utc).isoformat(),
+        created_at=datetime.now(UTC).isoformat(),
         provenance=dict(
             code_revision=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
             dirty=True,

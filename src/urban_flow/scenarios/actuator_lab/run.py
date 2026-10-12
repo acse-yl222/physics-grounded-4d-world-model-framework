@@ -9,12 +9,18 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from common.runtime import trial_root
-import argparse, json, math, sys, time
+import argparse
+import json
+import math
+import sys
+import time
 from pathlib import Path
+
 import numpy as np
 import torch
-from urban_flow.scenarios.region.run_ai4urban import build_model, allocate, advance, write_json
+
+from common.runtime import trial_root
+from urban_flow.scenarios.region.run_ai4urban import advance, allocate, build_model, write_json
 
 
 @torch.inference_mode()
@@ -62,7 +68,7 @@ def main():
     )
     write_json(out / "config.json", config)
     solid = np.zeros(shape, bool)
-    model, ns = build_model(solid, cell, torch.device("cuda"), dt=dt, ub=-8.0)
+    model, _ns = build_model(solid, cell, torch.device("cuda"), dt=dt, ub=-8.0)
     # The reference gradient is half the derivative of a linear field. Rescale
     # only this isolated experiment, so physical actuator acceleration is coupled
     # to unit-gain spatial derivatives. Keep original windfarm runs unchanged.
@@ -154,7 +160,7 @@ def main():
     for step in range(1, steps + 1):
         t = (step - 0.5) * dt
         force(t, dt / 2)
-        state, correction, residual = advance(model, state, pads, k1, dt, 10)
+        state, correction, _residual = advance(model, state, pads, k1, dt, 10)
         assert torch.isfinite(correction).all() and float(correction.abs().max()) < 80000, (
             "Pressure solve diverged"
         )

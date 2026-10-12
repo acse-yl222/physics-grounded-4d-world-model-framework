@@ -22,7 +22,6 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from common.locations import code_path
 import argparse
 import glob
 import json
@@ -35,8 +34,9 @@ from pathlib import Path
 
 import numpy as np
 
-from urban_geometry.voxelization.glb_plan import read_glb_header
+from common.locations import code_path
 from common.pipeline.run_scene import load_config, read_json, rel
+from urban_geometry.voxelization.glb_plan import read_glb_header
 
 
 def main():
@@ -57,7 +57,7 @@ def main():
     (web / "models").mkdir(parents=True, exist_ok=True)
     out.mkdir(parents=True, exist_ok=True)
     meta = json.loads((G / "metadata.json").read_text())
-    nz, ny, nx = meta["shape_zyx"]
+    _nz, ny, nx = meta["shape_zyx"]
     ox, oy, _ = meta["source_region_origin_xyz_m"]
     step_s = float(cfg["wind"]["step_seconds"])
 
@@ -104,7 +104,7 @@ def main():
         np.save(path, arr)
         man["arrays"][relpath] = {"shape": list(arr.shape), "dtype": str(arr.dtype), **info}
         print(
-            f"{relpath:50s} {str(arr.dtype):8s} {arr.shape} {path.stat().st_size / 1e6:7.1f} MB",
+            f"{relpath:50s} {arr.dtype!s:8s} {arr.shape} {path.stat().st_size / 1e6:7.1f} MB",
             flush=True,
         )
 

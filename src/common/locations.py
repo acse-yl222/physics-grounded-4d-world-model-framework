@@ -1,7 +1,7 @@
 """Separate installed code/resources from a user's scene workspace."""
 
-from importlib.resources import files
 import os
+from importlib.resources import files
 from pathlib import Path
 
 

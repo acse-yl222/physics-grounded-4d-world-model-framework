@@ -1,16 +1,17 @@
 """Figures for output/core008/physics (PIL only; matplotlib is not installed in the trellis2 env)."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
 
 import numpy as np
 from PIL import Image, ImageDraw
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 OUT = ROOT / "output/core008/physics/digit"

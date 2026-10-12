@@ -2,8 +2,9 @@ from common.storage import Storage
 
 """Export standalone maps of the paired windfarm crop experiment."""
 import json
-import numpy as np
+
 import matplotlib
+import numpy as np
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -45,7 +46,7 @@ for ax, data, title, cm, vmin, vmax in zip(
         label="Elevation [m]" if ax is axes[0, 0] else "Axial velocity / difference [m/s]",
     )
 fig.suptitle(
-    f"4 m crop | 10 s startup transient | 80 m above local terrain | not engineering validated"
+    "4 m crop | 10 s startup transient | 80 m above local terrain | not engineering validated"
 )
 fig.savefig(root / "comparison.png", dpi=160)
 plt.close(fig)

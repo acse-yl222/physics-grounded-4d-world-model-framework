@@ -3,10 +3,10 @@
 import copy
 import importlib.util
 import json
-from pathlib import Path
 import shutil
 import tempfile
 import unittest
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("check_contract", ROOT / "tools/check_contract.py")

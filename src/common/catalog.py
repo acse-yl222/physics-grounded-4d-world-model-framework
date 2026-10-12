@@ -1,10 +1,12 @@
 """Scene and view registry validation, including cross-run space/time agreement."""
 
 from pathlib import Path
+
 from jsonschema import Draft202012Validator, FormatChecker
-from .contract import read_json, validate, require
+
+from .contract import read_json, require, validate
 from .locations import resource_path
-from .storage import scene_id, identifier
+from .storage import identifier, scene_id
 
 
 def schema_check(data, name):

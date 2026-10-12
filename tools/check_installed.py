@@ -1,13 +1,13 @@
 """Check a wheel installation from any directory, without an editable checkout."""
 
 import functools
-from http.server import ThreadingHTTPServer
 import json
-from pathlib import Path
 import tarfile
 import tempfile
 import threading
 import urllib.request
+from http.server import ThreadingHTTPServer
+from pathlib import Path
 
 import common
 from common.catalog import schema_check

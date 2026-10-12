@@ -5,27 +5,28 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import glob
+import os
+import sys
+
+import torch
+
 from common.layout import scene_input
 from common.runtime import trial_root
-import torch
-import sys
-import os
-import glob
-
 from traffic.configs.default import (
-    VEHICLE_DIM,
-    JACOBI_ITERS,
+    CELL_SIZE,
+    DT,
+    EVAL_SEED_OFFSET,
+    GRID_SIZE,
     HIST_STEPS,
+    JACOBI_ITERS,
     # Constant Velocity baseline
     MAX_SPEED,
-    DT,
-    CELL_SIZE,
     PRED_STEPS,
-    GRID_SIZE,
-    EVAL_SEED_OFFSET,
+    VEHICLE_DIM,
 )
-from traffic.models.particle_mlp import ParticleTrafficModel
 from traffic.data.generate_complex import generate_dataset
+from traffic.models.particle_mlp import ParticleTrafficModel
 
 
 def find_latest_model(date_filter=None):

@@ -1,6 +1,7 @@
-from common.locations import checkout_root, workspace_root
 import os
 from pathlib import Path
+
+from common.locations import checkout_root, workspace_root
 
 ROOT = (
     workspace_root()

@@ -1,18 +1,19 @@
 import json
-from pathlib import Path
 import shutil
 import struct
 import sys
 import tempfile
 import unittest
+from pathlib import Path
+
 import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
-from common.storage import Storage
+from common.catalog import view
 from common.export import package_export
 from common.runs import promote_bundle
-from common.catalog import view
+from common.storage import Storage
 
 
 class ExportTests(unittest.TestCase):
@@ -58,7 +59,7 @@ class ExportTests(unittest.TestCase):
     def test_trial_export_retain_and_register_view(self):
         bundle = package_export(self.storage, self.source, self.config, "trial_01")
         result = promote_bundle(self.storage, bundle)
-        document, runs = view(self.storage, "test", "run_trial_01")
+        _document, runs = view(self.storage, "test", "run_trial_01")
         self.assertEqual(set(runs), {"trial_01_geometry", "trial_01_wind"})
         self.assertTrue(result.is_file())
         self.assertTrue((bundle / "bundle.json").is_file())

@@ -1,8 +1,9 @@
 """Coordinator integration for the visually deduplicated Thurloe crossing only."""
 
 import json
+
 import bpy
-from mathutils import Vector, Matrix
+from mathutils import Matrix, Vector
 from public_realm_crossings import build
 
 
@@ -33,7 +34,7 @@ def integrate(root, M):
             (a + w / 2, 0),
         ]:
             p = M @ Vector((x + u[0] * da + v[0] * db, y + u[1] * da + v[1] * db, 2))
-            hit, loc, n, idx, ob, _ = scene.ray_cast(deps, p, Vector((0, 0, -1)), distance=3)
+            hit, loc, n, _idx, ob, _ = scene.ray_cast(deps, p, Vector((0, 0, -1)), distance=3)
             rid = ob.get("research_object_id", "") if hit else ""
             allowed = (
                 hit

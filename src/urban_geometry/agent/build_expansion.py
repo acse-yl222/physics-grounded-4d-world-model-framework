@@ -1,14 +1,23 @@
 """Preserve recovered campus and assemble the bounded museum district in its frame."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root, agent_src, authoring_path
-import bpy, json, sys, math, hashlib, argparse, importlib, shutil
+import argparse
+import hashlib
+import importlib
+import json
+import math
+import shutil
+import sys
+
+import bpy
 from mathutils import Matrix, Vector
+
+from common.layout import agent_src, authoring_path, repo_root
 
 ROOT = authoring_path()
 sys.path.insert(0, str(agent_src()))

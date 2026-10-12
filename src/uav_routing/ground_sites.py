@@ -8,8 +8,10 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+
 import numpy as np
-from scipy.ndimage import distance_transform_edt, minimum_filter, maximum_filter
+from scipy.ndimage import distance_transform_edt, maximum_filter, minimum_filter
+
 from common.storage import Storage
 
 

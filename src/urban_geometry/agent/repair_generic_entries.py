@@ -2,18 +2,20 @@
 Run with south_kensington/.venv/bin/python. Uses local footprints only.
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import authoring_path
 import json
+
 import numpy as np
-from shapely.geometry import Polygon, Point
-from shapely.ops import unary_union, transform
+from shapely.geometry import Point, Polygon
+from shapely.ops import transform, unary_union
 from shapely.strtree import STRtree
+
+from common.layout import authoring_path
 
 ROOT = authoring_path()
 TARGETS = [
@@ -123,7 +125,7 @@ def main():
                 )
         candidates.sort()
         if candidates:
-            rd, neg_length, _, edge, bay, p, n = candidates[0]
+            _rd, _neg_length, _, edge, bay, p, n = candidates[0]
             dp["entrance_override"] = {
                 "edge_index": edge,
                 "bay_index": bay,

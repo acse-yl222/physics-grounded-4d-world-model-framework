@@ -7,14 +7,19 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from common.runtime import source_path, trial_root
-import argparse, json, math, sys, hashlib
+import argparse
+import hashlib
+import json
+import math
+import sys
 from pathlib import Path
+
 import numpy as np
 from scipy.ndimage import distance_transform_edt
 
-from urban_geometry.voxelization.prepare_glb import read_primitive, raster
+from common.runtime import source_path, trial_root
 from urban_geometry.voxelization.glb_plan import read_glb_header
+from urban_geometry.voxelization.prepare_glb import raster, read_primitive
 
 
 def main():

@@ -14,18 +14,18 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from pathlib import Path
-from common.layout import scene_input
-from common.runtime import trial_root
 import argparse
 import json
 import os
 import sys
+from pathlib import Path
 
 import numpy as np
 import torch
 
 import traffic.configs.default as C
+from common.layout import scene_input
+from common.runtime import trial_root
 from traffic.verification import generate_complex_london as gen
 from traffic.verification.particle_mlp_london import ParticleTrafficModel
 
@@ -42,7 +42,7 @@ def grid_to_lonlat(row, col, T):
 def make_veh(roads, road_idx, direction, wp_idx, dest, speed=7.0):
     """Hot-start vehicle on a loaded real map."""
     poly = gen._road_path(roads, road_idx, direction)
-    center, tangent, normal = gen._poly_interp(poly, wp_idx)
+    center, _tangent, normal = gen._poly_interp(poly, wp_idx)
     lane = gen._spawn_lane(roads[road_idx])
     return {
         "row": center[0] + lane * normal[0],

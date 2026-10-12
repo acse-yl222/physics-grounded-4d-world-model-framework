@@ -1,10 +1,11 @@
 """Coordinator-owned tree grounding and one-time coordinate transformation."""
 
 import json
+
 import bpy
-from public_realm_ground import allowed
-from mathutils import Matrix, Vector
 from detailed_common import BuildingContext
+from mathutils import Matrix, Vector
+from public_realm_ground import allowed
 from public_realm_trees import build
 
 
@@ -18,7 +19,7 @@ def integrate(root, transform):
             continue
         x, y = row["position_authoring_xy_m"]
         p = transform @ Vector((x, y, 1.0))
-        hit, location, normal, index, obj, matrix = bpy.context.scene.ray_cast(
+        hit, location, normal, _index, obj, _matrix = bpy.context.scene.ray_cast(
             graph, p, Vector((0, 0, -1)), distance=3.0
         )
         assert hit, "No ground below " + row["id"]

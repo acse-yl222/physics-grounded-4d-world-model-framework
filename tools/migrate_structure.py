@@ -2,8 +2,8 @@
 
 import hashlib
 import json
-from pathlib import Path
 import re
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MOVES = [
@@ -116,13 +116,15 @@ def main():
             start = 0
             for node in tree.body:
                 if (
-                    isinstance(node, ast.Expr)
-                    and isinstance(node.value, ast.Constant)
-                    and isinstance(node.value.value, str)
-                    and start == 0
+                    (
+                        isinstance(node, ast.Expr)
+                        and isinstance(node.value, ast.Constant)
+                        and isinstance(node.value.value, str)
+                        and start == 0
+                    )
+                    or isinstance(node, ast.ImportFrom)
+                    and node.module == "__future__"
                 ):
-                    start = node.end_lineno
-                elif isinstance(node, ast.ImportFrom) and node.module == "__future__":
                     start = node.end_lineno
                 else:
                     break

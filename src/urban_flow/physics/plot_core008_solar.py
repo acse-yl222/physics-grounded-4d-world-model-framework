@@ -1,18 +1,19 @@
 """Figures for the solar run (PIL only). Usage: python plot_core008_solar.py [--out output/core008/physics/scaled_latent/solar]"""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
 import sys
 from pathlib import Path
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 OUT = (
@@ -31,8 +32,8 @@ ny, nx = foot1.shape
 foot4 = np.load(TERRAIN / "footprint_4m_yx.npy")
 cfg = json.loads((OUT / "run_config.json").read_text())
 CORE = (
-    slice(int((-581 + 2124 - 640) - 120), int((188 + 2124 - 640) + 120)),
-    slice(int((389 + 2116 - 480) - 120), int((967 + 2116 - 480) + 120)),
+    slice((-581 + 2124 - 640) - 120, (188 + 2124 - 640) + 120),
+    slice((389 + 2116 - 480) - 120, (967 + 2116 - 480) + 120),
 )  # 1 m core zoom
 
 
@@ -48,7 +49,7 @@ VIR = [(68, 1, 84), (59, 82, 139), (33, 145, 140), (94, 201, 98), (253, 231, 37)
 
 
 def panel(rgb, width):
-    h_px = int(round(width * rgb.shape[0] / rgb.shape[1]))
+    h_px = round(width * rgb.shape[0] / rgb.shape[1])
     return Image.fromarray(rgb[::-1].astype(np.uint8)).resize(
         (width, h_px), Image.Resampling.BOX if rgb.shape[1] > width else Image.Resampling.NEAREST
     ), h_px

@@ -1,10 +1,10 @@
 """Reuse the website city renderer with a self-contained retained presentation run."""
 
 import argparse
-from datetime import datetime, timezone
 import json
-from pathlib import Path
 import shutil
+from datetime import UTC, datetime
+from pathlib import Path
 
 from common.catalog import view as check_view
 from common.contract import validate
@@ -114,7 +114,7 @@ def package(storage, scene, source_view, legacy_export, run_id, presentation_con
         "run_id": run_id,
         "simulation": "city_presentation",
         "status": "complete",
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
         "provenance": {
             "code_revision": revision,
             "dirty": True,

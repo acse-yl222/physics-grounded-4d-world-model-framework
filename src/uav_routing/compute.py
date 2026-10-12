@@ -5,16 +5,16 @@ Ground mode adds 30m vertical legs; sites are model-derived, not surveyed.
 """
 
 import argparse
-from collections import Counter
-from dataclasses import asdict
 import hashlib
 import json
-from pathlib import Path
 import time
+from collections import Counter
+from dataclasses import asdict
+from pathlib import Path
 
 import numpy as np
-from scipy.ndimage import maximum_filter
 import torch
+from scipy.ndimage import maximum_filter
 
 
 def write_json(path, value):
@@ -55,7 +55,7 @@ def main():
     # One coarse cell horizontal dilation; full vertical columns close overhangs.
     height = maximum_filter(height, size=3, mode="nearest")
     nz = 20
-    mask = np.ascontiguousarray(((np.arange(nz) * cell)[None, None, :] < height.T[:, :, None]))
+    mask = np.ascontiguousarray((np.arange(nz) * cell)[None, None, :] < height.T[:, :, None])
     origin = np.array(meta["source_region_origin_xyz_m"], dtype=float)
     np.savez_compressed(
         out / "domain_8m.npz", mask=mask, origin_enu_m=origin, spacing_m=cell, height_yx_m=height

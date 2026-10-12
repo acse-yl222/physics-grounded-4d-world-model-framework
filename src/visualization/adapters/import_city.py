@@ -3,11 +3,13 @@
 import argparse
 import hashlib
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
+
 import numpy as np
-from common.storage import Storage
-from common.contract import validate
+
 from common.catalog import view as validate_view
+from common.contract import validate
+from common.storage import Storage
 
 
 def digest(path):
@@ -58,7 +60,7 @@ def register(storage, scene):
         "simulation": "urban_flow",
         "run_id": "legacy_web",
         "status": "complete",
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
         "provenance": {
             "code_revision": "preserved-legacy-export",
             "dirty": False,

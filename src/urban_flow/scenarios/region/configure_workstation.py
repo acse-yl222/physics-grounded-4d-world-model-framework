@@ -1,8 +1,8 @@
 """Install scene configuration and narrowly scoped compatibility updates."""
 
 import json
-from pathlib import Path
 import shutil
+from pathlib import Path
 
 from common.layout import repo_root
 

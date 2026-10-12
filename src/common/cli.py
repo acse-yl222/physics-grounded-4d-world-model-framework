@@ -2,9 +2,11 @@
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
+
 from jsonschema.exceptions import ValidationError
+
 from .contract import validate
 from .runs import promote, promote_bundle
 from .storage import Storage
@@ -54,7 +56,8 @@ def main(argv=None):
                 scenes.append({"scene_id": data["scene_id"], "title": data["title"]})
             print(json.dumps(scenes, indent=2))
         elif args.command == "run":
-            import os, subprocess
+            import os
+            import subprocess
 
             env = dict(os.environ, P4D_ROOT=str(storage.root), UWM_ROOT=str(storage.root))
             env["PYTHONPATH"] = (
@@ -66,7 +69,8 @@ def main(argv=None):
                 env=env,
             )
         elif args.command == "experiment":
-            import os, subprocess
+            import os
+            import subprocess
 
             env = dict(os.environ, P4D_ROOT=str(storage.root), UWM_ROOT=str(storage.root))
             env["PYTHONPATH"] = (

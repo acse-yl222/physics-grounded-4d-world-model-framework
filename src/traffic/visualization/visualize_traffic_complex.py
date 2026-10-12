@@ -5,15 +5,16 @@ Display the simulated driving trajectories of vehicles on a multi-intersection r
 import matplotlib
 
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
-import numpy as np
 import os
+
+import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.colors import ListedColormap
 
 from traffic.configs.default import GRID_SIZE
 from traffic.data.generate_complex import (
-    get_road_network,
     build_road_lane_centers,
+    get_road_network,
     simulate_trajectory,
 )
 
@@ -41,7 +42,7 @@ for vid, vt in tracks.items():
     ax.plot(cols[0], rows[0], "o", color=color, markersize=4)  # start
     ax.plot(cols[-1], rows[-1], "x", color=color, markersize=4)
 
-ax.set_title(f"Traffic on multi-intersection network", fontsize=12)
+ax.set_title("Traffic on multi-intersection network", fontsize=12)
 ax.set_xlim(0, GRID_SIZE)
 ax.set_ylim(GRID_SIZE, 0)
 

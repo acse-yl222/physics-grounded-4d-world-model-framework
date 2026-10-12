@@ -11,10 +11,10 @@ is needed. ?scene=<id> picks the scene (scenes/index.json). Run:
 """
 
 import os
-import sys
 import re
-import webbrowser
+import sys
 import threading
+import webbrowser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 ROOT = os.path.dirname(os.path.abspath(__file__))

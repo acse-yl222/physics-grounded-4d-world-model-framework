@@ -1,6 +1,6 @@
 """Compatibility import; implementation: solar/model.py."""
 
 if __package__:
-    from .solar.model import *  # noqa: F401,F403
+    from .solar.model import *
 else:
-    from solar.model import *  # noqa: F401,F403
+    from solar.model import *

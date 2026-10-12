@@ -9,13 +9,12 @@ nearest ground cell (downpipes / surcharged gullies). Buildings are raised block
 Usage: python run_core008_flood_swe.py --cell 4 [--hours 3] [--frame_seconds 300] [--out output/core008/physics/scaled_latent/flood/run_4m]
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import argparse
 import json
 import sys
@@ -26,8 +25,10 @@ import numpy as np
 import torch
 from scipy import ndimage
 
+from common.layout import repo_root
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from flood_swe import ShallowWater  # noqa: E402
+from flood_swe import ShallowWater
 
 ROOT = repo_root()
 RUN = ROOT / "output/core008/physics/scaled_latent"
@@ -138,7 +139,7 @@ def main():
     dt_max = a.dt_max or {4: 0.5, 2: 0.3, 1: 0.15}[cell]
     t_start = time.time()
 
-    dtm, bed, foot, green = load_terrain(cell)
+    _dtm, bed, foot, green = load_terrain(cell)
     ny, nx = bed.shape
     manning = np.where(green, a.n_green, a.n_paved).astype(np.float32)
     log(
@@ -293,7 +294,7 @@ def main():
             cg_hist = []
             for k, m in poi_masks.items():
                 poi_series[k].append(float(h[m].max().item()) if m.any() else 0.0)
-            if int(round(t)) % 600 == 0 or t >= T_end - 1e-6:
+            if round(t) % 600 == 0 or t >= T_end - 1e-6:
                 log(
                     fh,
                     f"t {t / 60:6.1f} min | rain {rec['rain_mm_h']:5.1f} mm/h | dt {dt:.3f} | max h {rec['max_depth_m']:.2f} m | area>10cm {rec['area_gt_10cm_m2'] / 1e4:.1f} ha | "

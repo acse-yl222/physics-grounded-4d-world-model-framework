@@ -1,13 +1,16 @@
 """Reprepare selected outer blocks using inherited OSM plus one bounded east-strip query."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
+import hashlib
+import json
+import subprocess
+
 from common.layout import authoring_path
-import json, hashlib, subprocess
 
 r = authoring_path()
 old = r.parents[1] / "south_kensington"

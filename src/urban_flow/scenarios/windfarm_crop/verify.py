@@ -2,6 +2,7 @@ from common.storage import Storage
 
 """Verify paired crop exports and quantify their difference without asserting physical validation."""
 import json
+
 import numpy as np
 
 root = Storage.load().run("windfarm", "crop")

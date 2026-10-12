@@ -3,9 +3,9 @@ routing.py = wave-based navigation field (first-arrival-time) toward the roost
 """
 
 import numpy as np
+from scipy.ndimage import map_coordinates
 from scipy.sparse import coo_matrix
 from scipy.sparse.csgraph import dijkstra
-from scipy.ndimage import map_coordinates
 
 _arrival_cache = {}  # static field -> compute once per run
 _gradient_cache = {}  # precomputed gradients of T, keyed same as _arrival_cache

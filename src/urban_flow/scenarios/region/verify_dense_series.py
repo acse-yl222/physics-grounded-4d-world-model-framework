@@ -2,8 +2,9 @@
 
 import json
 from pathlib import Path
-import numpy as np
+
 import h5py
+import numpy as np
 
 root = Path.cwd()
 folder = root / "visualizer/scenes/region/physics/ai4urban"

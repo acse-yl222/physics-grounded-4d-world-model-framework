@@ -1,10 +1,11 @@
 """Check coordinate preservation, domain clearance, and terrain occupancy."""
 
 import json
-from pathlib import Path
 import sys
-import numpy as np
+from pathlib import Path
+
 import matplotlib
+import numpy as np
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt

@@ -4,6 +4,7 @@ Tile and halo sizes below are counts of grid CELLS, not physical metres.
 
 import math
 from pathlib import Path
+
 import numpy as np
 import torch
 import torch.nn.functional as F
@@ -104,7 +105,7 @@ def encode_domain(solid, enc):
 @torch.inference_mode()
 def latent_step(latent_t, latent_geo, net):
     """LatentInferenceOnlyGeometryDDP.step_once, single process. latent_t/latent_geo already /10."""
-    _, _, D_lat, H_lat, W_lat = latent_geo.shape
+    _, _, _D_lat, H_lat, W_lat = latent_geo.shape
     stacked = torch.cat([latent_t, latent_geo], dim=1)
     nxt = torch.zeros_like(latent_t)
     for i in range(math.ceil(H_lat / TILE_LAT)):

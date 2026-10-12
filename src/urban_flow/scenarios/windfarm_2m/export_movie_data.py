@@ -1,6 +1,9 @@
-from common.storage import Storage
+import json
+
+import numpy as np
+
 from common.runtime import trial_root
-import json, numpy as np
+from common.storage import Storage
 
 base = Storage.load().run("windfarm", "mac_2m")
 out = trial_root("windfarm", "movie")

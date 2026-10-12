@@ -22,13 +22,12 @@ Temperature: identical to run_core008_scaled_wind_temperature.py (teacher cloud_
 Outputs: <project>/output/core008/physics/scaled_latent
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import hashlib
 import importlib.metadata
 import json
@@ -41,6 +40,8 @@ from pathlib import Path
 import numpy as np
 import torch
 import torch.nn.functional as F
+
+from common.layout import repo_root
 
 _orig_version = importlib.metadata.version
 importlib.metadata.version = lambda n: "1.24.4" if n == "numpy" else _orig_version(n)
@@ -59,9 +60,9 @@ for folder in (WIND_DIR, TEMP_DIR, LAT_DIR):
 sys.path.insert(0, str(SCALED_REPO))
 sys.path.insert(0, str(TEACHER_CODE))
 sys.modules.setdefault("h5py", types.ModuleType("h5py"))
-from scaled.model.autoencoders.autoencoder3dv1 import AutoencoderKL  # noqa: E402
-from scaled.model.unets.unet_3ds import UNet3DsModel  # noqa: E402
-import cloud_workflow as cw  # noqa: E402
+import cloud_workflow as cw
+from scaled.model.autoencoders.autoencoder3dv1 import AutoencoderKL
+from scaled.model.unets.unet_3ds import UNet3DsModel
 
 # ----------------------------------------------------------------------------- settings
 DOMAIN_LOWER_XYZ = (0, 0, 0)  # whole padded domain
@@ -203,7 +204,7 @@ def encode_domain(solid, enc):
 @torch.inference_mode()
 def latent_step(latent_t, latent_geo, net):
     """LatentInferenceOnlyGeometryDDP.step_once, single process. latent_t/latent_geo already /10."""
-    _, _, D_lat, H_lat, W_lat = latent_geo.shape
+    _, _, _D_lat, H_lat, W_lat = latent_geo.shape
     stacked = torch.cat([latent_t, latent_geo], dim=1)
     nxt = torch.zeros_like(latent_t)
     for i in range(math.ceil(H_lat / TILE_LAT)):
@@ -338,7 +339,7 @@ def run_wind(solid, geo):
 # ----------------------------------------------------------------------------- temperature
 def wind_at(seconds):
     seconds = max(float(seconds), 0.0)
-    lo = int(math.floor(seconds / STEP_SECONDS))
+    lo = math.floor(seconds / STEP_SECONDS)
     frac = seconds / STEP_SECONDS - lo
     a = np.load(WIND_DIR / f"wind4m_{SPINUP_STEPS + lo:03d}.npy")
     if frac < 1e-10:

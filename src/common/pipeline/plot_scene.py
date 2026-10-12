@@ -9,8 +9,8 @@ if __name__ == "__main__" and not __package__:
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import matplotlib
 
@@ -34,7 +34,7 @@ def main():
     out.mkdir(exist_ok=True)
     meta = json.loads((project_path(cfg["geometry"]) / "metadata.json").read_text())
     cell = cfg["cell_m"] * cfg["coarse_factor"]
-    z, ny, nx = meta["shape_zyx"]
+    _z, ny, nx = meta["shape_zyx"]
     ox, oy, _ = meta["source_region_origin_xyz_m"]
     extent = [ox, ox + nx * cfg["cell_m"], oy, oy + ny * cfg["cell_m"]]
     n = a.step if a.step is not None else cfg["wind_steps"]

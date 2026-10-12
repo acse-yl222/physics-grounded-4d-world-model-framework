@@ -2,10 +2,11 @@
 config.py = all simulation params (in SI units)
 """
 
-from common.layout import scene_input
-
 from dataclasses import dataclass, field
+
 import numpy as np
+
+from common.layout import scene_input
 
 # INDIVIDUAL TRAITS = spec for per-bird trait sampling i.e. creates individuals rather than clones
 # NOTE: currently avoiding traits that were tuned based on STARFLAG metrics to preserve behavior

@@ -17,7 +17,7 @@ import numpy as np
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from flood_swe import ShallowWater, G  # noqa: E402
+from flood_swe import G, ShallowWater
 
 dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 report = {}

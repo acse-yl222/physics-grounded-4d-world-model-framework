@@ -7,10 +7,10 @@ its first commit. Explicit filenames from pre-commit use the same boundary.
 
 import argparse
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import sys
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PRETTIER_SUFFIXES = {".js", ".mjs", ".cjs", ".html", ".css", ".json", ".yaml", ".yml", ".md"}

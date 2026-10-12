@@ -4,6 +4,7 @@ Dimensions/individual-node style correspondence remain partly estimated.
 """
 
 import math
+
 from detailed_common import BuildingContext
 
 EXHIBITION_IDS = {"node-8014230168", "node-8014230169", "node-8014230170"}

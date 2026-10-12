@@ -1,15 +1,17 @@
 """Plan-only raised-stair adjacency preflight, before master vertical/ray tests."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import authoring_path
 import json
+
 from shapely.geometry import Polygon
 from shapely.ops import unary_union
+
+from common.layout import authoring_path
 
 R = authoring_path()
 g = json.loads((R / "geometry.json").read_text())

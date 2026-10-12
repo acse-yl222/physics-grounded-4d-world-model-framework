@@ -1,15 +1,22 @@
 """Reopen, export uncompressed GLB, independently reimport and check object fidelity."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import authoring_path
-import bpy, json, sys, hashlib, struct, argparse
+import argparse
+import hashlib
+import json
+import struct
+import sys
+
+import bpy
 import numpy as np
 from mathutils import Vector
+
+from common.layout import authoring_path
 
 ROOT = authoring_path()
 p = argparse.ArgumentParser()

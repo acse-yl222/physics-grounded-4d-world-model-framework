@@ -1,9 +1,10 @@
 """Run: blender --background --python src/urban_geometry/uav/generate_models.py"""
 
-import bpy
-import math
 import json
+import math
 from pathlib import Path
+
+import bpy
 from mathutils import Vector
 
 OUT = Path(__file__).resolve().parent

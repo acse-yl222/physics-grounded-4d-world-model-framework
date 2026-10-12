@@ -13,13 +13,12 @@ Resumable: wind state is checkpointed every step; rerun to continue.
 Outputs: <project>/output/core008/physics/scaled
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import hashlib
 import importlib.metadata
 import json
@@ -31,6 +30,8 @@ from pathlib import Path
 
 import numpy as np
 import torch
+
+from common.layout import repo_root
 
 _orig_version = importlib.metadata.version
 importlib.metadata.version = lambda n: (
@@ -50,10 +51,10 @@ for folder in (WIND_DIR, TEMP_DIR):
 sys.path.insert(0, str(SCALED_REPO))
 sys.path.insert(0, str(TEACHER_CODE))
 sys.modules.setdefault("h5py", types.ModuleType("h5py"))
-from scaled.model.autoencoders.autoencoder3dv1 import AutoencoderKL  # noqa: E402
-from scaled.model.unets.unet_3ds import UNet3DsModel  # noqa: E402
-from wind_core import extract, tiles  # noqa: E402
-import cloud_workflow as cw  # noqa: E402
+import cloud_workflow as cw
+from scaled.model.autoencoders.autoencoder3dv1 import AutoencoderKL
+from scaled.model.unets.unet_3ds import UNet3DsModel
+from wind_core import extract, tiles
 
 # ----------------------------------------------------------------------------- settings
 DOMAIN_LOWER_XYZ = (448, 576, 0)  # padded-domain metres; buildings span x 625..3474, y 754..3348
@@ -261,7 +262,7 @@ def run_wind(solid, geo):
 def wind_at(seconds):
     """Wind at forecast time t (s): frames SPINUP_STEPS.. are 0, 25, 50 ... s; linear interpolation."""
     seconds = max(float(seconds), 0.0)
-    lo = int(math.floor(seconds / STEP_SECONDS))
+    lo = math.floor(seconds / STEP_SECONDS)
     frac = seconds / STEP_SECONDS - lo
     a = np.load(WIND_DIR / f"wind4m_{SPINUP_STEPS + lo:03d}.npy")
     if frac < 1e-10:

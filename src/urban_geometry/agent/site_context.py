@@ -1,6 +1,8 @@
-import json, struct
-from detailed_common import BuildingContext
+import json
+import struct
+
 import bpy
+from detailed_common import BuildingContext
 
 
 def build(root):

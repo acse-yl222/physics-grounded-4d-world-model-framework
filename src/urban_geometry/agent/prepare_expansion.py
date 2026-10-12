@@ -2,20 +2,26 @@
 Run with south_kensington/.venv/bin/python. Does not fetch or overwrite old outputs.
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import agent_src, authoring_path
-import json, math, copy, hashlib, shutil
-import numpy as np
+import copy
+import hashlib
+import json
+import math
+import shutil
+
 import mapbox_earcut as earcut
+import numpy as np
 from pyproj import Transformer
-from shapely.geometry import Polygon, box, LineString, mapping
+from shapely.geometry import LineString, Polygon, box, mapping
 from shapely.geometry.polygon import orient
-from shapely.ops import unary_union, transform
+from shapely.ops import transform, unary_union
+
+from common.layout import agent_src, authoring_path
 
 ROOT = authoring_path()
 WORK = ROOT.parents[1]

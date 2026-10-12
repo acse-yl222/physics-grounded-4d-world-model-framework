@@ -2,10 +2,11 @@
 
 import json
 import os
-from pathlib import Path
 import time
 import uuid
-from .storage import Storage, identifier, within, scene_id
+from pathlib import Path
+
+from .storage import Storage, identifier, scene_id, within
 
 _TRIALS = {}
 

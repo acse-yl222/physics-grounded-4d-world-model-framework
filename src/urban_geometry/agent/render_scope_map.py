@@ -1,20 +1,23 @@
 """Static scope/inventory map from mapped footprints; not a completion certificate."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import authoring_path
 import json
+
+import matplotlib
 import numpy as np
 from pyproj import Transformer
-import matplotlib
+
+from common.layout import authoring_path
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.patches import Polygon as Patch, Patch as LegendPatch
+from matplotlib.patches import Patch as LegendPatch
+from matplotlib.patches import Polygon as Patch
 
 R = authoring_path()
 g = json.loads((R / "geometry.json").read_text())

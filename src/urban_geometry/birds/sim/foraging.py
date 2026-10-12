@@ -45,7 +45,7 @@ def init_food_field(site, config, site_index):
     area = float(size[0] * size[1])
 
     # number of blobs scales with site area, so bigger sites get more blobs (rather than the same number of bigger blobs)
-    n_patches = max(1, int(round(config.food_patch_density * area)))
+    n_patches = max(1, round(config.food_patch_density * area))
 
     # fixed-resolution grid is stretched to fill the site, so meters-per-cell differs per axis
     # convert the metric sigma to per-axis cell sigma (isotropic in meters -> anisotropic in cells on non-square sites)

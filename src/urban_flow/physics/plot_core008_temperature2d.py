@@ -1,17 +1,18 @@
 """Figures for the 2-D temperature label model run (PIL only). Arrays are model orientation (row 0 = north)."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
 import sys
 
 import numpy as np
 from PIL import Image, ImageDraw
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 RUN = ROOT / (
@@ -79,7 +80,7 @@ def main():
     vals = np.concatenate([f[s & ~b] for f in fields])
     vmin, vmax = float(np.nanpercentile(vals, 1)), float(np.nanpercentile(vals, 99))
     width = 560
-    h_px = int(round(width * fields[0].shape[0] / fields[0].shape[1]))
+    h_px = round(width * fields[0].shape[0] / fields[0].shape[1])
     canvas = Image.new("RGB", (3 * (width + 16) + 120, 2 * (h_px + 40) + 90), BG)
     d = ImageDraw.Draw(canvas)
     d.text(

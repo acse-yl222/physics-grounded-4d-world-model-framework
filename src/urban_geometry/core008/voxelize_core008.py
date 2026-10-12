@@ -4,13 +4,13 @@ Uses roof samples at 1 m spacing and ground-to-roof solidification.
 This is a sampled 2.5D exterior approximation, not exact mesh-volume voxelization.
 """
 
+import argparse
 import json
 import math
 import mmap
 import struct
-import time
-import argparse
 import sys
+import time
 from pathlib import Path
 
 import numpy as np

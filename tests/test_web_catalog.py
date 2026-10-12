@@ -1,7 +1,7 @@
 import json
-from pathlib import Path
 import tempfile
 import unittest
+from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 from common.storage import Storage

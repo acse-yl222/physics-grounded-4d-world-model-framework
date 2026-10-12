@@ -9,26 +9,27 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-import numpy as np
-import torch
 import sys
 
+import numpy as np
+import torch
+
 from traffic.configs.default import (
+    CELL_SIZE,
+    DT,
+    GRID_SIZE,
+    HIST_STEPS,
     INTERSECTION_CENTER,
+    MAX_SPEED,
+    PRED_STEPS,
     ROAD_HALF_WIDTH,
     SIGNAL_CYCLE,
-    TURN_PROB_STRAIGHT,
-    TURN_PROB_LEFT,
-    TURN_RADIUS_RIGHT,
-    TURN_RADIUS_LEFT,
-    GRID_SIZE,
-    CELL_SIZE,
-    MAX_SPEED,
-    DT,
     TOTAL_FEAT_DIM,
+    TURN_PROB_LEFT,
+    TURN_PROB_STRAIGHT,
+    TURN_RADIUS_LEFT,
+    TURN_RADIUS_RIGHT,
     VEHICLE_DIM,
-    HIST_STEPS,
-    PRED_STEPS,
 )
 
 

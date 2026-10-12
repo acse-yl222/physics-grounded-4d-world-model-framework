@@ -1,18 +1,19 @@
 """Figures for temperature3d_solar (PIL only): native vs solar-coupled shade, ground surface temperature, air temperature."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
 import sys
 from pathlib import Path
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 OUT = (
@@ -63,7 +64,7 @@ GREY = [(40, 40, 45), (245, 235, 200)]
 
 
 def img(rgb, w):
-    h = int(round(w * rgb.shape[0] / rgb.shape[1]))
+    h = round(w * rgb.shape[0] / rgb.shape[1])
     return Image.fromarray(rgb[::-1].astype(np.uint8)).resize((w, h), Image.Resampling.NEAREST), h
 
 

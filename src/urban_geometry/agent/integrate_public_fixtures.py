@@ -1,10 +1,11 @@
 """Coordinator-owned fixture grounding; source frame baked once after build."""
 
 import json
+
 import bpy
-from public_realm_ground import allowed
 from mathutils import Matrix, Vector
 from public_realm_fixtures import build
+from public_realm_ground import allowed
 
 
 def integrate(root, transform):
@@ -17,7 +18,7 @@ def integrate(root, transform):
     for row in records:
         x, y = row["position_authoring_xy_m"]
         p = transform @ Vector((x, y, 1.0))
-        hit, location, normal, index, obj, matrix = bpy.context.scene.ray_cast(
+        hit, location, normal, _index, obj, _matrix = bpy.context.scene.ray_cast(
             graph, p, Vector((0, 0, -1)), distance=3.0
         )
         assert hit and normal.z > 0.9 and -0.2 <= location.z <= 0.2, (

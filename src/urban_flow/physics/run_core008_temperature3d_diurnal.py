@@ -10,13 +10,12 @@ Usage: python run_core008_temperature3d_diurnal.py [--date 2026-06-21] [--hours 
 Outputs: output/core008/physics/scaled_latent/temperature3d_solar/diurnal_<date>/
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import argparse
 import importlib.util
 import json
@@ -27,6 +26,8 @@ from dataclasses import asdict, replace
 
 import numpy as np
 import torch
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 RUN = ROOT / "output/core008/physics/scaled_latent"
@@ -42,11 +43,11 @@ SOLAR = RUN / "solar"
 sys.path.insert(0, str(MODEL_DIR))
 sys.path.insert(0, str(MODEL_DIR.parent / "velocity_calculation"))
 sys.path.insert(0, str(ROOT / "src/common/pipeline/physics"))
-import south_kensington_jupyter as _skj  # noqa: E402
+import south_kensington_jupyter as _skj
 
 if not hasattr(_skj, "rotate_2d_field"):
     _skj.rotate_2d_field = lambda field, deg: (
-        np.rot90(field, k=int(round(deg / 90.0)) % 4) if deg % 360 else field
+        np.rot90(field, k=round(deg / 90.0) % 4) if deg % 360 else field
     )
 spec = importlib.util.spec_from_file_location(
     "south_kensington_temperature_3d", MODEL_DIR / "south_kensington_temperature_3d.py"
@@ -54,8 +55,8 @@ spec = importlib.util.spec_from_file_location(
 M3 = importlib.util.module_from_spec(spec)
 sys.modules["south_kensington_temperature_3d"] = M3
 spec.loader.exec_module(M3)
-from south_kensington_jupyter import SouthKensingtonConfig  # noqa: E402
-from solar_np import ShadowNet, clear_sky  # noqa: E402
+from solar_np import ShadowNet, clear_sky
+from south_kensington_jupyter import SouthKensingtonConfig
 
 CELL = 4.0
 X0, Y0 = 480, 640
@@ -103,7 +104,7 @@ def solve_from_state(
     stable_dt = temp3d_config.max_courant * min(dx, dy, dz) / max(max_speed, 1e-6)
     diffusion_dt = 0.18 * min(dx, dy, dz) ** 2 / max(temp3d_config.diffusion_coeff_m2_s, 1e-6)
     dt = min(stable_dt, diffusion_dt, temp3d_config.frame_duration_s)
-    substeps = max(1, int(math.ceil(temp3d_config.frame_duration_s / max(dt, 1e-6))))
+    substeps = max(1, math.ceil(temp3d_config.frame_duration_s / max(dt, 1e-6)))
     dt = temp3d_config.frame_duration_s / substeps
     u_frames = torch.as_tensor(u_frames_np, device=device)
     v_frames = torch.as_tensor(v_frames_np, device=device)
@@ -222,7 +223,7 @@ def main():
     (out / "hourly").mkdir(exist_ok=True)
     fh = open(out / "run.log", "a")
     t0 = time.time()
-    y, mo, d = map(int, a.date.split("-"))
+    _y, mo, _d = map(int, a.date.split("-"))
     h0, h1 = map(int, a.hours.split("-"))
     utc_off = 1 if 4 <= mo <= 9 else 0
     velocity_config = SouthKensingtonConfig(
@@ -348,7 +349,7 @@ def main():
                 .cpu()
                 .numpy()
             )
-            dni, dhi = clear_sky(alt, mo)
+            dni, _dhi = clear_sky(alt, mo)
             direct_h = min((1 - a.cloud) * dni * math.sin(math.radians(alt)), ghi_model)
             diffuse = max(ghi_model - direct_h, 0.0)
             ghi_cell = (

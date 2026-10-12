@@ -13,18 +13,19 @@ if __name__ == "__main__" and not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 
+import argparse
+import sys
+
 import numpy as np
 import torch
-import sys
-import argparse
 
 from traffic.configs.default import (
-    PRED_STEPS,
-    MAX_SPEED,
+    DT,
     EVAL_SEED_OFFSET,
     GRID_SIZE,
+    MAX_SPEED,
+    PRED_STEPS,
     VEHICLE_DIM,
-    DT,
 )
 from traffic.data.generate_intersection import generate_dataset
 from traffic.evaluate import load_model, modify_regulation
@@ -125,7 +126,7 @@ def optimize_control(sample_idx, model_date=None, init_points=5, n_iter=15, log=
         pred_grid = model.predict_full_grid(modified.to(device), n_iters=1, alpha=0.3)
 
         # Calculate emissions
-        total_co2, n_veh = evaluate_prediction_emissions(grid_orig, pred_grid.cpu(), last_frame)
+        total_co2, _n_veh = evaluate_prediction_emissions(grid_orig, pred_grid.cpu(), last_frame)
 
         return -total_co2
 
@@ -142,12 +143,12 @@ def optimize_control(sample_idx, model_date=None, init_points=5, n_iter=15, log=
     )
 
     log(f"Bayesian Optimization Control Scheme: Sample {sample_idx}")
-    log(f"  Search Space: speed_factor ∈ [0.3, 1.0]")
+    log("  Search Space: speed_factor ∈ [0.3, 1.0]")
     log(f"  Initially randomly sample {init_points} points, iterate {n_iter} rounds")
 
     optimizer.maximize(init_points=init_points, n_iter=n_iter)
 
-    log(f"\nOptimal Result (Lower total CO2 is better):")
+    log("\nOptimal Result (Lower total CO2 is better):")
     best = optimizer.max
     log(f"  speed_factor  = {best['params']['speed_factor']:.3f}")
     log(f"  estimated CO2 = {-best['target']:.1f} g")

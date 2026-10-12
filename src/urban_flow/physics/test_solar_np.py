@@ -12,7 +12,7 @@ import numpy as np
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from solar_np import ShadowNet, HorizonNet, sun_position  # noqa: E402
+from solar_np import HorizonNet, ShadowNet, sun_position
 
 dev = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 rep = {}
@@ -100,7 +100,7 @@ def test_canyon_svf():
     H[40:] = Hb
     sn = ShadowNet(H, dx, dev)
     hn = HorizonNet(sn, n_azimuth=32, altitudes_deg=tuple(range(1, 90, 2)))
-    svf, hz = hn()
+    svf, _hz = hn()
     num = float(svf[30, 150:250].mean().item())
     phis = np.linspace(0, 2 * np.pi, 3600, endpoint=False)
     beta = np.arctan(

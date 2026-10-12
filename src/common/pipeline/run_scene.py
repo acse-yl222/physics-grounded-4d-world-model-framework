@@ -24,24 +24,24 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from common.locations import code_path, resource_path
 import argparse
 import copy
 import hashlib
 import json
 import math
+import os
 import re
 import shutil
 import subprocess
 import sys
 import time
-import os
 import uuid
-from common.storage import Storage, scene_id, identifier
 from pathlib import Path
 
+from common.locations import code_path, resource_path
 from common.pipeline.paths import ROOT, project_path
-from urban_geometry.voxelization.glb_plan import read_glb_header, local_bounds, plan_grid
+from common.storage import Storage, identifier, scene_id
+from urban_geometry.voxelization.glb_plan import local_bounds, plan_grid, read_glb_header
 
 STAGES = [
     "geometry",

@@ -1,19 +1,25 @@
 """Small independent landmark render/geometry inspection, before full integration."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import agent_src, authoring_path
-import bpy, json, sys, math
+import json
+import math
+import sys
+
+import bpy
 from mathutils import Vector
+
+from common.layout import agent_src, authoring_path
 
 root = authoring_path()
 sys.path.insert(0, str(agent_src()))
-from detailed_common import BuildingContext
 import importlib
+
+from detailed_common import BuildingContext
 
 rows = {f["id"]: f for f in json.loads((root / "geometry.json").read_text())["buildings"]}
 mods = {"way-27765411": "science_museum"}

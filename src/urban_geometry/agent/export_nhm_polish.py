@@ -1,12 +1,18 @@
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import agent_src, authoring_path
-import bpy, sys, json, math, importlib
+import importlib
+import json
+import math
+import sys
+
+import bpy
 from mathutils import Matrix, Vector
+
+from common.layout import agent_src, authoring_path
 
 root = authoring_path()
 sys.path.insert(0, str(agent_src()))

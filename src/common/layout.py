@@ -1,6 +1,7 @@
 """Locate the checkout independently of a module's depth."""
 
 from pathlib import Path
+
 from .locations import code_path, workspace_root
 
 

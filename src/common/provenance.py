@@ -1,9 +1,10 @@
 """Capture the exact source checkout used by a trial without including private data."""
 
-from pathlib import Path
 import subprocess
 import tarfile
-from .locations import code_path, resource_path, checkout_root
+from pathlib import Path
+
+from .locations import checkout_root, code_path, resource_path
 
 SOURCE_SUFFIXES = {".py", ".js", ".mjs", ".cjs", ".json", ".sh", ".toml", ".yaml", ".yml", ".md"}
 

@@ -7,12 +7,12 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from common.locations import code_path
 import json
-from pathlib import Path
 import subprocess
 import sys
+from pathlib import Path
 
+from common.locations import code_path
 from common.pipeline.paths import ROOT
 from common.pipeline.scene_scaled_latent import save_json
 

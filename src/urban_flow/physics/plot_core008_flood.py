@@ -1,18 +1,19 @@
 """Figures for a flood run folder (PIL only). Usage: python plot_core008_flood.py --run output/core008/physics/scaled_latent/flood/run_4m"""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
 import sys
 from pathlib import Path
 
 import numpy as np
 from PIL import Image, ImageDraw, ImageFont
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 RUN = (
@@ -86,7 +87,7 @@ def legend(d, x, y, stops, title):
 
 
 def panel(arr_rgb, width):
-    h_px = int(round(width * arr_rgb.shape[0] / arr_rgb.shape[1]))
+    h_px = round(width * arr_rgb.shape[0] / arr_rgb.shape[1])
     return Image.fromarray(arr_rgb[::-1]).resize((width, h_px), Image.Resampling.NEAREST), h_px
 
 

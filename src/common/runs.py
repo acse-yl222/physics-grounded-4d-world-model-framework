@@ -2,10 +2,11 @@
 
 import json
 import os
-from pathlib import Path
 import shutil
 import tempfile
-from .contract import validate, asset_references
+from pathlib import Path
+
+from .contract import asset_references, validate
 from .storage import scene_id
 
 
@@ -52,7 +53,8 @@ def promote(storage, source):
 
 def promote_bundle(storage, source):
     """Retain all declared runs, then expose a validated view; never replace a view."""
-    from .catalog import schema_check, view as check_view
+    from .catalog import schema_check
+    from .catalog import view as check_view
     from .storage import identifier
 
     source = Path(source).resolve()

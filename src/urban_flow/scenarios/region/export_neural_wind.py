@@ -4,6 +4,7 @@ Run from the workstation UrbanWorldModel root. No new inference is performed.
 
 import json
 from pathlib import Path
+
 import numpy as np
 
 root = Path.cwd()

@@ -10,13 +10,12 @@ Coordinates: grid -> domain -> region (- (2116, 2124)) -> EPSG:32630 (+ region o
 Outputs: output/core008/physics/scaled_latent/flood/terrain/
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
 import time
 
@@ -24,6 +23,8 @@ import numpy as np
 from PIL import Image
 from pyproj.transformer import TransformerGroup
 from scipy import ndimage
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 TILES = ROOT / "output/core008/geometry/ea_lidar_dtm_1m"
@@ -51,8 +52,8 @@ def load_mosaic():
         e0, n0 = tfw[4], tfw[5]  # centre of the top-left pixel
         a = np.array(Image.open(TILES / f"{name}_DTM_1m.tif"), np.float32)
         a[a < -1e30] = np.nan
-        r0 = int(round(184999.5 - n0))
-        c0 = int(round(e0 - 520000.5))
+        r0 = round(184999.5 - n0)
+        c0 = round(e0 - 520000.5)
         mosaic[r0 : r0 + a.shape[0], c0 : c0 + a.shape[1]] = a
         log(
             f"{name}: {a.shape}, nodata {np.isnan(a).sum()}, range {np.nanmin(a):.2f}..{np.nanmax(a):.2f} m AOD"

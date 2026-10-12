@@ -1,6 +1,11 @@
-import bpy, sys, json, time, math
+import json
+import math
+import sys
+import time
+
+import bpy
 import numpy as np
-from mathutils import Vector, Matrix
+from mathutils import Matrix, Vector
 
 argv = sys.argv[sys.argv.index("--") + 1 :]
 (
@@ -126,7 +131,10 @@ log("checks", json.dumps(checks)[:1500])
 
 
 # ---- tree simplification: replace sparse simplified leaf-card trees with solid low-poly trunk + canopy ----
-import bmesh, re, hashlib
+import hashlib
+import re
+
+import bmesh
 
 
 def world_bounds(objs):
@@ -428,11 +436,11 @@ for r in road_json["roads"]:
     ob["semantic_type"] = "traffic_road_centreline"
     road_objs.append(ob)
 # vehicles: shared box mesh, animated location/heading, scale 0 when absent
-FPS = int(round(1.0 / veh_json["meta"]["dt_s"]))
+FPS = round(1.0 / veh_json["meta"]["dt_s"])
 scene = bpy.context.scene
 scene.render.fps = FPS
 scene.frame_start = 0
-scene.frame_end = int(round(veh_json["meta"]["duration_s"] * FPS))
+scene.frame_end = round(veh_json["meta"]["duration_s"] * FPS)
 bm = bmesh.new()
 bmesh.ops.create_cube(bm, size=1.0)
 bmesh.ops.scale(bm, vec=(4.4, 1.8, 1.5), verts=bm.verts)
@@ -469,8 +477,8 @@ for v in veh_json["vehicles"]:
     ob["t_end_s"] = tr[-1]["t_s"]
     ob["source"] = "simulated (IDM + signals), not observed"
     ob.rotation_mode = "XYZ"
-    f0 = int(round(tr[0]["t_s"] * FPS))
-    f1 = int(round(tr[-1]["t_s"] * FPS))
+    f0 = round(tr[0]["t_s"] * FPS)
+    f1 = round(tr[-1]["t_s"] * FPS)
     ob.scale = (0, 0, 0)
     if f0 > 0:
         ob.keyframe_insert("scale", frame=f0 - 1)
@@ -482,7 +490,7 @@ for v in veh_json["vehicles"]:
         ob.keyframe_insert("scale", frame=f1 + 1)
     prev = None
     for p in tr:
-        f = int(round(p["t_s"] * FPS))
+        f = round(p["t_s"] * FPS)
         ob.location = (p["x"], p["y"], ZLIFT + 0.10)
         h = p["heading_rad"]
         if prev is not None:
@@ -547,8 +555,8 @@ for p in pred_json["predictions"]:
     if p.get("ade_m") is not None:
         ob["ade_m_vs_simulator"] = p["ade_m"]
         ob["fde_m_vs_simulator"] = p["fde_m"]
-    f0 = int(round(p["t_last_s"] * FPS))
-    f1 = int(round((p["t_last_s"] + pm["horizon_s"]) * FPS))
+    f0 = round(p["t_last_s"] * FPS)
+    f1 = round((p["t_last_s"] + pm["horizon_s"]) * FPS)
     ob.scale = (0, 0, 0)
     if f0 > 0:
         ob.keyframe_insert("scale", frame=f0 - 1)
@@ -582,7 +590,7 @@ bdt = float(bnpz["dt"])
 nb = bpos.shape[1]
 bcol = bpy.data.collections.new("Birds | flock simulation (src/urban_geometry/birds)")
 bpy.context.scene.collection.children.link(bcol)
-step = max(1, int(round((1.0 / FPS) / bdt)))
+step = max(1, round((1.0 / FPS) / bdt))
 sel = np.arange(0, len(btimes), step)
 bt = btimes[sel]
 bp = bpos[sel]
@@ -626,7 +634,7 @@ for kind, color in (("roosts", (0.9, 0.6, 0.1, 1)), ("forage_sites", (0.2, 0.8, 
     for k, s in enumerate(wl.get(kind, [])):
         c = s["center"]
         sz = s["size"]
-        me = bpy.data.meshes.new(f"Bird site | {kind[:-1] if kind.endswith('s') else kind} {k}")
+        me = bpy.data.meshes.new(f"Bird site | {kind.removesuffix('s')} {k}")
         me.from_pydata(
             [
                 (c[0] - sz[0] / 2, c[1] - sz[1] / 2, c[2] + 0.3),
@@ -654,9 +662,9 @@ states = np.unique(bstate[sel]).tolist()
 bird_stats = {
     "birds": nb,
     "sim_dt_s": bdt,
-    "sim_steps": int(len(btimes)),
+    "sim_steps": len(btimes),
     "duration_s": float(btimes[-1]),
-    "keyframes_per_bird": int(len(frames)),
+    "keyframes_per_bird": len(frames),
     "keyframe_dt_s": step * bdt,
     "sites": {"roosts": len(wl.get("roosts", [])), "forage_sites": len(wl.get("forage_sites", []))},
     "behaviour_states_seen": states,

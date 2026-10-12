@@ -12,19 +12,19 @@ if __name__ == "__main__" and not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 import argparse
-from datetime import datetime, timedelta, timezone
 import json
-from pathlib import Path
 import shutil
 import sys
 import time
+from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import numpy as np
 import torch
 
 from common.pipeline.paths import ROOT, project_path
-from common.pipeline.scene_scaled_latent import save_json, save_npz, digest, log
+from common.pipeline.scene_scaled_latent import digest, log, save_json, save_npz
 
 
 def terrain(cfg):
@@ -47,7 +47,7 @@ def terrain(cfg):
 
 
 def solar(cfg, bed, foot, green, canopy, out):
-    from urban_flow.physics.solar.model import ShadowNet, HorizonNet, sun_position, clear_sky
+    from urban_flow.physics.solar.model import HorizonNet, ShadowNet, clear_sky, sun_position
 
     cell = cfg["cell_m"]
     settings = cfg["solar"]
@@ -62,7 +62,7 @@ def solar(cfg, bed, foot, green, canopy, out):
     )
     solid = torch.as_tensor(foot, device="cuda")
     for date in settings["dates"]:
-        start = datetime.fromisoformat(date).replace(tzinfo=timezone.utc)
+        start = datetime.fromisoformat(date).replace(tzinfo=UTC)
         d = out / date
         d.mkdir(exist_ok=True)
         energy = torch.zeros_like(svf)
@@ -124,6 +124,7 @@ def solar(cfg, bed, foot, green, canopy, out):
 
 def flood(cfg, bed, foot, green, canopy, out):
     from scipy.ndimage import distance_transform_edt
+
     from urban_flow.physics.flood.model import ShallowWater
 
     s = cfg["flood"]

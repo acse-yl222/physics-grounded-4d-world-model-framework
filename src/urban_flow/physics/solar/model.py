@@ -134,10 +134,10 @@ class ShadowNet(torch.nn.Module):
     def running_max(self, G, px, py, S_cells):
         """max over s in (0, S] of G(x + s d), d = p/|p|: stage 0 = nearest samples along p, then doubling with 2^k p."""
         n = math.hypot(px, py)
-        m = int(round(n))
+        m = round(n)
         M = None
         for s in range(1, m + 1):
-            sh = self.shift(G, int(round(s * px / n)), int(round(s * py / n)))
+            sh = self.shift(G, round(s * px / n), round(s * py / n))
             M = sh if M is None else torch.maximum(M, sh)
         k = 1
         while k * n < S_cells:
@@ -154,7 +154,7 @@ class ShadowNet(torch.nn.Module):
         ta = math.tan(math.radians(altitude_deg))
         G = self.H - ta * self.dx * (self.xs * ux + self.ys * uy)
         S = max_range_m or min(self.hrange / max(ta, 1e-3), max(self.nx, self.ny) * self.dx)
-        M = self.running_max(G, px, py, max(1, int(math.ceil(S / self.dx))))
+        M = self.running_max(G, px, py, max(1, math.ceil(S / self.dx)))
         return M > G + 1e-3
 
 

@@ -1,9 +1,10 @@
 """Resolve repository metadata, retained scene assets and disposable run workspaces."""
 
-from dataclasses import dataclass
 import json
-from pathlib import Path
 import re
+from dataclasses import dataclass
+from pathlib import Path
+
 from .locations import workspace_root
 
 ALIASES = {"south_kensington": "south_ken", "core008": "south_ken"}

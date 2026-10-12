@@ -28,6 +28,7 @@ Run with:
 """
 
 import argparse
+
 import numpy as np
 import trimesh
 
@@ -119,7 +120,7 @@ def detect_up_axis(extents):
 
 def ascii_preview(occupied_xy, width=64):
     """Top-down footprint preview (x = columns/east, y = rows/north)."""
-    ny, nx = occupied_xy.shape  # note: passed as (y, x)
+    _ny, nx = occupied_xy.shape  # note: passed as (y, x)
     # downsample to <= width columns
     step = max(1, nx // width)
     ss = occupied_xy[::step, ::step]

@@ -1,10 +1,10 @@
 """Formatting must never rewrite tracked assets or historical evidence."""
 
 import importlib.util
-from pathlib import Path
 import subprocess
 import tempfile
 import unittest
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("repository_format", ROOT / "tools/format.py")

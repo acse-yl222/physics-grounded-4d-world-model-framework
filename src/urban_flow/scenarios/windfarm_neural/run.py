@@ -13,12 +13,19 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from common.runtime import source_path, trial_root
-import argparse, json, math, sys, time, traceback
+import argparse
+import json
+import math
+import sys
+import time
+import traceback
 from pathlib import Path
+
 import numpy as np
 import torch
 import torch.nn.functional as F
+
+from common.runtime import source_path, trial_root
 
 here = Path(__file__).resolve().parent
 from urban_flow.solvers.mac_torch import MAC

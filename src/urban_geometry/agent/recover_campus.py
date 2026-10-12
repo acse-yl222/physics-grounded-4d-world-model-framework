@@ -1,14 +1,19 @@
 """Recover editable triangulated campus geometry from the intact uncompressed GLB."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import authoring_path
-import bpy, json, hashlib, struct
+import hashlib
+import json
+import struct
+
+import bpy
 from mathutils import Vector
+
+from common.layout import authoring_path
 
 root = authoring_path()
 source = root.parents[1] / "assets/models/Imperial_College_South_Kensington_Detailed_Phase4.glb"

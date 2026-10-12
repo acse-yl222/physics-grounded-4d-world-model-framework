@@ -50,9 +50,7 @@ def save(rel, arr, **meta):
     os.makedirs(os.path.dirname(p), exist_ok=True)
     np.save(p, arr)
     man["arrays"][rel] = {"shape": list(arr.shape), "dtype": str(arr.dtype), **meta}
-    print(
-        f"{rel:50s} {str(arr.dtype):8s} {arr.shape} {os.path.getsize(p) / 1e6:7.1f} MB", flush=True
-    )
+    print(f"{rel:50s} {arr.dtype!s:8s} {arr.shape} {os.path.getsize(p) / 1e6:7.1f} MB", flush=True)
 
 
 # ---- geometry masks

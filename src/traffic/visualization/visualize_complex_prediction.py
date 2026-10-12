@@ -17,34 +17,35 @@ if __name__ == "__main__" and not __package__:
 import matplotlib
 
 matplotlib.use("Agg")
+import argparse
+import os
+import sys
+
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
-from matplotlib.colors import ListedColormap
-from matplotlib.animation import FuncAnimation
 import numpy as np
 import torch
-import sys
-import os
-import argparse
+from matplotlib.animation import FuncAnimation
+from matplotlib.colors import ListedColormap
+from matplotlib.lines import Line2D
 
 from traffic.configs.default import (
+    EVAL_SEED_OFFSET,
+    GRID_SIZE,
     HIST_STEPS,
     PRED_STEPS,
-    GRID_SIZE,
-    EVAL_SEED_OFFSET,
 )
 from traffic.data.generate_complex import (
-    get_road_network,
     build_road_lane_centers,
-    get_lane_centerlines,
     generate_dataset,
+    get_lane_centerlines,
+    get_road_network,
 )
 from traffic.evaluate import load_model
 
 
 def draw_network_base(ax):
     roads = get_road_network()
-    lane, drivable = build_road_lane_centers(roads)
+    _lane, drivable = build_road_lane_centers(roads)
     lane_lines = get_lane_centerlines(roads)
     road_cmap = ListedColormap(["white", "#EAEAEA"])
 

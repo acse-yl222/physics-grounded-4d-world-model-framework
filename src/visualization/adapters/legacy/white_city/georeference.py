@@ -10,7 +10,10 @@ import sys
 
 MODE = sys.argv.pop(1) if len(sys.argv) > 1 else "fit"
 if MODE == "names":
-    import json, struct, sys, collections
+    import collections
+    import json
+    import struct
+    import sys
 
     p = sys.argv[1]
     with open(p, "rb") as f:
@@ -83,7 +86,13 @@ if MODE == "names":
     for k in list(out)[:60]:
         print(repr(k), {kk: round(v, 1) for kk, v in out[k].items()})
 else:
-    import json, math, urllib.request, urllib.parse, re, sys
+    import json
+    import math
+    import re
+    import sys
+    import urllib.parse
+    import urllib.request
+
     import numpy as np
 
     glb = json.load(open("glb_named.json"))

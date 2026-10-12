@@ -4,7 +4,10 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-import json, torch
+import json
+
+import torch
+
 from urban_flow.solvers.mac_triton import MAC
 
 torch.set_num_threads(4)

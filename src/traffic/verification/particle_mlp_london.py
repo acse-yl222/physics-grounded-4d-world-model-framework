@@ -6,17 +6,17 @@ The model framework remains unchanged.
 """
 
 import torch
-import torch.nn as nn
+from torch import nn
 
 from traffic.configs.default import (
-    WINDOW_SIZE,
-    HIST_STEPS,
-    PRED_STEPS,
-    VEHICLE_DIM,
-    TOTAL_FEAT_DIM,
-    HIDDEN_DIM,
     EGO_HIDDEN_DIM,
+    HIDDEN_DIM,
+    HIST_STEPS,
     JACOBI_ITERS,
+    PRED_STEPS,
+    TOTAL_FEAT_DIM,
+    VEHICLE_DIM,
+    WINDOW_SIZE,
 )
 
 

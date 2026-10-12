@@ -8,7 +8,13 @@ Writes traffic/sim/frames.npz (per second: vehicle id, x, y, angle, speed in SUM
 traffic/sim/tls.json (signal programme states per second, run-length coded). build_traffic.py turns them into the viewer files.
 """
 
-import argparse, json, os, subprocess, sys, time
+import argparse
+import json
+import os
+import subprocess
+import sys
+import time
+
 import numpy as np
 import sumo
 

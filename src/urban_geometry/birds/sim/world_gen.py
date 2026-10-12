@@ -29,7 +29,6 @@ on a voxel heightmap. Site quality scores are assigned by relative area rank.
 import numpy as np
 from scipy.ndimage import distance_transform_edt
 
-
 # ── public entry point ────────────────────────────────────────────────
 
 
@@ -126,7 +125,7 @@ def _build_column_height_map(geo_data, grid_origin):
     """
     geometry = geo_data["geometry"]  # (nz, ny, nx) bool
     spacing_z = geo_data["grid_spacing_z"]
-    nz, ny, nx = geometry.shape
+    nz, _ny, _nx = geometry.shape
 
     # for each column, find the highest z index containing a solid voxel
     # broadcast z indices across the volume and mask by solidity
@@ -274,7 +273,7 @@ def _find_roost_candidates(
     spacing_xy = geo_data["grid_spacing"]
     spacing_z = geo_data["grid_spacing_z"]
     side_m = min(float(np.sqrt(min_area)), 30.0)
-    cw = max(1, int(round(side_m / spacing_xy)))
+    cw = max(1, round(side_m / spacing_xy))
 
     # quantize surface heights to voxel levels so each rooftop reads as one flat level
     quantized = np.round(column_height / spacing_z) * spacing_z
@@ -319,7 +318,7 @@ def _find_forage_candidates(
     """
     spacing_xy = geo_data["grid_spacing"]
     side_m = min(float(np.sqrt(min_area)), 60.0)
-    cw = max(1, int(round(side_m / spacing_xy)))
+    cw = max(1, round(side_m / spacing_xy))
     candidates = _fit_flat_squares(ground_mask, column_height, geo_data, grid_origin, cw)
     return _greedy_separate(candidates, min_separation)
 

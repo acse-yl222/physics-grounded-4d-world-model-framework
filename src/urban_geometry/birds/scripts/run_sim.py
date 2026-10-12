@@ -2,11 +2,12 @@
 run_sim.py = configure, run, and save simulation
 """
 
-import sys
-import os
-import time
 import argparse
 import json
+import os
+import sys
+import time
+
 import numpy as np
 
 # Compatibility for direct source-script execution.
@@ -16,10 +17,9 @@ if __name__ == "__main__" and not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
 from urban_geometry.birds.sim.config import SimConfig
+from urban_geometry.birds.sim.environment import day_fraction, get_environment
 from urban_geometry.birds.sim.integrator import init_state, step
 from urban_geometry.birds.sim.predator import init_predator, update_predator
-from urban_geometry.birds.sim.environment import get_environment
-from urban_geometry.birds.sim.environment import day_fraction
 
 
 def main():

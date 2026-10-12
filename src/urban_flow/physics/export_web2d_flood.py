@@ -5,18 +5,19 @@ Arrays keep the package convention: row 0 = south, col 0 = west, float16. Flood 
 (same origin as the 4 m arrays, 4x4 cells per 4 m cell); 4 m block means are added for light-weight playback.
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
 import shutil
 import sys
 
 import numpy as np
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 args = sys.argv[1:]

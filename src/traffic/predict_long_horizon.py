@@ -5,43 +5,45 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from common.runtime import trial_root
 import matplotlib
 
+from common.runtime import trial_root
+
 matplotlib.use("Agg")
+import argparse
+import os
+import sys
+
 import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
-from matplotlib.lines import Line2D
-from matplotlib.animation import FuncAnimation
 import numpy as np
 import torch
-import sys
-import os
-import argparse
+from matplotlib.animation import FuncAnimation
+from matplotlib.colors import ListedColormap
+from matplotlib.lines import Line2D
 
 from traffic.configs.default import (
-    GRID_SIZE,
     CELL_SIZE,
     DT,
+    EVAL_SEED_OFFSET,
+    GRID_SIZE,
     HIST_STEPS,
     PRED_STEPS,
-    VEHICLE_DIM,
     TOTAL_FEAT_DIM,
-    EVAL_SEED_OFFSET,
+    VEHICLE_DIM,
 )
-from traffic.evaluate import load_model, find_latest_model
 from traffic.data.generate_complex import (
-    get_road_network,
     build_road_lane_centers,
     get_lane_centerlines,
+    get_road_network,
     simulate_trajectory,
 )
+from traffic.evaluate import find_latest_model, load_model
 
 
 def draw_network_base(ax):
     """Draw the complex road network (identical style to the other visualisations)."""
     roads = get_road_network()
-    lane, drivable = build_road_lane_centers(roads)
+    _lane, drivable = build_road_lane_centers(roads)
     lane_lines = get_lane_centerlines(roads)
     road_cmap = ListedColormap(["white", "#EAEAEA"])
 
@@ -355,7 +357,7 @@ def main():
     model = load_model(device, args.model)
     model_name = os.path.basename(find_latest_model(args.model))
 
-    horizon_steps = int(round(args.horizon / DT))
+    horizon_steps = round(args.horizon / DT)
     if horizon_steps <= 0:
         raise ValueError("--horizon must be positive")
     n_rolls = (horizon_steps + PRED_STEPS - 1) // PRED_STEPS
@@ -428,7 +430,7 @@ def main():
         ade_by_step.append(np.mean(errs) if errs else np.nan)
 
     print("\nADE vs horizon:")
-    step3 = int(round(3.0 / DT))  # steps per 3-second block
+    step3 = round(3.0 / DT)  # steps per 3-second block
     for h in range(step3 - 1, horizon_steps, step3):
         print(f"  {(h + 1) * DT:>3.0f}s: {ade_by_step[h]:.2f} m")
     if not np.isnan(ade_by_step[-1]):

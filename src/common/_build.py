@@ -1,7 +1,8 @@
 """Include canonical schemas and static viewers without duplicating their sources."""
 
-from pathlib import Path
 import shutil
+from pathlib import Path
+
 from setuptools.command.build_py import build_py
 
 

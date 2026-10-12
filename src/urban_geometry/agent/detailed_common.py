@@ -5,6 +5,7 @@ global preference edits, file IO or automatic scene clearing occurs here.
 """
 
 import math
+
 import bpy
 from mathutils import Vector
 

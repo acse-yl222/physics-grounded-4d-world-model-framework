@@ -1,15 +1,17 @@
 """Produce consistent visual and numerical comparison of DIGIT smoke outputs."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
+
 import numpy as np
 from PIL import Image, ImageDraw
+
+from common.layout import repo_root
 
 root = repo_root() / "output/core008/physics/digit_smoke"
 palette = np.array(

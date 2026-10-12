@@ -6,8 +6,8 @@ Never copies project data, local configuration, cache, or recovery history.
 
 import argparse
 import json
-from pathlib import Path
 import shutil
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 

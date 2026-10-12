@@ -9,8 +9,8 @@ if __name__ == "__main__" and not __package__:
 
 import argparse
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import numpy as np
 

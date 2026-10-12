@@ -2,13 +2,14 @@
 
 #!/usr/bin/env python3
 import argparse
-import json
 import hashlib
+import json
 import math
-from pathlib import Path, PurePosixPath
 import sys
+from pathlib import Path, PurePosixPath
 
 from jsonschema import Draft202012Validator, FormatChecker
+
 from .locations import resource_path
 
 ROOT = Path(__file__).resolve().parents[2]

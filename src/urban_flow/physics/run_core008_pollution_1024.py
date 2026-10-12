@@ -10,13 +10,12 @@ Wind: every SCALED latent frame is decoded here to the full 64-layer field (mode
 Outputs: output/core008/physics/scaled_latent_1024/pollution/
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import importlib.util
 import json
 import sys
@@ -24,6 +23,8 @@ import time
 
 import numpy as np
 import torch
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 RUN = ROOT / "output/core008/physics/scaled_latent_1024"

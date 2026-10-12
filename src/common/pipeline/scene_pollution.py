@@ -11,20 +11,20 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from common.locations import code_path
 import argparse
 import importlib.util
 import json
-from pathlib import Path
 import shutil
 import sys
 import time
+from pathlib import Path
 
 import numpy as np
 import torch
 
+from common.locations import code_path
 from common.pipeline.paths import project_path
-from common.pipeline.scene_scaled_latent import save_npz, save_json, digest, log
+from common.pipeline.scene_scaled_latent import digest, log, save_json, save_npz
 
 
 def main():
@@ -46,7 +46,7 @@ def main():
     cell = cfg["cell_m"] * cfg["coarse_factor"]
     device = "cuda"
     solid = np.load(run / f"temperature/solid_{cell}m_zyx.npy")
-    nz, ny, nx = solid.shape
+    _nz, ny, _nx = solid.shape
     # A west-side line source inside the padding. Bounds expressed in actual metres.
     sx = slice(8, 18)
     sy = slice(int(ny * 0.1), int(ny * 0.9))

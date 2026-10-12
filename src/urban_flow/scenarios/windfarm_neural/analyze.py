@@ -1,11 +1,13 @@
-from common.storage import Storage
 from common.runtime import source_path, trial_root
+from common.storage import Storage
 
 """Figures and summary for the 4 m Neural Physics runs, with the 2 m Triton run as reference."""
-import json, sys
+import json
+import sys
 from pathlib import Path
-import numpy as np
+
 import matplotlib
+import numpy as np
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -63,7 +65,7 @@ def last(k):
 def extent(k):
     gg = geo[k]
     ox, oy, _ = gg["origin_xyz_m"]
-    nz, ny, nx = gg["shape_zyx"]
+    _nz, ny, nx = gg["shape_zyx"]
     h = gg["cell_m"]
     return [ox, ox + nx * h, oy, oy + ny * h]
 

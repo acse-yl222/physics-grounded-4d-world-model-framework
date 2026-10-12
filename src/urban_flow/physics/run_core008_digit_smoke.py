@@ -4,13 +4,12 @@ Runs the supplied rollout unchanged, including its boundary handling and scaling
 This is an out-of-training-resolution smoke test, not a CFD validation.
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import hashlib
 import json
 import sys
@@ -18,6 +17,8 @@ import time
 
 import numpy as np
 import torch
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 CODE = (

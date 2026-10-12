@@ -5,29 +5,30 @@ if __name__ == "__main__" and not __package__:
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from common.runtime import trial_root
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-from torch.utils.data import DataLoader, Dataset
 import os
 import sys
 from datetime import datetime
 
+import torch
+import torch.nn.functional as F
+from torch import nn
+from torch.utils.data import DataLoader, Dataset
+
+from common.runtime import trial_root
 from traffic.configs.default import (
-    GRID_SIZE,
-    WINDOW_SIZE,
-    HIST_STEPS,
-    PRED_STEPS,
-    VEHICLE_DIM,
     BATCH_SIZE,
-    LR,
     EPOCHS,
+    GRID_SIZE,
+    HIST_STEPS,
+    LR,
+    PRED_STEPS,
     TRAIN_TRAJECTORIES,
     VAL_TRAJECTORIES,
+    VEHICLE_DIM,
+    WINDOW_SIZE,
 )
-from traffic.models.particle_mlp import ParticleTrafficModel
 from traffic.data.generate_complex import generate_dataset
+from traffic.models.particle_mlp import ParticleTrafficModel
 
 
 class WindowDataset(Dataset):
@@ -98,10 +99,10 @@ def train():
         log_file.write(msg + "\n")
 
     log(f"Equipment: {device}")
-    train_inputs, train_labels, train_tracks, train_t_starts = generate_dataset(
+    train_inputs, _train_labels, train_tracks, train_t_starts = generate_dataset(
         TRAIN_TRAJECTORIES, return_tracks=True
     )
-    val_inputs, val_labels, val_tracks, val_t_starts = generate_dataset(
+    val_inputs, _val_labels, val_tracks, val_t_starts = generate_dataset(
         VAL_TRAJECTORIES, seed_offset=TRAIN_TRAJECTORIES, return_tracks=True
     )
     log(

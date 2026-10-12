@@ -1,10 +1,13 @@
 """Adapt the preserved SUMO export to ENU sparse trajectory frames without inventing missing time."""
 
-import hashlib, json
-from datetime import datetime, timezone
+import hashlib
+import json
+from datetime import UTC, datetime
+
 import numpy as np
-from common.storage import Storage
+
 from common.contract import validate
+from common.storage import Storage
 
 
 def main():
@@ -38,7 +41,7 @@ def main():
         "simulation": "traffic",
         "run_id": "legacy_agents",
         "status": "complete",
-        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(UTC).isoformat(),
         "provenance": {
             "code_revision": "preserved-SUMO-replay-export",
             "dirty": False,

@@ -3,16 +3,16 @@
 import hashlib
 import json
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import sys
 import tempfile
 import time
+from pathlib import Path
 
 import numpy as np
-from e2e_fixture import create_workspace
 from check_browser import chrome_path, viewer_server
+from e2e_fixture import create_workspace
 
 ROOT = Path(__file__).resolve().parents[1]
 

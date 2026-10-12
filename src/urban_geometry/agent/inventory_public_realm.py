@@ -1,14 +1,16 @@
 """Inventory cached OSM public-realm evidence strictly within the agreed AOI."""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import authoring_path
 import json
-from shapely.geometry import Point, LineString, box
+
+from shapely.geometry import LineString, Point, box
+
+from common.layout import authoring_path
 
 R = authoring_path()
 bounds = json.loads((R / "region.json").read_text())["bbox_wgs84"]

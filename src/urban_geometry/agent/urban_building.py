@@ -1,6 +1,7 @@
 """Modest procedural exterior baseline. OSM plans; estimated facades explicitly labelled."""
 
-import math, hashlib
+import hashlib
+import math
 
 
 def build(ctx, feature):

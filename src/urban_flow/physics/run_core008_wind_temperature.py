@@ -10,13 +10,12 @@ Outputs go to <project>/output/core008/physics. This is a transfer experiment on
 with a synthetic steady inflow; there is no CFD or measured reference.
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import hashlib
 import json
 import sys
@@ -26,6 +25,8 @@ from pathlib import Path
 
 import numpy as np
 import torch
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 DIGIT_CODE = (
@@ -41,13 +42,13 @@ sys.path.insert(0, str(DIGIT_CODE))
 sys.path.insert(0, str(TEACHER_CODE))
 # cloud_workflow imports h5py only for reading the old regression1024 wind archive, which is not used here.
 sys.modules.setdefault("h5py", types.ModuleType("h5py"))
+import cloud_workflow as cw
 from south_kensington_jupyter import (
     SouthKensingtonConfig,
     load_digit_model,
     run_digit_rollout,
     scale_back,
-)  # noqa: E402
-import cloud_workflow as cw  # noqa: E402
+)
 
 # ----------------------------------------------------------------------------- settings
 SPACING = 2  # metres, source voxel grid

@@ -1,18 +1,19 @@
 """Figures for a SCALED result folder (PIL only).
 Usage: python plot_core008_scaled.py [--dir output/core008/physics/scaled_latent] [step]"""
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import json
 import sys
 
 import numpy as np
 from PIL import Image, ImageDraw
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 _args = sys.argv[1:]
@@ -60,7 +61,7 @@ def colorbar(canvas, draw, x, y, w, h, vmin, vmax, palette, label):
 def panel(canvas, draw, rgb, x, y, width, title):
     """Paste north-up with preserved aspect ratio; returns pasted height."""
     h, w = rgb.shape[:2]
-    height = int(round(width * h / w))
+    height = round(width * h / w)
     draw.text((x, y), title, fill="white")
     canvas.paste(
         Image.fromarray(rgb[::-1]).resize((width, height), Image.Resampling.NEAREST), (x, y + 16)
@@ -117,7 +118,7 @@ def wind_figure(step):
     if solid is None:
         solid = _solid_4m_fallback()
     width = 900
-    h_px = int(round(width * v.shape[2] / v.shape[3]))
+    h_px = round(width * v.shape[2] / v.shape[3])
     canvas = Image.new("RGB", (2 * width + 140, 2 * (h_px + 46) + 90), BG)
     d = ImageDraw.Draw(canvas)
     d.text(
@@ -208,7 +209,7 @@ def temperature_figure(height_m=10.0):
     vmax = max(float(a[~m].max()) for a in refs + preds)
     limit = max(1e-6, max(float(np.abs((p - r)[~m]).max()) for p, r in zip(preds, refs)))
     width = 330
-    h_px = int(round(width * m.shape[0] / m.shape[1]))
+    h_px = round(width * m.shape[0] / m.shape[1])
     cols = steps + 1
     canvas = Image.new("RGB", (cols * (width + 12) + 140, 3 * (h_px + 36) + 100), BG)
     d = ImageDraw.Draw(canvas)
@@ -276,7 +277,7 @@ def _slice_panel_pair(canvas, d, speed, u, v, mask, x, y, width, title, stride_p
     rgb = colormap(speed, 0, vmax, VIRIDIS, mask)
     panel(canvas, d, rgb, x, y, width, title + "  speed")
     ny, nx = speed.shape
-    h_px = int(round(width * ny / nx))
+    h_px = round(width * ny / nx)
     x1 = x + width + 20
     panel(canvas, d, rgb, x1, y, width, title + "  direction")
     stride = max(1, nx // stride_px)
@@ -324,7 +325,7 @@ def wind_fullres_figures(vmax=3.0):
         layers = (10, 40) if name == "whole" else ((2, 10, 30) if CELL_M == 1 else (4, 12, 32))
         first = np.asarray(raw[0, 0][sy, sx])
         ny, nx = first.shape
-        h_px = int(round(width * ny / nx))
+        h_px = round(width * ny / nx)
         canvas = Image.new("RGB", (2 * width + 160, len(layers) * (h_px + 46) + 90), BG)
         d = ImageDraw.Draw(canvas)
         label = (
@@ -387,7 +388,7 @@ def spinup_gif(altitude_m=10, vmax=3.0, width=700):
         speed = np.linalg.norm(np.asarray(v, np.float32), axis=0)
         rgb = colormap(speed, 0, vmax, VIRIDIS, solid[k])
         ny, nx = speed.shape
-        h_px = int(round(width * ny / nx))
+        h_px = round(width * ny / nx)
         img = Image.new("RGB", (width + 40, h_px + 70), BG)
         d = ImageDraw.Draw(img)
         d.text(

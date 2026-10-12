@@ -10,13 +10,12 @@ city): domain x 520..600 m, y 848..3248 m, z 8..32 m; rate 0.1 per cell per seco
 Outputs: output/core008/physics/scaled_latent/pollution/
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import hashlib
 import importlib.util
 import json
@@ -25,6 +24,8 @@ import time
 
 import numpy as np
 import torch
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 RUN = ROOT / "output/core008/physics/scaled_latent"

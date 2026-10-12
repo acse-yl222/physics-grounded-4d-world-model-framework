@@ -12,13 +12,12 @@ Scenario: the model's default summer-afternoon settings (ambient 31.5 C, 2025-07
 Outputs: output/core008/physics/scaled_latent_1024/temperature2d/
 """
 
-from pathlib import Path as _UwmPath
 import sys as _uwm_sys
+from pathlib import Path as _UwmPath
 
 _uwm_sys.path.insert(
     0, str(next(p for p in _UwmPath(__file__).resolve().parents if (p / "common").is_dir()))
 )
-from common.layout import repo_root
 import importlib.util
 import json
 import sys
@@ -26,6 +25,8 @@ import time
 from dataclasses import asdict
 
 import numpy as np
+
+from common.layout import repo_root
 
 ROOT = repo_root()
 RUN = ROOT / (
@@ -52,7 +53,7 @@ spec = importlib.util.spec_from_file_location(
 M = importlib.util.module_from_spec(spec)
 sys.modules["south_kensington_temperature"] = M
 spec.loader.exec_module(M)
-from south_kensington_jupyter import SouthKensingtonConfig  # noqa: E402
+from south_kensington_jupyter import SouthKensingtonConfig
 
 CELL = 4.0
 LAYER = 3  # 12-16 m

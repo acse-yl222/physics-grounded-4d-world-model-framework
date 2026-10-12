@@ -20,7 +20,7 @@ if __name__ == "__main__" and not __package__:
     import sys
 
     sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from urban_geometry.voxelization.glb_plan import read_glb_header, local_bounds, plan_grid
+from urban_geometry.voxelization.glb_plan import local_bounds, plan_grid, read_glb_header
 
 COMPONENT = {
     5120: np.int8,
@@ -76,10 +76,10 @@ def raster(vertices, faces, height, ox, oy, cell):
         den = (b[1] - c[1]) * (a[0] - c[0]) + (c[0] - b[0]) * (a[1] - c[1])
         if abs(den) < 1e-10:
             continue
-        x0 = max(0, int(math.ceil((min(a[0], b[0], c[0]) - ox) / cell - 0.5)))
-        x1 = min(nx - 1, int(math.floor((max(a[0], b[0], c[0]) - ox) / cell - 0.5)))
-        y0 = max(0, int(math.ceil((min(a[1], b[1], c[1]) - oy) / cell - 0.5)))
-        y1 = min(ny - 1, int(math.floor((max(a[1], b[1], c[1]) - oy) / cell - 0.5)))
+        x0 = max(0, math.ceil((min(a[0], b[0], c[0]) - ox) / cell - 0.5))
+        x1 = min(nx - 1, math.floor((max(a[0], b[0], c[0]) - ox) / cell - 0.5))
+        y0 = max(0, math.ceil((min(a[1], b[1], c[1]) - oy) / cell - 0.5))
+        y1 = min(ny - 1, math.floor((max(a[1], b[1], c[1]) - oy) / cell - 0.5))
         for iy in range(y0, y1 + 1):
             y = oy + (iy + 0.5) * cell
             for ix in range(x0, x1 + 1):
