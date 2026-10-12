@@ -145,6 +145,7 @@ src/
   urban_geometry/       # Geometry processing and 3D agents
   urban_flow/           # Physical models, solvers and flow experiments
   traffic/              # Traffic training, prediction and replay
+  uav_routing/          # UAV ground stations, Wave PDE routes and exports
   visualization/        # Viewers, widgets and data adapters
   common/               # Storage, contracts, pipelines and HTTP serving
 project/
@@ -152,12 +153,13 @@ project/
   white_city/
   windfarm/
   actuator_lab/
+  ...                   # Further scenes such as delhi_karol_bagh and thapar_university
 cache/                  # Reproducible intermediates and local environments
 schemas/                # Run, scene and view contracts
 examples/               # Small protocol examples
 ```
 
-For new scenes, solvers or widgets, follow the [integration protocol](docs/framework/protocol-v1.md). Widgets consume declared data layers; solvers stay in their domain modules. [AGENTS.md](AGENTS.md) and the [simulation integration skill](.agents/skills/urban-simulation-contract/SKILL.md) provide the corresponding agent workflow.
+For new scenes, solvers or widgets, follow the [integration protocol](docs/framework/protocol-v1.md). Widgets consume declared data layers; solvers stay in their domain modules. The [architecture overview](docs/architecture.md) maps the packages to the run, experiment and modelling workflows. [AGENTS.md](AGENTS.md) and the [simulation integration skill](.agents/skills/urban-simulation-contract/SKILL.md) provide the corresponding agent workflow.
 
 Core checks:
 
@@ -165,6 +167,7 @@ Core checks:
 p4d validate examples/contract-v1/manifest.json
 python -m unittest discover -s tests -v
 node --test tests/test_*.mjs
+make test-e2e      # Required for every change; see docs/framework/e2e-ci.md
 ```
 
 Keep separate backups of unpublished scene data and external originals. The local `.history/` directory contains migration recovery material and must not be treated as disposable cache. The `main` branch holds source and small examples; `pages` hosts the public site and previously published assets.
@@ -194,16 +197,17 @@ Ruff formats Python and Notebook code cells; Prettier handles JavaScript, HTML, 
 
 [`tools/format.py`](tools/format.py) selects tracked files and new, non-ignored files, then applies the shared [`.prettierignore`](.prettierignore) boundary and Git exclusions. Maintained legacy code, scene configuration and view files are included. Third-party vendors, `.history/`, `cache/`, scene inputs/geometry/runs, synthetic data payloads, published snapshots and recorded provenance are excluded even when tracked. The legacy asset inventory is a generated record and stays unchanged. Unsupported binary formats are never passed to a formatter. Run the unified commands rather than formatting every JSON file recursively. After changing formatting configuration or exclusions, run `make format` and `make format-check` over the whole repository.
 
-The synthetic browser smoke test needs Chrome but no city assets or solver environment:
+The short end-to-end check needs Chrome and the `[geometry]` extra but no city assets, GPU or solver environment:
 
 ```sh
+python -m pip install -e '.[geometry]'
 npx puppeteer browsers install chrome
-make test-browser
+make test-e2e
 ```
 
-It starts a temporary server on a free localhost port and checks the five example layers, selection, interpolation, visibility, out-of-range hiding and disposal. Reports and screenshots stay under `cache/framework/browser/`. `CHROME_PATH` can select an existing compatible Chrome installation. Real-city browser tests and GPU/Blender simulations require their own environments and data. The base Python suite reports optional domain import tests as skipped; CI runs those tests separately with the CPU solver dependencies.
+It runs a generated GLB through the real CLI geometry and visualize stages, retention and view registration, then checks the retained GLB, NPY and the five example layers in the browser through the framework server. Logs, reports and screenshots stay under `cache/framework/e2e/`; [e2e-ci.md](docs/framework/e2e-ci.md) lists what must pass. `make test-browser` runs only the synthetic five-layer browser check. `CHROME_PATH` can select an existing compatible Chrome installation. Real-city browser tests and GPU/Blender simulations require their own environments and data. The base Python suite reports optional domain import tests as skipped; CI runs those tests separately with the CPU solver dependencies.
 
-[Repository CI](.github/workflows/ci.yml) runs format checks, Python 3.11/3.12/3.14 tests and isolated wheel validation, all Node unit tests, CPU domain imports and the synthetic viewer on PRs to `main`, pushes to `main` and manual dispatch. Tool versions are pinned, npm uses its lockfile, Actions use full commit SHAs, and the workflow has read-only repository permissions. Browser artifacts contain only the synthetic report and screenshot. A repository administrator can make the successful job checks required for merging through branch protection or a ruleset.
+[Repository CI](.github/workflows/ci.yml) runs six jobs on every pull request (including stacked PRs), pushes to `main` and manual dispatch: format and Node unit tests, Python 3.11/3.12/3.14 tests with isolated wheel validation, CPU domain imports, and `E2E smoke`. Every change must pass `E2E smoke`; it has no path filter or conditional skip. Tool versions are pinned, npm uses its lockfile, Actions use full commit SHAs, and the workflow has read-only repository permissions. E2E artifacts contain only the synthetic fixture's logs, report and screenshots. A repository administrator can make the job checks required for merging through branch protection or a ruleset.
 
 The pure formatting commit is listed in [`.git-blame-ignore-revs`](.git-blame-ignore-revs). To hide that commit when investigating code history:
 

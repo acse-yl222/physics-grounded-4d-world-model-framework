@@ -1,13 +1,18 @@
-"""Export a finished scene into the web viewer: visualizer/scenes/<scene>/{models,physics,scene.json}.
+"""Export a finished scene trial for the viewer: <trial>/export/{models,physics,scene.json}.
 
-    python src/common/pipeline/export_scene_web.py --config input/<scene>/config.json
+    python -m common.pipeline.export_scene_web --config <scene ID or pipeline config>
 
-Generic version of visualizer/scenes/white_city/tools/export_from_run.py: reads whatever stages of
-output/<scene>/ are complete (wind, 3-D physical temperature, pollution, solar, flood), writes one float16
-viewer array per layer (row 0 = south = local -y, col 0 = west = local -x), manifest.json, a scene.json built
-from the geometry metadata, registers the scene in visualizer/scenes/index.json and pre-renders the PNG
-frames with visualizer/scenes/tools/export_web_frames.py. The city model is the input GLB itself
-(hard-linked; the viewer decodes Draco and plain glTF).
+run_scene calls this as its visualize stage. The trial is cache/<scene>/pipeline/<run_id>/, where
+the run ID comes from UWM_RUN_ID (set by run_scene) or the config's run_id, else "preview".
+It reads whichever stages of the trial are complete (wind, 3-D physical temperature, pollution,
+solar, flood), writes one float16 viewer array per layer (row 0 = south = local -y, col 0 = west =
+local -x), physics/manifest.json and a scene.json built from the geometry metadata, records the
+scene in <trial>/export_index.json and pre-renders the PNG frames with
+src/visualization/adapters/legacy/shared/export_web_frames.py. The city model is the input GLB
+itself (hard-linked; the viewer decodes Draco and plain glTF). run_scene then packages the export
+as a protocol bundle.
+
+Generic version of src/visualization/adapters/legacy/white_city/export_from_run.py.
 """
 
 # Compatibility for direct source-script execution.
@@ -514,7 +519,7 @@ def main():
     elif not phase_order:
         (out / "web").mkdir(exist_ok=True)
         (out / "web" / "index.json").write_text(json.dumps({"layers": {}}))
-    print(f"open: python visualizer/serve.py  ->  http://localhost:8787/viewer/3d/?scene={scene}")
+    print(f"export ready: {rel(web)} (run_scene packages it as a protocol bundle)")
 
 
 if __name__ == "__main__":

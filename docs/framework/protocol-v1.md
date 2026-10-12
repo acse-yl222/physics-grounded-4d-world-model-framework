@@ -186,8 +186,9 @@ python3 tools/check_contract.py examples/contract-v1/manifest.json
 Pages 使用独立 `pages` 分支，以已发布站点为基础加上统一查看器，保留旧演示资源。
 本次发布不意味着以后自动允许上传任何新数据。
 
-自动检查配置见 [GitHub Actions 示例](contract-workflow.example.yml)。导入与安装检查使用 `.github/workflows/portability.yml`，覆盖协议、纯 JS、包导入和独立 wheel；
-较完整的历史检查模板仍保留在上述示例中。
+自动检查使用 `.github/workflows/ci.yml`（Repository CI），覆盖格式、协议、纯 JS、包导入、独立 wheel
+和 `E2E smoke`，说明见 [e2e-ci.md](e2e-ci.md)；较完整的历史检查模板仍保留在
+[GitHub Actions 示例](contract-workflow.example.yml) 中。
 
 ## 8. 当前可执行入口
 

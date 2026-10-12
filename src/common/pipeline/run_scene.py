@@ -1,14 +1,20 @@
-"""One-command scene runner: input/<scene>/config.json -> output/<scene>/ -> visualizer/scenes/<scene>/.
+"""One-command scene runner: project/<scene>/configs/pipeline.json -> cache trial -> protocol bundle.
 
-    python -m common.pipeline.run_scene white_city                # every stage listed in the config
-    python -m common.pipeline.run_scene white_city --dry-run      # plan, grid size, rough cost, nothing runs
-    python -m common.pipeline.run_scene white_city --stage wind   # one stage (its prerequisites must be done)
-    python -m common.pipeline.run_scene white_city --force visualize
+    p4d run white_city                             # every stage listed in the config, new trial
+    p4d run white_city --dry-run                   # plan, grid size, rough cost; nothing runs
+    p4d run white_city --run-id <id> --stage wind  # one stage of an existing trial
+    p4d run white_city --run-id <id> --force visualize
+    p4d run white_city --retain                    # also retain the bundle and register its view
 
-Stages, in order: geometry, wind, temperature, temperature3d, pollution, solar, flood, plot, verify, visualize.
-Each stage is idempotent: a finished stage is skipped, an interrupted wind run resumes from its last
-checkpoint, and every stage writes its log to cache/<scene>/pipeline/<run_id>/logs/<stage>.log. The existing scene scripts
-are called unchanged through generated legacy configs in cache/<scene>/pipeline/<run_id>/configs/.
+`p4d run` executes `python -m common.pipeline.run_scene` with the scene workspace configured.
+
+Stages, in order: geometry, wind, temperature, temperature3d, pollution, solar, flood, plot, verify,
+visualize. Each trial lives in cache/<scene>/pipeline/<run_id>/. Within a trial a finished stage is
+skipped, an interrupted wind run resumes from its last checkpoint when the trial is reused with
+--run-id, and every stage writes its log to logs/<stage>.log. The existing scene scripts are called
+unchanged through generated legacy configs in configs/. A complete visualize stage is packaged as a
+validated protocol bundle; --retain copies it into project/<scene>/runs/ and registers a view,
+never overwriting an existing run or view.
 """
 
 # Compatibility for direct source-script execution.
@@ -131,7 +137,10 @@ def merge(base, override):
 
 
 def load_config(target):
-    """target: input/<scene> directory (config.json inside) or a config file path."""
+    """target: a registered scene ID (project/<scene>/configs/pipeline.json) or a config path.
+
+    A relative path is resolved from the workspace root; a directory means <dir>/config.json.
+    """
     storage = Storage.load()
     candidate = (
         storage.metadata(target) / "configs/pipeline.json"
@@ -358,7 +367,10 @@ def status_of(stage, cfg, p, done):
         if "geometry" not in done:
             return "blocked", "needs geometry"
         if not (p["visualizer"] / "viewer/3d/index.html").is_file():
-            return "blocked", "visualizer/ (the web viewer repository) is missing"
+            return (
+                "blocked",
+                "src/visualization/legacy/viewer/3d (used for frame export) is missing",
+            )
         layers = sorted(
             s for s in ("wind", "temperature3d", "pollution", "solar", "flood") if s in done
         )
@@ -720,10 +732,14 @@ def main():
         )
         print(f"Validated protocol bundle: {bundle}")
         if args.retain:
-            print(f"Retained view: {promote_bundle(Storage.load(), bundle)}")
-        print(
-            f"view: python visualizer/serve.py  ->  http://localhost:8787/viewer/3d/?scene={cfg['scene']}"
-        )
+            view = promote_bundle(Storage.load(), bundle)
+            print(f"Retained view: {view}")
+            print(
+                "open: p4d serve  ->  http://127.0.0.1:8769/src/visualization/viewer/"
+                f"?scene={cfg['scene']}&view={view.stem}"
+            )
+        else:
+            print(f"retain and register its view: p4d retain {bundle}")
 
 
 if __name__ == "__main__":
