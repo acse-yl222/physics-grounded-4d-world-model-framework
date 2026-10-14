@@ -169,8 +169,16 @@ def height(tags, default):
 
 
 def clean_ring(xy):
-    """Open, counter-clockwise ring without repeated or collinear points; None if degenerate."""
-    pts = [p for i, p in enumerate(xy[:-1]) if i == 0 or np.hypot(*(p - xy[i - 1])) > 0.05]
+    """Open, counter-clockwise ring without repeated or collinear points; None if degenerate.
+
+    Accepts open or closed input; closing duplicates of the first point are removed.
+    """
+    pts = []
+    for p in np.asarray(xy, float):
+        if not pts or np.hypot(*(p - pts[-1])) > 0.05:
+            pts.append(p)
+    while len(pts) > 1 and np.hypot(*(pts[-1] - pts[0])) <= 0.05:
+        pts.pop()
     keep = []
     for i, p in enumerate(pts):
         a, b = pts[i - 1], pts[(i + 1) % len(pts)]
@@ -507,7 +515,7 @@ def main():
     reasons, sources, kept = Counter(), Counter(), []
     occupancy = np.zeros(shape, bool)
     for key, tags, xy, holes in items:
-        ring = clean_ring(np.vstack([xy, xy[:1]]))
+        ring = clean_ring(xy)
         if ring is None:
             reasons["degenerate footprint"] += 1
             continue
