@@ -10,6 +10,7 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+from urban_geometry.voxelization.context_buildings import clean_ring
 from urban_geometry.voxelization.georef_roads import enu_basis, to_latlon
 from urban_geometry.voxelization.glb_plan import local_bounds, plan_grid, read_glb_header
 
@@ -169,11 +170,38 @@ class ContextBuildingsTests(unittest.TestCase):
         self.assertAlmostEqual(extras["way/5"]["height_m"], 16.0)
         self.assertEqual(extras["relation/7#0"]["height_m"], 9.0)
         self.assertIn("note", extras["relation/7#0"])
+        positions = {
+            n["extras"].get("osm"): ctx["accessors"][
+                ctx["meshes"][n["mesh"]]["primitives"][0]["attributes"]["POSITION"]
+            ]
+            for n in ctx["nodes"]
+        }
+        self.assertEqual(positions["way/2"]["count"], 4 + 4 * 4)  # square roof + four walls
+        self.assertEqual(positions["way/2"]["min"][0], 200.0)
+        self.assertEqual(positions["way/2"]["max"][0], 230.0)
         self.assertEqual(len(merged["nodes"]), len(base["nodes"]) + len(ctx["nodes"]))
         before, after = plan_grid(local_bounds(base), 2), plan_grid(local_bounds(merged), 2)
         self.assertTrue(np.array_equal(before["size_xy_m"], after["size_xy_m"]))
         self.assertTrue(np.array_equal(before["origin_xy"], after["origin_xy"]))
         self.assertGreater(after["bounds"][1, 0], 400)
+
+    def test_clean_ring_keeps_every_corner(self):
+        open_ring = np.array(square(0, 0, 10, 10)[:-1], float)
+        for ring in (
+            open_ring,
+            np.vstack([open_ring, open_ring[:1]]),
+            np.vstack([open_ring, open_ring[:1], open_ring[:1]]),
+        ):
+            cleaned = clean_ring(ring)
+            self.assertEqual(len(cleaned), 4)
+            area = 0.5 * np.sum(
+                cleaned[:, 0] * np.roll(cleaned[:, 1], -1)
+                - np.roll(cleaned[:, 0], -1) * cleaned[:, 1]
+            )
+            self.assertAlmostEqual(area, 100.0)
+        midpoint = np.array([[0, 0], [5, 0], [10, 0], [10, 10], [0, 10], [0, 0]], float)
+        self.assertEqual(len(clean_ring(midpoint)), 4)
+        self.assertEqual(len(clean_ring(midpoint[::-1])), 4)
 
 
 if __name__ == "__main__":
