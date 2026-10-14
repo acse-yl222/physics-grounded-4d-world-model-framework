@@ -10,6 +10,7 @@ candidate origin and north, not a surveyed georeference.
 """
 
 import argparse
+import hashlib
 import json
 import math
 import re
@@ -117,6 +118,15 @@ def to_latlon(xy, frame):
         h = r / np.cos(lat) - nn
         lat = np.arctan2(p[:, 2], r * (1 - E2 * nn / (nn + h)))
     return np.degrees(lat), np.degrees(lon)
+
+
+def latlon_to_local(lat, lon, georef):
+    """Map WGS84 lat/lon to local model metres with a report written by this script."""
+    sim = georef["similarity"]
+    a = math.radians(sim["rotation_deg_ccw_local_to_enu"])
+    r = np.array([[math.cos(a), -math.sin(a)], [math.sin(a), math.cos(a)]])
+    enu = to_enu(lat, lon, enu_basis(*georef["tangent_plane_origin_latlon"]))
+    return (enu - np.asarray(sim["translation_enu_m"])) @ r / sim["scale"]
 
 
 def closest_on_polyline(p, line):
@@ -263,9 +273,13 @@ def main():
     per_way.sort(key=lambda w: -w["median_m"])
 
     report = {
-        "source": str(args.glb),
+        "source": {
+            "file": args.glb.name,
+            "sha256": hashlib.file_digest(args.glb.open("rb"), "sha256").hexdigest(),
+        },
         "method": "Road_<way> strip midpoints -> closest point on same OSM way; trimmed (90%) similarity ICP on a WGS84 tangent plane",
         "model_axes": "local x = gltf x, local y = -gltf z (voxeliser convention)",
+        "formula": "enu = WGS84 tangent plane (ECEF -> east, north) at tangent_plane_origin_latlon; enu = scale * R(rotation) @ local + translation",
         "osm": {
             "timestamp_osm_base": raw.get("osm3s", {}).get("timestamp_osm_base"),
             "fetched_at": raw.get("fetched_at"),
