@@ -1,0 +1,133 @@
+{
+  "source": {
+    "file": "delhi_karol_bagh.glb",
+    "sha256": "a544c260c99f78069f9c74c42e116477f7768016497d7aa8c696ddb8e8828702"
+  },
+  "method": "Road_<way> strip midpoints -> closest point on same OSM way; trimmed (90%) similarity ICP on a WGS84 tangent plane",
+  "model_axes": "local x = gltf x, local y = -gltf z (voxeliser convention)",
+  "formula": "enu = WGS84 tangent plane (ECEF -> east, north) at tangent_plane_origin_latlon; enu = scale * R(rotation) @ local + translation",
+  "osm": {
+    "timestamp_osm_base": "2026-10-14T09:45:23Z",
+    "fetched_at": "2026-10-14T09:47:03Z",
+    "ways_used": 93,
+    "ways_missing": [1136934125]
+  },
+  "rigid": {
+    "residual": {
+      "points": 444,
+      "rms_m": 0.8404227795754716,
+      "median_m": 0.21204318855935386,
+      "p95_m": 0.8102006870667431,
+      "max_m": 9.741326517240289
+    }
+  },
+  "similarity": {
+    "scale": 1.001470854765873,
+    "rotation_deg_ccw_local_to_enu": -0.016874403786182837,
+    "local_y_bearing_deg": 0.016874403786182837,
+    "translation_enu_m": [30.793989473076067, -3.9926872545989487],
+    "residual": {
+      "points": 444,
+      "rms_m": 0.7913929467143563,
+      "median_m": 0.13307686474488095,
+      "p95_m": 0.5282038931859213,
+      "max_m": 9.64622038414432
+    },
+    "held_out_half_residual": [
+      {
+        "points": 198,
+        "rms_m": 1.1004881436661529,
+        "median_m": 0.1260166349857953,
+        "p95_m": 0.3331925950673883,
+        "max_m": 9.62790715965639
+      },
+      {
+        "points": 246,
+        "rms_m": 0.39169402533173897,
+        "median_m": 0.13832130029397322,
+        "p95_m": 0.5409232252371,
+        "max_m": 4.783469274153341
+      }
+    ]
+  },
+  "tangent_plane_origin_latlon": [28.651236098412696, 77.18988506689342],
+  "local_origin_latlon": [28.65120007272762, 77.19020004909775],
+  "road_extent_corners_latlon": [
+    [28.645802348510102, 77.1825104957263],
+    [28.658350502268483, 77.18251380757276],
+    [28.645799301359578, 77.1946843469073],
+    [28.65834745480717, 77.19468910805874]
+  ],
+  "worst_ways": [
+    {
+      "way": 1136934124,
+      "name": null,
+      "points": 3,
+      "median_m": 2.106499815412243,
+      "max_m": 9.028435631775926
+    },
+    {
+      "way": 1191968489,
+      "name": "Arya Samaj Road",
+      "points": 4,
+      "median_m": 1.1809233346860217,
+      "max_m": 9.64622038414432
+    },
+    {
+      "way": 718034952,
+      "name": "Saraswati Marg",
+      "points": 17,
+      "median_m": 0.5002622895786373,
+      "max_m": 4.765554329983846
+    },
+    {
+      "way": 570217342,
+      "name": "Deshbandhu Gupta Road",
+      "points": 20,
+      "median_m": 0.4333813485340261,
+      "max_m": 0.7807449486454572
+    },
+    {
+      "way": 1204891663,
+      "name": "Saraswati Marg",
+      "points": 2,
+      "median_m": 0.3153818843224831,
+      "max_m": 0.5277731903395153
+    },
+    {
+      "way": 1308985778,
+      "name": null,
+      "points": 3,
+      "median_m": 0.30405112932423706,
+      "max_m": 0.3165905011103288
+    },
+    {
+      "way": 1308985779,
+      "name": null,
+      "points": 3,
+      "median_m": 0.29735179795703465,
+      "max_m": 0.29913149374162445
+    },
+    {
+      "way": 80932773,
+      "name": "Padam Singh Road",
+      "points": 13,
+      "median_m": 0.2861717548419106,
+      "max_m": 0.5151736974256776
+    },
+    {
+      "way": 1250760684,
+      "name": "Road No 9",
+      "points": 6,
+      "median_m": 0.2668581790812896,
+      "max_m": 0.3074088495248601
+    },
+    {
+      "way": 705095001,
+      "name": null,
+      "points": 2,
+      "median_m": 0.24885505328810453,
+      "max_m": 0.31053319183072176
+    }
+  ]
+}
