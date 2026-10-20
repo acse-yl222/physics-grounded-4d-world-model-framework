@@ -17,7 +17,7 @@ import sys
 import bpy
 from mathutils import Matrix, Vector
 
-from common.layout import agent_src, authoring_path, repo_root
+from common.layout import agent_src, authoring_path, expansion_run_dir, snapshot_key
 
 ROOT = authoring_path()
 sys.path.insert(0, str(agent_src()))
@@ -26,9 +26,7 @@ from detailed_common import BuildingContext
 p = argparse.ArgumentParser()
 p.add_argument("--run", required=True)
 args = p.parse_args(sys.argv[sys.argv.index("--") + 1 :])
-from common.storage import Storage, identifier
-
-out = Storage.load().scratch("south_ken", "geometry", identifier(args.run, run=True))
+out = expansion_run_dir(args.run)
 if out.exists():
     raise RuntimeError("Refusing existing run")
 rows = {f["id"]: f for f in json.loads((ROOT / "geometry.json").read_text())["buildings"]}
@@ -63,9 +61,7 @@ files = [
 
 
 def snapshot():
-    return {
-        str(f.relative_to(repo_root())): hashlib.sha256(f.read_bytes()).hexdigest() for f in files
-    }
+    return {snapshot_key(f): hashlib.sha256(f.read_bytes()).hexdigest() for f in files}
 
 
 files.extend(
@@ -267,7 +263,7 @@ bpy.ops.file.pack_all()
 bpy.ops.wm.save_as_mainfile(filepath=str(out / "expanded_region.blend"), compress=False)
 assert snapshot() == sources, "Sources changed during build"
 for source_file in files:
-    dest = out / "source_snapshot" / source_file.relative_to(ROOT)
+    dest = out / "source_snapshot" / snapshot_key(source_file)
     dest.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(source_file, dest)
 assert snapshot() == sources, "Sources changed while archiving snapshot"

@@ -16,9 +16,8 @@ import bpy
 import numpy as np
 from mathutils import Vector
 
-from common.layout import authoring_path
+from common.layout import expansion_run_dir
 
-ROOT = authoring_path()
 p = argparse.ArgumentParser()
 p.add_argument("--run", required=True)
 p.add_argument(
@@ -27,7 +26,7 @@ p.add_argument(
     help="Verify fresh GLB import in memory without saving a redundant blend copy",
 )
 args = p.parse_args(sys.argv[sys.argv.index("--") + 1 :])
-out = ROOT / "exports" / args.run
+out = expansion_run_dir(args.run)
 master = out / "expanded_region.blend"
 glb = out / "expanded_region.glb"
 assert not glb.exists(), "Refusing existing export"
