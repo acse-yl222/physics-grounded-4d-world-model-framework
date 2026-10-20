@@ -15,6 +15,10 @@ skipped, an interrupted wind run resumes from its last checkpoint when the trial
 unchanged through generated legacy configs in configs/. A complete visualize stage is packaged as a
 validated protocol bundle; --retain copies it into project/<scene>/runs/ and registers a view,
 never overwriting an existing run or view.
+
+Exit status: 0 when every requested stage is done; 1 when a stage fails; 3 when a requested stage
+was blocked and skipped (e.g. a missing prerequisite or unconfirmed georeference; the reason is
+printed) or --retain retained nothing.
 """
 
 # Compatibility for direct source-script execution.
@@ -55,6 +59,9 @@ STAGES = [
     "verify",
     "visualize",
 ]
+
+# Exit status 1 is a failed stage or invalid input, 2 an argparse usage error.
+EXIT_INCOMPLETE = 3
 
 DEFAULTS = {
     "scene": None,
@@ -724,7 +731,13 @@ def main():
     if failed:
         raise SystemExit(1)
     skipped = [s for s in requested if record["stages"].get(s, {}).get("status") == "skipped"]
-    print("\nrequested stages finished" + (f"; skipped: {', '.join(skipped)}" if skipped else ""))
+    if skipped:
+        print("\nINCOMPLETE: requested stages did not run")
+        for stage in skipped:
+            print(f"  {stage}: {record['stages'][stage]['detail']}")
+    else:
+        print("\nrequested stages finished")
+    retained = False
     if record["complete"] and "visualize" in done:
         from common.export import package_export
         from common.runs import promote_bundle
@@ -740,6 +753,7 @@ def main():
         print(f"Validated protocol bundle: {bundle}")
         if args.retain:
             view = promote_bundle(Storage.load(), bundle)
+            retained = True
             print(f"Retained view: {view}")
             print(
                 "open: p4d serve  ->  http://127.0.0.1:8769/src/visualization/viewer/"
@@ -747,6 +761,11 @@ def main():
             )
         else:
             print(f"retain and register its view: p4d retain {bundle}")
+    if args.retain and not retained:
+        reason = "the run is incomplete" if skipped else "the visualize stage is not done"
+        print(f"--retain: nothing was retained because {reason}")
+    if skipped or (args.retain and not retained):
+        raise SystemExit(EXIT_INCOMPLETE)
 
 
 if __name__ == "__main__":
