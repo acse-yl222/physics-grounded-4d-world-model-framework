@@ -35,7 +35,6 @@ def main():
     from wavepde.torch_backend.geometry import segment_free, segment_time
 
     out = args.output
-    out.mkdir(parents=True, exist_ok=True)
     geo = args.geometry
     meta = json.loads((geo / "metadata.json").read_text())
     from common.storage import Storage
@@ -57,14 +56,13 @@ def main():
     nz = 20
     mask = np.ascontiguousarray((np.arange(nz) * cell)[None, None, :] < height.T[:, :, None])
     origin = np.array(meta["source_region_origin_xyz_m"], dtype=float)
-    np.savez_compressed(
-        out / "domain_8m.npz", mask=mask, origin_enu_m=origin, spacing_m=cell, height_yx_m=height
-    )
     gates = []
     for s in stations:
         x, y, z = s["xyz"]
         pad = np.array([x, -z, y])
         ij = np.floor((pad[:2] - origin[:2]) / cell).astype(int)
+        if not (0 <= ij[0] < height.shape[1] and 0 <= ij[1] < height.shape[0]):
+            raise ValueError(f"Station outside the height map: {s['label']}")
         roof = float(height[ij[1], ij[0]])
         gate = pad.copy()
         gate[2] = (
@@ -87,7 +85,6 @@ def main():
             else "not verified"
         )
     gates = np.array(gates)
-    write_json(out / "stations_enu.json", stations)
     cfg = WaveConfig(
         c0=15,
         cz_up=6,
@@ -124,6 +121,12 @@ def main():
         raise ValueError(
             "Existing checkpoints have no input identity; use a fresh output directory"
         )
+    # Validate inputs and ownership above before writing into an existing directory.
+    out.mkdir(parents=True, exist_ok=True)
+    np.savez_compressed(
+        out / "domain_8m.npz", mask=mask, origin_enu_m=origin, spacing_m=cell, height_yx_m=height
+    )
+    write_json(out / "stations_enu.json", stations)
     write_json(identity_path, identity)
     started = time.time()
     for i in range(args.sources):
