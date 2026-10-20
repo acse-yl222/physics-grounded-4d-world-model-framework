@@ -64,8 +64,8 @@ jobs:
           cd "$RUNNER_TEMP"
           "$RUNNER_TEMP/p4d-wheel-env/bin/python" -I "$GITHUB_WORKSPACE/tools/check_installed.py"
 
-  domain-imports:
-    name: CPU domain imports
+  domain-tests:
+    name: CPU domain tests
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -77,8 +77,9 @@ jobs:
           cache-dependency-path: pyproject.toml
       - run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
       - run: python -m pip install -e '.[birds,traffic,flow]'
-      - run: python -m unittest discover -s tests -p test_package_imports.py -v
-      - run: python -m unittest discover -s tests -p test_numerical_exit.py -v
+      # The whole suite: tests that need torch or the flow stack are skipped in the
+      # base matrix and only run here.
+      - run: python -m unittest discover -s tests -v
 
   browser:
     name: E2E smoke
