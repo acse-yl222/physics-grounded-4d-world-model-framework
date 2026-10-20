@@ -299,11 +299,18 @@ def status_of(stage, cfg, p, done):
             return "blocked", "needs geometry"
         final = run / "wind" / f"velocity_final_{cell}m_raw_czyx_float16.npy"
         last = run / "wind" / f"wind{coarse}m_{w['steps']:03d}.npz"
-        if final.is_file() and last.is_file():
+        resume = read_json(run / "status.json", {}) or {}
+        # Files alone may be left by an interrupted run; the stage record confirms the last step.
+        recorded = (
+            resume.get("stage") == "wind" and resume.get("completed_steps") == w["steps"]
+        ) or (
+            resume.get("stage") == "wind_temperature_complete"
+            and resume.get("wind_steps") == w["steps"]
+        )
+        if final.is_file() and last.is_file() and recorded:
             return "done", f"{w['steps']} steps"
-        resume = read_json(run / "status.json")
         detail = f"{w['steps']} steps of {w['step_seconds']} s"
-        if resume and resume.get("stage") == "wind":
+        if resume.get("stage") == "wind":
             detail += f" (resume after step {resume.get('completed_steps')})"
         return "ready", detail
     if stage == "temperature":
