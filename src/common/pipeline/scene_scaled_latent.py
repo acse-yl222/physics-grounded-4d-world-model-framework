@@ -52,6 +52,19 @@ def log(message):
     print(time.strftime("%H:%M:%S"), message, flush=True)
 
 
+def load_temperature(path, device):
+    """Load the teacher temperature surrogate without its legacy code directory on sys.path.
+
+    The frozen teacher loader imports its sibling as top-level ``temperature_model``;
+    register the packaged module under that name instead.
+    """
+    from urban_flow.physics.wind_temperature_teacher.code import cloud_workflow as cw
+    from urban_flow.physics.wind_temperature_teacher.code import temperature_model
+
+    sys.modules.setdefault("temperature_model", temperature_model)
+    return cw.load_temperature(path, device)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--config", default="configs/white_city/scaled_latent.json")
@@ -270,9 +283,7 @@ def main():
             temp / "physical_solver.json",
             {"times_seconds": times, "frames": solver, "wind_start_step": spin},
         )
-        model, stats, patch = cw.load_temperature(
-            project_path(cfg["temperature_checkpoint"]), device
-        )
+        model, stats, patch = load_temperature(project_path(cfg["temperature_checkpoint"]), device)
         history = np.stack(refs[:3])
         persistence = history[-1].copy()
         rows = []
