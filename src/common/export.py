@@ -167,6 +167,13 @@ def package_export(storage, source, config, run_id, source_snapshot=None, code_r
             if len(times) != array.shape[0]:
                 raise ValueError(f"{key}: time/array length mismatch")
             cell = meta["cell_m"]
+            # Sliced solver layers record their sampling height; the scene.json "y" of
+            # temperature and pollution is only the legacy viewer's display offset.
+            z = metadata.get("z_m")
+            if z is None:
+                if key in ("temp", "poll"):
+                    raise ValueError(f"{key} has no recorded sample height; re-run its export")
+                z = meta.get("y", 0)
             kind = "vector_field" if vector else "scalar_field"
             layer = {
                 "id": key,
@@ -179,7 +186,7 @@ def package_export(storage, source, config, run_id, source_snapshot=None, code_r
                     "dtype": array.dtype.str,
                     "shape": list(array.shape),
                     "axes": "TCYX" if vector else "TYX",
-                    "origin_m": [grid["x0"], -grid["z_south"], meta.get("y", 0)],
+                    "origin_m": [grid["x0"], -grid["z_south"], z],
                     "spacing_m": [cell, cell],
                     "sample_location": "cell_center",
                     "byte_order": "little",

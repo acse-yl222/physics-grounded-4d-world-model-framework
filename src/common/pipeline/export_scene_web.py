@@ -51,6 +51,9 @@ def main():
     coarse = cell * cfg["wind"]["coarse_factor"]
     LZ = int(cfg["visualize"]["layer"])
     zlo, zhi = LZ * coarse, (LZ + 1) * coarse
+    # Local height of the exported layer's cell centres (solid columns start at z = 0). The
+    # scene.json "y" values below are legacy display heights; the protocol bundle reads this.
+    z_m = zlo + coarse / 2
     G, RUN, PHYS = p["geometry"], p["run"], p["physics"]
     web = p["scene_web"]
     out = web / "physics"
@@ -178,6 +181,7 @@ def main():
             uvw,
             components="u local +x, v local +y, w up (m/s)",
             time_s=[step_s * (i + 1) for i in range(len(wind_files))],
+            z_m=z_m,
             note="SCALED latent surrogate, block mean of the fine field, solid cells zero",
         )
         timeline = {"step_s": step_s, "steps": len(wind_files)}
@@ -210,6 +214,7 @@ def main():
             name,
             np.asarray(tz[:, LZ]).astype(np.float16),
             time_s=[dt * i for i in range(frames)],
+            z_m=z_m,
             units="C",
             ambient_c=tcfg["ambient_c"],
             surface_c=tcfg["surface_c"],
@@ -261,6 +266,7 @@ def main():
             name,
             conc,
             time_s=[step_s * (i + 1) for i in range(len(poll_files))],
+            z_m=z_m,
             note="upwind transport of an assumed line source, driven by the wind frames; arbitrary units",
         )
         layers_json["poll"] = {
