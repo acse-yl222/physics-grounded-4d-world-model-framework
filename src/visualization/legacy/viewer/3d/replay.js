@@ -9,6 +9,7 @@ import {
 import { addStations, addRoadSurfaces } from '../../agents/demo_rev02/stations.js';
 import { createSignalLayerV2 } from '../../agents/demo_rev02/signals-v2.js';
 import { loadRandomUav } from './random-uav.mjs';
+import { recordedTrafficTime } from './traffic-time.mjs';
 import { createFollowCamera } from '../../agents/demo_rev02/follow-camera.js';
 import { createBirdLayer } from '../../agents/demo_rev02/birds.js';
 
@@ -217,15 +218,12 @@ export async function createReplay({
   }
   const uavStates = (t) => flightData.model.sample(t);
   // Cars retain the existing recorded replay; UAV random walks use their own paths.
-  function trafficTime(t) {
-    if (!traffic) return t;
-    const span = traffic.lastTime - traffic.firstTime;
-    if (span <= 0 || (t >= traffic.firstTime && t <= traffic.lastTime)) return t;
-    return traffic.firstTime + ((((t - traffic.firstTime) % span) + span) % span);
-  }
+  // Outside the recorded traffic range there is no traffic data (null): no cars and no signal states.
+  const trafficTime = (t) => recordedTrafficTime(t, traffic);
+  const noTrafficData = (t) => Boolean(traffic) && trafficTime(t) === null;
   function carStates(t) {
-    if (!traffic) return [];
     t = trafficTime(t);
+    if (t === null) return [];
     const idx = Math.floor(t) - traffic.firstTime,
       a = traffic.frames[idx],
       b = traffic.frames[idx + 1],
@@ -361,9 +359,11 @@ export async function createReplay({
   };
   let sigSecond = -1;
   function updateSignalDots(t) {
-    const second = Math.floor(t);
+    const second = t === null ? null : Math.floor(t);
     if (second === sigSecond || !signalLayer) return;
     sigSecond = second;
+    sigDotGeom.setDrawRange(0, second === null ? 0 : heads.length); // no traffic data: no signal dots
+    if (second === null) return;
     const c = sigDotGeom.attributes.color;
     heads.forEach((h, i) => {
       const v = (signalLayer.stateAt(t, h) || '').toLowerCase();
@@ -424,7 +424,7 @@ export async function createReplay({
     });
     actors.updateUavs(displayed);
     actors.updateCars(R.cars);
-    signalLayer?.update(trafficTime(t));
+    signalLayer?.update(trafficTime(t) ?? -Infinity); // no recorded frame at -Infinity: the signals hide
     const birds = birdLayer ? birdLayer.update(t) : null;
     let n = 0;
     const mp = markerGeom.attributes.position.array,
@@ -470,9 +470,12 @@ export async function createReplay({
     ).length;
     const air = R.uavs.filter((u) => u.airborne).length;
     R.stats =
-      `Cars on the network ${R.cars.length} (${moving} moving) · ${near} within 450 m of campus\nUAVs ${air} · random Wave PDE flights · no scheduling` +
+      (noTrafficData(t)
+        ? 'Cars: no traffic data at this time'
+        : `Cars on the network ${R.cars.length} (${moving} moving) · ${near} within 450 m of campus`) +
+      `\nUAVs ${air} · random Wave PDE flights · no scheduling` +
       (traffic && traffic.lastTime < 3600
-        ? `\nTraffic: ${traffic.lastTime - traffic.firstTime} s sample looping (at ${timeString(trafficTime(t))}); full-hour files not placed in demo_rev02`
+        ? `\nTraffic data covers ${timeString(traffic.firstTime)}–${timeString(traffic.lastTime)} (no traffic data outside it); full-hour files not placed in demo_rev02`
         : '');
     if (birds && birds.present) {
       const names = ['foraging', 'transit', 'murmuration', 'descending', 'roosting'];
@@ -741,7 +744,11 @@ ${stateText(f.counts)}`;
       const dx = j.cx - campusCentre.x,
         dz = j.cz - campusCentre.z,
         dir = Math.abs(dx) > Math.abs(dz) ? (dx > 0 ? 'east' : 'west') : dz > 0 ? 'south' : 'north';
-      R.info = `Junction on the ${dir} side of campus (${j.d.toFixed(0)} m from the buildings) · ${j.ms.length} controlled movements · ${j.cars} cars within 70 m (${j.moving} moving)`;
+      R.info =
+        `Junction on the ${dir} side of campus (${j.d.toFixed(0)} m from the buildings) · ${j.ms.length} controlled movements · ` +
+        (noTrafficData(R.t)
+          ? 'no traffic data at this time'
+          : `${j.cars} cars within 70 m (${j.moving} moving)`);
     } else if (id === 'traffic') {
       // map view over the campus ring roads: straight down and north up (camera due south of the centre), so it reads like a
       // map from any seat; the only motion is a slow zoom from the whole ring-road area towards the campus
@@ -759,7 +766,11 @@ ${stateText(f.counts)}`;
       if (camera.position.distanceTo(start.pos) > 40) flyTo(start, lead, begin);
       else begin();
       const moving = R.cars.filter((c) => c.speed > CAR_STOPPED).length;
-      R.info = `${R.cars.length} cars on the network (${moving} moving) · white dots = moving, amber dots = stopped · signal heads shown as red / amber / green dots · blue ribbons = drivable lanes of the SUMO network`;
+      R.info =
+        (noTrafficData(R.t)
+          ? 'No traffic data at this time'
+          : `${R.cars.length} cars on the network (${moving} moving)`) +
+        ' · white dots = moving, amber dots = stopped · signal heads shown as red / amber / green dots · blue ribbons = drivable lanes of the SUMO network';
     } else if (id === 'uavs') {
       // wide, high sweep over the campus: the nearby hubs (H2 north, H3 south) and rooftop stations come into view
       setUavScale(UAV_MACRO_SCALE);
@@ -804,7 +815,7 @@ ${stateText(f.counts)}`;
     if (R.playing) {
       R.t += dt * R.speed;
       const end = R.duration || 3600;
-      if (R.t >= end) R.t = traffic ? traffic.firstTime + 10 : 0; // full-hour illustrative random-flight loop; the traffic sample loops on its own inside carStates
+      if (R.t >= end) R.t = traffic ? traffic.firstTime + 10 : 0; // full-hour illustrative random-flight loop; cars and signals show no data outside the recorded traffic range
     }
     if ((R.playing && now - R.lastDraw >= 35) || R.lastDraw === -Infinity) {
       update(R.t);
