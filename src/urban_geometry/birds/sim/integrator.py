@@ -1165,6 +1165,7 @@ def step(state, config, predator=None):
         "food_fields": food_fields,
         "forage_heading": forage_heading,
         "forage_mode": forage_mode,
+        "forage_giveup": forage_giveup,
         "forage_dwell": forage_dwell,
         "forage_hop_timer": forage_hop_timer,
         "time": time + dt,
