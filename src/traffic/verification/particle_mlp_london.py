@@ -132,7 +132,9 @@ class ParticleTrafficModel(nn.Module):
             # Displacement → Absolute Position
             for idx in range(cells.shape[0]):
                 r, c = cells[idx, 0].item(), cells[idx, 1].item()
-                start_pos = work_grid[-1, r, c, :2]
+                # Displacements are relative to the last observed frame, so anchor to the
+                # input grid rather than work_grid, whose last frame is blended each iteration.
+                start_pos = grid[-1, r, c, :2]
                 pred_abs = preds[idx].clone()
                 pred_abs[:, :2] = preds[idx, :, :2] * disp_scale + start_pos
                 pred_grid[:, r, c, :] = pred_abs
