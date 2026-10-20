@@ -26,14 +26,14 @@ import numpy as np
 import torch
 
 from common.layout import repo_root
+from common.locations import code_path
 
 ROOT = repo_root()
 RUN = ROOT / "output/core008/physics/scaled_latent"
 OUT = RUN / "pollution"
 OUT.mkdir(exist_ok=True)
-TRANSPORT = (
-    ROOT
-    / "src/urban_flow/physics/wind_pollution_code/code/vendor/yuhang/data_generation/physical_transport.py"
+TRANSPORT = code_path(
+    "src/urban_flow/physics/wind_pollution_code/code/vendor/yuhang/data_generation/physical_transport.py"
 )
 spec = importlib.util.spec_from_file_location("physical_transport", TRANSPORT)
 T = importlib.util.module_from_spec(spec)

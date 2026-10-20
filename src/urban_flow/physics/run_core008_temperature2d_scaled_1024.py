@@ -27,6 +27,7 @@ from dataclasses import asdict
 import numpy as np
 
 from common.layout import repo_root
+from common.locations import code_path
 
 ROOT = repo_root()
 RUN = ROOT / (
@@ -36,9 +37,8 @@ RUN = ROOT / (
 )
 OUT = RUN / "temperature2d"
 CACHE = OUT / "velocity_cache"
-MODEL_DIR = (
-    ROOT
-    / "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/physical_model"
+MODEL_DIR = code_path(
+    "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/physical_model"
 )
 LANDCOVER = ROOT / "output/core008/geometry/south_kensington_core008_landcover_4m"
 GEOM_1M = ROOT / "output/core008/geometry/south_kensington_core008_voxel_1m_domain4096"

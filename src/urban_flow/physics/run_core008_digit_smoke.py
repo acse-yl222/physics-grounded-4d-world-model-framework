@@ -19,11 +19,11 @@ import numpy as np
 import torch
 
 from common.layout import repo_root
+from common.locations import code_path
 
 ROOT = repo_root()
-CODE = (
-    ROOT
-    / "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/velocity_calculation"
+CODE = code_path(
+    "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/velocity_calculation"
 )
 sys.path.insert(0, str(CODE))
 from south_kensington_jupyter import (
