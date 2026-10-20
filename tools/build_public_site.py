@@ -61,7 +61,7 @@ def main():
         "npy.js",
     ):
         shutil.copy2(ROOT / "src/visualization/legacy/viewer" / name, target / "viewer" / name)
-    for name in ("index.html", "main.js", "style.css", "replay.js"):
+    for name in ("index.html", "main.js", "style.css", "replay.js", "traffic-time.mjs"):
         shutil.copy2(
             ROOT / "src/visualization/legacy/viewer/3d" / name, target / "viewer/3d" / name
         )
