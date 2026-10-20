@@ -11,7 +11,6 @@ from datetime import datetime
 
 import torch
 import torch.nn.functional as F
-from torch import nn
 from torch.utils.data import DataLoader, Dataset
 
 from common.runtime import trial_root
@@ -38,6 +37,7 @@ class WindowDataset(Dataset):
         half = WINDOW_SIZE // 2
         windows = []
         targets = []
+        valids = []
 
         for i in range(inputs.shape[0]):
             t_last = t_starts[i] + HIST_STEPS - 1
@@ -59,8 +59,9 @@ class WindowDataset(Dataset):
                 r = int(min(max(arow, 0), GRID_SIZE - 1))
                 c = int(min(max(acol, 0), GRID_SIZE - 1))
 
-                # target: Relative Displacement + Velocity Component
+                # target: Relative Displacement + Velocity Component; valid marks recorded frames
                 target = torch.zeros(PRED_STEPS, VEHICLE_DIM)
+                valid = torch.zeros(PRED_STEPS, dtype=torch.bool)
                 for k in range(PRED_STEPS):
                     tk = t_last + 1 + k
                     if tk not in future:
@@ -70,7 +71,9 @@ class WindowDataset(Dataset):
                     target[k, 1] = (fcol - acol) / GRID_SIZE
                     target[k, 2] = fvd
                     target[k, 3] = fvc
+                    valid[k] = True
                 targets.append(target)
+                valids.append(valid)
 
                 windows.append(padded[:, r : r + WINDOW_SIZE, c : c + WINDOW_SIZE, :])
 
@@ -78,12 +81,24 @@ class WindowDataset(Dataset):
             raise RuntimeError("No valid windows generated")
         self.windows = torch.stack(windows, dim=0)
         self.targets = torch.stack(targets, dim=0)
+        self.valid = torch.stack(valids, dim=0)
 
     def __len__(self):
         return self.windows.shape[0]
 
     def __getitem__(self, idx):
-        return self.windows[idx], self.targets[idx]
+        return self.windows[idx], self.targets[idx], self.valid[idx]
+
+
+def masked_mse(pred, target, valid):
+    """MSE over recorded future steps only; equals nn.MSELoss when every step is valid.
+
+    Steps after a vehicle leaves the grid or its track ends carry no target and
+    contribute neither loss nor gradient. Returns 0 when nothing is valid.
+    """
+    valid = valid.bool()
+    sq = (pred - target)[valid] ** 2  # (n_valid_steps, VEHICLE_DIM)
+    return sq.sum() / max(sq.numel(), 1)
 
 
 def train():
@@ -123,30 +138,37 @@ def train():
         model.parameters(), lr=LR, weight_decay=1e-4
     )  # L2 regularization to mitigate overfitting
     scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=30, gamma=0.5)
-    criterion = nn.MSELoss()
+    criterion = masked_mse
 
     best_val = float("inf")
 
+    # Epoch losses are means over every recorded future step in the split.
     for epoch in range(EPOCHS):
         model.train()
         train_loss = 0
-        for w, t in train_loader:
-            w, t = w.to(device), t.to(device)
+        train_steps = 0
+        for w, t, v in train_loader:
+            w, t, v = w.to(device), t.to(device), v.to(device)
             pred = model(w)
-            loss = criterion(pred, t)
+            loss = criterion(pred, t, v)
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-            train_loss += loss.item() * w.shape[0]
-        train_loss /= len(train_ds)
+            n = int(v.sum())
+            train_loss += loss.item() * n
+            train_steps += n
+        train_loss /= max(train_steps, 1)
 
         model.eval()
         val_loss = 0
+        val_steps = 0
         with torch.no_grad():
-            for w, t in val_loader:
-                w, t = w.to(device), t.to(device)
-                val_loss += criterion(model(w), t).item() * w.shape[0]
-        val_loss /= len(val_ds)
+            for w, t, v in val_loader:
+                w, t, v = w.to(device), t.to(device), v.to(device)
+                n = int(v.sum())
+                val_loss += criterion(model(w), t, v).item() * n
+                val_steps += n
+        val_loss /= max(val_steps, 1)
 
         scheduler.step()
 

@@ -62,6 +62,7 @@ python -m traffic.evaluate --model <the model date you want to evaluate>
 
 - `--model` takes the **date portion** of the model file (e.g. `08-16_07-31-30`).
 - Output metrics: ADE (Average Displacement Error), FDE (Final Displacement Error).
+- Only recorded future frames are scored: ADE averages over every observed (vehicle, step), and FDE over vehicles still recorded at the last prediction step. Steps after a vehicle leaves the grid or its track ends are masked, in evaluation and in the training loss.
 - The metric values are normalized; to get the actual distance multiply by `GRID_SIZE*CELL_SIZE`. For example, the `ADE` of `My model (No-iteration)` in the final report is computed as `0.019192*56*3=3.224256`
 
 ### 3.4 Validate on the Real London Road Network
