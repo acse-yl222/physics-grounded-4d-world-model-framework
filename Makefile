@@ -1,6 +1,6 @@
 PYTHON ?= python3
 
-.PHONY: format format-check lint hooks test test-python test-js test-browser test-e2e
+.PHONY: format format-check lint test test-python test-js test-browser test-e2e
 
 format:
 	$(PYTHON) tools/format.py --write
@@ -10,9 +10,6 @@ format-check:
 
 lint:
 	$(PYTHON) tools/format.py --lint
-
-hooks:
-	git config core.hooksPath tools/git-hooks
 
 test: test-python test-js
 

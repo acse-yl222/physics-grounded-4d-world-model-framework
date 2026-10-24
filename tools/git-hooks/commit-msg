@@ -1,3 +1,0 @@
-#!/bin/sh
-# Enabled by `make hooks`; applies the commit message rules in AGENTS.md before CI does.
-exec python3 "$(git rev-parse --show-toplevel)/tools/check_commit_message.py" --hook "$1"
