@@ -1,0 +1,38 @@
+name: Commit format
+
+# Separate from Repository CI so that editing a title reruns only this check.
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: commit-format-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  format:
+    name: PR title and commits
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      # Titles and messages reach the script through the environment or stdin, never the
+      # shell source.
+      - name: PR title
+        run: python3 tools/check_commit_message.py --title "$TITLE"
+        env:
+          TITLE: ${{ github.event.pull_request.title }}
+      - name: Commit messages
+        if: ${{ !cancelled() }}
+        run: >-
+          gh api --paginate "repos/$REPO/pulls/$PR/commits"
+          --jq '.[] | {sha, message: .commit.message, parents: (.parents | length)} | tojson'
+          | python3 tools/check_commit_message.py --commits
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}

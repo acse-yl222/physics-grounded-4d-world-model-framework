@@ -26,3 +26,23 @@ runs or changes requires authorization for that task; this file grants none.
 All changes must pass the `E2E smoke` CI check. Use `make test-e2e` for the local
 equivalent; setup, coverage and required merge-rule configuration are documented in
 `docs/framework/e2e-ci.md`. Keep this check unconditional for pull requests.
+
+Title pull requests `<type>(<scope>)!: <summary>` (Conventional Commits), at most 72
+characters, with an imperative summary of the change in lower case apart from proper nouns.
+Types: `feat` adds a capability, `fix` corrects wrong behaviour, `refactor` keeps behaviour,
+plus `perf`, `test`, `docs`, `ci`, `build` and `chore`. The scope names the area whose
+behaviour changes: `traffic`, `uav` (uav_routing), `flow` (urban_flow), `geometry`
+(urban_geometry other than birds), `birds`, `pipeline` (common/pipeline), `protocol`
+(protocol export and validation), `cli` (the rest of common), `viewer` (visualization) or
+`scenes` (`project/` data); `ci`, `docs`, `build` and `chore` may omit it. `!` marks changes
+after which existing results must be regenerated or relied-on behaviour such as exit codes or
+published pages differs.
+
+Commit messages use the same format for the subject, then a blank line and a body saying
+what changed and why, grouped by change type when it covers several, wrapped at 72
+characters where possible, with trailers last. Describe the change, not how it was made.
+A single-commit pull request is squashed with its commit subject, so that subject must equal
+the title. Squash `fixup!`/`squash!`/`amend!` commits before pushing; `Revert "..."` subjects
+from `git revert` and merge commits are accepted. The `PR title and commits` check applies
+`tools/check_commit_message.py` to the title and every commit of a pull request; run
+`make hooks` once per clone to apply it as a local `commit-msg` hook.
