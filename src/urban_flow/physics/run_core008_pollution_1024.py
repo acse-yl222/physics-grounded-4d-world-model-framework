@@ -25,14 +25,14 @@ import numpy as np
 import torch
 
 from common.layout import repo_root
+from common.locations import code_path
 
 ROOT = repo_root()
 RUN = ROOT / "output/core008/physics/scaled_latent_1024"
 OUT = RUN / "pollution"
 OUT.mkdir(exist_ok=True)
-TRANSPORT = (
-    ROOT
-    / "src/urban_flow/physics/wind_pollution_code/code/vendor/yuhang/data_generation/physical_transport.py"
+TRANSPORT = code_path(
+    "src/urban_flow/physics/wind_pollution_code/code/vendor/yuhang/data_generation/physical_transport.py"
 )
 
 
@@ -44,7 +44,7 @@ def _load(name, path):
     return module
 
 
-L = _load("latent1024", ROOT / "src/urban_flow/physics/run_core008_scaled_latent_1024.py")
+L = _load("latent1024", code_path("src/urban_flow/physics/run_core008_scaled_latent_1024.py"))
 T = _load("physical_transport", TRANSPORT)
 
 SUBSTEPS = 50  # NN4PDEs steps per SCALED step

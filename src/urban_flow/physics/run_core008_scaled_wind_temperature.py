@@ -32,6 +32,7 @@ import numpy as np
 import torch
 
 from common.layout import repo_root
+from common.locations import code_path
 
 _orig_version = importlib.metadata.version
 importlib.metadata.version = lambda n: (
@@ -40,7 +41,7 @@ importlib.metadata.version = lambda n: (
 
 ROOT = repo_root()
 SCALED_REPO = Path("/home/yl222/workspace/SCALED-Tutorial")
-TEACHER_CODE = ROOT / "src/urban_flow/physics/wind_temperature_teacher/code"
+TEACHER_CODE = code_path("src/urban_flow/physics/wind_temperature_teacher/code")
 TEMPERATURE_WEIGHTS = ROOT / "project/south_ken/input/models/temperature_one_step.pt"
 GEOMETRY = ROOT / "output/core008/geometry/south_kensington_core008_voxel_1m_domain4096"
 OUT = ROOT / "output/core008/physics/scaled"

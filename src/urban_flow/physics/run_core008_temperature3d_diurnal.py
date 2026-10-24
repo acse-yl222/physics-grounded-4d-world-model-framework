@@ -28,21 +28,20 @@ import numpy as np
 import torch
 
 from common.layout import repo_root
+from common.locations import code_path
 
 ROOT = repo_root()
 RUN = ROOT / "output/core008/physics/scaled_latent"
 BASE = RUN / "temperature3d_solar"
 CACHE = BASE / "velocity_cache"
-MODEL_DIR = (
-    ROOT
-    / "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/physical_model"
+MODEL_DIR = code_path(
+    "src/urban_flow/physics/environment-integration/members/yiqi_temperature/models/physical_model"
 )
 LANDCOVER = ROOT / "output/core008/geometry/south_kensington_core008_landcover_4m"
 TERRAIN = RUN / "flood/terrain"
 SOLAR = RUN / "solar"
 sys.path.insert(0, str(MODEL_DIR))
 sys.path.insert(0, str(MODEL_DIR.parent / "velocity_calculation"))
-sys.path.insert(0, str(ROOT / "src/common/pipeline/physics"))
 import south_kensington_jupyter as _skj
 
 if not hasattr(_skj, "rotate_2d_field"):
@@ -55,8 +54,9 @@ spec = importlib.util.spec_from_file_location(
 M3 = importlib.util.module_from_spec(spec)
 sys.modules["south_kensington_temperature_3d"] = M3
 spec.loader.exec_module(M3)
-from solar_np import ShadowNet, clear_sky
 from south_kensington_jupyter import SouthKensingtonConfig
+
+from urban_flow.physics.solar_np import ShadowNet, clear_sky
 
 CELL = 4.0
 X0, Y0 = 480, 640

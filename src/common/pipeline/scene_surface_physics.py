@@ -23,7 +23,8 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import torch
 
-from common.pipeline.paths import ROOT, project_path
+from common.locations import code_path
+from common.pipeline.paths import project_path
 from common.pipeline.scene_scaled_latent import digest, log, save_json, save_npz
 
 
@@ -208,6 +209,11 @@ def flood(cfg, bed, foot, green, canopy, out):
     )
 
 
+def solver_source(stage):
+    # Installed code, not the scene workspace that `p4d run` sets as P4D_ROOT.
+    return code_path(f"src/urban_flow/physics/{stage}/model.py")
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--config", default="configs/white_city/surface_physics.json")
@@ -235,7 +241,7 @@ def main():
         )
     out = project_path(cfg["output"]) / (args.stage + "_experimental")
     out.mkdir(exist_ok=True)
-    source = ROOT / f"src/urban_flow/physics/{args.stage}/model.py"
+    source = solver_source(args.stage)
     save_json(
         out / "run_config.json",
         {

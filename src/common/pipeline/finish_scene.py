@@ -15,6 +15,7 @@ import sys
 import time
 from pathlib import Path
 
+from common.locations import code_path
 from common.pipeline.paths import ROOT, project_path
 from common.pipeline.scene_scaled_latent import save_json
 
@@ -60,7 +61,12 @@ def main():
         save_json(out / "workflow_status.json", {"stage": script, "complete": False})
         try:
             subprocess.run(
-                [sys.executable, str(ROOT / "pipelines" / script), "--config", a.config],
+                [
+                    sys.executable,
+                    str(code_path(f"src/common/pipeline/{script}")),
+                    "--config",
+                    a.config,
+                ],
                 cwd=ROOT,
                 check=True,
             )
