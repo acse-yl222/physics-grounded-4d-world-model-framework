@@ -40,14 +40,24 @@ def find_latest_model(date_filter=None):
     return candidates[0]
 
 
-def compute_metrics(preds, targets):
+def compute_metrics(preds, targets, valid):
+    """ADE/FDE in normalized grid units over observed future frames only.
+
+    `valid` (N, PRED_STEPS) marks the steps a vehicle is actually recorded; a vehicle
+    that leaves the grid or ends its track within PRED_STEPS has no frame to score.
+    ADE is the mean error over all valid (vehicle, step) pairs. FDE is the mean
+    final-step error over vehicles whose final step is valid. Either is NaN when
+    nothing qualifies.
+    """
     pos_err = torch.norm(preds[:, :, :2] - targets[:, :, :2], dim=-1)  # (N, PRED_STEPS)
-    ade = pos_err.mean().item()
-    fde = pos_err[:, -1].mean().item()
+    valid = valid.bool()
+    ade = pos_err[valid].mean().item()
+    fde = pos_err[:, -1][valid[:, -1]].mean().item()
     return ade, fde
 
 
 def vehicle_gt_from_tracks(win_tracks, t_last):
+    """Return (row, col, target, valid) per vehicle; unrecorded future steps are invalid."""
     results = []
     for vt in win_tracks.values():
         anchor = None
@@ -63,6 +73,7 @@ def vehicle_gt_from_tracks(win_tracks, t_last):
         r = int(min(max(arow, 0), GRID_SIZE - 1))
         c = int(min(max(acol, 0), GRID_SIZE - 1))
         target = torch.zeros(PRED_STEPS, VEHICLE_DIM)
+        valid = torch.zeros(PRED_STEPS, dtype=torch.bool)
         for k in range(PRED_STEPS):
             tk = t_last + 1 + k
             if tk not in future:
@@ -72,7 +83,8 @@ def vehicle_gt_from_tracks(win_tracks, t_last):
             target[k, 1] = fcol / GRID_SIZE
             target[k, 2] = fvd
             target[k, 3] = fvc
-        results.append((r, c, target))
+            valid[k] = True
+        results.append((r, c, target, valid))
     return results
 
 
@@ -95,15 +107,17 @@ def evaluate(model_date=None, log=print):
 
     all_preds = []
     all_targets = []
+    all_valid = []
 
     with torch.no_grad():
         for i in range(test_inputs.shape[0]):
             grid = test_inputs[i].to(device)
             pred_grid = model.predict_full_grid(grid)
             t_last = test_t_starts[i] + HIST_STEPS - 1
-            for r, c, target in vehicle_gt_from_tracks(test_tracks[i], t_last):
+            for r, c, target, valid in vehicle_gt_from_tracks(test_tracks[i], t_last):
                 all_preds.append(pred_grid[:, r, c, :].cpu())
                 all_targets.append(target)
+                all_valid.append(valid)
 
     if not all_targets:
         log("No valid test samples")
@@ -111,7 +125,8 @@ def evaluate(model_date=None, log=print):
 
     preds_t = torch.stack(all_preds)
     targets_t = torch.stack(all_targets)
-    ade, fde = compute_metrics(preds_t, targets_t)
+    valid_t = torch.stack(all_valid)
+    ade, fde = compute_metrics(preds_t, targets_t, valid_t)
     log(f"[Jacobi iteration x{JACOBI_ITERS}] ADE: {ade:.6f}, FDE: {fde:.6f}")
 
 
@@ -148,6 +163,7 @@ def evaluate_counterfactual(model_date=None, log=print):
     }
     all_preds = {name: [] for name in scenarios}
     all_targets = []
+    all_valid = []
     with torch.no_grad():
         for i in range(test_inputs.shape[0]):
             grid_orig = test_inputs[i]
@@ -161,17 +177,19 @@ def evaluate_counterfactual(model_date=None, log=print):
                 modified = modify_regulation(grid_orig, cfg["signal"], cfg["speed"])
                 scenario_preds[name] = model.predict_full_grid(modified.to(device), n_iters=1)
 
-            for r, c, target in gts:
+            for r, c, target, valid in gts:
                 for name in scenarios:
                     all_preds[name].append(scenario_preds[name][:, r, c, :].cpu())
                 all_targets.append(target)
+                all_valid.append(valid)
 
     log("\nControl Intervention Analysis")
     targets_t = torch.stack(all_targets)
+    valid_t = torch.stack(all_valid)
 
     for name, cfg in scenarios.items():
         preds_t = torch.stack(all_preds[name])
-        ade, fde = compute_metrics(preds_t, targets_t)
+        ade, fde = compute_metrics(preds_t, targets_t, valid_t)
         log(f"[{cfg['label']}] ADE: {ade:.6f}, FDE: {fde:.6f}")
 
     orig = all_preds["original"]
@@ -200,13 +218,14 @@ def evaluate_cv(log=print):
     scale = MAX_SPEED * DT / (CELL_SIZE * GRID_SIZE)
     all_preds = []
     all_targets = []
+    all_valid = []
     with torch.no_grad():
         for i in range(test_inputs.shape[0]):
             grid = test_inputs[i]
             last_frame = grid[-1]
             t_last = test_t_starts[i] + HIST_STEPS - 1
 
-            for r, c, target in vehicle_gt_from_tracks(test_tracks[i], t_last):
+            for r, c, target, valid in vehicle_gt_from_tracks(test_tracks[i], t_last):
                 x = last_frame[r, c, 0].item()
                 y = last_frame[r, c, 1].item()
                 vx = last_frame[r, c, 2].item()
@@ -221,9 +240,11 @@ def evaluate_cv(log=print):
                     pred_car[step, 3] = vy
                 all_preds.append(pred_car)
                 all_targets.append(target)
+                all_valid.append(valid)
     preds_t = torch.stack(all_preds)
     targets_t = torch.stack(all_targets)
-    ade, fde = compute_metrics(preds_t, targets_t)
+    valid_t = torch.stack(all_valid)
+    ade, fde = compute_metrics(preds_t, targets_t, valid_t)
     log(f"[CV Baseline] ADE: {ade:.6f}, FDE: {fde:.6f}")
 
 
@@ -236,17 +257,20 @@ def evaluate_single_vehicle(model_date=None, log=print):
     log(f"[Single-vehicle] Number of test samples: {test_inputs.shape[0]}")
     all_preds = []
     all_targets = []
+    all_valid = []
     with torch.no_grad():
         for i in range(test_inputs.shape[0]):
             grid = test_inputs[i].to(device)
             pred_grid = model.predict_full_grid(grid, mask_neighbors=True)
             t_last = test_t_starts[i] + HIST_STEPS - 1
-            for r, c, target in vehicle_gt_from_tracks(test_tracks[i], t_last):
+            for r, c, target, valid in vehicle_gt_from_tracks(test_tracks[i], t_last):
                 all_preds.append(pred_grid[:, r, c, :].cpu())
                 all_targets.append(target)
+                all_valid.append(valid)
     preds_t = torch.stack(all_preds)
     targets_t = torch.stack(all_targets)
-    ade, fde = compute_metrics(preds_t, targets_t)
+    valid_t = torch.stack(all_valid)
+    ade, fde = compute_metrics(preds_t, targets_t, valid_t)
     log(f"[Single-vehicle MLP] ADE: {ade:.6f}, FDE: {fde:.6f}")
 
 
@@ -259,17 +283,20 @@ def evaluate_no_iter(model_date=None, log=print):
     log(f"[No-iteration] Number of test samples: {test_inputs.shape[0]}")
     all_preds = []
     all_targets = []
+    all_valid = []
     with torch.no_grad():
         for i in range(test_inputs.shape[0]):
             grid = test_inputs[i].to(device)
             pred_grid = model.predict_full_grid(grid, n_iters=1)
             t_last = test_t_starts[i] + HIST_STEPS - 1
-            for r, c, target in vehicle_gt_from_tracks(test_tracks[i], t_last):
+            for r, c, target, valid in vehicle_gt_from_tracks(test_tracks[i], t_last):
                 all_preds.append(pred_grid[:, r, c, :].cpu())
                 all_targets.append(target)
+                all_valid.append(valid)
     preds_t = torch.stack(all_preds)
     targets_t = torch.stack(all_targets)
-    ade, fde = compute_metrics(preds_t, targets_t)
+    valid_t = torch.stack(all_valid)
+    ade, fde = compute_metrics(preds_t, targets_t, valid_t)
     log(f"[No-iteration x1] ADE: {ade:.6f}, FDE: {fde:.6f}")
 
 
