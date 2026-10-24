@@ -48,6 +48,18 @@ def save_json(path, value):
     tmp.replace(path)
 
 
+def save_npy(path, array, dtype):
+    """Copy a channel-first array into a .npy memmap, renamed into place once complete."""
+    path = Path(path)
+    tmp = path.with_suffix(".partial")
+    target = np.lib.format.open_memmap(tmp, mode="w+", dtype=dtype, shape=array.shape)
+    for c in range(array.shape[0]):
+        target[c] = array[c]
+    target.flush()
+    del target
+    tmp.replace(path)
+
+
 def log(message):
     print(time.strftime("%H:%M:%S"), message, flush=True)
 
@@ -210,13 +222,7 @@ def main():
                 check_space()
                 # Final 2 m field remains directly loadable, with raw NN4PDEs u convention.
                 final = wind / f"velocity_final_{cell}m_raw_czyx_float16.npy"
-                target = np.lib.format.open_memmap(
-                    final, mode="w+", dtype=np.float16, shape=decoded.shape
-                )
-                for c in range(3):
-                    target[c] = decoded[c]
-                target.flush()
-                del target
+                save_npy(final, decoded, np.float16)
             del decoded
             speed = np.linalg.norm(mapped, axis=0)[~geo["solid"]]
             row = {
@@ -232,8 +238,8 @@ def main():
             }
             metrics["steps"].append(row)
             save_json(metrics_path, metrics)
-            save_npz(resume, state=state.numpy(), step=np.array(k))
-            prev = mapped
+            # Record the step before its resume checkpoint: run_scene treats this record as the
+            # completion marker, and resuming from the last step would not write it again.
             save_json(
                 out / "status.json",
                 {
@@ -243,6 +249,8 @@ def main():
                     "updated": time.strftime("%Y-%m-%d %H:%M:%S"),
                 },
             )
+            save_npz(resume, state=state.numpy(), step=np.array(k))
+            prev = mapped
             log(
                 f"Wind {k}/{cfg['wind_steps']}: {row['seconds']:.1f}s; mean {row['fluid_speed_mean']:.4f} m/s"
             )
