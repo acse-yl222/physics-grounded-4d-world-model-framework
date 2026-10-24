@@ -13,14 +13,13 @@ import sys
 import bpy
 from mathutils import Vector
 
-from common.layout import authoring_path
+from common.layout import expansion_run_dir
 
-ROOT = authoring_path()
 p = argparse.ArgumentParser()
 p.add_argument("--run", required=True)
 p.add_argument("--names", default="")
 args = p.parse_args(sys.argv[sys.argv.index("--") + 1 :])
-out = ROOT / "exports" / args.run
+out = expansion_run_dir(args.run)
 bpy.ops.wm.open_mainfile(filepath=str(out / "expanded_region.blend"))
 scene = bpy.context.scene
 cam = scene.camera
@@ -102,7 +101,7 @@ for name, target, loc, scale in views:
     manifest.append(
         {
             "name": name,
-            "file": str((renderdir / (name + ".png")).relative_to(ROOT)),
+            "file": str((renderdir / (name + ".png")).relative_to(out)),
             "target": list(target),
             "camera": list(loc),
             "scale": scale,

@@ -22,6 +22,26 @@ def authoring_path(relative=""):
     return Storage.load().assets("south_ken", "geometry") / "authoring" / path
 
 
+def expansion_run_dir(run):
+    """Disposable directory shared by the expansion build, verify and render scripts."""
+    from .storage import Storage
+
+    return Storage.load().scratch("south_ken", "geometry", run)
+
+
+def snapshot_key(path):
+    """Name an expansion input src/... or project/..., wherever code and data are installed."""
+    from .storage import Storage
+
+    path = Path(path)
+    code = code_path("src")
+    if path.is_relative_to(code):
+        return (Path("src") / path.relative_to(code)).as_posix()
+    if path.is_relative_to(authoring_path()):
+        return path.relative_to(Storage.load().data_root).as_posix()
+    raise ValueError(f"Not an expansion code or authoring input: {path}")
+
+
 def scene_input(scene, *parts):
     from .storage import Storage, within
 

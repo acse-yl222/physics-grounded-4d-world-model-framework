@@ -53,7 +53,8 @@ windfarm_neural），结果写入 `common.runtime.trial_root` 给出的 cache �
 
 扩展城市模型由 `urban_geometry/agent/` 中的脚本在 Blender 后台模式生成：
 `build_expansion.py` 组装，`verify_export.py` 导出并重新导入核对，`render_expansion.py` 渲染。
-它们读写 `project/south_ken/geometry/authoring/`，每次使用新的 `--run` 名称，
+它们读取 `project/south_ken/geometry/authoring/`，每次使用新的 `--run` 名称，
+三者共用 `cache/south_ken/geometry/<run>/`（`common.layout.expansion_run_dir`），
 目前尚未接入 `p4d run`。
 
 ### 查看结果
