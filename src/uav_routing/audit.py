@@ -4,6 +4,7 @@ import argparse
 import hashlib
 import itertools
 import json
+import secrets
 import shutil
 import subprocess
 import tarfile
@@ -67,6 +68,52 @@ def main():
     stations = json.loads((out / "stations_enu.json").read_text())
     ground = summary.get("ground_mode", False)
     endpoint_key = "pad_enu_m" if ground else "gate_enu_m"
+    # Resolve every retained input first, so a missing one cannot leave a partial run.
+    run_id = args.run_id
+    retained = storage.run(args.scene, run_id)
+    if retained.exists():
+        raise FileExistsError(f"Run already exists: {retained}")
+    site_dir = storage.assets(args.scene, "input") / "stations_ground_20261007"
+    # Ground sites are scene inputs written by ground_sites.py, not compute outputs.
+    ground_inputs = (
+        {
+            "stations_ground.json": site_dir / "stations.json",
+            "ground_site_audit.npz": site_dir / "ground_site_audit.npz",
+        }
+        if ground
+        else {}
+    )
+    geometry_names = [
+        "height_m.npy",
+        "metadata.json",
+        "ground_mesh_m_yx.npy",
+        "ground_mesh_valid_yx.npy",
+        "asphalt_8m_yx.npy",
+        "canopy_8m_yx.npy",
+    ]
+    site_names = ["stations.json", "selection.json"]
+    computed = ["domain_8m.npz", "travel_time_matrix_s.npy", "travel_time_matrix_s.csv"]
+    required = [
+        *ground_inputs.values(),
+        *(out / n for n in computed),
+        *(args.geometry / n for n in geometry_names),
+        *(site_dir / n for n in site_names),
+    ]
+    missing = sorted({str(p) for p in required if not p.is_file()})
+    if missing:
+        raise FileNotFoundError("Missing audit inputs: " + ", ".join(missing))
+    wave_sources = sorted((args.wave_repo / "src/wavepde").rglob("*.py"))
+    if not wave_sources:
+        raise FileNotFoundError(f"No Wave PDE sources under {args.wave_repo / 'src/wavepde'}")
+    if ground:
+        station_sha256 = hashlib.sha256(ground_inputs["stations_ground.json"].read_bytes())
+        if station_sha256.hexdigest() != summary["station_sha256"]:
+            raise ValueError(f"Station file differs from the compute input: {site_dir}")
+    views = args.framework / "project" / args.scene / "views"
+    if not views.is_dir():
+        raise FileNotFoundError(f"Missing views directory: {views}")
+    project = json.loads((args.framework / "project" / args.scene / "project.json").read_text())
+    code_revision = subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
     d = np.load(out / "domain_8m.npz")
     mask = d["mask"]
     origin = d["origin_enu_m"]
@@ -85,9 +132,12 @@ def main():
         db = delta @ drift
         cost = np.sum((-db + np.sqrt(db**2 + a * np.sum(delta**2, axis=1))) / a)
         cost_ok = abs(cost - r["path_travel_time_s"]) < 1e-3
+        # Explicit checks: python -O strips assert statements.
         if ground:
-            assert np.allclose(p[0, :2], p[1, :2]) and abs(p[1, 2] - p[0, 2] - 30) < 1e-6
-            assert np.allclose(p[-1, :2], p[-2, :2]) and abs(p[-2, 2] - p[-1, 2] - 30) < 1e-6
+            if not (np.allclose(p[0, :2], p[1, :2]) and abs(p[1, 2] - p[0, 2] - 30) < 1e-6):
+                raise ValueError(f"Route lacks a 30 m vertical takeoff leg: {r['path']}")
+            if not (np.allclose(p[-1, :2], p[-2, :2]) and abs(p[-2, 2] - p[-1, 2] - 30) < 1e-6):
+                raise ValueError(f"Route lacks a 30 m vertical landing leg: {r['path']}")
         checks.append(
             dict(
                 source=r["source"],
@@ -107,7 +157,8 @@ def main():
             ),
         ),
     )
-    assert all(r["collision_free"] and r["endpoints"] and r["cost_agrees"] for r in checks)
+    if not all(r["collision_free"] and r["endpoints"] and r["cost_agrees"] for r in checks):
+        raise ValueError("Independent route validation failed; see independent_validation.json")
     print("Independent collision, endpoint and cost checks:", len(checks), flush=True)
     fig, axes = plt.subplots(1, 2, figsize=(16, 7), layout="constrained")
     extent = [
@@ -179,181 +230,179 @@ def main():
     fig.savefig(out / "travel_times.png", dpi=160)
     plt.close(fig)
     # Retained protocol run: grouped thin ribbons display the computed static routes.
-    run_id = args.run_id
-    run = storage.run(args.scene, run_id)
-    run.mkdir(exist_ok=False)
-    (run / "data").mkdir()
-    layers = []
-    for s in stations:
-        positions = []
-        triangles = []
-        for r in valid:
-            if r["source"] != s["label"]:
+    # Assemble it in a hidden sibling and rename it into place only once complete.
+    run = retained.with_name(f".{retained.name}-{secrets.token_hex(4)}")
+    run.mkdir()
+    try:
+        (run / "data").mkdir()
+        layers = []
+        for s in stations:
+            positions = []
+            triangles = []
+            for r in valid:
+                if r["source"] != s["label"]:
+                    continue
+                p = np.load(out / r["path"])
+                for a, b in pairwise(p):
+                    tangent = b[:2] - a[:2]
+                    norm = np.linalg.norm(tangent)
+                    side = (
+                        np.array([-tangent[1], tangent[0], 0.0]) / norm * 0.7
+                        if norm > 1e-10
+                        else np.array([0.7, 0, 0])
+                    )
+                    n = len(positions)
+                    positions.extend(
+                        [
+                            (a - side).tolist(),
+                            (a + side).tolist(),
+                            (b - side).tolist(),
+                            (b + side).tolist(),
+                        ]
+                    )
+                    triangles.extend([[n, n + 1, n + 2], [n + 1, n + 3, n + 2]])
+            if not positions:
                 continue
-            p = np.load(out / r["path"])
-            for a, b in pairwise(p):
-                tangent = b[:2] - a[:2]
-                norm = np.linalg.norm(tangent)
-                side = (
-                    np.array([-tangent[1], tangent[0], 0.0]) / norm * 0.7
-                    if norm > 1e-10
-                    else np.array([0.7, 0, 0])
+            layer_id = "routes_" + s["label"].lower()
+            asset = "data/" + layer_id + ".json"
+            dump(run / asset, dict(positions=positions, triangles=triangles))
+            layers.append(
+                dict(
+                    id=layer_id,
+                    kind="mesh",
+                    format="json",
+                    asset=asset,
+                    sampling="static",
+                    display=dict(widget="mesh", capabilities=["opacity", "pick"]),
                 )
-                n = len(positions)
-                positions.extend(
-                    [
-                        (a - side).tolist(),
-                        (a + side).tolist(),
-                        (b - side).tolist(),
-                        (b + side).tolist(),
-                    ]
-                )
-                triangles.extend([[n, n + 1, n + 2], [n + 1, n + 3, n + 2]])
-        if not positions:
-            continue
-        layer_id = "routes_" + s["label"].lower()
-        asset = "data/" + layer_id + ".json"
-        dump(run / asset, dict(positions=positions, triangles=triangles))
-        layers.append(
-            dict(
-                id=layer_id,
-                kind="mesh",
-                format="json",
-                asset=asset,
-                sampling="static",
-                display=dict(widget="mesh", capabilities=["opacity", "pick"]),
             )
-        )
-    dump(
-        run / "data/gates.json",
-        dict(
-            positions=[s["gate_enu_m"] for s in stations],
-            values=[s["gate_enu_m"][2] for s in stations],
-        ),
-    )
-    layers.append(
-        dict(
-            id="flight_gates",
-            kind="scalar_field",
-            format="json",
-            asset="data/gates.json",
-            sampling="static",
-            field=dict(name="flight_gate_height", unit="m"),
-            display=dict(widget="scalar_field", capabilities=["pick", "opacity"]),
-        )
-    )
-    if ground:
         dump(
-            run / "data/ground_stations.json",
+            run / "data/gates.json",
             dict(
-                positions=[s["pad_enu_m"] for s in stations],
-                values=[float(s["id"]) for s in stations],
+                positions=[s["gate_enu_m"] for s in stations],
+                values=[s["gate_enu_m"][2] for s in stations],
             ),
         )
         layers.append(
             dict(
-                id="ground_stations",
+                id="flight_gates",
                 kind="scalar_field",
                 format="json",
-                asset="data/ground_stations.json",
+                asset="data/gates.json",
                 sampling="static",
-                field=dict(name="station_id", unit="1"),
+                field=dict(name="flight_gate_height", unit="m"),
                 display=dict(widget="scalar_field", capabilities=["pick", "opacity"]),
             )
         )
-    artifacts = []
-    for name in (["stations_ground.json", "ground_site_audit.npz"] if ground else []) + [
-        "summary.json",
-        "stations_enu.json",
-        "domain_8m.npz",
-        "travel_time_matrix_s.npy",
-        "travel_time_matrix_s.csv",
-        "independent_validation.json",
-        "routes_overview.png",
-        "travel_times.png",
-    ]:
-        shutil.copy2(out / name, run / name)
+        if ground:
+            dump(
+                run / "data/ground_stations.json",
+                dict(
+                    positions=[s["pad_enu_m"] for s in stations],
+                    values=[float(s["id"]) for s in stations],
+                ),
+            )
+            layers.append(
+                dict(
+                    id="ground_stations",
+                    kind="scalar_field",
+                    format="json",
+                    asset="data/ground_stations.json",
+                    sampling="static",
+                    field=dict(name="station_id", unit="1"),
+                    display=dict(widget="scalar_field", capabilities=["pick", "opacity"]),
+                )
+            )
+        artifacts = []
+        for name in (["stations_ground.json", "ground_site_audit.npz"] if ground else []) + [
+            "summary.json",
+            "stations_enu.json",
+            "domain_8m.npz",
+            "travel_time_matrix_s.npy",
+            "travel_time_matrix_s.csv",
+            "independent_validation.json",
+            "routes_overview.png",
+            "travel_times.png",
+        ]:
+            shutil.copy2(ground_inputs.get(name, out / name), run / name)
+            artifacts.append(
+                dict(
+                    id=name.replace(".", "_"),
+                    asset=name,
+                    sha256=hashlib.sha256((run / name).read_bytes()).hexdigest(),
+                    media_type="application/octet-stream",
+                )
+            )
+        with tarfile.open(run / "source_snapshot.tar.gz", "w:gz") as tar:
+            for path in wave_sources:
+                tar.add(path, arcname="wavepde/" + str(path.relative_to(args.wave_repo)))
+            for directory in ["src/uav_routing", "src/urban_geometry/voxelization"]:
+                base = code_path(directory)
+                for path in sorted(base.rglob("*.py")):
+                    tar.add(
+                        path, arcname="framework/" + str(Path(directory) / path.relative_to(base))
+                    )
+        # Retain the numerical and station-selection inputs, not just their hashes.
+        with tarfile.open(run / "routing_inputs.tar.gz", "w:gz") as tar:
+            for name in geometry_names:
+                tar.add(args.geometry / name, arcname="geometry/" + name)
+            for name in site_names:
+                tar.add(site_dir / name, arcname="stations/" + name)
         artifacts.append(
             dict(
-                id=name.replace(".", "_"),
-                asset=name,
-                sha256=hashlib.sha256((run / name).read_bytes()).hexdigest(),
-                media_type="application/octet-stream",
+                id="routing_inputs",
+                asset="routing_inputs.tar.gz",
+                sha256=hashlib.sha256((run / "routing_inputs.tar.gz").read_bytes()).hexdigest(),
+                media_type="application/gzip",
             )
         )
-    with tarfile.open(run / "source_snapshot.tar.gz", "w:gz") as tar:
-        for path in sorted((args.wave_repo / "src/wavepde").rglob("*.py")):
-            tar.add(path, arcname="wavepde/" + str(path.relative_to(args.wave_repo)))
-        for directory in ["src/uav_routing", "src/urban_geometry/voxelization"]:
-            base = code_path(directory)
-            for path in sorted(base.rglob("*.py")):
-                tar.add(path, arcname="framework/" + str(Path(directory) / path.relative_to(base)))
-    # Retain the numerical and station-selection inputs, not just their hashes.
-    with tarfile.open(run / "routing_inputs.tar.gz", "w:gz") as tar:
-        for name in [
-            "height_m.npy",
-            "metadata.json",
-            "ground_mesh_m_yx.npy",
-            "ground_mesh_valid_yx.npy",
-            "asphalt_8m_yx.npy",
-            "canopy_8m_yx.npy",
-        ]:
-            tar.add(args.geometry / name, arcname="geometry/" + name)
-        for name in ["stations.json", "selection.json"]:
-            tar.add(
-                storage.assets(args.scene, "input") / "stations_ground_20261007" / name,
-                arcname="stations/" + name,
+        artifacts.append(
+            dict(
+                id="source_snapshot",
+                asset="source_snapshot.tar.gz",
+                sha256=hashlib.sha256((run / "source_snapshot.tar.gz").read_bytes()).hexdigest(),
+                media_type="application/gzip",
             )
-    artifacts.append(
-        dict(
-            id="routing_inputs",
-            asset="routing_inputs.tar.gz",
-            sha256=hashlib.sha256((run / "routing_inputs.tar.gz").read_bytes()).hexdigest(),
-            media_type="application/gzip",
         )
-    )
-    artifacts.append(
-        dict(
-            id="source_snapshot",
-            asset="source_snapshot.tar.gz",
-            sha256=hashlib.sha256((run / "source_snapshot.tar.gz").read_bytes()).hexdigest(),
-            media_type="application/gzip",
+        with tarfile.open(run / "paths_enu.tar.gz", "w:gz") as tar:
+            for f in sorted(out.glob("route_*.npy")):
+                tar.add(f, arcname=f.name)
+        artifacts.append(
+            dict(
+                id="paths_enu",
+                asset="paths_enu.tar.gz",
+                sha256=hashlib.sha256((run / "paths_enu.tar.gz").read_bytes()).hexdigest(),
+                media_type="application/gzip",
+            )
         )
-    )
-    with tarfile.open(run / "paths_enu.tar.gz", "w:gz") as tar:
-        for f in sorted(out.glob("route_*.npy")):
-            tar.add(f, arcname=f.name)
-    artifacts.append(
-        dict(
-            id="paths_enu",
-            asset="paths_enu.tar.gz",
-            sha256=hashlib.sha256((run / "paths_enu.tar.gz").read_bytes()).hexdigest(),
-            media_type="application/gzip",
+        manifest = dict(
+            schema_version="1.1.0",
+            scene_id=args.scene,
+            simulation="wavepde",
+            run_id=run_id,
+            status="complete",
+            created_at=datetime.now(UTC).isoformat(),
+            provenance=dict(
+                code_revision=code_revision,
+                dirty=True,
+                parameters={k: v for k, v in summary.items() if k not in ["routes", "geometry"]},
+                inputs=[
+                    dict(id="baked_geometry", sha256=summary["geometry"]["source_sha256"]),
+                    dict(id="stations", sha256=summary["station_sha256"]),
+                ],
+            ),
+            spatial=project["spatial"],
+            time=dict(unit="s", samples=[]),
+            layers=layers,
+            artifacts=artifacts,
         )
-    )
-    project = json.loads((args.framework / "project" / args.scene / "project.json").read_text())
-    manifest = dict(
-        schema_version="1.1.0",
-        scene_id=args.scene,
-        simulation="wavepde",
-        run_id=run_id,
-        status="complete",
-        created_at=datetime.now(UTC).isoformat(),
-        provenance=dict(
-            code_revision=subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
-            dirty=True,
-            parameters={k: v for k, v in summary.items() if k not in ["routes", "geometry"]},
-            inputs=[
-                dict(id="baked_geometry", sha256=summary["geometry"]["source_sha256"]),
-                dict(id="stations", sha256=summary["station_sha256"]),
-            ],
-        ),
-        spatial=project["spatial"],
-        time=dict(unit="s", samples=[]),
-        layers=layers,
-        artifacts=artifacts,
-    )
-    dump(run / "manifest.json", manifest)
+        dump(run / "manifest.json", manifest)
+        if retained.exists():
+            raise FileExistsError(f"Run already exists: {retained}")
+        run.rename(retained)
+    except BaseException:
+        shutil.rmtree(run, ignore_errors=True)
+        raise
     view = dict(
         schema_version="1.1.0",
         scene_id=args.scene,
@@ -374,7 +423,7 @@ def main():
         ],
     )
     dump(args.framework / "project" / args.scene / "views" / f"{run_id}.json", view)
-    print("Retained:", run, flush=True)
+    print("Retained:", retained, flush=True)
 
 
 if __name__ == "__main__":
