@@ -190,7 +190,7 @@ make format        # Apply formatting to all owned files
 make format-check  # Check without changing files
 make lint          # Ruff lint of the same Python files, without fixing them
 make test          # Both protocol examples, Python tests and all Node unit tests
-pre-commit install # Optional: format and lint staged files before each commit
+pre-commit install # Optional: format and lint staged files, check commit messages
 pre-commit run --all-files
 ```
 
@@ -210,7 +210,7 @@ make test-e2e
 
 It runs a generated GLB through the real CLI geometry and visualize stages, retention and view registration, then checks the retained GLB, NPY and the five example layers in the browser through the framework server. Logs, reports and screenshots stay under `cache/framework/e2e/`; [e2e-ci.md](docs/framework/e2e-ci.md) lists what must pass. `make test-browser` runs only the synthetic five-layer browser check. `CHROME_PATH` can select an existing compatible Chrome installation. Real-city browser tests and GPU/Blender simulations require their own environments and data. The base Python suite reports tests that need torch or the flow stack as skipped; the CPU domain job runs the whole suite again with the CPU solver dependencies, so those tests run there.
 
-[Repository CI](.github/workflows/ci.yml) runs six jobs on every pull request (including stacked PRs), pushes to `main` and manual dispatch: format and Node unit tests, Python 3.11/3.12/3.14 tests with isolated wheel validation, the full suite with CPU domain dependencies, and `E2E smoke`. Every change must pass `E2E smoke`; it has no path filter or conditional skip. Tool versions are pinned, npm uses its lockfile, Actions use full commit SHAs, and the workflow has read-only repository permissions. E2E artifacts contain only the synthetic fixture's logs, report and screenshots. A repository administrator can make the job checks required for merging through branch protection or a ruleset. The separate [`PR title and commits`](.github/workflows/commit-format.yml) check runs [`tools/check_commit_message.py`](tools/check_commit_message.py) on the title and every commit of a pull request against the format in [AGENTS.md](AGENTS.md), and reruns when a title is edited; `make hooks` applies the same check as a local `commit-msg` hook.
+[Repository CI](.github/workflows/ci.yml) runs six jobs on every pull request (including stacked PRs), pushes to `main` and manual dispatch: format and Node unit tests, Python 3.11/3.12/3.14 tests with isolated wheel validation, the full suite with CPU domain dependencies, and `E2E smoke`. Every change must pass `E2E smoke`; it has no path filter or conditional skip. Tool versions are pinned, npm uses its lockfile, Actions use full commit SHAs, and the workflow has read-only repository permissions. E2E artifacts contain only the synthetic fixture's logs, report and screenshots. A repository administrator can make the job checks required for merging through branch protection or a ruleset. The separate [`PR title and commits`](.github/workflows/commit-format.yml) check runs [`tools/check_commit_message.py`](tools/check_commit_message.py) on the title and every commit of a pull request against the format in [AGENTS.md](AGENTS.md), and reruns when a title is edited; `pre-commit install` applies the same check as a local `commit-msg` hook.
 
 The pure formatting commit is listed in [`.git-blame-ignore-revs`](.git-blame-ignore-revs). To hide that commit when investigating code history:
 

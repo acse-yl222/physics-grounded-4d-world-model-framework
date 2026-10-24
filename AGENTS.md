@@ -44,5 +44,5 @@ characters where possible, with trailers last. Describe the change, not how it w
 A single-commit pull request is squashed with its commit subject, so that subject must equal
 the title. Squash `fixup!`/`squash!`/`amend!` commits before pushing; `Revert "..."` subjects
 from `git revert` and merge commits are accepted. The `PR title and commits` check applies
-`tools/check_commit_message.py` to the title and every commit of a pull request; run
-`make hooks` once per clone to apply it as a local `commit-msg` hook.
+`tools/check_commit_message.py` to the title and every commit of a pull request;
+`pre-commit install` also installs it as a local `commit-msg` hook.

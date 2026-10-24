@@ -149,13 +149,18 @@ class CommandLineTests(unittest.TestCase):
 class DocumentationTests(unittest.TestCase):
     def test_agents_md_documents_every_type_scope_and_the_hook(self):
         agents = (ROOT / "AGENTS.md").read_text()
-        for name in [*commit_message.TYPES, *commit_message.SCOPES, "make hooks"]:
+        for name in [*commit_message.TYPES, *commit_message.SCOPES, "pre-commit install"]:
             with self.subTest(name=name):
                 self.assertIn(f"`{name}`", agents)
 
-    def test_hook_is_executable_and_enabled_by_make(self):
-        self.assertTrue(os.access(ROOT / "tools/git-hooks/commit-msg", os.X_OK))
-        self.assertIn("core.hooksPath tools/git-hooks", (ROOT / "Makefile").read_text())
+    def test_pre_commit_installs_the_commit_msg_hook(self):
+        # pre-commit refuses to install while core.hooksPath is set, so no other installer.
+        config = (ROOT / ".pre-commit-config.yaml").read_text()
+        self.assertIn("default_install_hook_types: [pre-commit, commit-msg]", config)
+        self.assertIn("default_stages: [pre-commit]", config)
+        self.assertIn("entry: python tools/check_commit_message.py --hook", config)
+        self.assertIn("stages: [commit-msg]", config)
+        self.assertNotIn("hooksPath", (ROOT / "Makefile").read_text())
 
 
 if __name__ == "__main__":

@@ -1,4 +1,7 @@
 minimum_pre_commit_version: '4.6.2'
+# `pre-commit install` installs both hook types; hooks run before commits unless they say otherwise.
+default_install_hook_types: [pre-commit, commit-msg]
+default_stages: [pre-commit]
 repos:
   - repo: local
     hooks:
@@ -19,3 +22,8 @@ repos:
           - ruff==0.16.10
         types: [python]
         require_serial: true
+      - id: commit-message
+        name: Check the commit message format
+        entry: python tools/check_commit_message.py --hook
+        language: python
+        stages: [commit-msg]

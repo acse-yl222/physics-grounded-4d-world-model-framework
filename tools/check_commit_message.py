@@ -1,7 +1,7 @@
 """Check pull request titles and commit messages against the format in AGENTS.md.
 
 --title TITLE        a pull request title
---hook FILE          a commit message file, from the commit-msg hook (`make hooks`)
+--hook FILE          a commit message file, from pre-commit's commit-msg hook
 --commits            JSON lines {"sha", "message", "parents"} on stdin, as CI sends them
 """
 
