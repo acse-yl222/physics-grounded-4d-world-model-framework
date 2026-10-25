@@ -111,6 +111,31 @@
     "notes": "Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, following the four-storey description. Panel distribution is a deterministic random pattern, not traced; position of the orange columns/ramp and the roof plant are approximate."
   },
   {
+    "id": "imperial_170_queens_gate",
+    "name": "170 Queen's Gate (Rector's Residence)",
+    "claims": [
+      "28351f56-86f4-4152-99fe-01ac157d7cca"
+    ],
+    "references": [
+      {
+        "title": "170 Queen's Gate - British Listed Buildings (Historic England 1227415)",
+        "url": "https://britishlistedbuildings.co.uk/101227415-170-queens-gate-sw7-knightsbridge-and-belgravia-ward",
+        "used_for": "Grade II*, Shaw 1888, red brick Wren revival, gauged brick heads and aprons, small-pane sashes, louvred shutters, hipped tiled roof to eaves, central curved pedimented dormer with Serlian motif, segmental pediments, tall stacks"
+      },
+      {
+        "title": "170 Queen's Gate - Imperial College history",
+        "url": "https://imperial.ac.uk/about/history/170-queens-gate",
+        "used_for": "red brick with stone dressings, completed 1889, Rector's lodging"
+      },
+      {
+        "title": "Plate 104: No. 170 Queen's Gate - Survey of London vol 38",
+        "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-104",
+        "used_for": "date 1888-9, main front to Imperial College Road"
+      }
+    ],
+    "notes": "Eaves raised to 11.1 m (three tall storeys over a low plinth) with a 5 m hipped roof; the Overture height 10.4 m is inferred from floors. Bay count (7 x 4), door position and dormer sizes are proportioned from the listing text, not measured."
+  },
+  {
     "id": "imperial_business_school",
     "name": "Imperial College Business School and Main Entrance",
     "claims": [
@@ -150,6 +175,127 @@
       }
     ],
     "notes": "Height raised from the footprint value (15-17 m) to the documented 24 m glass facade. Drum diameter, position inside the atrium, column spacing and the sign lettering are proportioned, not measured. Rear (west) elevations abut older college buildings and are given a plain glazed/panel facade."
+  },
+  {
+    "id": "imperial_chemistry_building",
+    "name": "Chemistry Building, Imperial College",
+    "claims": [
+      "886385e0-8db0-49d2-b55b-98043ea1c3fd"
+    ],
+    "references": [
+      {
+        "title": "plate 76 - Survey of London vol 38 (Imperial College in 1973)",
+        "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-76",
+        "used_for": "Chemistry block 1968-70 and Biochemistry range 1962-5 by Architects Co-Partnership"
+      },
+      {
+        "title": "Department of Chemistry, Imperial College London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Department_of_Chemistry,_Imperial_College_London",
+        "used_for": "building identity / use"
+      },
+      {
+        "title": "chemistry at imperial (history)",
+        "url": "https://www.imperial.ac.uk/chemistry/about/our-history/chemistry-at-imperial/",
+        "used_for": "relationship with the surviving Aston Webb RCS-1 building"
+      }
+    ],
+    "notes": "No facade description was found; the ribbon-window / concrete-spandrel elevation, brick cores and rooftop extract stacks are a generic reconstruction of a 1960s ACP lab block, not traced from photos. Height 26.4 m from Overture (8 floors)."
+  },
+  {
+    "id": "imperial_chemistry_rcs1",
+    "name": "Chemistry RCS1 (Royal College of Science, Aston Webb)",
+    "claims": [
+      "18b99e43-c816-4a20-9a58-6525438d1280"
+    ],
+    "references": [
+      {
+        "title": "Royal College of Science - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_College_of_Science",
+        "used_for": "Aston Webb building in a Classical style with distinctive brick courses, mostly demolished"
+      },
+      {
+        "title": "chemistry at imperial (history)",
+        "url": "https://www.imperial.ac.uk/chemistry/about/our-history/chemistry-at-imperial/",
+        "used_for": "1906 Aston Webb building on Imperial College Road; part survives as RCS-1, cleaned and refurbished with Wolfson Foundation help"
+      }
+    ],
+    "notes": "Banding rhythm, window sizes and the balustrade are generic Webb/Edwardian classical detail, not traced from photographs. The whole Overture footprint (which may include later infill behind the street range) is modelled in the same idiom. Height 12.9 m from Overture."
+  },
+  {
+    "id": "imperial_dyson_building",
+    "name": "Dyson School of Design Engineering (25 Exhibition Road)",
+    "claims": [
+      "f84e24cc-0cba-4bcb-a8dc-9c39610db775",
+      "22d8e5b3-c1a4-4dbb-841a-dfd4e76aec40"
+    ],
+    "references": [
+      {
+        "title": "Dyson School of Design Engineering - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Dyson_School_of_Design_Engineering",
+        "used_for": "Dyson Building at 25 Exhibition Road since 2018; former Met Office London HQ 1910-19 and Science Museum building"
+      },
+      {
+        "title": "Dyson Building - Imperial College of London (Pascall+Watson)",
+        "url": "https://www.pascalls.co.uk/projects/work/education/dyson-building",
+        "used_for": "exterior retained, treated as if Grade II* listed; four-storey change of use"
+      },
+      {
+        "title": "Dyson School of Design Engineering fitted with Selectaglaze windows - PBC Today",
+        "url": "https://www.pbctoday.co.uk/news/planning-construction-news/dyson-school-design-engineering/66755/",
+        "used_for": "Edwardian baroque former sorting office on the corner of Exhibition Road and Imperial College Road; large sweeping curved-headed casements and tall box sash windows"
+      },
+      {
+        "title": "dyson school of design engineering link bridge receives planning approval - Pascall+Watson",
+        "url": "https://www.pascalls.co.uk/news/article/dyson-school-of-design-engineering-link-bridge-receives-planning-approval/",
+        "used_for": "minimalist glazed link structure"
+      }
+    ],
+    "notes": "Searches confirmed the Edwardian Baroque style and window types but not the facing materials; red brick with Portland stone dressings is assumed. Bay rhythm, corner treatment and attic are approximate. The 3.4 m strip footprint between RCS1 and the Dyson Building is modelled as a low glazed link. Height 13.6 m from Overture."
+  },
+  {
+    "id": "imperial_ethos",
+    "name": "Ethos Sport Imperial",
+    "claims": [
+      "5151acb6-c3ca-482d-87f5-ef659ace6ca7"
+    ],
+    "references": [
+      {
+        "title": "Visit the Ethos website - Imperial Sport (South Kensington facilities)",
+        "url": "https://www.imperial.ac.uk/admin-services/sport/facilities/south-kensington/",
+        "used_for": "four-storey facility on the north side of Prince's Gardens with a 25 m deck-level pool"
+      },
+      {
+        "title": "Imperial College starts work on sports centre - Leisure Opportunities",
+        "url": "https://leisureopportunities.co.uk/news/Imperial-College-starts-work-on-sports-centre/8548",
+        "used_for": "designed by Arup Associates to blend with surrounding architecture"
+      },
+      {
+        "title": "Boris Johnson opens restored London square after £160m investment by Imperial College London",
+        "url": "https://www.imperial.ac.uk/news/80641/boris-johnson-opens-restored-london-square/",
+        "used_for": "sports centre as part of the Prince's Gardens redevelopment"
+      }
+    ],
+    "notes": "No facade description was found by search; the glazed south front (per the brief), stone flanks and canopies are approximate. Height 17.2 m from Overture."
+  },
+  {
+    "id": "imperial_flowers_building",
+    "name": "Flowers Building, Imperial College",
+    "claims": [
+      "3298ff75-3b67-4db6-b8a7-e6558bd5b0ea"
+    ],
+    "references": [
+      {
+        "title": "Celebrating 25 Years of the Flowers Building - Imperial News",
+        "url": "https://www.imperial.ac.uk/news/articles/natural-sciences/life-sciences/2026/celebrating-25-years-of-the-flowers-building/",
+        "used_for": "designed by Norman Foster & Partners, life sciences research building"
+      },
+      {
+        "title": "Completed Campus Renewal Projects - Imperial College Centenary",
+        "url": "https://imperial.ac.uk/Centenary/completed_campus_projects.shtml",
+        "used_for": "opened December 2000, named after Lord Flowers"
+      }
+    ],
+    "notes": "No facade description was returned by searches; the aluminium-band / louvre elevation and rooftop flues follow Foster lab buildings of that period and are approximate. Main block 29.6 m (9 floors) and west wing 7.2 m from the Overture outline and part."
   },
   {
     "id": "imperial_i_hub",
@@ -243,6 +389,86 @@
       }
     ],
     "notes": "Not in the Overture footprints used by this scene (completed 2023), so claims are empty and the plan is a reconstruction: a 34 m x 24 m block on the vacant plot between Wood Lane, Shinfield Street and Wood Lane Studios, matching the descriptions (Wood Lane entrance, square to the east, accommodation and terrace neighbours). Exact plan, step positions (south terraces at 8 and 6 storeys, 4-storey NW corner) and storey heights are estimates; sources disagree on 8/9/10 storeys."
+  },
+  {
+    "id": "imperial_sir_ernst_chain",
+    "name": "Sir Ernst Chain Building - Wolfson Laboratories",
+    "claims": [
+      "e7b8d92c-ea3c-4dac-aabb-b548d6b05f07"
+    ],
+    "references": [
+      {
+        "title": "Sir Ernst Chain is honoured in building naming ceremony - Imperial News",
+        "url": "https://www.imperial.ac.uk/news/115787/sir-ernst-chain-honoured-building-naming/",
+        "used_for": "building identity, 2012 renaming of the biochemistry building"
+      },
+      {
+        "title": "plate 76 - Survey of London vol 38 (Imperial College in 1973)",
+        "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-76",
+        "used_for": "Biochemistry range 1962-5 by Architects Co-Partnership"
+      }
+    ],
+    "notes": "No facade description found; elevation (concrete mullion fins, dark spandrels, brick ends) is a reconstruction in the 1960s ACP idiom, not traced from photos. Height 23.2 m from Overture (7 floors)."
+  },
+  {
+    "id": "princes_gardens_eastside",
+    "name": "Eastside Halls, Prince's Gardens (Imperial College)",
+    "claims": [
+      "c718310f-6644-4eb6-9774-9b1159d70ade",
+      "a44753fb-883d-4c1b-953e-7c36f58382fb",
+      "17b6f6d3-5988-410a-9dad-fb3ce9c22694"
+    ],
+    "references": [
+      {
+        "title": "princes gardens redevelopment - KPF",
+        "url": "https://www.kpf.com/project/princes-gardens-redevelopment",
+        "used_for": "limestone / brick / stucco palette, rhythmic front fenestration, stepped rear bays"
+      },
+      {
+        "title": "Kawneer restores a princely feel to a historic London Square - Specification Online",
+        "url": "https://www.specificationonline.co.uk/articles/2016-03-22/kawneer-restores-a-princely-feel-to-a-historic-london-square",
+        "used_for": "AA201 unitised curtain walling on phase 2 (Eastside) of the KPF masterplan"
+      },
+      {
+        "title": "At a glance - Eastside (Imperial accommodation)",
+        "url": "https://www.imperial.ac.uk/students/accommodation/prospective/ug/halls/eastside/",
+        "used_for": "three adjoining halls, 454 rooms"
+      },
+      {
+        "title": "Places: Eastside - Imperial video archive",
+        "url": "https://blogs.imperial.ac.uk/videoarchive/places-eastside/",
+        "used_for": "Gabor, Linstead and Wilkinson halls"
+      }
+    ],
+    "notes": "Facade proportions, the glazed base and the attic are inferred from the KPF/Kawneer descriptions rather than traced from photos. Height 26.4 m from Overture (8 floors)."
+  },
+  {
+    "id": "princes_gardens_southside",
+    "name": "Southside Halls, Prince's Gardens (Imperial College)",
+    "claims": [
+      "a4244b77-ceb5-4377-a646-a94e5cdb2714",
+      "bfe3f43c-485d-44aa-a567-466a40f90f7f",
+      "deec4af8-7758-4763-9054-71f24a5cb25d",
+      "2b426de4-4776-4699-a31a-fb99683996d8"
+    ],
+    "references": [
+      {
+        "title": "princes gardens redevelopment - KPF",
+        "url": "https://www.kpf.com/project/princes-gardens-redevelopment",
+        "used_for": "limestone / brick / stucco palette, front elevation echoing terrace fenestration, stepped rear bays"
+      },
+      {
+        "title": "Imperial College Halls of Residence - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Imperial_College_Halls_of_Residence",
+        "used_for": "Southside = four halls (Falmouth, Keogh, Selkirk, Tizard), 413 beds, opened October 2007; 1963 Sheppard Robson predecessor"
+      },
+      {
+        "title": "Eastside Update - Imperial News",
+        "url": "https://www.imperial.ac.uk/news/29454/eastside-update/",
+        "used_for": "Southside and Eastside both designed by Kohn Pedersen Fox"
+      }
+    ],
+    "notes": "Window grid, glazed joints and attic treatment are inferred from the KPF description, not traced from photos. Front halls 20 m from Overture; Keogh (rear range) kept at its Overture 7.2 m with a set-back upper storey, which may understate it."
   },
   {
     "id": "queens_tower",
