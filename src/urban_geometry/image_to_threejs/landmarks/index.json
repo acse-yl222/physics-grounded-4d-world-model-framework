@@ -251,6 +251,41 @@
     "notes": "Construction date and elevation are not documented in the sources found; red brick with stone dressings is an assumption matched to the pre-war Imperial laboratory buildings. Height from the footprint record (13.6 m, 4 floors)."
   },
   {
+    "id": "brompton_cemetery",
+    "name": "Brompton Cemetery chapel, Great Circle colonnades and catacombs",
+    "claims": [
+      "bb91a7ce-3c52-4c4b-b7d3-3680eac1fd55",
+      "95f15d8a-a4f2-4ad0-a60d-16278479c565",
+      "a3ff1cea-6445-4452-b2d5-88588811604c",
+      "f5362b4a-511f-4b1a-9c9a-12ce770e9f8c",
+      "23bdbeab-014b-4dcd-aefe-fd7f059e7d9a",
+      "c6acc3c6-570f-4038-b8ce-6b9afd0d321d"
+    ],
+    "references": [
+      {
+        "title": "Brompton Cemetery - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Brompton_Cemetery",
+        "used_for": "Baud design, domed chapel, colonnades and catacombs, layout"
+      },
+      {
+        "title": "Brompton Cemetery - Historic England",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1000248",
+        "used_for": "octagonal Bath stone chapel with lead dome and Roman Doric pilasters; Great Circle ~92 m; rusticated sandstone arcades backed with brick"
+      },
+      {
+        "title": "Brompton Cemetery - Parks and Gardens UK",
+        "url": "https://www.parksandgardens.org/places/brompton-cemetery",
+        "used_for": "chapel closing the southern end of the avenue, colonnades"
+      },
+      {
+        "title": "Brompton Cemetery catacombs - Subterranea Britannica",
+        "url": "https://www.subbrit.org.uk/sites/brompton-cemetery-catacombs/",
+        "used_for": "catacomb vaults beneath the colonnades entered through cast-iron gates"
+      }
+    ],
+    "notes": "Heights estimated (colonnades 6.5 m with balustraded terrace, chapel drum 12 m, dome crown ~21 m with lantern); Overture heights (6-11 m) ignored. The arcade faces the avenue / circle side and the backs are brick, as in the listing; arch rhythm, portico size and the Western Catacombs treatment are approximate."
+  },
+  {
     "id": "cassini_tower",
     "name": "Cassini Tower, White City Living",
     "claims": [
@@ -274,6 +309,36 @@
       }
     ],
     "notes": "Tower plan is the curved part of the Overture outline, smoothed. The attached rectangular block is given 10 storeys (~33 m) as an estimate (the footprint carries the tower height for the whole outline). Balcony wave amplitude/phase is stylised."
+  },
+  {
+    "id": "charing_cross_hospital",
+    "name": "Charing Cross Hospital",
+    "claims": [
+      "8f126f1f-67b4-4d8f-8426-a753559bb6f0"
+    ],
+    "references": [
+      {
+        "title": "Charing Cross Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Charing_Cross_Hospital",
+        "used_for": "Ralph Tubbs cross-shaped main block, 17 storeys including two machine floors, 1973 opening"
+      },
+      {
+        "title": "200 years of Charing Cross Hospital in ten pictures - Imperial College",
+        "url": "https://www.imperial.ac.uk/news/188812/200-years-charing-cross-hospital-pictures/",
+        "used_for": "15-storey building in the shape of a cross"
+      },
+      {
+        "title": "Charing Cross Hospital - Mainstream Modern",
+        "url": "https://mainstreammodern.co.uk/CaseStudies.aspx/Detail/295/charing-cross-hospital",
+        "used_for": "cruciform plan with central core maximising ward windows; lower sections faced in brick"
+      },
+      {
+        "title": "Inventory Site Record - London Gardens Trust",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record/?ID=HAF009",
+        "used_for": "17 storeys, cruciform arrangement"
+      }
+    ],
+    "notes": "The Overture outline is a single 15 m podium without tower parts; the tower position (-1352, -2138) and orientation (site grid, 26 deg) were fitted to the widest cross that lies inside the outline, wing length 36 m from the centre and width 19 m are estimates. Height 59 m to the ward roof plus a 9 m plant/core top (~68 m) from the storey count. Facade (precast concrete with continuous window bands) is approximate."
   },
   {
     "id": "city_guilds_building",
@@ -379,6 +444,64 @@
       }
     ],
     "notes": "Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, following the four-storey description. Panel distribution is a deterministic random pattern, not traced; position of the orange columns/ramp and the roof plant are approximate."
+  },
+  {
+    "id": "hammersmith_apollo",
+    "name": "Hammersmith Apollo (Eventim Apollo)",
+    "claims": [
+      "a910f569-b25a-44d9-be36-9041d6fdb727"
+    ],
+    "references": [
+      {
+        "title": "Former Odeon Cinema - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101252993-former-odeon-cinema-hammersmith-broadway-ward",
+        "used_for": "brick cladding, artificial stone curved centrepiece with 15 giant engaged columns, projecting pavilions, rendered plinth, nine pairs of doors under canopy"
+      },
+      {
+        "title": "Hammersmith Apollo - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Apollo",
+        "used_for": "1932 Robert Cromie Gaumont Palace, Art Deco, Queen Caroline Street site by the flyover"
+      },
+      {
+        "title": "Hammersmith Odeon - Modernism in Metro-Land",
+        "url": "https://www.modernism-in-metroland.co.uk/hammersmith-odeon.html",
+        "used_for": "Cromie Art Deco treatment and context"
+      },
+      {
+        "title": "Hammersmith Apollo - Theatres Trust database",
+        "url": "https://database.theatrestrust.org.uk/resources/theatres/show/2575",
+        "used_for": "cinema-theatre with full stage (stage house behind auditorium)"
+      }
+    ],
+    "notes": "Heights estimated (front 15 m, auditorium 19 m, stage house 24 m) - Overture gives 11.8 m. The curved front is taken as the north-west outline edge facing Queen Caroline Street; column count from the listing, window and signage details approximate (no photos available)."
+  },
+  {
+    "id": "hammersmith_bridge",
+    "name": "Hammersmith Bridge",
+    "claims": [],
+    "references": [
+      {
+        "title": "Hammersmith Bridge - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Bridge",
+        "used_for": "Bazalgette 1887 suspension bridge, overall form, length"
+      },
+      {
+        "title": "Hammersmith Bridge - Historic England list entry",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1080793",
+        "used_for": "dark green and gold colour scheme of the original plans"
+      },
+      {
+        "title": "Hammersmith Bridge - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101080793",
+        "used_for": "wrought-iron framed towers cased in ornamental cast iron, partly gilded; heraldic arms on the towers"
+      },
+      {
+        "title": "Hammersmith Bridge fun facts - Londonist",
+        "url": "https://londonist.com/london/history/hammersmith-bridge-fun-facts",
+        "used_for": "700 ft length, repainted green in 2000"
+      }
+    ],
+    "notes": "Placed on the Overture bridge segment (224 m between abutments, 14.9 m deck outline). Main span taken as 129 m (422 ft, centred), tower tops 13 m above the deck, deck camber and chain sag estimated; pier shapes, portal ornament and heraldry are simplified. No building footprint is claimed."
   },
   {
     "id": "hammersmith_campus",
@@ -868,6 +991,47 @@
       }
     ],
     "notes": "Footprint from Overture (front measured 207 m). Heights are estimates from descriptions: towers 58 m (192 ft), front eaves 19 m, pavilions 24 m + steep roofs, Hintze Hall ridge 34 m; the Overture h (13.7 m) is inferred and ignored. Plan behind the front (gallery wings, light courts, north range) is schematic. Darwin Centre height (28 m) assumed from its eight storeys; Earth Galleries height (22 m + attic) estimated. Lodge modelled as a small terracotta lodge. Facade ornament is painted onto canvas textures."
+  },
+  {
+    "id": "olympia_london",
+    "name": "Olympia London (Grand Hall and National Hall)",
+    "claims": [
+      "7d7a7e76-085a-4c57-a013-00ede1ae9e26",
+      "1a26fac1-f055-47e7-a119-92b4fe25f1a9"
+    ],
+    "references": [
+      {
+        "title": "Olympia London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Olympia_London",
+        "used_for": "architects and dates (Coe 1886 Grand Hall, 1923 National Hall, 1929 Emberton Olympia Central), Olympia signage on Hammersmith Road"
+      },
+      {
+        "title": "Grand Hall and Pillar Hall, Olympia Exhibition Centre - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101096048",
+        "used_for": "red brick with stone dressings, iron glazed roof by Handyside, Italianate entrance front on Olympia Way opposite the station"
+      },
+      {
+        "title": "Olympia National and Olympia Central - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101456674-olympia-national-and-olympia-central-olympia-exhibition-centre-avonmore-and-brook-green-ward",
+        "used_for": "National Hall in the south-east corner, red brick, iron and glazed roof, facade on Hammersmith Road with corner entrance at Olympia Way"
+      },
+      {
+        "title": "Did You Know The Roof Of Olympia Is Retractable? - Londonist",
+        "url": "https://londonist.com/2014/08/climbing-to-the-top-of-olympia",
+        "used_for": "Grand Hall roof height (about 115 ft) and Victorian ironwork"
+      },
+      {
+        "title": "The Grand Hall - Olympia",
+        "url": "https://www.olympia.co.uk/space/the-grand-hall",
+        "used_for": "hall dimensions about 137-140 m by 76 m"
+      },
+      {
+        "title": "Olympia's National Hall receives £2m upgrade",
+        "url": "https://www.olympia.co.uk/press/olympias-national-hall-receives-2m-upgrade",
+        "used_for": "National Hall arched roof re-glazed"
+      }
+    ],
+    "notes": "Grand Hall barrel crown set to 35 m (sources give 115-135 ft), nave span ~50 m within the Overture outline; side aisles 15 m. National Hall barrel assumed parallel to the Grand Hall, crown 26 m. Entrance fronts are painted approximations from listing text (no photos available). The 2026 Heatherwick/SPPARC redevelopment (theatre, hotels, offices, canopy) is not in the footprint data and is not modelled."
   },
   {
     "id": "paddington_station",
@@ -1454,6 +1618,45 @@
       }
     ],
     "notes": "Massing from the Overture footprint at 20 m (6 floors). Facade grid, rooflights and plinth treatment are reconstructed from the 1960s Norman & Dawbarn idiom; no photograph could be fetched."
+  },
+  {
+    "id": "stamford_bridge",
+    "name": "Stamford Bridge (Chelsea FC)",
+    "claims": [
+      "86c51da0-ca51-4c0b-af84-ad5642b6138f",
+      "89551eed-b17f-49a4-a165-1aa9af9550a6",
+      "a89e22dc-242d-488a-97bf-90dcbdbd2f07",
+      "e4d88631-8795-425b-af2d-e603d2ea4b67",
+      "12884a42-26b5-4bb5-be9d-b2e7137aaed8"
+    ],
+    "references": [
+      {
+        "title": "Stamford Bridge (stadium) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Stamford_Bridge_(stadium)",
+        "used_for": "stand names and history, capacity ~40,000"
+      },
+      {
+        "title": "Stamford Bridge - Multiplex",
+        "url": "https://www.multiplex.global/projects/stamford-bridge/",
+        "used_for": "West Stand: three tiers, row of executive boxes, polycarbonate-clad steel roof"
+      },
+      {
+        "title": "Stamford Bridge Football Stadium - Event Masters",
+        "url": "https://www.eventmasters.co.uk/stamford-bridge.html",
+        "used_for": "East Stand 1973 three tiers, only stand surviving the 1990s redevelopment"
+      },
+      {
+        "title": "Stamford Bridge tickets - Tiqets",
+        "url": "https://tiqets.com/en/stamford-bridge-tickets-l145956",
+        "used_for": "photo caption: blue seating spelling CHELSEA under a large roof"
+      },
+      {
+        "title": "Matthew Harding remembered - Chelsea FC",
+        "url": "https://www.chelseafc.com/en/news/article/matthew-harding-remembered---his-chelsea-timeline",
+        "used_for": "North (Matthew Harding) Stand opened November 1994"
+      }
+    ],
+    "notes": "Stand roof heights estimated (West 31 m, East 30 m, Matthew Harding 23 m, Shed End 21 m; Overture gives 7-9 m). Seating rakes are single sloped planes with a glazed box band instead of separate tiers; exterior cladding and signage approximate; floodlights in the roof edges not modelled. The Millennium hotel (Stamford Bridge Hotel) footprint is left to the generic layer."
   },
   {
     "id": "trellick_tower",
