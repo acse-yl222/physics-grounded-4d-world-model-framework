@@ -1,5 +1,5 @@
 // Kensington & Chelsea style residential lamp column: black cast-metal column on a
-// fluted base, swan-neck bracket and a lantern; ~6 m mounting height.
+// fluted base, bracket arm and a lantern; ~6 m mounting height.
 export default {
   id: 'street_lamp',
   kind: 'street',
@@ -33,14 +33,9 @@ export default {
       g.add(o);
       return o;
     };
-    add(new THREE.CylinderGeometry(0.17, 0.22, 1.1, 8).rotateX(Math.PI / 2), black, 0, 0, 0.55);
-    add(new THREE.CylinderGeometry(0.06, 0.09, 5.2, 8).rotateX(Math.PI / 2), black, 0, 0, 3.6);
+    add(new THREE.CylinderGeometry(0.17, 0.22, 1.1, 6).rotateX(Math.PI / 2), black, 0, 0, 0.55);
+    add(new THREE.CylinderGeometry(0.06, 0.09, 5.2, 5).rotateX(Math.PI / 2), black, 0, 0, 3.6);
     add(new THREE.BoxGeometry(0.05, 0.9, 0.05), black, 0, 0.45, 6.12);
-    add(new THREE.TorusGeometry(0.18, 0.025, 4, 8, Math.PI), black, 0, 0.18, 6.0).rotation.set(
-      Math.PI / 2,
-      Math.PI / 2,
-      0,
-    );
     add(new THREE.CylinderGeometry(0.16, 0.1, 0.36, 6).rotateX(Math.PI / 2), lamp, 0, 0.9, 5.88);
     add(new THREE.ConeGeometry(0.22, 0.2, 6).rotateX(Math.PI / 2), black, 0, 0.9, 6.15);
     return g;

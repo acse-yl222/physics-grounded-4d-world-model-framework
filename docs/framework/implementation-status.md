@@ -65,3 +65,19 @@
   contract-workflow.example.yml。上述检查已在本地实际运行。
 - `cache/framework/browser` 保存本地浏览器报告和截图，可在查看后删除；不会公开提交。
   公开部署由 tools/build_public_site.py 选择静态资产，不复制 project 数据或本地配置。
+
+## imperial_corridor：image-to-three.js 城市模型（2026-10-25）
+
+- 新场景 `imperial_corridor`：以经纬度 (-0.200473, 51.506427) 为中心的 8 km × 8 km 区域，
+  范围 lon -0.258203 ~ -0.142743、lat 51.470494 ~ 51.542360，覆盖帝国理工 South Kensington
+  与 White City 校区。几何不复用既有 south_ken / white_city 模型，全部重新生成。
+- `src/urban_geometry/image_to_threejs`：从 Overture Maps（2026-10-21.0）下载建筑、道路、
+  土地利用、水体、树木与街道设施，用 three.js 生成伦敦风格立面、坡屋顶、道路、公园和水面；
+  88 个地标模块按网络参考资料重建并替换 152 个 footprint；`resources/` 资产库提供材质、
+  路灯、K6 电话亭、邮筒、公交站、长椅、信号灯、车辆与树种，并按 Overture 点位实例化。
+- 运行 `20261025T214135Z_534b69` 已通过 `p4d retain` 保留，五个 GLB 图层（buildings、
+  landmarks、ground、trees、street_furniture，Meshopt 压缩后约 78 MB）在统一查看器 5/5 加载。
+- 数据语义：未标注高度/屋顶/立面的建筑为估计值，并在场景数据中逐栋标记 `inferred`；
+  公园散布树木与道路补充路灯为程序生成；车辆资产未放置（无车辆位置数据）。
+  构建环境无法访问图片站点，地标参考来自网页检索文本，近似之处记录在各模块 notes。
+- 验证：113 项 Python、23 项 JavaScript、格式/lint 与 E2E smoke 通过。

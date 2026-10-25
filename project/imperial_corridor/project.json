@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "imperial_corridor",
+  "title": "Imperial South Kensington to White City (8 km)",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.200473,
+      "latitude": 51.506427,
+      "height_m": 0,
+      "vertical_datum": "Flat ground at local zero; no terrain model applied"
+    },
+    "bounds_m": {
+      "min": [-4000.0, -4000.0, 0],
+      "max": [4000.0, 4000.0, 129]
+    }
+  },
+  "inputs": [
+    {
+      "id": "overture",
+      "path": "input/overture/index.json",
+      "source": "Overture Maps release 2026-10-21.0 (s3://overturemaps-us-west-2)",
+      "sha256": "c8785e1705e6482932cd5bb2735a17be8883580225edbcdffe207b7b33aecab7",
+      "license": "Overture Maps (ODbL for OSM-derived features; see docs.overturemaps.org)"
+    }
+  ],
+  "default_view": "default"
+}

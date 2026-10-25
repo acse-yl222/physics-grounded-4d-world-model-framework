@@ -34,7 +34,7 @@ export default {
       [0.13, 0.06, 0.58, 0.22],
       [-0.11, -0.08, 0.6, 0.23],
     ]) {
-      const lobe = new THREE.Mesh(new THREE.IcosahedronGeometry(r, 1), leaf);
+      const lobe = new THREE.Mesh(new THREE.IcosahedronGeometry(r, r > 0.25 ? 1 : 0), leaf);
       lobe.position.set(x, y, z);
       lobe.scale.z = 0.85;
       g.add(lobe);
