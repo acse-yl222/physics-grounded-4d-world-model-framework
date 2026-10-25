@@ -739,6 +739,64 @@
     "notes": "Stands modelled as oriented rectangles fitted to the Overture footprints. Heights raised from the OSM values (6-11 m) to 12-15 m so the roofs meet as described; exact tier rake, floodlight and column positions are approximate. Pitch drawn between the stands (no footprint)."
   },
   {
+    "id": "natural_history_museum",
+    "name": "Natural History Museum",
+    "claims": [
+      "879ff4e2-4778-4c8b-8535-f252df2bc0b1",
+      "f26c3834-e72f-4603-8dd1-28315210b0db",
+      "9e33528c-5619-48da-85c7-6fd332e30473",
+      "5f2a364a-3a51-4fd6-b40a-799f15fbff37"
+    ],
+    "references": [
+      {
+        "title": "Natural History Museum, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Natural_History_Museum,_London",
+        "used_for": "Waterhouse, Romanesque terracotta building, buff and blue-grey terracotta, Gibbs and Canning tiles"
+      },
+      {
+        "title": "Listed Buildings Search (RBKC) - Natural History Museum",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=203737",
+        "used_for": "listing: buff and grey terracotta, pitched slated roof, three-bay centrepiece with two spired towers, end bays with steep pavilion roofs, square-headed ground and round-headed first floor windows with coupled lights"
+      },
+      {
+        "title": "Natural History Museum - Gardenvisit (London and its environs, 1927)",
+        "url": "https://www.gardenvisit.com/book/london_and_its_environs_1927/41_the_natural_history_museum/natural_history_museum",
+        "used_for": "central block with two towers 192 ft high, wings ending in pavilions"
+      },
+      {
+        "title": "Natural History Museum (Bluffton University architecture notes)",
+        "url": "https://homepages.bluffton.edu/~sullivanm/england/london/scimuseum/waterhouse.html",
+        "used_for": "terracotta in yellowish brown with bands of bluish grey"
+      },
+      {
+        "title": "Alfred Waterhouse: museum building, cathedral to nature (NHM)",
+        "url": "https://www.nhm.ac.uk/discover/alfred-waterhouse-museum-building-cathedral-to-nature.html",
+        "used_for": "terracotta over iron and steel frame, cathedral-like Hintze Hall"
+      },
+      {
+        "title": "Darwin Centre - architravel",
+        "url": "https://architravel.com/project/darwin-centre",
+        "used_for": "eight-storey concrete cocoon inside a glass atrium (C.F. Moller)"
+      },
+      {
+        "title": "Danish cocoon completed for London's insects - C.F. Moller",
+        "url": "https://www.cfmoller.com/g/Danish-cocoon-completed-for-Londons-insects-i12627.html",
+        "used_for": "cocoon form, completion 2008/2009"
+      },
+      {
+        "title": "Geological Museum - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Geological_Museum",
+        "used_for": "Allison and Markham building on Exhibition Road (1935), now the Red Zone / Earth Galleries"
+      },
+      {
+        "title": "Nature (1935) on the new Geological Museum",
+        "url": "https://www.nature.com/articles/1351060a0",
+        "used_for": "linked to the Science Museum by corridors over an arched gateway"
+      }
+    ],
+    "notes": "Footprint from Overture (front measured 207 m). Heights are estimates from descriptions: towers 58 m (192 ft), front eaves 19 m, pavilions 24 m + steep roofs, Hintze Hall ridge 34 m; the Overture h (13.7 m) is inferred and ignored. Plan behind the front (gallery wings, light courts, north range) is schematic. Darwin Centre height (28 m) assumed from its eight storeys; Earth Galleries height (22 m + attic) estimated. Lodge modelled as a small terracotta lodge. Facade ornament is painted onto canvas textures."
+  },
+  {
     "id": "princes_gardens_eastside",
     "name": "Eastside Halls, Prince's Gardens (Imperial College)",
     "claims": [
@@ -1085,6 +1143,37 @@
     "notes": "Cladding colour and window pattern are NOT documented in the sources found: charcoal metal module cladding with light frames is an assumption. Atria are placed at equal spacing along the footprint; height 4 storeys (~18 m) replaces Overture h=9.5 m. The Invention Rooms could not be located in the footprint data and are not modelled separately."
   },
   {
+    "id": "science_museum",
+    "name": "Science Museum",
+    "claims": [
+      "7d12ef9f-bee4-4c64-8bed-eadb621be38d",
+      "a79d76d6-b1e1-427e-b57c-857aebf62dde"
+    ],
+    "references": [
+      {
+        "title": "Science Museum, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Science_Museum,_London",
+        "used_for": "East Block by Sir Richard Allison (1913-1928), Centre Block infill 1980, Wellcome Wing 2000 extending to Queen's Gate"
+      },
+      {
+        "title": "Glowing panes - Building",
+        "url": "https://building.co.uk/focus/glowing-panes/8923.article",
+        "used_for": "blue glass wall fills the west elevation of the Wellcome Wing (MacCormac Jamieson Prichard)"
+      },
+      {
+        "title": "Science Museum's Wellcome Wing - Heritage Fund",
+        "url": "https://heritagefund.org.uk/projects/science-museums-wellcome-wing",
+        "used_for": "Wellcome Wing opening 2000"
+      },
+      {
+        "title": "Photo showing the construction of the East Block of the Science Museum",
+        "url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110146179",
+        "used_for": "East Block as a steel-framed stone-faced block on Exhibition Road"
+      }
+    ],
+    "notes": "Footprint from Overture; Overture height (12.9 m, inferred) replaced by estimates: East Block 24 m cornice + attic to 28 m (six public floors), Centre Block 24 m, Wellcome Wing 28 m. The Exhibition Road elevation (rusticated base, recessed giant colonnade, attic) is reconstructed from general descriptions, not measured drawings; column count and window rhythm are approximate. The Museum Lane service range is a schematic stone block."
+  },
+  {
     "id": "shepherds_bush_empire",
     "name": "Shepherd's Bush Empire",
     "claims": [
@@ -1260,6 +1349,54 @@
       }
     ],
     "notes": "Massing from the Overture footprint at 20 m (6 floors). Facade grid, rooflights and plinth treatment are reconstructed from the 1960s Norman & Dawbarn idiom; no photograph could be fetched."
+  },
+  {
+    "id": "victoria_and_albert_museum",
+    "name": "Victoria and Albert Museum",
+    "claims": [
+      "9e8e12eb-0a6c-473a-9dbb-95da1d662ab7",
+      "15e1d65d-685b-4897-83bb-92870507b04a",
+      "35d8865e-446a-4ec3-89b0-d6a1ba5ce494",
+      "3ebbb048-b039-47cd-8cae-0ba1defa99bc"
+    ],
+    "references": [
+      {
+        "title": "Out of the shadows: the facade and decorative sculpture of the V&A, part 1 (V&A Online Journal)",
+        "url": "https://www.vam.ac.uk/content/journals/research-journal/issue-no.-7-autumn-2015/out-of-the-shadows-the-faade-and-decorative-sculpture-of-the-victoria-and-albert-museum,-part-1",
+        "used_for": "219 m red brick and Portland stone front; open lantern in the outline of an imperial crown; 32 statues in niches between first-floor windows"
+      },
+      {
+        "title": "A grand entrance on Cromwell Road (V&A)",
+        "url": "https://www.vam.ac.uk/articles/a-grand-entrance-on-cromwell-road",
+        "used_for": "tower replanned as a three-storey octagonal structure; building brought forward onto Cromwell Road"
+      },
+      {
+        "title": "Victoria and Albert Museum - MIT Dome",
+        "url": "https://dome.mit.edu/handle/1721.3/136858",
+        "used_for": "column-tiered tower supporting an open crown"
+      },
+      {
+        "title": "Entrance, V&A Museum, London (Getty Images caption)",
+        "url": "https://www.gettyimages.com.au/detail/photo/entrance-v-a-museum-london-england-royalty-free-image/2195561429",
+        "used_for": "Portland stone entrance facade; statues of Victoria, Albert, and Fame on the pinnacle of the tower crown"
+      },
+      {
+        "title": "AL_A completes tile-covered entrance and subterranean gallery for V&A (Dezeen)",
+        "url": "https://www.dezeen.com/2017/06/28/ala-amanda-levete-v-a-victoria-albert-museum-exhibition-road-quarter-courtyard-gallery-london/",
+        "used_for": "Exhibition Road Quarter: porcelain-tiled Sackler Courtyard, cafe with tiled roof, refurbished Aston Webb Screen"
+      },
+      {
+        "title": "Treasures of London - The Aston Webb Screen (Exploring London)",
+        "url": "https://exploring-london.com/tag/sir-aston-webb/",
+        "used_for": "screen built to hide boilers, opened up with entrances into the courtyard"
+      },
+      {
+        "title": "Victoria and Albert Museum - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101190187-victoria-and-albert-museum-brompton-hans-town-ward",
+        "used_for": "quadrangle facades (Fowke, Sykes terracotta) at the heart of the museum"
+      }
+    ],
+    "notes": "Footprint from Overture (courtyard garden kept as a hole). Overture h (13.6 m) is inferred; heights are estimates: Cromwell Road range 22 m to the balustrade, frontispiece 25 m, tower crown with Fame at ~55 m (no published height found). Rear ranges, Cast Courts glazed roofs and the Henry Cole Wing block are schematic. Statue niches and stone banding are painted; the tower is simplified to octagonal stages, a column ring and eight crown ribs."
   },
   {
     "id": "westfield_london",
