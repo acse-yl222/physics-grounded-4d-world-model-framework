@@ -25,6 +25,34 @@
     "notes": "Concrete panel pattern (vertical fins with deep-set strip windows), ground-floor recess and the setback/height of the glazed roof storeys are proportioned, not measured: concrete block to 15 m, glazed extension to ~22 m (footprint height 16.8 m). The entrance on the lawn side uses the notch in the outline."
   },
   {
+    "id": "albert_bridge",
+    "name": "Albert Bridge",
+    "claims": [],
+    "references": [
+      {
+        "title": "Albert Bridge, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Albert_Bridge,_London",
+        "used_for": "length 710 ft, width 41 ft, height 66 ft, 1973 central piers, four spans"
+      },
+      {
+        "title": "Ordish-Lefeuvre system - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Ordish%E2%80%93Lefeuvre_system",
+        "used_for": "rigid inclined stays from the towers"
+      },
+      {
+        "title": "Albert Bridge - Institution of Civil Engineers",
+        "url": "https://www.ice.org.uk/what-is-civil-engineering/infrastructure-projects/albert-bridge",
+        "used_for": "towers of a central column surrounded by eight octagonal ones, cast-iron cylinder foundations, 1992 colour scheme"
+      },
+      {
+        "title": "The Glorious Albert Bridge - Battersea Society",
+        "url": "https://www.batterseasociety.org.uk/heritage-blog/the-glorious-albert-bridge",
+        "used_for": "octagonal tollbooths, pink blue and green paintwork"
+      }
+    ],
+    "notes": "No footprint; centreline taken from the scene \"Albert Bridge\" road segment and the Thames polygon (banks at about (2310,-2587) and (2373,-2797)). The scene is flat (water at ground level), so the deck is drawn with a gentle 4 m camber that returns to road level at the banks. Tower spacing from the 384 ft original main span; stay count, tower ornament and the exact distribution of pink/blue/green are approximate."
+  },
+  {
     "id": "albert_court",
     "name": "Albert Court",
     "claims": [
@@ -121,6 +149,69 @@
       }
     ],
     "notes": "Placed on the Overture canopy footprint and the four continent-group footprints (orientation ~7 deg from the group layout). Step and podium dimensions, stage heights (arches, gables at ~24 m, spire 31-51 m, cross to 54 m) are proportioned from descriptions. Sculpture groups and the statue are blocky stand-ins (marble masses with an animal and figures; gilt seated figure); mosaics are painted suggestions. Two small unnamed 2 x 8 m strips ~35 m south-east/south-west of the memorial (identity unknown, generic extrusion gave 17 m towers in the park) are claimed and drawn as low granite plinths."
+  },
+  {
+    "id": "battersea_bridge",
+    "name": "Battersea Bridge",
+    "claims": [],
+    "references": [
+      {
+        "title": "Battersea Bridge - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Battersea_Bridge",
+        "used_for": "Bazalgette 1890 bridge, five spans, cast iron and granite, ~40 ft width"
+      },
+      {
+        "title": "Battersea Bridge - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101080752-battersea-bridge-chelsea-riverside-ward",
+        "used_for": "listing: 5 spans of unequal radii rising to a central apex, iron spans springing from stone-faced piers"
+      },
+      {
+        "title": "Battersea's river crossings - Battersea Society",
+        "url": "https://batterseasociety.org.uk/heritage-blog/batterseas-river-crossings",
+        "used_for": "history and general appearance"
+      }
+    ],
+    "notes": "No footprint; centreline from the scene \"Battersea Bridge\" road, pier positions from the gaps in the scene Thames polygons along it (4 piers, 5 spans). Flat scene: deck rises to a 5 m apex and returns to road level at the banks. Dark green paint with gilt details is from general knowledge, not confirmed by a returned source."
+  },
+  {
+    "id": "battersea_power_station",
+    "name": "Battersea Power Station",
+    "claims": [
+      "42c2cb32-5a3e-438c-b441-94251d9888bd"
+    ],
+    "references": [
+      {
+        "title": "Battersea Power Station - Historic England list entry 1357620",
+        "url": "https://HistoricEngland.org.uk/listing/the-list/list-entry/1357620",
+        "used_for": "steel frame clad in brown Blockley brick in English bond, concrete roofs, pre-cast concrete chimneys, phasing"
+      },
+      {
+        "title": "Battersea Power Station - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101357620-battersea-power-station-queenstown-ward",
+        "used_for": "listing text: Halliday / Scott, boiler house between turbine halls"
+      },
+      {
+        "title": "Battersea Power Station - The Twentieth Century Society",
+        "url": "https://c20society.org.uk/100-buildings/1933-battersea-power-station-london",
+        "used_for": "column-like chimneys on modelled bases, jazz modern brickwork of the vast walls"
+      },
+      {
+        "title": "Battersea Power Station - Gilbert Scott",
+        "url": "https://gilbertscott.org/battersea-power-station",
+        "used_for": "vertical striations accentuating height"
+      },
+      {
+        "title": "Battersea Power Station - WilkinsonEyre",
+        "url": "https://www.wilkinsoneyre.com/projects/battersea-power-station",
+        "used_for": "sky villas around rooftop garden squares above the boiler house and turbine halls"
+      },
+      {
+        "title": "Michaelis Boyd unveils apartments inside Battersea Power Station - Dezeen",
+        "url": "https://www.dezeen.com/?p=1763325",
+        "used_for": "glazed floors added on top of the switch houses"
+      }
+    ],
+    "notes": "Massing from the Overture parts (30 m outer halls, 50 m boiler house, 55 m corner towers, 103 m chimneys). Brick fluting, window strips and stepped tower tiers are proportioned from general photo knowledge, not measured; rooftop villas and glazed top storeys are schematic. Jetty cranes omitted."
   },
   {
     "id": "bbc_television_centre",
@@ -341,6 +432,89 @@
     "notes": "The Overture outline is a single 15 m podium without tower parts; the tower position (-1352, -2138) and orientation (site grid, 26 deg) were fitted to the widest cross that lies inside the outline, wing length 36 m from the centre and width 19 m are estimates. Height 59 m to the ward roof plus a 9 m plant/core top (~68 m) from the storey count. Facade (precast concrete with continuous window bands) is approximate."
   },
   {
+    "id": "chelsea_bridge",
+    "name": "Chelsea Bridge",
+    "claims": [],
+    "references": [
+      {
+        "title": "Chelsea Bridge - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Chelsea_Bridge",
+        "used_for": "1937 self-anchored suspension bridge, first in Britain, steel, dimensions"
+      },
+      {
+        "title": "Grace's Guide - Chelsea Suspension Bridge",
+        "url": "https://www.gracesguide.co.uk/Chelsea_Suspension_Bridge",
+        "used_for": "history of the earlier and present suspension bridges"
+      },
+      {
+        "title": "Battersea's river crossings - Battersea Society",
+        "url": "https://batterseasociety.org.uk/heritage-blog/batterseas-river-crossings",
+        "used_for": "general appearance"
+      }
+    ],
+    "notes": "No footprint; centreline from the scene \"Chelsea Bridge\" road, tower positions from the two gaps in the scene Thames polygons (main span ~108 m). Flat scene: 3.5 m deck camber. Tower height (~22 m above water), lamp finials and the red/white/blue paint split are approximate (one lower-quality source for the colours)."
+  },
+  {
+    "id": "chelsea_harbour_belvedere",
+    "name": "The Belvedere, Chelsea Harbour",
+    "claims": [
+      "b949d968-5c44-48f1-a104-b7d8cf7521bf"
+    ],
+    "references": [
+      {
+        "title": "Chelsea Harbour - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Chelsea_Harbour",
+        "used_for": "Moxley Jenner & Partners, 1986-89 development, Belvedere tower"
+      },
+      {
+        "title": "Belvedere Tower, Chelsea Harbour, London - Manchester History",
+        "url": "https://manchesterhistory.net/architecture/1980/belvedere.html",
+        "used_for": "200 ft tower, bronze cladding, dark blue metal balconies, metallic pagoda-like roof"
+      },
+      {
+        "title": "The Belvedere - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/images/10273",
+        "used_for": "building record"
+      },
+      {
+        "title": "The Belvedere residential development, Chelsea Harbour (1999) - London Museum",
+        "url": "https://londonmuseum.org.uk/collections/v/object-743457/the-belvedere-residential-development-chelsea-harbour",
+        "used_for": "photograph record (caption only)"
+      }
+    ],
+    "notes": "Square Overture footprint chamfered into an octagon; body to 52 m and pagoda roof to ~61 m (200 ft), mast and gilded ball above. The tide ball is drawn at mid height on its mast; it is named in the brief but no returned source confirmed it. Balcony rhythm and roof tier proportions estimated."
+  },
+  {
+    "id": "chelsea_westminster_hospital",
+    "name": "Chelsea and Westminster Hospital",
+    "claims": [
+      "3348b0f2-e92b-4e04-860b-bdf95db229df"
+    ],
+    "references": [
+      {
+        "title": "Chelsea and Westminster Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Chelsea_and_Westminster_Hospital",
+        "used_for": "Sheppard Robson design, St Stephen's site, opened May 1993"
+      },
+      {
+        "title": "Art and surgery - Building magazine",
+        "url": "https://www.building.co.uk/focus/art-surgery/1014174.article",
+        "used_for": "(search summary only) central street and atrium, early ETFE membrane roof, office-type construction"
+      },
+      {
+        "title": "Chapel, Chelsea and Westminster Hospital - London Church Buildings",
+        "url": "https://londonchurchbuildings.com/2024/04/18/chapel-chelsea-westminster-hospital-fulham-road-chelsea/",
+        "used_for": "building context on Fulham Road"
+      },
+      {
+        "title": "Atrium lights - Historic England Archive",
+        "url": "https://images.historicenglandservices.org.uk/industry/engineering-construction-building-hospitals/atrium-lights-jlp01-10-55176-24318220.html",
+        "used_for": "existence of the large atrium (Laing construction photo record, caption only)"
+      }
+    ],
+    "notes": "Footprint and 16.9 m height from Overture; atrium position/size (about 120 x 28 m along the long axis) and the vaulted ETFE roof are inferred from descriptions, not measured. Cladding colour (light panels with blue-grey window bands) is approximate: no returned source specified the materials."
+  },
+  {
     "id": "city_guilds_building",
     "name": "City & Guilds Building (Imperial College)",
     "claims": [
@@ -444,6 +618,34 @@
       }
     ],
     "notes": "Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, following the four-storey description. Panel distribution is a deterministic random pattern, not traced; position of the orange columns/ramp and the roof plant are approximate."
+  },
+  {
+    "id": "grosvenor_bridge",
+    "name": "Grosvenor Bridge",
+    "claims": [],
+    "references": [
+      {
+        "title": "Grosvenor Bridge - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Grosvenor_Bridge",
+        "used_for": "history, 1963-67 rebuild, width 54 m, longest span 53.3 m"
+      },
+      {
+        "title": "Grosvenor Bridge (1967) - Structurae",
+        "url": "https://structurae.net/en/structures/grosvenor-bridge-1967",
+        "used_for": "span list (4 x 53.34 m), ten tracks"
+      },
+      {
+        "title": "9 secrets of the Grosvenor railway bridge - Londonist",
+        "url": "https://londonist.com/london/transport/9-secrets-of-the-grosvenor-railway-bridge",
+        "used_for": "new steel arches replacing the old structure"
+      },
+      {
+        "title": "Two Bridges in One - Shady Old Lady",
+        "url": "https://www.shadyoldlady.com/location/1438",
+        "used_for": "ten separate bridges, one per line, original piers encased in concrete"
+      }
+    ],
+    "notes": "No footprint; extent from the scene rail segments (level 1, deck 6.5 m) crossing the Thames at x~3657-3698 and pier positions from the gaps in the scene river polygons. Arch rise, rib count and colour (grey steel) are approximate. The generic rail layer still draws solid brick sides under each elevated track ribbon."
   },
   {
     "id": "hammersmith_apollo",
@@ -935,6 +1137,71 @@
     "notes": "Stands modelled as oriented rectangles fitted to the Overture footprints. Heights raised from the OSM values (6-11 m) to 12-15 m so the roofs meet as described; exact tier rake, floodlight and column positions are approximate. Pitch drawn between the stands (no footprint)."
   },
   {
+    "id": "lots_road_power_station",
+    "name": "Lots Road Power Station (Powerhouse)",
+    "claims": [
+      "209e903b-012d-4744-89a5-4249311fcea8"
+    ],
+    "references": [
+      {
+        "title": "Lots Road Power Station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lots_Road_Power_Station",
+        "used_for": "history, four original chimneys of which two remain"
+      },
+      {
+        "title": "Powerhouse, Chelsea Waterfront - Architecture Today",
+        "url": "https://architecturetoday.co.uk/?p=380395",
+        "used_for": "Farrells conversion, two restored ~84 m chimneys, 260 apartments"
+      },
+      {
+        "title": "Lots Road Power Station Development - Buro Happold",
+        "url": "https://www.burohappold.com/projects/lots-road-power-station/",
+        "used_for": "existing fabric retained as facade, glass-capped chimneys"
+      },
+      {
+        "title": "From power station to modern living - The Spaces",
+        "url": "https://thespaces.com/chelsea-powerhouse-apartments-london/",
+        "used_for": "terracotta detailing, ground-level arcade, three-storey glazed openings, 100 m atrium"
+      },
+      {
+        "title": "The history behind London's latest power-station conversion - Country Life",
+        "url": "https://countrylife.co.uk/property/the-history-behind-londons-latest-power-station-conversion-267648",
+        "used_for": "large red-brick structure with arched windows"
+      }
+    ],
+    "notes": "Overture footprint (named \"Metropolitan Building\", h 85 m = chimney height). Eaves (28 m), twin pitched roofs (glazed over the north turbine-hall atrium), bay rhythm and chimney positions (two middle positions of the original row of four, on the creek side) are estimates."
+  },
+  {
+    "id": "michelin_house",
+    "name": "Michelin House",
+    "claims": [
+      "57fd7837-1170-4d19-a554-f6c80be4b670"
+    ],
+    "references": [
+      {
+        "title": "Michelin House - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Michelin_House",
+        "used_for": "Espinasse 1911, Bibendum stained glass, corner towers with tyre-stack glass cupolas, faience, tile panels"
+      },
+      {
+        "title": "Michelin House - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101080656-michelin-house-the-main-part-facing-the-fulham-road-brompton-hans-town-ward",
+        "used_for": "listing of the main part facing Fulham Road"
+      },
+      {
+        "title": "Michelin House, Chelsea, London - Manchester History",
+        "url": "https://manchesterhistory.net/architecture/1920/michelin.html",
+        "used_for": "faience facade and Art Nouveau / Art Deco character"
+      },
+      {
+        "title": "Memories of Michelin House - David Adrian Smith",
+        "url": "https://davidadriansmith.com/2023/10/05/memories-of-michelin-house-a-london-marvel/",
+        "used_for": "general appearance of the front and side elevations"
+      }
+    ],
+    "notes": "Overture gives a simplified trapezoid (15 m Fulham Road front widening to 35 m at the rear) and an inferred 9.3 m height; walls are raised to 13 m (towers 15 m + cupolas) from the building's three tall storeys. Facades are painted reconstructions from descriptions (no photos available here); the Bibendum window and race tiles are schematic."
+  },
+  {
     "id": "natural_history_museum",
     "name": "Natural History Museum",
     "claims": [
@@ -1338,6 +1605,36 @@
       }
     ],
     "notes": "The whole footprint (house plus later extensions) is treated in the Lodge idiom: eaves 11.5 m with a 6 m tiled roof slope following the simplified outline (data height 15.7 m), shaped gables placed procedurally on longer edges and tall stacks. The 1928-30 and 2004 additions are not differentiated; the Livingstone and Shackleton statues are not modelled."
+  },
+  {
+    "id": "royal_hospital_chelsea",
+    "name": "Royal Hospital Chelsea",
+    "claims": [
+      "f5e5b611-fb1c-4626-9198-3abae1f5bfab"
+    ],
+    "references": [
+      {
+        "title": "The Royal Hospital: Architectural description - British History Online",
+        "url": "https://prod.british-history.ac.uk/node/84422",
+        "used_for": "central cupola over the vestibule between Great Hall and Chapel, court layout"
+      },
+      {
+        "title": "Royal Hospital Chelsea - Bluffton University photo pages",
+        "url": "https://homepages.bluffton.edu/~Sullivanm/england/london/wrenchelsea/hospital.html",
+        "used_for": "Figure Court colonnade, 32 ft Doric portico columns, inscription along the loggia cornice"
+      },
+      {
+        "title": "The Royal Hospital Chelsea: Inside Christopher Wren's masterpiece in SW3 - Country Life",
+        "url": "https://www.countrylife.co.uk/architecture/the-royal-hospital-chelsea-inside-christopher-wrens-masterpiece-in-sw3-257893",
+        "used_for": "red brick with stone dressings, Figure Court as the oldest part"
+      },
+      {
+        "title": "Royal Hospital Chelsea - Chelsea Pensioners",
+        "url": "https://www.chelsea-pensioners.co.uk/node/23",
+        "used_for": "general building description"
+      }
+    ],
+    "notes": "Footprint from Overture (h 7.5 m there is too low; eaves set to 12 m for the three-storey wards and 16 m for the Hall/Chapel range). Roofs are hipped volumes over hand-fitted rectangles, so junctions are simplified. Cupola height (~38 m) and dormer/chimney rhythm estimated; not measured."
   },
   {
     "id": "royal_school_of_mines",
