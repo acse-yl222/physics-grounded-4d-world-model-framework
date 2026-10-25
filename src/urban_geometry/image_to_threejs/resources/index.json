@@ -1,0 +1,358 @@
+{
+  "assets": [
+    {
+      "id": "bench",
+      "kind": "street",
+      "name": "Bench",
+      "file": "street/bench.mjs",
+      "size": [
+        1.8,
+        0.65,
+        0.85
+      ],
+      "references": [
+        {
+          "title": "RBKC Streetscape guide, chapter 4 - street furniture",
+          "url": "https://www.rbkc.gov.uk/media/document/chapter-4---street-furniture",
+          "used_for": "standard bench types: timber seat on metal frame"
+        }
+      ],
+      "notes": "Faces +y."
+    },
+    {
+      "id": "bicycle_stand",
+      "kind": "street",
+      "name": "Sheffield cycle stand",
+      "file": "street/bicycle_stand.mjs",
+      "size": [
+        0.8,
+        0.1,
+        0.8
+      ],
+      "references": [
+        {
+          "title": "RBKC Streetscape guide, chapter 4 - street furniture",
+          "url": "https://www.rbkc.gov.uk/media/document/chapter-4---street-furniture",
+          "used_for": "cycle stands in the street furniture palette"
+        }
+      ],
+      "notes": "One stand per mapped point; mapped capacity is not modelled."
+    },
+    {
+      "id": "bollard",
+      "kind": "street",
+      "name": "Cast-iron bollard",
+      "file": "street/bollard.mjs",
+      "size": [
+        0.25,
+        0.25,
+        0.95
+      ],
+      "references": [
+        {
+          "title": "RBKC Streetscape guide, part 2 - street furniture",
+          "url": "https://www.rbkc.gov.uk/media/document/part-2---street-furniture",
+          "used_for": "black cast-iron bollards in conservation areas"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "bus_stop",
+      "kind": "street",
+      "name": "Bus stop with shelter",
+      "file": "street/bus_stop.mjs",
+      "size": [
+        3.6,
+        1.6,
+        2.9
+      ],
+      "references": [
+        {
+          "title": "TfL Accessible Bus Stop Design Guidance (copy)",
+          "url": "https://www.slideshare.net/slideshow/busstopaccessible-designguidancepdf/256817600",
+          "used_for": "stop elements: post and flag, shelter, kerb"
+        },
+        {
+          "title": "Surrey bus stop technical specifications",
+          "url": "https://www.surreycc.gov.uk/land-planning-and-development/healthy-streets/requirements-and-guidance/section?id=12.7",
+          "used_for": "clear area between flag and shelter"
+        }
+      ],
+      "notes": "Overture records the stop, not whether it has a shelter; every stop gets one."
+    },
+    {
+      "id": "cycle_hire_dock",
+      "kind": "street",
+      "name": "Santander Cycles docking station",
+      "file": "street/cycle_hire_dock.mjs",
+      "size": [
+        6,
+        1.8,
+        2.3
+      ],
+      "references": [
+        {
+          "title": "Santander Cycles - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Santander_Cycles",
+          "used_for": "scheme, red bikes, 8D Technologies docks"
+        },
+        {
+          "title": "TfL guidance for suspending cycle hire docking stations",
+          "url": "https://www.TfL.gov.uk/cdn/static/cms/documents/guidance-for-suspending-cycle-hire-docking-stations-final-20210816.pdf",
+          "used_for": "0.75 m per docking point, 2.0 m allowance"
+        }
+      ],
+      "notes": "Fixed 6 docking points; real station sizes vary."
+    },
+    {
+      "id": "post_box",
+      "kind": "street",
+      "name": "Pillar box",
+      "file": "street/post_box.mjs",
+      "size": [
+        0.6,
+        0.6,
+        1.65
+      ],
+      "references": [
+        {
+          "title": "Pillar box - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/Pillar_box",
+          "used_for": "form and colours"
+        },
+        {
+          "title": "George V pillar box, Sheffield collection",
+          "url": "https://shimmer.shu.ac.uk/luna/servlet/detail/SHU~3~3~510779~150993",
+          "used_for": "height about 165 cm"
+        },
+        {
+          "title": "Pillar box, Falkirk collections",
+          "url": "https://collections.falkirk.gov.uk/objects/86335766/pillar-box",
+          "used_for": "base diameter about 59 cm"
+        }
+      ],
+      "notes": "Royal cypher omitted."
+    },
+    {
+      "id": "street_lamp",
+      "kind": "street",
+      "name": "Street lamp column",
+      "file": "street/street_lamp.mjs",
+      "size": [
+        0.5,
+        1.4,
+        6.4
+      ],
+      "references": [
+        {
+          "title": "RBKC Streetscape guide, part 2 - street furniture",
+          "url": "https://www.rbkc.gov.uk/media/document/part-2---street-furniture",
+          "used_for": "DW Windsor Chester column with Chelsea Coronet lantern on residential roads"
+        },
+        {
+          "title": "Essex design guide - street lighting",
+          "url": "https://www.essexdesignguide.co.uk/design-details/highways-technical-manual/street-lighting",
+          "used_for": "typical 6 m mounting height"
+        }
+      ],
+      "notes": "One generic heritage column for all roads; lantern simplified. The arm points along +y (towards the road)."
+    },
+    {
+      "id": "telephone_box",
+      "kind": "street",
+      "name": "K6 telephone kiosk",
+      "file": "street/telephone_box.mjs",
+      "size": [
+        0.91,
+        0.91,
+        2.51
+      ],
+      "references": [
+        {
+          "title": "Post Office telephone kiosk No. 6 - Science Museum Group",
+          "url": "https://collection.sciencemuseum.org.uk/objects/co33578/post-office-telephone-kiosk-no-6-1936-1968-telephone-box",
+          "used_for": "K6 design and date"
+        },
+        {
+          "title": "K6 Telephone Box - Timberscombe",
+          "url": "https://timberscombevillage.com/k6-telephone-box/",
+          "used_for": "height 8 ft 3 in (2.51 m)"
+        },
+        {
+          "title": "RBKC listed building description",
+          "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=1415684",
+          "used_for": "three feet square plan, shallow domed roof, cast iron painted red"
+        }
+      ],
+      "notes": "Pane glazing drawn as texture; crown reliefs omitted."
+    },
+    {
+      "id": "traffic_signal",
+      "kind": "street",
+      "name": "Traffic signal",
+      "file": "street/traffic_signal.mjs",
+      "size": [
+        0.4,
+        0.4,
+        3.6
+      ],
+      "references": [
+        {
+          "title": "Reducing street clutter: shared signals and lighting (SWOV)",
+          "url": "https://swov.nl/en/publicatie/reducing-street-clutter-shared-signals-and-lighting",
+          "used_for": "signal pole as a separate street element"
+        }
+      ],
+      "notes": "Aspects drawn red/amber/green, not timed."
+    },
+    {
+      "id": "waste_basket",
+      "kind": "street",
+      "name": "Litter bin",
+      "file": "street/waste_basket.mjs",
+      "size": [
+        0.6,
+        0.6,
+        1.05
+      ],
+      "references": [
+        {
+          "title": "RBKC Streetscape guide, chapter 4 - street furniture",
+          "url": "https://www.rbkc.gov.uk/media/document/chapter-4---street-furniture",
+          "used_for": "black litter bins as part of the standard street furniture palette"
+        }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "black_cab",
+      "kind": "vehicle",
+      "name": "London taxi (LEVC TX)",
+      "file": "vehicles/black_cab.mjs",
+      "size": [
+        1.87,
+        4.86,
+        1.89
+      ],
+      "references": [
+        {
+          "title": "LEVC TX - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/LEVC_TX",
+          "used_for": "length 4857 mm, width 1874 mm, height 1888 mm, wheelbase 2986 mm"
+        },
+        {
+          "title": "LEVC TX review - CAR magazine",
+          "url": "https://carmagazine.co.uk/car-reviews/levc/levc-tx-review-londons-new-electric-black-taxi-cab-driven",
+          "used_for": "body form and roof sign"
+        }
+      ],
+      "notes": "Not placed by the default build: there is no recorded vehicle position data for this scene."
+    },
+    {
+      "id": "double_decker_bus",
+      "kind": "vehicle",
+      "name": "New Routemaster bus",
+      "file": "vehicles/double_decker_bus.mjs",
+      "size": [
+        2.52,
+        11.23,
+        4.39
+      ],
+      "references": [
+        {
+          "title": "New Routemaster - Wikipedia",
+          "url": "https://en.wikipedia.org/wiki/New_Routemaster",
+          "used_for": "length 11.23 m, width 2.52 m, height 4.39 m"
+        },
+        {
+          "title": "New London Bus | Heatherwick Studio",
+          "url": "https://archilovers.com/projects/62870/new-london-bus.html",
+          "used_for": "wrap-around stair glazing"
+        }
+      ],
+      "notes": "Not placed by the default build: there is no recorded vehicle position data for this scene."
+    },
+    {
+      "id": "hatchback",
+      "kind": "vehicle",
+      "name": "Hatchback car",
+      "file": "vehicles/hatchback.mjs",
+      "size": [
+        1.8,
+        4.2,
+        1.45
+      ],
+      "references": [
+        {
+          "title": "LEVC dimensions table - VehicleScore",
+          "url": "https://vehiclescore.co.uk/car-dimensions-check/levc",
+          "used_for": "dimension conventions (length/width/height) used for UK vehicle data"
+        }
+      ],
+      "notes": "Generic proportions, not a specific model. Not placed by default (no vehicle position data)."
+    },
+    {
+      "id": "conifer",
+      "kind": "vegetation",
+      "name": "Conifer",
+      "file": "vegetation/conifer.mjs",
+      "size": [
+        0.35,
+        0.35,
+        1
+      ],
+      "references": [
+        {
+          "title": "London plane - Gdansk tree trail",
+          "url": "https://pg.edu.pl/en/sustainable-development/tree-trail/london-plane",
+          "used_for": "contrast species set for park planting variety"
+        }
+      ],
+      "notes": "Generic dark conical tree used sparingly for variety."
+    },
+    {
+      "id": "lime_tree",
+      "kind": "vegetation",
+      "name": "Common lime",
+      "file": "vegetation/lime_tree.mjs",
+      "size": [
+        0.45,
+        0.45,
+        1
+      ],
+      "references": [
+        {
+          "title": "London Plane (Yale Nature Walk)",
+          "url": "https://naturewalk.yale.edu/node/126",
+          "used_for": "contrast: plane spreading crown vs. narrower avenue trees"
+        }
+      ],
+      "notes": "Generic ovoid broadleaf used for variety."
+    },
+    {
+      "id": "london_plane",
+      "kind": "vegetation",
+      "name": "London plane",
+      "file": "vegetation/london_plane.mjs",
+      "size": [
+        0.65,
+        0.65,
+        1
+      ],
+      "references": [
+        {
+          "title": "Platanus x hispanica - Ebben nurseries",
+          "url": "https://www.ebben.nl/en/treeebb/plhispan-platanus-x-hispanica/",
+          "used_for": "height 20-40 m, crown 18-25 m wide, rounded semi-open crown"
+        },
+        {
+          "title": "The London Plane (treetree.co.uk)",
+          "url": "https://www.treetree.co.uk/treetree_downloads/The_London_Plane.pdf",
+          "used_for": "London street tree form"
+        }
+      ],
+      "notes": "Crown as three overlapping low-poly lobes."
+    }
+  ]
+}

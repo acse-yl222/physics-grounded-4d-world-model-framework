@@ -1,7 +1,7 @@
 // Generic building generator for every footprint not replaced by a landmark module.
 import * as THREE from 'three';
 import { MeshBatch, box, cap, facade, mat, pitchedRoof, roof, shopfront, walls } from './kit.mjs';
-import { FACADES } from './textures.mjs';
+import { FACADES } from '../resources/materials/textures.mjs';
 
 const PITCHED = {
   gabled: 'gabled',

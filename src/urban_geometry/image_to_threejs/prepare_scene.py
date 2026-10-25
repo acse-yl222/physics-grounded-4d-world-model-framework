@@ -531,21 +531,126 @@ def build_areas(land_use, land, land_cover, water):
     return areas, water_out, trees
 
 
+# Mapped point features -> reusable asset ids in resources/.
+ASSET_FOR_CLASS = {
+    "street_lamp": "street_lamp",
+    "bench": "bench",
+    "bus_stop": "bus_stop",
+    "post_box": "post_box",
+    "telephone": "telephone_box",
+    "bollard": "bollard",
+    "traffic_signals": "traffic_signal",
+    "waste_basket": "waste_basket",
+    "bicycle_parking": "bicycle_stand",
+    "bicycle_rental": "cycle_hire_dock",
+}
+LIT_ROADS = {"primary", "secondary", "tertiary", "trunk", "residential", "unclassified"}
+LAMP_SPACING_M = 32.0
+
+
+class RoadIndex:
+    """Grid of carriageway segments for nearest-road queries."""
+
+    def __init__(self, roads, cell=40.0):
+        self.cell, self.grid = cell, defaultdict(list)
+        for r in roads:
+            if r["level"] or prepare_kind(r["cls"]) is None:
+                continue
+            for a, b in itertools.pairwise(r["line"]):
+                for key in self.cells(a, b):
+                    self.grid[key].append((a, b, r))
+
+    def cells(self, a, b):
+        c = self.cell
+        x0, x1 = sorted((a[0], b[0]))
+        y0, y1 = sorted((a[1], b[1]))
+        for i in range(int(x0 // c), int(x1 // c) + 1):
+            for j in range(int(y0 // c), int(y1 // c) + 1):
+                yield i, j
+
+    def nearest(self, x, y, radius=45.0):
+        best = None
+        i, j = int(x // self.cell), int(y // self.cell)
+        for di in (-1, 0, 1):
+            for dj in (-1, 0, 1):
+                for a, b, r in self.grid.get((i + di, j + dj), ()):
+                    dx, dy = b[0] - a[0], b[1] - a[1]
+                    ll = dx * dx + dy * dy or 1e-9
+                    t = max(0.0, min(1.0, ((x - a[0]) * dx + (y - a[1]) * dy) / ll))
+                    px, py = a[0] + t * dx, a[1] + t * dy
+                    d = math.hypot(x - px, y - py)
+                    if d <= radius and (best is None or d < best[0]):
+                        best = (d, px, py, r)
+        return best
+
+
+def prepare_kind(cls):
+    return None if cls in ("footway", "path", "steps", "cycleway", "bridleway", "track") else cls
+
+
+def heading_to(x, y, near):
+    """Rotation about z turning an asset's front (+y) towards the nearest road."""
+    if near is None:
+        return 0.0
+    _, px, py, _ = near
+    return round(math.atan2(py - y, px - x) - math.pi / 2, 3)
+
+
+def build_placements(infra, roads):
+    """Asset placements {asset: [[x, y, heading, procedural]]}.
+
+    Mapped points keep their position (procedural = 0). Street lamps are also
+    spaced along lit roads where none is mapped nearby (procedural = 1).
+    """
+    index = RoadIndex(roads)
+    out = defaultdict(list)
+    for f in infra:
+        asset = ASSET_FOR_CLASS.get(f.get("class"))
+        if asset and f["geometry"]["type"] == "Point":
+            x, y = f["geometry"]["point"]
+            out[asset].append([round(x, 1), round(y, 1), heading_to(x, y, index.nearest(x, y)), 0])
+    mapped = defaultdict(list)
+    for x, y, *_ in out["street_lamp"]:
+        mapped[(int(x // 40), int(y // 40))].append((x, y))
+
+    def near_mapped(x, y):
+        i, j = int(x // 40), int(y // 40)
+        return any(
+            math.hypot(x - mx, y - my) < 20
+            for di in (-1, 0, 1)
+            for dj in (-1, 0, 1)
+            for mx, my in mapped.get((i + di, j + dj), ())
+        )
+
+    for r in roads:
+        if r["cls"] not in LIT_ROADS or r["level"]:
+            continue
+        side, carry = 1, LAMP_SPACING_M / 2
+        for a, b in itertools.pairwise(r["line"]):
+            length = math.dist(a, b)
+            if length < 1e-6:
+                continue
+            ux, uy = (b[0] - a[0]) / length, (b[1] - a[1]) / length
+            t = carry
+            while t < length:
+                off = r["w"] / 2 + 1.2
+                x = a[0] + ux * t - uy * off * side
+                y = a[1] + uy * t + ux * off * side
+                if not near_mapped(x, y):
+                    # Lamp arm (+y) points back across the carriageway.
+                    heading = math.atan2(uy * side, -ux * side) - math.pi / 2
+                    out["street_lamp"].append([round(x, 1), round(y, 1), round(heading, 3), 1])
+                side = -side
+                t += LAMP_SPACING_M
+            carry = t - length
+    return dict(out)
+
+
 def build_fixtures(infra):
     out = defaultdict(list)
     for f in infra:
         cls, geom = f.get("class"), f["geometry"]
-        if geom["type"] == "Point" and cls in (
-            "street_lamp",
-            "bench",
-            "bus_stop",
-            "post_box",
-            "telephone",
-            "bollard",
-            "traffic_signals",
-        ):
-            out[cls].append([round(v, 1) for v in geom["point"]])
-        elif geom["type"] == "LineString" and cls in ("wall", "fence", "hedge", "retaining_wall"):
+        if geom["type"] == "LineString" and cls in ("wall", "fence", "hedge", "retaining_wall"):
             out[cls].append([[round(x, 1), round(y, 1)] for x, y in geom["line"]])
     return dict(out)
 
@@ -573,6 +678,7 @@ def main() -> None:
     areas, water, trees = build_areas(
         load("land_use"), load("land"), load("land_cover"), load("water")
     )
+    infra = load("infrastructure")
     index = json.loads((args.overture / "index.json").read_text())
     scene = {
         "scene_id": cfg["scene_id"],
@@ -589,7 +695,8 @@ def main() -> None:
         "areas": areas,
         "water": water,
         "trees": trees,
-        "fixtures": build_fixtures(load("infrastructure")),
+        "fixtures": build_fixtures(infra),
+        "placements": build_placements(infra, roads),
     }
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(scene, separators=(",", ":")))

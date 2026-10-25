@@ -38,6 +38,9 @@ export default {
   and `group.rotation.z = frame.angle`, or build directly in scene coordinates from
   `polys`.
 - `scene`: the whole prepared scene (read only), e.g. to look up nearby roads.
+- `asset(id)` / `placeAssets(id, [[x, y, heading], …])`: reuse an asset from the
+  `resources/` library (street furniture, vehicles, trees) instead of modelling it
+  again — e.g. lamps along a forecourt or a K6 kiosk beside an entrance.
 
 ## Kit (`ctx.kit`, see `three/kit.mjs`)
 
@@ -90,3 +93,18 @@ street_w`) and prints triangle counts plus any page errors. `--context 0` hides 
 surrounding city. Look at the screenshots and iterate.
 `python3 src/urban_geometry/image_to_threejs/find_buildings.py --name … | --near X Y
 --radius R` lists footprint ids, centroids and heights.
+
+## Reusable assets (`resources/`)
+
+Anything that appears more than once — street furniture, vehicles, trees — is an
+asset in `resources/<street|vehicles|vegetation>/<id>.mjs` with the same no-import
+contract plus `kind` and `size: [width, depth, height]` (metres). `build({ THREE, kit })`
+returns a group with its origin at the base centre, z up and the front facing +y;
+vegetation is authored at 1 m height and scaled per tree. Facade, roof, road and
+ground materials are in `resources/materials/textures.mjs` and reached through
+`kit.facade`, `kit.roof`, `kit.road`, `kit.ground`.
+
+Mapped Overture points are placed automatically (`prepare_scene.py`,
+`ASSET_FOR_CLASS`), oriented towards the nearest carriageway. Add a new asset, run
+`node collect_landmarks.mjs` to refresh `resources/index.json`, and check it with
+`node render.cjs gallery`.

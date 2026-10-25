@@ -10,7 +10,7 @@ import {
   roadTexture,
   roofTexture,
   shopTexture,
-} from './textures.mjs';
+} from '../resources/materials/textures.mjs';
 
 export { canvasTexture, rng };
 

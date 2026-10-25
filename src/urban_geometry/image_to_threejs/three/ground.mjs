@@ -1,5 +1,6 @@
 // Ground layers: base terrain, land use, water, roads, rails, walls and trees.
 import * as THREE from 'three';
+import { instance } from './assets.mjs';
 import { MeshBatch, box, cap, ground, mat, road } from './kit.mjs';
 
 // Draw order by small vertical offsets (metres) so coplanar layers never z-fight.
@@ -266,7 +267,7 @@ export function buildGround(scene, { bounds } = {}) {
 }
 
 /** Instanced trees from mapped points plus scattered trees in parks and woods. */
-export function buildTrees(scene, { bounds, skipNear = [] } = {}) {
+export function buildTrees(scene, { bounds, assets } = {}) {
   const pts = scene.trees.filter((t) => inside(t, bounds)).map(([x, y, s]) => [x, y, s]);
   let seed = 1;
   const rand = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
@@ -299,40 +300,47 @@ export function buildTrees(scene, { bounds, skipNear = [] } = {}) {
         pts.push([px, py, rand()]);
       }
   }
+  // Species from the resources/vegetation library; heights in metres per species.
   const species = [
-    { crown: mat('foliage'), scale: 1 },
-    { crown: mat('dark_foliage'), scale: 1.15 },
-    { crown: mat('#5d8a45'), scale: 0.85 },
+    { id: 'london_plane', h: [12, 24] }, // 60 %
+    { id: 'lime_tree', h: [10, 18] }, // 30 %
+    { id: 'conifer', h: [7, 14] }, // 10 %
   ];
-  const crownGeo = new THREE.IcosahedronGeometry(1, 1);
-  const trunkGeo = new THREE.CylinderGeometry(0.18, 0.28, 1, 6)
-    .rotateX(Math.PI / 2)
-    .translate(0, 0, 0.5);
   const group = new THREE.Group();
   group.name = 'trees';
-  const m = new THREE.Matrix4(),
-    q = new THREE.Quaternion(),
-    up = new THREE.Vector3(0, 0, 1);
   const buckets = species.map(() => []);
-  for (const p of pts) buckets[Math.floor(p[2] * 997) % species.length].push(p);
-  buckets.forEach((list, si) => {
-    if (!list.length) return;
-    const crowns = new THREE.InstancedMesh(crownGeo, species[si].crown, list.length);
-    const trunks = new THREE.InstancedMesh(trunkGeo, mat('bark'), list.length);
-    crowns.name = `tree_crowns_${si}`;
-    trunks.name = `tree_trunks_${si}`;
-    list.forEach(([x, y, s], k) => {
-      const h = (8 + s * 10) * species[si].scale,
-        r = h * 0.32;
-      q.setFromAxisAngle(up, s * 6.28);
-      m.compose(new THREE.Vector3(x, y, h - r * 0.9), q, new THREE.Vector3(r, r, r * 1.1));
-      crowns.setMatrixAt(k, m);
-      m.compose(new THREE.Vector3(x, y, 0), q, new THREE.Vector3(1, 1, h - r * 1.4));
-      trunks.setMatrixAt(k, m);
-    });
-    group.add(crowns, trunks);
+  for (const p of pts) {
+    const r = (p[2] * 997) % 1;
+    buckets[r < 0.6 ? 0 : r < 0.9 ? 1 : 2].push([p[0], p[1], p[2] * 6.283, p[2]]);
+  }
+  buckets.forEach((list, k) => {
+    const sp = species[k];
+    group.add(
+      instance(assets.get(sp.id), list, {
+        name: `trees:${sp.id}`,
+        scaleOf: (p) => sp.h[0] + (sp.h[1] - sp.h[0]) * ((p[3] * 7.13) % 1),
+      }),
+    );
   });
   group.userData.count = pts.length;
+  return group;
+}
+
+/** Street furniture: mapped (and procedural lamp) placements from the library. */
+export function buildFurniture(scene, { bounds, assets } = {}) {
+  const group = new THREE.Group();
+  group.name = 'street_furniture';
+  for (const [id, list] of Object.entries(scene.placements ?? {})) {
+    const def = assets.get(id);
+    if (!def) throw new Error(`No resources asset for placement '${id}'`);
+    group.add(
+      instance(
+        def,
+        list.filter((p) => inside(p, bounds)),
+        { name: `furniture:${id}` },
+      ),
+    );
+  }
   return group;
 }
 

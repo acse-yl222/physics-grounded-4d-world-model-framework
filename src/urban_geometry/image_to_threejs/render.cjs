@@ -3,6 +3,7 @@
 //
 //   node render.cjs landmark <id> [--out DIR] [--views ne,sw,street_s] [--shadows]
 //   node render.cjs region <x> <y> <r> [--out DIR] [--views ne,top]
+//   node render.cjs gallery [--out DIR]            (all resources/ assets)
 //   node render.cjs export --out DIR [--layers buildings,ground,trees,landmarks] [--tile M]
 //
 // Screenshots are written as <out>/<name>_<view>.png; exports as <out>/*.glb.
@@ -113,7 +114,10 @@ async function main() {
         const [x, y, r] = o._.slice(1);
         name = `region_${x}_${y}_${r}`;
         q = `x=${x}&y=${y}&r=${r}`;
-      } else throw new Error('mode must be landmark | region | export');
+      } else if (mode === 'gallery') {
+        name = 'gallery';
+        q = 'gallery=1&context=0';
+      } else throw new Error('mode must be landmark | region | gallery | export');
       if (o.shadows) q += '&shadows=1';
       if (o.scene) q += `&scene=${o.scene}`;
       await page.goto(`${base}?${q}`);

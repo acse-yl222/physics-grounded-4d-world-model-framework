@@ -9,7 +9,8 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 import { buildGeneric } from './three/generic.mjs';
-import { buildGround, buildTrees } from './three/ground.mjs';
+import { assetObject, loadAssets } from './three/assets.mjs';
+import { buildFurniture, buildGround, buildTrees } from './three/ground.mjs';
 import { buildLandmark, loadLandmark } from './three/landmarks.mjs';
 
 const params = new URLSearchParams(location.search);
@@ -106,13 +107,30 @@ const stats = {};
 async function main() {
   const scene = await loadScene();
   const index = await landmarkIndex();
+  const assets = await loadAssets();
   const allClaims = new Set(index.flatMap((l) => l.claims ?? []));
   let bounds = null;
-  if (params.get('landmark')) {
+  if (params.get('gallery')) {
+    // Asset library gallery: every resources/ asset in a row, vehicles and trees scaled.
+    let x = 0;
+    const gallery = new THREE.Group();
+    for (const def of assets.values()) {
+      const tall = def.kind === 'vegetation' ? 12 : 1;
+      const o = assetObject(def);
+      o.scale.setScalar(tall);
+      o.position.x = x + (def.size[0] * tall) / 2;
+      x += def.size[0] * tall + 2;
+      gallery.add(o);
+    }
+    world.add(gallery);
+    focus = { x: x / 2, y: 0, z: 2, size: x * 0.35 };
+    bounds = { x0: -1e9, y0: -1e9, x1: -1e9 + 1, y1: -1e9 + 1 };
+    stats.assets = [...assets.keys()];
+  } else if (params.get('landmark')) {
     const id = params.get('landmark');
     const def = await loadLandmark(id);
     def.claims?.forEach((c) => allClaims.add(c));
-    const obj = buildLandmark(def, scene);
+    const obj = buildLandmark(def, scene, assets);
     world.add(obj);
     world.updateMatrixWorld(true);
     const box = new THREE.Box3().setFromObject(obj);
@@ -139,13 +157,14 @@ async function main() {
           b.c[1] >= bounds.y0 &&
           b.c[1] < bounds.y1
         )
-          world.add(buildLandmark(await loadLandmark(l.id), scene));
+          world.add(buildLandmark(await loadLandmark(l.id), scene, assets));
       }
   }
   if (params.get('context') !== '0') {
     world.add(buildGeneric(scene, { bounds, skip: allClaims }));
     world.add(buildGround(scene, { bounds }));
-    world.add(buildTrees(scene, { bounds }));
+    world.add(buildTrees(scene, { bounds, assets }));
+    world.add(buildFurniture(scene, { bounds, assets }));
   }
   world.traverse((o) => {
     if (o.isMesh) {
@@ -177,6 +196,7 @@ function triangles(root) {
 async function exportLayers(spec) {
   const scene = await loadScene();
   const index = await landmarkIndex();
+  const assets = await loadAssets();
   const claims = new Set(index.flatMap((l) => l.claims ?? []));
   const out = {};
   for (const layer of spec.layers) {
@@ -185,11 +205,13 @@ async function exportLayers(spec) {
     root.name = `${spec.prefix ?? ''}${layer}`;
     if (layer === 'buildings') root.add(buildGeneric(scene, { bounds: spec.bounds, skip: claims }));
     if (layer === 'ground') root.add(buildGround(scene, { bounds: spec.bounds }));
-    if (layer === 'trees') root.add(buildTrees(scene, { bounds: spec.bounds }));
+    if (layer === 'trees') root.add(buildTrees(scene, { bounds: spec.bounds, assets }));
+    if (layer === 'street_furniture')
+      root.add(buildFurniture(scene, { bounds: spec.bounds, assets }));
     if (layer === 'landmarks')
       for (const l of index) {
         try {
-          root.add(buildLandmark(await loadLandmark(l.id), scene));
+          root.add(buildLandmark(await loadLandmark(l.id), scene, assets));
         } catch (e) {
           out.errors = [...(out.errors ?? []), `${l.id}: ${e.message}`];
         }

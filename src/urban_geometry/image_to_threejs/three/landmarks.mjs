@@ -3,6 +3,7 @@
 // returns a THREE.Object3D in scene ENU metres that replaces the claimed footprints.
 import * as THREE from 'three';
 import * as kit from './kit.mjs';
+import { assetObject, instance } from './assets.mjs';
 import { buildGeneric } from './generic.mjs';
 
 export async function loadLandmark(id, base = new URL('../landmarks/', import.meta.url)) {
@@ -13,7 +14,11 @@ export async function loadLandmark(id, base = new URL('../landmarks/', import.me
   return def;
 }
 
-export function buildLandmark(def, scene) {
+export function buildLandmark(def, scene, assets = new Map()) {
+  const asset = (id) => {
+    if (!assets.has(id)) throw new Error(`${def.id}: unknown resources asset '${id}'`);
+    return assets.get(id);
+  };
   const claims = new Set(def.claims ?? []);
   const buildings = scene.buildings.filter((b) => claims.has(b.id));
   const missing = [...claims].filter((id) => !buildings.some((b) => b.id === id));
@@ -27,6 +32,10 @@ export function buildLandmark(def, scene) {
     byId: Object.fromEntries(buildings.map((b) => [b.id, b])),
     frame,
     scene,
+    /** Copy of a resources/ asset (street furniture, vehicles, trees) to place by hand. */
+    asset: (id) => assetObject(asset(id)),
+    /** Instanced copies of an asset at [[x, y, heading], ...] scene coordinates. */
+    placeAssets: (id, placements, opts) => instance(asset(id), placements, opts),
     /** Generic fallback for a claimed footprint the module does not model in detail. */
     generic: (ids) =>
       buildGeneric({

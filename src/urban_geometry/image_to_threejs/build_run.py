@@ -29,7 +29,8 @@ LAYERS = {
     "buildings": "Generic buildings (Overture footprints, procedural facades)",
     "landmarks": "Landmark models reconstructed from reference material",
     "ground": "Roads, pavements, rail, land use, parks and water",
-    "trees": "Mapped and scattered trees",
+    "trees": "Mapped and scattered trees (resources/vegetation)",
+    "street_furniture": "Lamps, benches, bus stops, post boxes, signals (resources/street)",
 }
 
 
