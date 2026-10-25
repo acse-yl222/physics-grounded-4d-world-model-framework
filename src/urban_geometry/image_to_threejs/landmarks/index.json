@@ -56,6 +56,76 @@
     "notes": "No listing text with materials was returned by search; the red brick with Portland stone dressings, slate roofs, dormers and chimneys follow the well-known appearance of the quad and Webb's Imperial work and are approximate. Ranges are split into hipped-roof rectangles fitted to the footprints; eaves at ~13.5 m (Union 14.5 m) so ridges match the footprint heights (16.8 / 17.8 m). Gateway proportions estimated."
   },
   {
+    "id": "blackett_laboratory",
+    "name": "Blackett Laboratory (Imperial College Physics)",
+    "claims": [
+      "fc97c25d-2316-42d9-8db4-9cd9ad109b99"
+    ],
+    "references": [
+      {
+        "title": "Blackett Laboratory - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Blackett_Laboratory",
+        "used_for": "corner of Prince Consort Road and Queen's Gate; Physics since completion in 1961"
+      },
+      {
+        "title": "The story of physics at South Kensington - Imperial College",
+        "url": "https://www.imperial.ac.uk/natural-sciences/departments/physics/about-us/department-history/the-story-of-physics-at-south-kensington/",
+        "used_for": "planned as a first-class steel frame building from the early 1950s"
+      },
+      {
+        "title": "From the Royal College of Science to the Blackett Laboratory - Imperial College",
+        "url": "https://www.imperial.ac.uk/physics/about-us/department-history/a-history-of-the-imperial-physics-department/",
+        "used_for": "Blackett's role in the design; common room on level 8"
+      }
+    ],
+    "notes": "Main block kept at the footprint height (20 m, 6 floors) plus a set-back top storey for the level-8 common room (~23.6 m). Cladding material and grid rhythm are not confirmed by the sources found (no photos fetched)."
+  },
+  {
+    "id": "bone_building",
+    "name": "Bone Building (Imperial College)",
+    "claims": [
+      "83b620cc-5e12-4222-a5ea-fceb42477b2a"
+    ],
+    "references": [
+      {
+        "title": "Centenary memories (Oakley) - Imperial College",
+        "url": "https://www.imperial.ac.uk/centenary/memories/oakley.shtml",
+        "used_for": "Bone Building beside the new Roderic Hill Building, courtyard behind"
+      },
+      {
+        "title": "South Kensington campus map (Imperial College)",
+        "url": "https://www.sbg.bio.ic.ac.uk/files/SouthKensingtonCampus.pdf",
+        "used_for": "Bone Building houses Aeronautics and Chemical Engineering"
+      }
+    ],
+    "notes": "Construction date and elevation are not documented in the sources found; red brick with stone dressings is an assumption matched to the pre-war Imperial laboratory buildings. Height from the footprint record (13.6 m, 4 floors)."
+  },
+  {
+    "id": "city_guilds_building",
+    "name": "City & Guilds Building (Imperial College)",
+    "claims": [
+      "4d70a509-252b-4948-b15c-eecc72fdba04"
+    ],
+    "references": [
+      {
+        "title": "City & Guilds legacy celebrated as building is renamed - Imperial College",
+        "url": "https://www.imperial.ac.uk/news/129966/city-guilds-legacy-celebrated-building-renamed/",
+        "used_for": "early 1960s building overlooking Exhibition Road, formerly Mechanical Engineering; facade modernised with a flight simulator on show (2017)"
+      },
+      {
+        "title": "History of Imperial College London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/History_of_Imperial_College_London",
+        "used_for": "site of the 1885 City and Guilds College, demolished 1962"
+      },
+      {
+        "title": "Survey of London vol. 38, plate 76",
+        "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-76",
+        "used_for": "1960-9 Norman and Dawbarn buildings around the Queen's Tower"
+      }
+    ],
+    "notes": "Footprint overlaps the Business School (a07c23b2); the overlapping north-east part is cut out of this model so the Business School landmark/generic can occupy it. Height 20 m from the footprint record. 1960s elevations and the 2017 curtain-wall pattern are reconstructed from descriptions only."
+  },
+  {
     "id": "eighty_eight_wood_lane",
     "name": "Eighty-Eight Wood Lane (Imperial West tower)",
     "claims": [
@@ -79,6 +149,31 @@
       }
     ],
     "notes": "Overture h=7.7 m is wrong; height 34 storeys x 3.15 m + crown = ~111 m (no metric height found). Taper modelled as four stepped sections (1.1 m inset per section) on the oriented rectangle of the footprint; the terracotta / glass panel mix and band design are approximations."
+  },
+  {
+    "id": "electrical_engineering_building",
+    "name": "Electrical & Electronic Engineering Building (Imperial College)",
+    "claims": [
+      "031912fe-8683-49ce-8793-860351f0b479"
+    ],
+    "references": [
+      {
+        "title": "EEE at a glance - Imperial College London",
+        "url": "https://www.imperial.ac.uk/electrical-engineering/about/at-a-glance/",
+        "used_for": "dedicated department building at the heart of the South Kensington campus"
+      },
+      {
+        "title": "Kontor's £1.1 million Imperial fitout - Skanska",
+        "url": "https://skanska.co.uk/about-skanska/news-and-events/press-releases/48178/Kontors-1.1-million-Imperial-fitout",
+        "used_for": "lower-level facade stripped and re-formed as a glazed reception (2002)"
+      },
+      {
+        "title": "Survey of London vol. 38, plate 76",
+        "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-76",
+        "used_for": "1960-9 Imperial College buildings by Norman and Dawbarn behind the Queen's Tower"
+      }
+    ],
+    "notes": "No photographs could be downloaded; elevation rhythm (ribbon windows, slab bands, blank ends) is reconstructed from memory of the tower and the generic 1960s Imperial idiom. Height from the footprint record (45.6 m, 14 floors); plant storey and masts are approximate."
   },
   {
     "id": "faculty_building",
@@ -109,6 +204,36 @@
       }
     ],
     "notes": "Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, following the four-storey description. Panel distribution is a deterministic random pattern, not traced; position of the orange columns/ramp and the roof plant are approximate."
+  },
+  {
+    "id": "huxley_building",
+    "name": "Huxley Building (Imperial College)",
+    "claims": [
+      "5add8849-9cf4-47d8-8c51-468c40d01959"
+    ],
+    "references": [
+      {
+        "title": "Queen's Gate - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Queen%27s_Gate",
+        "used_for": "Huxley Building on the east side of Queen's Gate"
+      },
+      {
+        "title": "The exterior of 178 Queens Gate (Historic England)",
+        "url": "https://historicengland.org.uk/images-books/photos/item/BL13479",
+        "used_for": "site formerly occupied by William Emerson's house"
+      },
+      {
+        "title": "Huxley Building architecture competition finalist - Felix",
+        "url": "https://felixonline.co.uk/articles/huxley-building-architecture-competition-finalist/",
+        "used_for": "brutalist-era concrete building with a poor public image"
+      },
+      {
+        "title": "South Kensington campus venues - Imperial College",
+        "url": "https://imperial.ac.uk/events-and-hospitality/venues/south-kensington-campus-venues",
+        "used_for": "building identity / use"
+      }
+    ],
+    "notes": "Massing, light wells and the domed rooftop part (32-36 m) come from the footprint record; facade rhythm, colours and the drum under the dome are reconstructions without photographic confirmation."
   },
   {
     "id": "imperial_170_queens_gate",
@@ -496,6 +621,79 @@
     "notes": "Footprint orientation from the Overture outline; stage heights proportioned from photos."
   },
   {
+    "id": "roderic_hill_ace",
+    "name": "Roderic Hill Building and ACE Extension (Imperial College)",
+    "claims": [
+      "344bf538-7f01-4ffe-a7b6-91e36dc0fee1",
+      "d13c2f28-2406-4392-abff-fb031588b15e"
+    ],
+    "references": [
+      {
+        "title": "Aeronautics department history - Imperial College",
+        "url": "https://www.imperial.ac.uk/engineering/departments/aeronautics/about/history/",
+        "used_for": "Roderic Hill Building opened 28 May 1957 by the Queen Mother; aerostructures laboratory"
+      },
+      {
+        "title": "Centenary memories (Oakley) - Imperial College",
+        "url": "https://www.imperial.ac.uk/centenary/memories/oakley.shtml",
+        "used_for": "steel girders on the former Queen's lawn; Bone Building beside it with a courtyard behind"
+      },
+      {
+        "title": "South Kensington campus map (Imperial College)",
+        "url": "https://www.sbg.bio.ic.ac.uk/files/SouthKensingtonCampus.pdf",
+        "used_for": "occupants of Roderic Hill, Bone and ACE Extension"
+      },
+      {
+        "title": "Roderic Maxwell Hill - Grace's Guide",
+        "url": "https://www.gracesguide.co.uk/Roderic_Maxwell_Hill",
+        "used_for": "namesake (Rector)"
+      }
+    ],
+    "notes": "Heights from the footprint records (Roderic Hill 20 m / 6 floors, ACE Extension 16.8 m / 5 floors). Facade materials and patterns are plausible reconstructions for their periods; no photographs were available."
+  },
+  {
+    "id": "royal_school_of_mines",
+    "name": "Royal School of Mines and Bessemer Building",
+    "claims": [
+      "84298f4f-be03-46fc-af9c-bffe24858013",
+      "f3f6f1cb-79b1-45a7-b6dc-a7b702afc3c6",
+      "eea65bdd-c0b4-443b-8cbe-5e17319dc64f"
+    ],
+    "references": [
+      {
+        "title": "Royal School of Mines (Imperial College) - listed building (gohistoric)",
+        "url": "https://gohistoric.com/places/528970-royal-school-mines-imperial-college-science-technology-london/listed",
+        "used_for": "Historic England list entry 1227162: Aston Webb 1909-13, Portland stone, 3 storeys + attic, centre 7 bays forward with Roman Ionic pilasters, semidomed niche, blind attic with sculptured groups, hipped green slate roof, Wernher and Beit busts on high pedestals"
+      },
+      {
+        "title": "Royal School of Mines - Manchester History (listing text)",
+        "url": "https://manchesterhistory.net/architecture/1920/minesschool.html",
+        "used_for": "Portland stone cladding, memorial sculptures either side of the grand entrance"
+      },
+      {
+        "title": "Wernher and Beit memorials - Victorian Web",
+        "url": "https://victorianweb.org/victorian/sculpture/montford/7.html",
+        "used_for": "P. R. Montford 1910 memorials with allegorical figures"
+      },
+      {
+        "title": "London Remembers - RSM name panels",
+        "url": "https://londonremembers.com/memorials/unwin-at-ic",
+        "used_for": "Beit bust right of the entrance, Wernher left; west wing named after Aston Webb, east after the Goldsmiths"
+      },
+      {
+        "title": "Imperial College Bessemer Building (MIT DOME, Sheppard Robson)",
+        "url": "https://dome.mit.edu/handle/1721.3/92658",
+        "used_for": "1960s building, 2006 entrance matched to renewed Bessemer facade with pink glass"
+      },
+      {
+        "title": "Explore the new RSM and Bessemer - Imperial College",
+        "url": "https://www.imperial.ac.uk/news/31814/explore-rsm-bessemer/",
+        "used_for": "joint RSM/Bessemer refurbishment programme"
+      }
+    ],
+    "notes": "RSM storey heights raised above the footprint record (12.9 m) to Edwardian proportions (cornice 14.2 m, ridge ~19.5 m) per the listing (3 storeys + attic). Bay count (30) and niche size are proportioned, not surveyed; sculptured groups are abstracted. The Bessemer elevation pattern and pink-glass entrance zone are approximate (no photos available)."
+  },
+  {
     "id": "scale_space",
     "name": "Scale Space (incl. Imperial White City Incubator)",
     "claims": [
@@ -620,6 +818,31 @@
       }
     ],
     "notes": "Height 54 m from Imperial (Overture h=5.8 m is wrong). Storey split (5.5 m ground + 12 x 4.0 m) and fin spacing (1.5 m), depth and the exact seven fin permutations are estimated; the plant tower height above the roof and the glazing tint are assumptions. Fins start at level 1; the ground floor is a recessed glazed base."
+  },
+  {
+    "id": "skempton_building",
+    "name": "Skempton Building (Imperial College Civil Engineering)",
+    "claims": [
+      "c7e47974-cdef-43e7-b350-351d8ab671a1"
+    ],
+    "references": [
+      {
+        "title": "History of the department - Civil Engineering, Imperial College",
+        "url": "https://imperial.ac.uk/civil-engineering/about-us/history-of-the-department",
+        "used_for": "building opened 1963 as the Civil Engineering Building, renamed Skempton Building in 2004"
+      },
+      {
+        "title": "New Civil Engineering Building at Imperial College (Emerald)",
+        "url": "https://www.emerald.com/insight/content/doi/10.1108/eb015445/full/html",
+        "used_for": "1964 notice: Norman & Dawbarn architects, over 110,000 sq ft"
+      },
+      {
+        "title": "Survey of London vol. 38, plate 76",
+        "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-76",
+        "used_for": "1960-9 Norman and Dawbarn buildings around the Queen's Tower"
+      }
+    ],
+    "notes": "Massing from the Overture footprint at 20 m (6 floors). Facade grid, rooflights and plinth treatment are reconstructed from the 1960s Norman & Dawbarn idiom; no photograph could be fetched."
   },
   {
     "id": "wood_lane_studios",
