@@ -25,6 +25,104 @@
     "notes": "Concrete panel pattern (vertical fins with deep-set strip windows), ground-floor recess and the setback/height of the glazed roof storeys are proportioned, not measured: concrete block to 15 m, glazed extension to ~22 m (footprint height 16.8 m). The entrance on the lawn side uses the notch in the outline."
   },
   {
+    "id": "albert_court",
+    "name": "Albert Court",
+    "claims": [
+      "74c835dc-626d-4ed5-854f-f0ee4cf054ff"
+    ],
+    "references": [
+      {
+        "title": "Albert Court - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Albert_Court",
+        "used_for": "Hemings design begun 1890, finished by Worley 1896-1900; D-shaped plan following the RHS garden curve; red brick with stone banding"
+      },
+      {
+        "title": "Albert Court - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101227161-albert-court-knightsbridge-and-belgravia-ward",
+        "used_for": "red brick with horizontal stone bands and dressings, 7 storeys and semi-basement, south facade balconies on Corinthian columns, conical roofed turrets at either end"
+      },
+      {
+        "title": "Albert Court in Prince Consort Road - London Picture Archive",
+        "url": "https://www.londonpicturearchive.org.uk/view-item?i=170008",
+        "used_for": "street view of the Prince Consort Road front"
+      }
+    ],
+    "notes": "Eaves raised to 22.5 m (7 storeys + semi-basement) above the 19.3 m data height, with a 4 m slate roof slope following the footprint. Light wells are the footprint holes. Balcony and turret positions are placed on the south (Prince Consort Road side) frontage ends; dimensions are estimated."
+  },
+  {
+    "id": "albert_hall_mansions",
+    "name": "Albert Hall Mansions",
+    "claims": [
+      "7701428d-dc11-4eae-9183-528507e9c77c",
+      "aa8d37bc-f10d-4774-a2db-92b3fae0e511",
+      "d58b94c2-ae6d-4d5a-8ec6-59c9deb32f0c"
+    ],
+    "references": [
+      {
+        "title": "Albert Hall Mansions - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Albert_Hall_Mansions",
+        "used_for": "Norman Shaw, completed 1879, early purpose-built mansion flats beside the Royal Albert Hall"
+      },
+      {
+        "title": "Albert Hall Mansions Nos 1-30 - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101275249-albert-hall-mansions-numbers-1-to-30-knightsbridge-and-belgravia-ward",
+        "used_for": "red brick under slate pitched roofs, Queen Anne style, paired bays under scrolly gables, five storeys plus two in the roof"
+      },
+      {
+        "title": "Albert Hall Mansions Nos 31-48 - Historic England list entry 1275268",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1275268",
+        "used_for": "scrolly gables at each end of the west facade"
+      },
+      {
+        "title": "Albert Hall Mansions - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101217743-albert-hall-mansions-knightsbridge-and-belgravia-ward",
+        "used_for": "Nos 49-82 block of eight storeys plus two in the roof"
+      }
+    ],
+    "notes": "Eaves/roof heights from the listing storey counts rather than the inferred data heights: Nos 1-30 eaves 17 m + 6 m roof, Nos 31-48 eaves 16 m + 5 m roof, Nos 49-86 eaves 27 m + 6 m roof. Roofs are mansard-style slopes following the simplified footprint; gables are placed procedurally on the longer street edges (not traced per bay). Window rhythm is a painted tile."
+  },
+  {
+    "id": "albert_memorial",
+    "name": "Albert Memorial",
+    "claims": [
+      "4807fb6d-2ebe-4de4-94ac-9122b798d3f8",
+      "a8cfc47f-900b-451f-a15e-c92c0ef63be0",
+      "6ff7d995-360f-4bc4-8d89-8ecb29b3d08b",
+      "c8159e6a-0e6d-4454-ad80-950285fe166d",
+      "93e65965-7e61-49fc-9473-1ff35f5b0360",
+      "621d410b-ab5a-47cb-a78e-a7fdd28d9b5f",
+      "7bdfa484-5fa2-47c9-87d8-414991b63209"
+    ],
+    "references": [
+      {
+        "title": "Albert Memorial - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Albert_Memorial",
+        "used_for": "Scott design, 1872 opening, seated gilt statue facing the Royal Albert Hall"
+      },
+      {
+        "title": "The Albert Memorial - Google Arts & Culture",
+        "url": "https://artsandculture.google.com/entity/m01j4pw",
+        "used_for": "176 ft (54 m) Gothic ciborium canopy; gilded bronze Albert by Foley; continent groups at the corners"
+      },
+      {
+        "title": "Prince Consort National Memorial - Historic England listing",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1217741",
+        "used_for": "square paved podium, steps on all sides, clustered granite columns at the four corners, gables with pinnacles, mosaic and enamel"
+      },
+      {
+        "title": "Victorian London - Albert Memorial",
+        "url": "https://www.victorianlondon.org/buildings/albertmemorial.htm",
+        "used_for": "mass of gilt, mosaic and coloured stones; ornamented spire with a cross at the top"
+      },
+      {
+        "title": "The Albert Memorial - A London Inheritance",
+        "url": "https://alondoninheritance.com/london-monuments/albert-memorial-19th-century-world-view",
+        "used_for": "octagonal grey-banded crocketed spire, gilded crown, angels round the spire base"
+      }
+    ],
+    "notes": "Placed on the Overture canopy footprint and the four continent-group footprints (orientation ~7 deg from the group layout). Step and podium dimensions, stage heights (arches, gables at ~24 m, spire 31-51 m, cross to 54 m) are proportioned from descriptions. Sculpture groups and the statue are blocky stand-ins (marble masses with an animal and figures; gilt seated figure); mosaics are painted suggestions. Two small unnamed 2 x 8 m strips ~35 m south-east/south-west of the memorial (identity unknown, generic extrusion gave 17 m towers in the park) are claimed and drawn as low granite plinths."
+  },
+  {
     "id": "bbc_television_centre",
     "name": "BBC Television Centre",
     "claims": [
@@ -726,6 +824,36 @@
     "notes": "Footprint orientation from the Overture outline; stage heights proportioned from photos."
   },
   {
+    "id": "rca_darwin_building",
+    "name": "Royal College of Art – Darwin Building",
+    "claims": [
+      "fbe9fd1c-d1c5-4d60-b6cc-7e8668ed3fd0"
+    ],
+    "references": [
+      {
+        "title": "Royal College of Art - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_College_of_Art",
+        "used_for": "designed by RCA staff Cadbury-Brown, Casson and Goodden, 1960-63, Grade II listed 2001"
+      },
+      {
+        "title": "Darwin Building, RCA, seen from the north-east - RIBApix",
+        "url": "https://www.architecture.com/image-library/RIBApix/licensed-image/poster/darwin-building-royal-college-of-art-kensington-gore-london-seen-from-the-northeast/posterid/RIBA4149.html",
+        "used_for": "concrete frame and brickwork massing on Kensington Gore"
+      },
+      {
+        "title": "Royal College of Art - Modernism in Metro-Land",
+        "url": "https://www.modernism-in-metroland.co.uk/royal-college-of-art.html",
+        "used_for": "Nairn: sombre purple-toned facing brick with concrete aggregate"
+      },
+      {
+        "title": "Darwin Building, Royal College of Art - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/1960/collegeofart.html",
+        "used_for": "eight-storey building of glass and dark brick for workshops and studios, opposite the Albert Hall"
+      }
+    ],
+    "notes": "Height from the data (26.4 m). Pier/bay rhythm and the glazed top storey with north-light roof glazing are approximations from descriptions; the staggered internal section is not modelled."
+  },
+  {
     "id": "roderic_hill_ace",
     "name": "Roderic Hill Building and ACE Extension (Imperial College)",
     "claims": [
@@ -755,6 +883,134 @@
       }
     ],
     "notes": "Heights from the footprint records (Roderic Hill 20 m / 6 floors, ACE Extension 16.8 m / 5 floors). Facade materials and patterns are plausible reconstructions for their periods; no photographs were available."
+  },
+  {
+    "id": "royal_albert_hall",
+    "name": "Royal Albert Hall",
+    "claims": [
+      "f8dc8756-8083-4501-8b2d-1ec37d51d0a3",
+      "7bb7d9b1-86fb-4516-914a-32d48fcffcc0"
+    ],
+    "references": [
+      {
+        "title": "Royal Albert Hall - Designing Buildings Wiki",
+        "url": "https://designingbuildings.co.uk/wiki/Royal_Albert_Hall",
+        "used_for": "elliptical plan 83 x 72 m, glass and wrought-iron dome ~41 m high, Fareham red brick"
+      },
+      {
+        "title": "Royal Albert Hall - victorianweb.org",
+        "url": "https://victorianweb.org/art/architecture/alberthall",
+        "used_for": "red brick and terracotta facade, view from the Albert Memorial across Kensington Gore"
+      },
+      {
+        "title": "The Royal Albert Hall frieze - Art UK",
+        "url": "https://artuk.org/discover/stories/the-royal-albert-hall-frieze-the-art-that-surrounds-the-worlds-most-famous-stage",
+        "used_for": "mosaic frieze about 25 m above ground running round the whole 244 m circumference"
+      },
+      {
+        "title": "Royal Albert Hall - Archivision (CU Digital Library)",
+        "url": "https://cudl.colorado.edu/luna/servlet/detail/ARCHIVISIONBASETO9~1~1~59565~1206427:Royal-Albert-Hall",
+        "used_for": "terracotta inscription letters along the top of the drum"
+      },
+      {
+        "title": "Royal Albert Hall - Bluffton University photo page",
+        "url": "https://homepages.bluffton.edu/~sullivanm/england/london/alberthall/alberthall.html",
+        "used_for": "terracotta frieze of 16 allegorical groups; south porch rebuilt 1996-2004"
+      }
+    ],
+    "notes": "Drum, porches and dome follow the 11 Overture parts (drum 25 m, dome springing ~29 m to 43.8 m, lantern 46.6 m). Bay count (40) and storey divisions of the facade are proportioned from photo descriptions, not measured. Frieze figures are suggested by an abstract buff-on-brown pattern; porch elevations are simplified (arched ground floor, windows, pediment). Chimney stack height kept at the data value."
+  },
+  {
+    "id": "royal_college_of_music",
+    "name": "Royal College of Music",
+    "claims": [
+      "9e685150-c49b-4687-89d0-5391bdc51b65",
+      "d8830a31-a66e-49d9-8059-c1ee4c3aef03",
+      "8a4fa60d-dd46-4859-9c06-770968c77ed3"
+    ],
+    "references": [
+      {
+        "title": "Royal College of Music - British Listed Buildings (Historic England list entry)",
+        "url": "https://britishlistedbuildings.co.uk/101265501-royal-college-of-music-knightsbridge-and-belgravia-ward",
+        "used_for": "twelve-bay symmetrical front, red brick with stone banding, steep slate roof, end towers with pyramidal tops and tourelles, centre gable with clock, concert hall 1899-1901 by Sidney Smith"
+      },
+      {
+        "title": "Royal College of Music - victorianweb.org",
+        "url": "https://victorianweb.org/art/architecture/blomfield/2.html",
+        "used_for": "Blomfield design opposite the Royal Albert Hall"
+      },
+      {
+        "title": "Royal College of Music, London - penang-traveltips",
+        "url": "https://www.penang-traveltips.com/europe/uk/england/london/royal-college-of-music.htm",
+        "used_for": "Flemish Mannerist style, red brick dressed with buff stone"
+      },
+      {
+        "title": "Royal College of Music dramatic new - Planet Hugill",
+        "url": "https://www.planethugill.com/2015/04/royal-college-of-music-dramatic-new.html",
+        "used_for": "Britten Theatre lies west of the courtyard behind the front range"
+      }
+    ],
+    "notes": "Eaves raised to ~17 m with a ~6 m slate roof; towers to ~25 m walls plus pyramidal caps (~33 m) proportioned from the listing description, not measured. The 8a4fa60d footprint is assumed to be the Britten Theatre block (modelled as a plain brick volume). Window rhythm is a painted 4-bay tile; the clock gable is simplified."
+  },
+  {
+    "id": "royal_college_of_organists",
+    "name": "Royal College of Organists (former)",
+    "claims": [
+      "f4fa2cad-6f80-4d7f-9e80-67a3eee60414"
+    ],
+    "references": [
+      {
+        "title": "Royal College of Organists - British Listed Buildings (Historic England list entry)",
+        "url": "https://britishlistedbuildings.co.uk/101217773-royal-college-of-organists-knightsbridge-and-belgravia-ward",
+        "used_for": "four storeys, three main bays, full-height canted entrance bay with oriels, mullion-and-transom windows, bracketed eaves cornice, stucco with sgraffito panels by F. W. Moody"
+      },
+      {
+        "title": "Royal College of Organists - Survey of London (british-history.ac.uk)",
+        "url": "https://www.british-history.ac.uk/node/40140",
+        "used_for": "built 1874-5 for the National Training School for Music; sgraffito executed by Moody's students"
+      },
+      {
+        "title": "Organs and archaeology - Adam Yamey",
+        "url": "https://adam-yamey-writes.com/tag/organ/",
+        "used_for": "cream, pale blue and maroon sgraffito; bands of putti carrying musical instruments"
+      },
+      {
+        "title": "Royal College of Organists - victorianweb.org",
+        "url": "https://www.victorianweb.org/art/architecture/misc/4.html",
+        "used_for": "H. H. Cole as architect, Moody sgraffiti"
+      }
+    ],
+    "notes": "The Overture footprint is larger than the narrow street building and is decorated throughout; the canted bay is placed at the centre of the street (north) frontage. Sgraffito figures are abstracted to putti silhouettes and scrolls; slate roof pitch is assumed. Eaves at the data height (17.9 m less roof)."
+  },
+  {
+    "id": "royal_geographical_society",
+    "name": "Royal Geographical Society (Lowther Lodge)",
+    "claims": [
+      "3a4b3304-873e-4e63-8bd0-8a65761eb461"
+    ],
+    "references": [
+      {
+        "title": "Royal Geographical Society - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101217774-royal-geographical-society-knightsbridge-and-belgravia-ward",
+        "used_for": "1874-5 by Norman Shaw for the Lowthers, 1928-30 extension; red brick with gauged and rubbed dressings, tile roofs, tall fluted brick stacks"
+      },
+      {
+        "title": "1875 - Lowther Lodge, Kensington, London - Archiseek",
+        "url": "https://www.archiseek.com/1875-lowther-lodge-kensington-london/",
+        "used_for": "early Queen Anne work, gables and pediments"
+      },
+      {
+        "title": "Royal Geographical Society - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_Geographical_Society",
+        "used_for": "Lowther Lodge as RGS headquarters, 1928-30 lecture room and 2004 extension"
+      },
+      {
+        "title": "Richard Norman Shaw - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Richard_Norman_Shaw",
+        "used_for": "Shaw Queen Anne style context"
+      }
+    ],
+    "notes": "The whole footprint (house plus later extensions) is treated in the Lodge idiom: eaves 11.5 m with a 6 m tiled roof slope following the simplified outline (data height 15.7 m), shaped gables placed procedurally on longer edges and tall stacks. The 1928-30 and 2004 additions are not differentiated; the Livingstone and Shackleton statues are not modelled."
   },
   {
     "id": "royal_school_of_mines",
