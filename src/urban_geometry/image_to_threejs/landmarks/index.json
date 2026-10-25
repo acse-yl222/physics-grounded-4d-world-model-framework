@@ -381,6 +381,49 @@
     "notes": "Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, following the four-storey description. Panel distribution is a deterministic random pattern, not traced; position of the orange columns/ramp and the roof plant are approximate."
   },
   {
+    "id": "hammersmith_campus",
+    "name": "Hammersmith Campus: Commonwealth Building, ICTEM, Burlington Danes",
+    "claims": [
+      "f438d558-eec4-4b55-af66-dc5593556773",
+      "eee43564-1df1-439c-a52f-1fbc98cc164a",
+      "a6c1df93-98e8-4475-951b-12e3e3bc05f9",
+      "19bb2805-2195-4548-8053-3e181fe4f86f"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "Commonwealth Building of the postgraduate medical school opened by the Queen in May 1966"
+      },
+      {
+        "title": "Wolfson Institute & Commonwealth Building - Modernism in Metro-Land",
+        "url": "https://www.modernism-in-metroland.co.uk/wolfson-institute.html",
+        "used_for": "Lyons Israel & Ellis 1961-66, brutalist, ten-storey Commonwealth Building linked by a bridge to the lecture block"
+      },
+      {
+        "title": "Wolfson Institute, Hammersmith Hospital - RIBApix",
+        "url": "https://www.architecture.com/image-library/ribapix/image-information/poster/wolfson-institute-hammersmith-hospital-du-cane-road-london/posterid/RIBA74626.html",
+        "used_for": "exposed concrete construction of the Lyons Israel & Ellis buildings"
+      },
+      {
+        "title": "ICTEM Building at Hammersmith Campus - Imperial College",
+        "url": "https://www.imperial.ac.uk/medicine/research-and-impact/facilities/translational-research-imaging/biological-imaging-centre/contact-us/",
+        "used_for": "ICTEM (L-Block) on Du Cane Road"
+      },
+      {
+        "title": "Imperial College London opens new research facility - Designcurial",
+        "url": "https://old.designcurial.com/news/imperial-college-london-opens-new-research-facility/",
+        "used_for": "ICTEM: GBP 73m facility of six floors beside Hammersmith Hospital"
+      },
+      {
+        "title": "Burlington Danes Imaging Centre - AKT II",
+        "url": "https://akt-uk.com/projects/burlington-danes-imaging-centre",
+        "used_for": "tiered structure, perforated stainless steel and glass facades, 2007, Sheppard Robson"
+      }
+    ],
+    "notes": "Footprints and Overture heights (Commonwealth 36 m / 11 floors, ICTEM 20 m, Burlington Danes 19.6 m). Facade patterns are generic interpretations of \"brutalist concrete\", \"six-floor glazed lab\" and \"perforated stainless steel and glass\" (no photographs available); bridge position, Burlington Danes tiering and roof plant are estimates. Historic 1905 hospital blocks are left generic."
+  },
+  {
     "id": "huxley_building",
     "name": "Huxley Building (Imperial College)",
     "claims": [
@@ -711,6 +754,36 @@
     "notes": "No facade description found; elevation (concrete mullion fins, dark spandrels, brick ends) is a reconstruction in the 1960s ACP idiom, not traced from photos. Height 23.2 m from Overture (7 floors)."
   },
   {
+    "id": "kensal_green_anglican_chapel",
+    "name": "Kensal Green Cemetery Anglican Chapel",
+    "claims": [
+      "368ef81d-0e6a-4858-a272-88e90318cb8c"
+    ],
+    "references": [
+      {
+        "title": "The Anglican Chapel, Kensal Green - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101190995-the-anglican-chapel-kensal-green-ward",
+        "used_for": "Griffith 1835-36, Portland stone and stucco, tetrastyle Doric portico and pediment, stepped podium, colonnades of paired columns between pilasters with anthemia, end pavilions"
+      },
+      {
+        "title": "Kensal Green Cemetery - Parks and Gardens",
+        "url": "https://www.parksandgardens.org/places/kensal-green-cemetery",
+        "used_for": "chapel setting on Centre Avenue, catacombs beneath"
+      },
+      {
+        "title": "Kensal Green Cemetery - Victorian Web",
+        "url": "https://www.victorianweb.org/art/parks/kensalgreen/2.html",
+        "used_for": "western pavilions with memorials, domed central interior"
+      },
+      {
+        "title": "Kensal Green (All Souls) Cemetery - Historic England",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1000817",
+        "used_for": "registered landscape context"
+      }
+    ],
+    "notes": "Plan from the Overture outline (chapel, portico bay, two L-shaped colonnade wings). Heights (cornice 10 m, pediment apex 13.5 m, colonnades 7 m) and column counts are estimates; the westward return arms are shown as lower colonnaded walks; anthemion ornament and the catacomb entrances are omitted."
+  },
+  {
     "id": "loftus_road",
     "name": "Loftus Road Stadium",
     "claims": [
@@ -795,6 +868,38 @@
       }
     ],
     "notes": "Footprint from Overture (front measured 207 m). Heights are estimates from descriptions: towers 58 m (192 ft), front eaves 19 m, pavilions 24 m + steep roofs, Hintze Hall ridge 34 m; the Overture h (13.7 m) is inferred and ignored. Plan behind the front (gallery wings, light courts, north range) is schematic. Darwin Centre height (28 m) assumed from its eight storeys; Earth Galleries height (22 m + attic) estimated. Lodge modelled as a small terracotta lodge. Facade ornament is painted onto canvas textures."
+  },
+  {
+    "id": "paddington_station",
+    "name": "London Paddington station and Great Western Royal Hotel",
+    "claims": [
+      "cacd5f93-024a-4c87-a69d-cbcf76a4f82f",
+      "360408b3-6867-4a89-9cc6-8e3548e0ffe1",
+      "5c55db4c-2e46-4a30-9cd6-95ab5c5fb5e2"
+    ],
+    "references": [
+      {
+        "title": "The history of London Paddington station - Network Rail",
+        "url": "https://www.networkrail.co.uk/who-we-are/our-history/iconic-infrastructure/the-history-of-london-paddington-station/",
+        "used_for": "span widths 68 ft / 102 ft 6 in / 70 ft, two transepts, wrought iron and glass, Digby Wyatt tracery, oriels on platform 1"
+      },
+      {
+        "title": "London Paddington station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/London_Paddington_station",
+        "used_for": "1854 train shed, fourth span, the Lawn, overall layout"
+      },
+      {
+        "title": "Hilton London Paddington - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hilton_London_Paddington",
+        "used_for": "Great Western Royal Hotel by P. C. Hardwick, French Second Empire, pediment sculpture"
+      },
+      {
+        "title": "Great Western Hotel - Historic England list entry 1227144",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1227144",
+        "used_for": "stuccoed brick, 4 storeys and attic, 7-bay centre and side ranges, 6-storey angle towers, steep pavilion roof, pedimented dormers, ogee tower roofs"
+      }
+    ],
+    "notes": "Shed placed in the Overture station outline (217 m from the Lawn to the north-west screens, spans 20.7/31.2/21.3/33.2 m). Springing (9.5 m) and crown heights (16.5-20.5 m), transept positions and roof glazing pattern are estimates; the 1999 Lawn roof is shown as a plain glazed canopy. Hotel heights (eaves 20 m, towers 28 m + ogee roofs) are estimated from the storey counts in the listing; dormer and window counts approximate. The Platform 1 range is lowered to 13 m except the MacMillan House end; north-west platform canopies and the outer station strip are flat roofs."
   },
   {
     "id": "princes_gardens_eastside",
@@ -1351,6 +1456,37 @@
     "notes": "Massing from the Overture footprint at 20 m (6 floors). Facade grid, rooflights and plinth treatment are reconstructed from the 1960s Norman & Dawbarn idiom; no photograph could be fetched."
   },
   {
+    "id": "trellick_tower",
+    "name": "Trellick Tower",
+    "claims": [
+      "e4024000-21e9-4920-ac2d-767c6cb60fdd",
+      "a0522042-7936-4c38-8523-883efe042e67"
+    ],
+    "references": [
+      {
+        "title": "Trellick Tower - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Trellick_Tower",
+        "used_for": "31 storeys, 98 m roof height, separate service tower, Goldfinger 1972"
+      },
+      {
+        "title": "Trellick Tower - Designing Buildings",
+        "url": "https://www.designingbuildings.co.uk/wiki/Trellick_Tower",
+        "used_for": "bridge-like walkways every third floor linking slab and service tower"
+      },
+      {
+        "title": "Trellick and Edenham listed status (RBKC)",
+        "url": "https://www.rbkc.gov.uk/pdf/Trellick%20and%20Edenham%20listed%20status.pdf",
+        "used_for": "bush-hammered in-situ concrete, pebble-finished panels, timber-clad balconies"
+      },
+      {
+        "title": "The future passed: Trellick Tower at 50 - Modernism in Metro-Land",
+        "url": "https://www.modernism-in-metroland.co.uk/blog/the-future-passed-the-trellick-tower-at-50",
+        "used_for": "deep recessed cedar-lined balconies; boiler house projecting like a ship bridge"
+      }
+    ],
+    "notes": "Slab and service tower from the Overture footprints; slab roof 92 m, boiler house top 98 m (reference roof height). Facade rhythm (two flat storeys + corridor storey per 3-storey group) is schematic; balcony pattern and window counts are approximate, colours from textual descriptions only."
+  },
+  {
     "id": "victoria_and_albert_museum",
     "name": "Victoria and Albert Museum",
     "claims": [
@@ -1470,6 +1606,41 @@
     "notes": "Ticket hall / platform range split of the footprint at y = 602 m is inferred from the outline. Brick colour, glazing pattern, clerestory and canopy forms are reconstructed from period descriptions without photographs; platform canopy roof is a simplified butterfly roof."
   },
   {
+    "id": "whiteleys",
+    "name": "Whiteleys (The Whiteley)",
+    "claims": [
+      "bad19412-57bd-4789-b9cc-12a13f944ba4"
+    ],
+    "references": [
+      {
+        "title": "Whiteleys - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Whiteleys",
+        "used_for": "Belcher & Joass 1911, extension 1925-27, retained 1911 facade"
+      },
+      {
+        "title": "The Whiteley - Foster + Partners",
+        "url": "https://fosterandpartners.com/projects/the-whiteley",
+        "used_for": "Grade II listed, Curtis Green phase, remodelled cupola on the northern corner, restored Queensway facade glazing"
+      },
+      {
+        "title": "Whiteleys - AKT II",
+        "url": "https://akt-uk.com/projects/whiteleys",
+        "used_for": "listed south-eastern corner with stone cupola and stone tower over the entrance"
+      },
+      {
+        "title": "The Whiteley - Radmat case study",
+        "url": "https://radmat.com/?p=18745",
+        "used_for": "colonnaded facade and rooftop cupolas"
+      },
+      {
+        "title": "Whiteleys shopping centre report - GLA",
+        "url": "https://data.london.gov.uk/download/2zw6q/5e02b63e-524f-44fc-8e61-938bf8699a15/whiteleys_shopping_centre_report.pdf",
+        "used_for": "retained facade, clock and glass dome, new central courtyard, up to 10 upper levels"
+      }
+    ],
+    "notes": "Overture height (14 m) replaced: facade cornice 22 m, attic 25.5 m, rear new-build blocks 30-36 m (storey counts from planning reports, exact profile unknown). Column rhythm, cupola proportions, dome position and the colour of the cupola roofs are estimates from textual descriptions only."
+  },
+  {
     "id": "wood_lane_station",
     "name": "Wood Lane station",
     "claims": [
@@ -1528,5 +1699,35 @@
       }
     ],
     "notes": "Overture h=6.1 m is wrong. Block heights are estimates: linked blocks at 7 storeys with the railway-side block raised to 10 storeys (the press figure). Facade materials were not found in any source: pale grey rainscreen panels with storey-high window strips and coloured reveals are an assumption."
+  },
+  {
+    "id": "wormwood_scrubs_gatehouse",
+    "name": "Wormwood Scrubs prison gatehouse",
+    "claims": [
+      "9a58d31d-e450-45e7-bf6e-c057663674fc"
+    ],
+    "references": [
+      {
+        "title": "HM Prison Wormwood Scrubs - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/HM_Prison_Wormwood_Scrubs",
+        "used_for": "Du Cane design, convict-built 1874-91, Howard and Fry medallions on the gate towers"
+      },
+      {
+        "title": "Gatehouse at HMP Wormwood Scrubs - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101393182",
+        "used_for": "red-brown brick in English bond, Portland stone, terracotta medallions, octagonal towers, frieze, blind arcade, cornice, octagonal tile roof"
+      },
+      {
+        "title": "The gatehouse at HMP Wormwood Scrubs - Historic England",
+        "url": "https://live.historicengland.org.uk/images-books/photos/item/DES01/23/09/06",
+        "used_for": "photo record title confirming the twin-tower gatehouse"
+      },
+      {
+        "title": "Listed Building Status for Wormwood Scrubs",
+        "url": "https://fulhamsw6.com/page/shared/common/sbwormwoodscrubs1.htm",
+        "used_for": "Grade II* chapel and gatehouse; terracotta busts of John Howard and Elizabeth Fry"
+      }
+    ],
+    "notes": "Plan from the Overture \"Gate Lodge\" outline (tower bays, gateway, rear lodges). Tower height (21 m to cornice, 26 m to finial), gateway height, band spacing and roof tile colour are estimates; the busts are shown as plain terracotta roundels. Prison perimeter wall not modelled (no footprint)."
   }
 ]
