@@ -1,5 +1,132 @@
 [
   {
+    "id": "abdus_salam_library",
+    "name": "Abdus Salam Library",
+    "claims": [
+      "9aff3388-d165-426e-96b2-eaaa63ff9a95"
+    ],
+    "references": [
+      {
+        "title": "Abdus Salam Library - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Abdus_Salam_Library",
+        "used_for": "opening 1969, site on Queen's Lawn next to Imperial College Road opposite Queen's Tower"
+      },
+      {
+        "title": "Imperial College Libraries - John McAslan + Partners",
+        "url": "https://mcaslan.co.uk/Imperial-College-Libraries",
+        "used_for": "1960s concrete-panelled structure; two-storey glazed roof extension (1993-97)"
+      },
+      {
+        "title": "Queen's Lawn - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Queen%27s_Lawn",
+        "used_for": "library as one of the buildings framing Queen's Lawn"
+      }
+    ],
+    "notes": "Concrete panel pattern (vertical fins with deep-set strip windows), ground-floor recess and the setback/height of the glazed roof storeys are proportioned, not measured: concrete block to 15 m, glazed extension to ~22 m (footprint height 16.8 m). The entrance on the lawn side uses the notch in the outline."
+  },
+  {
+    "id": "beit_quad",
+    "name": "Beit Quad (Imperial College Union and Beit Hall)",
+    "claims": [
+      "0a73225b-2a74-4c94-a906-3845d038da31",
+      "5a9ce829-61dc-447f-a41d-2307b207d1ff"
+    ],
+    "references": [
+      {
+        "title": "Beit Hall - Wikipedia",
+        "url": "https://www.Wikipedia.com/wiki/Beit_Hall",
+        "used_for": "Aston Webb design, built 1910; Union 1910-11, quad ranges 1912-1931"
+      },
+      {
+        "title": "About: Beit Hall - DBpedia",
+        "url": "https://dbpedia.org/page/Beit_Hall",
+        "used_for": "history and capacity"
+      },
+      {
+        "title": "A Quick Tour of the Union Bar - PocketSights",
+        "url": "https://pocketsights.stqry.com/tour/53093/preview",
+        "used_for": "archway with the Imperial College coat of arms in the pediment above the entrance; Tudor style"
+      },
+      {
+        "title": "Design for Students' Union, Imperial College - RIBApix",
+        "url": "https://www.architecture.com/image-library/ribapix/image-information/poster/design-for-students-union-imperial-college-kensington-london-perspective-of-entrance-facade/posterid/RIBA35495.html",
+        "used_for": "Aston Webb's entrance facade design"
+      }
+    ],
+    "notes": "No listing text with materials was returned by search; the red brick with Portland stone dressings, slate roofs, dormers and chimneys follow the well-known appearance of the quad and Webb's Imperial work and are approximate. Ranges are split into hipped-roof rectangles fitted to the footprints; eaves at ~13.5 m (Union 14.5 m) so ridges match the footprint heights (16.8 / 17.8 m). Gateway proportions estimated."
+  },
+  {
+    "id": "faculty_building",
+    "name": "Faculty Building",
+    "claims": [
+      "8b822f3f-bb9b-44b8-902c-8cc0bc967893"
+    ],
+    "references": [
+      {
+        "title": "Topping out of Imperial College Faculty Building - Foster + Partners (5 Sept 2003)",
+        "url": "https://www.fosterandpartners.com/news/topping-out-of-imperial-college-faculty-building",
+        "used_for": "four office storeys over two basements; courtyard site; completion 2004"
+      },
+      {
+        "title": "Imperial College Faculty Building - Foster + Partners",
+        "url": "https://fosterandpartners.com/projects/imperial-college-faculty-building",
+        "used_for": "project identity"
+      },
+      {
+        "title": "Faculty Building - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/2000/facultybuilding.html",
+        "used_for": "random opaque panels in three shades of blue (Per Arnoldi), blue vision glass, orange columns along the ramp"
+      },
+      {
+        "title": "Imperial College London Faculty Building - AEWORLDMAP",
+        "url": "https://aeworldmap.com/2013/06/21/imperial-college-london-faculty-building-london-united-kingdom/",
+        "used_for": "blue facades chosen partly to reduce solar gain"
+      }
+    ],
+    "notes": "Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, following the four-storey description. Panel distribution is a deterministic random pattern, not traced; position of the orange columns/ramp and the roof plant are approximate."
+  },
+  {
+    "id": "imperial_business_school",
+    "name": "Imperial College Business School and Main Entrance",
+    "claims": [
+      "a07c23b2-0d99-4c41-9835-130bfda2187c",
+      "45aceb4e-13a5-49e2-a6b1-8ead0cb3a394"
+    ],
+    "references": [
+      {
+        "title": "Imperial College Business School - Foster + Partners",
+        "url": "https://www.fosterandpartners.com/projects/imperial-college-business-school",
+        "used_for": "six-storey stainless steel drum with lecture theatres, grand colonnade on Exhibition Road"
+      },
+      {
+        "title": "The Queen opens Tanaka Business School - Foster + Partners (24 June 2004)",
+        "url": "https://www.fosterandpartners.com/news/the-queen-opens-tanaka-business-school-at-imperial-college-london",
+        "used_for": "opening date, highly visible College entrance on Exhibition Road"
+      },
+      {
+        "title": "Tanaka Business School topping out - Foster + Partners",
+        "url": "https://www.fosterandpartners.com/news/tanaka-business-school-at-imperial-college-london-topping-out",
+        "used_for": "drum clad with 12 mm diameter stainless-steel tubes"
+      },
+      {
+        "title": "Imperial College (Tanaka) Business School - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/2000/imperialcollege.html",
+        "used_for": "row of white columns in front of a 24 m high glass facade; ETFE atrium roof"
+      },
+      {
+        "title": "Imperial College London Main Entrance - venue page",
+        "url": "https://www.imperial.ac.uk/events-and-hospitality/venues/main-entrance/",
+        "used_for": "glass-fronted main entrance"
+      },
+      {
+        "title": "Access guide: Main Entrance building - AccessAble",
+        "url": "https://www.accessable.co.uk/imperial-college-london/south-kensington-campus/access-guides/main-entrance-building",
+        "used_for": "canopy / recess over the entrance"
+      }
+    ],
+    "notes": "Height raised from the footprint value (15-17 m) to the documented 24 m glass facade. Drum diameter, position inside the atrium, column spacing and the sign lettering are proportioned, not measured. Rear (west) elevations abut older college buildings and are given a plain glazed/panel facade."
+  },
+  {
     "id": "queens_tower",
     "name": "Queen's Tower",
     "claims": [
@@ -23,5 +150,66 @@
       }
     ],
     "notes": "Footprint orientation from the Overture outline; stage heights proportioned from photos."
+  },
+  {
+    "id": "sherfield_building",
+    "name": "Sherfield Building",
+    "claims": [
+      "7dc5fa73-2c5f-4fe1-8da6-4049490f9b37",
+      "72e1599d-430f-4d4b-9966-ce36593a1036"
+    ],
+    "references": [
+      {
+        "title": "Sherfield Building - Imperial College events and hospitality",
+        "url": "https://www.imperial.ac.uk/events-and-hospitality/venues/sherfield-building/",
+        "used_for": "building identity and use (Great Hall, venue levels)"
+      },
+      {
+        "title": "Queen's Lawn - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Queen%27s_Lawn",
+        "used_for": "position on the north side of Queen's Lawn next to the Abdus Salam Library"
+      },
+      {
+        "title": "Campus improvements - Imperial College property",
+        "url": "https://www.imperial.ac.uk/admin-services/property/current-projects/campus-improvements/",
+        "used_for": "Sherfield Walkway at levels 1-2, levels 3-5 above"
+      },
+      {
+        "title": "South Kensington Campus map (PDF)",
+        "url": "https://www.sbg.bio.ic.ac.uk/files/SouthKensingtonCampus.pdf",
+        "used_for": "Great Hall and common rooms on level 2 of Sherfield"
+      }
+    ],
+    "notes": "No architectural description of the facades was found; the precast concrete ribbon-window elevation, recessed glazed ground floor and plant rooms follow the 1960s campus style and are approximate. The elevated walkway linking east to the Main Entrance crosses other footprints and is not modelled. Height kept close to the footprint value (main slab 17.5 m, plant to ~20 m)."
+  },
+  {
+    "id": "sir_alexander_fleming_building",
+    "name": "Sir Alexander Fleming Building",
+    "claims": [
+      "858f0054-96ac-4038-81cb-964a28cdf4cc"
+    ],
+    "references": [
+      {
+        "title": "Imperial College Sir Alexander Fleming Building - Foster + Partners",
+        "url": "https://www.fosterandpartners.com/projects/imperial-college-sir-alexander-fleming-building",
+        "used_for": "forum on five levels, labs wrapped around it, glazed north end onto Queen's Lawn, sculpted rooflights"
+      },
+      {
+        "title": "Sir Alexander Fleming Building, Imperial College - Design Build Technology (Braun/Groemling)",
+        "url": "https://bdt.degruyter.com/?p=19080",
+        "used_for": "saw-tooth roof with north light; service shafts along main facades; 1994-98"
+      },
+      {
+        "title": "The Sir Alexander Fleming Building, Imperial College - Building Design",
+        "url": "https://bdonline.co.uk/the-sir-alexander-fleming-building-imperial-college/2155.article",
+        "used_for": "six-storey glazed atrium"
+      },
+      {
+        "title": "Buildings and Centres: One - Imperial College video archive",
+        "url": "https://blogs.imperial.ac.uk/videoarchive/buildings-and-centres-one/",
+        "used_for": "opening by the Queen, 21 October 1998"
+      }
+    ],
+    "notes": "Cladding material of the lab elevations was not found in the sources; modelled as pale grey metal panels with ribbon glazing and sun-shading blades. The glazed forum end is placed on the projecting north bay of the footprint; forum length, saw-tooth count and service shaft positions are approximate. Height 23.2 m from the footprint."
   }
 ]
