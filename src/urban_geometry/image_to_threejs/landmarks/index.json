@@ -151,6 +151,42 @@
     "notes": "Placed on the Overture canopy footprint and the four continent-group footprints (orientation ~7 deg from the group layout). Step and podium dimensions, stage heights (arches, gables at ~24 m, spire 31-51 m, cross to 54 m) are proportioned from descriptions. Sculpture groups and the statue are blocky stand-ins (marble masses with an animal and figures; gilt seated figure); mosaics are painted suggestions. Two small unnamed 2 x 8 m strips ~35 m south-east/south-west of the memorial (identity unknown, generic extrusion gave 17 m towers in the park) are claimed and drawn as low granite plinths."
   },
   {
+    "id": "apsley_house",
+    "name": "Apsley House",
+    "claims": [
+      "969b00fe-17d4-439f-85d2-144c564d460f",
+      "738895ec-7e67-4243-839b-587c2faaf7b9"
+    ],
+    "references": [
+      {
+        "title": "Apsley House - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Apsley_House",
+        "used_for": "Adam house refaced in Bath stone with pedimented portico by the Wyatts (1828-29)"
+      },
+      {
+        "title": "Apsley House - Historic England list entry 1226873",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1226873",
+        "used_for": "rusticated podium, centre 3 bays breaking forward with pedimented Corinthian portico, Corinthian pilasters on corners/sides, dentil cornice"
+      },
+      {
+        "title": "Mirror of Literature No. 381 (1829), Project Gutenberg",
+        "url": "https://gutenberg.org/cache/epub/11332/pg11332-images.html",
+        "used_for": "principal front: pediment on four Corinthian columns, Palladian style"
+      },
+      {
+        "title": "Decimus Burton Screen, Apsley Gate - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101278089-decimus-burton-screen-apsley-gate-west-end-ward",
+        "used_for": "screen: Portland stone Greek Ionic colonnade pierced by three entrances, central archway largest with attic frieze"
+      },
+      {
+        "title": "Decimus Burton screen - Victorian Web",
+        "url": "https://victorianweb.org/art/architecture/burton/2.html",
+        "used_for": "frieze of horsemen and chariots after the Elgin marbles"
+      }
+    ],
+    "notes": "House walls follow the Overture outline; storey heights (podium 5.6 m, cornice 16 m) are proportioned, not measured (Overture h = 20 m includes roof structures). Window rhythm is a painted 3.3 m bay; the west Waterloo Gallery skylight and chimneys are approximate. Screen column count/spacing and heights estimated from its footprint."
+  },
+  {
     "id": "battersea_bridge",
     "name": "Battersea Bridge",
     "claims": [],
@@ -212,6 +248,41 @@
       }
     ],
     "notes": "Massing from the Overture parts (30 m outer halls, 50 m boiler house, 55 m corner towers, 103 m chimneys). Brick fluting, window strips and stepped tower tiers are proportioned from general photo knowledge, not measured; rooftop villas and glazed top storeys are schematic. Jetty cranes omitted."
+  },
+  {
+    "id": "bbc_broadcasting_house",
+    "name": "BBC Broadcasting House",
+    "claims": [
+      "8f1d5a24-abeb-4827-b54c-da1e75bba49c"
+    ],
+    "references": [
+      {
+        "title": "Broadcasting House - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Broadcasting_House",
+        "used_for": "Art Deco HQ on Portland Place/Langham Place, John Peel (Egton) wing on the east side, extension at the rear, piazza"
+      },
+      {
+        "title": "Broadcasting House, London - Modernist Britain",
+        "url": "https://www.modernistbritain.co.uk/post/building/Broadcasting+House/",
+        "used_for": "Val Myer / Tudsbery, steel frame clad in Portland stone, Gill sculpture"
+      },
+      {
+        "title": "Broadcasting House - Regent Street - Manchester History",
+        "url": "https://manchesterhistory.net/architecture/1930/broadcasthouse.html",
+        "used_for": "nine storeys stepping down to six on the Langham Street side; main facade topped by an ornamental clock tower; lattice mast (replica)"
+      },
+      {
+        "title": "BBC Broadcasting House - A London Inheritance",
+        "url": "https://alondoninheritance.com/london-books/bbc-broadcasting-house",
+        "used_for": "Prospero and Ariel above the entrance; general appearance"
+      },
+      {
+        "title": "The historical building of BBC Broadcasting House - World Construction Network",
+        "url": "https://worldconstructionnetwork.com/?p=5337",
+        "used_for": "John Peel wing in the same Portland stone; glass-fronted link extension"
+      }
+    ],
+    "notes": "Outline from Overture; the old building is taken as the west arm of the U-shaped footprint (west of the piazza line) and the rest as the Peel wing / link extension. Old BH heights: 24.2 m (Overture) to the main parapet, then two set-back storeys to 31.5 m and the clock stage to ~33 m - set-back depths are estimated. The lattice mast, clock and Gill group are schematic. The Peel wing is drawn at a single 24.2 m height (the 16.8 m part lies inside the taller part in the source data)."
   },
   {
     "id": "bbc_television_centre",
@@ -375,6 +446,36 @@
       }
     ],
     "notes": "Heights estimated (colonnades 6.5 m with balustraded terrace, chapel drum 12 m, dome crown ~21 m with lantern); Overture heights (6-11 m) ignored. The arcade faces the avenue / circle side and the backs are brick, as in the listing; arch rhythm, portico size and the Western Catacombs treatment are approximate."
+  },
+  {
+    "id": "buckingham_palace",
+    "name": "Buckingham Palace",
+    "claims": [
+      "2f30b3f5-eb22-4154-9404-68a976499e6d"
+    ],
+    "references": [
+      {
+        "title": "Buckingham Palace - Wikipedia (Schools edition mirror)",
+        "url": "https://dlab.epfl.ch/wikispeedia/wpcd/wp/b/Buckingham_Palace.htm",
+        "used_for": "Blore 1850 east front redesigned by Aston Webb in 1913 in Portland stone as a backdrop to the Victoria Memorial; Nash west front, quadrangle plan"
+      },
+      {
+        "title": "Buckingham Palace Architecture - thingstodoinlondon",
+        "url": "https://www.thingstodoinlondon.com/attractions/buckingham-palace/architecture/",
+        "used_for": "central pediment with royal arms flanked by lion and unicorn, the balcony above the central entrance, symmetrical facade"
+      },
+      {
+        "title": "The Victoria Memorial and Buckingham Palace 1913 - Royal Collection Trust",
+        "url": "https://col.rct.uk/collection/2303715-e/the-victoria-memorial-and-buckingham-palace-1913",
+        "used_for": "east front composition as completed in 1913"
+      },
+      {
+        "title": "Buckingham Palace - Designing Buildings Wiki",
+        "url": "https://www.designingbuildings.co.uk/wiki/Buckingham_Palace",
+        "used_for": "building history: Nash/Blore wings around the quadrangle"
+      }
+    ],
+    "notes": "Plan, quadrangle and wing heights from the Overture footprint and its 12 parts; the unparted east, north and south ranges use 22 m. East-front bay rhythm, pavilion widths, column positions and pediment size are proportioned from memory of photographs (no measured elevation found); sculpture, the lion/unicorn and the arms are painted. The forecourt (gravel, railings, sentry boxes) is an approximate 20 m deep strip; the Victoria Memorial lies outside the domain and is not modelled. The east end of the palace extends ~100 m past the x = 4000 m domain edge and is kept whole."
   },
   {
     "id": "cassini_tower",
@@ -1172,6 +1273,36 @@
     "notes": "Overture footprint (named \"Metropolitan Building\", h 85 m = chimney height). Eaves (28 m), twin pitched roofs (glazed over the north turbine-hall atrium), bay rhythm and chimney positions (two middle positions of the original row of four, on the creek side) are estimates."
   },
   {
+    "id": "marble_arch",
+    "name": "Marble Arch",
+    "claims": [
+      "a344548c-782b-4847-a56a-7e242d693a39"
+    ],
+    "references": [
+      {
+        "title": "Marble Arch - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Marble_Arch",
+        "used_for": "Nash design, Arch of Constantine model, three arches with Corinthian columns"
+      },
+      {
+        "title": "Marble Arch - A View On Cities",
+        "url": "https://aviewoncities.com/london/marble-arch",
+        "used_for": "height 45 ft, white Carrara marble cladding"
+      },
+      {
+        "title": "Marble Arch - Victorian Web",
+        "url": "https://victorianweb.org/art/architecture/nash/1.html",
+        "used_for": "Carrara vs Seravezza marble; Arc du Carrousel influence"
+      },
+      {
+        "title": "Marble Arch - London Remembers",
+        "url": "https://www.londonremembers.com/memorials/marble-arch",
+        "used_for": "general appearance and relocation to Hyde Park corner"
+      }
+    ],
+    "notes": "Overall height 13.7 m from the 45 ft figure (Overture h = 10.4 m is too low). Plan and column positions from the Overture outline; opening widths, springing heights and attic proportions estimated. Sculpted reliefs are flat inset panels; the bronze gates are a painted grille."
+  },
+  {
     "id": "michelin_house",
     "name": "Michelin House",
     "claims": [
@@ -1740,6 +1871,36 @@
     "notes": "Footprint from Overture; Overture height (12.9 m, inferred) replaced by estimates: East Block 24 m cornice + attic to 28 m (six public floors), Centre Block 24 m, Wellcome Wing 28 m. The Exhibition Road elevation (rusticated base, recessed giant colonnade, attic) is reconstructed from general descriptions, not measured drawings; column count and window rhythm are approximate. The Museum Lane service range is a schematic stone block."
   },
   {
+    "id": "selfridges",
+    "name": "Selfridges",
+    "claims": [
+      "c3680bda-49e6-402d-b146-8f293b960995"
+    ],
+    "references": [
+      {
+        "title": "Selfridges flagship store - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Selfridges_flagship_store",
+        "used_for": "Burnham/Swales design, Giant Order of Ionic columns on the ground-floor base with metal and glass panels between, phases 1906-1928"
+      },
+      {
+        "title": "Selfridges, Oxford Street - Manchester History",
+        "url": "https://manchesterhistory.net/architecture/1920/selfridges.html",
+        "used_for": "Swales frontispiece, Burnet influence, Queen of Time sculpture by Gilbert Bayes above the entrance"
+      },
+      {
+        "title": "Selfridges, 398-454 Oxford Street - UCL Survey of London blog",
+        "url": "https://blogs.ucl.ac.uk/survey-of-london/2020/12/23/selfridges-398-454-oxford-street",
+        "used_for": "building history and phasing; columns hiding the steel frame"
+      },
+      {
+        "title": "Selfridges Oxford Street - Arch Journey",
+        "url": "https://archjourney.org/projects/selfridges-oxford-street/",
+        "used_for": "general architectural description"
+      }
+    ],
+    "notes": "Plan from the Overture outline. Heights are proportioned from the elevation (ground floor 6.6 m, giant order to 23 m, cornice 26 m, attic 29.5 m, set-back top floor 33 m) because Overture h = 18.2 m is clearly too low; no measured section was found. Column spacing (~6 m bays) is an estimate. The Wigmore Street (north) side and the later rear additions use a plainer painted elevation. Queen of Time is a schematic gilded figure."
+  },
+  {
     "id": "shepherds_bush_empire",
     "name": "Shepherd's Bush Empire",
     "claims": [
@@ -2033,6 +2194,75 @@
       }
     ],
     "notes": "Footprint from Overture (courtyard garden kept as a hole). Overture h (13.6 m) is inferred; heights are estimates: Cromwell Road range 22 m to the balustrade, frontispiece 25 m, tower crown with Fame at ~55 m (no published height found). Rear ranges, Cast Courts glazed roofs and the Henry Cole Wing block are schematic. Statue niches and stone banding are painted; the tower is simplified to octagonal stages, a column ring and eight crown ribs."
+  },
+  {
+    "id": "victoria_station",
+    "name": "Victoria Station",
+    "claims": [
+      "160e783b-6903-4167-9405-46269ea09d30",
+      "ac3d2c7f-62cc-4092-9bc4-b4715b99bd70",
+      "3fbdf097-fc5e-4b81-9945-add8ecd9b420"
+    ],
+    "references": [
+      {
+        "title": "The history of London Victoria station - Network Rail",
+        "url": "https://www.networkrail.co.uk/who-we-are/our-history/iconic-infrastructure/the-history-of-london-victoria-station/",
+        "used_for": "LB&SCR frontage in red brick with a large clock set in a scroll; Chatham side Portland stone frontage with mermaid caryatids; Brighton-side roof removed for Victoria Place"
+      },
+      {
+        "title": "Victoria Railway Station (former LB&SCR station and rear concourse) - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101389322-victoria-railway-station-the-former-london-brighton-and-south-coast-railway-station-and-rear-concourse-warwick-ward",
+        "used_for": "ashlar centrepiece and end pavilions, red brick with stone bands, 5 storeys plus 2 attic storeys in the mansard, canopy over the bottom 2 storeys, five ridged concourse roofs on cast-iron Corinthian columns"
+      },
+      {
+        "title": "Victoria Station - Victorian Web",
+        "url": "https://victorianweb.org/technology/railways/75.html",
+        "used_for": "Blomfield / Ancell Chatham frontage, Fowler 1862 south-east train shed"
+      },
+      {
+        "title": "Architectural Sculpture at Victoria Station by H. C. Fehr - Victorian Web",
+        "url": "https://victorianweb.org/sculpture/fehr/5.html",
+        "used_for": "pediments each held by a pair of mermaid caryatids with a wreath and cartouche"
+      }
+    ],
+    "notes": "Plan split from the Overture outline: Brighton side west of the chord between the two frontages, Chatham side and the Wilton Road range east of it; the two claimed roof footprints are modelled as Fowler's train shed as two segmental glazed spans (span form and 18 m crown height assumed). Brighton frontage height (20.5 m + mansard to ~27 m), Chatham frontage height (15 m), bay rhythm, canopy depth and the concourse ridge heights are estimates. Sculpture (caryatids) is schematic; the Grosvenor Hotel and Victoria Place are separate footprints not claimed here."
+  },
+  {
+    "id": "wellington_arch",
+    "name": "Wellington Arch",
+    "claims": [
+      "cc9ab33d-299e-4224-8dbb-c15280b83611",
+      "a822a7e4-0f9b-48ad-b8e4-3f6fc9e534a5",
+      "4018db4a-7677-49a0-b25b-d2c569902f22"
+    ],
+    "references": [
+      {
+        "title": "Wellington Arch - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Wellington_Arch",
+        "used_for": "Burton design, 1883 relocation to the top of Constitution Hill, quadriga history"
+      },
+      {
+        "title": "Description of Wellington Arch - English Heritage",
+        "url": "https://www.english-heritage.org.uk/visit/places/wellington-arch/history/description/",
+        "used_for": "single wide opening flanked by pairs of Corinthian columns standing well forward, blank attic as quadriga pedestal, Portland stone facing, faces east down Constitution Hill"
+      },
+      {
+        "title": "Wellington Arch and Quadriga - Art UK",
+        "url": "https://batch.artuk.org/discover/artworks/wellington-arch-and-quadriga-265475",
+        "used_for": "materials: bronze quadriga, Portland stone"
+      },
+      {
+        "title": "The Wellington Arch - Sotheby's Realty journal",
+        "url": "https://sothebysrealty.co.uk/the-journal/wellington-arch-london",
+        "used_for": "quadriga: winged Victory in a chariot drawn by four horses"
+      },
+      {
+        "title": "Wellington Arch - The Unfinished City",
+        "url": "https://www.theunfinishedcity.co.uk/2025/08/wellington-arch.html",
+        "used_for": "quadriga size (about 12 m high incl. pedestal reading)"
+      }
+    ],
+    "notes": "Arch massing from the Overture footprint (22 m x 13 m body plus column porticoes); heights proportioned (cornice 15 m, attic 19.7 m, Victory ~28 m) - no measured elevation was found. Quadriga horses and figures are schematic bronze forms; heading (east, towards the Palace) is assumed. Royal Artillery Memorial and Wellington statue are simplified (cruciform pedestal + stone howitzer; granite plinth + horse and rider) and are included so Hyde Park Corner does not show generic boxes."
   },
   {
     "id": "westfield_london",
