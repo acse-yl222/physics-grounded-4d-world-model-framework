@@ -104,11 +104,38 @@ async function landmarkIndex() {
 }
 
 const stats = {};
+/** ENU footprint box of an object built in the (z-up) world group. */
+function enuBox(obj) {
+  obj.updateMatrixWorld(true);
+  const b = new THREE.Box3().setFromObject(obj);
+  // three (x, y, z) = ENU (x, z, -y)
+  return { x0: b.min.x, x1: b.max.x, y0: -b.max.z, y1: -b.min.z };
+}
+
+/**
+ * Landmarks without claimed footprints (bridges, arches, memorials): built once to
+ * learn where they are; their boxes become ground cutouts so mapped ways over
+ * water do not duplicate a modelled bridge deck.
+ */
+async function freeStanding(index, scene, assets) {
+  const out = [];
+  for (const l of index.filter((e) => !e.claims?.length)) {
+    const object = buildLandmark(await loadLandmark(l.id), scene, assets);
+    const probe = new THREE.Group();
+    probe.rotation.x = -Math.PI / 2;
+    probe.add(object);
+    out.push({ id: l.id, object, box: enuBox(probe) });
+    probe.remove(object);
+  }
+  return out;
+}
+
 async function main() {
   const scene = await loadScene();
   const index = await landmarkIndex();
   const assets = await loadAssets();
   const allClaims = new Set(index.flatMap((l) => l.claims ?? []));
+  const free = await freeStanding(index, scene, assets);
   let bounds = null;
   if (params.get('gallery')) {
     // Asset library gallery: every resources/ asset in a row, vehicles and trees scaled.
@@ -147,22 +174,20 @@ async function main() {
       r = Number(params.get('r') ?? 400);
     bounds = { x0: x - r, y0: y - r, x1: x + r, y1: y + r };
     focus = { x, y, z: 0, size: r * 0.55 };
-    if (params.get('landmarks') !== '0')
+    if (params.get('landmarks') !== '0') {
       for (const l of index) {
         const b = scene.buildings.find((q) => q.id === l.claims?.[0]);
-        if (
-          b &&
-          b.c[0] >= bounds.x0 &&
-          b.c[0] < bounds.x1 &&
-          b.c[1] >= bounds.y0 &&
-          b.c[1] < bounds.y1
-        )
+        if (b && inside(b.c, bounds))
           world.add(buildLandmark(await loadLandmark(l.id), scene, assets));
       }
+      for (const f of free)
+        if (inside([(f.box.x0 + f.box.x1) / 2, (f.box.y0 + f.box.y1) / 2], bounds))
+          world.add(f.object);
+    }
   }
   if (params.get('context') !== '0') {
     world.add(buildGeneric(scene, { bounds, skip: allClaims }));
-    world.add(buildGround(scene, { bounds }));
+    world.add(buildGround(scene, { bounds, cutouts: free.map((f) => f.box) }));
     world.add(buildTrees(scene, { bounds, assets }));
     world.add(buildFurniture(scene, { bounds, assets }));
   }
@@ -176,6 +201,10 @@ async function main() {
   view(params.get('view') ?? 'ne');
   say(`${params.get('landmark') ?? 'region'} · ${triangles(world).toLocaleString()} triangles`);
   stats.triangles = triangles(world);
+}
+
+function inside(p, b) {
+  return p[0] >= b.x0 && p[0] < b.x1 && p[1] >= b.y0 && p[1] < b.y1;
 }
 
 function triangles(root) {
@@ -204,7 +233,10 @@ async function exportLayers(spec) {
     root.rotation.x = -Math.PI / 2; // ENU z-up -> glTF y-up
     root.name = `${spec.prefix ?? ''}${layer}`;
     if (layer === 'buildings') root.add(buildGeneric(scene, { bounds: spec.bounds, skip: claims }));
-    if (layer === 'ground') root.add(buildGround(scene, { bounds: spec.bounds }));
+    if (layer === 'ground') {
+      const cutouts = (await freeStanding(index, scene, assets)).map((f) => f.box);
+      root.add(buildGround(scene, { bounds: spec.bounds, cutouts }));
+    }
     if (layer === 'trees') root.add(buildTrees(scene, { bounds: spec.bounds, assets }));
     if (layer === 'street_furniture')
       root.add(buildFurniture(scene, { bounds: spec.bounds, assets }));

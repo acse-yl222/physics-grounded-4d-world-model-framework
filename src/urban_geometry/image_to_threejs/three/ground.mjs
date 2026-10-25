@@ -4,7 +4,7 @@ import { instance } from './assets.mjs';
 import { MeshBatch, box, cap, ground, mat, road } from './kit.mjs';
 
 // Draw order by small vertical offsets (metres) so coplanar layers never z-fight.
-const Z = { base: 0, area: 0.04, water: 0.06, pavement: 0.1, path: 0.13, rail: 0.14, road: 0.16 };
+const Z = { base: 0, area: 0.04, water: 0.075, pavement: 0.1, path: 0.13, rail: 0.14, road: 0.16 };
 const ROAD_KIND = {
   motorway: 'major',
   trunk: 'major',
@@ -141,7 +141,34 @@ function clipLine(line, b) {
   return !b || line.some((p) => inside(p, b));
 }
 
-export function buildGround(scene, { bounds } = {}) {
+/**
+ * Split polylines into runs that avoid `cutouts` (boxes of landmark structures such
+ * as bridges): a segment is dropped when both ends lie in a cutout and its midpoint
+ * is over mapped water, so riverside roads inside the same box are kept.
+ */
+function avoidCutouts(ways, cutouts, water) {
+  if (!cutouts?.length) return ways;
+  const inBox = (p) =>
+    cutouts.some((c) => p[0] >= c.x0 && p[0] <= c.x1 && p[1] >= c.y0 && p[1] <= c.y1);
+  const wet = (p) => water.some((w) => w.poly && pointIn(w.poly[0], p[0], p[1]));
+  const out = [];
+  for (const way of ways) {
+    let run = [way.line[0]];
+    for (let k = 1; k < way.line.length; k++) {
+      const a = way.line[k - 1],
+        b = way.line[k];
+      const cut = inBox(a) && inBox(b) && wet([(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]);
+      if (cut) {
+        if (run.length > 1) out.push({ ...way, line: run });
+        run = [b];
+      } else run.push(b);
+    }
+    if (run.length > 1) out.push({ ...way, line: run });
+  }
+  return out;
+}
+
+export function buildGround(scene, { bounds, cutouts } = {}) {
   const batch = new MeshBatch();
   const H = scene.half_m;
   const b = bounds ?? { x0: -H, y0: -H, x1: H, y1: H };
@@ -177,7 +204,7 @@ export function buildGround(scene, { bounds } = {}) {
   }
 
   const deck = mat('dark_concrete');
-  const roads = scene.roads
+  const roads = avoidCutouts(scene.roads, cutouts, scene.water)
     .filter((r) => clipLine(r.line, bounds))
     .sort((p, q) => (RANK[ROAD_KIND[p.cls]] ?? 0) - (RANK[ROAD_KIND[q.cls]] ?? 0));
   // Pavements first, under carriageways.
@@ -222,7 +249,7 @@ export function buildGround(scene, { bounds } = {}) {
         disc(batch, road(kind), end, r.w / 2, zBase - 0.002);
     }
   }
-  for (const r of scene.rails) {
+  for (const r of avoidCutouts(scene.rails, cutouts, scene.water)) {
     if (!clipLine(r.line, bounds)) continue;
     const z = r.level ? r.level * DECK_M : Z.rail;
     ribbon(batch, road('rail'), r.line, 3.4, z, {
@@ -271,6 +298,28 @@ export function buildTrees(scene, { bounds, assets } = {}) {
   const pts = scene.trees.filter((t) => inside(t, bounds)).map(([x, y, s]) => [x, y, s]);
   let seed = 1;
   const rand = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+  // Scattered trees must not stand inside building footprints.
+  const cell = 50,
+    grid = new Map();
+  for (const b of scene.buildings)
+    for (const poly of b.polys) {
+      const xs = poly[0].map((p) => p[0]),
+        ys = poly[0].map((p) => p[1]);
+      for (let i = Math.floor(Math.min(...xs) / cell); i <= Math.floor(Math.max(...xs) / cell); i++)
+        for (
+          let j = Math.floor(Math.min(...ys) / cell);
+          j <= Math.floor(Math.max(...ys) / cell);
+          j++
+        ) {
+          const key = `${i},${j}`;
+          if (!grid.has(key)) grid.set(key, []);
+          grid.get(key).push(poly[0]);
+        }
+    }
+  const built = (x, y) =>
+    (grid.get(`${Math.floor(x / cell)},${Math.floor(y / cell)}`) ?? []).some((ring) =>
+      pointIn(ring, x, y),
+    );
   for (const a of scene.areas) {
     const spacing = { wood: 9, park: 24, cemetery: 20, scrub: 14, grass: 45 }[a.kind];
     if (!spacing) continue;
@@ -297,6 +346,7 @@ export function buildTrees(scene, { bounds, assets } = {}) {
           py = y + rand() * spacing;
         if (rand() < 0.35 || !inside([px, py], bounds)) continue;
         if (!pointIn(ring, px, py) || a.poly.slice(1).some((h) => pointIn(h, px, py))) continue;
+        if (built(px, py)) continue;
         pts.push([px, py, rand()]);
       }
   }
