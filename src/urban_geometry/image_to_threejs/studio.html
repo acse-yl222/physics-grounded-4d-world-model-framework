@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Image-to-three.js studio</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #cfe0ee;
+        font:
+          13px system-ui,
+          sans-serif;
+      }
+      #info {
+        position: fixed;
+        left: 8px;
+        top: 8px;
+        padding: 6px 8px;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 4px;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "../../visualization/vendor/three/build/three.module.js",
+          "three/addons/": "../../visualization/vendor/three/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="info">loading…</div>
+    <script type="module" src="./studio.mjs"></script>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "scene_id": "imperial_corridor",
+  "title": "Imperial South Kensington to White City (8 km)",
+  "description": "8 km x 8 km domain covering Imperial College South Kensington and White City campuses",
+  "origin": {
+    "longitude": -0.200473,
+    "latitude": 51.506427
+  },
+  "domain_m": 8000,
+  "overture_release": "2026-10-21.0"
+}

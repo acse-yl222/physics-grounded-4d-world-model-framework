@@ -1,0 +1,226 @@
+// Studio page: renders landmarks / city regions for review and exports GLB layers.
+// Query parameters:
+//   scene=<url>                      prepared scene JSON (default: repo cache)
+//   landmark=<id>&context=<m>        one landmark plus generic surroundings
+//   x=<m>&y=<m>&r=<m>                a city region centred on (x, y)
+//   shadows=1                        enable sun shadows
+// window.studio exposes ready, view(name), stats and exportLayers(spec).
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
+import { buildGeneric } from './three/generic.mjs';
+import { buildGround, buildTrees } from './three/ground.mjs';
+import { buildLandmark, loadLandmark } from './three/landmarks.mjs';
+
+const params = new URLSearchParams(location.search);
+const info = document.getElementById('info');
+const say = (t) => (info.textContent = t);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(1);
+renderer.setSize(innerWidth, innerHeight);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+renderer.shadowMap.enabled = params.get('shadows') === '1';
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.appendChild(renderer.domElement);
+
+const scene3 = new THREE.Scene();
+scene3.background = new THREE.Color('#bcd3e6');
+const world = new THREE.Group(); // ENU (z-up) content
+world.rotation.x = -Math.PI / 2;
+scene3.add(world);
+const camera = new THREE.PerspectiveCamera(40, innerWidth / innerHeight, 0.5, 30000);
+const controls = new OrbitControls(camera, renderer.domElement);
+scene3.add(new THREE.HemisphereLight('#e8f1ff', '#5b6150', 1.6));
+const sun = new THREE.DirectionalLight('#fff4e0', 2.6);
+scene3.add(sun, sun.target);
+sun.castShadow = renderer.shadowMap.enabled;
+sun.shadow.mapSize.set(4096, 4096);
+sun.shadow.bias = -0.0005;
+
+const enu = (x, y, z) => new THREE.Vector3(x, z, -y);
+let focus = { x: 0, y: 0, z: 0, size: 1000 };
+
+function placeSun() {
+  const d = focus.size * 2;
+  sun.position.copy(enu(focus.x - d * 0.5, focus.y - d * 0.8, d * 0.9));
+  sun.target.position.copy(enu(focus.x, focus.y, 0));
+  const s = sun.shadow.camera;
+  s.left = s.bottom = -focus.size;
+  s.right = s.top = focus.size;
+  s.near = 1;
+  s.far = d * 4;
+  s.updateProjectionMatrix();
+}
+
+/** Named camera views around the focus: ne/nw/se/sw (aerial), top, street_<dir>. */
+function view(name = 'ne') {
+  const { x, y, z, size } = focus;
+  const dirs = {
+    n: [0, 1],
+    s: [0, -1],
+    e: [1, 0],
+    w: [-1, 0],
+    ne: [1, 1],
+    nw: [-1, 1],
+    se: [1, -1],
+    sw: [-1, -1],
+  };
+  let eye,
+    target = enu(x, y, z);
+  if (name === 'top') eye = enu(x, y - 1, size * 2.2);
+  else if (name.startsWith('street_')) {
+    const [dx, dy] = dirs[name.slice(7)] ?? dirs.s;
+    const l = Math.hypot(dx, dy);
+    eye = enu(x + (dx / l) * size * 2.4, y + (dy / l) * size * 2.4, 1.7);
+    target = enu(x, y, Math.max(z * 0.8, 8));
+  } else {
+    const [dx, dy] = dirs[name] ?? dirs.ne;
+    const l = Math.hypot(dx, dy);
+    eye = enu(x + (dx / l) * size * 2.1, y + (dy / l) * size * 2.1, z + size * 1.3);
+  }
+  camera.position.copy(eye);
+  controls.target.copy(target);
+  camera.near = Math.max(0.3, size / 2000);
+  camera.far = size * 60;
+  camera.updateProjectionMatrix();
+  controls.update();
+  renderer.render(scene3, camera);
+}
+
+async function loadScene() {
+  const url = params.get('scene') ?? '../../../cache/imperial_corridor/image_to_threejs/scene.json';
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`scene ${url}: ${res.status}`);
+  return res.json();
+}
+
+async function landmarkIndex() {
+  const res = await fetch('./landmarks/index.json');
+  return res.ok ? res.json() : [];
+}
+
+const stats = {};
+async function main() {
+  const scene = await loadScene();
+  const index = await landmarkIndex();
+  const allClaims = new Set(index.flatMap((l) => l.claims ?? []));
+  let bounds = null;
+  if (params.get('landmark')) {
+    const id = params.get('landmark');
+    const def = await loadLandmark(id);
+    def.claims?.forEach((c) => allClaims.add(c));
+    const obj = buildLandmark(def, scene);
+    world.add(obj);
+    world.updateMatrixWorld(true);
+    const box = new THREE.Box3().setFromObject(obj);
+    const c = box.getCenter(new THREE.Vector3()),
+      s = box.getSize(new THREE.Vector3());
+    // Back to ENU: three (x, y, z) = ENU (x, z, -y)
+    focus = { x: c.x, y: -c.z, z: s.y / 2, size: Math.max(s.x, s.z, s.y, 20) * 0.55 };
+    const r = Number(params.get('context') ?? Math.max(120, focus.size * 2.5));
+    bounds = { x0: focus.x - r, y0: focus.y - r, x1: focus.x + r, y1: focus.y + r };
+    stats.landmark = { id, triangles: triangles(obj), size: [s.x, s.z, s.y] };
+  } else {
+    const x = Number(params.get('x') ?? 0),
+      y = Number(params.get('y') ?? 0),
+      r = Number(params.get('r') ?? 400);
+    bounds = { x0: x - r, y0: y - r, x1: x + r, y1: y + r };
+    focus = { x, y, z: 0, size: r * 0.55 };
+    if (params.get('landmarks') !== '0')
+      for (const l of index) {
+        const b = scene.buildings.find((q) => q.id === l.claims?.[0]);
+        if (
+          b &&
+          b.c[0] >= bounds.x0 &&
+          b.c[0] < bounds.x1 &&
+          b.c[1] >= bounds.y0 &&
+          b.c[1] < bounds.y1
+        )
+          world.add(buildLandmark(await loadLandmark(l.id), scene));
+      }
+  }
+  if (params.get('context') !== '0') {
+    world.add(buildGeneric(scene, { bounds, skip: allClaims }));
+    world.add(buildGround(scene, { bounds }));
+    world.add(buildTrees(scene, { bounds }));
+  }
+  world.traverse((o) => {
+    if (o.isMesh) {
+      o.castShadow = true;
+      o.receiveShadow = true;
+    }
+  });
+  placeSun();
+  view(params.get('view') ?? 'ne');
+  say(`${params.get('landmark') ?? 'region'} · ${triangles(world).toLocaleString()} triangles`);
+  stats.triangles = triangles(world);
+}
+
+function triangles(root) {
+  let n = 0;
+  root.traverse((o) => {
+    if (!o.isMesh) return;
+    const g = o.geometry;
+    const t = (g.index ? g.index.count : g.attributes.position.count) / 3;
+    n += o.isInstancedMesh ? t * o.count : t;
+  });
+  return n;
+}
+
+/**
+ * Export layers for a region as GLB files PUT to /__out/<name>.glb.
+ * spec: { bounds:{x0,y0,x1,y1}, layers:['buildings','ground','trees','landmarks'], prefix }
+ */
+async function exportLayers(spec) {
+  const scene = await loadScene();
+  const index = await landmarkIndex();
+  const claims = new Set(index.flatMap((l) => l.claims ?? []));
+  const out = {};
+  for (const layer of spec.layers) {
+    const root = new THREE.Group();
+    root.rotation.x = -Math.PI / 2; // ENU z-up -> glTF y-up
+    root.name = `${spec.prefix ?? ''}${layer}`;
+    if (layer === 'buildings') root.add(buildGeneric(scene, { bounds: spec.bounds, skip: claims }));
+    if (layer === 'ground') root.add(buildGround(scene, { bounds: spec.bounds }));
+    if (layer === 'trees') root.add(buildTrees(scene, { bounds: spec.bounds }));
+    if (layer === 'landmarks')
+      for (const l of index) {
+        try {
+          root.add(buildLandmark(await loadLandmark(l.id), scene));
+        } catch (e) {
+          out.errors = [...(out.errors ?? []), `${l.id}: ${e.message}`];
+        }
+      }
+    root.traverse((o) => {
+      if (o.isMesh && o.userData.flat) o.geometry.deleteAttribute('normal');
+    });
+    const bytes = await new GLTFExporter().parseAsync(root, { binary: true, maxTextureSize: 1024 });
+    const name = `${root.name}.glb`;
+    // Chunked upload keeps each request small for the driver's DevTools channel.
+    const CHUNK = 8 << 20;
+    for (let k = 0; k * CHUNK < bytes.byteLength || k === 0; k++) {
+      const body = bytes.slice(k * CHUNK, (k + 1) * CHUNK);
+      const res = await fetch(`/__out/${name}?part=${k}`, { method: 'PUT', body });
+      if (!res.ok) throw new Error(`upload ${name}: ${res.status}`);
+    }
+    out[layer] = { file: name, bytes: bytes.byteLength, triangles: triangles(root) };
+    root.traverse((o) => o.geometry?.dispose());
+  }
+  return out;
+}
+
+const ready = params.get('mode') === 'export' ? Promise.resolve() : main();
+window.studio = { ready, view, stats, exportLayers };
+ready.catch((e) => {
+  say(`error: ${e.message}`);
+  console.error(e);
+});
+addEventListener('resize', () => {
+  renderer.setSize(innerWidth, innerHeight);
+  camera.aspect = innerWidth / innerHeight;
+  camera.updateProjectionMatrix();
+});
+controls.addEventListener('change', () => renderer.render(scene3, camera));

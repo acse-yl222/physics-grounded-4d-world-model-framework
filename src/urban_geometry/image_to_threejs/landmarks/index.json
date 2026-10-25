@@ -1,0 +1,27 @@
+[
+  {
+    "id": "queens_tower",
+    "name": "Queen's Tower",
+    "claims": [
+      "75b30aaa-f0c6-43f7-b5c7-9b93db7dab9e"
+    ],
+    "references": [
+      {
+        "title": "Queen's Tower, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Queen%27s_Tower,_London",
+        "used_for": "height 87 m, Portland stone cladding, copper-covered dome"
+      },
+      {
+        "title": "Queen's Tower - Imperial College history",
+        "url": "https://www.imperial.ac.uk/about/history/queens-tower/",
+        "used_for": "Collcutt neo-renaissance design, belfry and dome stages"
+      },
+      {
+        "title": "Queen's Tower - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101231643-queens-tower-knightsbridge-and-belgravia-ward",
+        "used_for": "listing description: Portland stone with red brick bands, copper dome"
+      }
+    ],
+    "notes": "Footprint orientation from the Overture outline; stage heights proportioned from photos."
+  }
+]
