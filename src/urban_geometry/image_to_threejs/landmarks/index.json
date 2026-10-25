@@ -25,6 +25,58 @@
     "notes": "Concrete panel pattern (vertical fins with deep-set strip windows), ground-floor recess and the setback/height of the glazed roof storeys are proportioned, not measured: concrete block to 15 m, glazed extension to ~22 m (footprint height 16.8 m). The entrance on the lawn side uses the notch in the outline."
   },
   {
+    "id": "bbc_television_centre",
+    "name": "BBC Television Centre",
+    "claims": [
+      "ce7e9a82-4a6e-4a89-83be-731f0979dadd",
+      "9bcde68a-4dad-4732-a9dd-f58c0c2ce473",
+      "141f12da-152d-4b90-b12d-c4dcde5e7710",
+      "14dc4fae-9f26-4c16-8b94-51eedd6b1aee",
+      "5349aecc-0f9b-4b10-81fc-64e8aa470aba",
+      "bb7c2a95-2aca-4a2e-bf90-388606f5aa25",
+      "57b2711d-3c29-4489-872e-76d314cdb46e",
+      "c685cd6f-495b-41fe-8288-45cb604f2647"
+    ],
+    "references": [
+      {
+        "title": "BBC Television Centre listing - British Listed Buildings (Historic England)",
+        "url": "https://britishlistedbuildings.co.uk/101393371-bbc-television-centre-including-the-main-circular-range-excluding-the-spur-the-original-scenery-block-and-the-former-canteen-shepherds-bush-green-ward",
+        "used_for": "eight-storey drum, sea-green mosaic with red stepped pattern in the courtyard, glazed full-height stair tower, Studio 1 blind brick wall with 26 white discs"
+      },
+      {
+        "title": "Helios (statue) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Helios_(statue)",
+        "used_for": "3 m gilded bronze Helios by Huxley-Jones on the central column"
+      },
+      {
+        "title": "Helios Returned to Courtyard at Television Centre",
+        "url": "https://new.actonw3.com/page/shared/common/bbc1702.htm",
+        "used_for": "fountain bowl with two reclining figures representing sound and vision"
+      },
+      {
+        "title": "Television Centre, Shepherd's Bush - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/1960/bbctv.html",
+        "used_for": "Dawbarn question-mark plan curling round the inner courtyard"
+      },
+      {
+        "title": "Television Centre - RIBA London Award 2019",
+        "url": "https://ribaj.com/buildings/regional-awards-2019-television-centre-ahmm-maccreanor-lavington-morris-drmm-mikhail-riches-piercy-haptic-archer-humphreys-coffey-architects-stanhop-mitsui-fudosan-aimco-bbc-studioworks-homes-refurbishment",
+        "used_for": "redevelopment team; Helios, Piper murals and Studio 1 atomic dots retained"
+      },
+      {
+        "title": "Television Centre - The Spaces",
+        "url": "https://thespaces.com/londons-television-centre-emerges-from-a-1bn-revamp/",
+        "used_for": "AHMM restored the green mosaics, fin walls and sweeping staircases"
+      },
+      {
+        "title": "Television Centre 2TVC - SCP",
+        "url": "https://professional.scp.co.uk/?p=191483",
+        "used_for": "2 Television Centre as the new office building"
+      }
+    ],
+    "notes": "Massing follows the Overture footprints and heights. Outer drum elevation (cream frame, pale blue tiled spandrels, ribbon windows) and the modern 2TVC / Crescent elevations are inferred, not traced from photos. Helios and the Sound/Vision figures are simplified stand-ins. The question-mark tail (spur) and the newer residential blocks to the south/east are left to the generic layer."
+  },
+  {
     "id": "beit_quad",
     "name": "Beit Quad (Imperial College Union and Beit Hall)",
     "claims": [
@@ -99,6 +151,31 @@
       }
     ],
     "notes": "Construction date and elevation are not documented in the sources found; red brick with stone dressings is an assumption matched to the pre-war Imperial laboratory buildings. Height from the footprint record (13.6 m, 4 floors)."
+  },
+  {
+    "id": "cassini_tower",
+    "name": "Cassini Tower, White City Living",
+    "claims": [
+      "ce72c672-bebf-44f0-b062-79f7ed623d35"
+    ],
+    "references": [
+      {
+        "title": "Cassini Tower, White City Living Phase 3 - New London Architecture",
+        "url": "https://nla.london/projects/cassini-tower-white-city-living-phase-3",
+        "used_for": "Patel Taylor; alternating white and patterned bronze wraparound balconies; precast concrete and laser-cut metal palette"
+      },
+      {
+        "title": "White City, Cassini Tower - Interface Facades",
+        "url": "https://www.interface-facades.com/?p=8123",
+        "used_for": "35 storeys / 112 m, undulating curved facade, alternating precast and laser-cut bronze balconies, faceted glazing, rectangular block with bolt-on balconies"
+      },
+      {
+        "title": "Brogan Group - White City Phase 3",
+        "url": "https://www.brogangroup.com/news/brogan-group-continue-temporary-works-at-white-city-phase-3/bp1315/",
+        "used_for": "height 112 m, 35 storeys"
+      }
+    ],
+    "notes": "Tower plan is the curved part of the Overture outline, smoothed. The attached rectangular block is given 10 storeys (~33 m) as an estimate (the footprint carries the tower height for the whole outline). Balcony wave amplitude/phase is stylised."
   },
   {
     "id": "city_guilds_building",
@@ -536,6 +613,34 @@
     "notes": "No facade description found; elevation (concrete mullion fins, dark spandrels, brick ends) is a reconstruction in the 1960s ACP idiom, not traced from photos. Height 23.2 m from Overture (7 floors)."
   },
   {
+    "id": "loftus_road",
+    "name": "Loftus Road Stadium",
+    "claims": [
+      "eed8691a-a296-4fb6-ab31-e8ff31a76854",
+      "10295b67-3690-414e-9c19-383852d30d01",
+      "6168b63b-8605-4e7c-aa86-c4b35bc061c3",
+      "e4054561-c075-4796-9657-3f81cb797bba"
+    ],
+    "references": [
+      {
+        "title": "Loftus Road - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Loftus_Road",
+        "used_for": "stand names and dates (South Africa Road 1968, Ellerslie Road 1972)"
+      },
+      {
+        "title": "Queens Park Rangers stadium - Premier League",
+        "url": "https://www.premierleague.com/clubs/17/Queens-Park-Rangers/stadium",
+        "used_for": "all four stands roughly the same height, roofs meet at all four corners"
+      },
+      {
+        "title": "Loftus Road - StadiumGuide",
+        "url": "https://stadiumguide.com/?p=1343",
+        "used_for": "two overhung tiers at School End and Loftus Road end, executive boxes between South Africa Road tiers, Ellerslie Road single tier"
+      }
+    ],
+    "notes": "Stands modelled as oriented rectangles fitted to the Overture footprints. Heights raised from the OSM values (6-11 m) to 12-15 m so the roofs meet as described; exact tier rake, floodlight and column positions are approximate. Pitch drawn between the stands (no footprint)."
+  },
+  {
     "id": "princes_gardens_eastside",
     "name": "Eastside Halls, Prince's Gardens (Imperial College)",
     "claims": [
@@ -724,6 +829,62 @@
     "notes": "Cladding colour and window pattern are NOT documented in the sources found: charcoal metal module cladding with light frames is an assumption. Atria are placed at equal spacing along the footprint; height 4 storeys (~18 m) replaces Overture h=9.5 m. The Invention Rooms could not be located in the footprint data and are not modelled separately."
   },
   {
+    "id": "shepherds_bush_empire",
+    "name": "Shepherd's Bush Empire",
+    "claims": [
+      "c48cc70b-bab2-4fe0-806b-238192436bd1"
+    ],
+    "references": [
+      {
+        "title": "BBC Television Theatre - British Listed Buildings (Historic England listing)",
+        "url": "https://www.britishlistedbuildings.co.uk/101358593-bbc-television-theatre-shepherds-bush-green-ward",
+        "used_for": "Matcham 1903, terracotta/brick/roughcast, asymmetrical, round tower with octagonal terracotta top stage, lantern and cupola"
+      },
+      {
+        "title": "Shepherd's Bush Empire - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Shepherd%27s_Bush_Empire",
+        "used_for": "history (Stoll, BBC Television Theatre), Grade II status"
+      },
+      {
+        "title": "About Us | O2 Shepherd's Bush Empire",
+        "url": "https://academymusicgroup.com/o2shepherdsbushempire/about-us",
+        "used_for": "tower as a skyline landmark, current O2 branding"
+      },
+      {
+        "title": "Shepherds Bush Empire - Theatres Trust database",
+        "url": "https://database.theatrestrust.org.uk/resources/theatres/show/2026",
+        "used_for": "theatre type / auditorium behind the front range"
+      }
+    ],
+    "notes": "OSM height (8.4 m) replaced by estimates: front range 15 m, auditorium roof 19 m, fly tower 23 m, tower ~29 m to the finial. Window rhythm, gables and canopy lettering are drawn from general descriptions, not measured photos."
+  },
+  {
+    "id": "shepherds_bush_stations",
+    "name": "Shepherd's Bush stations (Central line and Overground)",
+    "claims": [
+      "f8566caf-5b2b-4bf3-bbd4-606701a7f5ef",
+      "1ffe4a65-4bba-42e1-9081-78102c9b81a3"
+    ],
+    "references": [
+      {
+        "title": "Modernisation complete as Shepherd's Bush Tube station re-opens - TfL",
+        "url": "https://tfl.gov.uk/info-for/media/press-releases/2008/october/modernisation-complete-as-shepherds-bush-tube-station-reopens",
+        "used_for": "new building in glass, steel and granite, modern and light, 2008"
+      },
+      {
+        "title": "Shepherd's Bush tube station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Shepherd%27s_Bush_tube_station",
+        "used_for": "surface building completely replaced in 2008, Westfield section 106"
+      },
+      {
+        "title": "Shepherd's Bush railway station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Shepherd%27s_Bush_railway_station",
+        "used_for": "Overground station opened 28 September 2008, designed and funded by Westfield"
+      }
+    ],
+    "notes": "Pavilion height (~7 m) replaces the OSM 11.9 m; roof overhang, glazing grid and signage are generic for the 2008 TfL/Westfield station style. Overground station modelled as a glazed entrance with a canopy; platforms and tracks are not modelled."
+  },
+  {
     "id": "sherfield_building",
     "name": "Sherfield Building",
     "claims": [
@@ -843,6 +1004,107 @@
       }
     ],
     "notes": "Massing from the Overture footprint at 20 m (6 floors). Facade grid, rooflights and plinth treatment are reconstructed from the 1960s Norman & Dawbarn idiom; no photograph could be fetched."
+  },
+  {
+    "id": "westfield_london",
+    "name": "Westfield London",
+    "claims": [
+      "6c18544a-24db-473e-a017-c708daf43a05"
+    ],
+    "references": [
+      {
+        "title": "Westfield London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Westfield_London",
+        "used_for": "architects, opening date, extension"
+      },
+      {
+        "title": "Roof construction Westfield - Knippers Helbig",
+        "url": "https://www.knippershelbig.com/en/projects/dachkonstruktion-westfield/",
+        "used_for": "freeform steel-glass roof of ~18,000 m2, mesh segmentation, ~25 m span"
+      },
+      {
+        "title": "Westfield London - Buchan",
+        "url": "https://www.buchan.com.au/project/westfield-london/",
+        "used_for": "curving glass roof over a figure-eight layout, two levels plus mezzanine, elliptical voids above the nodes, The Atrium at the core"
+      },
+      {
+        "title": "Westfield London - Benoy",
+        "url": "https://benoy.com/projects/westfield-london-1",
+        "used_for": "distinct food / leisure / retail zones, integration with public transport"
+      },
+      {
+        "title": "If you build it, will they shop? - V&A blog",
+        "url": "https://www.vam.ac.uk/blog/sketch-product/if-you-build-it-will-they-shop",
+        "used_for": "The Village luxury area in an irregular part of the plan"
+      },
+      {
+        "title": "Westfield London - malls.com",
+        "url": "https://malls.com/uk/malls/westfield_london.html",
+        "used_for": "Southern Terrace living wall, ~170 m long (low-reliability source)"
+      },
+      {
+        "title": "John Lewis, White City - Allies and Morrison",
+        "url": "https://www.alliesandmorrison.com/projects/john-lewis-white-city",
+        "used_for": "white precast concrete facade with repeating glazed embrasures, glazed ground-floor ribbon"
+      }
+    ],
+    "notes": "Mall street layout is taken from the Overture building parts that trace the figure-of-eight (they are unroofed inside the 13.6 m box), so the glass vaults follow those outlines; vault rise (4-5 m), node domes and the lattice pattern are stylised. Upper volumes in the northern extension other than John Lewis are drawn as clad decks. External cladding colours, entrance positions and signage are approximate."
+  },
+  {
+    "id": "white_city_station",
+    "name": "White City station",
+    "claims": [
+      "94e1a43b-8a3e-4bac-a268-f372c89310ae",
+      "cb7942c6-3c67-49dc-bfeb-208dda30c112"
+    ],
+    "references": [
+      {
+        "title": "White City tube station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/White_City_tube_station",
+        "used_for": "opening 1947, replaced Wood Lane, plaque beside the entrance"
+      },
+      {
+        "title": "White City Station - Modernism in Metro-Land",
+        "url": "https://www.modernism-in-metroland.co.uk/white-city.html",
+        "used_for": "architects McGill and Seymour under Bilbow; Festival of Britain award 1951, Abram Games plaque"
+      },
+      {
+        "title": "White City Underground Station - Structurae",
+        "url": "https://structurae.net/en/structures/white-city-underground-station",
+        "used_for": "structure type / dates"
+      }
+    ],
+    "notes": "Ticket hall / platform range split of the footprint at y = 602 m is inferred from the outline. Brick colour, glazing pattern, clerestory and canopy forms are reconstructed from period descriptions without photographs; platform canopy roof is a simplified butterfly roof."
+  },
+  {
+    "id": "wood_lane_station",
+    "name": "Wood Lane station",
+    "claims": [
+      "e3f1fac8-65cb-4472-bf6b-f4423e2264cc"
+    ],
+    "references": [
+      {
+        "title": "Wood Lane Station - Ritchie Studio",
+        "url": "https://www.ritchie.studio/projects/wood_lane_station/",
+        "used_for": "shot peened stainless steel cladding, gold anodised aluminium ceiling panels, site between owners around the brick viaduct"
+      },
+      {
+        "title": "Wood Lane Station - e-architect",
+        "url": "https://www.e-architect.co.uk/london/wood-lane-station",
+        "used_for": "two-storey steel and glass structure with a suspended 25 m glass screen facade to Wood Lane"
+      },
+      {
+        "title": "Gold anodised aluminium at Wood Lane - John Desmond",
+        "url": "https://www.johndesmond.com/case-studies/wood-lane/",
+        "used_for": "gold anodised aluminium, stainless steel and mesh finishes"
+      },
+      {
+        "title": "New Wood Lane Underground station opens - TfL",
+        "url": "https://tfl.gov.uk/info-for/media/press-releases/2008/october/new-wood-lane-underground-station-opens",
+        "used_for": "opening October 2008, Westfield-funded"
+      }
+    ],
+    "notes": "Height reduced from 17.4 m (OSM) to ~11 m for a two-storey station. Canopy curvature, viaduct arch rhythm and platform canopy form are inferred from text descriptions; no photos could be viewed."
   },
   {
     "id": "wood_lane_studios",
