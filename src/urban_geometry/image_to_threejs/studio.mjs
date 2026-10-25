@@ -58,7 +58,8 @@ function placeSun() {
 
 /** Named camera views around the focus: ne/nw/se/sw (aerial), top, street_<dir>. */
 function view(name = 'ne') {
-  const { x, y, z, size } = focus;
+  const { x, y, z } = focus;
+  const size = focus.size * Number(params.get('zoom') ?? 1);
   const dirs = {
     n: [0, 1],
     s: [0, -1],

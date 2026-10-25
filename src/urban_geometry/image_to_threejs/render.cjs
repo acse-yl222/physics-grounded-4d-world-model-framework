@@ -3,6 +3,7 @@
 //
 //   node render.cjs landmark <id> [--out DIR] [--views ne,sw,street_s] [--shadows]
 //   node render.cjs region <x> <y> <r> [--out DIR] [--views ne,top]
+//   --zoom F scales the camera distance (0.4 = close-up); views also take top.
 //   node render.cjs gallery [--out DIR]            (all resources/ assets)
 //   node render.cjs export --out DIR [--layers buildings,ground,trees,landmarks] [--tile M]
 //
@@ -119,6 +120,7 @@ async function main() {
         q = 'gallery=1&context=0';
       } else throw new Error('mode must be landmark | region | gallery | export');
       if (o.shadows) q += '&shadows=1';
+      if (o.zoom) q += `&zoom=${o.zoom}`;
       if (o.scene) q += `&scene=${o.scene}`;
       await page.goto(`${base}?${q}`);
       await page.waitForFunction(() => window.studio, null, { timeout: 60000 });

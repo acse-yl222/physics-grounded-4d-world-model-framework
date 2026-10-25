@@ -431,3 +431,261 @@ export function ringFrame(ring) {
     ? { cx: centre[0], cy: centre[1], angle: ang, length: L, width: W }
     : { cx: centre[0], cy: centre[1], angle: ang + Math.PI / 2, length: W, width: L };
 }
+
+// ---------------------------------------------------------------------------
+// Detailing helpers: real geometry for elements that read at street level.
+// Edges run a -> b along a wall; for an outer CCW ring the outward normal is on
+// the right of a -> b. All helpers add to a MeshBatch.
+// ---------------------------------------------------------------------------
+
+function edgeFrame(a, b) {
+  const dx = b[0] - a[0],
+    dy = b[1] - a[1];
+  const len = Math.hypot(dx, dy) || 1;
+  const ux = dx / len,
+    uy = dy / len;
+  return { len, ux, uy, nx: uy, ny: -ux, angle: Math.atan2(dy, dx) };
+}
+
+/**
+ * A row of windows on wall edge a -> b at sill height z: glass panel proud of the
+ * wall plus frame, sill, lintel (or a round/segmental arch head) and optional
+ * glazing bars. Returns the window centres.
+ */
+export function windowRow(batch, a, b, z, opts = {}) {
+  const {
+    width = 1.2,
+    height = 2.0,
+    count,
+    bay = 3.6,
+    margin = 0.6,
+    depth = 0.12,
+    glass = mat('dark_glass'),
+    frame = mat('white'),
+    sill = frame,
+    head = 'lintel', // lintel | arch | segment | pediment | none
+    bars = 1, // glazing bars each way
+    surround = 0, // stone surround width (0 = none)
+    surroundMat = mat('portland_stone'),
+  } = opts;
+  const f = edgeFrame(a, b);
+  const usable = f.len - 2 * margin;
+  const n = count ?? Math.max(0, Math.floor(usable / bay + 0.35));
+  const centres = [];
+  for (let k = 0; k < n; k++) {
+    const t = margin + (usable * (k + 0.5)) / n;
+    const cx = a[0] + f.ux * t,
+      cy = a[1] + f.uy * t;
+    const out = (d) => [cx + f.nx * d, cy + f.ny * d];
+    const [gx, gy] = out(0.03);
+    box(batch, glass, gx, gy, z, width, 0.04, height, f.angle);
+    if (surround > 0) {
+      const [sx, sy] = out(depth * 0.5);
+      for (const s of [-1, 1])
+        box(
+          batch,
+          surroundMat,
+          sx + f.ux * s * (width / 2 + surround / 2),
+          sy + f.uy * s * (width / 2 + surround / 2),
+          z - 0.05,
+          surround,
+          depth,
+          height + 0.1,
+          f.angle,
+        );
+    }
+    const [fx, fy] = out(depth * 0.5);
+    for (const s of [-1, 1])
+      box(
+        batch,
+        frame,
+        fx + f.ux * s * (width / 2),
+        fy + f.uy * s * (width / 2),
+        z,
+        0.08,
+        depth,
+        height,
+        f.angle,
+      );
+    if (bars)
+      for (let i = 1; i <= bars; i++) {
+        box(
+          batch,
+          frame,
+          fx,
+          fy,
+          z + (height * i) / (bars + 1) - 0.025,
+          width,
+          depth * 0.6,
+          0.05,
+          f.angle,
+        );
+        box(
+          batch,
+          frame,
+          fx + f.ux * (width * (i / (bars + 1) - 0.5)),
+          fy + f.uy * (width * (i / (bars + 1) - 0.5)),
+          z,
+          0.05,
+          depth * 0.6,
+          height,
+          f.angle,
+        );
+      }
+    const [ox, oy] = out(depth * 0.9);
+    box(batch, sill, ox, oy, z - 0.1, width + 0.25, depth * 1.8, 0.1, f.angle);
+    if (head === 'lintel')
+      box(batch, sill, ox, oy, z + height, width + 0.2, depth * 1.4, 0.18, f.angle);
+    else if (head === 'pediment') {
+      box(batch, sill, ox, oy, z + height, width + 0.3, depth * 1.6, 0.14, f.angle);
+      const g = new THREE.CylinderGeometry(width * 0.62, width * 0.62, depth * 1.4, 3, 1).rotateX(
+        Math.PI / 2,
+      );
+      g.scale(1, 0.32, 1);
+      const m = new THREE.Matrix4()
+        .makeRotationZ(f.angle)
+        .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2));
+      m.setPosition(ox, oy, z + height + 0.14 + width * 0.12);
+      batch.addGeometry(sill, g, m);
+      g.dispose();
+    } else if (head === 'arch' || head === 'segment') {
+      const r = width / 2,
+        seg = head === 'arch' ? Math.PI : Math.PI / 2.5;
+      const g = new THREE.CylinderGeometry(r, r, 0.04, 10, 1, false, Math.PI / 2 - seg / 2, seg);
+      const m = new THREE.Matrix4()
+        .makeRotationZ(f.angle)
+        .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2));
+      m.setPosition(gx, gy, z + height - (head === 'segment' ? r * Math.cos(seg / 2) : 0));
+      batch.addGeometry(glass, g, m);
+      const ring = new THREE.TorusGeometry(r + 0.05, 0.07, 4, 10, seg).rotateZ(
+        Math.PI / 2 - seg / 2,
+      );
+      const m2 = new THREE.Matrix4()
+        .makeRotationZ(f.angle)
+        .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2));
+      m2.setPosition(ox, oy, z + height - (head === 'segment' ? r * Math.cos(seg / 2) : 0));
+      batch.addGeometry(sill, ring, m2);
+      g.dispose();
+      ring.dispose();
+    }
+    centres.push([cx, cy]);
+  }
+  return centres;
+}
+
+/** Windows on every edge of a ring, storey by storey (z0 = first sill, storey height). */
+export function windowGrid(batch, ring, z0, storeys, storey, opts = {}) {
+  for (let s = 0; s < storeys; s++)
+    for (let k = 0; k < ring.length; k++)
+      windowRow(
+        batch,
+        ring[k],
+        ring[(k + 1) % ring.length],
+        z0 + s * storey,
+        typeof opts === 'function' ? opts(s, k) : opts,
+      );
+}
+
+/**
+ * Projecting band around a ring (cornice, string course, plinth): outer face at
+ * offset `projection`, from z to z + height, with top and bottom caps.
+ */
+export function cornice(
+  batch,
+  material,
+  ring,
+  z,
+  { height = 0.5, projection = 0.4, steps = 1 } = {},
+) {
+  for (let s = 0; s < steps; s++) {
+    const p = projection * ((s + 1) / steps);
+    const h = height / steps;
+    const zz = z + s * h;
+    const outer = offsetRing(ring, p);
+    walls(batch, material, [[outer]], zz, zz + h, { bay: 1e6 });
+    cap(batch, material, [[outer, ring.slice().reverse()]], zz + h);
+    cap(batch, material, [[outer, ring.slice().reverse()]], zz, { down: true });
+  }
+}
+
+/** Evenly spaced round columns (with base and capital) from a to b. */
+export function colonnade(
+  batch,
+  material,
+  a,
+  b,
+  z0,
+  height,
+  { count, radius = 0.35, offset = 0, capital = 'doric', segments = 12 } = {},
+) {
+  const f = edgeFrame(a, b);
+  const n = count ?? Math.max(2, Math.round(f.len / (radius * 8)) + 1);
+  const shaft = new THREE.CylinderGeometry(radius * 0.88, radius, height * 0.86, segments).rotateX(
+    Math.PI / 2,
+  );
+  const base = new THREE.CylinderGeometry(
+    radius * 1.25,
+    radius * 1.3,
+    height * 0.05,
+    segments,
+  ).rotateX(Math.PI / 2);
+  const capG =
+    capital === 'corinthian'
+      ? new THREE.CylinderGeometry(radius * 1.35, radius * 0.95, height * 0.09, segments).rotateX(
+          Math.PI / 2,
+        )
+      : new THREE.BoxGeometry(radius * 2.5, radius * 2.5, height * 0.05);
+  for (let k = 0; k < n; k++) {
+    const t = n === 1 ? 0.5 : k / (n - 1);
+    const x = a[0] + (b[0] - a[0]) * t + f.nx * offset,
+      y = a[1] + (b[1] - a[1]) * t + f.ny * offset;
+    const m = new THREE.Matrix4();
+    batch.addGeometry(material, base, m.makeTranslation(x, y, z0 + height * 0.025));
+    batch.addGeometry(material, shaft, m.makeTranslation(x, y, z0 + height * 0.05 + height * 0.43));
+    batch.addGeometry(
+      material,
+      capG,
+      m.makeTranslation(x, y, z0 + height * (capital === 'corinthian' ? 0.955 : 0.975)),
+    );
+  }
+  [shaft, base, capG].forEach((g) => g.dispose());
+}
+
+/** Balustrade along a polyline: top rail, bottom rail and turned balusters. */
+export function balustrade(batch, material, line, z, { height = 1.0, spacing = 0.3 } = {}) {
+  const post = new THREE.CylinderGeometry(0.05, 0.07, height * 0.75, 6).rotateX(Math.PI / 2);
+  for (let k = 1; k < line.length; k++) {
+    const a = line[k - 1],
+      b = line[k];
+    const f = edgeFrame(a, b);
+    const mx = (a[0] + b[0]) / 2,
+      my = (a[1] + b[1]) / 2;
+    box(batch, material, mx, my, z + height * 0.85, f.len, 0.25, height * 0.15, f.angle);
+    box(batch, material, mx, my, z, f.len, 0.25, height * 0.1, f.angle);
+    const n = Math.floor(f.len / spacing);
+    for (let i = 0; i < n; i++) {
+      const t = (i + 0.5) / n;
+      batch.addGeometry(
+        material,
+        post,
+        new THREE.Matrix4().makeTranslation(
+          a[0] + (b[0] - a[0]) * t,
+          a[1] + (b[1] - a[1]) * t,
+          z + height * 0.475,
+        ),
+      );
+    }
+  }
+  post.dispose();
+}
+
+/** Solid of revolution about z from a profile [[radius, z], ...] (domes, drums, finials). */
+export function lathe(material, profile, { segments = 32, x = 0, y = 0, z = 0 } = {}) {
+  const g = new THREE.LatheGeometry(
+    profile.map(([r, h]) => new THREE.Vector2(r, h)),
+    segments,
+  ).rotateX(Math.PI / 2);
+  const mesh = new THREE.Mesh(g, material);
+  mesh.position.set(x, y, z);
+  return mesh;
+}

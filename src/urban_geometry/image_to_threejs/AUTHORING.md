@@ -66,6 +66,20 @@ y, z0, w, d, h, angle)`.
 - `kit.offsetRing(ring, d)` (grow / shrink a ring), `kit.ringFrame(ring)`,
   `kit.orientedExtent(ring, angle)`, `kit.ringArea(ring)`, `kit.rng(seed)`.
 
+Detailing helpers (real geometry, all into a MeshBatch):
+
+- `kit.windowRow(batch, a, b, sillZ, { width, height, count | bay, margin, depth, glass,
+frame, sill, head: 'lintel'|'arch'|'segment'|'pediment'|'none', bars, surround })` —
+  framed windows with glazing bars, sills and heads on wall edge a → b (outward normal
+  on the right of a → b for an outer CCW ring); `kit.windowGrid(batch, ring, z0,
+storeys, storey, opts | (storey, edge) => opts)` does every edge and storey.
+- `kit.cornice(batch, mat, ring, z, { height, projection, steps })` — projecting
+  cornices, string courses and plinths that follow the footprint.
+- `kit.colonnade(batch, mat, a, b, z0, height, { count, radius, offset, capital:
+'doric'|'corinthian' })`, `kit.balustrade(batch, mat, polyline, z, { height,
+spacing })`, `kit.lathe(mat, [[r, z], …], { x, y, z, segments })` for domes, drums,
+  lanterns and finials.
+
 Plain three.js geometry (`THREE.BoxGeometry`, `CylinderGeometry`, `LatheGeometry`,
 `ExtrudeGeometry`, `SphereGeometry`, …) is fine. three.js primitives are y-up: rotate
 cylinders / cones / lathes with `.rotateX(Math.PI / 2)` so their axis is +z.
@@ -85,7 +99,7 @@ cylinders / cones / lathes with `.rotateX(Math.PI / 2)` so their axis is +z.
 
 ```sh
 node src/urban_geometry/image_to_threejs/render.cjs landmark <id> \
-  --views ne,sw,street_s --out <dir> [--context 0] [--shadows]
+  --views ne,sw,street_s --out <dir> [--context 0] [--shadows] [--zoom 0.4]
 ```
 
 Writes `<dir>/<id>_<view>.png` (views: `ne nw se sw top street_n street_s street_e
