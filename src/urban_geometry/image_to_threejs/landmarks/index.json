@@ -56,6 +56,31 @@
     "notes": "No listing text with materials was returned by search; the red brick with Portland stone dressings, slate roofs, dormers and chimneys follow the well-known appearance of the quad and Webb's Imperial work and are approximate. Ranges are split into hipped-roof rectangles fitted to the footprints; eaves at ~13.5 m (Union 14.5 m) so ridges match the footprint heights (16.8 / 17.8 m). Gateway proportions estimated."
   },
   {
+    "id": "eighty_eight_wood_lane",
+    "name": "Eighty-Eight Wood Lane (Imperial West tower)",
+    "claims": [
+      "afb20d8e-65e4-4afd-9763-e88e74c3c86f"
+    ],
+    "references": [
+      {
+        "title": "Eighty Eight Wood Lane - PLP Architecture",
+        "url": "https://plparchitecture.com/?p=5788",
+        "used_for": "34-storey residential tower, glass and terracotta cladding, four sections divided by horizontal bands, tapering form"
+      },
+      {
+        "title": "Imperial College White City Campus Block F - Lindner",
+        "url": "https://www.lindner-group.com/en/references/imperial-college-white-city-campus-block-f",
+        "used_for": "facade panels mostly 1.5 m wide mixing glass and terracotta plates, 80 Wood Lane, 2018"
+      },
+      {
+        "title": "Imperial West masterplan - Aukett Swanke",
+        "url": "https://www.aukettswanke.com/projects/imperial-west-masterplan/",
+        "used_for": "masterplan context with Wood Lane Studios"
+      }
+    ],
+    "notes": "Overture h=7.7 m is wrong; height 34 storeys x 3.15 m + crown = ~111 m (no metric height found). Taper modelled as four stepped sections (1.1 m inset per section) on the oriented rectangle of the footprint; the terracotta / glass panel mix and band design are approximations."
+  },
+  {
     "id": "faculty_building",
     "name": "Faculty Building",
     "claims": [
@@ -127,6 +152,99 @@
     "notes": "Height raised from the footprint value (15-17 m) to the documented 24 m glass facade. Drum diameter, position inside the atrium, column spacing and the sign lettering are proportioned, not measured. Rear (west) elevations abut older college buildings and are given a plain glazed/panel facade."
   },
   {
+    "id": "imperial_i_hub",
+    "name": "Imperial College Translation & Innovation Hub (I-HUB)",
+    "claims": [
+      "1debec9f-f376-4c58-bdc2-8d7dd6c03604"
+    ],
+    "references": [
+      {
+        "title": "Imperial College, White City Campus, Translation & Innovation Hub - Thornton Tomasetti",
+        "url": "https://thorntontomasetti.com/project/imperial-college-white-city-campus-translation-innovation-hub",
+        "used_for": "12-storey building with seven-storey wing buffering the motorway; unitised glazing + metal sun shading + terracotta; asymmetric steel atrium roof"
+      },
+      {
+        "title": "Imperial launches its new hub for innovation at White City - Imperial News",
+        "url": "https://www.imperial.ac.uk/news/175572/imperial-launches-innovation-white-city/",
+        "used_for": "13-storey building, scale"
+      },
+      {
+        "title": "Imperial College London - PLP Architecture",
+        "url": "https://plparchitecture.com/?p=5696",
+        "used_for": "PLP design, 12-storey facility"
+      },
+      {
+        "title": "Laing O'Rourke hands over £200m uni hub - Building",
+        "url": "https://building.co.uk/news/laing-orourke-hands-over-200m-uni-hub/5083518.article",
+        "used_for": "architects PLP and Aukett Swanke, cost"
+      }
+    ],
+    "notes": "Overture h=11 m is wrong. Heights from storey counts: 13-storey block ~54 m, 7-storey Westway wing ~30 m (6 m ground + 4.0 m floors, estimated). Which part of the footprint carries the tall block (north, away from the Westway) and the atrium position/roof shape are inferred from the \"buffer wing\" description, not from drawings. Terracotta colour and sun-shade spacing approximate."
+  },
+  {
+    "id": "imperial_msrh",
+    "name": "Molecular Sciences Research Hub",
+    "claims": [
+      "2e9ddde6-d87e-4465-a01f-7d3cc82f1dac"
+    ],
+    "references": [
+      {
+        "title": "Molecular Sciences Research Hub - Aukett Swanke",
+        "url": "https://www.aukettswanke.com/projects/molecular-sciences-research-hub/",
+        "used_for": "main facade of stone and backlit perforated bronze cladding plus triple-glazed ventilated curtain wall facing Imperial Square; nine laboratory floors"
+      },
+      {
+        "title": "Imperial College installation - Glass Times",
+        "url": "https://glasstimes.co.uk/projects/imperial-college-installation/",
+        "used_for": "twin-skin triple-glazed curtain wall on the south elevation, single-skin on the north facade"
+      },
+      {
+        "title": "Kawneer glazing systems get under the skin of a new city campus - Specification Online",
+        "url": "https://www.specificationonline.co.uk/articles/2018-09-21/kawneer-glazing-systems-get-under-the-skin-of-a-new-city-campus",
+        "used_for": "unitised AA201 twin-skin curtain walling"
+      },
+      {
+        "title": "Molecular Sciences Research Hub, Imperial College - Proteus Facades",
+        "url": "https://proteusfacades.com/project/molecular-sciences-research-hub-imperial-college/",
+        "used_for": "perforated TECU Brass panels with patinated finish on a flat concrete facade"
+      }
+    ],
+    "notes": "Overture h=11.9 m is wrong; 9 storeys at 5.5 m + 8 x 4.2 m = ~39 m plus plant (estimate). The fold geometry of the outer glass skin, the extent of brass panels and the number of roof stacks are interpretations of the text descriptions, not measured."
+  },
+  {
+    "id": "imperial_school_of_public_health",
+    "name": "Imperial College School of Public Health",
+    "claims": [],
+    "references": [
+      {
+        "title": "Allies and Morrison completes School of Public Health building at White City - BD",
+        "url": "https://www.bdonline.co.uk/news/allies-and-morrison-completes-school-of-public-health-building-at-white-city/5135165.article",
+        "used_for": "ten storeys, 7,940 m2, pale terracotta-toned metal cladding with white precast panels"
+      },
+      {
+        "title": "School of Public Health, Imperial College London by Allies and Morrison - RIBA Journal",
+        "url": "https://www.ribaj.com/buildings/school-of-public-health-london-allies-and-morrison/",
+        "used_for": "pink metal cladding framing large windows in a precast concrete lattice; steps down to four storeys in one corner; between an accommodation block and a Victorian terrace"
+      },
+      {
+        "title": "School of Public Health - Jidipi (architect text)",
+        "url": "https://architectures.jidipi.com/j00107125/en/school-of-public-health",
+        "used_for": "stepped south facade, east windows concealed from residential building opposite, transparent north facade with entrance colonnade"
+      },
+      {
+        "title": "Imperial College School of Public Health - New London Architecture",
+        "url": "https://nla.london/projects/imperial-college-school-of-public-health",
+        "used_for": "Wood Lane address, entrance to the North Campus, public square on its east side"
+      },
+      {
+        "title": "Imperial opens major new building for School of Public Health - Imperial News",
+        "url": "https://www.imperial.ac.uk/news/251877/imperial-opens-major-building-school-public/",
+        "used_for": "opening, ten-storey description"
+      }
+    ],
+    "notes": "Not in the Overture footprints used by this scene (completed 2023), so claims are empty and the plan is a reconstruction: a 34 m x 24 m block on the vacant plot between Wood Lane, Shinfield Street and Wood Lane Studios, matching the descriptions (Wood Lane entrance, square to the east, accommodation and terrace neighbours). Exact plan, step positions (south terraces at 8 and 6 storeys, 4-storey NW corner) and storey heights are estimates; sources disagree on 8/9/10 storeys."
+  },
+  {
     "id": "queens_tower",
     "name": "Queen's Tower",
     "claims": [
@@ -150,6 +268,36 @@
       }
     ],
     "notes": "Footprint orientation from the Overture outline; stage heights proportioned from photos."
+  },
+  {
+    "id": "scale_space",
+    "name": "Scale Space (incl. Imperial White City Incubator)",
+    "claims": [
+      "6d4f0959-8460-45cb-81bb-f2e2e948279f"
+    ],
+    "references": [
+      {
+        "title": "Scale Space - CJCT",
+        "url": "https://cjctstudios.com/portfolio-item/scale-space/",
+        "used_for": "three 4-storey buildings, prefabricated modules assembled in situ, modules stacked around atria"
+      },
+      {
+        "title": "Scale Space - New London Architecture",
+        "url": "https://www.nla.london/index.php/projects/scale-space-london",
+        "used_for": "25,500 m2 for R&D, technology and education firms; Imperial + Blenheim Chalcot"
+      },
+      {
+        "title": "Phase B, Scale Space - JLL",
+        "url": "https://property.jll.co.uk/rent-office/office-rent-london-w12-7rz-45809",
+        "used_for": "atriums with full-height glazing, modular construction"
+      },
+      {
+        "title": "White City Incubator - Imperial",
+        "url": "https://imperial.ac.uk/stories/white-city-incubator",
+        "used_for": "incubator moved into Scale Space, 58 Wood Lane"
+      }
+    ],
+    "notes": "Cladding colour and window pattern are NOT documented in the sources found: charcoal metal module cladding with light frames is an assumption. Atria are placed at equal spacing along the footprint; height 4 storeys (~18 m) replaces Overture h=9.5 m. The Invention Rooms could not be located in the footprint data and are not modelled separately."
   },
   {
     "id": "sherfield_building",
@@ -211,5 +359,70 @@
       }
     ],
     "notes": "Cladding material of the lab elevations was not found in the sources; modelled as pale grey metal panels with ribbon glazing and sun-shading blades. The glazed forum end is placed on the projecting north bay of the footprint; forum length, saw-tooth count and service shaft positions are approximate. Height 23.2 m from the footprint."
+  },
+  {
+    "id": "sir_michael_uren_hub",
+    "name": "Sir Michael Uren Hub",
+    "claims": [
+      "6aebd0ac-3cc5-40f8-85c6-624d5309c8bd"
+    ],
+    "references": [
+      {
+        "title": "Sir Michael Uren Hub - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Sir_Michael_Uren_Hub",
+        "used_for": "13 storeys, Allies and Morrison, ISG, opening dates"
+      },
+      {
+        "title": "Sir Michael Uren Hub - Allies and Morrison",
+        "url": "https://www.alliesandmorrison.com/projects/sir-michael-uren-hub",
+        "used_for": "triangular plot by the Westway, plant tower at the thin end, fins as shading and privacy screen"
+      },
+      {
+        "title": "Research hub covered in precast concrete fins completed in London - CTBUH",
+        "url": "https://www.ctbuh.org/news/research-hub-covered-in-precast-concrete-fins-completed-in-london",
+        "used_for": "two long sides covered in 1,300 precast fins, ~4 m high, seven variants in a randomised pattern"
+      },
+      {
+        "title": "Sir Michael Uren Hub - RIBA London Award 2022",
+        "url": "https://www.architecture.com/awards-and-competitions-landing-page/awards/riba-regional-awards/riba-london-award-winners/2022/sir-michael-uren-hub",
+        "used_for": "white precast-concrete fins"
+      },
+      {
+        "title": "Milestone building reaches heights - Imperial News",
+        "url": "https://imperial.ac.uk/news/181806/milestone-building-reaches-heights",
+        "used_for": "54 m height"
+      }
+    ],
+    "notes": "Height 54 m from Imperial (Overture h=5.8 m is wrong). Storey split (5.5 m ground + 12 x 4.0 m) and fin spacing (1.5 m), depth and the exact seven fin permutations are estimated; the plant tower height above the roof and the glazing tint are assumptions. Fins start at level 1; the ground floor is a recessed glazed base."
+  },
+  {
+    "id": "wood_lane_studios",
+    "name": "Wood Lane Studios (Gradpad)",
+    "claims": [
+      "1bb9d556-765b-4913-b2f8-bad00648e5c8"
+    ],
+    "references": [
+      {
+        "title": "Wood Lane Studios welcomes first residents - Imperial News",
+        "url": "https://www.imperial.ac.uk/news/114895/wood-lane-studios-welcomes-first-residents/",
+        "used_for": "19,500 m2, 606 self-contained studios on the Imperial West site"
+      },
+      {
+        "title": "Wood Lane Studios - TLOTT",
+        "url": "https://www.tlottltd.co.uk/wood-lane-studios-west-london",
+        "used_for": "600 rooms over four blocks, completed August 2012, with ISG"
+      },
+      {
+        "title": "Imperial West masterplan - Aukett Swanke",
+        "url": "https://www.aukettswanke.com/projects/imperial-west-masterplan/",
+        "used_for": "Wood Lane Studios as phase one of the Imperial West masterplan"
+      },
+      {
+        "title": "Imperial College second campus gets green light - Construction Enquirer",
+        "url": "https://constructionenquirer.com/2012/07/26/phase-two-of-imperial-college-campus-approved",
+        "used_for": "first phase of four 10-storey accommodation blocks for 600 students"
+      }
+    ],
+    "notes": "Overture h=6.1 m is wrong. Block heights are estimates: linked blocks at 7 storeys with the railway-side block raised to 10 storeys (the press figure). Facade materials were not found in any source: pale grey rainscreen panels with storey-high window strips and coloured reveals are an assumption."
   }
 ]
