@@ -448,6 +448,41 @@
     "notes": "Heights estimated (colonnades 6.5 m with balustraded terrace, chapel drum 12 m, dome crown ~21 m with lantern); Overture heights (6-11 m) ignored. The arcade faces the avenue / circle side and the backs are brick, as in the listing; arch rhythm, portico size and the Western Catacombs treatment are approximate."
   },
   {
+    "id": "brompton_oratory",
+    "name": "Brompton Oratory",
+    "claims": [
+      "19eb774d-4dec-4c9a-967f-38c229614635"
+    ],
+    "references": [
+      {
+        "title": "Brompton Oratory - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Brompton_Oratory",
+        "used_for": "Herbert Gribble design, Italian/Roman Baroque, Portland stone exterior, concrete vaults and dome"
+      },
+      {
+        "title": "The Oratory, Brompton - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101358123-the-oratory-brompton-hans-town-ward",
+        "used_for": "listing: 5 bays below / 3 above, pediment, recessed porch, rusticated with pilasters and blind niches; nave of 3 bays, transepts, apsed chancel; lead dome over crossing with cupola and ball finial"
+      },
+      {
+        "title": "Survey of London vol. 41 - British History Online",
+        "url": "https://archive.british-history.ac.uk/node/41981",
+        "used_for": "dates: body 1880-4, facade 1892-5, dome 1895-6, Rickards designer of the lantern"
+      },
+      {
+        "title": "George Campbell Sherrin - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/George_Campbell_Sherrin",
+        "used_for": "Sherrin dome design built 1895-96"
+      },
+      {
+        "title": "Brompton Oratory - temples.org",
+        "url": "https://temples.org/temples/united-kingdom/brompton-oratory-london",
+        "used_for": "dome height about 200 ft, copper/lead exterior"
+      }
+    ],
+    "notes": "Facade faces Brompton Road (SSE). Internal layout (nave/chapels/transepts/crossing) placed within the Overture outline by proportion; nave eaves 24 m and dome cross at ~60 m are estimates. No western towers are modelled: the listing and Survey of London describe only the facade and dome. Facade sculpture reduced to niches and finials."
+  },
+  {
     "id": "buckingham_palace",
     "name": "Buckingham Palace",
     "claims": [
@@ -639,6 +674,46 @@
       }
     ],
     "notes": "Footprint overlaps the Business School (a07c23b2); the overlapping north-east part is cut out of this model so the Business School landmark/generic can occupy it. Height 20 m from the footprint record. 1960s elevations and the 2017 curtain-wall pattern are reconstructed from descriptions only."
+  },
+  {
+    "id": "design_museum",
+    "name": "Design Museum (former Commonwealth Institute)",
+    "claims": [
+      "5c24def6-8f83-48a5-88be-dee535a9d67a"
+    ],
+    "references": [
+      {
+        "title": "Creating the Design Museum's new home - Building",
+        "url": "https://building.co.uk/buildings/creating-the-design-museums-new-home/5067505.article",
+        "used_for": "183 ft square plan, 93 ft central section, heights 30 ft lowest to 80 ft peaks, central concrete shell plus four outer warps"
+      },
+      {
+        "title": "Commonwealth Institute - RBKC listed buildings",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=1227441",
+        "used_for": "listing: central hyperbolic paraboloids flanked by four warps"
+      },
+      {
+        "title": "The Design Museum - London Gardens Trust",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record?ID=KAC044",
+        "used_for": "RMJM 1962, hyperbolic paraboloid copper roof; re-clad curtain wall"
+      },
+      {
+        "title": "Design Museum - Allies and Morrison",
+        "url": "https://alliesandmorrison.com/projects/design-museum",
+        "used_for": "sky-blue dot-on-dot frit recalling the turquoise facades, replicated grid of mullions and transoms"
+      },
+      {
+        "title": "New Design Museum: raising the roof - Building",
+        "url": "https://building.co.uk/buildings/new-design-museum-raising-the-roof/5084994.article",
+        "used_for": "original blue glass and blockwork skin"
+      },
+      {
+        "title": "The Design Museum - IStructE awards",
+        "url": "https://istructe.org/structural-awards/projects/2017/the-design-museum",
+        "used_for": "55 m x 55 m roof retained during conversion"
+      }
+    ],
+    "notes": "Roof modelled as a ruled saddle surface (straight rulings across, smooth quadratic profile along the axis) through a profile of 17 m at the centre, 24.4 m peaks at the edges of the central section and 21 m at the front/back edge mid-points, falling to 9.1 m at the sides; the true form of the two central hypars and the warps is approximated. Front assumed to face Kensington High Street (north). Facade grid is a painted pattern, not traced."
   },
   {
     "id": "eighty_eight_wood_lane",
@@ -848,6 +923,96 @@
       }
     ],
     "notes": "Footprints and Overture heights (Commonwealth 36 m / 11 floors, ICTEM 20 m, Burlington Danes 19.6 m). Facade patterns are generic interpretations of \"brutalist concrete\", \"six-floor glazed lab\" and \"perforated stainless steel and glass\" (no photographs available); bridge position, Burlington Danes tiering and roof plant are estimates. Historic 1905 hospital blocks are left generic."
+  },
+  {
+    "id": "harrods",
+    "name": "Harrods",
+    "claims": [
+      "1206a894-cc7b-4c26-9f6d-5c7ab5ed6e58"
+    ],
+    "references": [
+      {
+        "title": "Harrods - Wrenn Report (Historic England listing text)",
+        "url": "https://www.thewrennreport.co.uk/building/E60000194-22da2404-ff8f-451a-bb6d-4f11f5b72f61/harrods",
+        "used_for": "pinky-buff Doulton terracotta, two lower storeys of display windows plus four storeys, octagonal dome with terracotta ribs, dormers, lunettes and cupola; corner cupolas; copper mansard attics; 2:4:3:3:3:4:2 bays"
+      },
+      {
+        "title": "Harrods - RBKC listed buildings",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=1294346",
+        "used_for": "C. W. Stephens 1901-05; Basil Street elevation by Louis D. Blanc 1929-30"
+      },
+      {
+        "title": "Architectural sculpture - Victorian Web",
+        "url": "https://victorianweb.org/sculpture/architectural/6.html",
+        "used_for": "salmon-pink Doulton block terracotta Brompton Road facade"
+      },
+      {
+        "title": "Harrods awnings - Make Architects",
+        "url": "https://makearchitects.com/?p=12748",
+        "used_for": "straight traditional awnings in Harrods green with gold lettering"
+      }
+    ],
+    "notes": "Overture height (9.9 m) is far too low; cornice set at 24 m, balustrade 26-27 m, mansards to ~30 m, corner cupolas ~38 m and dome lantern ~46 m, proportioned from the storey count in the listing. Dome placed on the Overture round building part. Pavilion/mansard positions follow the 2:4:3:3:3:4:2 rhythm on Brompton Road; on Hans Road only the corner and one central attic are modelled. Facade is a painted generic Stephens bay."
+  },
+  {
+    "id": "holland_house",
+    "name": "Holland House",
+    "claims": [
+      "a91fcdf0-5939-466f-b8f3-dc92f10ced7e"
+    ],
+    "references": [
+      {
+        "title": "Holland House - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Holland_House",
+        "used_for": "Jacobean mansion c.1605 for Sir Walter Cope; destroyed 1940; east wing and ground-floor/south facade ruins remain"
+      },
+      {
+        "title": "Holland House Garden - London Gardens Trust",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record?ID=KAC075",
+        "used_for": "three-storey east wing; ground-floor enclosed arcade with round-headed arches; pilasters and shaped gables to a tiled roof; youth hostel; ruin used as theatre backdrop"
+      },
+      {
+        "title": "Holland Park - Historic England list entry",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1000811",
+        "used_for": "east wing restored and converted to youth hostel 1957"
+      },
+      {
+        "title": "London Library survives Blitz (1940) - Flashbak",
+        "url": "https://flashbak.com/london-library-miraculously-survives-blitz-1940-416988/",
+        "used_for": "bombing of 27 September 1940"
+      }
+    ],
+    "notes": "E-plan read from the Overture outline (wings to the south-south-east). East wing eaves 11 m and gables to ~15 m are estimates (Overture 8.9 m). Ruin wall heights and the extent of surviving fabric in the centre/west are approximated; the 1950s hostel block (Safestay) is a separate footprint left to the generic layer."
+  },
+  {
+    "id": "holy_trinity_brompton",
+    "name": "Holy Trinity Brompton",
+    "claims": [
+      "c83e542e-228e-4da2-b3a7-6197242c810f"
+    ],
+    "references": [
+      {
+        "title": "Holy Trinity Brompton - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Holy_Trinity_Brompton",
+        "used_for": "Donaldson design, consecrated 1829, Commissioners' church; 1879-82 extension"
+      },
+      {
+        "title": "Parish of Holy Trinity, Brompton - AIM25",
+        "url": "https://atom.aim25.com/index.php/parish-of-holy-trinity-brompton-church-of-england-2",
+        "used_for": "5-bay clerestoried nave with two aisles, sanctuary with vestries, west tower with stair lobbies; stock brick, Suffolk facings, Bath stone dressings, lancets"
+      },
+      {
+        "title": "Holy Trinity Church, Brompton - DBR",
+        "url": "https://dbrlimited.com/projects/holy-trinity-church-brompton",
+        "used_for": "gault brickwork and Bath stone dressings on the tower"
+      },
+      {
+        "title": "Churches in Kensington and Chelsea - RBKC",
+        "url": "https://www.rbkc.gov.uk/node/160",
+        "used_for": "plain Gothic style"
+      }
+    ],
+    "notes": "Volumes follow the Overture building parts (tower 29.6 m incl. pinnacles, nave ridge 20 m, aisles 13.6 m, chancel 16.8 m); wall/eave splits within each part, tower stage heights and pinnacle form are estimated."
   },
   {
     "id": "huxley_building",
@@ -1208,6 +1373,76 @@
       }
     ],
     "notes": "Plan from the Overture outline (chapel, portico bay, two L-shaped colonnade wings). Heights (cornice 10 m, pediment apex 13.5 m, colonnades 7 m) and column counts are estimates; the westward return arms are shown as lower colonnaded walks; anthemion ornament and the catacomb entrances are omitted."
+  },
+  {
+    "id": "kensington_palace",
+    "name": "Kensington Palace and Orangery",
+    "claims": [
+      "bb9186ea-2aa8-4013-937a-607071c25b42",
+      "755e0c1f-1048-4ebf-b245-3b0f1c20c8db",
+      "e4f6979a-1775-4ba9-9785-42eed7a06a92",
+      "20733963-5e33-4e82-b578-6041ba0b457a",
+      "e5dacc52-9a46-4e7a-b152-0f85bd654371"
+    ],
+    "references": [
+      {
+        "title": "Kensington Palace - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Kensington_Palace",
+        "used_for": "Wren enlargement, south front with King's Gallery (Hawksmoor), brick rather than stone"
+      },
+      {
+        "title": "Kensington Palace - Wren (All Souls College library)",
+        "url": "https://library.asc.ox.ac.uk/wren/kensington_palace.html",
+        "used_for": "three-storey corner pavilions, cour d'honneur with clock-tower archway (Clock Court), 11-bay south block"
+      },
+      {
+        "title": "Gardenvisit - Kensington Palace (London and its environs, 1927)",
+        "url": "https://www.gardenvisit.com/book/london_and_its_environs_1927/11_hyde_park_and_kensington_gardens/kensington_palace",
+        "used_for": "south front as Wren left it"
+      },
+      {
+        "title": "The Orangery at Kensington Palace - Wallpaper",
+        "url": "https://wallpaper.com/travel/the-orangery-at-kensington-palace-london-uk",
+        "used_for": "English Baroque orangery by Hawksmoor 1704, enhanced by Vanbrugh"
+      },
+      {
+        "title": "Grinling Gibbons carvings at Kensington Palace - Historic Royal Palaces",
+        "url": "https://www.hrp.org.uk/blog/grinling-gibbons-carvings-at-kensington-palace/",
+        "used_for": "Orangery as Vanbrugh/Hawksmoor collaboration"
+      }
+    ],
+    "notes": "Massing from the Overture outlines; parapet heights raised slightly over the 11.3 m footprint value for the state ranges (three tall storeys). Roofs are hipped per wing rectangle (approximate ridge layout); the position of the clock tower on the west range and of the Victoria statue east of the palace are estimated. Window rhythm is a generic painted Wren sash bay, not traced per elevation."
+  },
+  {
+    "id": "kensington_town_hall",
+    "name": "Kensington Town Hall",
+    "claims": [
+      "eea6f92f-97c4-47b6-a227-7deb66a08c4e",
+      "8f3feda0-c629-43c8-827b-f1972ffef70b"
+    ],
+    "references": [
+      {
+        "title": "Kensington Town Hall, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Kensington_Town_Hall,_London",
+        "used_for": "Basil Spence, Brutalist, completed 1976, opened 1977, Hornton Street, Grade II*"
+      },
+      {
+        "title": "Kensington and Chelsea Town Hall - Mainstream Modern",
+        "url": "https://www.mainstreammodern.co.uk/case-study/kensington-and-chelsea-town-hall/",
+        "used_for": "red-brick civic centre around a courtyard; brickwork and white textured concrete echoing the library"
+      },
+      {
+        "title": "Kensington Town Hall - Modernism in Metro-land",
+        "url": "https://www.modernism-in-metroland.co.uk/kensington-town-hall.html",
+        "used_for": "Hornton Street flank cantilevered at first floor and stepping back at each higher level"
+      },
+      {
+        "title": "1977 - Kensington and Chelsea Town Hall - Archiseek",
+        "url": "https://www.archiseek.com/1977-kensington-and-chelsea-town-hall-london/",
+        "used_for": "general appearance and date"
+      }
+    ],
+    "notes": "Terracing applied to every outer face of the main block (sources only describe it for Hornton Street); storey heights (3.5 m) and the 5-level section to ~17 m exceed the Overture 13.9 m. Pavilions are taken from the polygonal lobes of the Overture outline; their use and exact heights are estimated."
   },
   {
     "id": "loftus_road",
@@ -1899,6 +2134,68 @@
       }
     ],
     "notes": "Plan from the Overture outline. Heights are proportioned from the elevation (ground floor 6.6 m, giant order to 23 m, cornice 26 m, attic 29.5 m, set-back top floor 33 m) because Overture h = 18.2 m is clearly too low; no measured section was found. Column spacing (~6 m bays) is an estimate. The Wigmore Street (north) side and the later rear additions use a plainer painted elevation. Queen of Time is a schematic gilded figure."
+  },
+  {
+    "id": "serpentine_north",
+    "name": "Serpentine North Gallery (The Magazine)",
+    "claims": [
+      "6900669a-b73e-4741-b402-4833ac1fbf3d",
+      "addf86c6-1704-44cb-b6a7-51088e15b851",
+      "5c826e8b-419c-4a4f-bdf2-f456a7891245"
+    ],
+    "references": [
+      {
+        "title": "Serpentine North Gallery - Zaha Hadid Architects",
+        "url": "https://www.zha.com/projects/architecture/serpentine-north-gallery",
+        "used_for": "two raw-brick barrel-vaulted stores, lower square surrounding structure with frontal colonnade; tensile extension on the west side"
+      },
+      {
+        "title": "Serpentine Sackler Gallery - arqa",
+        "url": "https://arqa.com/en/architecture/serpentine-sackler-gallery.html",
+        "used_for": "1805 gunpowder store joined with a 21st century tensile structure"
+      },
+      {
+        "title": "Zaha Hadid's Serpentine Sackler Gallery to open in September - Dezeen",
+        "url": "https://www.dezeen.com/2013/07/31/zaha-hadids-serpentine-sackler-gallery-to-open-in-september/amp/",
+        "used_for": "undulating white canopy beside the Grade II listed building"
+      },
+      {
+        "title": "The Magazine restaurant - Zaha Hadid Architects",
+        "url": "https://www.zha.com/projects/interior-architecture/the-magazine-restaurant",
+        "used_for": "fabric as load-bearing structure held up by five tapered steel columns"
+      },
+      {
+        "title": "Magazine project - Liam O'Connor Architects",
+        "url": "https://www.liamoconnor.com/project-magazine",
+        "used_for": "new north wing housing Serpentine offices"
+      }
+    ],
+    "notes": "Membrane surface is an analytic height field (peaks over five columns placed along the long axis of the extension outline), not the real form-found geometry. Colonnade assumed on the south (lake-facing) end; barrel-vault store sizes proportioned within the footprint. Magazine brick colour approximated as stock brick."
+  },
+  {
+    "id": "serpentine_south",
+    "name": "Serpentine South Gallery",
+    "claims": [
+      "f73fb7b1-58cd-4c43-8e02-0d756e86dc14"
+    ],
+    "references": [
+      {
+        "title": "Serpentine Galleries - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Serpentine_Galleries",
+        "used_for": "Grade II listed 1933-34 tea pavilion by James Grey West, gallery since 1970"
+      },
+      {
+        "title": "Serpentine Gallery - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101217605",
+        "used_for": "grey brick, red dressings, hipped tiled roof; single storey with two-storey core, tall hipped roof and timber cupola; nine bays, paired Doric columns in centre three bays with balustrade; entrance recessed to north"
+      },
+      {
+        "title": "Our History - Serpentine",
+        "url": "https://www.serpentinegalleries.org/our-history/",
+        "used_for": "history of the pavilion and gallery"
+      }
+    ],
+    "notes": "Plan square fitted to the Overture outline; body/core heights (4.8 m / 8.6 m) and core size proportioned from the listing description, not measured. Windows are a painted generic sash bay; the missing balustrade on the core is omitted as stated in the listing."
   },
   {
     "id": "shepherds_bush_empire",
