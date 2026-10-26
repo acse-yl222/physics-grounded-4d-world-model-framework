@@ -501,6 +501,99 @@
     "notes": "No listing text with materials was returned by search; the red brick with Portland stone dressings, slate roofs, dormers and chimneys follow the well-known appearance of the quad and Webb's Imperial work and are approximate. Ranges are split into hipped-roof rectangles fitted to the footprints; eaves at ~13.5 m (Union 14.5 m) so ridges match the footprint heights (16.8 / 17.8 m). Windows are modelled as stone mullion-and-transom cross windows on every storey (rhythm 3.6 m, not traced); the gatehouse turrets, oriel and pediment proportions, the coat of arms and the Athena keystone are simplified. The courtyard garden (lawns, hedges, paths, trees) comes from the mapped ground layer and is not duplicated here."
   },
   {
+    "id": "belgrave_square_terraces",
+    "name": "Belgrave Square terraces",
+    "claims": [
+      "c26a3463-787e-4a43-9df9-0a924633958f",
+      "f792fffb-3bb1-4aef-b083-76e56c946ccf",
+      "fbb4af06-0396-4dbf-a7f1-197983d102a1",
+      "d9fd6e9f-5411-4e2f-b435-375775ed5c88",
+      "f33590c5-f3a0-45b4-89a3-13b4d71399e6",
+      "a2ec0aa1-cc57-4c36-b0b1-cfbf3aa75a1b",
+      "c1465d3a-8230-4fa2-97e6-006bc4716df6",
+      "5544e22e-8131-46d7-90a5-7224249f8000",
+      "b7ee817d-d05a-4db5-a17f-3afdd0556021",
+      "eb0686b9-8941-4e04-b7f5-c060204cca63",
+      "21063d87-d37f-4956-ba49-ef0c92b8a6a8",
+      "e3b86330-eee6-4170-8b90-919e730572ba",
+      "d988e48f-1e8b-4cbe-88a3-742194d19b86",
+      "a7fb382b-83cd-4889-9b7e-a6439f684831",
+      "8b0e5fb9-acbf-4f45-9814-1fc7279df2f2",
+      "be39afb3-6408-4c49-bd03-5982dc516427",
+      "dc7fc063-e040-4590-a38c-fdb162013a4c",
+      "4c3b374e-94a4-46f9-9773-f9c5f5770047",
+      "8b3add80-0fa0-4854-a851-1d67f869ad5c",
+      "8d05c4b5-2490-4359-ba7c-a2193c121607",
+      "f11fa731-0ed2-4727-972c-846a783d253a",
+      "4b7d90e6-80e3-4e43-91c5-903061832676",
+      "3df23af8-de38-4954-8e6d-cc02c365eb3c",
+      "6e09fb55-1bdc-4e77-8574-89c4397a772f",
+      "273cd657-4699-4a00-9325-0321e26db030",
+      "60e6f2fe-49d6-4579-bee1-c68a96eb9f7f",
+      "952d03e1-f59e-4160-8cef-40a0c1d41203",
+      "c38b0705-7f3c-4a55-b766-e3db34bde817",
+      "de290b4c-ec83-40e6-8274-b35460ad0892",
+      "9ff27c62-a90a-4b12-9463-90a56ed3f27b",
+      "e6761123-dc8a-4620-afd9-02f9a5a9c9cf",
+      "9f037e8c-7a0e-4da3-82c9-ec0f725b55da",
+      "e9f04c78-9067-462c-be84-57849c304f95",
+      "45310088-ea95-4cb2-b1a7-84249832cbe4",
+      "20b3a787-c5ab-4071-85cb-14211f84afc3",
+      "ddfa05f2-7c06-4ab4-bef5-736187f84d7a",
+      "8f028c24-75ba-4256-a0e3-9cfa133da38d",
+      "3679e4fb-1c90-445e-a1e0-36487602cfbb",
+      "98dbba26-cf33-48b8-9b64-f101bb57723e",
+      "d593cb33-7d5e-4961-a96d-56b2398822c0",
+      "d507ab96-6b8d-4eab-ae54-3551629b5e9c",
+      "edc7d92d-23b1-422b-8e59-662f9f23fb5c",
+      "fbc77db0-2206-4da8-bf04-52d3fa63badd",
+      "3a42db65-537c-4a28-863c-a59eeeeec309",
+      "589a2fa0-3aca-4e75-ad6f-e8b9da8e5294",
+      "bab7d4bb-4b4c-4ede-a572-94c53465a93d",
+      "9f7b094b-029f-41a3-9836-c14866cef4a3",
+      "9098a84a-696e-4dbf-bf4d-e7135f4cfa09",
+      "bd8f3f59-d8e4-460d-bbcd-2e00a348b9e7",
+      "afe7bcd9-0d96-475d-8c42-bb86c1ac4618",
+      "0c65ac81-6c1f-429c-86b2-4a07effab767",
+      "535f02fb-bc58-4a7a-adc5-1ca2e7b02c86",
+      "ebad4450-795b-4a98-94ca-fed772b133c5",
+      "9faad181-f0db-4999-b96b-73a169ca5557",
+      "0fc9da3b-32ae-47f2-b58d-f4eb158e17ed",
+      "ce51929f-69ac-4748-90d3-8a05ae4de4cf",
+      "9e1f4311-142f-498f-a663-379a9b23e7f9",
+      "d8cb111d-4087-42a8-a579-61538fce5072",
+      "7a7d2ee6-c0a0-4b2a-a8d9-7c4deb57e31f",
+      "ab5053dc-3ac1-4a2d-83a0-c23169c3652f",
+      "8d7832c2-d8fd-4e4e-851e-2d5af4c9a69b",
+      "12ae951f-ebd9-4845-b408-07d3765c2f0d",
+      "df3639d6-e495-4e2f-8b90-ae0ad1ac6333",
+      "17c6cc86-9dc9-4adf-bcbb-a803562993e6"
+    ],
+    "references": [
+      {
+        "title": "Belgrave Square - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Belgrave_Square",
+        "used_for": "George Basevi for William and George Haldimand, building 1825-41"
+      },
+      {
+        "title": "1-11, Belgrave Square SW1 - Historic England list entry 1066455",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1066455",
+        "used_for": "Grade I grand terrace c.1825, stucco Graeco-Roman, three storeys over attic and basement, centre five bays and three-bay ends, giant Corinthian columns on first and second floors"
+      },
+      {
+        "title": "13-23, Belgrave Square SW1 - Historic England list entry 1066457",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1066457",
+        "used_for": "one of four grand terraces facing the square; low slate mansard roofs; projecting centre and end houses"
+      },
+      {
+        "title": "38-48 Belgrave Square - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101292022-38-48-belgrave-square-sw1-knightsbridge-and-belgravia-ward",
+        "used_for": "fluted giant Corinthian columns, extra attic storey in some mansards"
+      }
+    ],
+    "notes": "Footprints grouped by position into the four terraces (front houses plus their rear wings; the detached corner villas, mews and rows behind are left generic). Front houses: cornice 15.4 m, parapet and slate mansard to ~18.8 m; rear wings use min(Overture h, 10 m). Pavilion zones (centre 24 % and ends 10 % of each terrace front) carry giant Corinthian columns; porches, balconies, window sizes, rustication and the rear facades are generic Belgravia details, not traced per house."
+  },
+  {
     "id": "blackett_laboratory",
     "name": "Blackett Laboratory (Imperial College Physics)",
     "claims": [
@@ -709,6 +802,31 @@
       }
     ],
     "notes": "Plan, quadrangle and wing heights from the Overture footprint and its 12 parts; the unparted east, north and south ranges use 22 m. East front now follows the footprint steps (main face 2.4 m behind the centrepiece, terminal pavilions 1.45 m forward of it) with modelled bays: arched rusticated ground floor, piano nobile windows with alternating triangular/segmental open pediments and aprons, second-floor sashes, fluted Corinthian pilasters, paired columns, three arched gateways with gilded gates, the balcony on consoles, modillion cornice, roof balustrade, blind attics with urns, pediment with relief arms and lion/unicorn supporters (schematic). Bay counts (7 + 3 + 3 per side) are estimated from photographs remembered, not measured. Nash/Blore ranges keep the painted bay texture with added 3D cornices, modillions and roof balustrades. Forecourt railings, pier lanterns, gates, sentry boxes and guardsmen are approximate (20 m deep strip); the Victoria Memorial lies outside the domain. The east end extends ~100 m past the x = 4000 m domain edge and is kept whole."
+  },
+  {
+    "id": "cadogan_hall",
+    "name": "Cadogan Hall",
+    "claims": [
+      "d2338931-badb-4f02-9d03-b55d9c9e0249"
+    ],
+    "references": [
+      {
+        "title": "Cadogan Hall - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Cadogan_Hall",
+        "used_for": "former Church of Christ, Scientist, completed 1907, Byzantine Revival, R. F. Chisholm, Grade II, 953 seats"
+      },
+      {
+        "title": "Cadogan Hall - RBKC listed buildings",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=424005",
+        "used_for": "1904-9, Dove Brothers; Portland stone ashlar, granite ground-floor arcade, London stock brick behind, polygonal sheet metal roof behind pierced stone parapet"
+      },
+      {
+        "title": "The Christian Science church in Chelsea - Patrick Comerford",
+        "url": "https://www.patrickcomerford.com/2022/10/the-christian-science-church-in-chelsea.html",
+        "used_for": "domed campanile; seven coupled windows across the facade"
+      }
+    ],
+    "notes": "Street front taken as the north edge (Sloane Terrace). Front height 15 m, auditorium walls 17 m with a low octagonal metal roof to ~22 m, and the campanile (5.5 m square, ~31 m to the finial) at the east end of the front are estimates; arcade bay count and parapet piercing are simplified."
   },
   {
     "id": "cassini_tower",
@@ -1343,6 +1461,31 @@
     "notes": "No footprint; extent from the scene rail segments (level 1, deck 6.5 m) crossing the Thames at x~3657-3698 and pier positions from the gaps in the scene river polygons. Arch rise, rib count and colour (grey steel) are approximate. Rib pairs per track, spandrel post spacing, bracing, handrails and signal posts are schematic. The generic rail layer still draws solid brick sides under each elevated track ribbon."
   },
   {
+    "id": "grosvenor_hotel_victoria",
+    "name": "Grosvenor Hotel, Victoria",
+    "claims": [
+      "f4f2322d-a29e-4725-bba0-980f41a9a318"
+    ],
+    "references": [
+      {
+        "title": "The Clermont, Victoria - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Clermont,_Victoria",
+        "used_for": "J. T. Knowles, RA 1860, opened 1862; listing: one of the first French pavilion roofs in London; yellow brick and Bath stone, rusticated ground floor"
+      },
+      {
+        "title": "1862 - The Grosvenor Hotel, London - Archiseek",
+        "url": "https://www.archiseek.com/grosvenor-hotel-pimlico-london/",
+        "used_for": "Italianate, eight storeys to 150 ft with a French Renaissance roof"
+      },
+      {
+        "title": "Grosvenor Hotel heads - London Remembers",
+        "url": "https://www.londonremembers.com/sites/2869",
+        "used_for": "portrait busts/roundels in the first-floor window spandrels of the Buckingham Palace Road front"
+      }
+    ],
+    "notes": "Overture h 15.5 m replaced: cornice 26 m over ground + six storeys, mansard with two dormer tiers to ~34 m, end and centre pavilion roofs to ~42 m with cresting (towards the quoted 150 ft). Bay rhythm, pavilion widths, roundel count and the porch are approximations from the descriptions."
+  },
+  {
     "id": "hammersmith_administration_blocks",
     "name": "Hammersmith Hospital: North and South Administration blocks",
     "claims": [
@@ -1672,6 +1815,31 @@
     "notes": "Overture height (9.9 m) is far too low; cornice set at 24 m, balustrade 26-27 m, mansards to ~30 m, corner cupolas ~38 m and dome lantern ~46 m, proportioned from the storey count in the listing. Dome placed on the Overture round building part. Pavilion/mansard positions follow the 2:4:3:3:3:4:2 rhythm on Brompton Road; on Hans Road only the corner and one central attic are modelled. Brompton Road and Hans Road elevations have real window frames, sills, arch heads, pilasters, string courses, modillions and a turned balustrade with entrance bays at a regular interval (positions estimated); Basil Street / Hans Crescent keep a painted Stephens bay. Rooftop plant and rooflights are generic, not surveyed."
   },
   {
+    "id": "harvey_nichols",
+    "name": "Harvey Nichols",
+    "claims": [
+      "d3129735-42d1-4095-9457-2e0d520a1a38"
+    ],
+    "references": [
+      {
+        "title": "Harvey Nichols - the history",
+        "url": "https://www.harveynichols.com/info/help/about/the-history/",
+        "used_for": "old premises demolished 1889, present building built in stages 1889-94"
+      },
+      {
+        "title": "Harvey Nichols - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/904/england/london-sw1x/109-125-knightsbridge/harvey-nichols",
+        "used_for": "architect Charles William Stephens (Claridges, Park Lane Hotel)"
+      },
+      {
+        "title": "Knightsbridge South Side - Survey of London vol. 45 (British History Online)",
+        "url": "https://prod.british-history.ac.uk/node/38510",
+        "used_for": "mixture of late Victorian and inter-war exterior; growth shop by shop; Knightsbridge and Sloane Street fronts"
+      }
+    ],
+    "notes": "Facade materials (red brick with stone dressings above, stone ground and first floors), storey split (6 m shop storey, three 3.7 m upper storeys, mansard), the canted corner with its lead cupola, and the pilaster rhythm are reconstructed from general knowledge of the building; the searched sources do not describe materials. Overture height 14.9 m is raised to ~23 m to the mansard top."
+  },
+  {
     "id": "holland_house",
     "name": "Holland House",
     "claims": [
@@ -1798,6 +1966,36 @@
     "notes": "The building is aligned with the long (north-south) axis of the footprint, with the liturgical east end and the seven-light window on Prince Consort Road (south) and the west gable with bell turret to the north. Wall height (12.5 m to the parapet), nave ridge (21 m), window sizes, buttress spacing and the flanking stair turrets are estimates; the Lady Chapel and extra north aisle are covered by the footprint walls but not articulated separately. Tracery is simplified to mullions and transoms."
   },
   {
+    "id": "holy_trinity_sloane_street",
+    "name": "Holy Trinity Sloane Street",
+    "claims": [
+      "267459f4-7e2e-4bc9-ae85-0155ba879695"
+    ],
+    "references": [
+      {
+        "title": "Holy Trinity Sloane Street - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Holy_Trinity_Sloane_Street",
+        "used_for": "Sedding 1888-90, Arts and Crafts Gothic, 5th Earl Cadogan, Grade I"
+      },
+      {
+        "title": "Holy Trinity - RBKC listed buildings",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=423999",
+        "used_for": "red brick with stone panels and banding, late Gothic, 8-light flowing traceried west window, corner turrets"
+      },
+      {
+        "title": "Holy Trinity Sloane Street - Victorian Web",
+        "url": "https://victorianweb.org/victorian/art/architecture/trinity/22.html",
+        "used_for": "huge west and east windows with flowing tracery (Cherry and Pevsner)"
+      },
+      {
+        "title": "Holy Trinity Sloane Square is John Betjeman's cathedral - Patrick Comerford",
+        "url": "https://www.patrickcomerford.com/2022/09/holy-trinity-sloane-square-is-john.html?m=1",
+        "used_for": "widest church in London"
+      }
+    ],
+    "notes": "Wall height 15 m, ridge ~24 m and turret height ~27 m are estimates (Overture 16.6 m). Turret form (octagonal with stone caps and short spirelets), window tracery (drawn as a mullioned arched window), the side-aisle windows, buttress rhythm and the low vestry strip at the east end are simplified."
+  },
+  {
     "id": "huxley_building",
     "name": "Huxley Building (Imperial College)",
     "claims": [
@@ -1826,6 +2024,39 @@
       }
     ],
     "notes": "Massing, light wells and the domed rooftop part (32-36 m) come from the footprint record; the dome is drawn as an observatory-style dome with a shutter slit on a ribbed drum. Facade rhythm (dark ribbon windows between heavy exposed-aggregate spandrels, close-set concrete fins on the Queen's Gate front, recessed ground storey on a column line), colours, entrance and roof plant are reconstructions without photographic confirmation. The north face against the Blackett Laboratory is blind below its 20 m roof."
+  },
+  {
+    "id": "hyde_park_barracks",
+    "name": "Hyde Park Barracks",
+    "claims": [
+      "7a6d46a3-ee6d-4d1f-b4e3-4aabbc1c8f27",
+      "baca7b8b-45fe-4534-b29f-836644304879",
+      "1e43aa8f-c40f-495f-a6b8-c397d512b96e",
+      "9b42cc87-17f1-4400-8d01-9dacefa6df7e"
+    ],
+    "references": [
+      {
+        "title": "Hyde Park Barracks, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hyde_Park_Barracks,_London",
+        "used_for": "33-storey 94 m residential tower, McAlpine 1967-70, prominence from Hyde Park"
+      },
+      {
+        "title": "Hyde Park Cavalry Barracks - Mainstream Modern",
+        "url": "https://mainstreammodern.co.uk/casestudies.aspx/Detail/253/hyde-park-cavalry-barracks",
+        "used_for": "structural concrete finished in red brick to complement surrounding buildings"
+      },
+      {
+        "title": "Canmore - Basil Spence archive, Hyde Park Barracks",
+        "url": "https://canmore.org.uk/site/284764",
+        "used_for": "unity through red brick, concrete and concrete arches; married soldiers tower block"
+      },
+      {
+        "title": "Hyde Park Barracks - Structurae",
+        "url": "https://structurae.net/en/structures/hyde-park-barracks",
+        "used_for": "tower height 94 m"
+      }
+    ],
+    "notes": "Tower height 94 m from Wikipedia/Structurae (Overture footprint kept). Floor-to-floor 2.75 m, the pier rhythm (corner piers plus two intermediate piers per face), brick spandrels and the ribbed plant crown are simplified from general descriptions, not measured. Which low footprints belong to the barracks is inferred from position (the four blocks between Rutland Gate and Albert Gate along the park edge); their storey heights follow Overture. The barrel-roofed riding school position on the east block and the ground-floor concrete arcade along the park front are approximations."
   },
   {
     "id": "hyde_park_chapel",
@@ -2624,6 +2855,31 @@
     "notes": "Building names are from OpenStreetMap. The Cromwell Road houses are modelled with the generic stucco terrace type (porches, balconies, mansard with dormers) at 19.2 m to the cornice (Overture 22.5 m including roof); no elevation-level description was found, so porch count/positions, bay rhythm and chimneys are assumptions. The Moliere range is modelled as Neo-Georgian red brick with stone ground storey and dressings, five storeys under a parapet and slated roof; its single-storey part (4 m) is a flat-roofed link. Flags are illustrative."
   },
   {
+    "id": "mandarin_oriental_hyde_park",
+    "name": "Mandarin Oriental Hyde Park",
+    "claims": [
+      "87acb2f0-7381-4ab0-a0df-dc0b544861a3"
+    ],
+    "references": [
+      {
+        "title": "Mandarin Oriental Hyde Park, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Mandarin_Oriental_Hyde_Park,_London",
+        "used_for": "opened 1889 as apartments, hotel from 1902, Archer & Green / Archer & Hooper, height controversy"
+      },
+      {
+        "title": "Survey of London vol. 45 (British History Online)",
+        "url": "https://prod.british-history.ac.uk/node/38591",
+        "used_for": "Hyde Park Court by Archer & Green 1888-92; 100 ft height retained after the bill to limit it to 60 ft failed"
+      },
+      {
+        "title": "Knightsbridge and South Kensington tour - start Mandarin Oriental (VoiceMap)",
+        "url": "https://voicemap.me/tour/london/knightsbridge-and-south-kensington-prince-albert-s-lasting-legacy/sites/start-mandarin-oriental",
+        "used_for": "red brick and Portland stone, eclectic Franco-Flemish style with turrets and balconies"
+      }
+    ],
+    "notes": "Overall height ~33 m (Overture 32.8 m, consistent with the 100 ft limit). Storey split (5 m ground + 7 x 3.25 m), the positions of the corner turrets, the central gabled frontispieces with entrance canopy on Knightsbridge and the park-side central tower, dormer count and stone banding rhythm are approximations of the described style; no measured elevations were available."
+  },
+  {
     "id": "marble_arch",
     "name": "Marble Arch",
     "claims": [
@@ -2825,6 +3081,36 @@
     "notes": "Overture footprint (named LMS; h=7.7 m in the data is the old record) with 8 storeys from the sources: 5 m ground + 7 x 4.1 m lab floors = 33.7 m plus a 3 m plant screen. The champagne-bronze anodised tone, fin pitch and depth, the recessed glazed ground floor and the plant enclosure are assumptions (no photographs available)."
   },
   {
+    "id": "national_army_museum",
+    "name": "National Army Museum",
+    "claims": [
+      "f6db3be3-a259-4ed3-8df1-5a81d173de32"
+    ],
+    "references": [
+      {
+        "title": "National Army Museum - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/National_Army_Museum",
+        "used_for": "brutalist building by William Holford & Partners, started 1961, opened 11 November 1971; closed 2014-17 for rebuilding"
+      },
+      {
+        "title": "Army museum opens again after £23m revamp - Construction Management",
+        "url": "https://constructionmanagement.co.uk/army-muse6um-op5en-a7gain-after-23m-revamp/",
+        "used_for": "BDP scheme: new entrance building, atrium, new glazing formed in existing walls and roof"
+      },
+      {
+        "title": "National Army Museum Redevelopment - Gilbert-Ash",
+        "url": "https://gilbert-ash.com/projects/arts-culture/national-army-museum",
+        "used_for": "new two-storey extension, re-ordering of the 1970s building"
+      },
+      {
+        "title": "The National Army Museum - Manchester History (architecture)",
+        "url": "https://manchesterhistory.net/architecture/1970/armymuseum.html",
+        "used_for": "Holford & Partners 1961-71 attribution"
+      }
+    ],
+    "notes": "Overture h 7.7 m replaced by an estimated four storeys (~17 m) of dark brick with concrete bands and slot windows; the entrance pavilion (glazed, two storeys, deep white canopy and lettering) is put on the north-west Royal Hospital Road front. Atrium rooflight strip along the axis, window rhythm and roof plant are approximations; no elevation drawings were found."
+  },
+  {
     "id": "natural_history_museum",
     "name": "Natural History Museum",
     "claims": [
@@ -2954,6 +3240,36 @@
     "notes": "Grand Hall barrel crown set to 35 m (sources give 115-135 ft), nave span ~50 m within the Overture outline; side aisles 15 m under lean-to glazing. Vault ribs are arched lattice trusses (outer and inner chords with diagonal webs) at ~6.5 m centres - rib spacing and depth are not published in the sources found. National Hall barrel assumed parallel to the Grand Hall, crown 26 m. Hall walls carry real stone plinths, string courses, pilasters, round-arched upper and segmental lower windows per ~6 m bay (rhythm approximate); the Olympia Way entrance front (two storeys of arched windows, central arched entrance with steps, pediment, domed corner pavilions) and the National Hall front to Hammersmith Road (tall glazing-barred windows, glazed ground floor, canopy, OLYMPIA LONDON sign) are reconstructed from listing text, not photographs. The 2026 Heatherwick/SPPARC redevelopment (theatre, hotels, offices, canopy) is not in the footprint data and is not modelled."
   },
   {
+    "id": "one_hyde_park",
+    "name": "One Hyde Park",
+    "claims": [
+      "487b2885-f959-4021-baa2-9e6c14686a3f"
+    ],
+    "references": [
+      {
+        "title": "One Hyde Park by Rogers Stirk Harbour + Partners - Dezeen",
+        "url": "https://www.dezeen.com/2011/02/10/one-hyde-park-by-rogers-stirk-harbour-partners/amp/",
+        "used_for": "four linked towers of differing heights, plans wider in the middle tapering to the ends, duplex penthouses"
+      },
+      {
+        "title": "One Hyde Park - World Construction Network",
+        "url": "https://www.worldconstructionnetwork.com:443/projects/one-hyde-park",
+        "used_for": "two-storey steps: 10 storeys west, 14 at the peak, 12 east; glazed circulation cores; view corridor"
+      },
+      {
+        "title": "One Hyde Park - Permasteelisa Group",
+        "url": "https://www.permasteelisagroup.com/historic-project/one-hyde-park/",
+        "used_for": "unitised cladding, hand-painted solid copper privacy fins on the side elevations"
+      },
+      {
+        "title": "First impressions: Rogers One Hyde Park - Building",
+        "url": "https://building.co.uk/careers/first-impressions-rogers-one-hyde-park/5016080.article",
+        "used_for": "white concrete frame, glass and copper palette"
+      }
+    ],
+    "notes": "Pavilion outlines are cut from the single Overture footprint (four hexagons plus link cores). Storeys per pavilion (west to east 10, 12, 14, 12 + ground) follow the WCN description; the assignment of the peak to the third pavilion, the 3.5 m storey, the fin pitch and the external white column/bracing pattern are approximations. Ground-floor retail on the Knightsbridge end is generic."
+  },
+  {
     "id": "one_wood_crescent",
     "name": "1 Wood Crescent",
     "claims": [
@@ -3051,6 +3367,31 @@
       }
     ],
     "notes": "House numbers are inferred from footprint order; storey heights and the mansard are estimates (~19 m). The south end of No. 58 is treated as a party wall to the 1930s flats at Nos 59-63."
+  },
+  {
+    "id": "peter_jones",
+    "name": "Peter Jones",
+    "claims": [
+      "d6002410-8efa-4257-94ee-aa5b216f0fca"
+    ],
+    "references": [
+      {
+        "title": "Peter Jones - RBKC listed buildings",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=423991",
+        "used_for": "Grade II*, 1936-39, Crabtree/Slater Moberly/Reilly; concrete, glass and metal; seven storeys; curved corner; canopy; mullions with glass and white panels; recessed fifth floor; railings; lettering"
+      },
+      {
+        "title": "William Crabtree (architect) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/William_Crabtree_(architect)",
+        "used_for": "one of the first uses of the glass curtain wall in England"
+      },
+      {
+        "title": "The rebuilding of Peter Jones, 1932-1936 - John Lewis Memory Store",
+        "url": "https://johnlewismemorystore.org.uk/content/branch_finder/branches_o-r/peter_jones/the_rebuilding_of_peter_jones_1932-1936",
+        "used_for": "rebuilding history and curved corner on Sloane Square"
+      }
+    ],
+    "notes": "Storey heights (5.2 m ground, 3.6 m upper) and the set-back depths of the fifth and sixth floors are estimates giving ~27 m overall (Overture parts 20-23 m). Mullion pitch 1.05 m, the spandrel panel proportions, the position of the lettering above the canopy on the curved corner and the rooftop plant are approximations."
   },
   {
     "id": "phoenix_brewery",
@@ -3723,6 +4064,31 @@
     "notes": "The Overture footprint is larger than the narrow street building and is decorated throughout; the canted bay is placed at the centre of the street (north) frontage. Sgraffito figures are abstracted to putti silhouettes and scrolls; slate roof pitch is assumed. Eaves at the data height (17.9 m less roof). Windows are 3D mullion-and-transom frames placed on the painted sgraffito panels (bay rhythm 3.4 m assumed on every elevation); chimney and door positions are assumed."
   },
   {
+    "id": "royal_court_theatre",
+    "name": "Royal Court Theatre",
+    "claims": [
+      "fdd18601-b9bb-4f1d-9d44-cd9f9b49e4ab"
+    ],
+    "references": [
+      {
+        "title": "Royal Court Theatre - Historic England list entry 1226628 (British Listed Buildings)",
+        "url": "https://britishlistedbuildings.co.uk/101226628-royal-court-theatre-royal-hospital-ward",
+        "used_for": "Grade II, 1888 Emden and Crewe; red brick, stone dressings, painted ground floor; 4 storeys, 3 bays, central pediment, Corinthian columns, cambered pediments, round-headed windows, balustraded parapet"
+      },
+      {
+        "title": "Royal Court Theatre - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_Court_Theatre",
+        "used_for": "opened 24 September 1888 as the New Court Theatre; fine red brick and stone facade in a free Italianate style"
+      },
+      {
+        "title": "Royal Court Theatre - RBKC listed buildings",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=1226628",
+        "used_for": "interior reconstructed 1952, altered 1956 and 1980"
+      }
+    ],
+    "notes": "Facade height ~17 m with storey split 4.6 / 4.2 / 3.4 / 3.4 m, the auditorium/fly-tower massing behind (19 m) and the modern canopy with the name in lights are estimates. Corinthian columns are applied three-quarter columns on the second-floor storey of the centre bay; the carved pediments are drawn as segmental heads."
+  },
+  {
     "id": "royal_geographical_society",
     "name": "Royal Geographical Society (Lowther Lodge)",
     "claims": [
@@ -3858,6 +4224,36 @@
       }
     ],
     "notes": "Storey heights (raised ground 4.2 m, then 4.2/3.6/3.2/2.9 m) and a 2.8 m mansard are assumed from the listed storey count (Overture 17.4 m to the parapet is consistent). Ionic porticos are modelled as plain round columns; two porches assumed, one per house; window rhythm (three per house), chimney positions and the national flag are assumptions. The rear (Elvaston Mews) is shown as plain stock brick."
+  },
+  {
+    "id": "saatchi_gallery",
+    "name": "Saatchi Gallery (Duke of York's Headquarters)",
+    "claims": [
+      "dc09f143-ed44-4f72-9d02-08614e1c398d"
+    ],
+    "references": [
+      {
+        "title": "Duke of York's Headquarters - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Duke_of_York%27s_Headquarters",
+        "used_for": "John Sanders 1801, Royal Military Asylum, now the Saatchi Gallery"
+      },
+      {
+        "title": "Duke of York's Headquarters - RBKC listed buildings",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=420754",
+        "used_for": "Grade II*; yellow brick with stone pedimented Roman Doric tetrastyle portico"
+      },
+      {
+        "title": "Duke of York's Barracks, Chelsea: the entrance portico - RIBApix",
+        "url": "https://www.architecture.com/image-library/ribapix/image-information/poster/duke-of-yorks-barracks-chelsea-london-the-entrance-portico/posterid/RIBA58400.html",
+        "used_for": "central entrance portico on the main front"
+      },
+      {
+        "title": "John Sanders (architect) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/John_Sanders_(architect)",
+        "used_for": "building dates 1801-03, Saatchi Gallery"
+      }
+    ],
+    "notes": "Wing height 11.5 m (three storeys, Overture 10.4 m) and a raised 14 m centre block are estimates; the portico is drawn projecting from the small forward break in the footprint on the south-west front. Window counts follow a 3.4 m bay; parapet, hipped slate roofs and the gallery signage are generic."
   },
   {
     "id": "sainsbury_wing_hammersmith",
@@ -4625,6 +5021,56 @@
     "notes": "Footprint from the data; height 21 m kept, as 7 storeys (3.8 m ground + 6 x 2.9 m) rather than the data 8 floors. Date and finishes not found: exposed concrete frame with brick infill panels and ribbon glazing are generic."
   },
   {
+    "id": "st_pauls_knightsbridge",
+    "name": "St Paul's Knightsbridge",
+    "claims": [
+      "71632c3f-9c1c-4cc0-aeb9-c9988e4a6ec9"
+    ],
+    "references": [
+      {
+        "title": "St Paul's Church, Knightsbridge - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Paul%27s_Church,_Knightsbridge",
+        "used_for": "Thomas Cundy the younger, 1843, Grade II*, 32a Wilton Place"
+      },
+      {
+        "title": "Church of St Paul - Historic England list entry 1066084",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1066084",
+        "used_for": "yellow brick, Bath stone dressings, Perpendicular Gothic, centrally placed western tower with clock; later chancel and chapel"
+      },
+      {
+        "title": "St Paul, Wilton Place, Knightsbridge - London Church Buildings",
+        "url": "https://londonchurchbuildings.com/2013/02/03/st-paul-wilton-place-knightsbridge/",
+        "used_for": "Withers and Bodley chancel extensions, Blomfield side chapel"
+      }
+    ],
+    "notes": "Tower size (6.5 m square) and height (~29 m to the pinnacle tops), the pinnacles, the nave window count and buttress rhythm, the clerestory-less single roof over nave and aisles, and roof pitch are estimates; the Overture 11.5 m is used for the nave walls. Tower placed at the west (Wilton Place) end as the listing describes."
+  },
+  {
+    "id": "st_peters_eaton_square",
+    "name": "St Peter's Eaton Square",
+    "claims": [
+      "5f4af988-a80f-43b6-97d9-90addb1c2bcd"
+    ],
+    "references": [
+      {
+        "title": "St Peter's Church, Eaton Square - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Peter%27s_Church,_Eaton_Square",
+        "used_for": "Henry Hakewill 1824-27, hexastyle Ionic portico and clock tower, Grade II*, 1987 fire"
+      },
+      {
+        "title": "Church of St Peter - Historic England list entry 1356980",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1356980",
+        "used_for": "yellow stock brick, ashlar, stone dressings; 1837 rebuild; Blomfield recasting 1873-5"
+      },
+      {
+        "title": "1874 - St. Peter's Church, Eaton Square - Archiseek",
+        "url": "https://www.archiseek.com/?p=566112",
+        "used_for": "Blomfield enlargement 1874"
+      }
+    ],
+    "notes": "Portico placed on the south-west end of the footprint (facing down Eaton Square). Wall height 14 m, portico order height 10 m, and the tower (square clock stage, columned circular belfry, small cupola; ~38 m) are proportioned from general photographs, not measured. The Blomfield chancel/apse at the north-east end is drawn as the plain stepped footprint with round-headed windows."
+  },
+  {
     "id": "stadium_house",
     "name": "Stadium House (Imperial College)",
     "claims": [
@@ -4697,6 +5143,31 @@
       }
     ],
     "notes": "Stand roof heights estimated (West 31 m, East 30 m, Matthew Harding 23 m, Shed End 21 m; Overture gives 7-9 m). Seating is modelled as stepped concrete rows (0.8 m treads) with blue seat strips broken by gangways: two tiers for the Matthew Harding and Shed End, three for the East and West Stands, upper tiers cantilevered over glazed hospitality / box bands; row counts and rakes are fitted to the footprint depth and roof height, not surveyed. Roofs carry a lattice front truss with floodlight luminaires and a translucent leading edge (wider on the West Stand); exterior cladding, the CHELSEA seat lettering on the East Stand lower tier, the dugout / tunnel position in front of the West Stand and the big screens (omitted) are approximate. The Millennium hotel footprint is left to the generic layer."
+  },
+  {
+    "id": "the_lanesborough",
+    "name": "The Lanesborough",
+    "claims": [
+      "fa77d331-57b0-4b84-9ee8-000475671327"
+    ],
+    "references": [
+      {
+        "title": "The Lanesborough - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Lanesborough",
+        "used_for": "William Wilkins, begun 1827, St George's Hospital until the 1980s, hotel opened 1991"
+      },
+      {
+        "title": "The history of The Lanesborough - Oetker Hotels",
+        "url": "https://www.oetkerhotels.com/hotels/the-lanesborough/the-hotel/history/",
+        "used_for": "severe neo-Classicism inspired by the Choragic Monument of Thrasyllus; raised porticoes complementing Apsley House"
+      },
+      {
+        "title": "The Lanesborough - Wallpaper*",
+        "url": "https://www.wallpaper.com/travel/uk/london/hotels/the-lanesborough",
+        "used_for": "Regency-period Greek Revival building at Hyde Park Corner"
+      }
+    ],
+    "notes": "Height ~17.5 m (Overture 17.2 m) split as rusticated ground floor 4.8 m, two principal storeys and an attic above the entablature. Portico column count (four, square-capitalled Greek Doric), their positions at the centre of the east (Hyde Park Corner) and north (Knightsbridge) fronts, the pilaster rhythm and window sizes are approximations; stucco colour from general photographs."
   },
   {
     "id": "the_mediaworks",
@@ -4936,6 +5407,36 @@
       }
     ],
     "notes": "Footprint from Overture (courtyard garden kept as a hole). Overture h (13.6 m) is inferred; heights are estimates: Cromwell Road range 22 m to the balustrade, frontispiece 25 m, tower crown with Fame at ~58 m (no published height found). The Cromwell Road and Exhibition Road fronts are real geometry: brick-and-stone wall slabs with arched ground-floor windows, first-floor windows with architraves, pediments and glazing bars, statue niches with simplified standing figures between them, cornice and turned balustrade, quoins and raised pavilions with small open cupolas (the \"pavilion domes\"). Bay width (6.6 m) and storey heights are estimated from views, not drawings; statues are generic draped figures. Tower: square stage, column ring, statue stage and an eight-rib open crown with orb and Fame, all proportions estimated. Rear ranges, Cast Courts glazed roofs and the Henry Cole Wing block are schematic."
+  },
+  {
+    "id": "victoria_coach_station",
+    "name": "Victoria Coach Station",
+    "claims": [
+      "233d1e08-bda0-4a03-80d8-e5218e7287e4"
+    ],
+    "references": [
+      {
+        "title": "Victoria Coach Station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Victoria_Coach_Station",
+        "used_for": "opened 10 March 1932, Wallis Gilbert and Partners Art Deco, corner of Buckingham Palace Road and Elizabeth Street, Grade II 2014"
+      },
+      {
+        "title": "Vaizey on London's Art Deco Victoria Coach Station, listed GII - IHBC",
+        "url": "https://newsblogs.ihbc.org.uk/?p=8544",
+        "used_for": "corner tower one of London's most distinctive Art Deco landmarks"
+      },
+      {
+        "title": "Victoria Coach Station - Manchester History (architecture)",
+        "url": "https://manchesterhistory.net/architecture/1930/victoriacoach.html",
+        "used_for": "central tower; topmost storey added in the 1960s; concrete with coloured glass aggregate; cream paint"
+      },
+      {
+        "title": "Linking London and country: Victoria Coach Station - London Transport Museum",
+        "url": "https://ltmuseum.co.uk/collections/stories/transport/linking-london-and-country-victoria-coach-station",
+        "used_for": "opened with 66 departure bays around the yard"
+      }
+    ],
+    "notes": "Three 1932 storeys (11.6 m) plus the set-back 1960s storey to 15.4 m (Overture). Tower at the Buckingham Palace Road / Elizabeth Street corner rising to ~26 m with stepped fins and flagpole; the window bands, vertical piers, lettering and corner entrance canopy are drawn from the general Art Deco character, not traced. The covered yard/departure hall inside the C-shaped plan is not modelled."
   },
   {
     "id": "victoria_station",
