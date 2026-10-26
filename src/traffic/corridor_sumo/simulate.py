@@ -108,9 +108,14 @@ def run_period(
     """Simulate ``window['sim_begin_s']``..``window['end_s']`` (seconds since midnight).
 
     FCD is written from ``window['fcd_begin_s']`` to the end (gzip); edgeData covers the
-    measured hour ``start_s``..``end_s``; ``stop_output`` adds ``stopinfos.xml``.
+    measured hour ``start_s``..``end_s``; ``stop_output`` adds ``stopinfos.xml``. The
+    vehicle routes with edge exit times (``vehroutes.xml.gz``, vehicles still driving
+    at the end included) and SUMO's warnings (``sumo_warnings.log``: teleports) feed the
+    lane-path playback (``lane_routes``).
     """
     fcd = out_dir / "fcd.xml.gz"
+    vehroutes = out_dir / "vehroutes.xml.gz"
+    warnings = out_dir / "sumo_warnings.log"
     stats = out_dir / "statistics.xml"
     cfg = out_dir / "run.sumocfg"
     rel = lambda paths: ",".join(str(Path(p).resolve()) for p in paths)
@@ -158,17 +163,26 @@ def run_period(
         <device.fcd.begin value="{window["fcd_begin_s"]:g}"/>
         <device.fcd.period value="{sim["step_s"]}"/>
         <statistic-output value="{stats.resolve()}"/>{stop if stop_output else ""}
+        <vehroute-output value="{vehroutes.resolve()}"/>
+        <vehroute-output.exit-times value="true"/>
+        <vehroute-output.write-unfinished value="true"/>
     </output>
     <report>
         <no-step-log value="true"/>
-        <no-warnings value="true"/>
+        <error-log value="{warnings.resolve()}"/>
         <duration-log.statistics value="true"/>
     </report>
 </configuration>
 """
     )
     sumo_env.run([sumo_env.binary("sumo"), "-c", cfg], log=out_dir / "sumo.log")
-    out = {"fcd": fcd, "config": cfg, "statistics": read_statistics(stats)}
+    out = {
+        "fcd": fcd,
+        "config": cfg,
+        "statistics": read_statistics(stats),
+        "vehroutes": vehroutes,
+        "warnings": warnings,
+    }
     if stop_output:
         out["stopinfos"] = out_dir / "stopinfos.xml"
     return out

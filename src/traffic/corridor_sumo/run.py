@@ -42,10 +42,12 @@ from . import (
     demand,
     dft,
     export,
+    lane_routes,
     network,
     osm_extract,
     osm_net,
     periods,
+    road_network,
     simulate,
     state,
     sumo_env,
@@ -735,9 +737,14 @@ def run_periods(args) -> int:
     data = target / "data"
     data.mkdir(parents=True)
     recordings, samples = {}, None
+    # Drivable road surface from the simulated network, shared by the lane-path playback.
+    roads = road_network_export(storage, scene, cfg, geo, net_path, surface, half, data)
+    lane_files = list(roads["files"])
     for res in results:
         w = res["period"]
         rec = export.parse_fcd(res["fcd"], w["fcd_begin_s"], w["end_s"] - 1, res["kinds"], half)
+        lanes_info = lane_playback(res, rec, roads, data, run_id, digest(net_path))
+        lane_files += lanes_info["files"]
         max_records = (ecfg["max_bin_bytes"] - 4 * len(rec.frames)) // export.RECORD.itemsize
         kept = export.select(rec, max_records, ecfg.get("max_concurrent_vehicles"))
         rel = [round(t - w["fcd_begin_s"], 6) for t in rec.times]
@@ -765,6 +772,7 @@ def run_periods(args) -> int:
             "peak_concurrent_exported": max(map(len, kept.frames)),
             "traffic_bin_bytes": size,
             "heading_vs_motion": export.heading_check(kept),
+            "lane_playback": lanes_info["provenance"],
         }
         res["kept"], res["bin"] = kept, bin_path
     selection = (
@@ -833,6 +841,9 @@ def run_periods(args) -> int:
             ("bus_status", "data/bus_status.json", "application/json"),
             ("bus_stops", "data/bus_stops.json", "application/json"),
         ]
+    for name in lane_files:
+        stem = Path(name).stem
+        extra_artifacts.append((stem, f"data/{name}", "application/json"))
     if report is not None:
         periods.write_json(data / "network_report.json", report)
         extra_artifacts.append(("network_report", "data/network_report.json", "application/json"))
@@ -964,9 +975,11 @@ def run_periods(args) -> int:
         "window (the same length for all periods); absolute windows are in periods.*.window.",
         "config": cfg,
         "coordinates": "SUMO x,y == scene ENU metres (netconvert offset normalisation "
-        "disabled; verified via location offset and node coordinates); z = the scene DEM "
-        "with open water filled from the banks (terrain.DemSurface.road) when the geometry "
-        "config has terrain, else 0 (flat ground); flyovers are not raised",
+        "disabled; verified via location offset and node coordinates); trajectories: z = "
+        "the scene DEM with open water filled from the banks (terrain.DemSurface.road) when "
+        "the geometry config has terrain, else 0 (flat ground), flyovers not raised; "
+        "road_network lanes: the same surface plus OSM bridge decks (road_network)",
+        "road_network": roads["provenance"],
         "runtime_s": round(time.monotonic() - t_start, 1),
     }
     half = geo["domain_m"] / 2
@@ -1086,6 +1099,125 @@ def run_periods(args) -> int:
     }
     log(json.dumps(summary, indent=2))
     return 0
+
+
+def road_network_export(storage, scene, cfg, geo, net_path, surface, half, data) -> dict:
+    """``road_network.json`` (chunked when large) from the SUMO network with internal lanes."""
+    t = time.monotonic()
+    sumo_net = sumo_env.sumolib().net.readNet(str(net_path), withInternal=True)
+    structures, osm_sha = {}, None
+    osm_path = storage.assets(scene, "input") / cfg.get("osm", {}).get("dir", "osm") / "osm.xml.gz"
+    if osm_path.is_file():
+        enu = tfl.Enu(geo["origin"]["longitude"], geo["origin"]["latitude"])
+        structures = road_network.osm_structures(osm_path, enu)
+        osm_sha = digest(osm_path)
+    doc = road_network.build(sumo_net, half, surface.road if surface else None, structures)
+    provenance = {
+        "source": "SUMO network of this run (sumolib, internal lanes included)",
+        "net_sha256": digest(net_path),
+        "domain": f"lanes with a point or segment in |x|, |y| <= {half:g} m, kept whole "
+        "(not clipped at the boundary); internal lanes of connections between kept lanes; "
+        "pedestrian-, bicycle- and rail-only lanes dropped; lanes closed to passenger cars "
+        "carry allow (e.g. 'bus')",
+        "elevation": road_network.describe_elevation()
+        if surface
+        else "z = 0 (no scene terrain); bridge decks as described in road_network.py",
+        "osm_structures": {"ways": len(structures), "osm_sha256": osm_sha},
+        "internal_lanes": "lanes[].edge is null and lanes[].junction indexes junctions[]",
+        "counts": doc["counts"],
+    }
+    files = road_network.write(doc, data, provenance)
+    provenance["files"] = {n: (data / n).stat().st_size for n in files}
+    log(
+        f"road_network: {doc['counts']['lanes']} lanes ({doc['counts']['internal_lanes']} "
+        f"internal), {doc['counts']['junctions']} junctions in {len(files)} file(s), "
+        f"{round(time.monotonic() - t)} s"
+    )
+    net = lane_routes.Network(doc)
+    return {
+        "files": files,
+        "provenance": provenance,
+        "sumo_net": sumo_net,
+        "net": net,
+        "grid": lane_routes.SegmentGrid(net),
+    }
+
+
+def lane_playback(res, rec, roads, data: Path, run_id: str, net_sha: str) -> dict:
+    """``traffic_routes_<period>.json``: lane paths with entry times plus verification."""
+    t = time.monotonic()
+    w = res["period"]
+    window = (rec.times[0], rec.times[-1])
+    vehroutes = res.get("vehroutes")
+    if not vehroutes or not Path(vehroutes).is_file():
+        raise RuntimeError(f"[{w['id']}] no vehroute output for the lane-path playback")
+    teleports = lane_routes.read_teleports(res.get("warnings"))
+    bus_stops = lane_routes.read_bus_stops(
+        [p for p in res["additional"] if Path(p).name.endswith(".add.xml")]
+    )
+    end_xy = {rec.vehicles[i]["id"]: (x, y) for i, x, y, _ in rec.frames[-1]}
+    vehicles, counts = lane_routes.build_period(
+        vehroutes,
+        roads["sumo_net"],
+        roads["net"],
+        window,
+        res["kinds"],
+        bus_stops,
+        teleports,
+        end_xy,
+    )
+    header = {
+        "period": w["id"],
+        "label": w["label"],
+        "t0": window[0],
+        "t1": window[1],
+        "time": "seconds after midnight (same clock and window as traffic_<period>.bin)",
+        "road_network": "road_network.json",
+        "fields": {
+            "path": "lane indices into road_network lanes[] in driving order (internal "
+            "lanes of each connection included)",
+            "enter": "time each path element is entered (s)",
+            "leave": "time the last element is left (null: still on it at t1)",
+            "jumps": "[i, t]: element i-1 left at t, not drawn until enter[i] (teleport or "
+            "outside the exported network)",
+            "changes": "path indices entered by a lateral lane change (no connection)",
+            "stops": "bus stops: element, position along its lane shape (m), arrive, depart",
+            "end_pos": "with leave null: distance along the last lane at t1 (FCD)",
+        },
+        "lane_choice": lane_routes.LANE_CHOICE,
+        "timing": lane_routes.TIMING,
+        "provenance": {
+            "run_id": run_id,
+            "sumo_version": sumo_env.version(),
+            "net_sha256": net_sha,
+            "source": "SUMO vehroute-output (exit-times, write-unfinished), stop-output "
+            "started/ended in the route output, teleport warnings of the SUMO log",
+            "vehicles": "every vehicle on an exported lane during [t0, t1]; elements "
+            "trimmed to the window",
+            "teleports_logged": sum(len(v) for v in teleports.values()),
+            "counts": counts,
+        },
+    }
+    path = data / f"traffic_routes_{w['id']}.json"
+    files = lane_routes.write(vehicles, path, header)
+    checks = lane_routes.verify(
+        {"t0": window[0], "t1": window[1], "vehicles": vehicles},
+        roads["net"],
+        rec,
+        grid=roads["grid"],
+    )
+    log(f"[{w['id']}] lane playback: {len(vehicles)} vehicles, {files}; {json.dumps(checks)}")
+    return {
+        "files": files,
+        "provenance": {
+            "vehicles": len(vehicles),
+            "by_type": {k: v for k, v in counts.items() if k != "read"},
+            "files": {n: (data / n).stat().st_size for n in files},
+            "teleports_logged": header["provenance"]["teleports_logged"],
+            "verification": checks,
+            "runtime_s": round(time.monotonic() - t, 1),
+        },
+    }
 
 
 def bus_status_document(gtfs_dir: Path, results: list[dict], cfg: dict) -> dict:

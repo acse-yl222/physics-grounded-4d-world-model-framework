@@ -437,6 +437,8 @@ def simulate_period(
         "routes": routes,
         "mismatch": mismatch,
         "fcd": result["fcd"],
+        "vehroutes": result.get("vehroutes"),
+        "warnings": result.get("warnings"),
         "kinds": kinds,
         "config": result["config"],
         "additional": add_files,

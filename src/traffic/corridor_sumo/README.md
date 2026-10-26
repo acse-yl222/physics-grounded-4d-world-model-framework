@@ -44,6 +44,8 @@ come from `configs/image_to_threejs.json`.
 | `demand.py`       | vehicle types, randomTrips cars/taxis, synthetic bus lines              |
 | `simulate.py`     | headless SUMO run with FCD output; period runs with edgeData            |
 | `export.py`       | FCD parsing, vehicle selection, `trajectory_frames` JSON, `traffic.bin` |
+| `road_network.py` | SUMO lanes/internal lanes/junctions -> `road_network.json`, OSM decks   |
+| `lane_routes.py`  | vehroute exit times -> lane paths, timing, playback checks              |
 | `run.py`          | end-to-end CLI                                                          |
 | `sumo_env.py`     | locating SUMO binaries, tools and `sumolib`                             |
 
@@ -185,6 +187,75 @@ Bundle `data/` files:
   `periods.fcd_window_s` seconds of the hour. Manifest samples are seconds since the
   window start (same length for all periods); the viewer index `t0` is seconds since
   midnight.
+- `road_network.json` and `traffic_routes_<period>.json`: the lane-accurate playback
+  (next section).
+
+## Lane-accurate playback (`road_network.py`, `lane_routes.py`)
+
+Mesoscopic FCD positions jump between lanes and across junctions (vehicles move between
+25 m queue segments), and the viewer's Overture road surfaces are not the OSM network the
+vehicles drive on. The run therefore also exports the drivable SUMO network and, per
+period, each vehicle's lane path with entry times, so a viewer draws roads and vehicles
+from one geometry and moves vehicles along lane centre lines.
+
+- `road_network.json` (`corridor-road-network-v1`; above 12 MB an index,
+  `corridor-road-network-index-v1`, of `road_network_<k>.json` chunks that split
+  `edges`, `lanes`, `connections` and `junctions` into contiguous slices with global
+  indices), read with sumolib (`withInternal=True`):
+  - `edges`: `id, name, type, from, to, speed, priority, lanes`, plus `level` and
+    `structure` (bridge, tunnel, covered) where OSM says so;
+  - `lanes`: `id, edge, index` (SUMO lane index, 0 = kerbside), `width, speed, length`
+    (SUMO length), `allow` when closed to cars (e.g. `bus`) and `shape` `[[x, y, z]]`;
+    internal lanes (`:` ids) have `edge` null and `junction`;
+  - `connections`: `from_lane, to_lane, via, dir`, `tl` at signals; also from each
+    internal lane to the next lane of its via chain;
+  - `junctions`: `id, type, shape`, `deck_m` when raised; plus `counts`, `provenance`.
+
+  Lanes with a point or segment in the scene square are kept whole (not clipped);
+  internal lanes of connections between kept lanes are included;
+  pedestrian-, bicycle- and rail-only lanes are dropped. x/y are scene ENU metres; z is
+  `DemSurface.road(x, y)`, plus OSM bridge decks: the net carries no bridge/layer tags,
+  so they come from the scene OSM subset via the lane `origId` (OSM way ids) and
+  projection onto the way; level `max(layer, 1 if bridge)` × `DECK_M` 6.5 m (city model)
+  above the line between the street heights at the ends of the bridge run, slope limited
+  to 6 % from the run ends and between levels; mid-span junctions are raised so lanes,
+  internal lanes and junction polygons meet. Tunnels/covered ways are flagged in
+  `structure` and left on the street surface. Shapes are resampled every 10 m for the
+  terrain, simplified in 3D at 0.1 m and rounded to 0.1 m.
+
+- `traffic_routes_<period>.json` (`corridor-traffic-routes-v1`; chunked like the road
+  network above 12 MB) with `period, t0, t1, vehicles, lane_choice, timing, provenance`
+  for every vehicle on an exported lane in the playback window (the window of
+  `traffic_<period>.bin`); elements are trimmed to the window. A vehicle has
+  `id, type, path, enter, leave` and, where needed, `jumps, changes, stops, end_pos`.
+  `path` holds lane indices into `road_network` `lanes` in driving order, internal lanes
+  of each connection included; `enter` the time each element is entered; `leave` the
+  time the last one is left (null while still driving at the end; `end_pos` is then the
+  FCD position along it at `t1`).
+  - Times come from SUMO `--vehroute-output` with `exit-times` and `write-unfinished`
+    (both work in the mesoscopic model): entry = departure or the exit time of the
+    previous edge. Meso has no internal edges, so a connection's internal lanes get
+    `min(length / internal lane speed, the time at the edge's mean speed)` at the end of
+    the edge before it. Exit times are whole seconds; where an element would be passed
+    faster than 1.3 × its speed limit its entry is moved earlier, taking time from the
+    elements before it (count and maximum shift in provenance).
+  - Lane choice: per vehicle a dynamic programme over the lanes its vClass may use,
+    minimising lane changes along SUMO connections (via chains inserted); unavoidable
+    changes are listed in `changes` (lateral hop at the start of that element); ties go
+    by a per-vehicle hash so traffic spreads over equivalent lanes; buses use their stop
+    lane on stop edges. `stops` (`path_index`, `pos_m` along the exported shape,
+    `arrive`, `depart`) come from the route output's `started`/`ended`.
+  - `jumps` `[i, t]`: element `i - 1` was left at `t` and the vehicle is hidden until
+    `enter[i]` (jam teleports from the SUMO warning log `sumo_warnings.log`, or leaving
+    the exported network); viewers cut there instead of animating.
+  - Per period the run reconstructs 500 vehicles (SHA-1 order) at 1 s and records in
+    `periods.<id>.recorded.lane_playback.verification`: distance to the nearest lane
+    centre line, sideways steps (> 1 m across the lane/heading direction), still steps,
+    steps > 25 m, implied speeds (flag > 40 m/s), share of vehicles with jumps or lane
+    changes, vehicles on the same lane within 4 m (all vehicles), and the same figures
+    for the FCD playback. Constant speed within an element ignores queue spacing, so
+    queued vehicles can overlap on a lane; meso does not assign lanes, so lane
+    assignment is a reconstruction.
 
 ## Count-based hourly state (`count_state.py`)
 
@@ -267,6 +338,11 @@ exported vehicles are in provenance.
   synthetic, DfT bbox filter, profiles and fallback, direction splits, heading/class
   matching, GEH/R², LOS classes, count matching and routeSampler on a tiny network
   (skipped without SUMO), binary round trip, vehicle selection and protocol validation.
+- `python3 -m unittest tests.test_corridor_lanes -v` covers the road network export and
+  lane paths on a tiny netconvert junction (skipped without SUMO: lanes, internal lanes,
+  connections, kerbside left turn, bus-only lane, spreading over equivalent lanes,
+  playback on the centre lines), the timing split, playback with a stop, a jump and an
+  open end, vehroute/teleport parsing, bridge decks and chunking of both documents.
 
 ## BODS GTFS timetable buses (`gtfs_bus.py`, `bus_status.py`)
 
