@@ -1007,6 +1007,36 @@
     "notes": "The Overture outline is a single 15 m podium without tower parts; the tower position (-1352, -2138) and orientation (site grid, 26 deg) were fitted to the widest cross that lies inside the outline, wing length 36 m from the centre and width 19 m are estimates. Height 59 m to the ward roof plus a 9 m louvred plant/core top (~68 m) from the storey count. Tower: recessed glazing behind one projecting precast spandrel band per floor and mullions at 1.8 m (no published facade description found - approximate); wing ends solid with a painted window column. Podium: brick with real framed window bands on the outer elevations (painted in courtyards); the entrance canopy position on Fulham Palace Road, NHS sign and roof plant layout are approximate."
   },
   {
+    "id": "chelsea_academy",
+    "name": "Chelsea Academy",
+    "claims": [
+      "8585fd40-3ba7-47f6-86c9-efbca4de68ba"
+    ],
+    "references": [
+      {
+        "title": "Chelsea Academy - Time Out",
+        "url": "https://www.timeout.com/london/learning-centres/chelsea-academy",
+        "used_for": "FCBS; built to the boundary; roofs for play: semi-enclosed MUGA above the sports hall, training pitch above the activity hall"
+      },
+      {
+        "title": "Chelsea Academy London - e-architect",
+        "url": "https://e-architect.com/london/chelsea-academy",
+        "used_for": "two to four floors in linking blocks with atrium and open spaces; RIBA award 2011"
+      },
+      {
+        "title": "Building Awards 2011: Public Building Project of the Year - Chelsea Academy",
+        "url": "https://building.co.uk/building-awards-2011-public-building-project-of-the-year-chelsea-academy/5016494.article",
+        "used_for": "tight urban site opposite Lots Road power station; massing relating to two-storey terraces; Wates, Price & Myers"
+      },
+      {
+        "title": "RBKC information page on the Chelsea Academy (Grenfell Tower Inquiry exhibit)",
+        "url": "https://assets.grenfelltowerinquiry.org.uk/IWS00002082_Exhibit%20ED2_19%20-%20RBKC%20website%20information%20page%20on%20the%20Chelsea%20Academy.pdf",
+        "used_for": "three teaching blocks stepping down from five storeys by Lots Road Power Station to two storeys at Upcerne Road"
+      }
+    ],
+    "notes": "Block extents from the Overture parts (5-storey 17.5 m block nearest Lots Road, 3-storey 11 m middle block, 2-storey 7.6 m block to the north-west, the low part as the 7 m activity/sports hall wing with pitches on its roof). Facade materials were not found: pale brick with large windows, coloured spandrel panels and a glazed atrium are assumptions. Roof pitch markings and fence heights are estimates."
+  },
+  {
     "id": "chelsea_bridge",
     "name": "Chelsea Bridge",
     "claims": [],
@@ -1223,6 +1253,74 @@
       }
     ],
     "notes": "Front parapet at 15 m and the rear stage house at the Overture 13.6 m; the cupola follows the Overture round part (radius ~3.6 m) with the drum to 20 m and the dome to ~24 m (estimated). Pilaster rhythm is an even nine-bay split of the Notting Hill Gate front; the statue is a simple standing figure. Painted stone colour (cream) and the canopy over the entrance are assumptions."
+  },
+  {
+    "id": "craven_cottage",
+    "name": "Craven Cottage",
+    "claims": [
+      "18bb69ac-8025-4556-9b39-61592a8d5940",
+      "2e85782f-23b7-41dc-806f-5af23e717187",
+      "37c26bb3-bcb5-4c94-99c8-740b3507fca5",
+      "c4e6c905-1b1d-4918-8de7-f64a4f36c19a"
+    ],
+    "references": [
+      {
+        "title": "Craven Cottage - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Craven_Cottage",
+        "used_for": "stand names, Johnny Haynes Stand renamed after 2005, Leitch 1905, cottage pavilion in the corner"
+      },
+      {
+        "title": "Grandstand and Turnstiles to Fulham Football Club - Historic England",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1079754",
+        "used_for": "Leitch 1905; red brick with stone dressings; steel and corrugated iron roof; street front three storeys of 27 bays, nearly symmetrical, shaped gables over centre three bays and bays 5-6 from each end; central triangular pediment on the roof"
+      },
+      {
+        "title": "Office to South of Grandstand at Fulham Football Club - Historic England",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1358582",
+        "used_for": "the Cottage pavilion, Leitch 1905, central gable with bargeboarding and mock timber framing"
+      },
+      {
+        "title": "Grandstand and Turnstiles to Fulham Football Club - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101079754-grandstand-and-turnstiles-to-fulham-football-club-palace-riverside-ward",
+        "used_for": "listing text (turnstiles on Stevenage Road)"
+      }
+    ],
+    "notes": "Stand sections (seating rake, roof heights: Haynes Stand street front 11.5 m, roof 13.5 m falling to 10 m at the pitch; end stands 12 m at the back with roofs at 14.5 m) are estimates; Overture heights (3-9 m) are far too low. Shaped-gable outlines, window types per storey and the Cottage’s exact form are interpretive. Pitch, goals and markings are unclaimed ground-level geometry."
+  },
+  {
+    "id": "craven_cottage_riverside_stand",
+    "name": "Riverside Stand, Craven Cottage",
+    "claims": [
+      "7ed55280-6f1a-4830-86af-77a3d1e11b46"
+    ],
+    "references": [
+      {
+        "title": "Riverside Development, Craven Cottage, Fulham FC - SteelConstruction.info",
+        "url": "https://steelconstruction.info/case-studies/leisure-buildings/riverside-development-craven-cottage-fulham-fc",
+        "used_for": "113 m long x 30 m wide x 30 m high, six levels incl. basement, 7.4 x 9 m column grid"
+      },
+      {
+        "title": "Fulham FC Riverside Stand - IStructE Structural Awards 2023",
+        "url": "https://www.istructe.org/structural-awards/projects/2023/fulham-fc-riverside-stand/",
+        "used_for": "steel frame crowned by a 35 m cantilevering roof"
+      },
+      {
+        "title": "In focus: Fulham FC, Populous setting new standards by the riverside - FC Business",
+        "url": "https://fcbusiness.co.uk/news/in-focus-fulham-fc-populous-setting-new-standards-by-the-riverside/",
+        "used_for": "sweeping cantilevered roof with bronze-coloured soffit; riverside walkway"
+      },
+      {
+        "title": "New Riverside Stand, Craven Cottage - Core Five",
+        "url": "https://corefive.co.uk/project/new-riverside-stand-craven-cottage/",
+        "used_for": "event spaces, members’ club, boutique hotel (14 keys), spa with rooftop pool overlooking the Thames"
+      },
+      {
+        "title": "Fulham FC Riverside Stand Redevelopment - Populous",
+        "url": "https://populous.com/?p=27692",
+        "used_for": "architect"
+      }
+    ],
+    "notes": "Main stand spans the footprint between u = -54 and +66 m; the lower wings at either end are modelled as two-storey glazed pavilions (9 m). Tier rakes, level heights, roof depth (cantilever to 4 m over the pitch edge, top at 30 m), terrace and pool positions and the vertical fin rhythm of the river facade are estimates from the descriptions, not drawings. Overture h=6 m ignored."
   },
   {
     "id": "cumberland_lodge",
@@ -1449,6 +1547,38 @@
     "notes": "Basilican section (aisles 7.5 m, clerestory 13.5 m, nave ridge 18 m) and campanile height (34 m) are estimates; no dimensions were found. The campanile is placed on the south projection of the footprint about 16 m east of the west front; brick colour, window counts and the south and east additions are assumptions. The San Zeno front is abstracted to pilaster strips, raking corbel arcades, a wheel window, a gabled porch on two columns and a painted sgraffito tympanum. An Orthodox cross is added on the west gable."
   },
   {
+    "id": "earls_court_station",
+    "name": "Earl's Court station",
+    "claims": [
+      "a0da8673-68a2-4c8f-9eb6-180036b83f30",
+      "77d3571a-55c1-4dd3-95c3-235a623e9d47",
+      "26940f5c-b0b3-4959-8a51-cbe88de7d48e"
+    ],
+    "references": [
+      {
+        "title": "Earls Court Station - Historic England",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1358162",
+        "used_for": "1878 train shed by John Wolfe Barry with pitched roof on arched iron trusses at right angles; 1906 Earl’s Court Road facade by Harry W Ford in buff glazed faience with green trimmings, three entrance bays, keystones, Ionic columns, fascia; 1937 Warwick Road extension, 1970s top"
+      },
+      {
+        "title": "Earl's Court tube station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Earl%27s_Court_tube_station",
+        "used_for": "station layout: two island platforms, four District tracks under the shed"
+      },
+      {
+        "title": "Interior of Earls Court station, 1878 - London Transport Museum",
+        "url": "https://www.ltmuseum.co.uk/collections/collections-online/photographs/item/1998-85109",
+        "used_for": "glass and iron roof on iron beams, walls with arched niches, timber platforms"
+      },
+      {
+        "title": "Works commence at Earl’s Court to restore Grade II listed roof - TfL",
+        "url": "https://tfl.gov.uk/info-for/media/press-releases/2006/december/works-commence-at-earls-court-to-restore-grade-ii-listed-roof",
+        "used_for": "Victorian train shed roof restored c.2008"
+      }
+    ],
+    "notes": "Shed extent, wall height (7.5 m), ridge (13 m), truss pitch (7.5 m), the proportion of glazing and the platform positions are estimates; the two narrow Warwick Road-end strips of the footprint are modelled as platform canopies. The Earl’s Court Road block is modelled as a two-storey faience frontage (10.5 m) in front of a 12.3 m brick block; bay widths, column count and lettering approximate. Warwick Road entrance curved front and 1970s top are schematic."
+  },
+  {
     "id": "eighty_eight_wood_lane",
     "name": "Eighty-Eight Wood Lane (Imperial West tower)",
     "claims": [
@@ -1554,6 +1684,46 @@
     "notes": "Storey heights (ground 3.8 m above a 1 m basement plinth, then 4.0/3.4/3.0/2.8 m) and a steep slated roof with dormers and tall stacks are assumptions in keeping with the listing (roof storey); Overture 14.8 m is too low. The loggia is modelled over ground and first floors with Tuscan columns and round arches; bay widths, the rear range down the service road and the flag are assumptions."
   },
   {
+    "id": "empress_state_building",
+    "name": "Empress State Building",
+    "claims": [
+      "f5233a36-9cd0-4152-946e-2bbbac3036c9"
+    ],
+    "references": [
+      {
+        "title": "Empress State Building - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Empress_State_Building",
+        "used_for": "Stone, Toms & Partners, 1959-61, originally 100 m / 28 floors, Orbit revolving bar"
+      },
+      {
+        "title": "Empress State Building - Structurae",
+        "url": "https://structurae.net/structures/20009442",
+        "used_for": "117 m, 31 floors above ground"
+      },
+      {
+        "title": "Extending the Empress State Building - New Steel Construction",
+        "url": "https://www.newsteelconstruction.com/wp/extending-the-empress-state-building/",
+        "used_for": "south facade pushed out ~5 m, steel-and-glass extension, lightweight three-storey top"
+      },
+      {
+        "title": "The Empress strikes back - Building",
+        "url": "https://building.co.uk/news/the-empress-strikes-back/1021296.article",
+        "used_for": "curtain walls curving between three stone-clad corner towers; two-storey drum at the base"
+      },
+      {
+        "title": "Wilkinson Eyre revamps office - Design Week",
+        "url": "https://designweek.co.uk/issues/17-july-2003/wilkinson-eyre-revamps-office",
+        "used_for": "recladding of the three concave facades, horizontal aluminium louvres on the south facade"
+      },
+      {
+        "title": "Sanierung Empress State Building - BauNetz Wissen",
+        "url": "https://www.baunetzwissen.de/bauen-im-bestand/objekte/buero-verwaltung/sanierung-empress-state-building-in-london-gb-69172",
+        "used_for": "three-wing layout around a central service core"
+      }
+    ],
+    "notes": "Wing directions from the tips of the Overture base footprint (the drum). Wing width (20 m), tip radius (36 m), the depth of the concave curves, storey height (3.3 m) and the form of the glazed top, the bar drum and mast are estimates; mullion pitch and louvre spacing are schematic. Height kept at 117 m (Structurae)."
+  },
+  {
     "id": "exhibition_white_city",
     "name": "Exhibition White City (Dimco Buildings)",
     "claims": [
@@ -1642,6 +1812,119 @@
       }
     ],
     "notes": "Height from 14 office storeys (~54 m to the main roof; the Overture 25 m is too low). The split of the footprint into the three triangles, the shard outline and its sloping top are reconstructed from descriptions; frit pattern drawn procedurally."
+  },
+  {
+    "id": "fulham_broadway_centre",
+    "name": "Fulham Broadway Centre",
+    "claims": [
+      "7fb535a0-0f8e-4a1d-b01b-d19a16e07604"
+    ],
+    "references": [
+      {
+        "title": "Fulham Broadway tube station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Fulham_Broadway_tube_station",
+        "used_for": "shopping centre built over the station, new ticket hall opened 2003 with access through the centre"
+      },
+      {
+        "title": "Vue Fulham Broadway - Cinema Treasures",
+        "url": "https://www.cinematreasures.org/theaters/9875",
+        "used_for": "cinema on the first floor, opened October 2002 as Warner Village, Vue from 2004"
+      },
+      {
+        "title": "Fulham Broadway, Fulham SW6 1BW - GCW",
+        "url": "https://gcw.co.uk/project/194/fulham-broadway-fulham-sw6-1bw",
+        "used_for": "c. 200,000 sq ft, Sainsbury’s and nine-screen Vue as anchors"
+      }
+    ],
+    "notes": "No architectural description was found: the massing follows the Overture footprint at 14.8 m; the cladding (buff brick base, grey panel and glazed bands above), the double-height glazed entrance on Fulham Road, signage and roof plant are generic interpretations, not surveyed."
+  },
+  {
+    "id": "fulham_broadway_station",
+    "name": "Fulham Broadway station (former entrance and trainshed)",
+    "claims": [
+      "7413b081-93d5-4773-bbd7-ae4449801f4c"
+    ],
+    "references": [
+      {
+        "title": "Fulham Broadway Underground Station, former entrance building and trainshed - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101358569-fulham-broadway-underground-station-former-entrance-building-and-trainshed-fulham-broadway-ward",
+        "used_for": "trainshed 1880 with pitched glazed roof on wrought-iron trusses; entrance building rebuilt 1910 by Harry W Ford; steel frame clad in brick, brown faience facade; ticket hall, arcade, offices"
+      },
+      {
+        "title": "Fulham Broadway tube station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Fulham_Broadway_tube_station",
+        "used_for": "renaming from Walham Green; 2003 relocation of the entrance into the shopping centre"
+      },
+      {
+        "title": "The street entrance to Walham Green Underground Station - Historic England",
+        "url": "https://historicengland.org.uk/images-books/photos/item/BL21141",
+        "used_for": "street entrance (caption)"
+      }
+    ],
+    "notes": "Entrance block taken as the southern 8 m of the footprint facing Fulham Road (two storeys + parapet, 11.8 m) and the trainshed as the rest; the cutting is not modelled (tracks/platform level at ground). Faience bay design, lettering, truss pitch and roof glazing ratio are estimates."
+  },
+  {
+    "id": "fulham_palace",
+    "name": "Fulham Palace",
+    "claims": [
+      "8786a828-ddba-4707-82d8-8b2547c4f282"
+    ],
+    "references": [
+      {
+        "title": "Fulham Palace - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Fulham_Palace",
+        "used_for": "history, Tudor west court, Georgian east court"
+      },
+      {
+        "title": "Fulham Palace - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101286903",
+        "used_for": "Grade I; great hall c.1480 for Bishop Kemp; porch and west courtyard c.1500; south range rebuilt 1853; east court by Stiff Leadbetter 1764-6, remodelled and refronted 1814-18 by S P Cockerell"
+      },
+      {
+        "title": "Fulham Palace and Bishops Park - Parks & Gardens",
+        "url": "https://www.parksandgardens.org/places/fulham-palace-and-bishops-park",
+        "used_for": "red-brick Tudor courtyard; Leadbetter’s gothic crenellations removed"
+      },
+      {
+        "title": "Fulham Palace - Historic England (registered park and garden)",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1000133",
+        "used_for": "setting, moat and grounds"
+      }
+    ],
+    "notes": "The single Overture footprint is split into the west court quadrangle (north-west part, courtyard ~27 x 30 m assumed) and the east court block (south-east part). Ridge and eave heights, gate tower height (15 m), the diaper brickwork, chimney positions, the east front’s window pattern and the courtyard fountain are estimates. The 1866 chapel and the walled garden are not modelled."
+  },
+  {
+    "id": "fulham_town_hall",
+    "name": "Fulham Town Hall",
+    "claims": [
+      "86110e9b-1d5d-4b5c-90af-5f567720a800",
+      "c2e811c6-82fa-416e-8945-faee676f97cf",
+      "c7637656-af8f-45cb-ab85-7799ccf244ea",
+      "389aa5dd-2236-4481-86d2-faf1c9f3b886"
+    ],
+    "references": [
+      {
+        "title": "Fulham Town Hall - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Fulham_Town_Hall",
+        "used_for": "George Edwards, foundation stone 1888, completed 1890, Grade II*"
+      },
+      {
+        "title": "Fulham Town Hall (original building and 1904-5 extension) - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101191939-fulham-town-hall-original-building-and-1904-5-extension-parsons-green-and-walham-ward",
+        "used_for": "Portland stone facades, stock brick elsewhere; seven bays 2-3-2 with projecting centre rising to an attic; carved tympanum; iron canopy with lamps; Francis Wood 1904-5 extension"
+      },
+      {
+        "title": "1890- Old Town Hall, Fulham - Archiseek",
+        "url": "https://www.archiseek.com/?p=21781",
+        "used_for": "1934 Fulham Road extension by Walter Cave"
+      },
+      {
+        "title": "The Harwood Road elevation of Fulham Town Hall - Historic England",
+        "url": "https://historicengland.org.uk/images-books/photos/item/BL19372",
+        "used_for": "Harwood Road elevation (caption)"
+      }
+    ],
+    "notes": "Overture heights (9-11 m) are too low: three storeys of 5.0/4.6/4.2 m plus a 1.4 m balustrade (~15 m), central attic to ~19.5 m. Window forms (arched ground floor, pedimented first floor, lintelled second floor), column positions and carving are interpretive; the drum clock is placed over the middle of the Harwood Road range. Which claimed rear blocks belong to which phase is assumed."
   },
   {
     "id": "garry_weston_centre",
@@ -3330,6 +3613,38 @@
       }
     ],
     "notes": "Overture height 10.4 m kept for the three-storey front; the pool and sports hall volumes are raised to 13 m on the eastern half of the footprint (positions assumed). Facade treatment (white/silver panel cladding with a ribbon of glazing to the pool hall, coloured vertical fins echoing the academy greens, clerestory over the halls) is an assumption: no facade description was found."
+  },
+  {
+    "id": "kensington_olympia_station",
+    "name": "Kensington (Olympia) station",
+    "claims": [
+      "71ed838c-bc33-4a9e-9f75-2ebf317c1be9",
+      "fb40e347-d270-4f5b-a2c3-eff00aa98c2a",
+      "953b70b1-506f-4ef2-b49a-5ea7322c5697"
+    ],
+    "references": [
+      {
+        "title": "Kensington (Olympia) station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Kensington_(Olympia)_station",
+        "used_for": "history, renaming 1946, services, location on Olympia Way"
+      },
+      {
+        "title": "Kensington Olympia - Subterranea Britannica",
+        "url": "https://www.subbrit.org.uk/sb-sites/stations/k/kensington_olympia/index2.shtml",
+        "used_for": "original weatherboarded buildings and canopies, 1940 bomb damage, forecourt"
+      },
+      {
+        "title": "Olympia: entrance hall to Addison Road Station - RIBApix",
+        "url": "https://www.architecture.com/image-library/ribapix/image-information/poster/olympia-london-the-entrance-hall-from-the-exhibition-centre-to-addison-road-station-and-the-garage-i/posterid/RIBA73985.html",
+        "used_for": "Joseph Emberton’s 1937 Modern Movement link hall (context)"
+      },
+      {
+        "title": "Kensington Olympia railway station in the 1980s - urban75",
+        "url": "https://www.urban75.org/railway/kensington-olympia-station.html",
+        "used_for": "platform canopies and footbridge (photo captions)"
+      }
+    ],
+    "notes": "No architectural description of the present buildings was found: the west building is modelled as a single-storey brick range (claimed footprint) with a platform canopy, the two small footprints as entrance/ancillary pavilions. Platform positions follow the mapped tracks; canopy length (110 m), footbridge position and all heights are estimates. Platforms, canopies and the footbridge are unclaimed."
   },
   {
     "id": "kensington_palace",
@@ -5120,6 +5435,36 @@
     "notes": "Drum, porches and dome follow the 11 Overture parts (drum 25 m, dome springing ~29 m to 43.8 m, lantern 46.6 m). Bay count (~40 bays of ~6.2 m) and the storey levels are proportioned from photo descriptions, not measured. Windows, pilasters, string courses, balcony and parapet balustrades, the open gallery arcade with columns, modillioned cornice, dome ribs and porches are real geometry; the mosaic frieze and inscription are painted (figures abstracted). Porches are generic two-storey blocks with arched openings, the rebuilt south porch is not distinguished. Porch roofs are flat behind balustrades at the part heights (18-20 m). Ground is flat, so the south steps down to Prince Consort Road are not modelled. Chimney stack height kept at the data value."
   },
   {
+    "id": "royal_brompton_hospital",
+    "name": "Royal Brompton Hospital (Sydney Wing)",
+    "claims": [
+      "09b31bf8-0049-4b08-aadb-dde4be763761"
+    ],
+    "references": [
+      {
+        "title": "Royal Brompton Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_Brompton_Hospital",
+        "used_for": "specialist heart and lung centre on Sydney Street; Sydney Wing opened 1991"
+      },
+      {
+        "title": "Sydney Street - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Sydney_Street",
+        "used_for": "location of the hospital on Sydney Street"
+      },
+      {
+        "title": "Chapel, Royal Brompton Hospital, Sydney Street - London Church Buildings",
+        "url": "https://londonchurchbuildings.com/2025/11/19/chapel-royal-brompton-hospital-sydney-street-chelsea/",
+        "used_for": "chapel on the second floor of the 1980s Sydney Wing by Watkins Gray International"
+      },
+      {
+        "title": "Our hospitals - Royal Brompton & Harefield",
+        "url": "https://www.rbht.nhs.uk/node/2796",
+        "used_for": "Sydney Wing as the main hospital building, opened 1991"
+      }
+    ],
+    "notes": "No architectural description was found. Massing follows the Overture footprint; height raised to five storeys (20 m) with a set-back plant/top floor, which is an estimate. Brick colour, window bands, the entrance canopy on Sydney Street, the internal lightwells and the helipad-free roof plant are generic interpretations of a late-1980s hospital block."
+  },
+  {
     "id": "royal_college_of_music",
     "name": "Royal College of Music",
     "claims": [
@@ -5341,6 +5686,38 @@
       }
     ],
     "notes": "Tower facade is a grid of slim vertical precast mullions and storey spandrel bands (typical Seifert treatment, approximate). Roof plant/crown height and the podium openings are estimated; podium height kept at the Overture 10.4 m."
+  },
+  {
+    "id": "royal_marsden_hospital",
+    "name": "Royal Marsden Hospital",
+    "claims": [
+      "996fe2fe-07d3-4e22-a8b6-ecfcaf367726",
+      "eb3786ed-a82f-4af4-b093-bb2e2654748f",
+      "f971668e-fc32-4e45-9daf-c55902b5303f"
+    ],
+    "references": [
+      {
+        "title": "Royal Marsden Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_Marsden_Hospital",
+        "used_for": "history, move to Fulham Road in 1862, original architects"
+      },
+      {
+        "title": "Exterior view from the north-west of the entrance front of the Cancer Hospital - Historic England",
+        "url": "https://historicengland.org.uk/images-books/photos/item/BL08600",
+        "used_for": "Bedford Lemere 1888 photograph of the entrance front; architect Alexander Graham"
+      },
+      {
+        "title": "William Marsden - English Heritage blue plaques",
+        "url": "https://www.english-heritage.org.uk/visit/blue-plaques/william-marsden",
+        "used_for": "founding of the Cancer Hospital, Fulham Road 1862"
+      },
+      {
+        "title": "Fulham Road - Hidden London",
+        "url": "https://hidden-london.com/?p=38187",
+        "used_for": "hospitals along Fulham Road"
+      }
+    ],
+    "notes": "Facade materials were not described by any source found: the Victorian range is modelled in red brick with stone bands and slate pavilion roofs (typical of the 1880s; unverified). U-shaped front from the Overture footprint (central range set back behind the forecourt). Heights: main range 4 storeys + roof (~19 m to the ridge), Granard House 6 storeys (20 m), Wallace Wing 4 storeys (16 m). Window rhythm, porch, gables and signage are interpretive."
   },
   {
     "id": "royal_school_of_mines",
@@ -6154,6 +6531,36 @@
     "notes": "Church aligned with the footprint long axis (~25 deg), west front on Queen's Gate. Section (aisles 7.5 m, clerestory 15 m, steep roof ridge 23.5 m), the band spacing, window sizes and the bellcote height are estimates; the stepped west footprint edges (porches/buttresses) are walls with buttresses. Polychrome banding is modelled as thin projecting courses of red and black brick and stone on the yellow brick."
   },
   {
+    "id": "st_cuthberts_philbeach_gardens",
+    "name": "St Cuthbert's, Philbeach Gardens",
+    "claims": [
+      "08d0a32e-3083-4266-97a6-09615874afc9"
+    ],
+    "references": [
+      {
+        "title": "St Cuthbert's, Earls Court - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Cuthbert%27s,_Earls_Court",
+        "used_for": "Hugh Roumieu Gough, 1884-87; no tower intended, a slender flèche instead"
+      },
+      {
+        "title": "Church of St Cuthbert and St Matthias - Historic England",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1266119",
+        "used_for": "red brick with Bath stone dressings, austere late-C12 Gothic, plain aisle lancets, paired two-light Geometric clerestory windows"
+      },
+      {
+        "title": "St Cuthbert - National Churches Trust",
+        "url": "https://www.nationalchurchestrust.org/church/st-cuthbert-earls-court",
+        "used_for": "roof history (copper after war damage; later reslated)"
+      },
+      {
+        "title": "1887 - St. Cuthbert's Church, Kensington - Archiseek",
+        "url": "https://www.archiseek.com/?p=569390",
+        "used_for": "red and black brick"
+      }
+    ],
+    "notes": "Overture h=11 m is far too low; nave eave 17 m, ridge 25 m, aisle eave 7 m and flèche top ~39 m are estimates for the tall clerestoried church. Aisle widths, bay count (7) and the position of the flèche (at the chancel arch) are assumed; west porch and south chapel fitted to footprint bumps. Slate roof per the listing (c.2000 reslating)."
+  },
+  {
     "id": "st_james_sussex_gardens",
     "name": "St James, Sussex Gardens",
     "claims": [
@@ -6209,6 +6616,56 @@
     "notes": "Spire apex 46 m (150 ft); tower to 25.5 m with the broach spire above (split estimated). Transepts and chancel follow the footprint projections (crossing ~27 m from the west end). Aisle walls 7.5 m, clerestory 12 m and roof pitches are proportioned; lancet sizes and buttress rhythm are estimated, the west front is simplified to a triple lancet group."
   },
   {
+    "id": "st_johns_walham_green",
+    "name": "St John's, Walham Green",
+    "claims": [
+      "016a4a5a-06ba-4b83-9598-a6ce4e287f58"
+    ],
+    "references": [
+      {
+        "title": "Church of St John - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101079751-church-of-st-john-fulham-broadway-ward",
+        "used_for": "Grade II, Early English Gothic, yellow brick with stone dressings, tower on axis at the west end, 1893 alterations by E P Warren"
+      },
+      {
+        "title": "St John North End Road Walham Green - London Church Buildings",
+        "url": "https://londonchurchbuildings.com/2018/01/21/st-john-north-end-road-walham-green/",
+        "used_for": "J.H. Taylor, 1827-28"
+      },
+      {
+        "title": "Walham Green - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Walham_Green",
+        "used_for": "built on the site of the village pond"
+      }
+    ],
+    "notes": "Body, chancel and tower fitted to the Overture footprint; heights are estimates (eave 10.5 m, ridge 15 m, tower 28 m to the parapet plus 3.5 m pinnacles). Lancet count, buttress rhythm and the tower openings are typical of the type rather than surveyed; no galleries or interior modelled."
+  },
+  {
+    "id": "st_lukes_redcliffe_square",
+    "name": "St Luke's, Redcliffe Square",
+    "claims": [
+      "03972549-1bd0-452b-9098-f077585625ff"
+    ],
+    "references": [
+      {
+        "title": "St Luke's Church, Redcliffe Gardens - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Luke%27s_Church,_Redcliffe_Gardens",
+        "used_for": "George and Henry Godwin, 1872-73, Grade II, Pevsner: grandest of the Godwins’ Kensington churches"
+      },
+      {
+        "title": "Listed Buildings Search - RBKC",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=491328",
+        "used_for": "rock-faced snecked Kentish ragstone, ashlar dressings, slate roofs with terracotta cresting, octagonal baptistery roof"
+      },
+      {
+        "title": "Plate 96: St. Luke's Church, Redcliffe Square, exteriors - Survey of London",
+        "url": "https://www.british-history.ac.uk/survey-london/vol41/plate-96",
+        "used_for": "exterior views (titles only available): tower and spire, apse"
+      }
+    ],
+    "notes": "Plan zones (nave, aisles, chancel, apse, tower, baptistery) fitted to the Overture footprint; Overture h=8.7 m is too low. Eave/ridge heights (aisles 7 m, clerestory 14 m, ridge 21 m), tower position (north-west), baptistery position (south-east of the chancel), tower height 27 m and spire tip ~48 m are estimates; window counts and tracery are simplified to lancets and two-light windows with circular heads. Terracotta cresting omitted."
+  },
+  {
     "id": "st_mary_abbots",
     "name": "St Mary Abbots",
     "claims": [
@@ -6237,6 +6694,36 @@
       }
     ],
     "notes": "Total height 85 m (278 ft) from the references; the split (tower 36 m, spire 49 m) and the tower plan size (9.5 m) are estimated. Tower placed at the north-east corner of the footprint on Kensington Church Street. Aisle walls 9.5 m, clerestory to 17 m and a 50-degree nave roof are proportioned, not measured; aisle roofs are flat leaded caps rather than lean-to slopes. Window tracery is reduced to framed lancets; the 1889-93 cloister to the High Street is a separate footprint and not modelled."
+  },
+  {
+    "id": "st_mary_the_boltons",
+    "name": "St Mary The Boltons",
+    "claims": [
+      "3ea05633-2580-4b2d-a63e-b7f1ddd7412d"
+    ],
+    "references": [
+      {
+        "title": "St Mary The Boltons - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Mary_The_Boltons",
+        "used_for": "George Godwin the younger, consecrated 1850, Grade II"
+      },
+      {
+        "title": "Church of St Mary - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101294362-church-of-st-mary-redcliffe-ward",
+        "used_for": "rubblestone, ashlar dressings, slate roof, aisleless five-bay nave, crossing and transepts, crossing tower with ashlar broach spire with octagonal stage, west bellcote"
+      },
+      {
+        "title": "Plate 93: St. Mary's Church, The Boltons, exterior - Survey of London",
+        "url": "https://prod.british-history.ac.uk/node/42037",
+        "used_for": "spire added 1856 (caption)"
+      },
+      {
+        "title": "History - St Mary The Boltons",
+        "url": "https://www.stmarytheboltons.org.uk/history",
+        "used_for": "spire added 1854"
+      }
+    ],
+    "notes": "Cruciform plan fitted to the Overture footprint (chancel and vestry outlines simplified). Heights are estimates: nave eave 9 m, ridge 17 m, tower to 22 m, octagonal stage and spire tip ~46 m. Window tracery simplified to two- and three-light arched windows."
   },
   {
     "id": "st_marys_cambridge_wing",
@@ -7185,6 +7672,31 @@
       }
     ],
     "notes": "Arch massing from the Overture footprint (22 m x 13 m body plus column porticoes); heights proportioned (entablature 12.3-15 m, attic to 18.4 m, Victory ~28 m) - no measured elevation was found. Detail pass: jointed ashlar, fluted Corinthian columns with acanthus/volute capitals, Corinthian pilasters at corners and ends (per English Heritage), three-fascia architrave, blank frieze (garlands never carved), dentil + modillion cornice with breakforwards, moulded archivolts and keystones, coffered passage vault, pier doors, Burton's gates with garland roundels (royal arms simplified to gilt shields) and a radiating lunette; laurel wreaths in the pier panels are assumed. Quadriga horses and figures are stylised low-poly bronzes; heading (east, towards the Palace) is assumed. Royal Artillery Memorial (howitzer, reliefs, four bronzes) and Wellington statue are simplified; island lamps are resources assets."
+  },
+  {
+    "id": "west_brompton_station",
+    "name": "West Brompton station",
+    "claims": [
+      "ae4162c9-e46c-4f82-a97c-c97a4c1835f7"
+    ],
+    "references": [
+      {
+        "title": "West Brompton Station including Booking Hall and Train Shed - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101385365-west-brompton-station-including-booking-hall-and-train-shed-and-staircases-and-retaining-wall-redcliffe-ward",
+        "used_for": "Sir John Fowler, classical style, white Suffolk brick booking hall with slate pavilion roof, opened 1869, best preserved District station"
+      },
+      {
+        "title": "West Brompton station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/West_Brompton_station",
+        "used_for": "opening dates, District and Overground services"
+      },
+      {
+        "title": "Listed Buildings Search - RBKC",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=485827",
+        "used_for": "listing record"
+      }
+    ],
+    "notes": "Booking hall occupies the whole Overture footprint at street level (h 7 m); bay rhythm, quoins, door position and roof pitch are estimates. The platforms are in a cutting in reality; here the platform canopies (iron columns, ridged glazed/slate roofs) stand at ground level along the mapped tracks and are unclaimed geometry. Signage drawn on canvas."
   },
   {
     "id": "westfield_london",
