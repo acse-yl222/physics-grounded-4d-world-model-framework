@@ -7,5 +7,12 @@
     "latitude": 51.506427
   },
   "domain_m": 8000,
-  "overture_release": "2026-10-21.0"
+  "overture_release": "2026-10-21.0",
+  "terrain": {
+    "source": "aws_terrain_tiles_terrarium",
+    "zoom": 15,
+    "half_m": 4100,
+    "dem_m": 5.0,
+    "scene_grid_m": 10.0
+  }
 }
