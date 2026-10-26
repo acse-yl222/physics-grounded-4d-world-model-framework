@@ -872,6 +872,36 @@
     "notes": "Plan, quadrangle and wing heights from the Overture footprint and its 12 parts; the unparted east, north and south ranges use 22 m. East front now follows the footprint steps (main face 2.4 m behind the centrepiece, terminal pavilions 1.45 m forward of it) with modelled bays: arched rusticated ground floor, piano nobile windows with alternating triangular/segmental open pediments and aprons, second-floor sashes, fluted Corinthian pilasters, paired columns, three arched gateways with gilded gates, the balcony on consoles, modillion cornice, roof balustrade, blind attics with urns, pediment with relief arms and lion/unicorn supporters (schematic). Bay counts (7 + 3 + 3 per side) are estimated from photographs remembered, not measured. Nash/Blore ranges keep the painted bay texture with added 3D cornices, modillions and roof balustrades. Forecourt railings, pier lanterns, gates, sentry boxes and guardsmen are approximate (20 m deep strip); the Victoria Memorial lies outside the domain. The east end extends ~100 m past the x = 4000 m domain edge and is kept whole."
   },
   {
+    "id": "bush_theatre",
+    "name": "Bush Theatre (former Passmore Edwards Library)",
+    "claims": [
+      "cb1e6542-851e-4f7b-b406-5cf5b254c859"
+    ],
+    "references": [
+      {
+        "title": "Passmore Edwards Public Library, Shepherd's Bush - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Passmore_Edwards_Public_Library,_Shepherd%27s_Bush",
+        "used_for": "1895-96, Maurice Bingham Adams, brick structure with timber frame"
+      },
+      {
+        "title": "Shepherd's Bush (Uxbridge Rd) Library 1896 - The Passmore Edwards Legacy",
+        "url": "https://thepassmoreedwardslegacy.org.uk/hammersmith-uxbridge-rd-library-1896",
+        "used_for": "English Renaissance style, red brick with Portland stone cornices and mullions, gable sculpture 'Shepherd in the Bush', name carved over the entrance"
+      },
+      {
+        "title": "The Bush Theatre - Heritage of London Trust",
+        "url": "https://www.heritageoflondon.org/projects/the-bush-theatre",
+        "used_for": "entrance porch with pediment mouldings and lettering, entrance steps"
+      },
+      {
+        "title": "Bush Theatre - Haworth Tompkins",
+        "url": "https://www.haworthtompkins.com/work/bush-theatre",
+        "used_for": "conversion of the former library into auditorium, foyer and back of house"
+      }
+    ],
+    "notes": "Front range depth (13 m), eaves (10.5 m) and gable apex (17 m) heights, window counts, the bay rhythm and the shaped (Dutch-type) gable outline are estimates; the sculpture is a simple figure on a plinth in a niche. The rear hall/auditorium roof form and rooflights and the 2017 rear extension are simplified."
+  },
+  {
     "id": "cadogan_hall",
     "name": "Cadogan Hall",
     "claims": [
@@ -2240,6 +2270,40 @@
     "notes": "Placed on the Overture bridge segment (224 m between abutments, 14.9 m deck outline). Main span taken as 129 m (422 ft, centred), tower tops ~13-15 m above the deck (Wikipedia gives 48 ft), deck camber and chain sag estimated. Two stacked eyebar chains per side with pins at ~4.4 m, hangers every 2.8 m with clamps, cross and stiffening girders under the deck, lattice parapet with posts, clustered Doric columns on the river piers and cast-iron chain pedestals at the abutment corners follow the listing; the footway position relative to the chains, lamp standards (generic resources street_lamp at 20 m), pylon panel ornament and heraldry (shields with a cross, roundels) are simplified - the actual Royal Arms and county/city crests are not reproduced. No building footprint is claimed."
   },
   {
+    "id": "hammersmith_broadway_centre",
+    "name": "Hammersmith Broadway Centre, Bus Station and Station",
+    "claims": [
+      "fe5d7822-92c4-4482-b088-5877cb34f1f8",
+      "d1c84a0d-3c20-41c7-91e0-449b73b3cab9",
+      "f1dab892-5d7b-4035-89c1-13c70762d749",
+      "21ddae09-7834-4733-9b4c-00febd8d9aea",
+      "868ea82d-0343-4f07-8331-4de0df16981a"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Broadway - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Broadway",
+        "used_for": "shopping centre opened 1994 by EPR Architects; offices, retail and transport complex"
+      },
+      {
+        "title": "Hammersmith bus station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_bus_station",
+        "used_for": "two-level bus station: upper station above the shopping centre, lower at ground level"
+      },
+      {
+        "title": "Hammersmith tube station (District and Piccadilly lines) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_tube_station_(District_and_Piccadilly_lines)",
+        "used_for": "station buildings incorporated into the shopping centre and interchange in the early 1990s; reused Ford tiling"
+      },
+      {
+        "title": "EPR Architects - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/EPR_Architects",
+        "used_for": "architect practice"
+      }
+    ],
+    "notes": "The upper bus deck is set at 13 m to match the level-2 access ramps in the road layer; the shopping-centre volume under it, the office storey heights (5 m retail + 5 x 3.8 m), the cladding colours (grey stone piers, blue-green ribbon glazing), the bus-shelter canopies, the station frontage glazing and roundels and the platform-canopy column spacing are assumptions; no detailed facade description was found."
+  },
+  {
     "id": "hammersmith_campus",
     "name": "Hammersmith Campus: Commonwealth Building, ICTEM, Burlington Danes",
     "claims": [
@@ -2286,6 +2350,32 @@
       }
     ],
     "notes": "Footprints and Overture heights (Commonwealth 36 m / 11 floors, ICTEM 20 m, Burlington Danes 19.6 m). Commonwealth Building and Wolfson block in 3D: board-marked concrete, projecting spandrel bands, chunky piers and recessed steel-framed windows (an interpretation of the Lyons Israel Ellis concrete idiom, not traced from photographs); ICTEM curtain wall with fins, floor bands and transoms; Burlington Danes with stand-off perforated stainless screens (alpha-cut texture) on walkways over glazed ribbons; mullioned ground-floor lobbies and louvred roof plant. Bridge position, Burlington Danes tiering, colours and the courtyard furniture (generic resources assets) are estimates. Historic 1905 hospital blocks are left generic"
+  },
+  {
+    "id": "hammersmith_hc_station",
+    "name": "Hammersmith station (Circle and Hammersmith & City lines)",
+    "claims": [
+      "aacf332d-d056-4c82-b113-b9b3cf81bf9e",
+      "a8583a5b-7334-4a82-85fd-74d10361eb75"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith tube station (Circle and Hammersmith & City lines) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_tube_station_(Circle_and_Hammersmith_%26_City_lines)",
+        "used_for": "opened 1 December 1868 on Beadon Road, western terminus of the Circle and H&C lines"
+      },
+      {
+        "title": "Hammersmith and City Railway - AIM25",
+        "url": "https://atom.aim25.com/index.php/hammersmith-and-city-railway-4",
+        "used_for": "station moved 150 yards south in 1868 and reconstructed in 1908"
+      },
+      {
+        "title": "Hammersmith Station, Beadon Road - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/5266/england/london-w6/beadon-road/hammersmith-station",
+        "used_for": "station building on Beadon Road"
+      }
+    ],
+    "notes": "No description of the facade was found. The street building is modelled as a single tall storey of red brick with stone dressings and a parapet (Edwardian, consistent with the 1908 rebuild), with a glazed entrance, canopy and roundels; the second footprint is modelled as the platform canopy. Heights (5.5 m building, 4.0 m canopy) and all details are assumptions."
   },
   {
     "id": "hammersmith_house",
@@ -2398,6 +2488,37 @@
       }
     ],
     "notes": "Footprint and height 20 m / 6 storeys from the data. Construction date, architect and cladding are not documented in the sources found: buff brick with recessed ribbon glazing, glazed ground-floor foyer, parapet and roof plant are generic interpretations."
+  },
+  {
+    "id": "hammersmith_town_hall",
+    "name": "Hammersmith Town Hall",
+    "claims": [
+      "6d7515fa-b778-4ba2-8c90-8f7fbccba05f",
+      "69b78d4e-efc5-45fb-a957-9cdb9971f0e0"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Town Hall - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Town_Hall",
+        "used_for": "architect E. Berry Webber, 1938-39, Grade II, Swedish Georgian style, later extension"
+      },
+      {
+        "title": "Hammersmith Town Hall - British Listed Buildings (1079785)",
+        "url": "https://britishlistedbuildings.co.uk/101079785",
+        "used_for": "red-purple brick in monk bond, Portland stone ground floor with rustication and plinth, three storeys and attic, set-back upper floors, Crittall windows, banded brick parapet, nine-bay south elevation with projecting centrepiece, yellow stock courtyard"
+      },
+      {
+        "title": "Hammersmith Town Hall, London - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/1930/hammersmithtownhall.html",
+        "used_for": "red brick with Portland stone dressings, Neo-Georgian"
+      },
+      {
+        "title": "Hammersmith Town Hall - LBHF",
+        "url": "https://lbhf.gov.uk/councillors-and-democracy/about-hammersmith-fulham-council/hammersmith-town-hall",
+        "used_for": "history: north steps lost to the 1971-75 extension"
+      }
+    ],
+    "notes": "Two Overture footprints (h=7 m and 8 m, too low) are combined into one oriented courtyard block. Storey heights (5.0 m stone ground floor, 4.6 m and 4.2 m upper floors, 3.2 m attic), the 14 m range depth, the width and height of the south centrepiece, window sizes and the entrance doorcase are estimates; the attic is modelled as a set-back storey behind the parapet. Murals, flagpole and the courtyard fittings are not modelled; the new civic-campus buildings to the north are not part of this model."
   },
   {
     "id": "harrods",
@@ -3878,6 +3999,37 @@
     "notes": "Group module over 45 Overture footprints (terraces facing the Christ Church square and the Bayswater Road frontages, excluding the post-war infill blocks Heron Court, Lancaster Court and the 10-storey block west of Thistle Hyde Park). Each footprint gets a generic stucco elevation on the faces towards Lancaster Gate / Bayswater Road: rusticated ground floor, paired Doric porches with balustraded balconies, pedimented first-floor windows, cornices and a slate mansard attic with dormers (heights ~21 m to the parapet + attic). Bay windows, pavilion towers and individual house variations are not modelled; rear faces use the stock-brick facade texture."
   },
   {
+    "id": "latymer_upper_school",
+    "name": "Latymer Upper School",
+    "claims": [
+      "40ed4c8f-bb18-470a-8185-4c46c6a21f37",
+      "0502295e-f2bd-491a-91b0-648437baab4f"
+    ],
+    "references": [
+      {
+        "title": "Latymer Upper School - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Latymer_Upper_School",
+        "used_for": "King Street site since 1895"
+      },
+      {
+        "title": "History - Latymer Foundation",
+        "url": "https://latymerfoundation.org/the-foundation/history",
+        "used_for": "foundation stone 1893, opening 9 January 1895"
+      },
+      {
+        "title": "Schools: Latymer and Godolphin Schools - British History Online",
+        "url": "https://prod.british-history.ac.uk/node/15284",
+        "used_for": "buildings between King Street and the river, opened 1895; main block extended southward 1930"
+      },
+      {
+        "title": "Latymer Upper School Performing Arts Centre - e-architect",
+        "url": "https://www.e-architect.com/london/latymer-upper-school-building",
+        "used_for": "van Heyningen and Haward Performing Arts Centre, brick envelope in keeping with the school"
+      }
+    ],
+    "notes": "No description of the 1895 elevations was found; the main range is modelled as a three-storey red-brick Victorian school (4.2 m storeys) under a slate roof, with a gabled King Street front, stone-dressed mullioned windows, a central entrance and a small bell lantern - all assumptions, as are the identification of the long unnamed footprint as the 1895/1930 main block and the PAC’s glazed foyer and fly tower."
+  },
+  {
     "id": "leighton_house",
     "name": "Leighton House",
     "claims": [
@@ -3938,6 +4090,34 @@
     "notes": "Modelled on the 1.8 m deep Overture strip between the Henry Hotel and the Blakemore Hyde Park. Ornament follows the generic Leinster Gardens stucco terrace (porches, balcony, pedimented first-floor windows, cornice, parapet); exact mouldings approximated. The rear (cutting side) is shown as bare brick with iron stays; the railway cutting itself is not modelled."
   },
   {
+    "id": "linford_christie_stadium",
+    "name": "Linford Christie Stadium",
+    "claims": [
+      "c1f25d0e-32f2-487f-bd1d-fa6a3c3eee8e",
+      "80554d52-cf6f-4712-a15d-fe2128bfc713",
+      "1706f9b7-8cf4-42ba-bd72-cab6fa404a6e",
+      "b33da4fb-cea8-4437-9258-4f1263ae7428"
+    ],
+    "references": [
+      {
+        "title": "Linford Christie Stadium - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Linford_Christie_Stadium",
+        "used_for": "opened 1967 as West London Stadium, renamed 1993, eight-lane 400 m track, two 100 m straights, elevated stand, Thames Valley Harriers, location"
+      },
+      {
+        "title": "Linford Christie Outdoor Sports Centre - LBHF",
+        "url": "https://www.lbhf.gov.uk/sports-and-parks/leisure-centres/linford-christie-outdoor-sports-centre",
+        "used_for": "stand, floodlit training areas and changing rooms"
+      },
+      {
+        "title": "Linford Christie Stadium Proposal - LBHF Appendix 2",
+        "url": "https://democracy.lbhf.gov.uk/documents/s122549/Appendix%202%20-%20Linford%20Christie%20Stadium%20Proposal.pdf",
+        "used_for": "condition of the track and the tired viewing stand with space beneath"
+      }
+    ],
+    "notes": "Track geometry is a standard 400 m layout (36.5 m inner radius, 84.39 m straights, 8 x 1.22 m lanes) fitted to the mapped track area; the red surface itself comes from the ground layer. Stand rake, roof height (~10 m), seat rows, the pavilion and clubhouse heights, the practice-straight roof and the number and height (22 m) of floodlight masts are assumptions; Overture h=39 m for the stand is wrong."
+  },
+  {
     "id": "linley_sambourne_house",
     "name": "Linley Sambourne House",
     "claims": [
@@ -3961,6 +4141,42 @@
       }
     ],
     "notes": "Front taken as the north-north-west short edge on Stafford Terrace. Storey heights (raised ground 3.6 m from 1.2 m, first 3.4 m, second 2.9 m), the 2.5 m entrance bay, bay-window projection (1.1 m) and mansard pitch are estimated. The rear is plain brick; the basement area is shown as a sunken strip with railings."
+  },
+  {
+    "id": "livat_hammersmith",
+    "name": "Livat Hammersmith (Kings Mall), Ashcroft Square and Lyric Hammersmith",
+    "claims": [
+      "dc98f78d-5ee6-421c-aee6-f4815625cc8f",
+      "04e0c92a-8b67-470d-9b57-ebff244e9510"
+    ],
+    "references": [
+      {
+        "title": "Livat Hammersmith - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Livat_Hammersmith",
+        "used_for": "formerly Kings Mall, opened 1979, entrances off King Street, Ashcroft Square and Sovereign Court housing in the complex, Ingka purchase 2020, reopening 2022, anchors"
+      },
+      {
+        "title": "Ingka Centres launches in London with world-first urban meeting place",
+        "url": "https://www.ingkacentres.com/cs/newsroom/ingka-centres-launches-in-london-with-world-first-urban-meeting-place",
+        "used_for": "Livat Hammersmith concept and opening"
+      },
+      {
+        "title": "Lyric Theatre (Hammersmith) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lyric_Theatre_(Hammersmith)",
+        "used_for": "theatre on Lyric Square within the King Street complex"
+      },
+      {
+        "title": "Rick Mather Architects refurbishes and expands Lyric Hammersmith - Dezeen",
+        "url": "https://www.dezeen.com/2015/12/27/rick-mather-architects-refurbishment-expansion-lyric-hammersmith-theatre-london/",
+        "used_for": "2015 Reuben Foundation wing to the west, triple-height foyer"
+      },
+      {
+        "title": "19-20-21 (2015) - Contemporary Art Society",
+        "url": "https://www.contemporaryartsociety.org/node/36190",
+        "used_for": "David Batchelor's neon piece on the facade facing Lyric Square"
+      }
+    ],
+    "notes": "The Lyric is the 16.5 m sub-part of the Livat footprint (a part cannot be claimed on its own, so it is modelled here). Mall podium height (10.5 m), the Ashcroft Square housing as six storeys of brown-brick deck-access blocks over the podium with access galleries on the courtyard side, the courtyard deck garden, the King Street entrance canopy and LIVAT lettering, the theatre fly tower height (22 m) and the neon colours are assumptions."
   },
   {
     "id": "loftus_road",
@@ -4495,6 +4711,71 @@
     "notes": "Models the existing slab at the Overture height (39.2 m: 4.4 m ground floor + eleven 3.2 m floors + plant room); the approved Squire & Partners refurbishment and extension and the new low-rise blocks are not shown, as their completion is not confirmed. Window module (1.5 m), spandrel colour and the recessed glazed ground floor are generic for the period, not taken from photographs."
   },
   {
+    "id": "norland_house",
+    "name": "Norland House",
+    "claims": [
+      "e082a5e9-2c2b-4173-a81f-f6a7792f4764"
+    ],
+    "references": [
+      {
+        "title": "Edward Woods Estate - London Gardens Trust inventory",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record/?ID=HAF012",
+        "used_for": "estate layout and towers"
+      },
+      {
+        "title": "Rockwool helps the Edward Woods Estate achieve a low carbon future - Construction Index",
+        "url": "https://www.theconstructionindex.co.uk/news/view/rockwool-helps-the-edward-woods-estate-achieve-a-low-carbon-future",
+        "used_for": "refurbishment replacing the brick finish with rendered external insulation"
+      },
+      {
+        "title": "ROCKPANEL breathes fresh life into a landmark project - Specification Online",
+        "url": "https://mail.specificationonline.co.uk/articles/2016-03-22/rockpanel-breathes-fresh-life-into-a-landmark-project",
+        "used_for": "Rockpanel cladding combined with Rockwool insulation"
+      },
+      {
+        "title": "Edward Woods - ECD Architects",
+        "url": "https://ecda.co.uk/?p=1149",
+        "used_for": "four penthouse flats on each tower roof, steel frames faced in wood-finish Rockpanel"
+      },
+      {
+        "title": "Norland House - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/8288/england/london-w11/queensdale-crescent/norland-house",
+        "used_for": "24 storeys; ECD refurbishment 2013; 2022 removal of south-elevation solar panels and recladding"
+      },
+      {
+        "title": "Appendix 1 - List of 6 storeys blocks - LBHF",
+        "url": "https://democracy.lbhf.gov.uk/documents/s96936/Appendix 1 - List of 6 storeys blocks 051017.pdf",
+        "used_for": "24-storey blocks with 23 residential floors"
+      }
+    ],
+    "notes": "Height from 24 storeys (3.4 m ground + 22 x 2.75 m + 3.0 m penthouse level, ~67 m) instead of Overture h. Cladding colours (off-white render, grey bands, timber-tone penthouses), the window module, balcony positions and the lift-motor room are estimates; rooftop wind turbines and the former south-facade solar panels are omitted as their current state is unclear."
+  },
+  {
+    "id": "novotel_london_west",
+    "name": "Novotel London West",
+    "claims": [
+      "7a32c3e8-9b17-47ce-9766-0d89c33b3ab3"
+    ],
+    "references": [
+      {
+        "title": "Novotel London West - Successful Meetings venue listing",
+        "url": "https://www.successfulmeetings.com/Meeting-Event-Venues/Hammersmith-England/Convention-Hotel/Novotel-London-West-p5226159",
+        "used_for": "630 rooms, build year, convention hotel"
+      },
+      {
+        "title": "Novotel London West - Meetings & Conventions",
+        "url": "https://www.meetings-conventions.com/Meeting-Event-Venues/Hammersmith-England/Convention-Hotel/Novotel-London-West-p2009386",
+        "used_for": "concrete and brick hotel in a nine-storey complex near Hammersmith station"
+      },
+      {
+        "title": "Meeting and event venues in H&F for business - LBHF",
+        "url": "https://www.lbhf.gov.uk/sites/default/files/section_attachments/meeting_and_event_venues_in_hf_for_business.pdf",
+        "used_for": "629 bedrooms, conference venue"
+      }
+    ],
+    "notes": "No architectural description was found beyond \"concrete and brick, nine storeys\". The model assigns the two long footprint rings to nine-storey bedroom wings (4.5 m + 3.6 m podium, 7 x 2.9 m bedroom floors, ~29 m) and the central rectangle to a two-storey lobby/conference block with rooflights; spandrel colour, window proportions, podium glazing, rooftop plant and the sign positions are assumptions. Overture h=7 m is too low."
+  },
+  {
     "id": "olympia_london",
     "name": "Olympia London (Grand Hall and National Hall)",
     "claims": [
@@ -4800,6 +5081,46 @@
       }
     ],
     "notes": "Facade composition (stone ground storey and giant pilasters on the Porchester Road front, brick upper storeys with stone bands, arched ground-floor windows on Queensway) is a simplified reconstruction; the pool-hall roof lanterns are schematic. Heights from Overture (12.7 m) plus parapets."
+  },
+  {
+    "id": "poynter_house",
+    "name": "Poynter House",
+    "claims": [
+      "6c4b10eb-a8f1-4804-8bb4-9d415b231424"
+    ],
+    "references": [
+      {
+        "title": "Edward Woods Estate - London Gardens Trust inventory",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record/?ID=HAF012",
+        "used_for": "estate layout and towers"
+      },
+      {
+        "title": "Rockwool helps the Edward Woods Estate achieve a low carbon future - Construction Index",
+        "url": "https://www.theconstructionindex.co.uk/news/view/rockwool-helps-the-edward-woods-estate-achieve-a-low-carbon-future",
+        "used_for": "refurbishment replacing the brick finish with rendered external insulation"
+      },
+      {
+        "title": "ROCKPANEL breathes fresh life into a landmark project - Specification Online",
+        "url": "https://mail.specificationonline.co.uk/articles/2016-03-22/rockpanel-breathes-fresh-life-into-a-landmark-project",
+        "used_for": "Rockpanel cladding combined with Rockwool insulation"
+      },
+      {
+        "title": "Edward Woods - ECD Architects",
+        "url": "https://ecda.co.uk/?p=1149",
+        "used_for": "four penthouse flats on each tower roof, steel frames faced in wood-finish Rockpanel"
+      },
+      {
+        "title": "Norland House - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/8288/england/london-w11/queensdale-crescent/norland-house",
+        "used_for": "24 storeys; ECD refurbishment 2013; 2022 removal of south-elevation solar panels and recladding"
+      },
+      {
+        "title": "Appendix 1 - List of 6 storeys blocks - LBHF",
+        "url": "https://democracy.lbhf.gov.uk/documents/s96936/Appendix 1 - List of 6 storeys blocks 051017.pdf",
+        "used_for": "24-storey blocks with 23 residential floors"
+      }
+    ],
+    "notes": "Height from 24 storeys (3.4 m ground + 22 x 2.75 m + 3.0 m penthouse level, ~67 m) instead of Overture h. Cladding colours (off-white render, grey bands, timber-tone penthouses), the window module, balcony positions and the lift-motor room are estimates; rooftop wind turbines and the former south-facade solar panels are omitted as their current state is unclear."
   },
   {
     "id": "princes_gardens_eastside",
@@ -5198,6 +5519,36 @@
     "notes": "Footprint orientation from the Overture outline; entrance on the south (former Imperial Institute) side. Stage heights (balconies at 30, 50 and 62 m, octagon 71-77 m, dome to 84 m, cupola to 87.5 m), pilaster and window rhythm, arch counts and the lion carving are proportioned from general knowledge of photographs, not measured. The listing wording on whether the turrets sit on the corners or the octagon is ambiguous; turrets are placed on the corners with buttresses flying to the octagon."
   },
   {
+    "id": "ravenscourt_park_station",
+    "name": "Ravenscourt Park station",
+    "claims": [
+      "4f9f0492-cd84-4f07-9504-31eb5f101ea7"
+    ],
+    "references": [
+      {
+        "title": "Ravenscourt Park tube station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Ravenscourt_Park_tube_station",
+        "used_for": "opening 1873 as Shaftesbury Road, renamed 1888, District line"
+      },
+      {
+        "title": "Booking Hall Level drawing, LSWR Engineer’s Office 1911 - London Transport Museum",
+        "url": "https://www.ltmuseum.co.uk/collections/collections-online/drawings/item/1995-1459",
+        "used_for": "c.1911 rebuilding of the booking hall level"
+      },
+      {
+        "title": "B/W print; Booking hall at Ravenscourt Park station, 1956 - London Transport Museum",
+        "url": "https://www.ltmuseum.co.uk/collections/collections-online/photographs/item/1998-71432",
+        "used_for": "street-level booking hall"
+      },
+      {
+        "title": "Ravenscourt Park Tube Station - penang-traveltips",
+        "url": "https://www.penang-traveltips.com/europe/uk/england/london/ravenscourt-park-tube-station.htm",
+        "used_for": "station next to the railway overpass along Ravenscourt Road"
+      }
+    ],
+    "notes": "The footprint is treated as the viaduct station structure (booking hall in the arches, deck at ~6.5 m to match the road-layer rail level) with two platform canopies above. Arch spacing, brick colour, canopy length, valance profile, the roundel position and the frontage details are assumptions."
+  },
+  {
     "id": "rca_darwin_building",
     "name": "Royal College of Art – Darwin Building",
     "claims": [
@@ -5341,6 +5692,41 @@
       }
     ],
     "notes": "Five storeys modelled (4.2 m ground + 4 x 3.6 m), the top two set back ~3 m behind planted terraces; Overture h=12 m may record the earlier building. The continuous horizontal \"ribbon\" spandrel bands in pale glazed terracotta with dark-framed glazing are an interpretation of the name; the actual cladding was not found."
+  },
+  {
+    "id": "riverside_studios",
+    "name": "Riverside Studios / Queen's Wharf",
+    "claims": [
+      "fdf14190-8e4f-416a-a585-751a22f12deb"
+    ],
+    "references": [
+      {
+        "title": "Assael wins planning consent for Queen's Wharf riverside development",
+        "url": "https://www.assael.co.uk/?p=6530",
+        "used_for": "four storeys on Crisp Road rising to seven facing the river, curved form"
+      },
+      {
+        "title": "Queen's Wharf - Assael (RIBA Find an Architect)",
+        "url": "https://find-an-architect.architecture.com/assael-architecture-limited/london/queen39s-wharf",
+        "used_for": "eight-storey glass-fronted curved building, glazing terminating at a six-storey brick element"
+      },
+      {
+        "title": "Hammersmith's award-winning riverside walkway - Mount Anvil",
+        "url": "https://mountanvil.com/news/hammersmiths-award-winning-riverside-walkway",
+        "used_for": "eight storeys; river-facing metal facade echoing Hammersmith Bridge; riverside walk"
+      },
+      {
+        "title": "Queens Wharf - A2Dominion",
+        "url": "https://www.a2dominiongroup.co.uk/content/fspdf/Queens_Wharf.pdf",
+        "used_for": "165 homes, Riverside Studios rebuilt within the scheme, completion 2018"
+      },
+      {
+        "title": "Riverside Studios to be Redeveloped - fulhamsw6.com",
+        "url": "https://fulhamsw6.com/page/hammersmithtoday/info/riverside002.htm",
+        "used_for": "studios, theatre, cinema and bar programme"
+      }
+    ],
+    "notes": "Part heights follow the described storey counts (8 on the curved river block, 7 on the river-side brick range, 4-6 stepping down towards Crisp Road) rather than Overture (20-23 m); the 7.2 m centre part is modelled as the studio box under a landscaped podium. Brick colour, the gold-bronze tone of the metal fins, balcony positions, window rhythm and the signage position are assumptions."
   },
   {
     "id": "roderic_hill_ace",
@@ -6255,6 +6641,41 @@
     "notes": "The entrance front faces east onto Shepherds Bush Green (the earlier model put it on the Rockwood Place side); the tower stands at the south-east corner as in the listing. OSM height (8.4 m) replaced by estimates: front range eaves 14 m, auditorium roof ~20 m, fly tower 24 m, tower ~30 m to the finial. Bay widths, window counts, canopy depth and the arcade (now partly hidden by signage) are inferred from the listing text, not measured from photographs."
   },
   {
+    "id": "shepherds_bush_market",
+    "name": "Shepherd's Bush Market",
+    "claims": [
+      "b6430ab8-320a-4daf-91f4-36de9cec67c8",
+      "3cc2605a-adf3-4a29-901a-d1f6181ea523",
+      "0049adb7-fb31-4406-bf56-8e3711dc9bb4",
+      "c72113f7-240a-4454-982d-a27f54503d49",
+      "f093d704-dc30-48e5-8796-156f779e9841",
+      "9ff781d7-4bad-4d2d-8cb3-6189dbf104fd"
+    ],
+    "references": [
+      {
+        "title": "Shepherd's Bush Market - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Shepherd%27s_Bush_Market",
+        "used_for": "market history (1914 opening, 1918 reopening), Yoo Capital ownership"
+      },
+      {
+        "title": "Shepherds Bush Market through the ages - LBHF",
+        "url": "https://www.lbhf.gov.uk/news/2016/12/shepherds-bush-market-through-ages",
+        "used_for": "east side of the railway viaduct between Goldhawk Road and Uxbridge Road; 90+ traders"
+      },
+      {
+        "title": "About - Shepherd's Bush Market",
+        "url": "https://shepherdsbushmarket.org/about/",
+        "used_for": "stalls on Railway Approach from 30 June 1914"
+      },
+      {
+        "title": "Shepherds Bush Market London - Foresyte",
+        "url": "https://foresyteapp.com/shepherds-bush-market-london/",
+        "used_for": "railway arches used as shops since the 1863 viaduct"
+      }
+    ],
+    "notes": "The six narrow 4 m \"retail\" footprints along the market lane are interpreted as the stall rows (west row in front of the railway arches, east row, and blocks near Goldhawk Road). Unit width (3 m), awning colours, fascia boards, roof form and the entrance sign are generic market stall features, not surveyed; the viaduct itself is not in the scene data and is not modelled. Recent redevelopment proposals are ignored."
+  },
+  {
     "id": "shepherds_bush_stations",
     "name": "Shepherd's Bush stations (Central line and Overground)",
     "claims": [
@@ -6992,6 +7413,31 @@
     "notes": "Spire height 73 m from the Victorian Web figure. The tower is placed on the square projection at the north-east corner of the footprint (St Petersburgh Place side); nave/transept roof heights and the window tracery are estimated. Footprint is nearly square, so a cruciform roof (wide nave, transepts) over aisled walls is assumed."
   },
   {
+    "id": "st_pauls_hammersmith",
+    "name": "St Paul's Church, Hammersmith",
+    "claims": [
+      "bfa7663c-a6b1-4bba-91df-8e48bc2643e8"
+    ],
+    "references": [
+      {
+        "title": "Church of St Paul, Hammersmith - British Listed Buildings (1079802)",
+        "url": "https://britishlistedbuildings.co.uk/101079802-church-of-st-paul-hammersmith-hammersmith-broadway-ward",
+        "used_for": "Seddon and Gough, coursed pink rubblestone with ashlar dressings, 4-stage pinnacled tower at north east, Grade II*"
+      },
+      {
+        "title": "St Paul Hammersmith - Church of England heritage record",
+        "url": "https://heritage.churchofengland.org/buildings/7738",
+        "used_for": "ring of eight bells (belfry in the tower)"
+      },
+      {
+        "title": "St Paul's Churchyard and St Paul's Green - London Gardens Trust",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record?ID=HAF055",
+        "used_for": "setting in the churchyard / green beside the flyover"
+      }
+    ],
+    "notes": "Tower height (~38 m to the pinnacles), nave eaves (12 m) and ridge (21 m), the aisle/nave widths, buttress spacing, window counts and tracery, and the treatment of the lower western block (modelled as a gabled narthex/baptistery) are estimates; the footprint h=16.9 m is used only as a guide. Tracery is simplified to mullioned lancets under pointed heads."
+  },
+  {
     "id": "st_pauls_knightsbridge",
     "name": "St Paul's Knightsbridge",
     "claims": [
@@ -7144,6 +7590,81 @@
       }
     ],
     "notes": "Stand roof heights estimated (West 31 m, East 30 m, Matthew Harding 23 m, Shed End 21 m; Overture gives 7-9 m). Seating is modelled as stepped concrete rows (0.8 m treads) with blue seat strips broken by gangways: two tiers for the Matthew Harding and Shed End, three for the East and West Stands, upper tiers cantilevered over glazed hospitality / box bands; row counts and rakes are fitted to the footprint depth and roof height, not surveyed. Roofs carry a lattice front truss with floodlight luminaires and a translucent leading edge (wider on the West Stand); exterior cladding, the CHELSEA seat lettering on the East Stand lower tier, the dugout / tunnel position in front of the West Stand and the big screens (omitted) are approximate. The Millennium hotel footprint is left to the generic layer."
+  },
+  {
+    "id": "stebbing_house",
+    "name": "Stebbing House",
+    "claims": [
+      "c4773b81-d7e5-47cd-9a2c-67e0fe462340"
+    ],
+    "references": [
+      {
+        "title": "Edward Woods Estate - London Gardens Trust inventory",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record/?ID=HAF012",
+        "used_for": "estate layout and towers"
+      },
+      {
+        "title": "Rockwool helps the Edward Woods Estate achieve a low carbon future - Construction Index",
+        "url": "https://www.theconstructionindex.co.uk/news/view/rockwool-helps-the-edward-woods-estate-achieve-a-low-carbon-future",
+        "used_for": "refurbishment replacing the brick finish with rendered external insulation"
+      },
+      {
+        "title": "ROCKPANEL breathes fresh life into a landmark project - Specification Online",
+        "url": "https://mail.specificationonline.co.uk/articles/2016-03-22/rockpanel-breathes-fresh-life-into-a-landmark-project",
+        "used_for": "Rockpanel cladding combined with Rockwool insulation"
+      },
+      {
+        "title": "Edward Woods - ECD Architects",
+        "url": "https://ecda.co.uk/?p=1149",
+        "used_for": "four penthouse flats on each tower roof, steel frames faced in wood-finish Rockpanel"
+      },
+      {
+        "title": "Norland House - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/8288/england/london-w11/queensdale-crescent/norland-house",
+        "used_for": "24 storeys; ECD refurbishment 2013; 2022 removal of south-elevation solar panels and recladding"
+      },
+      {
+        "title": "Appendix 1 - List of 6 storeys blocks - LBHF",
+        "url": "https://democracy.lbhf.gov.uk/documents/s96936/Appendix 1 - List of 6 storeys blocks 051017.pdf",
+        "used_for": "24-storey blocks with 23 residential floors"
+      }
+    ],
+    "notes": "Height from 24 storeys (3.4 m ground + 22 x 2.75 m + 3.0 m penthouse level, ~67 m) instead of Overture h. Cladding colours (off-white render, grey bands, timber-tone penthouses), the window module, balcony positions and the lift-motor room are estimates; rooftop wind turbines and the former south-facade solar panels are omitted as their current state is unclear."
+  },
+  {
+    "id": "the_ark",
+    "name": "The Ark",
+    "claims": [
+      "68f2e937-d306-44cf-b2bb-5c8cd59943df"
+    ],
+    "references": [
+      {
+        "title": "The Ark, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Ark,_London",
+        "used_for": "architects, 1989-92 dates, 10 floors, location south of the Hammersmith Flyover"
+      },
+      {
+        "title": "The Ark - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/1990/ark.html",
+        "used_for": "boat-like appearance with an elevated bridge or crows nest; copper panels and bands of tinted glazing"
+      },
+      {
+        "title": "The incredible hull - Building",
+        "url": "https://www.building.co.uk/focus/the-incredible-hull/3106848.article",
+        "used_for": "bulging copper-clad hull, steeply sloping atrium sides, open central atrium"
+      },
+      {
+        "title": "The London Ark - AJ Buildings Library",
+        "url": "https://www.ajbuildingslibrary.co.uk/projects/display/id/475",
+        "used_for": "brickwork at the base, project overview"
+      },
+      {
+        "title": "Ark office building - Rockfon case study",
+        "url": "https://rockfon.com/design-inspiration/ark-office-building",
+        "used_for": "iconic curvature and the Crow’s Nest panoramic meeting room"
+      }
+    ],
+    "notes": "Overture h=17.7 m is far too low and Wikipedia’s 76 m roof height conflicts with ten floors; the model uses a 4.8 m ground floor + 7 x 3.75 m hull floors (eaves ~31 m) and two further floors inside the dormered copper roof rising to ~44.5 m, with the crow’s nest to ~51 m. The outward flare per floor (0.32 m), the copper/glass band proportions, the position of the crow’s nest near the eastern bow, the atrium rooflight along the ridge and the brick colour of the base are estimates from descriptions, not measured drawings."
   },
   {
     "id": "the_lanesborough",
@@ -7672,6 +8193,36 @@
       }
     ],
     "notes": "Arch massing from the Overture footprint (22 m x 13 m body plus column porticoes); heights proportioned (entablature 12.3-15 m, attic to 18.4 m, Victory ~28 m) - no measured elevation was found. Detail pass: jointed ashlar, fluted Corinthian columns with acanthus/volute capitals, Corinthian pilasters at corners and ends (per English Heritage), three-fascia architrave, blank frieze (garlands never carved), dentil + modillion cornice with breakforwards, moulded archivolts and keystones, coffered passage vault, pier doors, Burton's gates with garland roundels (royal arms simplified to gilt shields) and a radiating lunette; laurel wreaths in the pier panels are assumed. Quadriga horses and figures are stylised low-poly bronzes; heading (east, towards the Palace) is assumed. Royal Artillery Memorial (howitzer, reliefs, four bronzes) and Wellington statue are simplified; island lamps are resources assets."
+  },
+  {
+    "id": "west_12_shopping_centre",
+    "name": "West 12 Shopping Centre",
+    "claims": [
+      "9ca26cb4-0427-4bb6-9693-223eb3e5cd6a"
+    ],
+    "references": [
+      {
+        "title": "West 12 - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/West_12",
+        "used_for": "opened 1967, joint venture, redeveloped in the 1990s, shopping centre on Shepherd’s Bush Green"
+      },
+      {
+        "title": "Vue Shepherd's Bush - Cinema Treasures",
+        "url": "https://www.cinematreasures.org/theaters/21154",
+        "used_for": "Warner Village 12-screen multiplex opened 2001, rebranded Vue 2004"
+      },
+      {
+        "title": "West 12 Centre Owner Reveals Radical Plan to Redevelop Site - fulhamsw6.com",
+        "url": "https://fulhamsw6.com/page/shared/common/west12centre002.htm",
+        "used_for": "front half facing the Green vs. rear half containing the Vue"
+      },
+      {
+        "title": "Local Plan Regulation 18 - South of Shepherds Bush Green - LBHF",
+        "url": "https://www.lbhf.gov.uk/planning/planning-policy/local-plan/local-plan-regulation-18/Area%20strategies/south-shepherds-bush-green",
+        "used_for": "rolling refurbishment programme of the centre"
+      }
+    ],
+    "notes": "The rear footprint part (h=16.4 m) is modelled as the multiplex block and the remainder as a two-storey podium (9.5 m) with a rooftop car park; the car-park layout, ramp, cladding colours, the Green-facing glazed entrance and signage positions are assumptions. The residential towers that stand on the site corners are left to the generic layer."
   },
   {
     "id": "west_brompton_station",
