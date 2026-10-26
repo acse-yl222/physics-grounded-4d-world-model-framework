@@ -33,6 +33,17 @@ export default {
       used_for: 'Sherrin dome design built 1895-96',
     },
     {
+      title: 'Statue of John Henry Newman, London - Wikipedia',
+      url: 'https://en.wikipedia.org/wiki/Statue_of_John_Henry_Newman,_London',
+      used_for:
+        'Newman memorial outside the Oratory: Bodley and Garner design, figure by Chavalliaud (1896)',
+    },
+    {
+      title: 'John Henry Cardinal Newman by Chavalliaud - Victorian Web',
+      url: 'https://victorianweb.org/sculpture/chavalliaud/3.html',
+      used_for: 'setting of the memorial beside the church',
+    },
+    {
       title: 'Brompton Oratory - temples.org',
       url: 'https://temples.org/temples/united-kingdom/brompton-oratory-london',
       used_for: 'dome height about 200 ft, copper/lead exterior',
@@ -42,7 +53,10 @@ export default {
     'Facade faces Brompton Road (SSE). Internal layout (nave/chapels/transepts/crossing) placed within the ' +
     'Overture outline by proportion; nave eaves 24 m and dome cross at ~60 m are estimates. No western towers are ' +
     'modelled: the listing and Survey of London describe only the facade and dome. Facade sculpture reduced ' +
-    'to niches and finials.',
+    'to niches and finials. Capitals are simplified Corinthian bells with abacus (no leaf carving); clerestory ' +
+    'thermal-window surrounds, drum columns, porch doors, forecourt railings and gate piers are real geometry ' +
+    'with estimated sizes. Newman memorial placed west of the facade in front of the hall (position, canopy ' +
+    'form and figure are approximations).',
   build(ctx) {
     const { THREE, kit, buildings } = ctx;
     const ring = buildings[0].polys[0][0];
@@ -68,6 +82,38 @@ export default {
         new THREE.Matrix4().makeRotationZ(A + rz).setPosition(p[0], p[1], z),
       );
       geo.dispose();
+    };
+    // Corinthian capital: bell flaring to a square abacus (acanthus not modelled leaf by leaf).
+    const capital = (x, y, z, r) => {
+      lgeo(
+        new THREE.LatheGeometry(
+          [
+            [0, 0],
+            [r * 1.0, 0],
+            [r * 1.05, 0.08],
+            [r * 1.0, 0.16],
+            [r * 1.12, r * 0.9],
+            [r * 1.35, r * 1.25],
+            [0, r * 1.25],
+          ].map(([a, b]) => new THREE.Vector2(a, b)),
+          12,
+        ).rotateX(Math.PI / 2),
+        stone,
+        x,
+        y,
+        z,
+      );
+      lbox(stone, x, y, z + r * 1.25, r * 3.0, r * 3.0, r * 0.3);
+      for (let k = 0; k < 4; k++) {
+        const a = (k * Math.PI) / 2 + Math.PI / 4;
+        lgeo(
+          new THREE.SphereGeometry(r * 0.28, 6, 4),
+          stone,
+          x + Math.cos(a) * r * 1.3,
+          y + Math.sin(a) * r * 1.3,
+          z + r * 1.05,
+        );
+      }
     };
     const stoneC = '#ddd5c2';
     const stone = kit.mat(stoneC, { roughness: 0.8 });
@@ -175,6 +221,49 @@ export default {
       });
       kit.walls(batch, stone, [[kit.offsetRing(r4, 0.45)]], z1 - 0.8, z1);
       kit.cap(batch, stone, [[kit.offsetRing(r4, 0.45), r4.slice().reverse()]], z1);
+      kit.cornice(batch, stoneD, r4, HC + 0.2, { height: 0.35, projection: 0.15 });
+      // 3D thermal (Diocletian) window surrounds, mullions and sills over the painted glazing
+      for (let k = 0; k < 4; k++) {
+        const a = r4[k],
+          b = r4[(k + 1) % 4];
+        const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+        const n = Math.round(len / uvBay);
+        if (n < 1) continue;
+        const bw = len / n,
+          ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
+        const ux = (b[0] - a[0]) / len,
+          uy = (b[1] - a[1]) / len;
+        const zc = HC + 0.38 * (z1 - HC);
+        for (let i = 0; i < n; i++) {
+          const t = (i + 0.5) * bw;
+          const cx = a[0] + ux * t + uy * 0.12,
+            cy = a[1] + uy * t - ux * 0.12;
+          const ring = new THREE.TorusGeometry(bw * 0.37, bw * 0.045, 4, 14, Math.PI);
+          const m = new THREE.Matrix4()
+            .makeRotationZ(ang)
+            .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2))
+            .setPosition(cx, cy, zc);
+          batch.addGeometry(stone, ring, m);
+          ring.dispose();
+          for (const d of [-0.13, 0.13])
+            kit.box(
+              batch,
+              stone,
+              cx + ux * d * bw,
+              cy + uy * d * bw,
+              zc,
+              bw * 0.05,
+              0.16,
+              bw * 0.34,
+              ang,
+            );
+          kit.box(batch, stone, cx, cy, zc - 0.15, bw * 0.84, 0.3, 0.15, ang);
+          // pilaster between bays
+          const px = a[0] + ux * i * bw + uy * 0.1,
+            py = a[1] + uy * i * bw - ux * 0.1;
+          if (i > 0) kit.box(batch, stone, px, py, HC + 0.55, bw * 0.09, 0.2, z1 - HC - 1.4, ang);
+        }
+      }
       kit.pitchedRoof(
         batch,
         leadRoof,
@@ -258,7 +347,15 @@ export default {
         for (const d of [-0.55, 0.55]) {
           const px = cx + Math.cos(pa) * (R + 0.35) - Math.sin(pa) * d,
             py = cy + Math.sin(pa) * (R + 0.35) + Math.cos(pa) * d;
-          lbox(stone, px, py, zDrum, 0.6, 0.6, 8.5, pa);
+          lgeo(
+            new THREE.CylinderGeometry(0.3, 0.34, 7.6, 10).rotateX(Math.PI / 2),
+            stone,
+            px,
+            py,
+            zDrum + 0.45 + 3.8,
+          );
+          lbox(stoneD, px, py, zDrum, 0.8, 0.8, 0.45, pa);
+          capital(px, py, zDrum + 8.0, 0.3);
         }
       }
       lgeo(
@@ -378,6 +475,21 @@ export default {
       kit.cap(batch, stone, [[lower]], H1);
       // recessed porch (centre bay) with dark opening
       lbox(dark, 0, F0 - 0.01, 0.6, 7.0, 0.1, 9.0);
+      // timber doors with stone doorcases inside the recessed porch
+      {
+        const timber = kit.mat('#4a3424', { roughness: 0.7 });
+        for (const dx of [-2.2, 0, 2.2]) {
+          const w = dx === 0 ? 2.0 : 1.4,
+            h = dx === 0 ? 4.6 : 3.6;
+          lbox(stone, dx, F0 - 0.05, 0.6, w + 0.6, 0.1, h + 0.5);
+          lbox(timber, dx, F0 - 0.1, 0.6, w, 0.1, h);
+          for (const p of [-w / 4, w / 4])
+            lbox(kit.mat('#3a2a1d'), dx + p, F0 - 0.16, 1.0, w * 0.36, 0.04, h * 0.8);
+        }
+        const t = new THREE.TorusGeometry(3.5, 0.35, 4, 18, Math.PI).rotateX(Math.PI / 2);
+        lgeo(t, stone, 0, F0 - 0.15, 9.6);
+        lbox(stone, 0, F0 - 0.25, 12.6, 1.0, 0.5, 1.3); // keystone
+      }
       const porchArch = new THREE.CircleGeometry(3.5, 16, 0, Math.PI).rotateX(Math.PI / 2);
       lgeo(porchArch, dark, 0, F0 - 0.02, 9.6);
       // paired columns / pilasters: 5 bays below
@@ -394,7 +506,8 @@ export default {
             1.4 + (H1 - 3.2) / 2,
           );
           lbox(stoneD, xx, F0 - 0.9, 0, 1.5, 1.5, 1.4);
-          lbox(stone, xx, F0 - 0.9, H1 - 1.8, 1.5, 1.5, 0.6);
+          capital(xx, F0 - 0.9, H1 - 2.0, 0.6);
+          lbox(stoneD, xx, F0 - 0.9, 1.15, 1.35, 1.35, 0.25);
           if (k === 0 || k === 5) break;
         }
       }
@@ -440,9 +553,25 @@ export default {
             F0 + 0.0,
             H1 + 0.5 + (H2 - 1.5) / 2,
           );
+          capital(x + d, F0, H1 + 0.5 + H2 - 1.5 - 0.65, 0.5);
+          lbox(stoneD, x + d, F0, H1 + 0.5, 1.15, 1.15, 0.35);
         }
       }
       lbox(dark, 0, F0 + 0.45, H1 + 2.5, 3.6, 0.1, 5.5);
+      // window frame, mullions, transom and a balustraded sill
+      for (const dx of [-1.8, -0.6, 0.6, 1.8])
+        lbox(stoneD, dx, F0 + 0.38, H1 + 2.5, 0.16, 0.14, 5.5);
+      lbox(stoneD, 0, F0 + 0.38, H1 + 5.2, 3.6, 0.14, 0.14);
+      lbox(stone, 0, F0 + 0.3, H1 + 2.3, 4.6, 0.5, 0.22);
+      kit.balustrade(batch, stone, [L(-2.2, F0 + 0.1), L(2.2, F0 + 0.1)], H1 + 1.4, {
+        height: 0.9,
+        spacing: 0.3,
+      });
+      {
+        const t = new THREE.TorusGeometry(1.9, 0.18, 4, 14, Math.PI).rotateX(Math.PI / 2);
+        lgeo(t, stone, 0, F0 + 0.35, H1 + 8.0);
+        lbox(stone, 0, F0 + 0.3, H1 + 9.55, 0.7, 0.4, 0.8); // keystone
+      }
       lgeo(
         new THREE.CircleGeometry(1.8, 12, 0, Math.PI).rotateX(Math.PI / 2),
         dark,
@@ -543,6 +672,114 @@ export default {
       // steps
       lbox(stoneD, 0, F0 - 3.0, 0, W1 * 0.6, 3.0, 0.4);
       lbox(stoneD, 0, F0 - 2.2, 0.4, W1 * 0.55, 1.5, 0.35);
+      // forecourt paving and railings with gate piers along Brompton Road
+      const pave = kit.mat('#bcb5a6', { roughness: 0.95 });
+      kit.cap(batch, pave, [[rect(-W1 / 2 - 1, -6.6, W1 / 2 + 1, F0 - 0.01)]], 0.02);
+      const iron = kit.mat('#1e2124', { roughness: 0.5, metalness: 0.4 });
+      for (const [x0, x1] of [
+        [-W1 / 2 - 1, -7],
+        [7, W1 / 2 + 1],
+      ]) {
+        lbox(iron, (x0 + x1) / 2, -6.5, 0.15, x1 - x0, 0.05, 0.05);
+        lbox(iron, (x0 + x1) / 2, -6.5, 1.55, x1 - x0, 0.05, 0.05);
+        lbox(stoneD, (x0 + x1) / 2, -6.5, 0, x1 - x0, 0.45, 0.35);
+        const n = Math.round((x1 - x0) / 0.14);
+        for (let i = 0; i <= n; i++)
+          lbox(iron, x0 + (i * (x1 - x0)) / n, -6.5, 0.35, 0.025, 0.025, 1.45);
+        for (const x of [x0, x1]) {
+          lbox(stone, x, -6.5, 0, 0.8, 0.8, 2.2);
+          lbox(stone, x, -6.5, 2.2, 1.0, 1.0, 0.25);
+          lgeo(new THREE.SphereGeometry(0.32, 8, 6), stone, x, -6.5, 2.75);
+        }
+      }
+      // Cardinal Newman memorial (Bodley & Garner; figure by Chavalliaud, 1896) in front of
+      // the hall west of the church: stepped base, pedestal and a canopied niche
+      {
+        const nx = -24.5,
+          ny = -5.2;
+        lbox(stoneD, nx, ny, 0, 4.2, 3.0, 0.3);
+        lbox(stoneD, nx, ny, 0.3, 3.6, 2.4, 0.3);
+        lbox(stone, nx, ny, 0.6, 2.8, 1.8, 2.4);
+        lbox(stone, nx, ny, 3.0, 3.2, 2.1, 0.3);
+        for (const dx of [-1.3, 1.3]) {
+          lgeo(
+            new THREE.CylinderGeometry(0.2, 0.22, 3.6, 10).rotateX(Math.PI / 2),
+            stone,
+            nx + dx,
+            ny - 0.7,
+            3.3 + 1.8,
+          );
+          lbox(stone, nx + dx, ny - 0.7, 6.9, 0.55, 0.55, 0.25);
+        }
+        lbox(stoneD, nx, ny + 0.4, 3.3, 2.2, 0.8, 3.8);
+        lbox(stone, nx, ny - 0.2, 7.1, 3.4, 2.0, 0.6);
+        const ped = new THREE.Shape();
+        ped.moveTo(-1.7, 0);
+        ped.lineTo(1.7, 0);
+        ped.lineTo(0, 1.4);
+        ped.lineTo(-1.7, 0);
+        lgeo(
+          new THREE.ExtrudeGeometry(ped, { depth: 2.0, bevelEnabled: false })
+            .rotateX(Math.PI / 2)
+            .translate(0, 1.0, 0),
+          stone,
+          nx,
+          ny - 0.2,
+          7.7,
+        );
+        lbox(stone, nx, ny - 0.2, 9.1, 0.4, 0.4, 0.8);
+        // standing figure in cardinal's robes, white marble
+        const marble = kit.mat('#ebe8e0', { roughness: 0.45 });
+        lgeo(
+          new THREE.LatheGeometry(
+            [
+              [0, 0],
+              [0.55, 0],
+              [0.45, 0.9],
+              [0.33, 1.5],
+              [0.36, 1.75],
+              [0.18, 1.9],
+              [0, 1.95],
+            ].map(([a, b]) => new THREE.Vector2(a, b)),
+            12,
+          ).rotateX(Math.PI / 2),
+          marble,
+          nx,
+          ny - 0.3,
+          3.3,
+        );
+        lgeo(new THREE.SphereGeometry(0.17, 10, 8), marble, nx, ny - 0.3, 5.42);
+        // railings round the memorial
+        for (const [x0, y0, x1, y1] of [
+          [-2.4, -1.8, 2.4, -1.8],
+          [-2.4, -1.8, -2.4, 1.5],
+          [2.4, -1.8, 2.4, 1.5],
+        ]) {
+          const n = Math.round(Math.hypot(x1 - x0, y1 - y0) / 0.15);
+          for (let i = 0; i <= n; i++)
+            lbox(
+              iron,
+              nx + x0 + ((x1 - x0) * i) / n,
+              ny + y0 + ((y1 - y0) * i) / n,
+              0,
+              0.025,
+              0.025,
+              1.1,
+            );
+          lbox(
+            iron,
+            nx + (x0 + x1) / 2,
+            ny + (y0 + y1) / 2,
+            1.05,
+            Math.abs(x1 - x0) + 0.05,
+            Math.abs(y1 - y0) + 0.05,
+            0.04,
+          );
+        }
+      }
+      // lamps at the gate piers
+      const lp = [L(-W1 / 2 - 1, -5.8), L(W1 / 2 + 1, -5.8)].map((p) => [p[0], p[1], A + Math.PI]);
+      g.add(ctx.placeAssets('street_lamp', lp, { name: 'brompton_oratory:lamps' }));
     }
     g.add(batch.toGroup('brompton_oratory'));
     return g;

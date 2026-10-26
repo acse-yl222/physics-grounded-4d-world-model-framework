@@ -535,12 +535,22 @@
         "used_for": "Sherrin dome design built 1895-96"
       },
       {
+        "title": "Statue of John Henry Newman, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Statue_of_John_Henry_Newman,_London",
+        "used_for": "Newman memorial outside the Oratory: Bodley and Garner design, figure by Chavalliaud (1896)"
+      },
+      {
+        "title": "John Henry Cardinal Newman by Chavalliaud - Victorian Web",
+        "url": "https://victorianweb.org/sculpture/chavalliaud/3.html",
+        "used_for": "setting of the memorial beside the church"
+      },
+      {
         "title": "Brompton Oratory - temples.org",
         "url": "https://temples.org/temples/united-kingdom/brompton-oratory-london",
         "used_for": "dome height about 200 ft, copper/lead exterior"
       }
     ],
-    "notes": "Facade faces Brompton Road (SSE). Internal layout (nave/chapels/transepts/crossing) placed within the Overture outline by proportion; nave eaves 24 m and dome cross at ~60 m are estimates. No western towers are modelled: the listing and Survey of London describe only the facade and dome. Facade sculpture reduced to niches and finials."
+    "notes": "Facade faces Brompton Road (SSE). Internal layout (nave/chapels/transepts/crossing) placed within the Overture outline by proportion; nave eaves 24 m and dome cross at ~60 m are estimates. No western towers are modelled: the listing and Survey of London describe only the facade and dome. Facade sculpture reduced to niches and finials. Capitals are simplified Corinthian bells with abacus (no leaf carving); clerestory thermal-window surrounds, drum columns, porch doors, forecourt railings and gate piers are real geometry with estimated sizes. Newman memorial placed west of the facade in front of the hall (position, canopy form and figure are approximations)."
   },
   {
     "id": "buckingham_palace",
@@ -838,12 +848,22 @@
         "used_for": "original blue glass and blockwork skin"
       },
       {
+        "title": "What's new under the roof? - RIBA Journal",
+        "url": "https://www.ribaj.com/buildings/what-s-new-under-the-roof/",
+        "used_for": "clusters of the original Commonwealth flagpoles and fountains in the new entrance plaza"
+      },
+      {
+        "title": "The Design Museum and Holland Green - RIBA London Award 2017",
+        "url": "https://www.architecture.com:443/awards-and-competitions-landing-page/awards/riba-regional-awards/riba-london-award-winners/2017/the-design-museum-and-hollandgreen",
+        "used_for": "West 8 landscape; entrance from Kensington High Street"
+      },
+      {
         "title": "The Design Museum - IStructE awards",
         "url": "https://istructe.org/structural-awards/projects/2017/the-design-museum",
         "used_for": "55 m x 55 m roof retained during conversion"
       }
     ],
-    "notes": "Roof modelled as a ruled saddle surface (straight rulings across, smooth quadratic profile along the axis) through a profile of 17 m at the centre, 24.4 m peaks at the edges of the central section and 21 m at the front/back edge mid-points, falling to 9.1 m at the sides; the true form of the two central hypars and the warps is approximated. Front assumed to face Kensington High Street (north). Facade grid is a painted pattern, not traced."
+    "notes": "Roof modelled as a ruled saddle surface (straight rulings across, smooth quadratic profile along the axis) through a profile of 17 m at the centre, 24.4 m peaks at the edges of the central section and 21 m at the front/back edge mid-points, falling to 9.1 m at the sides; the true form of the two central hypars and the warps is approximated. Front assumed to face Kensington High Street (north). Curtain-wall mullions (1.5 m) and transoms are 3D over a painted fritted glazing; copper standing seams follow the roof rulings. Entrance doors, canopy, plaza depth, fountain and flagpole positions and flag colours are estimated."
   },
   {
     "id": "dormition_cathedral",
@@ -1365,7 +1385,7 @@
         "used_for": "straight traditional awnings in Harrods green with gold lettering"
       }
     ],
-    "notes": "Overture height (9.9 m) is far too low; cornice set at 24 m, balustrade 26-27 m, mansards to ~30 m, corner cupolas ~38 m and dome lantern ~46 m, proportioned from the storey count in the listing. Dome placed on the Overture round building part. Pavilion/mansard positions follow the 2:4:3:3:3:4:2 rhythm on Brompton Road; on Hans Road only the corner and one central attic are modelled. Facade is a painted generic Stephens bay."
+    "notes": "Overture height (9.9 m) is far too low; cornice set at 24 m, balustrade 26-27 m, mansards to ~30 m, corner cupolas ~38 m and dome lantern ~46 m, proportioned from the storey count in the listing. Dome placed on the Overture round building part. Pavilion/mansard positions follow the 2:4:3:3:3:4:2 rhythm on Brompton Road; on Hans Road only the corner and one central attic are modelled. Brompton Road and Hans Road elevations have real window frames, sills, arch heads, pilasters, string courses, modillions and a turned balustrade with entrance bays at a regular interval (positions estimated); Basil Street / Hans Crescent keep a painted Stephens bay. Rooftop plant and rooflights are generic, not surveyed."
   },
   {
     "id": "holland_house",
@@ -1385,6 +1405,11 @@
         "used_for": "three-storey east wing; ground-floor enclosed arcade with round-headed arches; pilasters and shaped gables to a tiled roof; youth hostel; ruin used as theatre backdrop"
       },
       {
+        "title": "Holland House - RBKC listed buildings",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=419638",
+        "used_for": "east wing to full height with enclosed ground-storey arcade, pilastered upper storeys, shaped gables to tiled roof, tower behind with slated roof; south front with arcades survives to single-storey height; red brick and stone"
+      },
+      {
         "title": "Holland Park - Historic England list entry",
         "url": "https://historicengland.org.uk/listing/the-list/list-entry/1000811",
         "used_for": "east wing restored and converted to youth hostel 1957"
@@ -1395,7 +1420,7 @@
         "used_for": "bombing of 27 September 1940"
       }
     ],
-    "notes": "E-plan read from the Overture outline (wings to the south-south-east). East wing eaves 11 m and gables to ~15 m are estimates (Overture 8.9 m). Ruin wall heights and the extent of surviving fabric in the centre/west are approximated; the 1950s hostel block (Safestay) is a separate footprint left to the generic layer."
+    "notes": "South front reduced to single-storey arcades per the RBKC listing text (earlier two-storey shell removed). Cross windows, pilasters, clustered octagonal chimney shafts and the slated tower behind the wing are real geometry with estimated sizes and positions; the seasonal Opera Holland Park canopy/stage is not modelled. E-plan read from the Overture outline (wings to the south-south-east). East wing eaves 11 m and gables to ~15 m are estimates (Overture 8.9 m). Ruin wall heights and the extent of surviving fabric in the centre/west are approximated; the 1950s hostel block (Safestay) is a separate footprint left to the generic layer."
   },
   {
     "id": "holy_trinity_brompton",
@@ -1420,12 +1445,22 @@
         "used_for": "gault brickwork and Bath stone dressings on the tower"
       },
       {
+        "title": "Church of the Holy Trinity - Historic England list entry",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1189293",
+        "used_for": "Gothic, gault brick with stone dressings, slate roof; west tower with battlements and pinnacles"
+      },
+      {
+        "title": "Holy Trinity Churchyard - London Gardens Trust",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record/?ID=KAC079",
+        "used_for": "churchyard garden setting"
+      },
+      {
         "title": "Churches in Kensington and Chelsea - RBKC",
         "url": "https://www.rbkc.gov.uk/node/160",
         "used_for": "plain Gothic style"
       }
     ],
-    "notes": "Volumes follow the Overture building parts (tower 29.6 m incl. pinnacles, nave ridge 20 m, aisles 13.6 m, chancel 16.8 m); wall/eave splits within each part, tower stage heights and pinnacle form are estimated."
+    "notes": "Volumes follow the Overture building parts (tower 29.6 m incl. pinnacles, nave ridge 20 m, aisles 13.6 m, chancel 16.8 m); wall/eave splits within each part, tower stage heights and pinnacle form are estimated. Lancets (pointed heads, Bath stone surrounds, single mullion), buttresses, battlements, crocketed pinnacles and the west doors are real geometry with an estimated rhythm (one lancet per 5.4 m bay); the triple east window, clerestory heights and the churchyard path/lamps are approximations."
   },
   {
     "id": "holy_trinity_prince_consort_road",
@@ -1969,6 +2004,21 @@
         "used_for": "south front as Wren left it"
       },
       {
+        "title": "Gardenvisit - Kensington Gardens (London and its environs, 1927)",
+        "url": "https://www.gardenvisit.com/book/london_and_its_environs_1927/11_hyde_park_and_kensington_gardens/kensington_gardens",
+        "used_for": "William III statue (Baucke, 1907) in front of the south side; Broad Walk"
+      },
+      {
+        "title": "Treasures of London - Queen Victoria outside Kensington Palace (Exploring London)",
+        "url": "https://exploring-london.com/2019/07/26/treasures-of-london-queen-victoria-outside-kensington-palace/",
+        "used_for": "seated marble Queen Victoria by Princess Louise (1893) on the east front"
+      },
+      {
+        "title": "Orangery at Kensington Palace - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101223783-orangery-at-kensington-palace-campden-ward",
+        "used_for": "one storey, red and amber brick, 13 bays, three centre bays set forward with split segmental pediment"
+      },
+      {
         "title": "The Orangery at Kensington Palace - Wallpaper",
         "url": "https://wallpaper.com/travel/the-orangery-at-kensington-palace-london-uk",
         "used_for": "English Baroque orangery by Hawksmoor 1704, enhanced by Vanbrugh"
@@ -1979,7 +2029,7 @@
         "used_for": "Orangery as Vanbrugh/Hawksmoor collaboration"
       }
     ],
-    "notes": "Massing from the Overture outlines; parapet heights raised slightly over the 11.3 m footprint value for the state ranges (three tall storeys). Roofs are hipped per wing rectangle (approximate ridge layout); the position of the clock tower on the west range and of the Victoria statue east of the palace are estimated. Window rhythm is a generic painted Wren sash bay, not traced per elevation."
+    "notes": "Massing from the Overture outlines; parapet heights raised slightly over the 11.3 m footprint value for the state ranges (three tall storeys). Roofs are hipped per wing rectangle (approximate ridge layout); the position of the clock tower on the west range, of the Victoria statue east of the palace and of the William III statue south of the King's Gallery are estimated. Sash windows are real geometry (frames, glazing bars, rubbed-brick surrounds, stone sills) at a regular 3.3 m bay on every elevation, not traced per elevation; storey heights estimated. Statues are simplified figures. Orangery end pavilions estimated."
   },
   {
     "id": "kensington_town_hall",
@@ -2005,12 +2055,22 @@
         "used_for": "Hornton Street flank cantilevered at first floor and stepping back at each higher level"
       },
       {
+        "title": "Kensington Town Hall - Manchester History (Spence)",
+        "url": "https://manchesterhistory.net/architecture/1970/kensingtontownhall.html",
+        "used_for": "civic suite on the south side facing the Library; blind brick great hall (west) and council chamber raised to first floor (east), both with canted corners; pool beneath the chamber later a garden"
+      },
+      {
+        "title": "Kensington Town Hall - C20 Society",
+        "url": "https://c20society.org.uk/?p=7704",
+        "used_for": "general description of the brick civic centre"
+      },
+      {
         "title": "1977 - Kensington and Chelsea Town Hall - Archiseek",
         "url": "https://www.archiseek.com/1977-kensington-and-chelsea-town-hall-london/",
         "used_for": "general appearance and date"
       }
     ],
-    "notes": "Terracing applied to every outer face of the main block (sources only describe it for Hornton Street); storey heights (3.5 m) and the 5-level section to ~17 m exceed the Overture 13.9 m. Pavilions are taken from the polygonal lobes of the Overture outline; their use and exact heights are estimated."
+    "notes": "Terracing applied to every outer face of the main block (sources only describe it for Hornton Street); storey heights (3.5 m) and the 5-level section to ~17 m exceed the Overture 13.9 m. The two south lobes of the outline are taken as the blind great hall (west) and the council chamber raised on piers over a garden (east); the north-west lobe is modelled as a brick pavilion of unknown use. Window bands are recessed glazing with 3D mullions, sills and white concrete fascias; mullion spacing (1.5 m), the terrace handrails, the Hornton Street entrance canopy position and all pavilion heights are estimated."
   },
   {
     "id": "loftus_road",
@@ -3111,12 +3171,17 @@
         "used_for": "fabric as load-bearing structure held up by five tapered steel columns"
       },
       {
+        "title": "The Magazine - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101278154-the-magazine-knightsbridge-and-belgravia-ward",
+        "used_for": "Grade II*, 1805 (rainwater heads); one storey with attic, brown stock brick with stone dressings, pedimented attic rising above the portico roof"
+      },
+      {
         "title": "Magazine project - Liam O'Connor Architects",
         "url": "https://www.liamoconnor.com/project-magazine",
         "used_for": "new north wing housing Serpentine offices"
       }
     ],
-    "notes": "Membrane surface is an analytic height field (peaks over five columns placed along the long axis of the extension outline), not the real form-found geometry. Colonnade assumed on the south (lake-facing) end; barrel-vault store sizes proportioned within the footprint. Magazine brick colour approximated as stock brick."
+    "notes": "Magazine: brown stock brick with stone dressings, portico with pedimented attic above its roof (listing); portico order drawn as Tuscan/Doric with six columns, window count and round-headed sash form estimated; barrel vaults shown lead-covered with rolls. Membrane surface is an analytic height field (peaks over five columns placed along the long axis of the extension outline), not the real form-found geometry. Colonnade assumed on the south (lake-facing) end; barrel-vault store sizes proportioned within the footprint. Magazine brick colour approximated as stock brick."
   },
   {
     "id": "serpentine_south",
@@ -3138,10 +3203,15 @@
       {
         "title": "Our History - Serpentine",
         "url": "https://www.serpentinegalleries.org/our-history/",
-        "used_for": "history of the pavilion and gallery"
+        "used_for": "history of the pavilion (1934, replacing the 1855 refreshment rooms) and gallery"
+      },
+      {
+        "title": "Serpentine Gallery, London - Inexhibit",
+        "url": "https://www.inexhibit.com/mymuseum/serpentine-gallery-london/",
+        "used_for": "general description of the pavilion in its lawn setting"
       }
     ],
-    "notes": "Plan square fitted to the Overture outline; body/core heights (4.8 m / 8.6 m) and core size proportioned from the listing description, not measured. Windows are a painted generic sash bay; the missing balustrade on the core is omitted as stated in the listing."
+    "notes": "Plan built as the clean square fitted to the Overture outline (the small jags of the outline are ignored); body/core heights (4.8 m / 8.6 m) and core size proportioned from the listing description, not measured. Sash windows, red brick surrounds and quoins, paired Doric columns, balustrades and the cupola are real geometry; window and glazing-bar counts are typical of the period, not counted from photographs. The cupola balustrade is omitted (stated missing in the listing). The temporary summer pavilion is not modelled."
   },
   {
     "id": "shepherds_bush_empire",

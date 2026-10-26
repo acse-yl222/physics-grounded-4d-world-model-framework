@@ -35,23 +35,31 @@ export default {
       used_for: 'fabric as load-bearing structure held up by five tapered steel columns',
     },
     {
+      title: 'The Magazine - British Listed Buildings',
+      url: 'https://britishlistedbuildings.co.uk/101278154-the-magazine-knightsbridge-and-belgravia-ward',
+      used_for:
+        'Grade II*, 1805 (rainwater heads); one storey with attic, brown stock brick with stone dressings, pedimented attic rising above the portico roof',
+    },
+    {
       title: "Magazine project - Liam O'Connor Architects",
       url: 'https://www.liamoconnor.com/project-magazine',
       used_for: 'new north wing housing Serpentine offices',
     },
   ],
   notes:
-    'Membrane surface is an analytic height field (peaks over five columns placed along the long axis of the ' +
+    'Magazine: brown stock brick with stone dressings, portico with pedimented attic above its roof (listing); ' +
+    'portico order drawn as Tuscan/Doric with six columns, window count and round-headed sash form estimated; ' +
+    'barrel vaults shown lead-covered with rolls. Membrane surface is an analytic height field (peaks over five columns placed along the long axis of the ' +
     'extension outline), not the real form-found geometry. Colonnade assumed on the south (lake-facing) end; ' +
     'barrel-vault store sizes proportioned within the footprint. Magazine brick colour approximated as stock brick.',
   build(ctx) {
     const { THREE, kit, byId } = ctx;
     const g = new THREE.Group();
     const batch = new kit.MeshBatch();
-    const brickC = '#a68c69';
+    const brickC = '#9a7f5e';
     const brickMat = kit.mat(brickC, { roughness: 0.95 });
     const stone = kit.mat('portland_stone');
-    const slate = kit.roof('slate', 0);
+    const leadRoof = kit.roof('lead', 0);
     const lead = kit.mat('lead');
     const white = kit.mat('#f4f4f1', { roughness: 0.55, side: THREE.DoubleSide });
     const steel = kit.mat('white_steel');
@@ -59,7 +67,7 @@ export default {
     const dark = kit.mat('dark_glass');
     const brickTex = kit.paintedMaterial('serpentine_north:brick', 256, 256, (c, w, h) => {
       const r = kit.rng(0.551);
-      c.fillStyle = '#8f7a5c';
+      c.fillStyle = '#86725a';
       c.fillRect(0, 0, w, h);
       for (let y = 0; y < h; y += 4)
         for (let x = (y / 4) % 2 ? -6 : 0; x < w; x += 12) {
@@ -81,67 +89,290 @@ export default {
       const p = L(x, y);
       kit.box(batch, m, p[0], p[1], z0, w, d, h, A + rz);
     };
+    const lgeo = (geo, m, x, y, z, rz = 0) => {
+      const p = L(x, y);
+      batch.addGeometry(
+        m,
+        geo,
+        new THREE.Matrix4().makeRotationZ(A + rz).setPosition(p[0], p[1], z),
+      );
+      geo.dispose();
+    };
+    const rect = (x0, y0, x1, y1) => [L(x0, y0), L(x1, y0), L(x1, y1), L(x0, y1)];
     const hl = fr.length / 2,
       hw = fr.width / 2;
     // which end of the long axis faces south
-    const southSign = sa > 0 ? -1 : 1; // local +x points north when sin(A) > 0
-    // lower surrounding range (perimeter wall with stone coping)
-    const H1 = 4.6;
-    kit.walls(batch, brickTex, [[ring]], 0, H1, { bay: 3, storey: 3 });
+    const ss = sa > 0 ? -1 : 1; // local +x points north when sin(A) > 0
+    const sashGlass = kit.mat('#3c4a55', { roughness: 0.2, metalness: 0.15 });
+    const sashFrame = kit.mat('#f1efe8', { roughness: 0.55 });
+    const doorM = kit.mat('#2e3a35', { roughness: 0.6 });
+    const paving = kit.mat('#c4bdae', { roughness: 0.95 });
+    // forecourt / terrace paving round the Magazine
     {
-      const inner = kit.offsetRing(ring, -0.45);
-      kit.walls(batch, stone, [[kit.offsetRing(ring, 0.1)]], H1, H1 + 0.35);
-      kit.cap(batch, stone, [[kit.offsetRing(ring, 0.1), inner.slice().reverse()]], H1 + 0.35);
+      const outer = rect(-hl - 7, -hw - 3, hl + 3, hw + 3);
+      kit.cap(batch, paving, [[outer, rect(-hl, -hw, hl, hw).reverse()]], 0.03);
+    }
+    // lower surrounding range: brown stock brick, stone plinth, cornice and coping
+    const H1 = 4.6;
+    const body = rect(-hl, -hw, hl, hw);
+    kit.walls(batch, brickTex, [[body]], 0, H1, { bay: 1, storey: 2 });
+    kit.cornice(batch, stone, body, 0, { height: 0.45, projection: 0.12 });
+    kit.cornice(batch, stone, body, H1 - 0.45, { height: 0.45, projection: 0.3, steps: 2 });
+    {
+      const inner = kit.offsetRing(body, -0.45);
+      kit.walls(batch, brickMat, [[body]], H1, H1 + 0.45, { bay: 1e6 });
+      kit.walls(batch, brickMat, [[inner.slice().reverse()]], H1, H1 + 0.45, { bay: 1e6 });
+      kit.cap(
+        batch,
+        stone,
+        [[kit.offsetRing(body, 0.08), kit.offsetRing(inner, -0.05).reverse()]],
+        H1 + 0.58,
+      );
+      kit.walls(batch, stone, [[kit.offsetRing(body, 0.08)]], H1 + 0.45, H1 + 0.58, { bay: 1e6 });
       kit.cap(batch, lead, [[inner]], H1 + 0.1);
     }
+    // windows: round-headed recessed arches with sashes on the long sides and the rear,
+    // stone sills; plain on the face against the Hadid extension (it is glazed into it)
+    const win = {
+      width: 1.3,
+      height: 2.2,
+      bay: 3.6,
+      margin: 1.6,
+      depth: 0.14,
+      glass: sashGlass,
+      frame: sashFrame,
+      sill: stone,
+      head: 'arch',
+      bars: 2,
+      surround: 0.22,
+      surroundMat: kit.mat('#8a6f4f', { roughness: 0.95 }),
+    };
+    const sides = [
+      [L(-hl, -hw), L(hl, -hw)],
+      [L(hl, -hw), L(hl, hw)],
+      [L(hl, hw), L(-hl, hw)],
+      [L(-hl, hw), L(-hl, -hw)],
+    ];
+    // Round-arched window row: kit.windowRow for the rectangular part, plus the arch
+    // frame ring and a half-disc of glass in the wall plane for the head.
+    const archRow = (a, b, z, o) => {
+      kit.windowRow(batch, a, b, z, { ...o, head: 'none' });
+      const dx = b[0] - a[0],
+        dy = b[1] - a[1],
+        len = Math.hypot(dx, dy),
+        ux = dx / len,
+        uy = dy / len,
+        ang = Math.atan2(dy, dx);
+      const margin = o.margin ?? 0.6,
+        bay = o.bay ?? 3.6,
+        depth = o.depth ?? 0.12;
+      const usable = len - 2 * margin;
+      const n = o.count ?? Math.max(0, Math.floor(usable / bay + 0.35));
+      const r = o.width / 2;
+      const rot = new THREE.Matrix4()
+        .makeRotationZ(ang)
+        .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2));
+      for (let k = 0; k < n; k++) {
+        const t = margin + (usable * (k + 0.5)) / n;
+        const cx = a[0] + ux * t,
+          cy = a[1] + uy * t;
+        const disc = new THREE.CircleGeometry(r, 12, 0, Math.PI).rotateX(Math.PI / 2);
+        batch.addGeometry(
+          o.glass,
+          disc,
+          new THREE.Matrix4()
+            .makeRotationZ(ang)
+            .setPosition(cx + uy * 0.03, cy - ux * 0.03, z + o.height),
+        );
+        disc.dispose();
+        const ringG = new THREE.TorusGeometry(r + 0.04, 0.07, 4, 12, Math.PI);
+        const m = rot
+          .clone()
+          .setPosition(cx + uy * depth * 0.9, cy - ux * depth * 0.9, z + o.height);
+        batch.addGeometry(o.sill ?? o.frame, ringG, m);
+        ringG.dispose();
+        if (o.bars) {
+          kit.box(
+            batch,
+            o.frame,
+            cx + uy * depth * 0.5,
+            cy - ux * depth * 0.5,
+            z + o.height,
+            0.05,
+            depth * 0.6,
+            r,
+            ang,
+          );
+        }
+        if (o.surround) {
+          const sr = new THREE.TorusGeometry(
+            r + o.surround * 0.6,
+            o.surround * 0.5,
+            3,
+            12,
+            Math.PI,
+          );
+          batch.addGeometry(
+            o.surroundMat,
+            sr,
+            rot.clone().setPosition(cx + uy * depth * 0.5, cy - ux * depth * 0.5, z + o.height),
+          );
+          sr.dispose();
+        }
+      }
+    };
+    // west long side faces the extension: is it the -y or +y side?
+    const ext0 = byId['addf86c6-1704-44cb-b6a7-51088e15b851'];
+    let extSide = -1;
+    if (ext0) {
+      const ec = ext0.c ?? ext0.polys[0][0][0];
+      const v = -(ec[0] - fr.cx) * sa + (ec[1] - fr.cy) * ca;
+      extSide = v > 0 ? 1 : -1;
+    }
+    sides.forEach(([a, b], k) => {
+      const isSouth = (k === 3 && ss < 0) || (k === 1 && ss > 0);
+      const isExt = (k === 0 && extSide < 0) || (k === 2 && extSide > 0);
+      if (isSouth || isExt) return;
+      archRow(a, b, 1.1, win);
+    });
     // two barrel-vaulted powder stores side by side along the long axis
     const storeL = fr.length * 0.6,
       storeW = fr.width * 0.3;
     for (const s of [-1, 1]) {
       const y = s * (storeW / 2 + 0.4);
-      const r4 = [
-        L(-storeL / 2, y - storeW / 2),
-        L(storeL / 2, y - storeW / 2),
-        L(storeL / 2, y + storeW / 2),
-        L(-storeL / 2, y + storeW / 2),
-      ];
-      kit.walls(batch, brickTex, [[r4]], H1, 6.4, { bay: 3, storey: 3 });
-      kit.walls(batch, stone, [[kit.offsetRing(r4, 0.2)]], 6.2, 6.5);
-      // barrel vault expressed as a segmental lead/slate roof
+      const r4 = rect(-storeL / 2, y - storeW / 2, storeL / 2, y + storeW / 2);
+      kit.walls(batch, brickTex, [[r4]], H1, 6.4, { bay: 1, storey: 2 });
+      kit.cornice(batch, stone, r4, 6.1, { height: 0.35, projection: 0.22 });
+      // barrel vault, lead covered, with rolls
+      const R = storeW / 2 + 0.3;
       const vault = new THREE.CylinderGeometry(
-        storeW / 2 + 0.3,
-        storeW / 2 + 0.3,
+        R,
+        R,
         storeL + 0.4,
-        16,
+        20,
         1,
         false,
         -Math.PI / 2,
         Math.PI,
       ).rotateZ(Math.PI / 2);
-      const m4 = new THREE.Matrix4().makeRotationZ(A).setPosition(...L(0, y), 6.5);
-      const sc = new THREE.Matrix4().makeScale(1, 1, 0.55);
-      batch.addGeometry(slate, vault, m4.multiply(sc));
+      const m4 = new THREE.Matrix4().makeRotationZ(A).setPosition(...L(0, y), 6.45);
+      batch.addGeometry(leadRoof, vault, m4.multiply(new THREE.Matrix4().makeScale(1, 1, 0.55)));
       vault.dispose();
-    }
-    // frontal Tuscan colonnade on the south end
-    {
-      const x = southSign * (hl + 0.05);
-      const xc = southSign * (hl + 1.6);
-      lbox(stone, xc, 0, 0, 3.2, hw * 1.3, 0.3);
-      lbox(stone, xc, 0, H1 - 0.8, 3.2, hw * 1.3 + 0.4, 0.8);
-      lbox(stone, xc, 0, H1 - 0.05, 3.4, hw * 1.3 + 0.6, 0.4);
-      const n = 6;
-      for (let k = 0; k < n; k++) {
-        const y = -hw * 0.6 + (k * hw * 1.2) / (n - 1);
-        const col = new THREE.CylinderGeometry(0.32, 0.38, H1 - 1.1, 12).rotateX(Math.PI / 2);
-        const m4 = new THREE.Matrix4().setPosition(
-          ...L(southSign * (hl + 2.6), y),
-          0.3 + (H1 - 1.1) / 2,
-        );
-        batch.addGeometry(stone, col, m4);
-        col.dispose();
+      for (let i = 1; i < 8; i++) {
+        const t = -storeL / 2 + (i * storeL) / 8;
+        const roll = new THREE.TorusGeometry(R + 0.03, 0.06, 3, 16, Math.PI)
+          .rotateX(Math.PI / 2)
+          .rotateZ(Math.PI / 2);
+        const mm = new THREE.Matrix4()
+          .makeRotationZ(A)
+          .setPosition(...L(t, y), 6.45)
+          .multiply(new THREE.Matrix4().makeScale(1, 1, 0.55));
+        batch.addGeometry(lead, roll, mm);
+        roll.dispose();
       }
-      lbox(dark, x, 0, 0.3, 0.1, hw * 0.5, 2.8);
+      // gable-end lunettes (semicircular windows in the vault ends)
+      for (const ex of [-1, 1]) {
+        const lun = new THREE.CircleGeometry(R * 0.98, 16, 0, Math.PI).rotateX(Math.PI / 2);
+        lgeo(
+          lun.scale(1, 1, 0.55),
+          brickMat,
+          ex * (storeL / 2 + 0.01),
+          y,
+          6.45,
+          ex > 0 ? Math.PI / 2 : -Math.PI / 2,
+        );
+        const lg = new THREE.CircleGeometry(R * 0.45, 12, 0, Math.PI).rotateX(Math.PI / 2);
+        lgeo(lg, sashGlass, ex * (storeL / 2 + 0.03), y, 6.5, ex > 0 ? Math.PI / 2 : -Math.PI / 2);
+      }
+    }
+    // frontal portico on the south end: Tuscan columns, entablature, lead roof, and the
+    // pedimented brick attic rising above it
+    {
+      const fx = ss * hl;
+      const depth = 3.4;
+      const xc = fx + ss * (depth / 2);
+      const pw = hw * 1.3;
+      lbox(stone, xc, 0, 0, depth + 0.4, pw + 0.6, 0.35);
+      lbox(stone, xc + ss * (depth / 2 + 0.5), 0, 0, 0.7, pw - 1.0, 0.18);
+      const zc = 0.35,
+        hc = H1 - 1.15;
+      kit.colonnade(
+        batch,
+        stone,
+        L(fx + ss * (depth - 0.5), -pw / 2 + 0.6),
+        L(fx + ss * (depth - 0.5), pw / 2 - 0.6),
+        zc,
+        hc,
+        {
+          count: 6,
+          radius: 0.32,
+          capital: 'doric',
+        },
+      );
+      lbox(stone, xc, 0, H1 - 0.8, depth + 0.2, pw + 0.2, 0.55); // architrave + frieze
+      lbox(stone, xc, 0, H1 - 0.25, depth + 0.6, pw + 0.6, 0.4); // cornice
+      kit.pitchedRoof(
+        batch,
+        leadRoof,
+        stone,
+        rect(fx - ss * 0.3, -pw / 2, fx + ss * (depth + 0.2), pw / 2).map((p) => p),
+        A,
+        H1 + 0.15,
+        0.6,
+        'hipped',
+        {
+          overhang: 0.1,
+        },
+      );
+      // doors and windows inside the portico
+      const wa = L(fx + ss * 0.02, ss < 0 ? hw - 1 : -hw + 1),
+        wb = L(fx + ss * 0.02, ss < 0 ? -hw + 1 : hw - 1);
+      kit.windowRow(batch, wa, wb, 0.35, {
+        width: 1.7,
+        height: 2.7,
+        count: 3,
+        margin: 4,
+        glass: doorM,
+        frame: sashFrame,
+        sill: stone,
+        head: 'lintel',
+        bars: 1,
+        surround: 0.2,
+        surroundMat: stone,
+      });
+      // attic with pediment above the portico roof
+      const ax = fx - ss * 0.6;
+      lbox(brickMat, ax, 0, H1 + 0.45, 1.2, pw * 0.75, 2.3);
+      lbox(stone, ax, 0, H1 + 2.75, 1.4, pw * 0.75 + 0.3, 0.35);
+      const hwp = pw * 0.375 + 0.15;
+      const ped = new THREE.Shape();
+      ped.moveTo(-hwp, 0);
+      ped.lineTo(hwp, 0);
+      ped.lineTo(0, 1.6);
+      ped.lineTo(-hwp, 0);
+      const pg = new THREE.ExtrudeGeometry(ped, { depth: 1.4, bevelEnabled: false })
+        .rotateX(Math.PI / 2)
+        .translate(0, 0.7, 0);
+      lgeo(pg, stone, ax, 0, H1 + 3.1, Math.PI / 2);
+      const tym = new THREE.Shape();
+      tym.moveTo(-hwp + 0.6, 0.15);
+      tym.lineTo(hwp - 0.6, 0.15);
+      tym.lineTo(0, 1.25);
+      tym.lineTo(-hwp + 0.6, 0.15);
+      const tg = new THREE.ExtrudeGeometry(tym, { depth: 0.1, bevelEnabled: false })
+        .rotateX(Math.PI / 2)
+        .translate(0, 0.05, 0);
+      lgeo(tg, brickMat, ax + ss * 0.72, 0, H1 + 3.1, Math.PI / 2);
+    }
+    // rainwater heads dated 1805 and downpipes at the corners
+    for (const [sx, sy] of [
+      [-1, -1],
+      [1, -1],
+      [1, 1],
+      [-1, 1],
+    ]) {
+      lbox(kit.mat('black'), sx * (hl - 0.6), sy * (hw + 0.12), 0, 0.12, 0.12, H1 - 0.5);
+      lbox(kit.mat('black'), sx * (hl - 0.6), sy * (hw + 0.18), H1 - 0.9, 0.45, 0.3, 0.45);
     }
 
     // ---- Zaha Hadid tensile extension ------------------------------------------------
@@ -247,6 +478,17 @@ export default {
             b = [p[0] + ((q[0] - p[0]) * (i + 1)) / n, p[1] + ((q[1] - p[1]) * (i + 1)) / n];
           const za = Z(...a),
             zb = Z(...b);
+          kit.box(
+            batch,
+            steel,
+            a[0],
+            a[1],
+            0,
+            0.09,
+            0.09,
+            za - 0.3,
+            Math.atan2(b[1] - a[1], b[0] - a[0]),
+          );
           batch.quad(
             glass,
             [a[0], a[1], 0],
@@ -285,13 +527,37 @@ export default {
       }
     }
 
-    // ---- North wing (single-storey brick offices) ---------------------------------------
+    // ---- North wing (single-storey brick offices, Liam O'Connor) -------------------------
     const nw = byId['5c826e8b-419c-4a4f-bdf2-f456a7891245'];
     if (nw) {
-      kit.walls(batch, kit.facade('london_stock', 1), nw.polys, 0, 3.6, { bay: 3.2, storey: 3.2 });
-      for (const ring2 of nw.polys[0]) {
-        kit.walls(batch, stone, [[kit.offsetRing(ring2, 0.1)]], 3.6, 4.0);
-        kit.cap(batch, stone, [[kit.offsetRing(ring2, 0.1)]], 4.0);
+      for (const poly of nw.polys) {
+        const r0 = poly[0];
+        kit.walls(batch, brickTex, [[r0]], 0, 3.6, { bay: 1, storey: 2 });
+        kit.cornice(batch, stone, r0, 0, { height: 0.35, projection: 0.08 });
+        kit.cornice(batch, stone, r0, 3.3, { height: 0.3, projection: 0.2 });
+        const inner = kit.offsetRing(r0, -0.3);
+        kit.walls(batch, brickMat, [[r0]], 3.6, 4.1, { bay: 1e6 });
+        kit.walls(batch, brickMat, [[inner.slice().reverse()]], 3.6, 4.1, { bay: 1e6 });
+        kit.cap(
+          batch,
+          stone,
+          [[kit.offsetRing(r0, 0.06), kit.offsetRing(inner, -0.04).reverse()]],
+          4.2,
+        );
+        kit.walls(batch, stone, [[kit.offsetRing(r0, 0.06)]], 4.1, 4.2, { bay: 1e6 });
+        kit.cap(batch, lead, [[r0]], 3.7);
+        for (let k = 0; k < r0.length; k++)
+          kit.windowRow(batch, r0[k], r0[(k + 1) % r0.length], 0.9, {
+            width: 1.2,
+            height: 2.0,
+            bay: 3.2,
+            margin: 0.8,
+            glass: sashGlass,
+            frame: sashFrame,
+            sill: stone,
+            head: 'lintel',
+            bars: 2,
+          });
       }
     }
     g.add(batch.toGroup('serpentine_north'));

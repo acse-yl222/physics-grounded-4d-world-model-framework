@@ -37,7 +37,10 @@ export default {
     'Overture height (9.9 m) is far too low; cornice set at 24 m, balustrade 26-27 m, mansards to ~30 m, corner ' +
     'cupolas ~38 m and dome lantern ~46 m, proportioned from the storey count in the listing. Dome placed on the ' +
     'Overture round building part. Pavilion/mansard positions follow the 2:4:3:3:3:4:2 rhythm on Brompton Road; ' +
-    'on Hans Road only the corner and one central attic are modelled. Facade is a painted generic Stephens bay.',
+    'on Hans Road only the corner and one central attic are modelled. Brompton Road and Hans Road elevations have ' +
+    'real window frames, sills, arch heads, pilasters, string courses, modillions and a turned balustrade with ' +
+    'entrance bays at a regular interval (positions estimated); Basil Street / Hans Crescent keep a painted ' +
+    'Stephens bay. Rooftop plant and rooflights are generic, not surveyed.',
   build(ctx) {
     const { THREE, kit, buildings } = ctx;
     const b = buildings[0];
@@ -134,35 +137,324 @@ export default {
       c.fillRect(0, Y(24), w, (0.6 / 24) * h);
     });
 
+    // Round-arched window row: kit.windowRow for the rectangular part, plus the arch
+    // frame ring and a half-disc of glass in the wall plane for the head.
+    const archRow = (a, b, z, o) => {
+      kit.windowRow(batch, a, b, z, { ...o, head: 'none' });
+      const dx = b[0] - a[0],
+        dy = b[1] - a[1],
+        len = Math.hypot(dx, dy),
+        ux = dx / len,
+        uy = dy / len,
+        ang = Math.atan2(dy, dx);
+      const margin = o.margin ?? 0.6,
+        bay = o.bay ?? 3.6,
+        depth = o.depth ?? 0.12;
+      const usable = len - 2 * margin;
+      const n = o.count ?? Math.max(0, Math.floor(usable / bay + 0.35));
+      const r = o.width / 2;
+      const rot = new THREE.Matrix4()
+        .makeRotationZ(ang)
+        .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2));
+      for (let k = 0; k < n; k++) {
+        const t = margin + (usable * (k + 0.5)) / n;
+        const cx = a[0] + ux * t,
+          cy = a[1] + uy * t;
+        const disc = new THREE.CircleGeometry(r, 12, 0, Math.PI).rotateX(Math.PI / 2);
+        batch.addGeometry(
+          o.glass,
+          disc,
+          new THREE.Matrix4()
+            .makeRotationZ(ang)
+            .setPosition(cx + uy * 0.03, cy - ux * 0.03, z + o.height),
+        );
+        disc.dispose();
+        const ringG = new THREE.TorusGeometry(r + 0.04, 0.07, 4, 12, Math.PI);
+        const m = rot
+          .clone()
+          .setPosition(cx + uy * depth * 0.9, cy - ux * depth * 0.9, z + o.height);
+        batch.addGeometry(o.sill ?? o.frame, ringG, m);
+        ringG.dispose();
+        if (o.bars) {
+          kit.box(
+            batch,
+            o.frame,
+            cx + uy * depth * 0.5,
+            cy - ux * depth * 0.5,
+            z + o.height,
+            0.05,
+            depth * 0.6,
+            r,
+            ang,
+          );
+        }
+        if (o.surround) {
+          const sr = new THREE.TorusGeometry(
+            r + o.surround * 0.6,
+            o.surround * 0.5,
+            3,
+            12,
+            Math.PI,
+          );
+          batch.addGeometry(
+            o.surroundMat,
+            sr,
+            rot.clone().setPosition(cx + uy * depth * 0.5, cy - ux * depth * 0.5, z + o.height),
+          );
+          sr.dispose();
+        }
+      }
+    };
     // ---- main block -----------------------------------------------------------
     const H = 24;
-    kit.walls(batch, facade, [[ring]], 0, H, { bay: 6.2, storey: H / 2 });
+    // Principal elevations (Brompton Road W -> N corner, Hans Road N -> E corner) get
+    // real windows; Basil Street / Hans Crescent keep the painted bay.
+    const nearPt = (x, y) =>
+      ring.reduce((best, p) =>
+        Math.hypot(p[0] - x, p[1] - y) < Math.hypot(best[0] - x, best[1] - y) ? p : best,
+      );
+    const cW = nearPt(2506, -809),
+      cN = nearPt(2603, -720),
+      cE = nearPt(2685, -798);
+    const segDist = (p, a, b) => {
+      const vx = b[0] - a[0],
+        vy = b[1] - a[1];
+      const t = Math.max(
+        0,
+        Math.min(1, ((p[0] - a[0]) * vx + (p[1] - a[1]) * vy) / (vx * vx + vy * vy)),
+      );
+      return Math.hypot(p[0] - a[0] - t * vx, p[1] - a[1] - t * vy);
+    };
+    const isFront = (a, b) => {
+      const m = [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2];
+      return segDist(m, cW, cN) < 4 || segDist(m, cN, cE) < 4;
+    };
+    const plain = kit.paintedMaterial('harrods:plain', 512, 1024, (c, w, h) => {
+      const r = kit.rng(0.2718);
+      const Y = (z) => h - (z / 24) * h;
+      c.fillStyle = TC;
+      c.fillRect(0, 0, w, h);
+      c.fillStyle = 'rgba(120,70,50,0.2)';
+      for (let z = 0; z < 24; z += 0.6) c.fillRect(0, Y(z), w, 1);
+      for (let z = 0, k = 0; z < 24; z += 0.6, k++)
+        for (let x = k % 2 ? 0 : 32; x < w; x += 64) c.fillRect(x, Y(z + 0.6), 1, (0.6 / 24) * h);
+      for (let i = 0; i < 500; i++) {
+        c.fillStyle = `rgba(${r() < 0.5 ? '255,230,210' : '150,90,60'},${0.04 + r() * 0.05})`;
+        c.fillRect(r() * w, r() * h, 6 + r() * 14, 3 + r() * 3);
+      }
+      // window reveals (dark recess behind the 3D frames) so the openings read deep
+      const bw = w / 4;
+      const hole = (x0, z0, z1, ww, arch) => {
+        c.fillStyle = '#3b3029';
+        c.fillRect(x0, Y(z1), ww, Y(z0) - Y(z1));
+        if (arch) {
+          c.beginPath();
+          c.arc(x0 + ww / 2, Y(z1), ww / 2, Math.PI, 0);
+          c.fill();
+        }
+      };
+      for (let k = 0; k < 4; k++) {
+        const x = k * bw;
+        hole(x + bw * 0.08, 0.5, 4.7, bw * 0.84);
+        hole(x + bw * 0.12, 5.75, 9.45, bw * 0.76);
+        for (const [z0, z1, arch] of [
+          [10.55, 12.95],
+          [13.95, 16.35],
+          [17.35, 19.75],
+          [20.55, 21.95, true],
+        ]) {
+          hole(x + bw * 0.16 - 1, z0, z1, bw * 0.3 + 2, arch);
+          hole(x + bw * 0.54 - 1, z0, z1, bw * 0.3 + 2, arch);
+        }
+      }
+    });
+    const BAY = 6.2;
+    const frontEdges = [];
+    for (let k = 0; k < ring.length; k++) {
+      const a = ring[k],
+        b = ring[(k + 1) % ring.length];
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      if (len < 0.05) continue;
+      const front = isFront(a, b);
+      const n = Math.round(len / BAY);
+      const u1 = n >= 1 ? n / 4 : 0.03;
+      const shade = 0.96 + ((k * 0.37) % 1) * 0.06;
+      batch.quad(
+        front ? plain : facade,
+        [a[0], a[1], 0],
+        [b[0], b[1], 0],
+        [b[0], b[1], H],
+        [a[0], a[1], H],
+        [0, 0],
+        [u1, 0],
+        [u1, 1],
+        [0, 1],
+        [shade, shade, shade],
+      );
+      if (front && n >= 1) frontEdges.push({ a, b, len, n });
+    }
+
+    // Real windows, pilasters and entrances on the principal elevations.
+    const bronzeF = kit.mat('#4a3a26', { roughness: 0.45, metalness: 0.6 });
+    const sashF = kit.mat('#5a4434', { roughness: 0.6 });
+    const glassM = kit.mat('#46586a', { roughness: 0.15, metalness: 0.3 });
+    const shopGlass = kit.mat('#55626b', { roughness: 0.1, metalness: 0.35 });
+    const tcDress = kit.mat('#e2b796', { roughness: 0.7 });
+    let bayIndex = 0;
+    for (const { a, b, len, n } of frontEdges) {
+      const bw = len / n;
+      const ux = (b[0] - a[0]) / len,
+        uy = (b[1] - a[1]) / len;
+      const ang = Math.atan2(uy, ux);
+      const nx = uy,
+        ny = -ux;
+      const at = (s, d = 0) => [a[0] + ux * s + nx * d, a[1] + uy * s + ny * d];
+      for (let i = 0; i < n; i++) {
+        const s0 = i * bw,
+          s1 = (i + 1) * bw;
+        const A0 = at(s0),
+          A1 = at(s1);
+        const entrance = bayIndex % 5 === 2;
+        bayIndex++;
+        if (entrance) {
+          // bronze entrance doors with a fanlight under the awning
+          const c = at((s0 + s1) / 2, 0.02);
+          kit.box(batch, shopGlass, c[0], c[1], 0, bw * 0.6, 0.06, 4.3, ang);
+          const cf = at((s0 + s1) / 2, 0.1);
+          for (const du of [-0.3, -0.1, 0.1, 0.3]) {
+            const q = at((s0 + s1) / 2 + du * bw, 0.1);
+            kit.box(batch, bronzeF, q[0], q[1], 0, 0.14, 0.16, 4.3, ang);
+          }
+          kit.box(batch, bronzeF, cf[0], cf[1], 3.0, bw * 0.62, 0.18, 0.14, ang);
+          kit.box(batch, bronzeF, cf[0], cf[1], 4.3, bw * 0.66, 0.2, 0.2, ang);
+          const st = at((s0 + s1) / 2, 0.6);
+          kit.box(batch, kit.mat('#9c948a'), st[0], st[1], 0, bw * 0.7, 1.2, 0.12, ang);
+        } else
+          kit.windowRow(batch, A0, A1, 0.6, {
+            width: bw * 0.84,
+            height: 4.0,
+            count: 1,
+            margin: 0,
+            depth: 0.16,
+            glass: shopGlass,
+            frame: bronzeF,
+            sill: tcDress,
+            head: 'none',
+            bars: 2,
+          });
+        kit.windowRow(batch, A0, A1, 5.8, {
+          width: bw * 0.76,
+          height: 3.6,
+          count: 1,
+          margin: 0,
+          depth: 0.14,
+          glass: glassM,
+          frame: sashF,
+          sill: tcDress,
+          head: 'lintel',
+          bars: 2,
+        });
+        for (const [z0, z1, arch] of [
+          [10.6, 12.9, false],
+          [14.0, 16.3, false],
+          [17.4, 19.7, false],
+          [20.6, 21.9, true],
+        ])
+          (arch ? archRow : (aa, bb, zz, oo) => kit.windowRow(batch, aa, bb, zz, oo))(A0, A1, z0, {
+            width: bw * 0.3,
+            height: z1 - z0,
+            count: 2,
+            margin: bw * 0.12,
+            depth: 0.12,
+            glass: glassM,
+            frame: sashF,
+            sill: tcDress,
+            head: 'lintel',
+            bars: 1,
+            surround: 0.14,
+            surroundMat: tcDress,
+          });
+        // terracotta pilaster with capital between the paired windows' bays (upper storeys)
+        const p = at(s0, 0.14);
+        kit.box(batch, terracottaLight, p[0], p[1], 10.0, 0.75, 0.28, 13.4, ang);
+        kit.box(batch, terracottaLight, p[0], p[1], 23.0, 1.0, 0.45, 0.45, ang);
+        kit.box(batch, terracottaLight, p[0], p[1], 9.9, 0.95, 0.4, 0.3, ang);
+        // ground-floor pier
+        const gp = at(s0, 0.1);
+        kit.box(batch, terracotta, gp[0], gp[1], 0, bw * 0.16, 0.2, 5.0, ang);
+      }
+      const p = at(len, 0.14);
+      kit.box(batch, terracottaLight, p[0], p[1], 10.0, 0.75, 0.28, 13.4, ang);
+    }
     const off = (d) => kit.offsetRing(ring, d);
     const band = (z0, z1, d, m) => {
       const o = off(d);
-      kit.walls(batch, m, [[o]], z0, z1);
+      kit.walls(batch, m, [[o]], z0, z1, { bay: 1e6 });
       kit.cap(batch, m, [[o, ring.slice().reverse()]], z1);
       kit.cap(batch, m, [[o, ring.slice().reverse()]], z0, { down: true });
     };
-    // frieze, cornice and balustrade
-    kit.walls(batch, terracotta, [[ring]], H, H + 1.6);
+    // string courses, frieze, cornice and balustrade
+    band(4.95, 5.35, 0.22, terracottaLight);
+    band(9.7, 10.1, 0.35, terracottaLight);
+    for (const z of [13.5, 16.9, 20.2]) band(z, z + 0.25, 0.12, terracottaLight);
+    kit.walls(batch, terracotta, [[ring]], H, H + 1.6, { bay: 1e6 });
+    band(H + 1.2, H + 1.6, 0.5, terracottaLight);
     band(H + 1.6, H + 2.1, 0.9, terracottaLight);
     band(H - 0.2, H + 0.25, 0.3, terracottaLight);
     const inner = off(-0.5);
     const BAL0 = H + 2.1,
       BAL1 = H + 3.1;
-    kit.walls(batch, terracotta, [[ring]], BAL0, BAL0 + 0.25);
-    kit.walls(batch, terracotta, [[ring]], BAL1 - 0.2, BAL1);
+    // modillion brackets under the cornice on the principal elevations
+    for (const { a, b, len } of frontEdges) {
+      const ux = (b[0] - a[0]) / len,
+        uy = (b[1] - a[1]) / len;
+      const nm = Math.floor(len / 1.2);
+      for (let i = 0; i < nm; i++) {
+        const s = (i + 0.5) * (len / nm);
+        kit.box(
+          batch,
+          terracottaLight,
+          a[0] + ux * s + uy * 0.5,
+          a[1] + uy * s - ux * 0.5,
+          H + 1.35,
+          0.25,
+          0.75,
+          0.3,
+          Math.atan2(uy, ux),
+        );
+      }
+    }
+    kit.walls(batch, terracotta, [[ring]], BAL0, BAL0 + 0.25, { bay: 1e6 });
+    kit.walls(batch, terracotta, [[ring]], BAL1 - 0.2, BAL1, { bay: 1e6 });
     kit.cap(batch, terracottaLight, [[ring, inner.slice().reverse()]], BAL1);
-    kit.walls(batch, terracotta, [[inner.slice().reverse()]], BAL0, BAL1);
-    kit.cap(batch, leadM, [[ring]], H + 2.1);
-    // balusters along the perimeter
+    kit.walls(batch, terracotta, [[inner.slice().reverse()]], BAL0, BAL1, { bay: 1e6 });
+    kit.cap(batch, kit.roof('flat', 1), [[ring]], H + 2.1, { scale: 12 });
+    // balusters: turned on the principal elevations, simple blocks elsewhere
     for (let k = 0; k < ring.length; k++) {
       const p = ring[k],
         q = ring[(k + 1) % ring.length];
       const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
-      const n = Math.floor(len / 0.7);
       const ang = Math.atan2(q[1] - p[1], q[0] - p[0]);
+      if (isFront(p, q)) {
+        kit.balustrade(batch, terracottaLight, [p, q], BAL0, { height: 1.0, spacing: 0.42 });
+        const np = Math.floor(len / 6.2);
+        for (let i = 0; i <= np; i++) {
+          const t = np ? i / np : 0;
+          kit.box(
+            batch,
+            terracotta,
+            p[0] + (q[0] - p[0]) * t,
+            p[1] + (q[1] - p[1]) * t,
+            BAL0,
+            0.6,
+            0.6,
+            1.15,
+            ang,
+          );
+        }
+        continue;
+      }
+      const n = Math.floor(len / 0.7);
       for (let i = 1; i < n; i++) {
         const t = i / n;
         kit.box(
@@ -178,7 +470,24 @@ export default {
         );
       }
     }
-    // ground-floor awnings (Harrods green), one per bay
+    // ground-floor awnings (Harrods green with gold lettering on the valance)
+    const valance = kit.paintedMaterial(
+      'harrods:valance',
+      512,
+      64,
+      (c, w, h) => {
+        c.fillStyle = '#1f4a35';
+        c.fillRect(0, 0, w, h);
+        c.fillStyle = '#d9b45a';
+        c.fillRect(0, 4, w, 2);
+        c.fillRect(0, h - 6, w, 2);
+        c.font = 'bold 34px serif';
+        c.textAlign = 'center';
+        c.textBaseline = 'middle';
+        c.fillText('Harrods', w / 2, h / 2 + 1);
+      },
+      { roughness: 0.8, side: THREE.DoubleSide },
+    );
     for (let k = 0; k < ring.length; k++) {
       const p = ring[k],
         q = ring[(k + 1) % ring.length];
@@ -211,16 +520,36 @@ export default {
         );
         // valance
         batch.quad(
-          awningM,
-          [A0[0] + nx * out, A0[1] + ny * out, z1],
+          valance,
           [A0[0] + nx * out, A0[1] + ny * out, z1 - 0.35],
           [A1[0] + nx * out, A1[1] + ny * out, z1 - 0.35],
           [A1[0] + nx * out, A1[1] + ny * out, z1],
+          [A0[0] + nx * out, A0[1] + ny * out, z1],
           [0, 0],
-          [0, 1],
-          [1, 1],
           [1, 0],
+          [1, 1],
+          [0, 1],
         );
+        // side cheeks and support arms
+        for (const [P0, sgn] of [
+          [A0, 1],
+          [A1, -1],
+        ]) {
+          batch.add(
+            awningM,
+            [
+              [P0[0], P0[1], z0],
+              [P0[0] + nx * out, P0[1] + ny * out, z1],
+              [P0[0] + nx * out, P0[1] + ny * out, z1 - 0.35],
+            ],
+            [
+              [0, 0],
+              [1, 0],
+              [1, 1],
+            ],
+            sgn > 0 ? [0, 2, 1] : [0, 1, 2],
+          );
+        }
       }
     }
 
@@ -485,6 +814,20 @@ export default {
       add(new THREE.CylinderGeometry(0.06, 0.06, 1.6, 4).rotateX(Math.PI / 2), gold, zt + 6.7);
     }
 
+    // arched windows on the front of the dome's square base and the attic mansards' fronts
+    archRow(at(BR, 12 * bay - 0.5, 0.72), at(BR, 9 * bay + 0.5, 0.72), Z0 + 0.5, {
+      width: 1.4,
+      height: 2.2,
+      count: 3,
+      margin: 0.8,
+      depth: 0.14,
+      glass: glassM,
+      frame: sashF,
+      sill: tcDress,
+      bars: 1,
+      surround: 0.14,
+      surroundMat: tcDress,
+    });
     // ---- gold "HARRODS" lettering on the frieze over the central bays ----------------------
     {
       const sign = kit.paintedMaterial(
@@ -530,43 +873,109 @@ export default {
         return c;
       };
       const rr = kit.rng(0.6021);
-      const plant = kit.mat('#9a9a96');
-      const glazing = kit.mat('glass');
+      const plant = kit.paintedMaterial(
+        'harrods:plant',
+        128,
+        128,
+        (c, w, h) => {
+          c.fillStyle = '#9d9d98';
+          c.fillRect(0, 0, w, h);
+          c.fillStyle = '#7f807c';
+          for (let y = 6; y < h; y += 6) c.fillRect(0, y, w, 2);
+          c.fillStyle = '#6b6c69';
+          for (let x = 0; x < w; x += 32) c.fillRect(x, 0, 2, h);
+        },
+        { vertexColors: true },
+      );
+      const plantTop = kit.mat('#8d8d89');
+      const glazing = kit.mat('#7d98a8', { roughness: 0.1, metalness: 0.3 });
+      const ribM = kit.mat('#e2e4e2', { roughness: 0.5, metalness: 0.3 });
       const [mx, my] = at(BR, BR.len / 2, 55);
-      let placed = 0;
-      for (let tries = 0; tries < 80 && placed < 9; tries++) {
-        const x = mx + (rr() - 0.5) * 110,
-          y = my + (rr() - 0.5) * 110;
-        const w = 6 + rr() * 10,
-          d = 4 + rr() * 6;
-        const ok = [
+      const fits = (x, y, w, d, m) =>
+        [
           [-1, -1],
           [1, -1],
           [1, 1],
           [-1, 1],
         ].every(([sx, sy]) => {
-          const px =
-              x + sx * (w / 2 + 14) * Math.cos(BR.ang) - sy * (d / 2 + 14) * Math.sin(BR.ang),
-            py = y + sx * (w / 2 + 14) * Math.sin(BR.ang) + sy * (d / 2 + 14) * Math.cos(BR.ang);
+          const px = x + sx * (w / 2 + m) * Math.cos(BR.ang) - sy * (d / 2 + m) * Math.sin(BR.ang),
+            py = y + sx * (w / 2 + m) * Math.sin(BR.ang) + sy * (d / 2 + m) * Math.cos(BR.ang);
           return inside(px, py);
         });
-        if (!ok) continue;
-        kit.box(batch, plant, x, y, H + 2.1, w, d, 2.5 + rr() * 2, BR.ang);
-        placed++;
+      // glazed pitched rooflights over the internal halls, on low upstands, with ribs
+      const lights = [];
+      for (const [s, d, len] of [
+        [0.5, 30, 34],
+        [0.5, 50, 40],
+        [0.3, 72, 26],
+        [0.7, 72, 26],
+        [0.5, 94, 30],
+      ]) {
+        const [x, y] = at(BR, BR.len * s, d);
+        if (!fits(x, y, len, 7, 4)) continue;
+        lights.push([x, y, len]);
+        const r4 = [-1, 1, 1, -1].map((sx, k) => {
+          const sy = k < 2 ? -1 : 1;
+          return [
+            x + sx * (len / 2) * Math.cos(BR.ang) - sy * 3.5 * Math.sin(BR.ang),
+            y + sx * (len / 2) * Math.sin(BR.ang) + sy * 3.5 * Math.cos(BR.ang),
+          ];
+        });
+        kit.walls(batch, plantTop, [[r4]], H + 2.1, H + 2.8, { bay: 1e6 });
+        kit.pitchedRoof(batch, glazing, plantTop, r4, BR.ang, H + 2.8, 2.2, 'gabled', {
+          overhang: 0,
+        });
+        for (let k = 0; k <= Math.round(len / 2); k++) {
+          const t = -len / 2 + (k * len) / Math.round(len / 2);
+          for (const sy of [-1, 1]) {
+            const b0 = [
+              x + t * Math.cos(BR.ang) - sy * 3.5 * Math.sin(BR.ang),
+              y + t * Math.sin(BR.ang) + sy * 3.5 * Math.cos(BR.ang),
+            ];
+            const b1 = [x + t * Math.cos(BR.ang), y + t * Math.sin(BR.ang)];
+            const geo = new THREE.BoxGeometry(0.1, 0.1, Math.hypot(3.5, 2.2));
+            const dir = new THREE.Vector3(b1[0] - b0[0], b1[1] - b0[1], 2.2).normalize();
+            const q = new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0, 0, 1), dir);
+            batch.addGeometry(
+              ribM,
+              geo,
+              new THREE.Matrix4().compose(
+                new THREE.Vector3((b0[0] + b1[0]) / 2, (b0[1] + b1[1]) / 2, H + 2.8 + 1.1 + 0.04),
+                q,
+                new THREE.Vector3(1, 1, 1),
+              ),
+            );
+            geo.dispose();
+          }
+        }
       }
-      // two long glazed ridge lights
-      for (const d of [36, 62]) {
-        const [x, y] = at(BR, BR.len / 2, d);
-        if (!inside(x, y)) continue;
-        const prism = new THREE.CylinderGeometry(2.6, 2.6, 34, 3, 1)
-          .rotateZ(Math.PI / 2)
-          .scale(1, 1, 0.6);
-        batch.addGeometry(
-          glazing,
-          prism,
-          new THREE.Matrix4().makeRotationZ(BR.ang).setPosition(x, y, H + 2.1 + 0.8),
-        );
-        prism.dispose();
+      // plant rooms, lift motor rooms and tanks spread over the rest of the roof
+      let placed = 0;
+      for (let tries = 0; tries < 220 && placed < 18; tries++) {
+        const x = mx + (rr() - 0.5) * 120,
+          y = my + (rr() - 0.5) * 120;
+        const w = 4 + rr() * 10,
+          d = 3 + rr() * 6;
+        if (!fits(x, y, w, d, 12)) continue;
+        if (
+          lights.some(
+            ([lx, ly, ll]) => Math.hypot(lx - x, ly - y) < ll / 2 + Math.max(w, d) / 2 + 2,
+          )
+        )
+          continue;
+        const hh = 2.2 + rr() * 2.4;
+        kit.box(batch, plant, x, y, H + 2.1, w, d, hh, BR.ang, [1, 1, 1]);
+        kit.box(batch, plantTop, x, y, H + 2.1 + hh, w + 0.2, d + 0.2, 0.15, BR.ang);
+        if (rr() < 0.4) {
+          const fan = new THREE.CylinderGeometry(0.8, 0.8, 0.6, 12).rotateX(Math.PI / 2);
+          batch.addGeometry(
+            plantTop,
+            fan,
+            new THREE.Matrix4().makeTranslation(x, y, H + 2.1 + hh + 0.45),
+          );
+          fan.dispose();
+        }
+        placed++;
       }
     }
 
