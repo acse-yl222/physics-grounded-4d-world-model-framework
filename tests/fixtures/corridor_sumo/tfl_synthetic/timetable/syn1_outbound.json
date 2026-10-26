@@ -1,0 +1,87 @@
+{
+  "_synthetic": "SYNTHETIC test fixture in the shape of a TfL Unified API response. Not TfL data; line SYN1, its stops and timetable are invented for unit tests.",
+  "lineId": "syn1",
+  "direction": "outbound",
+  "timetable": {
+    "departureStopId": "SYNTH0001",
+    "routes": [
+      {
+        "schedules": [
+          {
+            "name": "Saturday",
+            "knownJourneys": [
+              {
+                "hour": "8",
+                "minute": "0",
+                "intervalId": 0
+              }
+            ],
+            "periods": []
+          },
+          {
+            "name": "Monday to Friday",
+            "knownJourneys": [
+              {
+                "hour": "7",
+                "minute": "55",
+                "intervalId": 0
+              },
+              {
+                "hour": "8",
+                "minute": "0",
+                "intervalId": 0
+              },
+              {
+                "hour": "8",
+                "minute": "10",
+                "intervalId": 0
+              },
+              {
+                "hour": "8",
+                "minute": "20",
+                "intervalId": 0
+              },
+              {
+                "hour": "8",
+                "minute": "30",
+                "intervalId": 0
+              },
+              {
+                "hour": "8",
+                "minute": "40",
+                "intervalId": 0
+              },
+              {
+                "hour": "8",
+                "minute": "50",
+                "intervalId": 0
+              },
+              {
+                "hour": "9",
+                "minute": "5",
+                "intervalId": 0
+              }
+            ],
+            "periods": [
+              {
+                "type": "Normal",
+                "fromTime": {
+                  "hour": 5,
+                  "minute": 0
+                },
+                "toTime": {
+                  "hour": 23,
+                  "minute": 0
+                },
+                "frequency": {
+                  "lowestFrequency": 8,
+                  "highestFrequency": 12
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

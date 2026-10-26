@@ -1,0 +1,89 @@
+{
+  "_synthetic": "SYNTHETIC test fixture in the shape of a TfL Unified API response. Not TfL data; line SYN1, its stops and timetable are invented for unit tests.",
+  "lineId": "syn1",
+  "lineName": "SYN1",
+  "direction": "outbound",
+  "isOutboundOnly": false,
+  "mode": "bus",
+  "lineStrings": [
+    "[[[0.0, 51.0], [0.001, 51.001]]]",
+    "[[[-0.207978, 51.496025], [-0.206953, 51.496249], [-0.205842, 51.496653], [-0.204514, 51.497201], [-0.203518, 51.497498], [-0.202609, 51.497821], [-0.20183, 51.4981], [-0.200516, 51.498576], [-0.199679, 51.4988], [-0.19864, 51.499088], [-0.19737, 51.49951], [-0.196086, 51.500013], [-0.194945, 51.500408], [-0.194368, 51.50057]]]"
+  ],
+  "stations": [
+    {
+      "$type": "Tfl.Api.Presentation.Entities.MatchedStop, Tfl.Api.Presentation.Entities",
+      "id": "SYNTH0001",
+      "stationId": "SYNTH0001",
+      "name": "Synthetic Stop A",
+      "lat": 51.496501,
+      "lon": -0.206246,
+      "stopLetter": "S"
+    },
+    {
+      "$type": "Tfl.Api.Presentation.Entities.MatchedStop, Tfl.Api.Presentation.Entities",
+      "id": "SYNTH0002",
+      "stationId": "SYNTH0002",
+      "name": "Synthetic Stop B",
+      "lat": 51.498073,
+      "lon": -0.201916,
+      "stopLetter": "S"
+    },
+    {
+      "$type": "Tfl.Api.Presentation.Entities.MatchedStop, Tfl.Api.Presentation.Entities",
+      "id": "SYNTH0003",
+      "stationId": "SYNTH0003",
+      "name": "Synthetic Stop C",
+      "lat": 51.499196,
+      "lon": -0.198308,
+      "stopLetter": "S"
+    }
+  ],
+  "stopPointSequences": [
+    {
+      "lineId": "syn1",
+      "branchId": 0,
+      "direction": "outbound",
+      "stopPoint": [
+        {
+          "$type": "Tfl.Api.Presentation.Entities.MatchedStop, Tfl.Api.Presentation.Entities",
+          "id": "SYNTH0001",
+          "stationId": "SYNTH0001",
+          "name": "Synthetic Stop A",
+          "lat": 51.496501,
+          "lon": -0.206246,
+          "stopLetter": "S"
+        },
+        {
+          "$type": "Tfl.Api.Presentation.Entities.MatchedStop, Tfl.Api.Presentation.Entities",
+          "id": "SYNTH0002",
+          "stationId": "SYNTH0002",
+          "name": "Synthetic Stop B",
+          "lat": 51.498073,
+          "lon": -0.201916,
+          "stopLetter": "S"
+        },
+        {
+          "$type": "Tfl.Api.Presentation.Entities.MatchedStop, Tfl.Api.Presentation.Entities",
+          "id": "SYNTH0003",
+          "stationId": "SYNTH0003",
+          "name": "Synthetic Stop C",
+          "lat": 51.499196,
+          "lon": -0.198308,
+          "stopLetter": "S"
+        }
+      ]
+    }
+  ],
+  "orderedLineRoutes": [
+    {
+      "name": "Synthetic A - Synthetic C",
+      "naptanIds": ["SYNTH0001", "SYNTH0002", "SYNTH0003"],
+      "serviceType": "Regular"
+    },
+    {
+      "name": "Synthetic A - Synthetic B (night)",
+      "naptanIds": ["SYNTH0001", "SYNTH0002"],
+      "serviceType": "Night"
+    }
+  ]
+}

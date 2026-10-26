@@ -1,0 +1,32 @@
+{
+  "_synthetic": "SYNTHETIC test fixture in the shape of a TfL Unified API response. Not TfL data; line SYN1, its stops and timetable are invented for unit tests.",
+  "timetable": {
+    "routes": [
+      {
+        "schedules": [
+          {
+            "name": "Monday to Friday",
+            "knownJourneys": [],
+            "periods": [
+              {
+                "type": "FrequencyHour",
+                "fromTime": {
+                  "hour": 7,
+                  "minute": 0
+                },
+                "toTime": {
+                  "hour": 10,
+                  "minute": 0
+                },
+                "frequency": {
+                  "lowestFrequency": 6,
+                  "highestFrequency": 10
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

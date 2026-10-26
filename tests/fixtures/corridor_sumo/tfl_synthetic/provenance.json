@@ -1,0 +1,7 @@
+{
+  "_synthetic": "SYNTHETIC test fixture in the shape of a TfL Unified API response. Not TfL data; line SYN1, its stops and timetable are invented for unit tests.",
+  "source": "SYNTHETIC fixture (not the TfL Unified API)",
+  "synthetic": true,
+  "lines": ["syn1"],
+  "requests": []
+}

@@ -18,6 +18,7 @@ LAYERS = {
     "buildings": ("buildings", "building"),
     "building_parts": ("buildings", "building_part"),
     "segments": ("transportation", "segment"),
+    "connectors": ("transportation", "connector"),
     "land_use": ("base", "land_use"),
     "land_cover": ("base", "land_cover"),
     "land": ("base", "land"),
@@ -74,7 +75,11 @@ COLUMNS = {
         "road_flags",
         "level_rules",
         "width_rules",
+        "connectors",
+        "speed_limits",
+        "access_restrictions",
     ],
+    "connectors": ["id", "geometry"],
     "land_use": ["id", "geometry", "names", "subtype", "class", "surface", "level"],
     "land_cover": ["id", "geometry", "subtype"],
     "land": ["id", "geometry", "subtype", "class", "level"],
@@ -181,19 +186,24 @@ def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("config", type=Path, help="project/<scene>/configs/image_to_threejs.json")
     p.add_argument("out", type=Path, help="output directory (e.g. project/<scene>/input/overture)")
-    p.add_argument("--layers", nargs="*", default=list(LAYERS))
+    # Connectors (road graph nodes) are only needed by the traffic network builder.
+    p.add_argument("--layers", nargs="*", default=[k for k in LAYERS if k != "connectors"])
     args = p.parse_args()
     cfg = json.loads(args.config.read_text())
     origin, half = cfg["origin"], cfg["domain_m"] / 2
     enu = Enu(origin["longitude"], origin["latitude"])
     bbox = enu.inverse_bbox(half)
     args.out.mkdir(parents=True, exist_ok=True)
+    previous = args.out / "index.json"
+    kept = json.loads(previous.read_text()) if previous.exists() else {}
+    kept = kept.get("layers", {}) if kept.get("release") == cfg["overture_release"] else {}
     index = {
         "release": cfg["overture_release"],
         "bbox_wgs84": bbox,
         "origin": origin,
         "license": "Overture Maps (ODbL for OSM-derived features; see docs.overturemaps.org)",
-        "layers": {},
+        # Layers fetched earlier into the same directory stay listed with their hashes.
+        "layers": {k: v for k, v in kept.items() if (args.out / v["path"]).exists()},
     }
     for layer in args.layers:
         path = args.out / f"{layer}.json"

@@ -1,0 +1,57 @@
+{
+  "scene_id": "imperial_corridor",
+  "geometry_config": "configs/image_to_threejs.json",
+  "overture_dir": "overture_transport",
+  "network": {
+    "skip_subclasses": ["parking_aisle", "driveway"],
+    "include_tunnels": true,
+    "include_private": false,
+    "tls_min_major": 3,
+    "netconvert": {
+      "junctions.join-dist": 12,
+      "tls.join-dist": 25,
+      "junctions.corner-detail": 5
+    }
+  },
+  "simulation": {
+    "begin_s": 0,
+    "end_s": 1200,
+    "record_from_s": 300,
+    "step_s": 1,
+    "seed": 42,
+    "time_to_teleport_s": 120
+  },
+  "demand": {
+    "seed": 42,
+    "car": {
+      "period_s": 0.6,
+      "fringe_factor": 10,
+      "min_distance_m": 1500
+    },
+    "taxi": {
+      "period_s": 4.0,
+      "fringe_factor": 3,
+      "min_distance_m": 800
+    },
+    "synthetic_bus": {
+      "routes": 24,
+      "headway_s": 480,
+      "min_distance_m": 3000,
+      "speed_exponent": 4
+    }
+  },
+  "tfl": {
+    "enabled": true,
+    "fetch_if_missing": true,
+    "timetable": true,
+    "stop_search_radius_m": 1000,
+    "schedule": "Monday to Friday",
+    "hour": 8,
+    "default_headway_s": null,
+    "dwell_s": 20
+  },
+  "export": {
+    "max_concurrent_vehicles": 1200,
+    "max_bin_bytes": 14000000
+  }
+}
