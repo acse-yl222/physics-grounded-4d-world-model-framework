@@ -660,6 +660,26 @@ def build_fixtures(infra):
     return dict(out)
 
 
+def add_terrain(scene, cfg, index_path):
+    """Attach the configured DEM to the scene (see terrain.py)."""
+    try:
+        from .fetch_terrain import load_dem
+        from .terrain import apply_terrain, scene_terrain
+    except ImportError:
+        from fetch_terrain import load_dem
+        from terrain import apply_terrain, scene_terrain
+
+    opts = cfg.get("terrain") or {}
+    dem, index = load_dem(index_path)
+    record = scene_terrain(
+        dem,
+        index,
+        dx=opts.get("scene_grid_m", 10.0),
+        half=opts.get("half_m", cfg["domain_m"] / 2 + 100),
+    )
+    scene["source"]["terrain"] = apply_terrain(scene, record)
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("config", type=Path)
@@ -669,6 +689,11 @@ def main() -> None:
         "--claims",
         type=Path,
         help="landmarks/index.json; tags footprints replaced by landmark modules",
+    )
+    p.add_argument(
+        "--terrain",
+        type=Path,
+        help="DEM index.json (fetch_terrain.py); adds scene terrain and ground levels",
     )
     args = p.parse_args()
     cfg = json.loads(args.config.read_text())
@@ -704,6 +729,8 @@ def main() -> None:
         "placements": build_placements(infra, roads),
     }
     scene["source"]["conflicts_resolved"] = resolve(scene)
+    if args.terrain:
+        add_terrain(scene, cfg, args.terrain)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(scene, separators=(",", ":")))
     inferred = sum(

@@ -4,14 +4,16 @@
 //   landmark=<id>&context=<m>        one landmark plus generic surroundings
 //   x=<m>&y=<m>&r=<m>                a city region centred on (x, y)
 //   shadows=1                        enable sun shadows
-// window.studio exposes ready, view(name), stats and exportLayers(spec).
+// window.studio exposes ready, view(name), stats and exportLayers(spec); exportLayers
+// also accepts a 'terrain' layer (the base heightfield of scenes with terrain).
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
 import { buildGeneric } from './three/generic.mjs';
 import { assetObject, loadAssets } from './three/assets.mjs';
-import { buildFurniture, buildGround, buildTrees } from './three/ground.mjs';
+import { buildFurniture, buildGround, buildTerrain, buildTrees } from './three/ground.mjs';
 import { buildLandmark, loadLandmark } from './three/landmarks.mjs';
+import { elevation, hasTerrain } from './three/terrain.mjs';
 import { animateWater } from './three/water.mjs';
 
 const params = new URLSearchParams(location.search);
@@ -69,12 +71,15 @@ scene3.environment = skyEnvironment();
 scene3.environmentIntensity = 0.6;
 
 const enu = (x, y, z) => new THREE.Vector3(x, z, -y);
-let focus = { x: 0, y: 0, z: 0, size: 1000 };
+// ground: terrain height the views are taken relative to (0 on flat scenes).
+let focus = { x: 0, y: 0, z: 0, size: 1000, ground: 0 };
+let terrainScene = null;
 
 function placeSun() {
   const d = focus.size * 2;
-  sun.position.copy(enu(focus.x - d * 0.5, focus.y - d * 0.8, d * 0.9));
-  sun.target.position.copy(enu(focus.x, focus.y, 0));
+  const g = focus.ground ?? 0;
+  sun.position.copy(enu(focus.x - d * 0.5, focus.y - d * 0.8, g + d * 0.9));
+  sun.target.position.copy(enu(focus.x, focus.y, g));
   const s = sun.shadow.camera;
   s.left = s.bottom = -focus.size;
   s.right = s.top = focus.size;
@@ -86,6 +91,7 @@ function placeSun() {
 /** Named camera views around the focus: ne/nw/se/sw (aerial), top, street_<dir>. */
 function view(name = 'ne') {
   const { x, y, z } = focus;
+  const g = focus.ground ?? 0;
   const size = focus.size * Number(params.get('zoom') ?? 1);
   const dirs = {
     n: [0, 1],
@@ -98,17 +104,19 @@ function view(name = 'ne') {
     sw: [-1, -1],
   };
   let eye,
-    target = enu(x, y, z);
-  if (name === 'top') eye = enu(x, y - 1, size * 2.2);
+    target = enu(x, y, z + g);
+  if (name === 'top') eye = enu(x, y - 1, g + size * 2.2);
   else if (name.startsWith('street_')) {
     const [dx, dy] = dirs[name.slice(7)] ?? dirs.s;
     const l = Math.hypot(dx, dy);
-    eye = enu(x + (dx / l) * size * 2.4, y + (dy / l) * size * 2.4, 1.7);
-    target = enu(x, y, Math.max(z * 0.8, 8));
+    const ex = x + (dx / l) * size * 2.4,
+      ey = y + (dy / l) * size * 2.4;
+    eye = enu(ex, ey, (terrainScene ? elevation(terrainScene, ex, ey) : 0) + 1.7);
+    target = enu(x, y, g + Math.max(z * 0.8, 8));
   } else {
     const [dx, dy] = dirs[name] ?? dirs.ne;
     const l = Math.hypot(dx, dy);
-    eye = enu(x + (dx / l) * size * 2.1, y + (dy / l) * size * 2.1, z + size * 1.3);
+    eye = enu(x + (dx / l) * size * 2.1, y + (dy / l) * size * 2.1, g + z + size * 1.3);
   }
   camera.position.copy(eye);
   controls.target.copy(target);
@@ -160,6 +168,7 @@ async function freeStanding(index, scene, assets) {
 
 async function main() {
   const scene = await loadScene();
+  if (hasTerrain(scene)) terrainScene = scene;
   const index = await landmarkIndex();
   const assets = await loadAssets();
   const allClaims = new Set(index.flatMap((l) => l.claims ?? []));
@@ -195,6 +204,7 @@ async function main() {
       s = box.getSize(new THREE.Vector3());
     // Back to ENU: three (x, y, z) = ENU (x, z, -y)
     focus = { x: c.x, y: -c.z, z: s.y / 2, size: Math.max(s.x, s.z, s.y, 20) * 0.55 };
+    if (terrainScene) focus.ground = box.min.y;
     const r = Number(params.get('context') ?? Math.max(120, focus.size * 2.5));
     bounds = { x0: focus.x - r, y0: focus.y - r, x1: focus.x + r, y1: focus.y + r };
     stats.landmark = { id, triangles: triangles(obj), size: [s.x, s.z, s.y] };
@@ -204,6 +214,7 @@ async function main() {
       r = Number(params.get('r') ?? 400);
     bounds = { x0: x - r, y0: y - r, x1: x + r, y1: y + r };
     focus = { x, y, z: 0, size: r * 0.55 };
+    if (terrainScene) focus.ground = elevation(scene, x, y);
     if (params.get('landmarks') !== '0') {
       for (const l of index) {
         const b = scene.buildings.find((q) => q.id === l.claims?.[0]);
@@ -271,9 +282,12 @@ async function exportLayers(spec) {
     root.rotation.x = -Math.PI / 2; // ENU z-up -> glTF y-up
     root.name = `${spec.prefix ?? ''}${layer}`;
     if (layer === 'buildings') root.add(buildGeneric(scene, { bounds: spec.bounds, skip: claims }));
+    // With a separate terrain layer the ground layer holds only the draped features.
+    if (layer === 'terrain') root.add(buildTerrain(scene, { bounds: spec.bounds }));
     if (layer === 'ground') {
       const cutouts = (await freeStanding(index, scene, assets)).map((f) => f.box);
-      root.add(buildGround(scene, { bounds: spec.bounds, cutouts }));
+      const base = !(hasTerrain(scene) && spec.layers.includes('terrain'));
+      root.add(buildGround(scene, { bounds: spec.bounds, cutouts, base }));
     }
     if (layer === 'trees') {
       const cutouts = (await freeStanding(index, scene, assets)).map((f) => f.box);

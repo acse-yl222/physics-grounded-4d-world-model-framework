@@ -71,12 +71,13 @@ export function assetObject(def, detail = 'high') {
 
 /**
  * Instance an asset at placements [[x, y, heading, ...], ...] in scene ENU metres.
- * scaleOf(placement) may return a number (uniform) or [sx, sy, sz].
+ * scaleOf(placement) may return a number (uniform) or [sx, sy, sz]; zOf(placement),
+ * when given, sets each base height (e.g. the terrain elevation) instead of `z`.
  */
 export function instance(
   def,
   placements,
-  { scaleOf = () => 1, z = 0, name, detail = 'high' } = {},
+  { scaleOf = () => 1, z = 0, zOf = null, name, detail = 'high' } = {},
 ) {
   const group = new THREE.Group();
   group.name = name ?? `assets:${def.id}`;
@@ -92,7 +93,7 @@ export function instance(
       const sc = scaleOf(p);
       Array.isArray(sc) ? s.set(...sc) : s.setScalar(sc);
       q.setFromAxisAngle(up, p[2] ?? 0);
-      m.compose(new THREE.Vector3(p[0], p[1], z), q, s);
+      m.compose(new THREE.Vector3(p[0], p[1], zOf ? zOf(p) : z), q, s);
       mesh.setMatrixAt(k, m);
     });
     mesh.computeBoundingSphere();

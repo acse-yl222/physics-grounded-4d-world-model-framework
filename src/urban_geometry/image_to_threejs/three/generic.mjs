@@ -31,6 +31,9 @@ const PASTELS = [
   [0.9, 1, 0.92],
   [0.98, 0.92, 1],
 ];
+// Walls of buildings on terrain start this far below their ground (`ground_z`, or the
+// `ground_plane` of sloping terraces).
+export const FOOT_M = 0.5;
 const BAY = { glass: 3.0, modern_clad: 3.3, concrete: 3.4, metal_clad: 5, ragstone: 5.5 };
 const STOREY = { metal_clad: 4.5, ragstone: 6, glass: 3.6, portland_stone: 3.7 };
 
@@ -70,7 +73,7 @@ function roofKind(b, style) {
   return 'slate';
 }
 
-function shell(batch, b, piece, style, color) {
+function shell(batch, b, piece, style, color, foot = 0) {
   const variants = FACADES[style]?.colors.length ?? 1;
   const wall = facade(style, Math.floor(b.seed * 97) % variants);
   const bay = (BAY[style] ?? 3.6) * (0.9 + 0.25 * ((b.seed * 13.7) % 1));
@@ -81,10 +84,12 @@ function shell(batch, b, piece, style, color) {
   const kind = PITCHED[piece.roof];
   const rise = kind ? Math.min(piece.roofH || 3, (piece.h - minh) * 0.6) : 0;
   const eave = piece.h - rise;
-  let z = minh;
+  // On terrain (foot > 0) ground-level walls reach below the footprint's lowest point.
+  const base = foot > 0 ? -foot : 0;
+  let z = minh || base;
   // Shopfront band on commercial ground floors.
   if (!minh && (b.group === 'commercial' || b.cls === 'retail') && eave > 6) {
-    walls(batch, shopfront(Math.floor(b.seed * 53) % 6), piece.polys, 0, 4.2, {
+    walls(batch, shopfront(Math.floor(b.seed * 53) % 6), piece.polys, base, 4.2, {
       bay: 4.2,
       storey: 4.2,
       uvBase: 0,
@@ -206,9 +211,23 @@ function vessel(batch, b) {
   box(batch, mat('dark_steel'), cx, cy, 0.7 + cabinH, len * 0.75, beam * 0.86, 0.12, angle);
 }
 
+/** Vertex counts per material bucket, to lift what is added after this point. */
+function mark(batch) {
+  return new Map([...batch.buckets].map(([m, bk]) => [m, bk.p.length]));
+}
+
+/** Raise every vertex added to the batch since `marks` by dz(x, y). */
+function lift(batch, marks, dz) {
+  for (const [m, bk] of batch.buckets)
+    for (let k = marks.get(m) ?? 0; k < bk.p.length; k += 3)
+      bk.p[k + 2] += dz(bk.p[k], bk.p[k + 1]);
+}
+
 /**
  * Build all generic buildings whose centroid falls inside `bounds`
- * ({x0,y0,x1,y1}); landmark-claimed footprints are skipped.
+ * ({x0,y0,x1,y1}); landmark-claimed footprints are skipped. Buildings with a
+ * `ground_z` (scenes with terrain) stand on it, walls extended FOOT_M lower, and
+ * vessels float at it (their water level).
  */
 export function buildGeneric(scene, { bounds, skip = new Set() } = {}) {
   const batch = new MeshBatch();
@@ -217,16 +236,24 @@ export function buildGeneric(scene, { bounds, skip = new Set() } = {}) {
     if (b.landmark || skip.has(b.id)) continue;
     const [x, y] = b.c;
     if (bounds && (x < bounds.x0 || x >= bounds.x1 || y < bounds.y0 || y >= bounds.y1)) continue;
-    if (b.vessel) {
-      vessel(batch, b);
-      count++;
-      continue;
+    const ground = Number.isFinite(b.ground_z) ? b.ground_z : null;
+    const marks = ground === null ? null : mark(batch);
+    const foot = ground === null || b.vessel ? 0 : FOOT_M;
+    if (b.vessel) vessel(batch, b);
+    else {
+      const style = b.style;
+      const color = tint(b, style);
+      if (b.parts?.length)
+        for (const p of b.parts)
+          shell(batch, b, { ...p, roof: p.roof }, p.style ?? style, color, foot);
+      else shell(batch, b, b, style, color, foot);
     }
-    const style = b.style;
-    const color = tint(b, style);
-    if (b.parts?.length)
-      for (const p of b.parts) shell(batch, b, { ...p, roof: p.roof }, p.style ?? style, color);
-    else shell(batch, b, b, style, color);
+    if (marks && b.ground_plane) {
+      // Long footprints on an even slope (terraces) are sheared onto it.
+      const [z0, gx, gy] = b.ground_plane,
+        [cx, cy] = b.c;
+      lift(batch, marks, (x, y) => z0 + gx * (x - cx) + gy * (y - cy));
+    } else if (marks && ground) lift(batch, marks, () => ground);
     count++;
   }
   const group = batch.toGroup('generic_buildings');

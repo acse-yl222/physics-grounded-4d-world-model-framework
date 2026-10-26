@@ -41,6 +41,11 @@ export default {
 - `asset(id)` / `placeAssets(id, [[x, y, heading], …])`: reuse an asset from the
   `resources/` library (street furniture, vehicles, trees) instead of modelling it
   again — e.g. lamps along a forecourt or a K6 kiosk beside an entrance.
+- Terrain: always model on flat ground at z = 0. On scenes with terrain the loader
+  lifts the whole object to its ground level (`ctx.ground`: the lowest `ground_z` of
+  the claims; bridges over water to the bank level) and moves vertices at z = 0 down
+  to the terrain where it falls away. `ctx.elevation(x, y)` gives the absolute
+  terrain height (0 on flat scenes) if a module needs it.
 
 ## Kit (`ctx.kit`, see `three/kit.mjs`)
 

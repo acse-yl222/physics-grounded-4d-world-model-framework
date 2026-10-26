@@ -1,6 +1,7 @@
 """Scene preparation for the image-to-three.js city generator."""
 
 import json
+import math
 import subprocess
 import sys
 import tempfile
@@ -10,11 +11,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+import numpy as np
+
 from urban_geometry.image_to_threejs import (
     check_conflicts,
     fetch_overture,
+    fetch_terrain,
     prepare_scene,
     resolve_conflicts,
+    terrain,
 )
 
 SQUARE_CW = [[0, 0], [0, 10], [6, 10], [6, 0], [0, 0]]
@@ -270,6 +275,158 @@ class ResolveConflictsTest(unittest.TestCase):
         moved, kept = scene["trees"]
         self.assertGreater(moved[1], -50 + 5)
         self.assertEqual(kept, [20, -80, 0.4])
+
+
+class TerrainSourceTest(unittest.TestCase):
+    def test_terrarium_decoding_matches_the_documented_example(self):
+        # docs/formats.md: 2523.266 m encodes as rgb(137, 219, 68) -> 2523.265625.
+        rgb = np.array([[[137, 219, 68], [128, 0, 0]]], dtype=np.uint8)
+        h = fetch_terrain.decode_terrarium(rgb)
+        self.assertAlmostEqual(float(h[0, 0]), 2523.265625, places=4)
+        self.assertEqual(float(h[0, 1]), 0.0)
+
+    def test_tiles_cover_the_domain_and_resampling_follows_web_mercator(self):
+        enu = fetch_overture.Enu(-0.200473, 51.506427)
+        z = 15
+        xr, yr = fetch_terrain.tile_range(enu, 4110, z)
+        self.assertEqual((len(xr), len(yr)), (12, 12))  # ~3 m pixels, 8.2 km square
+        # A mosaic whose value is the pixel-centre x coordinate within the mosaic.
+        cols = np.arange(len(xr) * fetch_terrain.TILE) + 0.5
+        mosaic = np.tile(cols, (len(yr) * fetch_terrain.TILE, 1)).astype(np.float64)
+        xs = np.array([-4100.0, 0.0, 2500.0])
+        ys = np.array([-4100.0, 3000.0])
+        out = fetch_terrain.resample(mosaic, xr[0], yr[0], enu, xs, ys, z)
+        self.assertEqual(out.shape, (2, 3))
+        for i, x in enumerate(xs):
+            lon = enu.lon0 + x / enu.kx
+            px, _ = fetch_terrain.mercator_px(lon, enu.lat0, z)
+            local = float(px) - xr[0] * fetch_terrain.TILE
+            self.assertAlmostEqual(float(out[0, i]), local, delta=0.01)
+        # Rows run south to north: pixel y grows southwards.
+        rows = np.arange(len(yr) * fetch_terrain.TILE) + 0.5
+        mosaic_y = np.tile(rows[:, None], (1, len(xr) * fetch_terrain.TILE))
+        out_y = fetch_terrain.resample(mosaic_y, xr[0], yr[0], enu, xs, ys, z)
+        self.assertGreater(out_y[0, 0], out_y[1, 0])
+
+
+def plane(x, y):
+    return 12.0 + 0.03 * np.asarray(x) - 0.01 * np.asarray(y)
+
+
+def dem_fixture(half=120.0, dx=5.0):
+    xs = fetch_terrain.grid_axis(half, dx)
+    xx, yy = np.meshgrid(xs, xs)
+    index = {"x0": float(xs[0]), "y0": float(xs[0]), "dx": dx}
+    return plane(xx, yy).astype(np.float32), index
+
+
+class SceneTerrainTest(unittest.TestCase):
+    def test_encoding_round_trip_and_size(self):
+        dem, index = dem_fixture()
+        x0, y0, dx, values = terrain.scene_grid(dem, index, 10.0, 100.0)
+        self.assertEqual((x0, dx, values.shape), (-100.0, 10.0, (21, 21)))
+        rec = terrain.encode(values, x0, y0, dx)
+        self.assertEqual(rec["encoding"], "int16le-base64")
+        self.assertEqual(len(rec["z"]), 4 * math.ceil(2 * 21 * 21 / 3))
+        back = terrain.decode(rec)
+        self.assertLessEqual(float(np.abs(back - values).max()), 0.005 + 1e-9)
+        # The [1, 2, 1] filter and decimation keep a plane (inside the edge nodes).
+        xs = x0 + dx * np.arange(21)
+        xx, yy = np.meshgrid(xs, xs)
+        self.assertLess(float(np.abs(back - plane(xx, yy))[1:-1, 1:-1].max()), 0.006)
+        sample = terrain.Sampler(rec)
+        self.assertAlmostEqual(float(sample(3.3, -7.7)), float(plane(3.3, -7.7)), delta=0.006)
+
+    def test_ground_levels_of_buildings_water_and_vessels(self):
+        dem, index = dem_fixture()
+        rec = terrain.encode(*terrain.scene_grid(dem, index, 10.0, 100.0)[3:], -100.0, -100.0, 10.0)
+        scene = {
+            "buildings": [
+                footprint_record("b", BOX(0, 0, 40, 20)),
+                {**footprint_record("boat", BOX(-60, -60, -50, -56)), "vessel": True},
+                footprint_record("terrace", BOX(-90, 10, 90, 18)),
+            ],
+            "water": [
+                {"kind": "river", "poly": [BOX(-80, -80, -40, -40)]},
+                {"kind": "river", "poly": [BOX(-40, -80, 0, -40)]},  # shares an edge
+                {"kind": "pond", "poly": [BOX(50, 50, 70, 70)]},
+            ],
+        }
+        stats = terrain.apply_terrain(scene, rec)
+        b, boat, row = scene["buildings"]
+        # A 180 m terrace on the 3 % slope follows a plane nowhere above the terrain.
+        self.assertNotIn("ground_plane", b)  # 1.4 m of ground spread stays level
+        z0, gx, gy = row["ground_plane"]
+        self.assertAlmostEqual(gx, 0.03, delta=0.002)
+        self.assertAlmostEqual(gy, -0.01, delta=0.002)
+        self.assertAlmostEqual(z0, float(plane(*row["c"])), delta=0.05)
+        self.assertLessEqual(z0, float(plane(*row["c"])) + 0.01)
+        self.assertAlmostEqual(b["ground_z"], float(plane(0, 20)), delta=0.02)
+        self.assertAlmostEqual(b["ground_max"], float(plane(40, 0)), delta=0.02)
+        self.assertNotIn("ground_z", scene["water"][0])
+        river, river2, pond = (w["level"] for w in scene["water"])
+        self.assertEqual(river, river2)
+        self.assertLess(river, float(plane(-40, -60)))  # low percentile of the surface
+        self.assertGreater(pond, float(plane(50, 70)) - 0.01)
+        self.assertEqual(boat["ground_z"], river)
+        self.assertEqual(stats["water_levels"], 3)
+        self.assertEqual(stats["sloped_buildings"], 1)
+        self.assertIn("terrain", scene)
+
+    def test_prepare_cli_adds_terrain_only_when_given(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            layers = {
+                "buildings": [building("b1", SQUARE_CW, num_floors=3)],
+                "building_parts": [],
+                "segments": [],
+                "land_use": [],
+                "land": [],
+                "land_cover": [],
+                "water": [],
+                "infrastructure": [],
+            }
+            index = {"release": "test", "license": "test", "layers": {}}
+            for name, features in layers.items():
+                (tmp / f"{name}.json").write_text(json.dumps({"features": features}))
+                index["layers"][name] = {"sha256": "0" * 64}
+            (tmp / "index.json").write_text(json.dumps(index))
+            config = tmp / "config.json"
+            cfg = {"scene_id": "t", "origin": {"longitude": 0, "latitude": 0}, "domain_m": 200}
+            cfg["terrain"] = {"scene_grid_m": 10.0, "half_m": 110}
+            config.write_text(json.dumps(cfg))
+            dem, grid = dem_fixture()
+            np.save(tmp / "dem.npy", dem)
+            src = {"name": "fixture", "zoom": 15, "imagery_sources": ["uk_lidar"]}
+            src |= {"attribution": ["fixture"], "license": "fixture"}
+            dem_index = {**grid, "file": "dem.npy", "shape": list(dem.shape), "sha256": "1" * 64}
+            dem_index |= {"vertical_datum": "fixture", "source": src}
+            (tmp / "dem.json").write_text(json.dumps(dem_index))
+            script = ROOT / "src/urban_geometry/image_to_threejs/prepare_scene.py"
+            for extra, name in (([], "flat.json"), (["--terrain", tmp / "dem.json"], "hill.json")):
+                subprocess.run(
+                    [sys.executable, script, config, tmp, tmp / name, *extra],
+                    check=True,
+                    capture_output=True,
+                )
+            flat = json.loads((tmp / "flat.json").read_text())
+            hill = json.loads((tmp / "hill.json").read_text())
+            self.assertNotIn("terrain", flat)
+            self.assertNotIn("ground_z", flat["buildings"][0])
+            self.assertEqual(hill["terrain"]["nx"], 23)
+            self.assertEqual(hill["source"]["terrain"]["grid"], [23, 23])
+            self.assertAlmostEqual(
+                hill["buildings"][0]["ground_z"], float(plane(0, 10)), delta=0.02
+            )
+            # Apart from terrain fields the scenes agree.
+            for key in ("terrain",):
+                hill.pop(key)
+            hill["source"].pop("terrain")
+            for b in hill["buildings"]:
+                b.pop("ground_z")
+                b.pop("ground_max")
+                b.pop("ground_plane", None)
+            self.assertEqual(hill, flat)
 
 
 if __name__ == "__main__":
