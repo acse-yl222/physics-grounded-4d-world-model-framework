@@ -9,11 +9,11 @@
       "longitude": -0.200473,
       "latitude": 51.506427,
       "height_m": 0,
-      "vertical_datum": "Flat ground at local zero; no terrain model applied"
+      "vertical_datum": "Scene z is the DEM height in metres. Heights as delivered by Terrarium tiles (metres, no datum conversion documented by Tilezen). The UK source is the Environment Agency LIDAR Composite DTM, published in metres above Ordnance Datum Newlyn (ODN)."
     },
     "bounds_m": {
-      "min": [-4000.0, -4000.0, 0],
-      "max": [4000.0, 4000.0, 129]
+      "min": [-4000.0, -4000.0, -5],
+      "max": [4000.0, 4000.0, 142]
     }
   },
   "inputs": [
@@ -23,6 +23,13 @@
       "source": "Overture Maps release 2026-10-21.0 (s3://overturemaps-us-west-2)",
       "sha256": "c8785e1705e6482932cd5bb2735a17be8883580225edbcdffe207b7b33aecab7",
       "license": "Overture Maps (ODbL for OSM-derived features; see docs.overturemaps.org)"
+    },
+    {
+      "id": "terrain",
+      "path": "input/terrain/index.json",
+      "source": "AWS Terrain Tiles (Tilezen Joerd) terrarium z15 (https://s3.amazonaws.com/elevation-tiles-prod/terrarium/{z}/{x}/{y}.png)",
+      "sha256": "aa3ff9f5e5cc6cd17577490af993384a06ef011bdae5605f6e5c8cbfe45bd978",
+      "license": "United Kingdom terrain data \u00a9 Environment Agency copyright and/or database right 2015. All rights reserved. See https://github.com/tilezen/joerd/blob/master/docs/attribution.md"
     }
   ],
   "default_view": "resolved"

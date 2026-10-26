@@ -119,3 +119,10 @@
   22 m，按 OSM layer 分层、隧道口 200 m 坡道），非实测；状态为时刻表值，非实时；Elizabeth 线与
   Overground 不在该数据中，仅显示轨道与车站。运行 `20261026T144219Z_0b0d68` 以视图 `underground`
   保留并并入默认视图 `resolved`（统一查看器 11/11 图层加载）。
+- 2026-10-26 地形：AWS Terrain Tiles（zoom 15，英国数据源为 Environment Agency 2 m LIDAR DTM，裸地高程，
+  ODN 米；"United Kingdom terrain data © Environment Agency copyright and/or database right 2015."）重采样为
+  5 m ENU DEM（−2.6 至 68.3 m，泰晤士河面约 −1.5 m）。建筑、道路、水面、树木与地标贴合地形；交通轨迹取街面
+  高度（河面由岸边高度填补，高架桥不抬升），地铁深度相对 75 m 低通街面计算。场景竖直基准改为 ODN：
+  城市 `20261026T194153Z_4272ce`（视图 `terrain`）、交通 `20261026T195447Z_b8281a`（`traffic_osm`）、地铁
+  `20261026T195611Z_f0fea9`（`underground`）一起保留，默认视图 `resolved` 12/12 图层加载。仍为平地坐标的旧视图
+  `default`、`detailed`、`traffic_sumo`、`traffic_dft` 已移除（对应运行仍保留在本地 runs 目录）。
