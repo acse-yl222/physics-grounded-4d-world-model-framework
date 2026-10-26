@@ -31,14 +31,29 @@ export default {
       url: 'https://www.sbg.bio.ic.ac.uk/files/SouthKensingtonCampus.pdf',
       used_for: 'Great Hall and common rooms on level 2 of Sherfield',
     },
+    {
+      title: 'Graham Dawbarn - Wikipedia',
+      url: 'https://en.wikipedia.org/wiki/Graham_Dawbarn',
+      used_for:
+        'Dawbarn engaged in 1956 to redevelop Imperial College (context for the 1960s campus style)',
+    },
+    {
+      title: 'Survey of London vol. 38, plate 76',
+      url: 'https://www.british-history.ac.uk/survey-london/vol38/plate-76',
+      used_for: 'college buildings of 1960-9 by Norman and Dawbarn',
+    },
   ],
   notes:
     'No architectural description of the facades was found; the precast concrete ribbon-window elevation, ' +
     'recessed glazed ground floor and plant rooms follow the 1960s campus style and are approximate. ' +
     'The elevated walkway linking east to the Main Entrance crosses other footprints and is not modelled. ' +
-    'Height kept close to the footprint value (main slab 17.5 m, plant to ~20 m).',
-  build({ THREE, kit, byId }) {
+    'Height kept close to the footprint value (main slab 17.5 m, plant to ~20 m). Spandrel bands, mullion ' +
+    "module (1.7 m), entrance positions on the Queen's Lawn side, flues and roof rail are indicative. " +
+    'The architect is not confirmed by the sources found; Norman and Dawbarn were the college architects ' +
+    'for the 1960s rebuilding.',
+  build({ THREE, kit, byId, placeAssets }) {
     const g = new THREE.Group();
+    const M = new THREE.Matrix4();
     const batch = new kit.MeshBatch();
     const main = byId['7dc5fa73-2c5f-4fe1-8da6-4049490f9b37'];
     const annex = byId['72e1599d-430f-4d4b-9966-ce36593a1036'];
@@ -114,6 +129,90 @@ export default {
     }
     // Upper floors.
     kit.walls(batch, ribbon, [[ring]], zG, zTop, { bay: 3.4, storey: 3.33, uvBase: zG });
+    // Real precast spandrel bands projecting at each floor and slim mullions in the
+    // ribbon glazing; floor-edge drip under each band.
+    const mull = kit.mat('#8d8f8e', { roughness: 0.5, metalness: 0.3 });
+    const band = kit.mat('#d9d4c7', { roughness: 0.85 });
+    const ribbonDetail = (rg, zBase, n) => {
+      for (let s = 0; s < n; s++) {
+        const z = zBase + s * 3.33;
+        kit.cornice(batch, band, rg, z - 0.05, { height: 1.2, projection: 0.28 });
+        kit.cornice(batch, kit.mat('#b4afa2'), rg, z - 0.12, { height: 0.07, projection: 0.2 });
+        for (let k = 0; k < rg.length; k++) {
+          const a = rg[k],
+            b = rg[(k + 1) % rg.length];
+          const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+          if (len < 1.5) continue;
+          const nx = (b[1] - a[1]) / len,
+            ny = -(b[0] - a[0]) / len;
+          const m = Math.round(len / 1.7);
+          const ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
+          for (let i = 1; i < m; i++) {
+            const t = i / m;
+            kit.box(
+              batch,
+              mull,
+              a[0] + (b[0] - a[0]) * t + nx * 0.05,
+              a[1] + (b[1] - a[1]) * t + ny * 0.05,
+              z + 1.15,
+              0.08,
+              0.12,
+              2.15,
+              ang,
+            );
+          }
+          // opening-light transom
+          kit.box(
+            batch,
+            mull,
+            (a[0] + b[0]) / 2 + nx * 0.04,
+            (a[1] + b[1]) / 2 + ny * 0.04,
+            z + 2.6,
+            len,
+            0.08,
+            0.06,
+            ang,
+          );
+        }
+      }
+    };
+    ribbonDetail(ring, zG, 4);
+    // Ground-floor glazing mullions and doors behind the pilotis.
+    for (let k = 0; k < inner.length; k++) {
+      const a = inner[k],
+        b = inner[(k + 1) % inner.length];
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      if (len < 1.5) continue;
+      const ang = Math.atan2(b[1] - a[1], b[0] - a[0]);
+      const nx = (b[1] - a[1]) / len,
+        ny = -(b[0] - a[0]) / len;
+      const m = Math.round(len / 1.5);
+      for (let i = 1; i < m; i++) {
+        const t = i / m;
+        kit.box(
+          batch,
+          mull,
+          a[0] + (b[0] - a[0]) * t + nx * 0.05,
+          a[1] + (b[1] - a[1]) * t + ny * 0.05,
+          0,
+          0.1,
+          0.12,
+          zG,
+          ang,
+        );
+      }
+      kit.box(
+        batch,
+        mull,
+        (a[0] + b[0]) / 2 + nx * 0.05,
+        (a[1] + b[1]) / 2 + ny * 0.05,
+        2.6,
+        len,
+        0.12,
+        0.1,
+        ang,
+      );
+    }
     // Parapet coping and roof.
     kit.walls(batch, pale, [[kit.offsetRing(ring, 0.25)]], zTop - 0.6, zTop + 0.6);
     kit.cap(batch, roofMat, [[ring]], zTop + 0.35);
@@ -146,7 +245,94 @@ export default {
       const [x, y] = at(u, v);
       kit.box(batch, louvre, x, y, zTop + 1.0, w + 0.06, d + 0.06, h * 0.45, fr.angle);
     }
+    ribbonDetail(aRing, zG, 4);
+    // Lift overruns, flues and a roof-edge safety rail.
+    for (const [u, v, w, d, h] of [
+      [-35, -4, 4, 4, 2.4],
+      [38, 3, 4, 4, 2.4],
+    ]) {
+      const [x, y] = at(u, v);
+      kit.box(batch, plant, x, y, zTop + 0.35, w, d, h, fr.angle);
+      kit.box(batch, pale, x, y, zTop + 0.35 + h, w + 0.3, d + 0.3, 0.25, fr.angle);
+    }
+    const flue = new THREE.CylinderGeometry(0.3, 0.3, 3.2, 10).rotateX(Math.PI / 2);
+    for (const [u, v] of [
+      [-10, 4],
+      [-8, 4],
+      [28, -3],
+    ]) {
+      const [x, y] = at(u, v);
+      batch.addGeometry(kit.mat('steel'), flue, M.makeTranslation(x, y, zTop + 0.35 + 1.6));
+    }
+    flue.dispose();
+    const railR = kit.offsetRing(ring, -0.6);
+    kit.balustrade(
+      batch,
+      kit.mat('#9aa0a3', { metalness: 0.5, roughness: 0.4 }),
+      [...railR, railR[0]],
+      zTop + 0.6,
+      { height: 1.1, spacing: 2.0 },
+    );
+    // Louvre slats on the plant rooms.
+    for (const [u, v, w, d, h] of blocks) {
+      const [x, y] = at(u, v);
+      for (let z = zTop + 1.0 + h * 0.5; z < zTop + h; z += 0.3)
+        kit.box(batch, louvre, x, y, z, w + 0.04, d + 0.04, 0.06, fr.angle);
+    }
+    // Main entrance from Queen's Lawn on the south face: glazed screen, canopy, steps.
+    let south = null;
+    for (let k = 0; k < ring.length; k++) {
+      const a = ring[k],
+        b = ring[(k + 1) % ring.length];
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      if (len > 40 && b[0] > a[0]) south = { a, b, len };
+    }
+    const entries = [];
+    if (south) {
+      const { a, b, len } = south;
+      const ex = (b[0] - a[0]) / len,
+        ey = (b[1] - a[1]) / len,
+        nx = ey,
+        ny = -ex;
+      const ang = Math.atan2(ey, ex);
+      for (const t of [0.42, 0.75]) {
+        const cx = a[0] + (b[0] - a[0]) * t,
+          cy = a[1] + (b[1] - a[1]) * t;
+        const Pt = (s, o) => [cx + ex * s + nx * o, cy + ey * s + ny * o];
+        let [x, y] = Pt(0, 1.2);
+        kit.box(batch, pale, x, y, zG - 0.9, 9, 4.6, 0.35, ang);
+        kit.box(batch, kit.mat('#2a2f33'), x, y, zG - 0.95, 8.6, 4.2, 0.05, ang);
+        [x, y] = Pt(0, -2.12);
+        kit.box(batch, kit.mat('dark_glass'), x, y, 0, 6, 0.1, 2.6, ang);
+        for (const s of [-3, -1, 1, 3]) {
+          [x, y] = Pt(s, -2.05);
+          kit.box(batch, mull, x, y, 0, 0.12, 0.15, 2.7, ang);
+        }
+        for (let st = 0; st < 3; st++) {
+          [x, y] = Pt(0, 3.6 - st * 0.4);
+          kit.box(
+            batch,
+            kit.mat('#bdb7aa'),
+            x,
+            y,
+            0,
+            9,
+            1.2 - st * 0.0 + 0.4,
+            0.15 * (st + 1),
+            ang,
+          );
+        }
+        entries.push(Pt(-6, 5), Pt(6, 5));
+      }
+    }
     g.add(batch.toGroup('sherfield'));
+    if (entries.length)
+      g.add(
+        placeAssets(
+          'street_lamp',
+          entries.map(([x, y]) => [x, y, Math.PI]),
+        ),
+      );
     return g;
   },
 };

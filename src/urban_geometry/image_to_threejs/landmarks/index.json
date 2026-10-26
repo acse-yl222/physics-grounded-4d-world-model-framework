@@ -22,7 +22,7 @@
         "used_for": "library as one of the buildings framing Queen's Lawn"
       }
     ],
-    "notes": "Concrete panel pattern (vertical fins with deep-set strip windows), ground-floor recess and the setback/height of the glazed roof storeys are proportioned, not measured: concrete block to 15 m, glazed extension to ~22 m (footprint height 16.8 m). The entrance on the lawn side uses the notch in the outline."
+    "notes": "Concrete panel pattern (vertical fins with deep-set strip windows), ground-floor recess and the setback/height of the glazed roof storeys are proportioned, not measured: concrete block to 15 m, glazed extension to ~22 m (footprint height 16.8 m). The entrance on the lawn side uses the notch in the outline. Fin spacing (two per 3.6 m bay), brise-soleil blades, glazed ridge rooflights, roof plant, the roof terrace balustrade and the entrance sign/steps are indicative, not traced from drawings."
   },
   {
     "id": "albert_bridge",
@@ -357,7 +357,7 @@
       {
         "title": "A Quick Tour of the Union Bar - PocketSights",
         "url": "https://pocketsights.stqry.com/tour/53093/preview",
-        "used_for": "archway with the Imperial College coat of arms in the pediment above the entrance; Tudor style"
+        "used_for": "archway with the Imperial College coat of arms in the pediment above the entrance; keystone carved as the head of Athena with her owl headdress; Tudor style"
       },
       {
         "title": "Design for Students' Union, Imperial College - RIBApix",
@@ -365,7 +365,7 @@
         "used_for": "Aston Webb's entrance facade design"
       }
     ],
-    "notes": "No listing text with materials was returned by search; the red brick with Portland stone dressings, slate roofs, dormers and chimneys follow the well-known appearance of the quad and Webb's Imperial work and are approximate. Ranges are split into hipped-roof rectangles fitted to the footprints; eaves at ~13.5 m (Union 14.5 m) so ridges match the footprint heights (16.8 / 17.8 m). Gateway proportions estimated."
+    "notes": "No listing text with materials was returned by search; the red brick with Portland stone dressings, slate roofs, dormers and chimneys follow the well-known appearance of the quad and Webb's Imperial work and are approximate. Ranges are split into hipped-roof rectangles fitted to the footprints; eaves at ~13.5 m (Union 14.5 m) so ridges match the footprint heights (16.8 / 17.8 m). Windows are modelled as stone mullion-and-transom cross windows on every storey (rhythm 3.6 m, not traced); the gatehouse turrets, oriel and pediment proportions, the coat of arms and the Athena keystone are simplified. The courtyard garden (lawns, hedges, paths, trees) comes from the mapped ground layer and is not duplicated here."
   },
   {
     "id": "blackett_laboratory",
@@ -793,7 +793,7 @@
         "used_for": "blue facades chosen partly to reduce solar gain"
       }
     ],
-    "notes": "Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, following the four-storey description. Panel distribution is a deterministic random pattern, not traced; position of the orange columns/ramp and the roof plant are approximate."
+    "notes": "Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, following the four-storey description. Panel distribution is a deterministic random pattern, not traced; position of the orange columns/ramp and the roof plant are approximate. Mullions follow the 1.5 m panel module of the texture; entrance doors, steps, roof rail and condensers are indicative."
   },
   {
     "id": "grosvenor_bridge",
@@ -1090,7 +1090,12 @@
       {
         "title": "Tanaka Business School topping out - Foster + Partners",
         "url": "https://www.fosterandpartners.com/news/tanaka-business-school-at-imperial-college-london-topping-out",
-        "used_for": "drum clad with 12 mm diameter stainless-steel tubes"
+        "used_for": "drum clad with 12 mm stainless-steel tubes; glass facade hung from the roof with wind loads taken to the columns by slender T-section struts; ETFE pillows 20 x 4.2 m"
+      },
+      {
+        "title": "Imperial history - Building magazine",
+        "url": "https://www.building.co.uk/focus/imperial-history/3032948.article",
+        "used_for": "drum sheathed in narrow horizontal stainless-steel tubes acting as acoustic baffles"
       },
       {
         "title": "Imperial College (Tanaka) Business School - manchesterhistory.net",
@@ -1108,7 +1113,7 @@
         "used_for": "canopy / recess over the entrance"
       }
     ],
-    "notes": "Height raised from the footprint value (15-17 m) to the documented 24 m glass facade. Drum diameter, position inside the atrium, column spacing and the sign lettering are proportioned, not measured. Rear (west) elevations abut older college buildings and are given a plain glazed/panel facade."
+    "notes": "Height raised from the footprint value (15-17 m) to the documented 24 m glass facade. Drum diameter, position inside the atrium, column spacing (3.6 m), strut levels, mullion module (1.5 m) and the sign lettering are proportioned, not measured. Rear (west) elevations abut older college buildings and are given a plain painted glazed/panel facade. Bollards, cycle stands and benches on the Exhibition Road footway are indicative."
   },
   {
     "id": "imperial_chemistry_building",
@@ -1778,15 +1783,25 @@
       {
         "title": "Queen's Tower - Imperial College history",
         "url": "https://www.imperial.ac.uk/about/history/queens-tower/",
-        "used_for": "Collcutt neo-renaissance design, belfry and dome stages"
+        "used_for": "Collcutt neo-renaissance design; two Imperial Institute lions by the entrance; 324 steps"
       },
       {
         "title": "Queen's Tower - British Listed Buildings",
         "url": "https://britishlistedbuildings.co.uk/101231643-queens-tower-knightsbridge-and-belgravia-ward",
-        "used_for": "listing description: Portland stone with red brick bands, copper dome"
+        "used_for": "listing: Portland stone with red brick bands, four stages with balustraded balconies, pilaster strips, archway near base, octagonal stage with semicircular turrets and flying buttresses, cupola, gilded finial"
+      },
+      {
+        "title": "Around London in lions - Londonist",
+        "url": "https://londonist.com/london/great-outdoors/around-london-in-lions",
+        "used_for": "lions sculpted by Harry Dixon (1892), originally a quartet"
+      },
+      {
+        "title": "Queen's Tower renovation - Imperial College property",
+        "url": "https://www.imperial.ac.uk/admin-services/property/current-projects/queens-tower/",
+        "used_for": "stone steps around the base of the tower"
       }
     ],
-    "notes": "Footprint orientation from the Overture outline; stage heights proportioned from photos."
+    "notes": "Footprint orientation from the Overture outline; entrance on the south (former Imperial Institute) side. Stage heights (balconies at 30, 50 and 62 m, octagon 71-77 m, dome to 84 m, cupola to 87.5 m), pilaster and window rhythm, arch counts and the lion carving are proportioned from general knowledge of photographs, not measured. The listing wording on whether the turrets sit on the corners or the octagon is ambiguous; turrets are placed on the corners with buttresses flying to the octagon."
   },
   {
     "id": "rca_darwin_building",
@@ -2285,9 +2300,19 @@
         "title": "South Kensington Campus map (PDF)",
         "url": "https://www.sbg.bio.ic.ac.uk/files/SouthKensingtonCampus.pdf",
         "used_for": "Great Hall and common rooms on level 2 of Sherfield"
+      },
+      {
+        "title": "Graham Dawbarn - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Graham_Dawbarn",
+        "used_for": "Dawbarn engaged in 1956 to redevelop Imperial College (context for the 1960s campus style)"
+      },
+      {
+        "title": "Survey of London vol. 38, plate 76",
+        "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-76",
+        "used_for": "college buildings of 1960-9 by Norman and Dawbarn"
       }
     ],
-    "notes": "No architectural description of the facades was found; the precast concrete ribbon-window elevation, recessed glazed ground floor and plant rooms follow the 1960s campus style and are approximate. The elevated walkway linking east to the Main Entrance crosses other footprints and is not modelled. Height kept close to the footprint value (main slab 17.5 m, plant to ~20 m)."
+    "notes": "No architectural description of the facades was found; the precast concrete ribbon-window elevation, recessed glazed ground floor and plant rooms follow the 1960s campus style and are approximate. The elevated walkway linking east to the Main Entrance crosses other footprints and is not modelled. Height kept close to the footprint value (main slab 17.5 m, plant to ~20 m). Spandrel bands, mullion module (1.7 m), entrance positions on the Queen's Lawn side, flues and roof rail are indicative. The architect is not confirmed by the sources found; Norman and Dawbarn were the college architects for the 1960s rebuilding."
   },
   {
     "id": "sir_alexander_fleming_building",
@@ -2317,7 +2342,7 @@
         "used_for": "opening by the Queen, 21 October 1998"
       }
     ],
-    "notes": "Cladding material of the lab elevations was not found in the sources; modelled as pale grey metal panels with ribbon glazing and sun-shading blades. The glazed forum end is placed on the projecting north bay of the footprint; forum length, saw-tooth count and service shaft positions are approximate. Height 23.2 m from the footprint."
+    "notes": "Cladding material of the lab elevations was not found in the sources; modelled as pale grey metal panels with ribbon glazing and sun-shading blades. The glazed forum end is placed on the projecting north bay of the footprint; forum length, saw-tooth count and service shaft positions are approximate. Height 23.2 m from the footprint. Sun-shading blades over every window band, the mullion module (1.8 m), glazing bars, shaft grilles, entrance doors/steps/sign and the cycle stands are indicative."
   },
   {
     "id": "sir_michael_uren_hub",

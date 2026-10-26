@@ -34,8 +34,9 @@ export default {
   notes:
     'Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, ' +
     'following the four-storey description. Panel distribution is a deterministic random pattern, not ' +
-    'traced; position of the orange columns/ramp and the roof plant are approximate.',
-  build({ THREE, kit, buildings }) {
+    'traced; position of the orange columns/ramp and the roof plant are approximate. Mullions follow the ' +
+    '1.5 m panel module of the texture; entrance doors, steps, roof rail and condensers are indicative.',
+  build({ THREE, kit, buildings, placeAssets }) {
     const g = new THREE.Group();
     const batch = new kit.MeshBatch();
     const ring = buildings[0].polys[0][0];
@@ -153,7 +154,104 @@ export default {
     }
     const [cx, cy] = at(0, -fr.width / 2 - 1.1);
     kit.box(batch, soffit, cx, cy, 3.4, 14, 2.6, 0.3, fr.angle);
+    // Silver curtain-wall mullions on the 1.5 m panel module, floor transoms and
+    // intermediate panel transoms, all proud of the glass.
+    const silver = kit.mat('#d3d9de', { roughness: 0.4, metalness: 0.1 });
+    let run2 = 0;
+    for (let k = 0; k < ring.length; k++) {
+      const a = ring[k],
+        b = ring[(k + 1) % ring.length];
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      if (len < 0.05) continue;
+      const dx = (b[0] - a[0]) / len,
+        dy = (b[1] - a[1]) / len,
+        ox = dy,
+        oy = -dx;
+      const an = Math.atan2(dy, dx);
+      // mullions on the painted panel joints (texture runs continuously around the ring)
+      for (let t = Math.ceil(run2 / BAY) * BAY - run2; t <= len + 1e-6; t += BAY)
+        kit.box(
+          batch,
+          silver,
+          a[0] + dx * t + ox * 0.08,
+          a[1] + dy * t + oy * 0.08,
+          0,
+          0.08,
+          0.16,
+          z1,
+          an,
+        );
+      run2 += len;
+      const cx = (a[0] + b[0]) / 2 + ox * 0.1,
+        cy = (a[1] + b[1]) / 2 + oy * 0.1;
+      for (let row = 0; row <= ROWS; row++) {
+        const z = (row * z1) / ROWS;
+        const floor = row % 2 === 0;
+        kit.box(
+          batch,
+          silver,
+          cx,
+          cy,
+          z - (floor ? 0.1 : 0.03),
+          len,
+          floor ? 0.24 : 0.12,
+          floor ? 0.2 : 0.06,
+          an,
+        );
+      }
+    }
+    // Glazed entrance doors, steps and a roof-edge rail.
+    {
+      for (const u of [-3.5, 0, 3.5]) {
+        const [x, y] = at(u, -fr.width / 2 - 0.08);
+        kit.box(batch, kit.mat('dark_glass'), x, y, 0, 2.2, 0.06, 2.6, fr.angle);
+        kit.box(batch, silver, x, y, 2.6, 2.4, 0.12, 0.12, fr.angle);
+      }
+      for (let st = 0; st < 2; st++) {
+        const [x, y] = at(0, -fr.width / 2 - 3.2 + st * 0.5);
+        kit.box(batch, kit.mat('#c9c4b8'), x, y, 0, 14, 1.4 - st * 0.4, 0.15 * (st + 1), fr.angle);
+      }
+    }
+    const railR = kit.offsetRing(ring, -0.5);
+    kit.balustrade(batch, silver, [...railR, railR[0]], z1 + 0.7, { height: 1.1, spacing: 2.0 });
+    // Plant-level louvre fins and rooftop condensers.
+    for (let k = 0; k < plantRing.length; k++) {
+      const a = plantRing[k],
+        b = plantRing[(k + 1) % plantRing.length];
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      const dx = (b[0] - a[0]) / len,
+        dy = (b[1] - a[1]) / len;
+      const an = Math.atan2(dy, dx);
+      for (let t = 0.6; t < len; t += 1.2)
+        kit.box(
+          batch,
+          plantMat,
+          a[0] + dx * t + dy * 0.05,
+          a[1] + dy * t - dx * 0.05,
+          z1 + 0.7,
+          0.08,
+          0.15,
+          2.7,
+          an,
+        );
+    }
+    for (const u of [-6, -1, 4, 9]) {
+      const [x, y] = at(u, 2);
+      kit.box(batch, kit.mat('#9ea3a6'), x, y, z1 + 3.4, 2.2, 1.2, 1.1, fr.angle);
+      const fan = new THREE.CylinderGeometry(0.45, 0.45, 0.06, 12).rotateX(Math.PI / 2);
+      batch.addGeometry(
+        kit.mat('#3a3f42'),
+        fan,
+        new THREE.Matrix4().makeTranslation(x, y, z1 + 4.53),
+      );
+      fan.dispose();
+    }
     g.add(batch.toGroup('faculty_building'));
+    const benches = [-10, 10].map((u) => {
+      const [x, y] = at(u, -fr.width / 2 - 5.5);
+      return [x, y, fr.angle];
+    });
+    g.add(placeAssets('bench', benches));
     return g;
   },
 };

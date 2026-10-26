@@ -28,8 +28,10 @@ export default {
   notes:
     'Concrete panel pattern (vertical fins with deep-set strip windows), ground-floor recess and the ' +
     'setback/height of the glazed roof storeys are proportioned, not measured: concrete block to 15 m, ' +
-    'glazed extension to ~22 m (footprint height 16.8 m). The entrance on the lawn side uses the notch in the outline.',
-  build({ THREE, kit, buildings }) {
+    'glazed extension to ~22 m (footprint height 16.8 m). The entrance on the lawn side uses the notch in the outline. ' +
+    'Fin spacing (two per 3.6 m bay), brise-soleil blades, glazed ridge rooflights, roof plant, the roof terrace ' +
+    'balustrade and the entrance sign/steps are indicative, not traced from drawings.',
+  build({ THREE, kit, buildings, placeAssets }) {
     const g = new THREE.Group();
     const batch = new kit.MeshBatch();
     const ring = buildings[0].polys[0][0];
@@ -125,6 +127,90 @@ export default {
     for (const z of [zG, zG + 3.4, zG + 6.8])
       kit.walls(batch, dark, [[kit.offsetRing(ring, 0.18)]], z - 0.25, z);
 
+    // Projecting precast fins between the deep-set windows (aligned with the panel
+    // texture: two windows per 3.6 m bay), sill ledges and soffit edge at the recess.
+    const fin = kit.mat('#cbc6ba', { roughness: 0.9 });
+    const sillM = kit.mat('#a9a49a');
+    for (let k = 0; k < ring.length; k++) {
+      const a = ring[k],
+        b = ring[(k + 1) % ring.length];
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      if (len < 2.5) continue;
+      const n = Math.max(Math.round(len / 3.6), 1);
+      const ex = (b[0] - a[0]) / len,
+        ey = (b[1] - a[1]) / len,
+        nx = ey,
+        ny = -ex;
+      const ang = Math.atan2(ey, ex);
+      for (let i = 0; i < 2 * n; i++) {
+        const t = (len * (i + 0.82)) / (2 * n);
+        if (t > len - 0.3) continue;
+        kit.box(
+          batch,
+          fin,
+          a[0] + ex * t + nx * 0.2,
+          a[1] + ey * t + ny * 0.2,
+          zG,
+          0.22,
+          0.4,
+          zC - 1.2 - zG,
+          ang,
+        );
+      }
+      for (let st = 0; st < 3; st++) {
+        const z = zG + st * 3.4 + 3.4 * 0.2 - 0.12;
+        kit.box(
+          batch,
+          sillM,
+          (a[0] + b[0]) / 2 + nx * 0.12,
+          (a[1] + b[1]) / 2 + ny * 0.12,
+          z,
+          len - 0.2,
+          0.25,
+          0.1,
+          ang,
+        );
+      }
+    }
+    // Ground-floor glazing mullions and doors behind the columns.
+    const mullM = kit.mat('#585e62', { metalness: 0.4, roughness: 0.4 });
+    for (let k = 0; k < inner.length; k++) {
+      const a = inner[k],
+        b = inner[(k + 1) % inner.length];
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      if (len < 1.2) continue;
+      const ex = (b[0] - a[0]) / len,
+        ey = (b[1] - a[1]) / len,
+        nx = ey,
+        ny = -ex;
+      const ang = Math.atan2(ey, ex);
+      const m = Math.round(len / 1.8);
+      for (let i = 1; i < m; i++) {
+        const t = (len * i) / m;
+        kit.box(
+          batch,
+          mullM,
+          a[0] + ex * t + nx * 0.05,
+          a[1] + ey * t + ny * 0.05,
+          0,
+          0.1,
+          0.12,
+          zG,
+          ang,
+        );
+      }
+      kit.box(
+        batch,
+        mullM,
+        (a[0] + b[0]) / 2 + nx * 0.05,
+        (a[1] + b[1]) / 2 + ny * 0.05,
+        2.7,
+        len,
+        0.12,
+        0.1,
+        ang,
+      );
+    }
     // Two-storey glazed roof extension on the simplified rectangle, set back ~4 m.
     const fr = kit.ringFrame(ring);
     const ca = Math.cos(fr.angle),
@@ -135,6 +221,69 @@ export default {
     const top = [at(-hl, -hw), at(hl, -hw), at(hl, hw), at(-hl, hw)];
     if (kit.ringArea(top) < 0) top.reverse();
     kit.walls(batch, glazing, [[top]], zC, zTop - 0.8, { bay: 3, storey: 3.1, uvBase: zC });
+    // Mullions and transoms of the McAslan glazing, slim steel posts at the corners.
+    for (let k = 0; k < top.length; k++) {
+      const a = top[k],
+        b = top[(k + 1) % top.length];
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      const ex = (b[0] - a[0]) / len,
+        ey = (b[1] - a[1]) / len,
+        nx = ey,
+        ny = -ex;
+      const ang = Math.atan2(ey, ex);
+      const m = Math.round(len / 1.5);
+      for (let i = 0; i <= m; i++) {
+        const t = (len * i) / m;
+        kit.box(
+          batch,
+          metal,
+          a[0] + ex * t + nx * 0.08,
+          a[1] + ey * t + ny * 0.08,
+          zC,
+          i % 2 ? 0.06 : 0.1,
+          0.18,
+          zTop - 0.8 - zC,
+          ang,
+        );
+      }
+      for (const z of [zC + 0.1, zC + 1.7, zC + 4.9])
+        kit.box(
+          batch,
+          metal,
+          (a[0] + b[0]) / 2 + nx * 0.08,
+          (a[1] + b[1]) / 2 + ny * 0.08,
+          z,
+          len,
+          0.14,
+          0.06,
+          ang,
+        );
+      // external brise-soleil blades at the top of each glazed storey
+      for (const z of [zC + 3.0, zTop - 1.3])
+        for (let j = 0; j < 3; j++)
+          kit.box(
+            batch,
+            metal,
+            (a[0] + b[0]) / 2 + nx * (0.35 + j * 0.25),
+            (a[1] + b[1]) / 2 + ny * (0.35 + j * 0.25),
+            z - j * 0.02,
+            len,
+            0.2,
+            0.04,
+            ang,
+          );
+    }
+    // Terrace on the concrete roof around the extension: paving and a glass balustrade.
+    kit.cap(batch, kit.mat('#a8a49c'), [[kit.offsetRing(ring, 0.3)]], zC + 0.02);
+    const railR = kit.offsetRing(ring, -0.4);
+    const glassRail = kit.mat('#b7ccd4', {
+      transparent: true,
+      opacity: 0.35,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    });
+    kit.walls(batch, glassRail, [[railR]], zC, zC + 1.1);
+    kit.walls(batch, metal, [[kit.offsetRing(railR, 0.03)]], zC + 1.05, zC + 1.12);
     // Intermediate floor edge and projecting metal roof.
     kit.walls(batch, metal, [[kit.offsetRing(top, 0.1)]], zC + 3.3, zC + 3.6);
     const roofR = kit.offsetRing(top, 0.9);
@@ -145,8 +294,34 @@ export default {
     const sky = kit.mat('#8fb0c0', { roughness: 0.15, metalness: 0.3 });
     for (let u = -hl + 6; u < hl - 4; u += 9) {
       const [x, y] = at(u, 0);
-      kit.box(batch, sky, x, y, zTop, 3.2, hw * 2 - 6, 0.9, fr.angle);
-      kit.box(batch, metal, x, y, zTop + 0.9, 3.5, hw * 2 - 5.6, 0.12, fr.angle);
+      // glazed ridge rooflight on an upstand kerb
+      kit.box(batch, metal, x, y, zTop, 3.4, hw * 2 - 5.8, 0.45, fr.angle);
+      const hl2 = (hw * 2 - 6) / 2;
+      const rl = [at(u - 1.6, -hl2), at(u + 1.6, -hl2), at(u + 1.6, hl2), at(u - 1.6, hl2)];
+      kit.pitchedRoof(
+        batch,
+        glazing,
+        sky,
+        kit.ringArea(rl) < 0 ? rl.reverse() : rl,
+        fr.angle + Math.PI / 2,
+        zTop + 0.45,
+        1.1,
+        'gabled',
+        { overhang: 0.05 },
+      );
+      const [rx0, ry0] = at(u, -hl2),
+        [rx1, ry1] = at(u, hl2);
+      kit.box(
+        batch,
+        metal,
+        (rx0 + rx1) / 2,
+        (ry0 + ry1) / 2,
+        zTop + 1.5,
+        0.15,
+        hl2 * 2 + 0.1,
+        0.12,
+        fr.angle,
+      );
     }
     // Entrance canopy on the Queen's Lawn side (east) at the notch in the outline.
     let best = null;
@@ -176,7 +351,81 @@ export default {
         Math.atan2(b[1] - a[1], b[0] - a[0]) + Math.PI / 2,
       );
     }
+    // Roof plant between the rooflights: air-handling units with louvre slats and ducts.
+    for (const [uu, vv] of [
+      [-hl + 2.2, hw - 4],
+      [hl - 2.5, -hw + 4],
+    ]) {
+      const [x, y] = at(uu, vv);
+      kit.box(batch, kit.mat('#b8bbbb'), x, y, zTop, 3, 5, 2, fr.angle);
+      for (let z = zTop + 0.3; z < zTop + 1.9; z += 0.22)
+        kit.box(batch, kit.mat('#8d9293'), x, y, z, 3.05, 5.05, 0.05, fr.angle);
+      kit.box(batch, metal, x, y, zTop + 2, 3.2, 5.2, 0.12, fr.angle);
+    }
+    // Entrance: glazed doors under the canopy, steps, name sign; furniture on the lawn side.
+    const extras = [];
+    if (best) {
+      const { a, b, len } = best;
+      const ex = (b[0] - a[0]) / len,
+        ey = (b[1] - a[1]) / len,
+        nx = ey,
+        ny = -ex;
+      const ang = Math.atan2(ey, ex);
+      const cx = (a[0] + b[0]) / 2,
+        cy = (a[1] + b[1]) / 2;
+      const Pt = (s2, o) => [cx + ex * s2 + nx * o, cy + ey * s2 + ny * o];
+      let [x, y] = Pt(0, -1.42);
+      kit.box(batch, kit.mat('dark_glass'), x, y, 0, 5.2, 0.08, 3.0, ang);
+      for (const s2 of [-2.6, -1.3, 0, 1.3, 2.6]) {
+        [x, y] = Pt(s2, -1.36);
+        kit.box(batch, mullM, x, y, 0, 0.1, 0.12, 3.1, ang);
+      }
+      [x, y] = Pt(0, -1.36);
+      kit.box(batch, mullM, x, y, 2.3, 5.2, 0.12, 0.1, ang);
+      for (let st = 0; st < 3; st++) {
+        [x, y] = Pt(0, 3.6 - st * 0.35);
+        kit.box(batch, kit.mat('#bdb7aa'), x, y, 0, 8.5, 1.0 + st * 0.7, 0.14 * (st + 1), ang);
+      }
+      const signM = kit.paintedMaterial('abdus_salam_library:sign', 512, 64, (c, w, h) => {
+        c.fillStyle = '#e6e8e8';
+        c.fillRect(0, 0, w, h);
+        c.fillStyle = '#003e74';
+        c.font = 'bold 34px sans-serif';
+        c.textAlign = 'center';
+        c.textBaseline = 'middle';
+        c.fillText('Abdus Salam Library', w / 2, h / 2 + 2);
+      });
+      const s0 = Pt(3.8, 3.3),
+        s1 = Pt(-3.8, 3.3);
+      // sign on the canopy fascia, facing outward (edge s0 -> s1 has the outside on its right)
+      batch.quad(
+        signM,
+        [s1[0], s1[1], 3.05],
+        [s0[0], s0[1], 3.05],
+        [s0[0], s0[1], 3.75],
+        [s1[0], s1[1], 3.75],
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 1],
+      );
+      for (const s2 of [-6, 6]) extras.push(Pt(s2, 5.5));
+    }
     g.add(batch.toGroup('abdus_salam_library'));
+    if (extras.length) {
+      g.add(
+        placeAssets(
+          'bench',
+          extras.map(([x, y]) => [x, y, -Math.PI / 2]),
+        ),
+      );
+      g.add(
+        placeAssets(
+          'bicycle_stand',
+          extras.map(([x, y], i) => [x, y + (i ? 3 : -3), 0]),
+        ),
+      );
+    }
     return g;
   },
 };
