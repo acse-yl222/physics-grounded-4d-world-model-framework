@@ -43,6 +43,12 @@ export default {
       used_for: 'Southern Terrace living wall, ~170 m long (low-reliability source)',
     },
     {
+      title: 'Westfield London, White City - Barbour Product Search',
+      url: 'https://www.barbourproductsearch.info/westfield-london-white-city-news013924.html',
+      used_for:
+        'two external terraces (Southern Terrace and Wood Lane) holding the main entrances and restaurants; curved steps and planters rising from street level to the elevated entrances',
+    },
+    {
       title: 'John Lewis, White City - Allies and Morrison',
       url: 'https://www.alliesandmorrison.com/projects/john-lewis-white-city',
       used_for:
@@ -50,8 +56,8 @@ export default {
     },
   ],
   notes:
-    'Mall street layout is taken from the Overture building parts that trace the figure-of-eight (they are unroofed inside the 13.6 m box), so the glass vaults follow those outlines; vault rise (4-5 m), node domes and the lattice pattern are stylised. Upper volumes in the northern extension other than John Lewis are drawn as clad decks. External cladding colours, entrance positions and signage are approximate.',
-  build({ THREE, kit, buildings }) {
+    'Mall street layout is taken from the Overture building parts that trace the figure-of-eight (they are unroofed inside the 13.6 m box), so the glass vaults follow those outlines; vault rise (4-5 m), node domes and the member pattern (3.2 m squares triangulated by diagonals, drawn as steel ribbons over the glazing) are stylised rather than the real Knippers Helbig mesh. Entrance curtain-wall grid, canopy columns, the Wood Lane terrace (curved steps drawn as straight flights) and planters, pilaster rhythm, John Lewis embrasure spacing, living-wall planting clumps and rooftop plant are approximate. Upper volumes in the northern extension other than John Lewis are drawn as clad decks. External cladding colours and signage are approximate.',
+  build({ THREE, kit, buildings, placeAssets }) {
     const g = new THREE.Group();
     const batch = new kit.MeshBatch();
     const DS = { side: THREE.DoubleSide };
@@ -171,8 +177,8 @@ export default {
         x.fillStyle = gr;
         x.fillRect(0, 0, w, h);
         // Triangulated lattice of the grid shell (rod-node mesh).
-        x.strokeStyle = '#eef1f2';
-        x.lineWidth = 5;
+        x.strokeStyle = 'rgba(238,241,242,0.35)';
+        x.lineWidth = 2;
         x.beginPath();
         for (let k = 0; k <= w; k += 64) {
           x.moveTo(k, 0);
@@ -190,9 +196,29 @@ export default {
       },
       { roughness: 0.15, metalness: 0.4, side: THREE.DoubleSide },
     );
-    const roofM = kit.mat('#d7d9d7', { roughness: 0.9, side: THREE.DoubleSide });
+    const roofM = kit.paintedMaterial(
+      'westfield:roof',
+      256,
+      256,
+      (x, w, h) => {
+        x.fillStyle = '#c9cbc8';
+        x.fillRect(0, 0, w, h);
+        const r = kit.rng(0.55);
+        for (let k = 0; k < 900; k++) {
+          x.fillStyle = `rgba(${r() > 0.5 ? 255 : 90},${r() > 0.5 ? 255 : 95},95,0.05)`;
+          x.fillRect(r() * w, r() * h, 3, 3);
+        }
+        // Membrane sheet seams (1 m sheets) and walkway lines.
+        x.fillStyle = 'rgba(0,0,0,0.07)';
+        for (let k = 0; k < w; k += 32) x.fillRect(k, 0, 2, h);
+        x.fillStyle = 'rgba(255,255,255,0.25)';
+        x.fillRect(0, 120, w, 10);
+      },
+      { roughness: 0.9, side: THREE.DoubleSide },
+    );
     const roofDark = kit.mat('#a6aaa9', { roughness: 0.9, side: THREE.DoubleSide });
     const plant = kit.mat('#8d9396', DS);
+    const plantDark = kit.mat('#5d6366', DS);
     const steel = kit.mat('white_steel', DS);
     const signM = kit.paintedMaterial(
       'westfield:sign',
@@ -300,7 +326,23 @@ export default {
         if (!inside([r], x, y) || segDist([r], x, y) < 6) continue;
         const w = 3 + rnd() * 6,
           d = 2 + rnd() * 4;
-        kit.box(batch, plant, x, y, z, w, d, 1.2 + rnd() * 1.8, 0.26);
+        const hh = 1.2 + rnd() * 1.8;
+        kit.box(batch, plant, x, y, z, w, d, hh, 0.26);
+        // Air-handling unit: louvred side band and extract fans on top.
+        kit.box(batch, plantDark, x, y, z + hh * 0.35, w + 0.04, d + 0.04, hh * 0.3, 0.26);
+        const nfan = Math.max(1, Math.floor(w / 2.4));
+        for (let f = 0; f < nfan; f++) {
+          const o = (f - (nfan - 1) / 2) * 2.2;
+          const fx = x + Math.cos(0.26) * o,
+            fy = y + Math.sin(0.26) * o;
+          const fan = new THREE.CylinderGeometry(0.8, 0.8, 0.35, 12).rotateX(Math.PI / 2);
+          batch.addGeometry(
+            plantDark,
+            fan,
+            new THREE.Matrix4().makeTranslation(fx, fy, z + hh + 0.17),
+          );
+          fan.dispose();
+        }
         placed++;
       }
     };
@@ -315,6 +357,38 @@ export default {
       [-1378, 92],
       [-1505, 245],
     ];
+    const memberM = kit.mat('#eef0f1', { roughness: 0.4, metalness: 0.5, side: THREE.DoubleSide });
+    const member = (P, Q) => {
+      const dx = Q[0] - P[0],
+        dy = Q[1] - P[1];
+      const l = Math.hypot(dx, dy) || 1;
+      const nx = (-dy / l) * 0.07,
+        ny = (dx / l) * 0.07;
+      const up = 0.05,
+        dn = 0.22;
+      batch.quad(
+        memberM,
+        [P[0] - nx, P[1] - ny, P[2] + up],
+        [Q[0] - nx, Q[1] - ny, Q[2] + up],
+        [Q[0] + nx, Q[1] + ny, Q[2] + up],
+        [P[0] + nx, P[1] + ny, P[2] + up],
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 1],
+      );
+      batch.quad(
+        memberM,
+        [P[0], P[1], P[2] + up],
+        [Q[0], Q[1], Q[2] + up],
+        [Q[0], Q[1], Q[2] - dn],
+        [P[0], P[1], P[2] - dn],
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 1],
+      );
+    };
     const vault = (rings, base, rise, cell = 1.6) => {
       const all = rings.flat();
       const xs = all.map((p) => p[0]),
@@ -355,6 +429,11 @@ export default {
             p01 = P(i, j + 1);
           const uv = (p) => [p[0] / 6, p[1] / 6];
           batch.quad(glassRoof, p00, p10, p11, p01, uv(p00), uv(p10), uv(p11), uv(p01));
+          // Steel members of the grid shell: a 3.2 m square grid triangulated
+          // by diagonals (rod-and-node mesh), as ribbons standing proud of the glass.
+          if (j % 2 === 0) member(p00, p10);
+          if (i % 2 === 0) member(p00, p01);
+          if ((i - j) % 2 === 0) member(p00, p11);
         }
       // Steel edge beam around the springing line.
       for (const r of rings) for (const e of edges(r)) wallEdge(steel, e, base - 0.6, base + 0.25);
@@ -367,11 +446,58 @@ export default {
     for (const e of edges(mainRing)) {
       const isEntrance = e.len > 25 && (e.nx < -0.85 || (e.ny < -0.85 && e.a[0] < -1500));
       wallEdge(isEntrance ? entrance : clad, e, 0, mainH, 3.6, mainH / 2);
+      const tx = (e.b[0] - e.a[0]) / e.len,
+        ty = (e.b[1] - e.a[1]) / e.len;
+      if (isEntrance) {
+        // Curtain-wall mullions and transoms over the glazed entrance bays.
+        const n = Math.round(e.len / 2.4);
+        for (let i = 1; i < n; i++) {
+          const t = (e.len * i) / n;
+          kit.box(
+            batch,
+            steel,
+            e.a[0] + tx * t + e.nx * 0.12,
+            e.a[1] + ty * t + e.ny * 0.12,
+            0,
+            0.1,
+            0.25,
+            mainH - 0.3,
+            Math.atan2(ty, tx),
+          );
+        }
+        for (const z of [3.2, 6.6, 9.8])
+          kit.box(
+            batch,
+            steel,
+            (e.a[0] + e.b[0]) / 2 + e.nx * 0.1,
+            (e.a[1] + e.b[1]) / 2 + e.ny * 0.1,
+            z,
+            e.len,
+            0.2,
+            0.12,
+            Math.atan2(ty, tx),
+          );
+      } else if (e.len > 8) {
+        // Clad elevations: pilaster fins every ~7 m.
+        const n = Math.round(e.len / 7.2);
+        for (let i = 0; i <= n; i++) {
+          const t = (e.len * i) / n;
+          kit.box(
+            batch,
+            clad,
+            e.a[0] + tx * t + e.nx * 0.25,
+            e.a[1] + ty * t + e.ny * 0.25,
+            0,
+            0.7,
+            0.5,
+            mainH,
+            Math.atan2(ty, tx),
+          );
+        }
+      }
       if (isEntrance && e.len > 40) {
         const mx = (e.a[0] + e.b[0]) / 2 + e.nx * 0.3,
           my = (e.a[1] + e.b[1]) / 2 + e.ny * 0.3;
-        const tx = (e.b[0] - e.a[0]) / e.len,
-          ty = (e.b[1] - e.a[1]) / e.len;
         batch.quad(
           signM,
           [mx - tx * 9, my - ty * 9, mainH - 4.2],
@@ -400,8 +526,47 @@ export default {
           5.9,
           { down: true },
         );
+        kit.walls(batch, steel, [[ccw(cp)]], 5.9, 6.2, { bay: 1e6 });
+        // Canopy columns and glazed doors beneath.
+        for (const t of [0, 9.3, 18.6, 28]) {
+          const px = c0[0] + tx * t + e.nx * 6.4,
+            py = c0[1] + ty * t + e.ny * 6.4;
+          kit.box(batch, steel, px, py, 0, 0.35, 0.35, 5.9, Math.atan2(ty, tx));
+        }
+        kit.windowRow(batch, c0, c1, 0.1, {
+          glass: kit.mat('#3a4a55'),
+          frame: steel,
+          sill: steel,
+          bay: 3.5,
+          width: 2.6,
+          height: 2.8,
+          margin: 1,
+          head: 'none',
+          bars: 1,
+        });
+        // Raised entrance terrace with curved steps and planters (Wood Lane).
+        if (e.nx < -0.85) {
+          const pave = kit.mat('#b9b2a4', DS);
+          for (let k = 0; k < 5; k++) {
+            const d = 9 + k * 0.45;
+            const len = 34 + k * 2.2;
+            const mx2 = (e.a[0] + e.b[0]) / 2 + e.nx * (d / 2),
+              my2 = (e.a[1] + e.b[1]) / 2 + e.ny * (d / 2);
+            kit.box(batch, pave, mx2, my2, 0, len, d, 0.9 - k * 0.18, Math.atan2(ty, tx));
+          }
+          const planterM = kit.mat('#8f8a80', DS);
+          const leaves = kit.mat('dark_foliage', DS);
+          for (const t of [-14, -7, 7, 14]) {
+            const px = (e.a[0] + e.b[0]) / 2 + tx * t + e.nx * 8.2,
+              py = (e.a[1] + e.b[1]) / 2 + ty * t + e.ny * 8.2;
+            kit.box(batch, planterM, px, py, 0.9, 4.2, 1.6, 0.7, Math.atan2(ty, tx));
+            kit.box(batch, leaves, px, py, 1.6, 3.9, 1.3, 0.45, Math.atan2(ty, tx));
+          }
+        }
       }
     }
+    kit.cornice(batch, roofDark, mainRing, mainH - 1.2, { height: 1.2, projection: 0.3 });
+    kit.cornice(batch, roofDark, mainRing, 0, { height: 0.5, projection: 0.1 });
     kit.cap(batch, roofM, [[mainRing]], mainH);
     kit.walls(batch, roofDark, [[mainRing]], mainH, mainH + 0.9);
     plantOn(mainRing, mainH, 40);
@@ -425,6 +590,28 @@ export default {
           m === johnLewis ? 2.2 : m === deck ? 1.75 : (p.h - z0) / 2,
           z0,
         );
+      if (m === johnLewis) {
+        // Deep glazed embrasures in the white precast, staggered row by row.
+        const rows = Math.max(1, Math.floor((p.h - z0) / 3.0));
+        for (const e of edges(r)) {
+          if (e.len < 4) continue;
+          for (let k = 0; k < rows; k++)
+            kit.windowRow(batch, e.a, e.b, z0 + 0.7 + k * 3.0, {
+              glass: kit.mat('#33424d', { roughness: 0.12, metalness: 0.3 }),
+              frame: kit.mat('#d9d5cb'),
+              sill: kit.mat('#f3f1ea'),
+              surroundMat: kit.mat('#f3f1ea'),
+              bay: 3.2,
+              width: 1.3,
+              height: 2.0,
+              margin: k % 2 ? 2.4 : 0.8,
+              head: 'lintel',
+              surround: 0.35,
+              depth: 0.55,
+              bars: 0,
+            });
+        }
+      }
       kit.cap(batch, id === '0c9f' || id === '8270' ? roofDark : roofM, [[r]], p.h);
       kit.walls(batch, roofDark, [[r]], p.h, p.h + 0.8);
       if (id === '08fa') plantOn(r, p.h, 12);
@@ -451,6 +638,48 @@ export default {
         wallEdge(green ? living : clad, e, 0, H, 3.6, H / 2);
       }
       kit.cap(batch, roofM, [[south]], H);
+      // Clumps of planting standing proud of the living wall, and street
+      // furniture on the terrace in front of it.
+      const leafA = kit.mat('#4f7a3c', DS),
+        leafB = kit.mat('#6c9a48', DS);
+      const benches = [],
+        lamps = [];
+      for (const e of edges(south)) {
+        if (!(e.len > 12 && e.ny < -0.3)) continue;
+        const tx = (e.b[0] - e.a[0]) / e.len,
+          ty = (e.b[1] - e.a[1]) / e.len;
+        const f = Math.atan2(ty, tx);
+        const n = Math.floor(e.len / 1.6);
+        for (let i = 0; i < n; i++) {
+          const t = (i + 0.5) * 1.6;
+          for (let z = 2.4; z < H - 0.6; z += 1.3) {
+            if (rnd() < 0.35) continue;
+            const x = e.a[0] + tx * t + e.nx * 0.18,
+              y = e.a[1] + ty * t + e.ny * 0.18;
+            kit.box(
+              batch,
+              rnd() > 0.5 ? leafA : leafB,
+              x,
+              y,
+              z,
+              1.0 + rnd() * 0.8,
+              0.35,
+              0.7 + rnd() * 0.5,
+              f,
+            );
+          }
+        }
+        for (let t = 6; t < e.len - 4; t += 12) {
+          benches.push([e.a[0] + tx * t + e.nx * 5, e.a[1] + ty * t + e.ny * 5, f + Math.PI]);
+          lamps.push([
+            e.a[0] + tx * (t + 6) + e.nx * 7,
+            e.a[1] + ty * (t + 6) + e.ny * 7,
+            f + Math.PI,
+          ]);
+        }
+      }
+      if (benches.length) g.add(placeAssets('bench', benches));
+      if (lamps.length) g.add(placeAssets('street_lamp', lamps));
       // Undulating glazed canopy over the terrace.
       vault([south], H + 0.2, 4.0, 2.0);
     }

@@ -464,12 +464,22 @@
       {
         "title": "BBC Television Centre listing - British Listed Buildings (Historic England)",
         "url": "https://britishlistedbuildings.co.uk/101393371-bbc-television-centre-including-the-main-circular-range-excluding-the-spur-the-original-scenery-block-and-the-former-canteen-shepherds-bush-green-ward",
-        "used_for": "eight-storey drum, sea-green mosaic with red stepped pattern in the courtyard, glazed full-height stair tower, Studio 1 blind brick wall with 26 white discs"
+        "used_for": "eight-storey drum, sea-green mosaic with red stepped pattern in the courtyard, glazed full-height stair tower, Studio 1 blind brick wall with 26 white discs; Helios a gilded figure on a slightly tapered column rising through a shallow bowl set on four legs"
       },
       {
         "title": "Helios (statue) - Wikipedia",
         "url": "https://en.wikipedia.org/wiki/Helios_(statue)",
         "used_for": "3 m gilded bronze Helios by Huxley-Jones on the central column"
+      },
+      {
+        "title": "Television Centre - RIBA London Award 2019 (riba.org)",
+        "url": "https://www.riba.org/explore/awards/uk-awards/regional-awards/2019/london/television-centre/",
+        "used_for": "circular mosaic-lined Helios Courtyard; refurbished 3 m gilded bronze Helios on a tall column with a water feature"
+      },
+      {
+        "title": "Former BBC Television Centre - Heidelberg Materials",
+        "url": "https://www.heidelbergmaterials.com/en/bbc",
+        "used_for": "fountain bowl and obelisk recreated in self-compacting concrete; obelisk an 11 m slender tapering form"
       },
       {
         "title": "Helios Returned to Courtyard at Television Centre",
@@ -497,7 +507,7 @@
         "used_for": "2 Television Centre as the new office building"
       }
     ],
-    "notes": "Massing follows the Overture footprints and heights. Outer drum elevation (cream frame, pale blue tiled spandrels, ribbon windows) and the modern 2TVC / Crescent elevations are inferred, not traced from photos. Helios and the Sound/Vision figures are simplified stand-ins. The question-mark tail (spur) and the newer residential blocks to the south/east are left to the generic layer."
+    "notes": "Massing follows the Overture footprints and heights. The outer drum elevation (cream slab bands and mullions, pale blue mosaic spandrels, ribbon glazing), the courtyard curtain walling, the 2TVC fin facade and the Crescent window rhythm are inferred from descriptions, not traced from photos; window and fin pitches are generic. Helios follows the listing (gilded figure on a slightly tapered column rising through a shallow bowl on four legs, ~11 m obelisk) with simplified anatomy; Sound and Vision are stand-in reclining forms. The 26 Studio 1 discs are placed in a stylised scatter. The question-mark tail (spur) and the newer residential blocks to the south/east are left to the generic layer."
   },
   {
     "id": "beit_quad",
@@ -893,7 +903,7 @@
       {
         "title": "Cassini Tower, White City Living Phase 3 - New London Architecture",
         "url": "https://nla.london/projects/cassini-tower-white-city-living-phase-3",
-        "used_for": "Patel Taylor; alternating white and patterned bronze wraparound balconies; precast concrete and laser-cut metal palette"
+        "used_for": "Patel Taylor; alternating white and patterned bronze wraparound balconies; precast concrete and laser-cut metal palette; balconies re-join into a soft D-shaped plan tapering back towards the apex"
       },
       {
         "title": "White City, Cassini Tower - Interface Facades",
@@ -906,7 +916,7 @@
         "used_for": "height 112 m, 35 storeys"
       }
     ],
-    "notes": "Tower plan is the curved part of the Overture outline, smoothed. The attached rectangular block is given 10 storeys (~33 m) as an estimate (the footprint carries the tower height for the whole outline). Balcony wave amplitude/phase is stylised."
+    "notes": "Tower plan is the curved part of the Overture outline, smoothed; floors 25-35 are inset by up to 2.4 m to suggest the taper towards the apex (amount assumed). The attached rectangular block is given 10 storeys (~33 m) as an estimate (the footprint carries the tower height for the whole outline). Balcony wave amplitude/phase, mullion pitch, the double-height lobby, the bronze-finned plant screen and maintenance gantry on the roof, and the landscaped podium (trees, benches) are stylised."
   },
   {
     "id": "catherine_lewis_centre",
@@ -3102,10 +3112,15 @@
       {
         "title": "Loftus Road - StadiumGuide",
         "url": "https://stadiumguide.com/?p=1343",
-        "used_for": "two overhung tiers at School End and Loftus Road end, executive boxes between South Africa Road tiers, Ellerslie Road single tier"
+        "used_for": "two overhung tiers at School End and Loftus Road end, executive boxes between South Africa Road tiers, Ellerslie Road single tier; post-and-beam roof with posts at each end and two between; four slim floodlight pylons behind the School End and Loftus Road end; fascias painted the same blue"
+      },
+      {
+        "title": "Loftus Road - Around the Grounds",
+        "url": "https://www.aroundthegrounds.org/grounds-hub/loftus-road/",
+        "used_for": "South Africa Road Stand with the larger upper tier and only a couple of supporting pillars"
       }
     ],
-    "notes": "Stands modelled as oriented rectangles fitted to the Overture footprints. Heights raised from the OSM values (6-11 m) to 12-15 m so the roofs meet as described; exact tier rake, floodlight and column positions are approximate. Pitch drawn between the stands (no footprint)."
+    "notes": "Stands modelled as oriented rectangles fitted to the Overture footprints. Heights raised from the OSM values (6-11 m) to 12-15 m so the roofs meet as described. Seating is stepped geometry (0.8 m rows, one seat back per 0.5 m, gangways every ~11 m); tier rakes, box depth, roof girder spacing, pylon height (~36 m) and advertising boards are approximate. Pitch drawn between the stands (no footprint)."
   },
   {
     "id": "lots_road_power_station",
@@ -4890,7 +4905,7 @@
       {
         "title": "BBC Television Theatre - British Listed Buildings (Historic England listing)",
         "url": "https://www.britishlistedbuildings.co.uk/101358593-bbc-television-theatre-shepherds-bush-green-ward",
-        "used_for": "Matcham 1903, terracotta/brick/roughcast, asymmetrical, round tower with octagonal terracotta top stage, lantern and cupola"
+        "used_for": "Matcham 1903; asymmetrical terracotta/brick/roughcast front; round tower on the left (brick base, roughcast stage with terracotta-framed windows, octagonal top stage with classical details and arched windows, lantern and cupola); brick entrance bay with bracketed eaves and first-floor terracotta arcade; roughcast gabled bay and wide splayed brick return on the right; iron entrance canopy with modern cladding"
       },
       {
         "title": "Shepherd's Bush Empire - Wikipedia",
@@ -4908,7 +4923,7 @@
         "used_for": "theatre type / auditorium behind the front range"
       }
     ],
-    "notes": "OSM height (8.4 m) replaced by estimates: front range 15 m, auditorium roof 19 m, fly tower 23 m, tower ~29 m to the finial. Window rhythm, gables and canopy lettering are drawn from general descriptions, not measured photos."
+    "notes": "The entrance front faces east onto Shepherds Bush Green (the earlier model put it on the Rockwood Place side); the tower stands at the south-east corner as in the listing. OSM height (8.4 m) replaced by estimates: front range eaves 14 m, auditorium roof ~20 m, fly tower 24 m, tower ~30 m to the finial. Bay widths, window counts, canopy depth and the arcade (now partly hidden by signage) are inferred from the listing text, not measured from photographs."
   },
   {
     "id": "shepherds_bush_stations",
@@ -4932,9 +4947,19 @@
         "title": "Shepherd's Bush railway station - Wikipedia",
         "url": "https://en.wikipedia.org/wiki/Shepherd%27s_Bush_railway_station",
         "used_for": "Overground station opened 28 September 2008, designed and funded by Westfield"
+      },
+      {
+        "title": "Shepherd's Bush Central Line Station - Ritchie Studio",
+        "url": "https://www.ritchie.studio/projects/shepherds_bush_station/",
+        "used_for": "contemporary, elegant entrance structure; identifiable presence on Uxbridge Road at the western edge of the Southern Interchange, calmer facade towards the Shepherds Bush Town Conservation Area"
+      },
+      {
+        "title": "West London Line station - Ritchie Studio",
+        "url": "https://www.ritchie.studio/projects/west_london_line/",
+        "used_for": "discreet station at the Holland Park roundabout / Uxbridge Road junction, scale matched to the Central line station; formal layout of station building and footbridge"
       }
     ],
-    "notes": "Pavilion height (~7 m) replaces the OSM 11.9 m; roof overhang, glazing grid and signage are generic for the 2008 TfL/Westfield station style. Overground station modelled as a glazed entrance with a canopy; platforms and tracks are not modelled."
+    "notes": "Pavilion height (~7 m) replaces the OSM 11.9 m; glazing grid, roof depth, rooflights and signage are generic for the 2008 TfL/Westfield station style. The west (Green) face is drawn as solid granite for the 'calmer facade'. Overground: the footprint lies west of the two tracks, so it holds the station building (south) and the west platform; the east platform, footbridge span and stair/lift tower are drawn just outside the footprint, with lengths and canopy forms inferred, not measured."
   },
   {
     "id": "sherfield_building",
@@ -6037,12 +6062,17 @@
         "used_for": "Southern Terrace living wall, ~170 m long (low-reliability source)"
       },
       {
+        "title": "Westfield London, White City - Barbour Product Search",
+        "url": "https://www.barbourproductsearch.info/westfield-london-white-city-news013924.html",
+        "used_for": "two external terraces (Southern Terrace and Wood Lane) holding the main entrances and restaurants; curved steps and planters rising from street level to the elevated entrances"
+      },
+      {
         "title": "John Lewis, White City - Allies and Morrison",
         "url": "https://www.alliesandmorrison.com/projects/john-lewis-white-city",
         "used_for": "white precast concrete facade with repeating glazed embrasures, glazed ground-floor ribbon"
       }
     ],
-    "notes": "Mall street layout is taken from the Overture building parts that trace the figure-of-eight (they are unroofed inside the 13.6 m box), so the glass vaults follow those outlines; vault rise (4-5 m), node domes and the lattice pattern are stylised. Upper volumes in the northern extension other than John Lewis are drawn as clad decks. External cladding colours, entrance positions and signage are approximate."
+    "notes": "Mall street layout is taken from the Overture building parts that trace the figure-of-eight (they are unroofed inside the 13.6 m box), so the glass vaults follow those outlines; vault rise (4-5 m), node domes and the member pattern (3.2 m squares triangulated by diagonals, drawn as steel ribbons over the glazing) are stylised rather than the real Knippers Helbig mesh. Entrance curtain-wall grid, canopy columns, the Wood Lane terrace (curved steps drawn as straight flights) and planters, pilaster rhythm, John Lewis embrasure spacing, living-wall planting clumps and rooftop plant are approximate. Upper volumes in the northern extension other than John Lewis are drawn as clad decks. External cladding colours and signage are approximate."
   },
   {
     "id": "westway_sports_centre",
@@ -6110,7 +6140,7 @@
       {
         "title": "White City Station - Modernism in Metro-Land",
         "url": "https://www.modernism-in-metroland.co.uk/white-city.html",
-        "used_for": "architects McGill and Seymour under Bilbow; Festival of Britain award 1951, Abram Games plaque"
+        "used_for": "architects McGill and Seymour under Bilbow; Holden-style brick ticket hall with large glass windows and a coloured roundel; Festival of Britain award 1951, Abram Games plaque left of the entrance"
       },
       {
         "title": "White City Underground Station - Structurae",
@@ -6118,7 +6148,7 @@
         "used_for": "structure type / dates"
       }
     ],
-    "notes": "Ticket hall / platform range split of the footprint at y = 602 m is inferred from the outline. Brick colour, glazing pattern, clerestory and canopy forms are reconstructed from period descriptions without photographs; platform canopy roof is a simplified butterfly roof."
+    "notes": "Ticket hall / platform range split of the footprint at y = 602 m is inferred from the outline. Brick colour, the steel window grid, clerestory, canopy depth and the platform layout (two island platforms between three tracks under butterfly canopies, at grade) are reconstructed from period descriptions without photographs. Tracks are drawn only inside the canopy footprint."
   },
   {
     "id": "whiteleys",
@@ -6196,7 +6226,7 @@
       {
         "title": "Wood Lane Station - Ritchie Studio",
         "url": "https://www.ritchie.studio/projects/wood_lane_station/",
-        "used_for": "shot peened stainless steel cladding, gold anodised aluminium ceiling panels, site between owners around the brick viaduct"
+        "used_for": "shot peened stainless steel cladding, gold anodised aluminium ceiling panels, granite flooring, site between owners around the brick viaduct"
       },
       {
         "title": "Wood Lane Station - e-architect",
@@ -6211,10 +6241,15 @@
       {
         "title": "New Wood Lane Underground station opens - TfL",
         "url": "https://tfl.gov.uk/info-for/media/press-releases/2008/october/new-wood-lane-underground-station-opens",
-        "used_for": "opening October 2008, Westfield-funded"
+        "used_for": "opening October 2008, Westfield-funded; old viaduct arches incorporated into the stainless steel and glass ticket hall"
+      },
+      {
+        "title": "Wood Lane tube station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Wood_Lane_tube_station",
+        "used_for": "two platforms; building encases the viaduct, platforms reached by stairs and lifts either side of the brick arches"
       }
     ],
-    "notes": "Height reduced from 17.4 m (OSM) to ~11 m for a two-storey station. Canopy curvature, viaduct arch rhythm and platform canopy form are inferred from text descriptions; no photos could be viewed."
+    "notes": "The viaduct is assumed to run north-south along the Wood Lane edge of the footprint (the rail layer has no H&C track here), so the glass screen fronts the platforms and the ticket hall fills the wedge to the east with its entrance on the south-east side facing White City Place. Height reduced from 17.4 m (OSM) to ~13 m. Arch rhythm, canopy depths, fin spacing and roundel positions are inferred from text descriptions; no photos could be viewed."
   },
   {
     "id": "wood_lane_studios",
