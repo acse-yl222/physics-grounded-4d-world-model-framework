@@ -551,10 +551,10 @@ export function windowRow(batch, a, b, z, opts = {}) {
     } else if (head === 'arch' || head === 'segment') {
       const r = width / 2,
         seg = head === 'arch' ? Math.PI : Math.PI / 2.5;
-      const g = new THREE.CylinderGeometry(r, r, 0.04, 10, 1, false, Math.PI / 2 - seg / 2, seg);
-      const m = new THREE.Matrix4()
-        .makeRotationZ(f.angle)
-        .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2));
+      // Vertical glass tympanum: the cylinder axis is the wall normal (rotateZ maps y to
+      // the outward side), and theta in [-seg/2, seg/2] spans the upper half-disc.
+      const g = new THREE.CylinderGeometry(r, r, 0.04, 10, 1, false, -seg / 2, seg);
+      const m = new THREE.Matrix4().makeRotationZ(f.angle);
       m.setPosition(gx, gy, z + height - (head === 'segment' ? r * Math.cos(seg / 2) : 0));
       batch.addGeometry(glass, g, m);
       const ring = new THREE.TorusGeometry(r + 0.05, 0.07, 4, 10, seg).rotateZ(
