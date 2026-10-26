@@ -30,6 +30,12 @@ export default {
         'National Hall in the south-east corner, red brick, iron and glazed roof, facade on Hammersmith Road with corner entrance at Olympia Way',
     },
     {
+      title: 'Grand Hall and Pillar Hall, Olympia Exhibition Centre - Historic England',
+      url: 'https://historicengland.org.uk/listing/the-list/list-entry/1096048',
+      used_for:
+        'Grand Hall addresses Olympia Way opposite Kensington Olympia station; barrel vault with lean-to gallery roofs',
+    },
+    {
       title: 'Did You Know The Roof Of Olympia Is Retractable? - Londonist',
       url: 'https://londonist.com/2014/08/climbing-to-the-top-of-olympia',
       used_for: 'Grand Hall roof height (about 115 ft) and Victorian ironwork',
@@ -47,9 +53,14 @@ export default {
   ],
   notes:
     'Grand Hall barrel crown set to 35 m (sources give 115-135 ft), nave span ~50 m within the Overture outline; ' +
-    'side aisles 15 m. National Hall barrel assumed parallel to the Grand Hall, crown 26 m. Entrance fronts are ' +
-    'painted approximations from listing text (no photos available). The 2026 Heatherwick/SPPARC redevelopment ' +
-    '(theatre, hotels, offices, canopy) is not in the footprint data and is not modelled.',
+    'side aisles 15 m under lean-to glazing. Vault ribs are arched lattice trusses (outer and inner chords with ' +
+    'diagonal webs) at ~6.5 m centres - rib spacing and depth are not published in the sources found. National Hall ' +
+    'barrel assumed parallel to the Grand Hall, crown 26 m. Hall walls carry real stone plinths, string courses, ' +
+    'pilasters, round-arched upper and segmental lower windows per ~6 m bay (rhythm approximate); the Olympia Way ' +
+    'entrance front (two storeys of arched windows, central arched entrance with steps, pediment, domed corner ' +
+    'pavilions) and the National Hall front to Hammersmith Road (tall glazing-barred windows, glazed ground floor, ' +
+    'canopy, OLYMPIA LONDON sign) are reconstructed from listing text, not photographs. The 2026 Heatherwick/SPPARC ' +
+    'redevelopment (theatre, hotels, offices, canopy) is not in the footprint data and is not modelled.',
   build(ctx) {
     const { THREE, kit, byId, frame } = ctx;
     const g = new THREE.Group();
@@ -88,40 +99,69 @@ export default {
       addGeo(m, new THREE.BoxGeometry(du, dv, dz), M(u, v, z0 + dz / 2));
 
     // Materials.
-    // Hall walls: one texture tile = 4 bays x full wall height; red brick with stone
-    // pilasters, plinth and string course, tall round-arched upper windows.
-    const brickFacade = kit.paintedMaterial('olympia_london:hallwall', 512, 256, (c, w, h) => {
+    const brick = kit.mat('red_brick');
+    const plainBrick = kit.paintedMaterial('olympia_london:brick', 256, 256, (c, w, h) => {
       c.fillStyle = '#97503a';
       c.fillRect(0, 0, w, h);
-      c.fillStyle = 'rgba(55,20,10,0.22)';
-      for (let y = 0; y < h; y += 3) c.fillRect(0, y, w, 1);
-      const st = '#d6cdb6';
-      c.fillStyle = st;
-      c.fillRect(0, 0, w, 10); // cornice band
-      c.fillRect(0, 150, w, 7); // string course
-      c.fillRect(0, h - 18, w, 18); // plinth
-      const bw = w / 4;
-      for (let i = 0; i < 4; i++) {
-        const x = i * bw;
-        c.fillStyle = st;
-        c.fillRect(x, 10, 12, h - 28);
-        c.fillStyle = '#26313a';
-        const ww = bw - 46,
-          wx = x + 29;
-        c.fillRect(wx, 52, ww, 90);
-        c.beginPath();
-        c.arc(wx + ww / 2, 52, ww / 2, Math.PI, 0);
-        c.fill();
-        c.fillStyle = st;
-        c.fillRect(wx - 4, 140, ww + 8, 5);
-        c.fillRect(wx + ww / 2 - 2, 30, 4, 112);
-        c.fillStyle = 'rgba(40,15,8,0.35)';
-        c.fillRect(wx, 172, ww, 56); // recessed blind panel
-        c.fillStyle = '#2c363e';
-        c.fillRect(wx + ww * 0.3, 182, ww * 0.4, 40);
-      }
+      const r = kit.rng(1886);
+      for (let y = 0; y < h; y += 4)
+        for (let x = ((y / 4) % 2) * 8; x < w; x += 16) {
+          const t = r();
+          c.fillStyle = `rgba(${130 + t * 40},${62 + t * 22},${44 + t * 14},0.55)`;
+          c.fillRect(x, y, 15, 3);
+        }
     });
-    const brick = kit.mat('red_brick');
+    const winGlass = kit.mat('#2a343c', { roughness: 0.15, metalness: 0.3 });
+    const winFrame = kit.mat('#e9e4d6', { roughness: 0.6 });
+    const dressStone = kit.mat('#d6cdb6', { roughness: 0.8 });
+    // Real dressings on a hall's outer walls: stone plinth, string course and
+    // pilasters, arched upper windows and segmental-headed lower windows per bay.
+    const dress = (ring, H, skip = () => false) => {
+      kit.cornice(batch, dressStone, ring, 0, { height: 1.0, projection: 0.25 });
+      kit.cornice(batch, dressStone, ring, H * 0.5, { height: 0.45, projection: 0.18 });
+      for (let k = 0; k < ring.length; k++) {
+        const p = ring[k],
+          q = ring[(k + 1) % ring.length];
+        const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
+        if (len < 5.5 || skip(p, q, len)) continue;
+        const n = Math.max(1, Math.round((len - 1) / 6));
+        const bayL = (len - 1) / n;
+        const ux = (q[0] - p[0]) / len,
+          uy = (q[1] - p[1]) / len;
+        for (let i = 0; i <= n; i++) {
+          const t = 0.5 + bayL * i;
+          addGeo(
+            dressStone,
+            new THREE.BoxGeometry(0.9, 0.5, H - 1.6),
+            new THREE.Matrix4()
+              .makeRotationZ(Math.atan2(uy, ux))
+              .setPosition(p[0] + ux * t + uy * 0.2, p[1] + uy * t - ux * 0.2, 1.0 + (H - 1.6) / 2),
+          );
+        }
+        const common = {
+          count: n,
+          margin: 0.5,
+          glass: winGlass,
+          frame: winFrame,
+          sill: dressStone,
+          depth: 0.2,
+        };
+        kit.windowRow(batch, p, q, H * 0.5 + 1.4, {
+          ...common,
+          width: Math.min(2.6, bayL - 2.2),
+          height: H * 0.26,
+          head: 'arch',
+          bars: 2,
+        });
+        kit.windowRow(batch, p, q, 2.2, {
+          ...common,
+          width: Math.min(2.0, bayL - 2.6),
+          height: H * 0.24,
+          head: 'segment',
+          bars: 1,
+        });
+      }
+    };
     const stone = kit.mat('portland_stone');
     const lead = kit.mat('lead');
     const iron = kit.mat('#7a8489', { roughness: 0.55, metalness: 0.35 });
@@ -180,92 +220,6 @@ export default {
       },
       { roughness: 0.3, metalness: 0.2 },
     );
-    const entrance = kit.paintedMaterial('olympia_london:entrance', 1024, 256, (c, w, h) => {
-      // Italianate front: red brick, stone pilasters, round-arched windows, stone
-      // cornice and a central arched entrance with lettering.
-      c.fillStyle = '#9a4d38';
-      c.fillRect(0, 0, w, h);
-      c.fillStyle = 'rgba(60,20,10,0.25)';
-      for (let y = 0; y < h; y += 4) c.fillRect(0, y, w, 1);
-      const stoneC = '#dcd3bd';
-      c.fillStyle = stoneC;
-      c.fillRect(0, 0, w, 18); // cornice and balustrade
-      c.fillRect(0, 120, w, 9); // string course
-      c.fillRect(0, h - 22, w, 22); // plinth
-      const bays = 15;
-      const bw = w / bays;
-      for (let i = 0; i < bays; i++) {
-        const x = i * bw;
-        c.fillStyle = stoneC;
-        c.fillRect(x, 18, 7, h - 40); // pilaster
-        if (i === 7) continue;
-        c.fillStyle = '#2f3a42';
-        // upper arched windows
-        c.fillRect(x + 16, 50, bw - 26, 60);
-        c.beginPath();
-        c.arc(x + 16 + (bw - 26) / 2, 50, (bw - 26) / 2, Math.PI, 0);
-        c.fill();
-        c.fillStyle = stoneC;
-        c.fillRect(x + 12, 108, bw - 18, 4);
-        // lower windows
-        c.fillStyle = '#2f3a42';
-        c.fillRect(x + 16, 150, bw - 26, 70);
-        c.beginPath();
-        c.arc(x + 16 + (bw - 26) / 2, 150, (bw - 26) / 2, Math.PI, 0);
-        c.fill();
-      }
-      // central entrance arch
-      const cx = 7.5 * bw;
-      c.fillStyle = stoneC;
-      c.fillRect(cx - bw * 0.75, 18, bw * 1.5, h - 40);
-      c.fillStyle = '#28323a';
-      c.fillRect(cx - bw * 0.48, 120, bw * 0.96, h - 142);
-      c.beginPath();
-      c.arc(cx, 120, bw * 0.48, Math.PI, 0);
-      c.fill();
-      c.fillStyle = '#7a2f22';
-      c.font = 'bold 22px serif';
-      c.textAlign = 'center';
-      c.fillText('OLYMPIA', cx, 60);
-    });
-    const hammersmithFront = kit.paintedMaterial(
-      'olympia_london:national_front',
-      1024,
-      256,
-      (c, w, h) => {
-        // National Hall front to Hammersmith Road: red brick and stone with tall
-        // windows; white OLYMPIA LONDON lettering on a blue band over the canopy.
-        c.fillStyle = '#93503a';
-        c.fillRect(0, 0, w, h);
-        c.fillStyle = 'rgba(50,20,10,0.22)';
-        for (let y = 0; y < h; y += 4) c.fillRect(0, y, w, 1);
-        c.fillStyle = '#d8cfb8';
-        c.fillRect(0, 0, w, 14);
-        c.fillRect(0, h - 70, w, 8);
-        const bays = 12;
-        const bw = w / bays;
-        for (let i = 0; i < bays; i++) {
-          c.fillStyle = '#d8cfb8';
-          c.fillRect(i * bw, 14, 8, h - 84);
-          c.fillStyle = '#2c3740';
-          c.fillRect(i * bw + 20, 40, bw - 32, 130);
-          c.fillStyle = '#d8cfb8';
-          for (let k = 1; k < 4; k++) c.fillRect(i * bw + 20, 40 + k * 32, bw - 32, 3);
-        }
-        c.fillStyle = '#1d3f7a';
-        c.fillRect(w * 0.25, 18, w * 0.5, 22);
-        c.fillStyle = '#ffffff';
-        c.font = 'bold 18px sans-serif';
-        c.textAlign = 'center';
-        c.fillText('OLYMPIA  LONDON', w / 2, 35);
-        // glazed ground floor entrances
-        c.fillStyle = '#26313a';
-        c.fillRect(0, h - 60, w, 60);
-        c.fillStyle = '#c9c4b8';
-        for (let x = 0; x < w; x += 42) c.fillRect(x, h - 60, 5, 60);
-      },
-    );
-
     // Barrel vault helper: segmental arch across v (centre vc, half-span a, spring
     // zs, rise r) running from u = ua to ub. Glazing quads plus iron ribs.
     const barrel = (
@@ -313,21 +267,47 @@ export default {
           [0, 1],
         );
       }
-      // Ribs.
+      // Ribs: arched lattice trusses (outer and inner chords with diagonal webs).
+      const zc0 = zc;
+      const inner = prof.map(([v, z]) => {
+        const dv = v - vc,
+          dz = z - zc0,
+          l = Math.hypot(dv, dz);
+        return [vc + (dv * (R - 1.5)) / l, zc0 + (dz * (R - 1.5)) / l];
+      });
+      const strut = (m, u, [va, za], [vb, zb], w, t) => {
+        const len = Math.hypot(vb - va, zb - za);
+        const geo = new THREE.BoxGeometry(w, len + 0.04, t);
+        const mm = new THREE.Matrix4()
+          .makeRotationZ(A)
+          .multiply(new THREE.Matrix4().makeRotationX(Math.atan2(zb - za, vb - va)))
+          .setPosition(...W(u, (va + vb) / 2, (za + zb) / 2));
+        addGeo(m, geo, mm);
+      };
       const nr = Math.max(2, Math.round(L / ribStep));
       for (let i = 0; i <= nr; i++) {
         const u = ua + (L * i) / nr;
         for (let k = 0; k < segs; k++) {
-          const [v0, z0] = prof[k],
-            [v1, z1] = prof[k + 1];
-          const len = Math.hypot(v1 - v0, z1 - z0);
-          const geo = new THREE.BoxGeometry(0.7, len + 0.05, 0.6);
-          const m = new THREE.Matrix4()
-            .makeRotationZ(A)
-            .multiply(new THREE.Matrix4().makeRotationX(Math.atan2(z1 - z0, v1 - v0)))
-            .setPosition(...W(u, (v0 + v1) / 2, (z0 + z1) / 2 + 0.3));
-          addGeo(iron, geo, m);
+          strut(
+            iron,
+            u,
+            [prof[k][0], prof[k][1] + 0.25],
+            [prof[k + 1][0], prof[k + 1][1] + 0.25],
+            0.5,
+            0.45,
+          );
+          strut(iron, u, inner[k], inner[k + 1], 0.4, 0.3);
+          strut(
+            iron,
+            u,
+            k % 2 ? prof[k] : inner[k],
+            k % 2 ? inner[k + 1] : prof[k + 1],
+            0.18,
+            0.18,
+          );
         }
+        // springing shoes
+        for (const k of [0, segs]) lbox(iron, u, prof[k][0], prof[k][1] - 2, 0.8, 1.2, 2);
       }
       // Longitudinal purlins at a few heights.
       for (const k of [3, Math.round(segs / 2) - 3, Math.round(segs / 2) + 3, segs - 3]) {
@@ -377,7 +357,8 @@ export default {
     const gRing = grand.polys[0][0];
     const ge = ext(gRing);
     const aisleH = 15;
-    kit.walls(batch, brickFacade, grand.polys, 0, aisleH, { bay: 6, storey: aisleH / 2 });
+    kit.walls(batch, plainBrick, grand.polys, 0, aisleH, { bay: 4, storey: 4 });
+    dress(gRing, aisleH);
     lbox(stone, 0, 0, aisleH - 0.2, 0.01, 0.01, 0.01); // keep material ordering stable
     // stone cornice following the outline
     for (const ring of grand.polys[0])
@@ -446,22 +427,108 @@ export default {
         s = endNE;
       const v0 = gvc - fw / 2,
         v1 = gvc + fw / 2;
-      const a =
-        s > 0
-          ? [W(u, v0, 0), W(u, v1, 0), W(u, v1, fh), W(u, v0, fh)]
-          : [W(u, v1, 0), W(u, v0, 0), W(u, v0, fh), W(u, v1, fh)];
-      batch.add(
-        entrance,
-        a,
-        [
-          [0, 0],
-          [1, 0],
-          [1, 1],
-          [0, 1],
-        ],
-        [0, 1, 2, 0, 2, 3],
-      );
       lbox(brick, u - s * 0.4, gvc, 0, 0.8, fw, fh);
+      // Italianate front: stone plinth, string courses, pilasters, two storeys of
+      // round-arched windows with stone surrounds, a central entrance arch.
+      const fp = (v, z = 0) => {
+        const w = W(u, v, z);
+        return [w[0], w[1]];
+      };
+      const seg = (va, vb) => (s > 0 ? [fp(va), fp(vb)] : [fp(vb), fp(va)]);
+      lbox(stone, u + s * 0.15, gvc, 0, 0.3, fw, 1.4);
+      lbox(stone, u + s * 0.15, gvc, 9.6, 0.4, fw, 0.6);
+      lbox(stone, u + s * 0.1, gvc, fh - 1.6, 0.3, fw, 0.5);
+      for (const [va, vb] of [
+        [v0 + 7, gvc - 4],
+        [gvc + 4, v1 - 7],
+      ]) {
+        const nb = 5,
+          bl = (vb - va) / nb;
+        for (let i = 0; i <= nb; i++) lbox(stone, u + s * 0.2, va + bl * i, 1.4, 0.4, 0.8, fh - 3);
+        const [a2, b2] = seg(va, vb);
+        const common = {
+          count: nb,
+          margin: 0,
+          glass: winGlass,
+          frame: winFrame,
+          sill: stone,
+          depth: 0.25,
+          surround: 0.3,
+          surroundMat: stone,
+        };
+        kit.windowRow(batch, a2, b2, 2.4, {
+          ...common,
+          width: 2.2,
+          height: 4.6,
+          head: 'arch',
+          bars: 2,
+        });
+        kit.windowRow(batch, a2, b2, 11.2, {
+          ...common,
+          width: 2.2,
+          height: 4.4,
+          head: 'arch',
+          bars: 2,
+        });
+      }
+      // central entrance: stone arch surround, recessed doors, fanlight, steps
+      lbox(stone, u + s * 0.3, gvc, 0, 0.6, 9, fh - 1.6);
+      lbox(winGlass, u + s * 0.62, gvc, 1.0, 0.05, 5.2, 6.4);
+      for (const dv of [-1.3, 0, 1.3])
+        lbox(kit.mat('#3a2c22', { roughness: 0.6 }), u + s * 0.65, gvc + dv, 1.0, 0.08, 1.2, 4.2);
+      lbox(winFrame, u + s * 0.66, gvc, 5.2, 0.08, 5.2, 0.15);
+      for (const dv of [-1.73, -0.87, 0.87, 1.73])
+        lbox(winFrame, u + s * 0.66, gvc + dv, 5.35, 0.06, 0.08, 2.05);
+      {
+        const arch = new THREE.TorusGeometry(2.9, 0.45, 6, 16, Math.PI);
+        addGeo(
+          stone,
+          arch,
+          new THREE.Matrix4()
+            .makeRotationZ(A)
+            .multiply(new THREE.Matrix4().makeRotationZ(Math.PI / 2))
+            .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2))
+            .setPosition(...W(u + s * 0.7, gvc, 7.4)),
+        );
+        const fan = new THREE.CylinderGeometry(2.6, 2.6, 0.05, 16, 1, false, 0, Math.PI);
+        addGeo(
+          winGlass,
+          fan,
+          new THREE.Matrix4()
+            .makeRotationZ(A)
+            .multiply(new THREE.Matrix4().makeRotationY(Math.PI / 2))
+            .setPosition(...W(u + s * 0.64, gvc, 7.4)),
+        );
+        lbox(stone, u + s * 0.75, gvc, 10.2, 0.7, 1.2, 1.3); // keystone
+      }
+      for (let k = 0; k < 4; k++)
+        lbox(
+          stone,
+          u + s * (1.2 + k * 0.4),
+          gvc,
+          0,
+          0.4 + (3 - k) * 0.4,
+          10 - k * 0.5,
+          0.25 * (4 - k),
+        );
+      // name panel over the entrance
+      lbox(
+        kit.paintedMaterial('olympia_london:name', 512, 64, (c, w, h) => {
+          c.fillStyle = '#d6cdb6';
+          c.fillRect(0, 0, w, h);
+          c.fillStyle = '#6a2a1e';
+          c.font = 'bold 44px serif';
+          c.textAlign = 'center';
+          c.textBaseline = 'middle';
+          c.fillText('OLYMPIA', w / 2, h / 2 + 3);
+        }),
+        u + s * 0.62,
+        gvc,
+        fh - 4.6,
+        0.1,
+        8,
+        1.1,
+      );
       lbox(stone, u + s * 0.1, gvc, fh, 1.6, fw + 1, 1.2); // cornice
       // balustrade with urns / statues along the parapet
       for (let k = 0; k <= 14; k++) {
@@ -515,7 +582,9 @@ export default {
     const nRing = national.polys[0][0];
     const ne = ext(nRing);
     const nH = 13;
-    kit.walls(batch, brickFacade, national.polys, 0, nH, { bay: 6, storey: nH / 2 });
+    kit.walls(batch, plainBrick, national.polys, 0, nH, { bay: 4, storey: 4 });
+    const nRing0 = national.polys[0][0];
+    const isHamFront = (p, q, len) => len > 20 && -(q[0] - p[0]) / len < -0.85;
     for (const ring of national.polys[0])
       for (let k = 0; k < ring.length; k++) {
         const p = ring[k],
@@ -528,6 +597,7 @@ export default {
           .setPosition((p[0] + q[0]) / 2, (p[1] + q[1]) / 2, nH + 0.2);
         addGeo(stone, geo, m);
       }
+    dress(nRing0, nH, isHamFront);
     kit.cap(batch, lead, national.polys, nH, { scale: 6 });
     // The National's vault: clip its u range to the part of the footprint that is
     // reasonably rectangular (the outline narrows to the south-west).
@@ -559,21 +629,56 @@ export default {
       const o = 0.35,
         top = nH + 4;
       const P = (t, z, d = o) => [p[0] + dx * t + nx * d, p[1] + dy * t + ny * d, z];
-      batch.add(
-        hammersmithFront,
-        [P(0, 0), P(len, 0), P(len, top), P(0, top)],
-        [
-          [0, 0],
-          [len / 60, 0],
-          [len / 60, 1],
-          [0, 1],
-        ],
-        [0, 1, 2, 0, 2, 3],
-      );
       const rot = Math.atan2(dy, dx);
       const at = (t, d, z) => new THREE.Matrix4().makeRotationZ(rot).setPosition(...P(t, z, d));
       addGeo(brick, new THREE.BoxGeometry(len, 0.6, top), at(len / 2, 0.05, top / 2));
       addGeo(stone, new THREE.BoxGeometry(len + 0.6, 1.4, 1.0), at(len / 2, 0.6, top + 0.5));
+      // Front to Hammersmith Road: stone pilasters, tall windows with glazing
+      // bars, sign band, glazed ground-floor entrances behind the canopy.
+      const nb = Math.max(4, Math.round(len / 6));
+      const bl = len / nb;
+      for (let i = 0; i <= nb; i++)
+        addGeo(
+          stone,
+          new THREE.BoxGeometry(1.0, 0.5, top - 0.5),
+          at(bl * i, o + 0.2, (top - 0.5) / 2),
+        );
+      addGeo(stone, new THREE.BoxGeometry(len, 0.5, 0.6), at(len / 2, o + 0.2, 6.3));
+      addGeo(stone, new THREE.BoxGeometry(len, 0.45, 0.8), at(len / 2, o + 0.2, top - 1.6));
+      kit.windowRow(batch, P(0, 0), P(len, 0), 7.2, {
+        count: nb,
+        margin: 0,
+        width: bl - 2.2,
+        height: top - 9.6,
+        bars: 3,
+        head: 'lintel',
+        glass: winGlass,
+        frame: winFrame,
+        sill: stone,
+        depth: 0.2,
+      });
+      addGeo(winGlass, new THREE.BoxGeometry(len - 2, 0.08, 4.0), at(len / 2, o + 0.05, 2.0));
+      for (let x = 1; x <= len - 1; x += 2.2)
+        addGeo(kit.mat('#c9c4b8'), new THREE.BoxGeometry(0.14, 0.14, 4.0), at(x, o + 0.12, 2.0));
+      addGeo(
+        kit.mat('#c9c4b8'),
+        new THREE.BoxGeometry(len - 2, 0.14, 0.14),
+        at(len / 2, o + 0.12, 2.7),
+      );
+      const signW = Math.min(30, len * 0.5);
+      addGeo(
+        kit.paintedMaterial('olympia_london:national_sign', 512, 64, (c, w, h) => {
+          c.fillStyle = '#1d3f7a';
+          c.fillRect(0, 0, w, h);
+          c.fillStyle = '#ffffff';
+          c.font = 'bold 36px sans-serif';
+          c.textAlign = 'center';
+          c.textBaseline = 'middle';
+          c.fillText('OLYMPIA  LONDON', w / 2, h / 2 + 2);
+        }),
+        new THREE.BoxGeometry(signW, 0.15, 1.8),
+        at(len / 2, o + 0.5, top - 3.0),
+      );
       // Emberton-style flat entrance canopy.
       addGeo(
         kit.mat('white_render'),
@@ -585,6 +690,19 @@ export default {
         new THREE.BoxGeometry(Math.min(40, len * 0.6), 0.2, 0.7),
         at(len / 2, 4.9, 4.6),
       );
+      // canopy soffit lights and lamp standards / bollards along the pavement
+      for (let i = 0; i < 10; i++)
+        addGeo(
+          kit.mat('#fff4d6', { emissive: new THREE.Color('#ffe9b0') }),
+          new THREE.BoxGeometry(0.8, 0.8, 0.06),
+          at(len / 2 + (i - 4.5) * (Math.min(40, len * 0.6) / 10), 2.6, 4.22),
+        );
+      const lamps = [],
+        bol = [];
+      for (let t = 4; t < len; t += 14) lamps.push([...P(t, 0, 6.5).slice(0, 2), rot + Math.PI]);
+      for (let t = 2; t < len; t += 3) bol.push([...P(t, 0, 5.2).slice(0, 2), rot]);
+      g.add(ctx.placeAssets('street_lamp', lamps));
+      g.add(ctx.placeAssets('bollard', bol));
     }
 
     g.add(batch.toGroup('olympia_london'));

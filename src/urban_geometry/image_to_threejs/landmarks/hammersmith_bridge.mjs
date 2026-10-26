@@ -26,6 +26,23 @@ export default {
         'wrought-iron framed towers cased in ornamental cast iron, partly gilded; heraldic arms on the towers',
     },
     {
+      title: 'Hammersmith Bridge - Historic England list entry 1079819',
+      url: 'https://historicengland.org.uk/listing/the-list/list-entry/1079819',
+      used_for:
+        'clustered Doric columns on the stone piers, wrought-iron parapets, cast-iron pedestals at the chain corners, heraldry on the towers',
+    },
+    {
+      title: "Hammersmith Bridge - Grace's Guide",
+      url: 'https://www.gracesguide.co.uk/Hammersmith_Bridge',
+      used_for: 'eyebar chain links with pinned joints',
+    },
+    {
+      title: 'Hammersmith Bridge - Historic Bridges',
+      url: 'https://historicbridges.org/unitedkingdom/hammersmith/report.htm',
+      used_for:
+        'double suspension chains, wrought-iron hangers, timber deck on cross girders with stiffening girders',
+    },
+    {
       title: 'Hammersmith Bridge fun facts - Londonist',
       url: 'https://londonist.com/london/history/hammersmith-bridge-fun-facts',
       used_for: '700 ft length, repainted green in 2000',
@@ -33,8 +50,13 @@ export default {
   ],
   notes:
     'Placed on the Overture bridge segment (224 m between abutments, 14.9 m deck outline). Main span taken as 129 m ' +
-    '(422 ft, centred), tower tops 13 m above the deck, deck camber and chain sag estimated; pier shapes, portal ' +
-    'ornament and heraldry are simplified. No building footprint is claimed.',
+    '(422 ft, centred), tower tops ~13-15 m above the deck (Wikipedia gives 48 ft), deck camber and chain sag ' +
+    'estimated. Two stacked eyebar chains per side with pins at ~4.4 m, hangers every 2.8 m with clamps, cross and ' +
+    'stiffening girders under the deck, lattice parapet with posts, clustered Doric columns on the river piers and ' +
+    'cast-iron chain pedestals at the abutment corners follow the listing; the footway position relative to the ' +
+    'chains, lamp standards (generic resources street_lamp at 20 m), pylon panel ornament and heraldry (shields with ' +
+    'a cross, roundels) are simplified - the actual Royal Arms and county/city crests are not reproduced. No building ' +
+    'footprint is claimed.',
   build(ctx) {
     const { THREE, kit } = ctx;
     const g = new THREE.Group();
@@ -233,16 +255,28 @@ export default {
     for (const s of [S1, S2]) {
       const dz = deckZ(s);
       // stone pier with cutwaters
-      box(stone, s, 0, -1.5, 7, 2 * half + 8, dz - 1.3 + 1.5);
+      box(stone, s, 0, -1.5, 7, 2 * half + 8, dz - 3.5 + 1.5);
+      kit.cornice(
+        batch,
+        stone,
+        [
+          W(s - 3.5, -half - 4, 0),
+          W(s + 3.5, -half - 4, 0),
+          W(s + 3.5, half + 4, 0),
+          W(s - 3.5, half + 4, 0),
+        ].map((q) => [q[0], q[1]]),
+        dz - 3.9,
+        { height: 0.4, projection: 0.3 },
+      );
       for (const v of [-(half + 4), half + 4]) {
-        const cw = new THREE.CylinderGeometry(3.5, 3.5, dz + 0.2, 3).rotateX(Math.PI / 2);
+        const cw = new THREE.CylinderGeometry(3.5, 3.5, dz - 2.0, 3).rotateX(Math.PI / 2);
         addGeo(
           stone,
           cw,
           M(
             s,
             v + Math.sign(v) * 0.6,
-            -1.5 + (dz + 0.2) / 2,
+            -1.5 + (dz - 2.0) / 2,
             new THREE.Matrix4().makeRotationZ(v > 0 ? Math.PI / 2 : -Math.PI / 2),
           ),
         );
@@ -313,11 +347,37 @@ export default {
       }
       for (const face of [-1, 1]) {
         // heraldic shield panels on both faces of the portal
-        addGeo(
-          red,
-          new THREE.CylinderGeometry(1.1, 0.2, 2.2, 3).rotateX(Math.PI / 2).rotateY(Math.PI / 2),
-          M(s + face * 0.85, 0, dz + 11.4, new THREE.Matrix4().makeRotationX(0)),
-        );
+        {
+          // heater-shaped shield: red field with a gilt border and cross
+          const sh = new THREE.Shape();
+          sh.moveTo(-1.0, 0);
+          sh.lineTo(1.0, 0);
+          sh.lineTo(1.0, -0.9);
+          sh.quadraticCurveTo(0.95, -1.7, 0, -2.1);
+          sh.quadraticCurveTo(-0.95, -1.7, -1.0, -0.9);
+          sh.closePath();
+          const basis = new THREE.Matrix4().makeBasis(
+            new THREE.Vector3(0, face, 0),
+            new THREE.Vector3(0, 0, 1),
+            new THREE.Vector3(face, 0, 0),
+          );
+          const border = new THREE.ExtrudeGeometry(sh, {
+            depth: 0.08,
+            bevelEnabled: false,
+            curveSegments: 6,
+          });
+          addGeo(gold, border, M(s + face * 0.8, 0, dz + 12.3, basis));
+          const field = new THREE.ExtrudeGeometry(sh, {
+            depth: 0.06,
+            bevelEnabled: false,
+            curveSegments: 6,
+          });
+          field.scale(0.85, 0.88, 1);
+          field.translate(0, -0.1, 0);
+          addGeo(red, field, M(s + face * 0.86, 0, dz + 12.3, basis));
+          addGeo(gold, new THREE.BoxGeometry(0.06, 0.22, 1.6), M(s + face * 0.94, 0, dz + 10.75));
+          addGeo(gold, new THREE.BoxGeometry(0.06, 1.4, 0.22), M(s + face * 0.94, 0, dz + 11.4));
+        }
         addGeo(gold, new THREE.BoxGeometry(0.1, 2.8, 0.25), M(s + face * 0.88, 0, dz + 12.6));
         for (const dv of [-4.2, 4.2])
           addGeo(
@@ -328,6 +388,143 @@ export default {
       }
     }
 
+    // ---- Detailing ----
+    const pinMat = kit.mat('#3f6a4b', { roughness: 0.5, metalness: 0.25 });
+    // Eyebar chain pins / link plates at ~4.4 m pitch.
+    for (const side of [-1, 1])
+      for (const k of [0, 1])
+        for (let sp = 2.2; sp < L - 2; sp += 4.4) {
+          const z = chainZ(sp, k);
+          addGeo(pinMat, new THREE.CylinderGeometry(0.3, 0.3, 0.8, 8), M(sp, side * chainV, z));
+          addGeo(gold, new THREE.CylinderGeometry(0.12, 0.12, 0.84, 6), M(sp, side * chainV, z));
+        }
+    // Hanger clamps at the chain and the deck girder; parapet posts in line.
+    for (const side of [-1, 1])
+      for (let sp = 3; sp < L - 3; sp += 2.8) {
+        if (Math.abs(sp - S1) < 2.5 || Math.abs(sp - S2) < 2.5) continue;
+        const z0 = deckZ(sp) + 0.2,
+          z1 = chainZ(sp, 1);
+        if (z1 - z0 >= 0.5) {
+          box(paleGreen, sp, side * chainV, z1 - 0.5, 0.3, 0.3, 0.5);
+          box(paleGreen, sp, side * chainV, z0, 0.35, 0.35, 0.45);
+        }
+        box(green, sp, side * half, deckZ(sp) + 0.2, 0.16, 0.16, 1.45);
+        addGeo(gold, new THREE.SphereGeometry(0.1, 5, 3), M(sp, side * half, deckZ(sp) + 1.75));
+      }
+    // Deck structure seen from the river: cross girders and stiffening girders.
+    for (let sp = 1.4; sp < L; sp += 2.8)
+      box(green, sp, 0, deckZ(sp) - 2.0, 0.3, 2 * half + 0.8, 0.7);
+    for (const v of [-half + 0.2, -3.5, 0, 3.5, half - 0.2])
+      for (let i = 0; i < 28; i++) {
+        const sa = (L * i) / 28,
+          sb = (L * (i + 1)) / 28;
+        const za = deckZ(sa) - 1.6,
+          zb = deckZ(sb) - 1.6;
+        addGeo(
+          green,
+          new THREE.BoxGeometry(sb - sa + 0.05, 0.25, 0.6),
+          M(
+            (sa + sb) / 2,
+            v,
+            (za + zb) / 2,
+            new THREE.Matrix4().makeRotationY(-Math.atan2(zb - za, sb - sa)),
+          ),
+        );
+      }
+    // Clustered Doric columns on the river piers carrying the deck (listing).
+    for (const st of [S1, S2]) {
+      const dz = deckZ(st);
+      for (const v of [-(half + 1.6), -3.5, 0, 3.5, half + 1.6])
+        for (const [ds, dv] of [
+          [-0.6, -0.6],
+          [0.6, -0.6],
+          [-0.6, 0.6],
+          [0.6, 0.6],
+        ]) {
+          addGeo(
+            green,
+            new THREE.CylinderGeometry(0.4, 0.46, 1.7, 10).rotateX(Math.PI / 2),
+            M(st + ds * 2.2, v + dv, dz - 3.5 + 0.25 + 0.85),
+          );
+          box(green, st + ds * 2.2, v + dv, dz - 3.5, 1.1, 1.1, 0.25);
+          box(gold, st + ds * 2.2, v + dv, dz - 1.55, 1.05, 1.05, 0.25);
+        }
+    }
+    // Pylon dressing: gilded panel mouldings and blind arcading on the shafts.
+    for (const st of [S1, S2]) {
+      const dz = deckZ(st);
+      for (const side of [-1, 1]) {
+        const v = side * (half + 1.6);
+        for (const f of [-1, 1]) {
+          box(gold, st + f * 1.24, v, dz + 2.0, 0.06, 1.2, 0.12);
+          box(gold, st + f * 1.24, v, dz + 9.2, 0.06, 1.2, 0.12);
+          box(gold, st + f * 1.24, v - 0.6, dz + 2.0, 0.06, 0.1, 7.3);
+          box(gold, st + f * 1.24, v + 0.6, dz + 2.0, 0.06, 0.1, 7.3);
+          const arch = new THREE.TorusGeometry(0.55, 0.06, 4, 10, Math.PI);
+          addGeo(
+            gold,
+            arch,
+            M(
+              st + f * 1.26,
+              v,
+              dz + 8.4,
+              new THREE.Matrix4()
+                .makeRotationZ(Math.PI / 2)
+                .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)),
+            ),
+          );
+          // heraldic roundel on the outer face of each pylon cap
+          addGeo(
+            red,
+            new THREE.CylinderGeometry(0.6, 0.6, 0.08, 12).rotateZ(Math.PI / 2),
+            M(st + f * 1.85, v, dz + 11.4),
+          );
+          addGeo(
+            gold,
+            new THREE.TorusGeometry(0.62, 0.06, 4, 12).rotateY(Math.PI / 2),
+            M(st + f * 1.88, v, dz + 11.4),
+          );
+        }
+        // crocketed cresting around the saddle housing
+        for (let k = -3; k <= 3; k++)
+          for (const f of [-1, 1])
+            addGeo(
+              gold,
+              new THREE.ConeGeometry(0.1, 0.45, 4).rotateX(Math.PI / 2),
+              M(st + f * 1.8, v + k * 0.4, dz + 13.7),
+            );
+      }
+    }
+    // Cast-iron chain pedestals at the four abutment corners (listing).
+    for (const sa of [0.5, L - 0.5]) {
+      const dz = deckZ(sa);
+      for (const side of [-1, 1]) {
+        const v = side * chainV;
+        box(green, sa, v, dz - 0.4, 3.0, 2.2, 2.6);
+        box(gold, sa, v, dz + 2.2, 3.2, 2.4, 0.2);
+        addGeo(
+          green,
+          new THREE.ConeGeometry(1.4, 1.3, 4).rotateX(Math.PI / 2),
+          M(sa, v, dz + 3.05, new THREE.Matrix4().makeRotationZ(Math.PI / 4)),
+        );
+        addGeo(gold, new THREE.SphereGeometry(0.25, 8, 5), M(sa, v, dz + 3.8));
+        addGeo(
+          red,
+          new THREE.CylinderGeometry(0.5, 0.5, 0.06, 12).rotateZ(Math.PI / 2),
+          M(sa + (sa < L / 2 ? -1.52 : 1.52), v, dz + 0.9),
+        );
+      }
+    }
+    // Lamp standards along both parapets (resources street_lamp, arm over the road).
+    for (let sp = 12; sp < L - 8; sp += 20) {
+      if (Math.abs(sp - S1) < 8 || Math.abs(sp - S2) < 8) continue;
+      const pl = [];
+      for (const side of [-1, 1]) {
+        const [x, y] = W(sp, side * (half - 0.35), 0);
+        pl.push([x, y, side > 0 ? Math.atan2(-d[1], -d[0]) : rot]);
+      }
+      g.add(ctx.placeAssets('street_lamp', pl, { z: deckZ(sp) + 0.2 }));
+    }
     g.add(batch.toGroup('hammersmith_bridge'));
     return g;
   },

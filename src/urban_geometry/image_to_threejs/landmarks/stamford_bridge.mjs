@@ -35,6 +35,17 @@ export default {
       used_for: 'photo caption: blue seating spelling CHELSEA under a large roof',
     },
     {
+      title: 'Stamford Bridge: Chelsea FC - Football Stadiums',
+      url: 'https://www.football-stadiums.co.uk/?p=14',
+      used_for:
+        'two-tier Shed End and Matthew Harding Stand, three-tier West Stand with near-transparent roof',
+    },
+    {
+      title: 'Stamford Bridge - Football Ground Guide',
+      url: 'https://footballgroundguide.com/leagues/england/premier-league/stamford-bridge-chelsea.html',
+      used_for: 'stand layout and tiering (upper and lower tiers all round)',
+    },
+    {
       title: 'Matthew Harding remembered - Chelsea FC',
       url: 'https://www.chelseafc.com/en/news/article/matthew-harding-remembered---his-chelsea-timeline',
       used_for: 'North (Matthew Harding) Stand opened November 1994',
@@ -42,9 +53,13 @@ export default {
   ],
   notes:
     'Stand roof heights estimated (West 31 m, East 30 m, Matthew Harding 23 m, Shed End 21 m; Overture gives 7-9 m). ' +
-    'Seating rakes are single sloped planes with a glazed box band instead of separate tiers; exterior cladding and ' +
-    'signage approximate; floodlights in the roof edges not modelled. The Millennium hotel (Stamford Bridge Hotel) ' +
-    'footprint is left to the generic layer.',
+    'Seating is modelled as stepped concrete rows (0.8 m treads) with blue seat strips broken by gangways: two tiers ' +
+    'for the Matthew Harding and Shed End, three for the East and West Stands, upper tiers cantilevered over glazed ' +
+    'hospitality / box bands; row counts and rakes are fitted to the footprint depth and roof height, not surveyed. ' +
+    'Roofs carry a lattice front truss with floodlight luminaires and a translucent leading edge (wider on the West ' +
+    'Stand); exterior cladding, the CHELSEA seat lettering on the East Stand lower tier, the dugout / tunnel position ' +
+    'in front of the West Stand and the big screens (omitted) are approximate. The Millennium hotel footprint is ' +
+    'left to the generic layer.',
   build(ctx) {
     const { THREE, kit, byId } = ctx;
     const g = new THREE.Group();
@@ -300,110 +315,566 @@ export default {
       if (b) kit.cap(batch, roofMat, b.polys, 9);
     }
 
+    const DS = { side: THREE.DoubleSide };
+    const seatBlue = kit.paintedMaterial(
+      'stamford_bridge:seatrow',
+      64,
+      64,
+      (c, w, h) => {
+        c.fillStyle = '#1d4fa8';
+        c.fillRect(0, 0, w, h);
+        c.fillStyle = '#163e86';
+        for (let x = 0; x < w; x += 8) c.fillRect(x, 0, 2, h);
+      },
+      DS,
+    );
+    const seatLetters = kit.paintedMaterial(
+      'stamford_bridge:seat_letters',
+      1024,
+      256,
+      (c, w, h) => {
+        c.fillStyle = '#1d4fa8';
+        c.fillRect(0, 0, w, h);
+        c.fillStyle = '#f2f2f2';
+        c.font = 'bold 190px sans-serif';
+        c.textAlign = 'center';
+        c.textBaseline = 'middle';
+        c.fillText('CHELSEA', w / 2, h / 2 + 10);
+      },
+      DS,
+    );
+    const treadMat = kit.mat('#9a9c9e', { roughness: 0.9, ...DS });
+    const riserMat = kit.mat('#7f8285', { roughness: 0.9, ...DS });
+    const fasciaWhite = kit.mat('#eef0f2', { roughness: 0.6, ...DS });
+    const ledMat = kit.mat('#1a3d7a', {
+      emissive: new THREE.Color('#2456b0'),
+      roughness: 0.4,
+      ...DS,
+    });
+    const boxGlass = kit.mat('#26323c', { roughness: 0.15, metalness: 0.3, ...DS });
+    const soffit = kit.mat('#d7dadc', { roughness: 0.8, ...DS });
+    const floodMat = kit.mat('#fffbe8', { emissive: new THREE.Color('#fff2c0'), roughness: 0.3 });
+    const steelDS = kit.mat('white_steel', DS);
+    const tierCfg = {
+      'e4d88631-8795-425b-af2d-e603d2ea4b67': [0.5, 0.5],
+      'a89e22dc-242d-488a-97bf-90dcbdbd2f07': [0.55, 0.45],
+      '89551eed-b17f-49a4-a165-1aa9af9550a6': [0.36, 0.22, 0.42],
+      '86c51da0-ca51-4c0b-af84-ad5642b6138f': [0.36, 0.22, 0.42],
+    };
     for (const s of stands) {
       const b = byId[s.id];
       if (!b) continue;
       const ring = b.polys[0][0];
       const H = s.H;
       kit.cap(batch, conc, b.polys, 0.05);
-      // depth of the stand behind the seated side
       let dmax = 0;
       for (const p of ring) {
         const [u, v] = L(p);
         const lt = s.lat(u, v);
         if (lt > s.l0 + 5 && lt < s.l1 - 5) dmax = Math.max(dmax, s.dist(u, v));
       }
-      const D = Math.min(Math.max(14, dmax * 0.8), 34);
-      // Roof: translucent leading strip (0..9 m), opaque behind and over the corners.
-      const front = 9;
+      const D = Math.min(Math.max(14, dmax - 1.5), 40);
+      // Roof: translucent leading strip, opaque behind; soffit underneath.
+      const front = s.id.startsWith('86c5') ? 16 : 9;
       const opaque1 = clip(ring, s, true, front),
         opaque2 = clip(ring, s, false, 0.01);
       const strip = clip(ring, s, true, 0.01);
       const strip2 = strip && clip(strip, s, false, front);
-      for (const r of [opaque1, opaque2]) if (r) kit.cap(batch, roofMat, [[r]], H, { scale: 6 });
+      for (const r of [opaque1, opaque2])
+        if (r) {
+          kit.cap(batch, roofMat, [[r]], H, { scale: 6 });
+          kit.cap(batch, soffit, [[r]], H - 0.6, { scale: 6, down: true });
+        }
       if (r2(strip2)) kit.cap(batch, polyc, [[strip2]], H - 0.3);
-      // seating rake with a glazed box band two-thirds up
+
       const l0 = s.l0 + 1,
         l1 = s.l1 - 1;
-      const zf = 1.2,
-        zb = H - 5;
-      const quadLat = (m, d0, z0, d1, z1, u0, u1) => {
-        const pts = [at(s, l0, d0, z0), at(s, l1, d0, z0), at(s, l1, d1, z1), at(s, l0, d1, z1)];
-        const flip = s.out[0] < 0 || s.out[1] > 0; // keep winding facing up / towards the pitch
+      const span = l1 - l0;
+      const rotLat = s.out[0] ? A + Math.PI / 2 : A;
+      const rotDist = s.out[0] ? A : A + Math.PI / 2;
+      // Quad in stand coordinates [lat, dist, z].
+      const Q = (m, a, bb, c2, d2, uv) =>
         batch.add(
           m,
-          flip ? pts : pts.slice().reverse(),
-          flip
-            ? [
-                [u0, 0],
-                [u1, 0],
-                [u1, 1],
-                [u0, 1],
-              ]
-            : [
-                [u0, 1],
-                [u1, 1],
-                [u1, 0],
-                [u0, 0],
-              ],
+          [at(s, ...a), at(s, ...bb), at(s, ...c2), at(s, ...d2)],
+          uv || [
+            [0, 0],
+            [1, 0],
+            [1, 1],
+            [0, 1],
+          ],
           [0, 1, 2, 0, 2, 3],
         );
-      };
-      const span = l1 - l0;
-      const dB = D * 0.62,
-        zB = zf + (zb - zf) * 0.58;
-      quadLat(s.name ? seatsName : seats, 2, zf, dB, zB, 0, s.name ? 1 : span / 20);
-      quadLat(boxes, dB, zB, dB + 0.3, zB + 2.6, 0, 1);
-      quadLat(seats, dB + 0.3, zB + 2.6, D, zb + 1.5, 0, span / 20);
-      quadLat(conc, 0, 0, 2, zf, 0, 1);
-      quadLat(boxes, D, zb + 1.5, D + 0.2, H - 0.4, 0, 1);
+      const latBox = (m, lt, d, z0, wl, wd, h) =>
+        addGeo(
+          m,
+          new THREE.BoxGeometry(wl, wd, h),
+          new THREE.Matrix4().makeRotationZ(rotLat).setPosition(...at(s, lt, d, z0 + h / 2)),
+        );
+      // Gangway positions along the stand.
+      const nSeg = Math.max(3, Math.round(span / 11));
+      const gw = 1.3;
+      const segs = [];
+      for (let k = 0; k < nSeg; k++) {
+        const a0 = l0 + (span * k) / nSeg + (k ? gw / 2 : 0),
+          a1 = l0 + (span * (k + 1)) / nSeg - (k < nSeg - 1 ? gw / 2 : 0);
+        segs.push([a0, a1]);
+      }
+      // Tier layout: fractions of the depth; rises scaled to fit under the roof.
+      const fr = tierCfg[s.id] || [0.5, 0.5];
+      const gapH = fr.length === 3 ? 3.0 : 3.4,
+        overhang = 3.5,
+        d0 = 2.5,
+        z0 = 1.1;
+      const tread = 0.8;
+      const usable = D - d0 + overhang * (fr.length - 1);
+      const tiers = fr.map((f, i) => ({
+        rows: Math.max(4, Math.floor((usable * f) / tread)),
+        rise: 0.3 + 0.12 * i,
+      }));
+      const sumRise = tiers.reduce((a, t) => a + t.rows * t.rise, 0);
+      const k = Math.min(1, (H - 4.5 - z0 - gapH * (tiers.length - 1)) / sumRise);
+      tiers.forEach((t) => (t.rise *= k));
+      let d = d0,
+        z = z0;
+      const profile = [];
+      quadLat0(conc, 0, 0, d0, z0);
+      function quadLat0(m, da, za, db, zb) {
+        Q(m, [l0, da, za], [l1, da, za], [l1, db, zb], [l0, db, zb]);
+      }
+      tiers.forEach((t, ti) => {
+        const tz0 = z,
+          td0 = d;
+        // front wall / balcony fascia of the tier
+        if (ti === 0) {
+          Q(
+            fasciaWhite,
+            [l0, d - 0.15, 0],
+            [l1, d - 0.15, 0],
+            [l1, d - 0.15, z + 1.0],
+            [l0, d - 0.15, z + 1.0],
+          );
+        } else {
+          Q(fasciaWhite, [l0, d, z - 1.6], [l1, d, z - 1.6], [l1, d, z + 1.0], [l0, d, z + 1.0]);
+          Q(
+            ledMat,
+            [l0, d - 0.03, z - 1.3],
+            [l1, d - 0.03, z - 1.3],
+            [l1, d - 0.03, z - 0.3],
+            [l0, d - 0.03, z - 0.3],
+            [
+              [0, 0],
+              [span / 4, 0],
+              [span / 4, 1],
+              [0, 1],
+            ],
+          );
+          Q(
+            soffit,
+            [l0, d, z - 1.6],
+            [l1, d, z - 1.6],
+            [l1, d + overhang + 2, z - 0.6],
+            [l0, d + overhang + 2, z - 0.6],
+          );
+        }
+        for (let r = 0; r < t.rows; r++) {
+          const zr = z + t.rise;
+          // riser and tread (concrete), continuous across the stand
+          Q(riserMat, [l0, d, z], [l1, d, z], [l1, d, zr], [l0, d, zr]);
+          Q(treadMat, [l0, d, zr], [l1, d, zr], [l1, d + tread, zr], [l0, d + tread, zr]);
+          // seat row: back face and seat top, split by gangways
+          const lettered = s.name && ti === 0;
+          const vv0 = r / t.rows,
+            vv1 = (r + 0.8) / t.rows;
+          for (const [a0, a1] of segs) {
+            const m = lettered ? seatLetters : seatBlue;
+            const uA = lettered ? (a0 - l0) / span : (a0 - l0) / 2,
+              uB = lettered ? (a1 - l0) / span : (a1 - l0) / 2;
+            Q(
+              m,
+              [a0, d + 0.55, zr],
+              [a1, d + 0.55, zr],
+              [a1, d + 0.62, zr + 0.48],
+              [a0, d + 0.62, zr + 0.48],
+              [
+                [uA, vv0],
+                [uB, vv0],
+                [uB, vv1],
+                [uA, vv1],
+              ],
+            );
+            Q(
+              m,
+              [a0, d + 0.12, zr + 0.42],
+              [a1, d + 0.12, zr + 0.42],
+              [a1, d + 0.55, zr + 0.42],
+              [a0, d + 0.55, zr + 0.42],
+              [
+                [uA, vv0],
+                [uB, vv0],
+                [uB, vv1],
+                [uA, vv1],
+              ],
+            );
+          }
+          profile.push([d, zr]);
+          d += tread;
+          z = zr;
+        }
+        // vomitory openings in the tier (dark portals at mid-depth)
+        const vr = Math.floor(t.rows * 0.45);
+        const vd = td0 + vr * tread,
+          vz = tz0 + vr * t.rise;
+        for (let kk = 1; kk < nSeg; kk += 2) {
+          const lt = l0 + (span * kk) / nSeg;
+          latBox(boxGlass, lt, vd + 1.2, vz - 0.05, 2.4, 2.4, 0.12);
+          latBox(fasciaWhite, lt - 1.3, vd + 1.2, vz, 0.15, 2.4, 1.0);
+          latBox(fasciaWhite, lt + 1.3, vd + 1.2, vz, 0.15, 2.4, 1.0);
+        }
+        // hospitality / box band between tiers
+        if (ti < tiers.length - 1) {
+          const zb = z + gapH;
+          Q(fasciaWhite, [l0, d, z], [l1, d, z], [l1, d, z + 0.25], [l0, d, z + 0.25]);
+          Q(
+            boxGlass,
+            [l0, d + 0.2, z + 0.25],
+            [l1, d + 0.2, z + 0.25],
+            [l1, d + 0.2, zb - 0.4],
+            [l0, d + 0.2, zb - 0.4],
+          );
+          for (let kk = 0; kk <= Math.round(span / 4); kk++)
+            latBox(
+              fasciaWhite,
+              l0 + (span * kk) / Math.round(span / 4),
+              d + 0.25,
+              z + 0.25,
+              0.12,
+              0.12,
+              gapH - 0.65,
+            );
+          // box balconies with glass balustrades
+          Q(
+            treadMat,
+            [l0, d - 1.4, z + 0.2],
+            [l1, d - 1.4, z + 0.2],
+            [l1, d, z + 0.2],
+            [l0, d, z + 0.2],
+          );
+          Q(
+            polyc,
+            [l0, d - 1.4, z + 0.2],
+            [l1, d - 1.4, z + 0.2],
+            [l1, d - 1.4, z + 1.2],
+            [l0, d - 1.4, z + 1.2],
+          );
+          for (let kk = 0; kk <= Math.round(span / 4); kk++)
+            latBox(
+              fasciaWhite,
+              l0 + (span * kk) / Math.round(span / 4),
+              d - 0.7,
+              z + 0.2,
+              0.1,
+              1.4,
+              1.0,
+            );
+          d -= overhang;
+          z = zb;
+        }
+      });
+      // gangway steps (lighter concrete strips) through the seating
+      for (const [, a1] of segs.slice(0, -1))
+        for (const [pd, pz] of profile)
+          latBox(treadMat, a1 + gw / 2, pd + tread / 2, pz, gw, tread, 0.04);
+      // back wall from the top row to the roof, with a walkway rail
+      Q(riserMat, [l0, d, z], [l1, d, z], [l1, d, H - 0.6], [l0, d, H - 0.6]);
+      Q(
+        boxGlass,
+        [l0, d - 0.05, z + 1.4],
+        [l1, d - 0.05, z + 1.4],
+        [l1, d - 0.05, z + 2.4],
+        [l0, d - 0.05, z + 2.4],
+      );
+      // end screens: fan from the bottom of the back wall through the profile
+      for (const lt of [l0, l1]) {
+        const verts = [at(s, lt, d, 0), at(s, lt, 0, 0)];
+        for (const [pd, pz] of profile) verts.push(at(s, lt, pd, pz));
+        verts.push(at(s, lt, d, z), at(s, lt, d, H - 0.6));
+        const tris = [];
+        for (let i = 1; i < verts.length - 1; i++) tris.push(0, i, i + 1);
+        batch.add(
+          kit.mat('#c3c6c9', { roughness: 0.85, ...DS }),
+          verts,
+          verts.map(() => [0, 0]),
+          tris,
+        );
+      }
       // advertising boards along the pitch edge
-      quadLat(
-        kit.mat('#16324f', { emissive: new THREE.Color('#0b1d33') }),
-        -0.5,
-        0,
-        -0.4,
-        1.1,
-        0,
-        1,
+      Q(
+        ledMat,
+        [l0, -0.5, 0],
+        [l1, -0.5, 0],
+        [l1, -0.5, 1.0],
+        [l0, -0.5, 1.0],
+        [
+          [0, 0],
+          [span / 6, 0],
+          [span / 6, 1],
+          [0, 1],
+        ],
       );
-      // roof front truss
-      const mid = at(s, (l0 + l1) / 2, 0.6, H - 1.1);
-      const rot = s.out[0] ? A + Math.PI / 2 : A;
-      addGeo(
-        truss,
-        new THREE.BoxGeometry(span + 2, 1.0, 1.6),
-        new THREE.Matrix4().makeRotationZ(rot).setPosition(...mid),
-      );
+      // Roof front: lattice truss with floodlight strip beneath.
+      const tz1 = H - 0.3,
+        tz0 = H - 2.6;
+      latBox(steelDS, (l0 + l1) / 2, 0.6, tz1 - 0.35, span + 2, 0.5, 0.35);
+      latBox(steelDS, (l0 + l1) / 2, 0.6, tz0, span + 2, 0.5, 0.35);
+      latBox(fasciaWhite, (l0 + l1) / 2, 0.2, tz0 + 0.35, span + 2, 0.1, tz1 - tz0 - 0.7);
+      const nd = Math.round(span / 3);
+      for (let kk = 0; kk <= nd; kk++) {
+        const lt = l0 - 1 + ((span + 2) * kk) / nd;
+        latBox(steelDS, lt, 0.9, tz0, 0.18, 0.18, tz1 - tz0);
+        if (kk < nd) {
+          const lt2 = l0 - 1 + ((span + 2) * (kk + 0.5)) / nd;
+          const dl = (span + 2) / nd,
+            dh = tz1 - tz0;
+          const geo = new THREE.BoxGeometry(Math.hypot(dl, dh), 0.14, 0.14);
+          const m = new THREE.Matrix4()
+            .makeRotationZ(rotLat)
+            .multiply(new THREE.Matrix4().makeRotationY((kk % 2 ? 1 : -1) * Math.atan2(dh, dl)))
+            .setPosition(...at(s, lt2, 0.9, (tz0 + tz1) / 2));
+          addGeo(steelDS, geo, m);
+        }
+        if (kk % 2 === 0) {
+          // floodlight luminaires angled at the pitch
+          const geo = new THREE.BoxGeometry(0.9, 0.5, 0.6);
+          const m = new THREE.Matrix4()
+            .makeRotationZ(rotLat)
+            .multiply(
+              new THREE.Matrix4().makeRotationX((s.out[0] < 0 || s.out[1] > 0 ? -1 : 1) * 0.6),
+            )
+            .setPosition(...at(s, lt, 0.4, tz0 - 0.4));
+          addGeo(floodMat, geo, m);
+        }
+      }
+      // rafters under the roof, from the front truss to the back
+      const nr = Math.round(span / 8);
+      for (let kk = 0; kk <= nr; kk++) {
+        const lt = l0 + (span * kk) / nr;
+        const geo = new THREE.BoxGeometry(D + 2, 0.4, 1.2);
+        addGeo(
+          steelDS,
+          geo,
+          new THREE.Matrix4()
+            .makeRotationZ(rotDist)
+            .setPosition(...at(s, lt, (D + 2) / 2, H - 1.2)),
+        );
+      }
       // roof support columns at the back of the seats
-      for (let k = 0; k <= 4; k++) {
-        const p = at(s, l0 + (span * k) / 4, D + 0.6, 0);
+      for (let kk = 0; kk <= 4; kk++) {
+        const p = at(s, l0 + (span * kk) / 4, d + 0.6, 0);
         addGeo(
           truss,
           new THREE.BoxGeometry(0.8, 0.8, H),
           new THREE.Matrix4().setPosition(p[0], p[1], H / 2),
         );
       }
-      // cantilever trusses over the roof (East Stand's exposed frame)
+      // exposed cantilever trusses over the roof of the tall stands
       if (s.H >= 30)
-        for (let k = 0; k <= 6; k++) {
-          const lt = l0 + (span * k) / 6;
+        for (let kk = 0; kk <= 6; kk++) {
+          const lt = l0 + (span * kk) / 6;
           const p0 = at(s, lt, D + 4, H),
             p1 = at(s, lt, 2, H);
           const len = Math.hypot(p1[0] - p0[0], p1[1] - p0[1]);
-          const geo = new THREE.BoxGeometry(len, 0.6, 1.8);
           addGeo(
             truss,
-            geo,
+            new THREE.BoxGeometry(len, 0.6, 0.5),
             new THREE.Matrix4()
               .makeRotationZ(Math.atan2(p1[1] - p0[1], p1[0] - p0[0]))
-              .setPosition((p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2, H + 0.9),
+              .setPosition((p0[0] + p1[0]) / 2, (p0[1] + p1[1]) / 2, H + 2.6),
           );
+          for (let j = 0; j <= 5; j++) {
+            const dd = 2 + ((D + 2) * j) / 5;
+            latBox(truss, lt, dd, H, 0.35, 0.35, 2.4);
+            if (j < 5) {
+              const geo = new THREE.BoxGeometry(Math.hypot((D + 2) / 5, 2.4), 0.25, 0.25);
+              const m = new THREE.Matrix4()
+                .makeRotationZ(rotDist)
+                .multiply(
+                  new THREE.Matrix4().makeRotationY(
+                    (j % 2 ? 1 : -1) * Math.atan2(2.4, (D + 2) / 5),
+                  ),
+                )
+                .setPosition(...at(s, lt, dd + (D + 2) / 10, H + 1.3));
+              addGeo(truss, geo, m);
+            }
+          }
         }
     }
     function r2(r) {
       return r && r.length >= 3;
     }
+
+    // Exterior: structural columns and concourse fins on the outside walls.
+    for (const e of allEdges) {
+      if (inBowl(e.p) && inBowl(e.q)) continue;
+      const len = Math.hypot(e.q[0] - e.p[0], e.q[1] - e.p[1]);
+      if (len < 8) continue;
+      const H = hOf.get(e.id);
+      const ux = (e.q[0] - e.p[0]) / len,
+        uy = (e.q[1] - e.p[1]) / len;
+      const rot = Math.atan2(uy, ux);
+      const n = Math.round(len / 7.5);
+      for (let i = 0; i <= n; i++) {
+        const t = (len * i) / n;
+        addGeo(
+          truss,
+          new THREE.BoxGeometry(0.7, 0.7, H),
+          new THREE.Matrix4()
+            .makeRotationZ(rot)
+            .setPosition(e.p[0] + ux * t + uy * 0.35, e.p[1] + uy * t - ux * 0.35, H / 2),
+        );
+      }
+      // mullions and transom over the glazed concourse band of the cladding
+      const nmul = Math.round(len / 2);
+      for (let i = 1; i < nmul; i++) {
+        const t = (len * i) / nmul;
+        addGeo(
+          fasciaWhite,
+          new THREE.BoxGeometry(0.12, 0.25, H * 0.16),
+          new THREE.Matrix4()
+            .makeRotationZ(rot)
+            .setPosition(e.p[0] + ux * t + uy * 0.12, e.p[1] + uy * t - ux * 0.12, H * 0.375),
+        );
+      }
+      addGeo(
+        fasciaWhite,
+        new THREE.BoxGeometry(len, 0.25, 0.12),
+        new THREE.Matrix4()
+          .makeRotationZ(rot)
+          .setPosition(
+            (e.p[0] + e.q[0]) / 2 + uy * 0.12,
+            (e.p[1] + e.q[1]) / 2 - ux * 0.12,
+            H * 0.4,
+          ),
+      );
+      for (const zf of [H * 0.156, H * 0.5])
+        addGeo(
+          fasciaWhite,
+          new THREE.BoxGeometry(len, 0.9, 0.3),
+          new THREE.Matrix4()
+            .makeRotationZ(rot)
+            .setPosition((e.p[0] + e.q[0]) / 2 + uy * 0.45, (e.p[1] + e.q[1]) / 2 - ux * 0.45, zf),
+        );
+      addGeo(
+        roofMat,
+        new THREE.BoxGeometry(len + 0.4, 1.2, 0.8),
+        new THREE.Matrix4()
+          .makeRotationZ(rot)
+          .setPosition((e.p[0] + e.q[0]) / 2 + uy * 0.5, (e.p[1] + e.q[1]) / 2 - ux * 0.5, H + 0.2),
+      );
+    }
+
+    // Pitch furniture: goals with nets, corner flags, dugouts, tunnel.
+    {
+      const post = kit.mat('white');
+      const net = kit.paintedMaterial(
+        'stamford_bridge:net',
+        64,
+        64,
+        (c, w, h) => {
+          c.clearRect(0, 0, w, h);
+          c.strokeStyle = 'rgba(255,255,255,0.9)';
+          c.lineWidth = 2;
+          for (let x = 0; x <= w; x += 8) {
+            c.beginPath();
+            c.moveTo(x, 0);
+            c.lineTo(x, h);
+            c.stroke();
+            c.beginPath();
+            c.moveTo(0, x);
+            c.lineTo(w, x);
+            c.stroke();
+          }
+        },
+        { transparent: true, alphaTest: 0.3, side: THREE.DoubleSide },
+      );
+      const P = (u, v, z, r = A) =>
+        new THREE.Matrix4().makeRotationZ(r).setPosition(...Wd(u, v, z));
+      const pu = 52.5 * 0.98;
+      for (const sg of [-1, 1]) {
+        const u = sg * pu;
+        for (const v of [-3.66, 3.66])
+          addGeo(
+            post,
+            new THREE.CylinderGeometry(0.06, 0.06, 2.44, 8).rotateX(Math.PI / 2),
+            P(u, v, 1.22),
+          );
+        addGeo(post, new THREE.BoxGeometry(0.12, 7.44, 0.12), P(u, 0, 2.44));
+        const ub = u + sg * 2;
+        const nv = [
+          [u, -3.66, 2.44],
+          [u, 3.66, 2.44],
+          [ub, 3.66, 1.6],
+          [ub, -3.66, 1.6],
+        ];
+        batch.add(
+          net,
+          nv.map((p) => Wd(...p)),
+          [
+            [0, 0],
+            [8, 0],
+            [8, 3],
+            [0, 3],
+          ],
+          [0, 1, 2, 0, 2, 3],
+        );
+        batch.add(
+          net,
+          [Wd(ub, -3.66, 0), Wd(ub, 3.66, 0), Wd(ub, 3.66, 1.6), Wd(ub, -3.66, 1.6)],
+          [
+            [0, 0],
+            [8, 0],
+            [8, 2],
+            [0, 2],
+          ],
+          [0, 1, 2, 0, 2, 3],
+        );
+        for (const v of [-3.66, 3.66])
+          batch.add(
+            net,
+            [Wd(u, v, 0), Wd(ub, v, 0), Wd(ub, v, 1.6), Wd(u, v, 2.44)],
+            [
+              [0, 0],
+              [2, 0],
+              [2, 2],
+              [0, 3],
+            ],
+            [0, 1, 2, 0, 2, 3],
+          );
+        for (const v of [-34, 34]) {
+          addGeo(
+            kit.mat('#e8d84a'),
+            new THREE.CylinderGeometry(0.03, 0.03, 1.5, 6).rotateX(Math.PI / 2),
+            P(u, v, 0.75),
+          );
+          addGeo(
+            kit.mat('#d23a2e', { side: THREE.DoubleSide }),
+            new THREE.BoxGeometry(0.02, 0.45, 0.35),
+            P(u, v + 0.22, 1.3),
+          );
+        }
+      }
+      // Dugouts and tunnel on the West Stand side.
+      const vD = vWe + 1.2;
+      for (const u of [-9, 9]) {
+        addGeo(kit.mat('#2b3a4a'), new THREE.BoxGeometry(10, 2.2, 0.3), P(u, vD - 0.9, 0));
+        addGeo(polyc, new THREE.BoxGeometry(10, 2.4, 0.1), P(u, vD, 2.2));
+        addGeo(polyc, new THREE.BoxGeometry(10, 0.1, 2.2), P(u, vD - 1.15, 1.1));
+        addGeo(kit.mat('#1d4fa8'), new THREE.BoxGeometry(9.6, 0.5, 0.9), P(u, vD - 0.7, 0.3));
+      }
+      addGeo(fasciaWhite, new THREE.BoxGeometry(4, 6, 2.6), P(0, vD - 2.0, 0));
+      addGeo(boxGlass, new THREE.BoxGeometry(3, 0.1, 2.2), P(0, vD + 1.05, 0.05));
+    }
+
     g.add(batch.toGroup('stamford_bridge'));
     return g;
   },
