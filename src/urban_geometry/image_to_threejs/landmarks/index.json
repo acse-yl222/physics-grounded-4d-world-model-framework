@@ -2331,12 +2331,32 @@
       {
         "title": "Listed Buildings Search (RBKC) - Natural History Museum",
         "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=203737",
-        "used_for": "listing: buff and grey terracotta, pitched slated roof, three-bay centrepiece with two spired towers, end bays with steep pavilion roofs, square-headed ground and round-headed first floor windows with coupled lights"
+        "used_for": "listing: 27 bays, buff and grey terracotta, pitched slated roof, projecting three-bay centrepiece with two spired towers, end bays with octagonal towers and steep pavilion roofs, square-headed basement and ground floor and round-headed first floor windows with coupled subsidiary round-headed lights, animal figures on first-floor sills"
+      },
+      {
+        "title": "Natural History Museum London, England (GoHistoric listing mirror)",
+        "url": "https://gohistoric.com/places/249431-natural-history-museum-london/listed",
+        "used_for": "listing text cross-check (bays, storeys, window heads)"
+      },
+      {
+        "title": "Natural History Museum, Front Lodge and Gates, Gatepiers and Railings (Historic England)",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1080675",
+        "used_for": "gates, piers and railings by Waterhouse erected by 1881"
+      },
+      {
+        "title": "Gates, Gatepiers and Railings to Natural History Museum (GoHistoric)",
+        "url": "https://gohistoric.com/places/652730-gates-gatepiers-railings-natural-history-museum-london/listed",
+        "used_for": "Portland stone piers of octagonal section carrying wrought-iron railings; larger square Cromwell Road gate piers topped by lanterns; openwork wrought-iron centre piers with gilded lions"
       },
       {
         "title": "Natural History Museum - Gardenvisit (London and its environs, 1927)",
         "url": "https://www.gardenvisit.com/book/london_and_its_environs_1927/41_the_natural_history_museum/natural_history_museum",
         "used_for": "central block with two towers 192 ft high, wings ending in pavilions"
+      },
+      {
+        "title": "Natural History Museum - TripExpert",
+        "url": "https://www.tripexpert.com/london/attractions/natural-history-museum",
+        "used_for": "central towers 58 m over the arched entrance"
       },
       {
         "title": "Natural History Museum (Bluffton University architecture notes)",
@@ -2347,6 +2367,11 @@
         "title": "Alfred Waterhouse: museum building, cathedral to nature (NHM)",
         "url": "https://www.nhm.ac.uk/discover/alfred-waterhouse-museum-building-cathedral-to-nature.html",
         "used_for": "terracotta over iron and steel frame, cathedral-like Hintze Hall"
+      },
+      {
+        "title": "1880 - Natural History Museum, Kensington, London (Archiseek)",
+        "url": "https://www.archiseek.com/?p=3558",
+        "used_for": "terracotta supplied by Gibbs and Canning of Tamworth"
       },
       {
         "title": "Darwin Centre - architravel",
@@ -2369,7 +2394,7 @@
         "used_for": "linked to the Science Museum by corridors over an arched gateway"
       }
     ],
-    "notes": "Footprint from Overture (front measured 207 m). Heights are estimates from descriptions: towers 58 m (192 ft), front eaves 19 m, pavilions 24 m + steep roofs, Hintze Hall ridge 34 m; the Overture h (13.7 m) is inferred and ignored. Plan behind the front (gallery wings, light courts, north range) is schematic. Darwin Centre height (28 m) assumed from its eight storeys; Earth Galleries height (22 m + attic) estimated. Lodge modelled as a small terracotta lodge. Facade ornament is painted onto canvas textures."
+    "notes": "Footprint from Overture (front measured 207 m). Heights are estimates from descriptions: towers 58 m (192 ft), front eaves 19 m, pavilions 24 m + steep roofs, Hintze Hall ridge 34 m; the Overture h (13.7 m) is inferred and ignored. The Cromwell Road front (wings, pavilions, centrepiece, towers) is real geometry: wall slabs with through openings and reveals, plate-tracery panels with coupled round-headed lights, colonnettes, banded voussoirs, banded buttress piers, string courses and corbel tables; the receding orders of the portal and the rose window are modelled; terracotta animal figures and foliage carving are omitted. Bay rhythm (10 bays per wing, 2 per pavilion face) and opening sizes are estimated from the listing and general views, not drawings. Entrance terrace raised 2.4 m over the forecourt (steps from the mapped OSM steps line). Plan behind the front (gallery wings, light courts, north range) is schematic and painted. Darwin Centre height (28 m) assumed from its eight storeys; Earth Galleries height (22 m + attic) and window grid estimated. Railing, pier spacing and gate positions follow the mapped fence lines; lion and lantern finials are simplified."
   },
   {
     "id": "olympia_london",
@@ -3094,22 +3119,52 @@
         "used_for": "East Block by Sir Richard Allison (1913-1928), Centre Block infill 1980, Wellcome Wing 2000 extending to Queen's Gate"
       },
       {
-        "title": "Glowing panes - Building",
-        "url": "https://building.co.uk/focus/glowing-panes/8923.article",
-        "used_for": "blue glass wall fills the west elevation of the Wellcome Wing (MacCormac Jamieson Prichard)"
+        "title": "Science Museum, London (Wikishire)",
+        "url": "https://wikishire.co.uk/wiki/Science_Museum,_London",
+        "used_for": "substantial neoclassical building on Exhibition Road"
       },
       {
-        "title": "Science Museum's Wellcome Wing - Heritage Fund",
-        "url": "https://heritagefund.org.uk/projects/science-museums-wellcome-wing",
-        "used_for": "Wellcome Wing opening 2000"
+        "title": "Richard Allison (architect) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Richard_Allison_(architect)",
+        "used_for": "Office of Works chief architect; East Block among his public buildings"
+      },
+      {
+        "title": "Survey of London vol. 38, plate 75 (British History Online)",
+        "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-75",
+        "used_for": "Science Museum eastern block 1914-28 by (Sir) R. J. Allison, exterior photo caption"
+      },
+      {
+        "title": "Photo showing the facade for the East Block (Science Museum Group)",
+        "url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110146247",
+        "used_for": "East Block facade record (caption)"
       },
       {
         "title": "Photo showing the construction of the East Block of the Science Museum",
         "url": "https://collection.sciencemuseumgroup.org.uk/documents/aa110146179",
         "used_for": "East Block as a steel-framed stone-faced block on Exhibition Road"
+      },
+      {
+        "title": "Listed Buildings Search (RBKC) - Exhibition Road subway",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=493237",
+        "used_for": "neighbouring 1915 Portland stone work with banded rustication (style of the base)"
+      },
+      {
+        "title": "Glowing panes - Building",
+        "url": "https://building.co.uk/focus/glowing-panes/8923.article",
+        "used_for": "blue glass wall fills the west elevation of the Wellcome Wing; V-shaped diagonal rods carry it to brackets at the top of the two stair towers from which it is hung"
+      },
+      {
+        "title": "The appliance of science (Design Week)",
+        "url": "https://www.designweek.co.uk/issues/21-january-1999/the-appliance-of-science/",
+        "used_for": "Wellcome Wing as tiers stepping back from a central atrium, blue light"
+      },
+      {
+        "title": "Science Museum's Wellcome Wing - Heritage Fund",
+        "url": "https://heritagefund.org.uk/projects/science-museums-wellcome-wing",
+        "used_for": "Wellcome Wing opening 2000"
       }
     ],
-    "notes": "Footprint from Overture; Overture height (12.9 m, inferred) replaced by estimates: East Block 24 m cornice + attic to 28 m (six public floors), Centre Block 24 m, Wellcome Wing 28 m. The Exhibition Road elevation (rusticated base, recessed giant colonnade, attic) is reconstructed from general descriptions, not measured drawings; column count and window rhythm are approximate. The Museum Lane service range is a schematic stone block."
+    "notes": "Footprint from Overture; Overture height (12.9 m, inferred) replaced by estimates: East Block 24 m cornice + attic to 28 m (six public floors), Centre Block 24 m, Wellcome Wing 28 m. The Exhibition Road elevation is real geometry (banded-rusticated base with window openings, end bays with framed windows, a recessed giant order of eleven Ionic columns before metal-framed glazing with spandrel panels, entablature with dentils, attic windows and parapet), reconstructed from general descriptions, not measured drawings: column count, order and window rhythm are approximate; the north and south return elevations of the East Block carry framed windows. Wellcome Wing: stair towers, hanging brackets and V rods are schematic. The Museum Lane service range and the rear elevations are painted."
   },
   {
     "id": "selfridges",
@@ -3825,22 +3880,32 @@
       {
         "title": "Out of the shadows: the facade and decorative sculpture of the V&A, part 1 (V&A Online Journal)",
         "url": "https://www.vam.ac.uk/content/journals/research-journal/issue-no.-7-autumn-2015/out-of-the-shadows-the-faade-and-decorative-sculpture-of-the-victoria-and-albert-museum,-part-1",
-        "used_for": "219 m red brick and Portland stone front; open lantern in the outline of an imperial crown; 32 statues in niches between first-floor windows"
+        "used_for": "219 m red brick and Portland stone front; open lantern in the outline of an imperial crown; statues in niches between first-floor windows along the whole front"
       },
       {
         "title": "A grand entrance on Cromwell Road (V&A)",
         "url": "https://www.vam.ac.uk/articles/a-grand-entrance-on-cromwell-road",
-        "used_for": "tower replanned as a three-storey octagonal structure; building brought forward onto Cromwell Road"
+        "used_for": "tower replanned as a three-storey octagonal structure; building brought forward onto Cromwell Road; entrance opened 1909"
       },
       {
         "title": "Victoria and Albert Museum - MIT Dome",
         "url": "https://dome.mit.edu/handle/1721.3/136858",
-        "used_for": "column-tiered tower supporting an open crown"
+        "used_for": "skyline broken by pavilion domes and campaniles; column-tiered tower supporting an open crown"
       },
       {
         "title": "Entrance, V&A Museum, London (Getty Images caption)",
         "url": "https://www.gettyimages.com.au/detail/photo/entrance-v-a-museum-london-england-royalty-free-image/2195561429",
         "used_for": "Portland stone entrance facade; statues of Victoria, Albert, and Fame on the pinnacle of the tower crown"
+      },
+      {
+        "title": "V&A facade - Queen Victoria (London Remembers)",
+        "url": "https://www.londonremembers.com/memorials/v-a-facade-queen-victoria/other",
+        "used_for": "Albert and Victoria by the arch, Edward VII and Alexandra flanking the entrance; 36 statues on the two public facades, names on labels under the feet"
+      },
+      {
+        "title": "Victoria and Albert Museum, the facade on Cromwell Road (RIBApix)",
+        "url": "https://www.architecture.com/image-library/ribapix/image-information/poster/victoria-and-albert-museum-south-kensington-london-the-facade-on-cromwell-road/posterid/RIBA7582.html",
+        "used_for": "general view of the Cromwell Road facade (caption)"
       },
       {
         "title": "AL_A completes tile-covered entrance and subterranean gallery for V&A (Dezeen)",
@@ -3858,7 +3923,7 @@
         "used_for": "quadrangle facades (Fowke, Sykes terracotta) at the heart of the museum"
       }
     ],
-    "notes": "Footprint from Overture (courtyard garden kept as a hole). Overture h (13.6 m) is inferred; heights are estimates: Cromwell Road range 22 m to the balustrade, frontispiece 25 m, tower crown with Fame at ~55 m (no published height found). Rear ranges, Cast Courts glazed roofs and the Henry Cole Wing block are schematic. Statue niches and stone banding are painted; the tower is simplified to octagonal stages, a column ring and eight crown ribs."
+    "notes": "Footprint from Overture (courtyard garden kept as a hole). Overture h (13.6 m) is inferred; heights are estimates: Cromwell Road range 22 m to the balustrade, frontispiece 25 m, tower crown with Fame at ~58 m (no published height found). The Cromwell Road and Exhibition Road fronts are real geometry: brick-and-stone wall slabs with arched ground-floor windows, first-floor windows with architraves, pediments and glazing bars, statue niches with simplified standing figures between them, cornice and turned balustrade, quoins and raised pavilions with small open cupolas (the \"pavilion domes\"). Bay width (6.6 m) and storey heights are estimated from views, not drawings; statues are generic draped figures. Tower: square stage, column ring, statue stage and an eight-rib open crown with orb and Fame, all proportions estimated. Rear ranges, Cast Courts glazed roofs and the Henry Cole Wing block are schematic."
   },
   {
     "id": "victoria_station",
