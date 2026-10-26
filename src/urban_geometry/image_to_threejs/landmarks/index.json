@@ -563,6 +563,31 @@
     "notes": "Tower plan is the curved part of the Overture outline, smoothed. The attached rectangular block is given 10 storeys (~33 m) as an estimate (the footprint carries the tower height for the whole outline). Balcony wave amplitude/phase is stylised."
   },
   {
+    "id": "catherine_lewis_centre",
+    "name": "Catherine Lewis Centre, Hammersmith Hospital",
+    "claims": [
+      "a660a1d5-36e9-4b02-ae8b-f687be22afe5"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "hospital on Du Cane Road, White City; history of the site"
+      },
+      {
+        "title": "Hammersmith Hospital location map - Imperial College Healthcare",
+        "url": "https://www.imperial.nhs.uk/~/media/website/locations/hammersmith-hospital/hammersmith-hospital-location-map.pdf?la=en",
+        "used_for": "building names and positions on the campus"
+      },
+      {
+        "title": "Hammersmith campus map (Imperial College)",
+        "url": "https://warwick.ac.uk/tenichols/presentations/gsk-neurophysics-2/hammersmith_campus_map.pdf",
+        "used_for": "Catherine Lewis Centre beside the Cancer Centre, Radiotherapy, Energy Centre and MRC Cyclotron"
+      }
+    ],
+    "notes": "Footprint and 3 storeys from the data. No description found; buff brick with ribbon glazing, glazed entrance and roof plant are generic."
+  },
+  {
     "id": "charing_cross_hospital",
     "name": "Charing Cross Hospital",
     "claims": [
@@ -831,6 +856,31 @@
     "notes": "Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, following the four-storey description. Panel distribution is a deterministic random pattern, not traced; position of the orange columns/ramp and the roof plant are approximate. Mullions follow the 1.5 m panel module of the texture; entrance doors, steps, roof rail and condensers are indicative."
   },
   {
+    "id": "garry_weston_centre",
+    "name": "Garry Weston Centre, Hammersmith Hospital",
+    "claims": [
+      "4a6be438-9d66-482d-a8eb-0b91ce875675"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "hospital on Du Cane Road, White City; history of the site"
+      },
+      {
+        "title": "Hammersmith Hospital location map - Imperial College Healthcare",
+        "url": "https://www.imperial.nhs.uk/~/media/website/locations/hammersmith-hospital/hammersmith-hospital-location-map.pdf?la=en",
+        "used_for": "building names and positions on the campus"
+      },
+      {
+        "title": "Hammersmith Hospital location map (Imperial College)",
+        "url": "https://t4awstest.cc.ic.ac.uk/media/imperial-college/medicine/imperial-crf/Hammersmith-Hospital-location-map.pdf",
+        "used_for": "Garry Weston Centre near the Burlington Danes building and nursery"
+      }
+    ],
+    "notes": "Footprint and 4 storeys / 13.6 m from the data. No description found; brick, ribbon glazing and the glazed stair tower are generic."
+  },
+  {
     "id": "grosvenor_bridge",
     "name": "Grosvenor Bridge",
     "claims": [],
@@ -857,6 +907,32 @@
       }
     ],
     "notes": "No footprint; extent from the scene rail segments (level 1, deck 6.5 m) crossing the Thames at x~3657-3698 and pier positions from the gaps in the scene river polygons. Arch rise, rib count and colour (grey steel) are approximate. The generic rail layer still draws solid brick sides under each elevated track ribbon."
+  },
+  {
+    "id": "hammersmith_administration_blocks",
+    "name": "Hammersmith Hospital: North and South Administration blocks",
+    "claims": [
+      "e5b291b0-cd40-4f8d-b7f1-e60d1309b233",
+      "3952ac63-f8d1-4853-a13f-f87775d7adc6"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "Giles, Gough and Trollope, 1905 infirmary on Du Cane Road"
+      },
+      {
+        "title": "Hammersmith workhouse - workhouses.org.uk",
+        "url": "https://www.workhouses.org.uk/Hammersmith/",
+        "used_for": "infirmary at the Du Cane Road front, workhouse behind; boiler-house, laundry and workshops between"
+      },
+      {
+        "title": "Giles, Gough and Trollope hospitals - Secret Leeds forum",
+        "url": "https://www.secretleeds.com/viewtopic.php?p=98974",
+        "used_for": "pediments over windows and paler brick bands"
+      }
+    ],
+    "notes": "Footprints and storey counts (South 4, North 3) from the data. Central gable, stone entrance surround, steps and chimney stacks are assumed from the general style of the 1905 buildings; no photograph or listing text was found."
   },
   {
     "id": "hammersmith_apollo",
@@ -897,6 +973,36 @@
       }
     ],
     "notes": "Heights estimated (front 15 m, auditorium 19 m, stage house 25 m) - Overture gives 11.8 m. The curved front is taken as the north outline run facing the flyover / Queen Caroline Street junction. Column count, door pairs and glazed flank bands follow the listing; window sizes between the columns, the Deco capitals, the canopy depth and the present eventim signage are approximations (no photographs available). Rear elevations are plain brick with pilaster strips; roof plant is generic."
+  },
+  {
+    "id": "hammersmith_block_a",
+    "name": "Hammersmith Hospital Block A",
+    "claims": [
+      "da644626-6407-4a75-a508-43f86376a3a3"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "hospital on Du Cane Road, White City; history of the site and later medical-school buildings"
+      },
+      {
+        "title": "Hammersmith Hospital location map - Imperial College Healthcare",
+        "url": "https://www.imperial.nhs.uk/~/media/website/locations/hammersmith-hospital/hammersmith-hospital-location-map.pdf?la=en",
+        "used_for": "building names and positions on the campus"
+      },
+      {
+        "title": "Renal and transplant outpatients - AccessAble",
+        "url": "https://www.accessable.co.uk/imperial-college-healthcare-nhs-trust/hammersmith-hospital/access-guides/renal-and-transplant-outpatients-department",
+        "used_for": "main building in Zone A houses ground-floor outpatient departments"
+      },
+      {
+        "title": "Hammersmith workhouse - workhouses.org.uk",
+        "url": "https://www.workhouses.org.uk/Hammersmith/",
+        "used_for": "1905 infirmary on the southern part of the site, pavilion layout"
+      }
+    ],
+    "notes": "Footprint and 5 storeys from the data (Edwardian 3.7 m storeys give ~21 m to the ridge). Assumed to share the 1905 red-brick idiom of the ward pavilions; the exact age of each part of this large range, its window rhythm, roof form (hipped slate following the footprint), entrance canopy position on the south face and chimneys are interpretations without photographs."
   },
   {
     "id": "hammersmith_bridge",
@@ -983,6 +1089,118 @@
       }
     ],
     "notes": "Footprints and Overture heights (Commonwealth 36 m / 11 floors, ICTEM 20 m, Burlington Danes 19.6 m). Facade patterns are generic interpretations of \"brutalist concrete\", \"six-floor glazed lab\" and \"perforated stainless steel and glass\" (no photographs available); bridge position, Burlington Danes tiering and roof plant are estimates. Historic 1905 hospital blocks are left generic."
+  },
+  {
+    "id": "hammersmith_house",
+    "name": "Hammersmith House, Hammersmith Hospital",
+    "claims": [
+      "1662f755-179e-45c6-b755-30cd78a378e2"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "hospital on Du Cane Road, White City; history of the site and later medical-school buildings"
+      },
+      {
+        "title": "Hammersmith Hospital location map - Imperial College Healthcare",
+        "url": "https://www.imperial.nhs.uk/~/media/website/locations/hammersmith-hospital/hammersmith-hospital-location-map.pdf?la=en",
+        "used_for": "building names and positions on the campus"
+      },
+      {
+        "title": "Hammersmith campus map (Imperial College)",
+        "url": "https://warwick.ac.uk/tenichols/presentations/gsk-neurophysics-2/hammersmith_campus_map.pdf",
+        "used_for": "Hammersmith House beside the Renal and Commonwealth buildings"
+      }
+    ],
+    "notes": "Footprint from the data; Overture gives 16.2 m with 6 floors, modelled as 5 storeys (3.6 m ground + 3.15 m) to keep the height. No description found: pale rendered spandrels with grey ribbon glazing and roof plant are generic."
+  },
+  {
+    "id": "hammersmith_infirmary_wards_east",
+    "name": "Hammersmith Hospital: B Blocks and Urgent Treatment Centre",
+    "claims": [
+      "7ce77b99-1639-4d7c-9610-8aa2b903aa59",
+      "baadaab4-b845-4632-82b3-a2141f77b9a1",
+      "a1fdf958-8e12-493b-b0a3-ee2fd2e72cc5"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "infirmary by Giles, Gough and Trollope on the north side of Du Cane Road, opened 1905"
+      },
+      {
+        "title": "Hammersmith workhouse - workhouses.org.uk",
+        "url": "https://www.workhouses.org.uk/Hammersmith/",
+        "used_for": "infirmary blocks on the southern part of the site fronting Du Cane Road"
+      },
+      {
+        "title": "Giles, Gough and Trollope hospitals - Secret Leeds forum",
+        "url": "https://www.secretleeds.com/viewtopic.php?p=98974",
+        "used_for": "triangular pediments over windows and pale brick bands typical of the firm c.1900"
+      }
+    ],
+    "notes": "Overture footprints; 3 storeys for the B blocks and 2 for the Urgent Treatment Centre (data). Treated as Edwardian red-brick pavilions (whether the UTC range is original is not confirmed); window rhythm, hipped slate roofs, gables and chimneys are interpretations, not traced from photographs."
+  },
+  {
+    "id": "hammersmith_infirmary_wards_west",
+    "name": "Hammersmith Hospital: Blocks C, D and G (1905 ward pavilions)",
+    "claims": [
+      "6bcd3635-cecc-4c43-ab60-603c6722e2ca",
+      "33e28c69-b903-487d-bf40-8a227958704c",
+      "b155ec06-b317-4195-b09c-3aa776b1fa6a",
+      "ebb1a33d-3e18-473c-8122-0467f1abd039",
+      "1d42ac43-dbc1-4294-9aaf-44e08032a029"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "infirmary and workhouse on 14-acre site north of Du Cane Road, Giles, Gough and Trollope, opened 1905"
+      },
+      {
+        "title": "Hammersmith workhouse - workhouses.org.uk",
+        "url": "https://www.workhouses.org.uk/Hammersmith/",
+        "used_for": "infirmary on the southern part of the site fronting Du Cane Road, workhouse to the north"
+      },
+      {
+        "title": "Royal College of Nursing archive, Volume 35 page 481 (1905)",
+        "url": "https://rcnarchive.rcn.org.uk/volumes/35/Volume 35 Page 481",
+        "used_for": "pavilion plan with wards facing south and attached day rooms"
+      },
+      {
+        "title": "Giles, Gough and Trollope hospitals - Secret Leeds forum",
+        "url": "https://www.secretleeds.com/viewtopic.php?p=98974",
+        "used_for": "firm style c.1900: pointed/triangular pediments over windows, horizontal bands of paler brick"
+      }
+    ],
+    "notes": "Footprints from Overture; storey counts from the data (C and G 3, D blocks 5, middle pavilion 4) at ~3.8 m Edwardian storeys. No photographs were available: red brick with pale brick bands, stone plinth/cornice, pediment heads on the top floor, hipped slate roofs, gables on short ends and chimney positions are an interpretation of the firm style, not traced. Later alterations ignored."
+  },
+  {
+    "id": "hammersmith_renal_building",
+    "name": "Hammersmith Hospital Renal Building (Block F)",
+    "claims": [
+      "d17e094b-6ce3-4f1b-8099-68510089d138",
+      "c840331f-9549-4a4c-a560-4e94fda14352"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "hospital on Du Cane Road, White City; history of the site and later medical-school buildings"
+      },
+      {
+        "title": "Hammersmith Hospital location map - Imperial College Healthcare",
+        "url": "https://www.imperial.nhs.uk/~/media/website/locations/hammersmith-hospital/hammersmith-hospital-location-map.pdf?la=en",
+        "used_for": "building names and positions on the campus"
+      },
+      {
+        "title": "World Kidney Day - SRILAHH visit to Hammersmith Hospital",
+        "url": "https://worldkidneyday.org/?p=42839",
+        "used_for": "foyer of the Renal Building (Block F), Hammersmith Hospital, Du Cane Road"
+      }
+    ],
+    "notes": "Footprint and height 20 m / 6 storeys from the data. Construction date, architect and cladding are not documented in the sources found: buff brick with recessed ribbon glazing, glazed ground-floor foyer, parapet and roof plant are generic interpretations."
   },
   {
     "id": "harrods",
@@ -1653,6 +1871,61 @@
     "notes": "Overture gives a simplified trapezoid (15 m Fulham Road front widening to 35 m at the rear) and an inferred 9.3 m height; walls are raised to 13 m (towers 15 m + cupolas) from the building's three tall storeys. Facades are painted reconstructions from descriptions (no photos available here); the Bibendum window and race tiles are schematic."
   },
   {
+    "id": "mrc_clinical_sciences_centre",
+    "name": "MRC Clinical Sciences Centre building",
+    "claims": [
+      "ac48a5e5-6451-47ab-be3a-8e8e867c2d37"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "hospital on Du Cane Road, White City; history of the site"
+      },
+      {
+        "title": "Hammersmith Hospital location map - Imperial College Healthcare",
+        "url": "https://www.imperial.nhs.uk/~/media/website/locations/hammersmith-hospital/hammersmith-hospital-location-map.pdf?la=en",
+        "used_for": "building names and positions on the campus"
+      },
+      {
+        "title": "MRC Laboratory of Medical Sciences - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/MRC_Laboratory_of_Medical_Sciences",
+        "used_for": "successor institute of the MRC Clinical Sciences Centre on the Hammersmith campus"
+      }
+    ],
+    "notes": "Footprint and 6 storeys / 20 m from the data. Date, architect and cladding not documented in the sources found: brown brick with ribbon glazing, a louvred plant storey and roof flues are generic interpretations of a lab building of that size."
+  },
+  {
+    "id": "mrc_lms_hammersmith",
+    "name": "MRC Laboratory of Medical Sciences building",
+    "claims": [
+      "dfc77f80-b4e9-4245-95fc-5c582d7819ca"
+    ],
+    "references": [
+      {
+        "title": "MRC London Institute of Medical Sciences - New London Architecture",
+        "url": "https://nla.london/projects/mrc-london-institute-of-medical-sciences",
+        "used_for": "architect Hawkins\\Brown, Buro Happold engineers; eight storeys clad in anodised aluminium; former cyclotron plot"
+      },
+      {
+        "title": "Imperial College London opens Laboratory of Medical Sciences - Tradeline",
+        "url": "https://www.tradelineinc.com/news/2024-2/imperial-college-london-opens-laboratory-medical-sciences",
+        "used_for": "opened January 2024, eight-storey building, GBP 120m"
+      },
+      {
+        "title": "HRH The Princess Royal opens the LMS - Buro Happold",
+        "url": "https://www.burohappold.com/news/hrh-the-princess-royal-officially-opens-the-mrcs-london-institute-of-medical-sciences/",
+        "used_for": "structural, vibration and services engineering 2017-2022"
+      },
+      {
+        "title": "MRC Laboratory of Medical Sciences - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/MRC_Laboratory_of_Medical_Sciences",
+        "used_for": "institute on the Hammersmith Hospital campus run with Imperial College"
+      }
+    ],
+    "notes": "Overture footprint (named LMS; h=7.7 m in the data is the old record) with 8 storeys from the sources: 5 m ground + 7 x 4.1 m lab floors = 33.7 m plus a 3 m plant screen. The champagne-bronze anodised tone, fin pitch and depth, the recessed glazed ground floor and the plant enclosure are assumptions (no photographs available)."
+  },
+  {
     "id": "natural_history_museum",
     "name": "Natural History Museum",
     "claims": [
@@ -1867,6 +2140,31 @@
       }
     ],
     "notes": "Window grid, glazed joints and attic treatment are inferred from the KPF description, not traced from photos. Front halls 20 m from Overture; Keogh (rear range) kept at its Overture 7.2 m with a set-back upper storey, which may understate it. Refinement: limestone garden fronts with real recessed vertical windows (aluminium frames, transom, glass Juliet balustrades, stone sills) in the terrace rhythm, projecting stone piers, string course over a glazed base of recessed shopfront-like windows and an entrance with canopy and steps per hall, recessed full-height glazed joints with mullions, zinc attic with standing seams and punched windows, stone cornice; the stepped buff-brick rear bays and Keogh have punched windows; roof overruns, plant louvres and guard rails; paved strip with benches along the gardens."
+  },
+  {
+    "id": "queen_charlottes_chelsea_hospital",
+    "name": "Queen Charlotte's & Chelsea Hospital",
+    "claims": [
+      "8a55fb63-45d6-440f-9815-e740170a8427"
+    ],
+    "references": [
+      {
+        "title": "Queen Charlotte's and Chelsea Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Queen_Charlotte%27s_and_Chelsea_Hospital",
+        "used_for": "moved to Du Cane Road beside Hammersmith Hospital in 2000 from Marylebone Road / Goldhawk Road"
+      },
+      {
+        "title": "Queen Charlotte's & Chelsea Hospital - AccessAble",
+        "url": "https://www.accessable.co.uk/imperial-college-healthcare-nhs-trust/queen-charlotte-s-chelsea-hospital",
+        "used_for": "hospital entrance and departments on the Du Cane Road site"
+      },
+      {
+        "title": "Hammersmith Hospital location map - Imperial College Healthcare",
+        "url": "https://www.imperial.nhs.uk/~/media/website/locations/hammersmith-hospital/hammersmith-hospital-location-map.pdf?la=en",
+        "used_for": "position of Queen Charlotte's & Chelsea on the campus"
+      }
+    ],
+    "notes": "Footprint and 5 storeys / 16.8 m from the data (modelled 4.2 m ground + 4 x 3.3 m = 17.4 m). The architect and cladding of the c.2000 building were not found: brick with pale string bands, ribbon windows, the glazed entrance hall on the Du Cane Road (south) side and roof plant are interpretations."
   },
   {
     "id": "queens_tower",
@@ -2173,6 +2471,36 @@
       }
     ],
     "notes": "RSM storey heights raised above the footprint record (12.9 m) to Edwardian proportions (cornice 14.2 m, ridge ~19.5 m) per the listing (3 storeys + attic). The Prince Consort Road front, centre block and Exhibition Road return have real windows (rusticated ground floor with keystoned openings, architraved first-floor sashes with console hoods, plain second-floor architraves), plinth, string courses, modillion cornice and a balustrade with dies; courtyard elevations keep the painted bay tile. Bay count (30), niche size, the frieze lettering, the area railings and the attic sculpture groups are proportioned/abstracted, not surveyed. The Bessemer elevation pattern (pale spandrel bands, aluminium ribbon glazing) and pink-glass entrance zone are approximate (no photos available)."
+  },
+  {
+    "id": "sainsbury_wing_hammersmith",
+    "name": "Robert and Lisa Sainsbury Wing, Hammersmith Hospital",
+    "claims": [
+      "3e30932b-4a55-4045-8836-3e1fb341332e"
+    ],
+    "references": [
+      {
+        "title": "Hammersmith Hospital - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hammersmith_Hospital",
+        "used_for": "hospital on Du Cane Road, White City; history of the site"
+      },
+      {
+        "title": "Hammersmith Hospital location map - Imperial College Healthcare",
+        "url": "https://www.imperial.nhs.uk/~/media/website/locations/hammersmith-hospital/hammersmith-hospital-location-map.pdf?la=en",
+        "used_for": "building names and positions on the campus"
+      },
+      {
+        "title": "Sainsbury Wing - Imperial Private Healthcare",
+        "url": "https://www.private.imperial.nhs.uk/our-facilities/sainsbury-wing",
+        "used_for": "dedicated private facility within Hammersmith Hospital"
+      },
+      {
+        "title": "Robert & Lisa Sainsbury Wing - Doctify",
+        "url": "https://www.doctify.com/uk/practice/hammersmith-hospital",
+        "used_for": "en-suite inpatient rooms, outpatient facilities and chemotherapy suite (use)"
+      }
+    ],
+    "notes": "Footprint and 3 storeys from the data (~11.5 m). Opening date and architect not found; red-brick spandrels with ribbon windows, glazed entrance with canopy on the south face and plant are generic."
   },
   {
     "id": "scale_space",
@@ -2523,6 +2851,242 @@
       }
     ],
     "notes": "Massing from the Overture footprint at 20 m (6 floors). Facade grid (slender precast mullions at 1.6 m over continuous slab bands, recessed dark ground storey on a column line), entrance canopy and signage, north-light rooflights and roof plant are reconstructed from the 1960s Norman & Dawbarn idiom; no photograph could be fetched."
+  },
+  {
+    "id": "st_marys_cambridge_wing",
+    "name": "Cambridge Wing, St Mary's Hospital",
+    "claims": [
+      "71fbfc5d-7557-460e-8953-1584c43b4ca3"
+    ],
+    "references": [
+      {
+        "title": "Paterson Centre building at St Mary's Hospital temporarily closed - Imperial College Healthcare",
+        "url": "https://WWW.IMPERIAL.NHS.UK/about-us/news/patterson-centre-building-at-st-marys-hospital-temporarily-closed",
+        "used_for": "Thistlethwayte ward in the Cambridge wing on Norfolk Place"
+      },
+      {
+        "title": "St Mary's Hospital, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Mary%27s_Hospital,_London",
+        "used_for": "hospital history and buildings on the Praed Street / South Wharf Road site"
+      },
+      {
+        "title": "St Mary's Hospital site map - Imperial College",
+        "url": "https://t4awstest.cc.ic.ac.uk/media/imperial-college/visit/public/stmarysmap.pdf",
+        "used_for": "building names and positions on the campus"
+      }
+    ],
+    "notes": "Footprint and 4 storeys / 12.5 m from the data (modelled 3.8 m + 3 x 3.3 m, parapet to ~14.6 m). Date and materials not documented in the sources found; the inter-war red brick idiom of the neighbouring Lindo Wing and medical school is assumed."
+  },
+  {
+    "id": "st_marys_clarence_memorial_wing",
+    "name": "Clarence Memorial Wing, St Mary's Hospital",
+    "claims": [
+      "e3ecca62-3f84-403d-b38c-6fbcaaaad174"
+    ],
+    "references": [
+      {
+        "title": "Clarence Memorial Wing of St Mary's Hospital - British Listed Buildings (list entry 1265525)",
+        "url": "https://britishlistedbuildings.co.uk/101265525-clarence-memorial-wing-of-st-marys-hospital-hyde-park-ward",
+        "used_for": "Emerson, Eclectic Renaissance; ashlar ground floor and basement, red brick with ashlar dressings and loggias; slate double mansard with dormers; 4 storeys, basement, semi-basement and attic; centre with Ionic pilasters/columns, octagonal turrets, 2-tier loggia, canted angle bay; Fleming plaque"
+      },
+      {
+        "title": "Clarence Memorial Wing, St Mary's Hospital - Victorian Web",
+        "url": "https://victorianweb.org/victorian/art/architecture/emerson/2.html",
+        "used_for": "1892 design by Sir William Emerson, opened 1904; Pevsner: \"florid glories of late Victorian Baroque\""
+      },
+      {
+        "title": "1896 Clarence Memorial Wing, St Mary's Hospital - Archiseek",
+        "url": "https://www.archiseek.com/1896-clarence-memorial-wing-st-marys-hospital-paddington-london",
+        "used_for": "main frontage on Praed Street"
+      },
+      {
+        "title": "St Mary's Hospital, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Mary%27s_Hospital,_London",
+        "used_for": "hospital history, Fleming laboratory"
+      }
+    ],
+    "notes": "Overture footprint; heights from the listing storey count rather than the data (12.4 m): 5.6 m ashlar base (semi-basement + ground), three 3.9 m brick storeys to an 18.5 m cornice, double mansard to ~24.5 m, turrets to ~29 m. Turret caps (lead ogee domes), loggia bay widths, dormer rhythm and the colour of the brick are estimates; Ionic orders are represented by the kit column with a simple capital. Rear wings are modelled with the same materials but plainer detail."
+  },
+  {
+    "id": "st_marys_lindo_wing",
+    "name": "Lindo Wing, St Mary's Hospital",
+    "claims": [
+      "fc15c37c-d489-4ba5-8753-b819be230c11"
+    ],
+    "references": [
+      {
+        "title": "Kate labors in Jewish-funded wing - Times of Israel",
+        "url": "https://www.timesofisrael.com/kate-labors-in-jewish-funded-wing/",
+        "used_for": "wing of 1937 funded by Frank Charles Lindo (about GBP 111,500 donated)"
+      },
+      {
+        "title": "Twentieth Century Society blog (St Mary's, Cooper)",
+        "url": "https://c20society.org.uk/?p=9194",
+        "used_for": "neo-Georgian building, possibly by Sir Edwin Cooper (attribution speculative)"
+      },
+      {
+        "title": "Lindo Wing - SECL",
+        "url": "https://secl.co.uk/projects/lindo-wing",
+        "used_for": "Lindo Wing project page"
+      },
+      {
+        "title": "St Mary's Hospital, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Mary%27s_Hospital,_London",
+        "used_for": "hospital history and buildings on the Praed Street / South Wharf Road site"
+      },
+      {
+        "title": "St Mary's Hospital site map - Imperial College",
+        "url": "https://t4awstest.cc.ic.ac.uk/media/imperial-college/visit/public/stmarysmap.pdf",
+        "used_for": "building names and positions on the campus"
+      }
+    ],
+    "notes": "Footprint and 4 storeys from the data (12.3 m; modelled 3.6 m + 3 x 3.2 m with parapet ~14.2 m). Brick colour, stone surround, steps and railings at the entrance, stone cornice and window rhythm are from the general neo-Georgian description, not traced; the entrance is placed on the north-west (South Wharf Road side) longest elevation."
+  },
+  {
+    "id": "st_marys_medical_school",
+    "name": "St Mary's Medical School building (Imperial College)",
+    "claims": [
+      "ea80ba4f-05f6-48f9-b8b3-e05421e127a6",
+      "993edad6-52bf-4507-b78a-b21b36fe96d5"
+    ],
+    "references": [
+      {
+        "title": "St Mary's Hospital Medical School records - AIM25",
+        "url": "https://atom.aim25.com/index.php/st-marys-hospital-medical-school-10",
+        "used_for": "school moved from South Wharf Road to Norfolk Place in 1933"
+      },
+      {
+        "title": "Opening of the new medical school and pathological institute, St Mary's Hospital (1933) - Wellcome Collection",
+        "url": "https://content.www.wellcomecollection.org/works/e72nwjw2",
+        "used_for": "opened by the King and Queen on 12 December 1933"
+      },
+      {
+        "title": "The architecture of labour - Twentieth Century Society",
+        "url": "https://c20society.org.uk/2013/07/22/the-architecture-of-labour",
+        "used_for": "Cooper did the medical school at St Mary's in 1933"
+      },
+      {
+        "title": "St Mary's Hospital, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Mary%27s_Hospital,_London",
+        "used_for": "hospital history and buildings on the Praed Street / South Wharf Road site"
+      },
+      {
+        "title": "St Mary's Hospital site map - Imperial College",
+        "url": "https://t4awstest.cc.ic.ac.uk/media/imperial-college/visit/public/stmarysmap.pdf",
+        "used_for": "building names and positions on the campus"
+      }
+    ],
+    "notes": "Two duplicate Overture footprints (one with the courtyard hole) are claimed; the holed one is modelled. Five storeys from the data (17.2 m): 4.4 m ground + 4 x 3.3 m, parapet to ~18.6 m. Materials (red brick, Portland stone base and dressings, multi-pane steel windows), the entrance frontispiece on Norfolk Place and the attic set-back are assumptions in the Cooper idiom; the sources found do not describe the elevations."
+  },
+  {
+    "id": "st_marys_mint_wing",
+    "name": "Mint Wing, St Mary's Hospital (former GWR stables)",
+    "claims": [
+      "01f0bd18-3be2-415f-807f-f6131726089c"
+    ],
+    "references": [
+      {
+        "title": "Mint Wing of St Mary's Hospital - Historic England list entry 1066060",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1066060",
+        "used_for": "GWR stables 1878, brickwork resurfaced 1922, converted 1960s; yellow brick, Welsh slate roof, 3 storeys around an irregular courtyard; segment-arched windows on ground and second floors, enlarged first-floor openings; glazed galleries and ramps in the yard"
+      },
+      {
+        "title": "Mint Wing of St Mary's Hospital - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101066060-mint-wing-of-st-marys-hosptial-hyde-park-ward",
+        "used_for": "stables for ~600 horses for Paddington; listed 1986 for historical interest and group value"
+      },
+      {
+        "title": "St Mary's Hospital, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Mary%27s_Hospital,_London",
+        "used_for": "hospital history and buildings on the Praed Street / South Wharf Road site"
+      },
+      {
+        "title": "St Mary's Hospital site map - Imperial College",
+        "url": "https://t4awstest.cc.ic.ac.uk/media/imperial-college/visit/public/stmarysmap.pdf",
+        "used_for": "building names and positions on the campus"
+      }
+    ],
+    "notes": "Overture footprint (the courtyard is not a hole in the data, so the yard galleries are not modelled). Height from 3 storeys at ~3.6 m (11.6 m eaves) rather than the data 6.9 m. Window spacing, the larger rectangular first-floor openings, the hipped-slate roof form following the footprint and the chimney/vent positions are estimates."
+  },
+  {
+    "id": "st_marys_paterson_centre",
+    "name": "Paterson Centre, St Mary's Hospital",
+    "claims": [
+      "0f06c988-3608-4e07-99a4-9fc923db3179"
+    ],
+    "references": [
+      {
+        "title": "St Mary's Hospital Paterson Building - AccessAble",
+        "url": "https://www.accessable.co.uk/imperial-college-healthcare-nhs-trust/st-mary-s-hospital/access-guides/st-mary-s-hospital-paterson-building",
+        "used_for": "surgical innovation centre uses; own car park"
+      },
+      {
+        "title": "Paterson Centre building at St Mary's Hospital temporarily closed - Imperial College Healthcare",
+        "url": "https://WWW.IMPERIAL.NHS.UK/about-us/news/patterson-centre-building-at-st-marys-hospital-temporarily-closed",
+        "used_for": "Paterson Centre as a separate building with Paterson ward"
+      },
+      {
+        "title": "St Mary's Hospital, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Mary%27s_Hospital,_London",
+        "used_for": "hospital history and buildings on the Praed Street / South Wharf Road site"
+      },
+      {
+        "title": "St Mary's Hospital site map - Imperial College",
+        "url": "https://t4awstest.cc.ic.ac.uk/media/imperial-college/visit/public/stmarysmap.pdf",
+        "used_for": "building names and positions on the campus"
+      }
+    ],
+    "notes": "Footprint and 5 storeys / 16.8 m from the data. Finishes not found: buff brick with ribbon glazing, a glazed entrance and roof plant are generic."
+  },
+  {
+    "id": "st_marys_queen_mother_wing",
+    "name": "Queen Elizabeth the Queen Mother Wing, St Mary's Hospital",
+    "claims": [
+      "330805df-2b63-4cc6-870b-a8cb42bac109"
+    ],
+    "references": [
+      {
+        "title": "Day 72 - Sussex Gardens - Praed Street - Paddington Basin (Every Street in London)",
+        "url": "https://everystreetinlondon.com/2022/05/",
+        "used_for": "modern Queen Mother Wing opened 1987 abutting Paddington Basin, subsumed Paddington General Hospital"
+      },
+      {
+        "title": "St Mary's Hospital, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Mary%27s_Hospital,_London",
+        "used_for": "hospital history and buildings on the Praed Street / South Wharf Road site"
+      },
+      {
+        "title": "St Mary's Hospital site map - Imperial College",
+        "url": "https://t4awstest.cc.ic.ac.uk/media/imperial-college/visit/public/stmarysmap.pdf",
+        "used_for": "building names and positions on the campus"
+      }
+    ],
+    "notes": "Footprint and 36 m / 11 storeys from the data (modelled 4.6 m ground + 9 x 3.2 m + plant storey). Architect and cladding not found: brown brick spandrels with recessed ribbon windows, the entrance canopy on the south (South Wharf Road) face and roof plant are interpretations."
+  },
+  {
+    "id": "st_marys_salton_house",
+    "name": "Salton House, St Mary's Hospital",
+    "claims": [
+      "e3757313-2756-4730-b2fd-300a766e46dc"
+    ],
+    "references": [
+      {
+        "title": "Trust shares proposals for new outpatients building at St Mary's Hospital - Imperial College Healthcare",
+        "url": "https://WWW.IMPERIAL.NHS.UK/about-us/news/trust-shares-proposals-of-new-outpatients-building-at-st-marys-hospital",
+        "used_for": "Salton House, Dumbell and Victoria and Albert buildings to be replaced by an eight-storey outpatients building"
+      },
+      {
+        "title": "St Mary's Hospital, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Mary%27s_Hospital,_London",
+        "used_for": "hospital history and buildings on the Praed Street / South Wharf Road site"
+      },
+      {
+        "title": "St Mary's Hospital site map - Imperial College",
+        "url": "https://t4awstest.cc.ic.ac.uk/media/imperial-college/visit/public/stmarysmap.pdf",
+        "used_for": "building names and positions on the campus"
+      }
+    ],
+    "notes": "Footprint from the data; height 21 m kept, as 7 storeys (3.8 m ground + 6 x 2.9 m) rather than the data 8 floors. Date and finishes not found: exposed concrete frame with brick infill panels and ribbon glazing are generic."
   },
   {
     "id": "stamford_bridge",
