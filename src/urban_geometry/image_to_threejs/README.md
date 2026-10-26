@@ -14,6 +14,7 @@ run with GLB mesh layers (`buildings`, `landmarks`, `ground`, `trees`,
 | `prepare_scene.py`      | Resolves heights, roofs, facade styles; roads, areas, water, trees  |
 | `resolve_conflicts.py`  | Fits roads, pavements and trees around footprints and water         |
 | `check_conflicts.py`    | Reports remaining overlaps in a prepared scene (needs `shapely`)    |
+| `check_buildings.mjs`   | Builds every generic building headlessly and checks its geometry    |
 | `three/`                | three.js kit, facade textures, generic buildings, ground and trees  |
 | `three/terrain.mjs`     | `elevation(scene, x, y)`: bilinear terrain height (0 when flat)     |
 | `landmarks/<id>.mjs`    | One module per landmark (see [AUTHORING.md](AUTHORING.md))          |
@@ -62,6 +63,19 @@ prepared scene and raw exports.
   interpolated between the terrain at their ends, and trees / furniture at the
   sampled elevation. Railway cuttings are part of the DTM, so a few footprints over
   or beside them span several metres of ground.
+- Generic buildings: rings are normalised (repeated / collinear points dropped, outer
+  CCW, holes CW) before walls and roofs are built. Pitched roofs are laid out on the
+  oriented rectangle along the ridge but clipped to the footprint, with walls (gables
+  included) rising to the roof surface, so roofs never overhang missing corners or
+  leave gaps under the eaves; footprints with holes, several polygons, more than 64
+  vertices or filling < 65 % of that rectangle get a flat roof. Overture building
+  parts replace their outline; what they leave uncovered (often a rear extension) is
+  kept as a flat `rest` part no higher than the parts' eaves unless it is most of the
+  building. Parts get their own ridge and roof height. Terrace rows longer than a
+  plot (22 m) are ridged along their length. On a `ground_plane`, flat roofs stay
+  level and only wall feet follow the plane. `node check_buildings.mjs <scene.json>`
+  counts failure classes (missing / misfit roofs, gaps between walls and roof,
+  inward walls, leaks seen by rays from outside, parts gaps) with example ids.
 - Heights and roof shapes from Overture tags are kept. Missing values are estimated
   from storey counts, neighbouring tagged buildings or the building class, and are
   flagged per building in `inferred` in the prepared scene. Facade styles are

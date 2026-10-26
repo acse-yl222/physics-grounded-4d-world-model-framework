@@ -106,6 +106,49 @@ class AttributeTest(unittest.TestCase):
         self.assertEqual(out["main"]["parts"][0]["minh"], 10)
         self.assertEqual(out["main"]["parts"][0]["h"], 30)
 
+    def test_parts_keep_the_uncovered_outline_with_their_own_roofs(self):
+        outline = [[0, 0], [10, 0], [10, 12], [0, 12]]
+        house = building("house", outline, **{"class": "terrace"}, num_floors=2)
+        main = building("main", [[0, 0], [10, 0], [10, 7], [0, 7]], building_id="house")
+        main.update(roof_shape="gabled", num_floors=2)
+        out = self.build([house], parts=[main])["house"]
+        part, rest = out["parts"]
+        self.assertEqual(part["roof"], "gabled")
+        # Its own ridge, by the terraced-house rule: across its 10 m depth.
+        self.assertAlmostEqual(abs(math.cos(part["ridge"])), 0, places=3)
+        self.assertGreater(part["roofH"], 0)
+        self.assertTrue(rest["rest"])
+        self.assertEqual(rest["roof"], "flat")
+        self.assertAlmostEqual(prepare_scene.ring_area(rest["polys"][0][0]), 50, places=3)
+        # A rear extension is no higher than the eaves of the main part.
+        self.assertAlmostEqual(rest["h"], part["h"] - part["roofH"], places=2)
+        self.assertIn("parts_remainder", out["inferred"])
+        # Parts covering the outline (up to slivers) add nothing.
+        full = building("full", outline, building_id="house2")
+        out = self.build([building("house2", outline)], parts=[full])["house2"]
+        self.assertEqual(len(out["parts"]), 1)
+
+    def test_terrace_rows_are_ridged_along_their_length(self):
+        plot = [[0, 0], [5, 0], [5, 11], [0, 11]]
+        row = [[0, 0], [60, 0], [60, 7], [0, 7]]
+        out = self.build(
+            [
+                building("plot", plot, **{"class": "terrace"}),
+                building("row", row, **{"class": "terrace"}),
+            ]
+        )
+        self.assertAlmostEqual(abs(math.cos(out["plot"]["ridge"])), 1, places=3)  # across
+        self.assertAlmostEqual(abs(math.sin(out["row"]["ridge"])), 0, places=3)  # along
+        self.assertEqual(out["row"]["roof"], "gabled")
+
+    def test_pitched_roofs_with_courtyards_are_flat(self):
+        ring = [[0, 0], [12, 0], [12, 10], [0, 10]]
+        hole = [[4, 4], [8, 4], [8, 6], [4, 6]]
+        f = {"id": "c", "geometry": {"type": "Polygon", "rings": [ring, hole]}}
+        out = self.build([{**f, "roof_shape": "gabled"}])["c"]
+        self.assertEqual(out["roof"], "flat")
+        self.assertIn("roof_simplified", out["inferred"])
+
 
 class WaysTest(unittest.TestCase):
     def test_tunnels_skipped_bridges_lifted(self):

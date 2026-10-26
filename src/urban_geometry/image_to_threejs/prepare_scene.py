@@ -22,6 +22,11 @@ except ImportError:
     from resolve_conflicts import resolve
 
 FLOOR_M = 3.2
+TERRACE_PLOT_M = 22.0  # deepest single terraced-house plot; longer footprints are rows
+# Building parts: uncovered remainder of the outline kept as its own volume when at
+# least this large (m2, and per piece at least REST_MIN_M2 and REST_MIN_WIDTH_M wide).
+REST_MIN_M2 = 4.0
+REST_MIN_WIDTH_M = 0.8
 PITCHED = {"gabled", "hipped", "half_hipped", "saltbox", "gambrel", "mansard", "pyramidal"}
 HOUSE = {"house", "terrace", "semidetached_house", "detached", "bungalow", "houseboat"}
 SMALL = {"garage", "garages", "shed", "hut", "roof", "carport", "kiosk", "toilets"}
@@ -273,6 +278,22 @@ def resolve_height(f, group, polys, area, key, local_median):
     return float(h), int(floors), inferred
 
 
+def ridge_angle(f, group, ang, length, width):
+    """Ridge direction (radians from east): tagged, else along the oriented rectangle."""
+    direction = f.get("roof_direction")
+    if direction is not None:
+        return math.radians(90 - direction) + math.pi / 2
+    # London terraced houses have ridges parallel to the street, across the plot
+    # depth; footprints longer than a plot are whole rows, ridged along their length.
+    across = (
+        group == "house"
+        and length / max(width, 1e-6) > 1.4
+        and width < 8
+        and length < TERRACE_PLOT_M
+    )
+    return ang + (math.pi / 2 if across else 0.0)
+
+
 def resolve_roof(f, group, h, polys, inferred):
     shape = f.get("roof_shape")
     ang, length, width = obb(polys[0][0])
@@ -285,25 +306,67 @@ def resolve_roof(f, group, h, polys, inferred):
         else:
             shape = "flat"
         inferred.append("roof_shape")
-    if shape in PITCHED and (rect < 0.6 or width > 30):
-        shape = "flat"  # pitched roofs are generated over the oriented rectangle only
+    if shape in PITCHED and (rect < 0.6 or width > 30 or len(polys) > 1 or len(polys[0]) > 1):
+        # Pitched roofs are fitted to the oriented rectangle of a single ring.
+        shape = "flat"
         inferred.append("roof_simplified")
     roof_h = f.get("roof_height")
     if shape in PITCHED and roof_h is None:
         roof_h = min(0.5 * width * math.tan(math.radians(38)), 5.5, h * 0.4)
     if shape not in PITCHED:
         roof_h = 0.0
-    direction = f.get("roof_direction")
-    if direction is None:
-        # London terraces have ridges parallel to the street, usually across the plot depth.
-        ridge = ang + (
-            math.pi / 2
-            if group == "house" and length / max(width, 1e-6) > 1.4 and width < 8
-            else 0.0
-        )
-    else:
-        ridge = math.radians(90 - direction) + math.pi / 2
+    ridge = ridge_angle(f, group, ang, length, width)
     return shape, round(roof_h, 2), round(ridge, 4)
+
+
+def resolve_part_roof(p, group, polys, h, minh):
+    """(shape, roofH, ridge) of a building part: tagged pitched roofs over a single ring
+    that fits its oriented rectangle, with their own ridge; otherwise flat."""
+    shape = p.get("roof_shape") or "flat"
+    if shape not in PITCHED:
+        return shape, float(p.get("roof_height") or 0.0), None
+    ang, length, width = obb(polys[0][0])
+    rect = abs(ring_area(polys[0][0])) / max(length * width, 1e-6)
+    if rect < 0.6 or width > 30 or len(polys) > 1 or len(polys[0]) > 1:
+        return "flat", 0.0, None
+    roof_h = p.get("roof_height") or min(
+        0.5 * width * math.tan(math.radians(38)), 5.5, (h - minh) * 0.4
+    )
+    ridge = ridge_angle(p, group, ang, length, width)
+    return shape, round(float(roof_h), 2), round(ridge, 4)
+
+
+def polys_of_shape(geom):
+    """Shapely (Multi)Polygon -> normalised polygons (outer CCW, holes CW)."""
+    from shapely.geometry import mapping
+
+    out = []
+    for g in getattr(geom, "geoms", [geom]):
+        if g.geom_type != "Polygon" or g.is_empty:
+            continue
+        m = mapping(g)
+        out.extend(
+            footprint({"type": "Polygon", "rings": [list(map(list, r)) for r in m["coordinates"]]})
+        )
+    return out
+
+
+def remainder(polys, parts):
+    """Part of the outline not covered by any part, as polygons (slivers dropped)."""
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+
+    outer = unary_union([Polygon(p[0], p[1:]).buffer(0) for p in polys])
+    covered = unary_union([Polygon(q[0], q[1:]).buffer(0) for part in parts for q in part["polys"]])
+    rest = outer.difference(covered)
+    keep = [
+        g
+        for g in getattr(rest, "geoms", [rest])
+        if g.geom_type == "Polygon"
+        and g.area >= REST_MIN_M2
+        and not g.buffer(-REST_MIN_WIDTH_M / 2).is_empty
+    ]
+    return polys_of_shape(unary_union(keep)) if keep else []
 
 
 def round_polys(polys):
@@ -383,14 +446,16 @@ def build_buildings(buildings, parts, claimed):
             pmin = p.get("min_height") or ((p.get("min_floor") or 0) * FLOOR_M)
             if ph <= pmin:
                 continue
+            pshape, proof_h, pridge = resolve_part_roof(p, group, pp, ph, pmin)
             sub.append(
                 {
                     "id": p["id"],
                     "polys": round_polys(pp),
                     "h": round(ph, 2),
                     "minh": round(pmin, 2),
-                    "roof": p.get("roof_shape") or "flat",
-                    "roofH": p.get("roof_height") or 0.0,
+                    "roof": pshape,
+                    "roofH": proof_h,
+                    **({"ridge": pridge} if pridge is not None else {}),
                     **(
                         {"style": FACADE_MATERIAL[p["facade_material"]]}
                         if p.get("facade_material") in FACADE_MATERIAL
@@ -398,6 +463,35 @@ def build_buildings(buildings, parts, claimed):
                     ),
                 }
             )
+        if sub:
+            # The outline is not drawn when a building has parts; keep what the parts
+            # leave uncovered (often a rear extension) as a flat volume no higher than
+            # the parts' eaves unless it is most of the building.
+            rest = remainder(polys, sub)
+            if rest:
+                rest_area = sum(
+                    abs(ring_area(p[0])) - sum(abs(ring_area(r)) for r in p[1:]) for p in rest
+                )
+                eaves = [
+                    q["h"] - (q["roofH"] if q["roof"] in PITCHED else 0.0)
+                    for q in sub
+                    if q["minh"] <= 0.5
+                ]
+                rest_h = h if rest_area >= 0.5 * abs(area) or not eaves else min(h, max(eaves))
+                if rest_h > rec["minh"]:
+                    sub.append(
+                        {
+                            "id": f"{key}:rest",
+                            "polys": round_polys(rest),
+                            "h": round(rest_h, 2),
+                            "minh": rec["minh"],
+                            "roof": "flat",
+                            "roofH": 0.0,
+                            "rest": True,
+                        }
+                    )
+                    inferred.append("parts_remainder")
+                    rec["inferred"] = inferred
         if sub:
             rec["parts"] = sub
         records.append(rec)

@@ -66,9 +66,12 @@ modern_clad, concrete, metal_clad, ragstone, timber`. Uses vertex colours (white
 - `kit.walls(batch, material, polys, z0, z1, { bay, storey, uvBase, color })` — wall
   quads with storey-aligned UVs; `kit.cap(batch, material, polys, z, { scale, down })`
   — triangulated roof / floor; `kit.pitchedRoof(batch, roofMat, wallMat, ring, angle,
-eave, rise, 'gabled'|'hipped'|'pyramidal'|'mansard')`; `kit.box(batch, material, x,
-y, z0, w, d, h, angle)`.
-- `kit.offsetRing(ring, d)` (grow / shrink a ring), `kit.ringFrame(ring)`,
+eave, rise, 'gabled'|'hipped'|'pyramidal'|'mansard')` (over the oriented rectangle);
+  `kit.fittedRoof(batch, roofMat, ring, angle, eave, rise, kind)` clips the same roof
+  to the ring and `kit.roofWalls(batch, wallMat, polys, z0, roof)` raises walls to it;
+  `kit.box(batch, material, x, y, z0, w, d, h, angle)`.
+- `kit.normalisePolys(polys)` / `kit.normaliseRing(ring)` (drop repeated and
+  collinear points, outer CCW, holes CW), `kit.offsetRing(ring, d)` (grow / shrink a ring), `kit.ringFrame(ring)`,
   `kit.orientedExtent(ring, angle)`, `kit.ringArea(ring)`, `kit.rng(seed)`.
 
 Detailing helpers (real geometry, all into a MeshBatch):

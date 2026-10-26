@@ -210,22 +210,147 @@ export function walls(
       }
 }
 
+/**
+ * Normalised copy of a ring [[x, y], ...]: non-finite points, closing and repeated
+ * vertices (closer than `tol`) and collinear vertices or spikes (within `tol` of the
+ * line through their neighbours) dropped; wound CCW, or CW for a hole. Null when
+ * fewer than 3 vertices or no area remain.
+ */
+export function normaliseRing(ring, { hole = false, tol = 0.01 } = {}) {
+  let pts = (ring ?? []).filter((p) => p && Number.isFinite(p[0]) && Number.isFinite(p[1]));
+  pts = pts.filter((p, k) => {
+    const q = pts[(k + 1) % pts.length];
+    return pts.length < 2 || Math.hypot(q[0] - p[0], q[1] - p[1]) >= tol;
+  });
+  for (let changed = true; changed && pts.length >= 3;) {
+    changed = false;
+    for (let k = 0; k < pts.length; k++) {
+      const a = pts[(k - 1 + pts.length) % pts.length],
+        b = pts[k],
+        c = pts[(k + 1) % pts.length];
+      const ac = Math.hypot(c[0] - a[0], c[1] - a[1]);
+      const cross = Math.abs((b[0] - a[0]) * (c[1] - a[1]) - (b[1] - a[1]) * (c[0] - a[0]));
+      const ab = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      if (ab < tol || cross < tol * Math.max(ac, tol)) {
+        pts.splice(k, 1);
+        changed = true;
+        break;
+      }
+    }
+  }
+  if (pts.length < 3) return null;
+  const area = ringArea(pts);
+  if (Math.abs(area) < tol * tol) return null;
+  pts = pts.map((p) => [p[0], p[1]]);
+  return area > 0 === hole ? pts.reverse() : pts;
+}
+
+/** normaliseRing over polygons (first ring outer, CCW; holes CW); empty polygons dropped. */
+export function normalisePolys(polys, opts = {}) {
+  const out = [];
+  for (const poly of polys ?? []) {
+    const outer = normaliseRing(poly?.[0], opts);
+    if (!outer) continue;
+    const holes = poly
+      .slice(1)
+      .map((r) => normaliseRing(r, { ...opts, hole: true }))
+      .filter(Boolean);
+    out.push([outer, ...holes]);
+  }
+  return out;
+}
+
+/** Convex hull of points [[x, y], ...] (CCW, monotone chain). */
+export function convexHull(points) {
+  const p = points.slice().sort((a, b) => a[0] - b[0] || a[1] - b[1]);
+  if (p.length < 3) return p;
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lower = [],
+    upper = [];
+  for (const q of p) {
+    while (lower.length >= 2 && cross(lower.at(-2), lower.at(-1), q) <= 0) lower.pop();
+    lower.push(q);
+  }
+  for (const q of p.reverse()) {
+    while (upper.length >= 2 && cross(upper.at(-2), upper.at(-1), q) <= 0) upper.pop();
+    upper.push(q);
+  }
+  return lower.slice(0, -1).concat(upper.slice(0, -1));
+}
+
+/** Counters of geometry fallbacks (cap triangulations replaced by a convex hull). */
+export const stats = { capHull: 0 };
+
+/**
+ * Triangles of one polygon (outer ring + holes) as {pts, tris} with every triangle
+ * wound CCW, or null. When earcut covers the polygon badly it retries with the
+ * normalised rings, then with holes shrunk 1 cm (holes touching the outline), and a
+ * hole-free polygon it cannot triangulate at all gets its convex hull (counted in
+ * `stats.capHull`, warned once).
+ */
+export function triangulatePolygon(poly) {
+  const attempt = (rings) => {
+    const contour = rings[0].map(([x, y]) => new THREE.Vector2(x, y));
+    const holes = rings.slice(1).map((r) => r.map(([x, y]) => new THREE.Vector2(x, y)));
+    let faces;
+    try {
+      faces = THREE.ShapeUtils.triangulateShape(contour, holes);
+    } catch {
+      return null;
+    }
+    const pts = [...contour, ...holes.flat()];
+    let area = 0;
+    const tris = [];
+    for (const [a, b, c] of faces) {
+      const s =
+        (pts[b].x - pts[a].x) * (pts[c].y - pts[a].y) -
+        (pts[b].y - pts[a].y) * (pts[c].x - pts[a].x);
+      if (!(Math.abs(s) > 0)) continue;
+      area += Math.abs(s) / 2;
+      tris.push(s > 0 ? [a, b, c] : [a, c, b]);
+    }
+    return { pts, tris, area };
+  };
+  const target = (rings) =>
+    Math.abs(ringArea(rings[0])) - rings.slice(1).reduce((a, r) => a + Math.abs(ringArea(r)), 0);
+  const raw = poly?.[0]?.length >= 3 ? attempt(poly) : null;
+  const ok = (r, rings) =>
+    r && r.tris.length && Math.abs(r.area - target(rings)) <= 0.01 * target(rings) + 1e-6;
+  if (ok(raw, poly)) return raw;
+  const norm = normalisePolys([poly])[0];
+  const fixed = norm ? attempt(norm) : null;
+  if (fixed && ok(fixed, norm)) return fixed;
+  // Holes touching the outline (or each other) defeat earcut: shrink them by 1 cm.
+  const apart =
+    norm?.length > 1 ? attempt([norm[0], ...norm.slice(1).map((r) => offsetRing(r, 0.01))]) : null;
+  if (apart && ok(apart, norm)) return apart;
+  const best = [raw, fixed, apart]
+    .filter((r) => r?.tris.length)
+    .sort(
+      (a, b) => Math.abs(a.area - target(norm ?? poly)) - Math.abs(b.area - target(norm ?? poly)),
+    )[0];
+  if (best) return best;
+  // Nothing to cover (e.g. a hole equal to its outline), or holes a hull would fill.
+  if (!norm || norm.length > 1 || target(norm) <= 1e-3 * Math.abs(ringArea(norm[0]))) return null;
+  const hull = convexHull(norm[0]);
+  if (hull.length < 3) return null;
+  stats.capHull++;
+  if (stats.capHull === 1) console.warn('kit.cap: triangulation failed, using convex hull');
+  const pts = hull.map(([x, y]) => new THREE.Vector2(x, y));
+  const tris = [];
+  for (let k = 1; k + 1 < hull.length; k++) tris.push([0, k, k + 1]);
+  return { pts, tris, area: Math.abs(ringArea(hull)) };
+}
+
 /** Triangulated horizontal cap of polygons at height z (normal +z or -z). */
 export function cap(batch, material, polys, z, { scale = 8, down = false, color } = {}) {
   for (const poly of polys) {
-    const contour = poly[0].map(([x, y]) => new THREE.Vector2(x, y));
-    const holes = poly.slice(1).map((r) => r.map(([x, y]) => new THREE.Vector2(x, y)));
-    let tris;
-    try {
-      tris = THREE.ShapeUtils.triangulateShape(contour, holes);
-    } catch {
-      continue;
-    }
-    const pts = [...contour, ...holes.flat()];
-    const verts = pts.map((p) => [p.x, p.y, z]);
-    const uvs = pts.map((p) => [p.x / scale, p.y / scale]);
+    const t = triangulatePolygon(poly);
+    if (!t) continue;
+    const verts = t.pts.map((p) => [p.x, p.y, z]);
+    const uvs = t.pts.map((p) => [p.x / scale, p.y / scale]);
     const idx = [];
-    for (const t of tris) down ? idx.push(t[0], t[2], t[1]) : idx.push(t[0], t[1], t[2]);
+    for (const [a, b, c] of t.tris) down ? idx.push(a, c, b) : idx.push(a, b, c);
     batch.add(material, verts, uvs, idx, color);
   }
 }
@@ -366,6 +491,198 @@ export function pitchedRoof(
     // Close the overhang soffit triangles under the verge.
   }
   return { e, ridge: [P(r0, vm, top), P(r1, vm, top)], top };
+}
+
+/** Sutherland-Hodgman clip of ring [[u, v]] to the half-plane a + bu*u + bv*v <= 0. */
+function clipHalf(ring, a, bu, bv) {
+  const out = [];
+  for (let k = 0; k < ring.length; k++) {
+    const p = ring[k],
+      q = ring[(k + 1) % ring.length];
+    const dp = a + bu * p[0] + bv * p[1],
+      dq = a + bu * q[0] + bv * q[1];
+    if (dp <= 0) out.push(p);
+    if (dp < 0 !== dq < 0 && dp !== 0 && dq !== 0) {
+      const t = dp / (dp - dq);
+      out.push([p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t]);
+    }
+  }
+  return out;
+}
+
+/**
+ * Roof surface over the oriented rectangle of `ring` (ridge along `angle`) as the
+ * lower envelope of its slope planes z = a + bu*u + bv*v in the rectangle's (u, v)
+ * frame: gabled 2 planes, hipped / mansard 4, pyramidal 4 meeting at the apex.
+ * Returns { e, planes, zAt(x, y), ridge, top }.
+ */
+export function roofPlanes(ring, angle, eave, rise, kind = 'gabled') {
+  const e = orientedExtent(ring, angle);
+  const { u0, u1, v0, v1 } = e;
+  const half = Math.max((v1 - v0) / 2, 1e-3),
+    vm = (v0 + v1) / 2,
+    top = eave + rise;
+  const k = rise / half;
+  const planes = [
+    { a: eave - k * v0, bu: 0, bv: k },
+    { a: eave + k * v1, bu: 0, bv: -k },
+  ];
+  let r0 = u0,
+    r1 = u1;
+  if (kind !== 'gabled') {
+    const inset =
+      kind === 'pyramidal'
+        ? Math.max((u1 - u0) / 2, 1e-3)
+        : Math.max(Math.min(half, (u1 - u0) / 2 - 0.01), 1e-3);
+    const ku = rise / inset;
+    planes.push({ a: eave - ku * u0, bu: ku, bv: 0 }, { a: eave + ku * u1, bu: -ku, bv: 0 });
+    r0 = kind === 'pyramidal' ? (u0 + u1) / 2 : u0 + inset;
+    r1 = kind === 'pyramidal' ? r0 : u1 - inset;
+  }
+  const uv = (x, y) => [x * e.c + y * e.s, -x * e.s + y * e.c];
+  const zUV = (u, v) => Math.min(...planes.map((p) => p.a + p.bu * u + p.bv * v));
+  return {
+    e,
+    planes,
+    uv,
+    zUV,
+    zAt: (x, y) => zUV(...uv(x, y)),
+    ridge: [e.at(r0, vm, top), e.at(r1, vm, top)],
+    top,
+  };
+}
+
+function convex(ring) {
+  let sign = 0;
+  for (let k = 0; k < ring.length; k++) {
+    const a = ring[k],
+      b = ring[(k + 1) % ring.length],
+      c = ring[(k + 2) % ring.length];
+    const cr = (b[0] - a[0]) * (c[1] - b[1]) - (b[1] - a[1]) * (c[0] - b[0]);
+    if (Math.abs(cr) < 1e-9) continue;
+    if (sign && Math.sign(cr) !== sign) return false;
+    sign = Math.sign(cr);
+  }
+  return true;
+}
+
+/**
+ * Pitched roof fitted to the footprint ring (outer, CCW) instead of its oriented
+ * rectangle: each slope plane of roofPlanes() is clipped to the ring and to where it
+ * is the lowest plane, so the roof covers exactly the footprint (grown by `overhang`
+ * for convex rings) and meets walls built with roofWalls(). Returns the roofPlanes()
+ * record.
+ */
+export function fittedRoof(
+  batch,
+  roofMat,
+  ring,
+  angle,
+  eave,
+  rise,
+  kind = 'gabled',
+  { overhang = 0.3, color } = {},
+) {
+  const roof = roofPlanes(ring, angle, eave, rise, kind);
+  const { e, planes, uv } = roof;
+  const outline = (overhang > 0 && convex(ring) ? offsetRing(ring, overhang) : ring).map(([x, y]) =>
+    uv(x, y),
+  );
+  const s = 3; // roof texture metres per tile
+  // Triangulate the outline once, then cut every (convex) triangle into the convex
+  // facets of the planes: robust for concave footprints.
+  const base = triangulatePolygon([outline]);
+  if (!base) return roof;
+  const tris = base.tris.map((t) => t.map((i) => [base.pts[i].x, base.pts[i].y]));
+  for (let i = 0; i < planes.length; i++) {
+    const P = planes[i];
+    // Texture rows parallel to the eaves: t up the slope, s along it.
+    const g = Math.hypot(P.bu, P.bv) || 1;
+    const du = P.bu / g,
+      dv = P.bv / g,
+      stretch = Math.hypot(1, Math.hypot(P.bu, P.bv));
+    const verts = [],
+      uvs = [],
+      idx = [];
+    for (const tri of tris) {
+      let facet = tri;
+      for (let j = 0; j < planes.length && facet.length >= 3; j++)
+        if (j !== i)
+          facet = clipHalf(facet, P.a - planes[j].a, P.bu - planes[j].bu, P.bv - planes[j].bv);
+      if (facet.length < 3 || Math.abs(ringArea(facet)) < 1e-6) continue;
+      const first = verts.length;
+      for (const [u, v] of facet) {
+        verts.push(e.at(u, v, P.a + P.bu * u + P.bv * v));
+        uvs.push([(-dv * u + du * v) / s, ((du * u + dv * v) * stretch) / s]);
+      }
+      // Clipping keeps the triangle's CCW winding (upward; (u, v) is a rotation of x, y).
+      for (let k = 1; k + 1 < facet.length; k++) idx.push(first, first + k, first + k + 1);
+    }
+    if (idx.length) batch.add(roofMat, verts, uvs, idx, color);
+  }
+  return roof;
+}
+
+/**
+ * Walls of polygons from z0 up to a roof surface (a roofPlanes() record), split where
+ * the roof creases cross an edge, with the same storey-aligned UVs as walls().
+ */
+export function roofWalls(
+  batch,
+  material,
+  polys,
+  z0,
+  roof,
+  { bay = 3.6, storey = 3.2, uvBase = 0, color } = {},
+) {
+  const { planes, uv } = roof;
+  for (const poly of polys)
+    for (const ring of poly)
+      for (let k = 0; k < ring.length; k++) {
+        const a = ring[k],
+          b = ring[(k + 1) % ring.length];
+        const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+        if (len < 0.05) continue;
+        const n = Math.round(len / bay);
+        const ut = n >= 1 ? n / 4 : 0.03;
+        const [ua, va] = uv(a[0], a[1]),
+          [ub, vb] = uv(b[0], b[1]);
+        const za = planes.map((p) => p.a + p.bu * ua + p.bv * va),
+          zb = planes.map((p) => p.a + p.bu * ub + p.bv * vb);
+        const ts = [0, 1];
+        for (let i = 0; i < planes.length; i++)
+          for (let j = i + 1; j < planes.length; j++) {
+            const d0 = za[i] - za[j],
+              d1 = zb[i] - zb[j];
+            if (d0 * d1 < 0) ts.push(d0 / (d0 - d1));
+          }
+        ts.sort((x, y) => x - y);
+        const zt = (t) => Math.min(...za.map((z, i) => z + (zb[i] - z) * t));
+        const at = (t) => [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
+        const v = (z) => (z - uvBase) / (2 * storey);
+        for (let q = 0; q + 1 < ts.length; q++) {
+          const t0 = ts[q],
+            t1 = ts[q + 1];
+          if (t1 - t0 < 1e-6) continue;
+          const p0 = at(t0),
+            p1 = at(t1);
+          const h0 = Math.max(z0, zt(t0)),
+            h1 = Math.max(z0, zt(t1));
+          if (h0 <= z0 && h1 <= z0) continue;
+          batch.quad(
+            material,
+            [p0[0], p0[1], z0],
+            [p1[0], p1[1], z0],
+            [p1[0], p1[1], h1],
+            [p0[0], p0[1], h0],
+            [t0 * ut, v(z0)],
+            [t1 * ut, v(z0)],
+            [t1 * ut, v(h1)],
+            [t0 * ut, v(h0)],
+            color,
+          );
+        }
+      }
 }
 
 /** Axis-aligned box centred at (x, y) with base z0, rotated by angle about z. */

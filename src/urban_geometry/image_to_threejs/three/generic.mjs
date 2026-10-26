@@ -5,10 +5,14 @@ import {
   box,
   cap,
   facade,
+  fittedRoof,
   mat,
+  normalisePolys,
   orientedExtent,
-  pitchedRoof,
+  ringArea,
+  ringFrame,
   roof,
+  roofWalls,
   shopfront,
   walls,
 } from './kit.mjs';
@@ -34,6 +38,11 @@ const PASTELS = [
 // Walls of buildings on terrain start this far below their ground (`ground_z`, or the
 // `ground_plane` of sloping terraces).
 export const FOOT_M = 0.5;
+// Pitched roofs need a single ring that fills at least this share of the oriented
+// rectangle the roof planes are laid out on, and at most PITCHED_MAX_VERTS vertices;
+// other footprints get a flat roof.
+export const PITCHED_MIN_FIT = 0.65;
+export const PITCHED_MAX_VERTS = 64;
 const BAY = { glass: 3.0, modern_clad: 3.3, concrete: 3.4, metal_clad: 5, ragstone: 5.5 };
 const STOREY = { metal_clad: 4.5, ragstone: 6, glass: 3.6, portland_stone: 3.7 };
 
@@ -73,63 +82,115 @@ function roofKind(b, style) {
   return 'slate';
 }
 
+/** Share of the oriented rectangle along `angle` that the ring fills. */
+export function rectFit(ring, angle) {
+  const e = orientedExtent(ring, angle);
+  const rect = (e.u1 - e.u0) * (e.v1 - e.v0);
+  return rect > 0 ? Math.abs(ringArea(ring)) / rect : 0;
+}
+
+/**
+ * Roof form actually built for a piece (normalised polygons): the pitched kind and
+ * ridge angle, or null for a flat roof when the footprint has holes, several
+ * polygons, too many vertices or does not fill its oriented rectangle.
+ */
+export function pitchedFor(piece, polys, fallbackRidge) {
+  const kind = PITCHED[piece.roof];
+  if (!kind || polys.length !== 1 || polys[0].length !== 1) return null;
+  const ring = polys[0][0];
+  if (ring.length > PITCHED_MAX_VERTS) return null;
+  // The piece's own ridge, else the building's when it fits (parts of scenes prepared
+  // without part ridges), else the piece's long axis.
+  const candidates = Number.isFinite(piece.ridge)
+    ? [piece.ridge]
+    : [fallbackRidge, ringFrame(ring).angle].filter(Number.isFinite);
+  for (const ridge of candidates)
+    if (rectFit(ring, ridge) >= PITCHED_MIN_FIT) return { kind, ridge };
+  return null;
+}
+
+/** Point in polygons (even-odd over every ring). */
+function insidePolys(polys, x, y) {
+  let inside = false;
+  for (const poly of polys)
+    for (const ring of poly)
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [xi, yi] = ring[i],
+          [xj, yj] = ring[j];
+        if (yi > y !== yj > y && x < ((xj - xi) * (y - yi)) / (yj - yi) + xi) inside = !inside;
+      }
+  return inside;
+}
+
+/**
+ * One volume (the building or one of its parts): walls, roof and, when it starts
+ * above the ground, a floor. Returns whether it has a pitched roof.
+ */
 function shell(batch, b, piece, style, color, foot = 0) {
+  const polys = normalisePolys(piece.polys);
+  const minh = piece.minh ?? 0;
+  if (!polys.length || !(piece.h > minh + 0.05)) return false;
   const variants = FACADES[style]?.colors.length ?? 1;
   const wall = facade(style, Math.floor(b.seed * 97) % variants);
   const bay = (BAY[style] ?? 3.6) * (0.9 + 0.25 * ((b.seed * 13.7) % 1));
   const storey = STOREY[style] ?? 3.2;
   const roofKey = roofKind(b, style);
   const rmat = roof(roofKey, Math.floor(b.seed * 31) % 3);
-  const minh = piece.minh ?? 0;
-  const kind = PITCHED[piece.roof];
-  const rise = kind ? Math.min(piece.roofH || 3, (piece.h - minh) * 0.6) : 0;
+  const pitched = pitchedFor(piece, polys, b.ridge);
+  const rise = pitched ? Math.min(piece.roofH || 3, (piece.h - minh) * 0.6) : 0;
   const eave = piece.h - rise;
   // On terrain (foot > 0) ground-level walls reach below the footprint's lowest point.
   const base = foot > 0 ? -foot : 0;
   let z = minh || base;
   // Shopfront band on commercial ground floors.
   if (!minh && (b.group === 'commercial' || b.cls === 'retail') && eave > 6) {
-    walls(batch, shopfront(Math.floor(b.seed * 53) % 6), piece.polys, base, 4.2, {
+    walls(batch, shopfront(Math.floor(b.seed * 53) % 6), polys, base, 4.2, {
       bay: 4.2,
       storey: 4.2,
       uvBase: 0,
     });
     z = 4.2;
   }
-  walls(batch, wall, piece.polys, z, eave, { bay, storey, uvBase: minh > 0 ? 0 : 0.6, color });
-  if (minh > 0.5) cap(batch, rmat, piece.polys, minh, { down: true });
-  if (kind && piece.polys.length === 1) {
-    const r = pitchedRoof(batch, rmat, wall, piece.polys[0][0], b.ridge, eave, rise, kind, {
+  const uvBase = minh > 0 ? 0 : 0.6;
+  if (minh > 0.5) cap(batch, rmat, polys, minh, { down: true });
+  if (pitched) {
+    const ring = polys[0][0];
+    const r = fittedRoof(batch, rmat, ring, pitched.ridge, eave, rise, pitched.kind, {
       color: [1, 1, 1],
-      wallColor: color,
-      storey,
     });
-    if (b.group === 'house' && r.ridge) {
-      // Chimney stacks at the party walls.
+    roofWalls(batch, wall, polys, z, r, { bay, storey, uvBase, color });
+    if (b.group === 'house') {
+      // Chimney stacks at the party walls (where they stand on the footprint).
       const brick = mat('london_stock');
-      for (const t of [0.08, 0.92]) {
-        const x = r.ridge[0][0] + (r.ridge[1][0] - r.ridge[0][0]) * t;
-        const y = r.ridge[0][1] + (r.ridge[1][1] - r.ridge[0][1]) * t;
-        if (r.ridge[0][0] === r.ridge[1][0] && r.ridge[0][1] === r.ridge[1][1] && t > 0.5) break;
-        box(batch, brick, x, y, r.top - 1.2, 0.6, 1.6, 2.2, b.ridge + Math.PI / 2);
+      const [p0, p1] = r.ridge;
+      const single = p0[0] === p1[0] && p0[1] === p1[1];
+      for (const t of single ? [0.5] : [0.08, 0.92]) {
+        const x = p0[0] + (p1[0] - p0[0]) * t;
+        const y = p0[1] + (p1[1] - p0[1]) * t;
+        if (!insidePolys(polys, x, y)) continue;
+        box(batch, brick, x, y, r.zAt(x, y) - 1.2, 0.6, 1.6, 2.2, pitched.ridge + Math.PI / 2);
       }
     }
   } else {
-    cap(batch, rmat, piece.polys, eave, { scale: 6 });
+    walls(batch, wall, polys, z, eave, { bay, storey, uvBase, color });
+    cap(batch, rmat, polys, eave, { scale: 6 });
     // Parapet coping line and rooftop plant on larger flat roofs.
-    const area = Math.abs(polyArea(piece.polys));
+    const area = Math.abs(polyArea(polys));
     if (area > 600 && eave > 12) {
       const n = Math.min(4, Math.floor(area / 900) + 1);
-      const ring = piece.polys[0][0];
+      const ring = polys[0][0];
       const [cx, cy] = centroidOf(ring);
       for (let k = 0; k < n; k++) {
         const a = b.seed * 40 + k * 2.1,
           rr = Math.sqrt(area) * 0.15;
+        const x = cx + Math.cos(a) * rr,
+          y = cy + Math.sin(a) * rr;
+        if (!insidePolys(polys, x, y)) continue;
         box(
           batch,
           mat('#9a9a95'),
-          cx + Math.cos(a) * rr,
-          cy + Math.sin(a) * rr,
+          x,
+          y,
           eave,
           2 + ((b.seed * (k + 3)) % 1) * 3,
           2 + ((b.seed * (k + 7)) % 1) * 2,
@@ -139,6 +200,7 @@ function shell(batch, b, piece, style, color, foot = 0) {
       }
     }
   }
+  return Boolean(pitched);
 }
 
 function polyArea(polys) {
@@ -216,11 +278,11 @@ function mark(batch) {
   return new Map([...batch.buckets].map(([m, bk]) => [m, bk.p.length]));
 }
 
-/** Raise every vertex added to the batch since `marks` by dz(x, y). */
+/** Raise every vertex added to the batch since `marks` by dz(x, y, z). */
 function lift(batch, marks, dz) {
   for (const [m, bk] of batch.buckets)
     for (let k = marks.get(m) ?? 0; k < bk.p.length; k += 3)
-      bk.p[k + 2] += dz(bk.p[k], bk.p[k + 1]);
+      bk.p[k + 2] += dz(bk.p[k], bk.p[k + 1], bk.p[k + 2]);
 }
 
 /**
@@ -239,20 +301,30 @@ export function buildGeneric(scene, { bounds, skip = new Set() } = {}) {
     const ground = Number.isFinite(b.ground_z) ? b.ground_z : null;
     const marks = ground === null ? null : mark(batch);
     const foot = ground === null || b.vessel ? 0 : FOOT_M;
+    let pitched = false;
     if (b.vessel) vessel(batch, b);
     else {
       const style = b.style;
       const color = tint(b, style);
       if (b.parts?.length)
         for (const p of b.parts)
-          shell(batch, b, { ...p, roof: p.roof }, p.style ?? style, color, foot);
-      else shell(batch, b, b, style, color, foot);
+          pitched = shell(batch, b, p, p.style ?? style, color, foot) || pitched;
+      else pitched = shell(batch, b, b, style, color, foot);
     }
     if (marks && b.ground_plane) {
-      // Long footprints on an even slope (terraces) are sheared onto it.
+      // Long footprints on an even slope (terraces) are sheared onto it. Flat roofs stay
+      // level: only the wall feet follow the plane, the rest is lifted to its height
+      // under the centroid (kept within half the height of the uphill end).
       const [z0, gx, gy] = b.ground_plane,
         [cx, cy] = b.c;
-      lift(batch, marks, (x, y) => z0 + gx * (x - cx) + gy * (y - cy));
+      const plane = (x, y) => z0 + gx * (x - cx) + gy * (y - cy);
+      if (pitched || b.vessel) lift(batch, marks, plane);
+      else {
+        let top = -Infinity;
+        for (const poly of b.polys) for (const [x, y] of poly[0]) top = Math.max(top, plane(x, y));
+        const level = Math.max(z0, top - 0.5 * (b.h - (b.minh ?? 0)));
+        lift(batch, marks, (x, y, z) => (z <= 0.01 ? plane(x, y) : level));
+      }
     } else if (marks && ground) lift(batch, marks, () => ground);
     count++;
   }
