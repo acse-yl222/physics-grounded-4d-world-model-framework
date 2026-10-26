@@ -140,13 +140,13 @@ function enuBox(obj) {
 }
 
 /**
- * Landmarks without claimed footprints (bridges, arches, memorials): built once to
+ * Landmarks without claimed footprints (arches, memorials) and bridges: built once to
  * learn where they are; their boxes become ground cutouts so mapped ways over
  * water do not duplicate a modelled bridge deck.
  */
 async function freeStanding(index, scene, assets) {
   const out = [];
-  for (const l of index.filter((e) => !e.claims?.length)) {
+  for (const l of index.filter((e) => !e.claims?.length || /_bridge$/.test(e.id))) {
     const object = buildLandmark(await loadLandmark(l.id), scene, assets);
     const probe = new THREE.Group();
     probe.rotation.x = -Math.PI / 2;
