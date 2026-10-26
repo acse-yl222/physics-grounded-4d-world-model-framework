@@ -17,7 +17,9 @@ water bodies a flat ``level`` and vessels the level of the water they float on.
 from __future__ import annotations
 
 import base64
+import json
 import math
+from pathlib import Path
 
 import numpy as np
 
@@ -287,3 +289,102 @@ def scene_terrain(dem: np.ndarray, index: dict, dx: float, half: float) -> dict:
     }
     rec["vertical_datum"] = index["vertical_datum"]
     return rec
+
+
+# ---------------------------------------------------------------- surfaces for other runs
+
+FLAT_DATUM = "Flat ground at local zero; no terrain model applied"
+# DEM cells this low are open water (the Thames surface is about -1.5 m ODN here);
+# road and rail surfaces carry across them at the height of the banks (bridges).
+WATER_FILL_M = 0.5
+# Foreshore and river walls below this, near open water, are filled too, so bridge
+# decks meet the embankment roads rather than the foreshore.
+BANK_M = 3.0
+
+
+def vertical_datum_text(index: dict | None) -> str:
+    """The scene's ``spatial.origin.vertical_datum`` for runs placed on this DEM."""
+    if not index:
+        return FLAT_DATUM
+    return "Scene z is the DEM height in metres. " + index["vertical_datum"]
+
+
+def fill_low(
+    values: np.ndarray, below: float = WATER_FILL_M, bank: float = BANK_M, reach: int = 12
+) -> np.ndarray:
+    """Open water (cells below ``below``) plus the low foreshore within ``reach`` cells of
+    it (below ``bank``) is refilled from the dry banks: each pass sets a hole cell to
+    the mean of its filled 4-neighbours, growing in from the edges."""
+    out = values.astype(np.float64).copy()
+    water = out < below
+    near = water.copy()
+    for _ in range(reach):
+        near = (
+            near
+            | np.roll(near, 1, 0)
+            | np.roll(near, -1, 0)
+            | np.roll(near, 1, 1)
+            | np.roll(near, -1, 1)
+        )
+    hole = water | (near & (out < bank))
+    while hole.any():
+        known = ~hole
+        acc = np.zeros_like(out)
+        cnt = np.zeros_like(out)
+        for dj, di in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            shifted_v = np.roll(out, (dj, di), axis=(0, 1))
+            shifted_k = np.roll(known, (dj, di), axis=(0, 1))
+            acc += np.where(shifted_k, shifted_v, 0)
+            cnt += shifted_k
+        grow = hole & (cnt > 0)
+        if not grow.any():
+            break
+        out[grow] = acc[grow] / cnt[grow]
+        hole &= ~grow
+    return out
+
+
+def box_smooth(values: np.ndarray, radius: int) -> np.ndarray:
+    """Mean over a (2r+1)^2 window (edges use the cells available)."""
+    pad = np.pad(values, radius, mode="edge")
+    c = np.cumsum(np.cumsum(np.pad(pad, ((1, 0), (1, 0))), axis=0), axis=1)
+    k = 2 * radius + 1
+    return (c[k:, k:] - c[:-k, k:] - c[k:, :-k] + c[:-k, :-k]) / (k * k)
+
+
+class DemSurface:
+    """Heights for runs placed on the scene DEM (traffic, Underground).
+
+    ``ground``: the DEM. ``road``: the DEM with open water and its foreshore filled from
+    the dry banks, so vehicles crossing river bridges stay at bank height (flyovers over
+    land are not raised: without lane data a vehicle on a flyover and one on the street
+    below cannot be told apart). ``smooth``: ``road`` low-pass
+    filtered over about ``smooth_m``, a reference for tunnels, which run far flatter
+    than the streets above them.
+    """
+
+    def __init__(self, dem: np.ndarray, index: dict, smooth_m: float = 75.0):
+        self.index = index
+        self.grid = {"x0": index["x0"], "y0": index["y0"], "dx": index["dx"]}
+        self.dem = dem.astype(np.float64)
+        self.road_values = fill_low(self.dem)
+        self.smooth_values = box_smooth(self.road_values, max(1, round(smooth_m / index["dx"])))
+        self.vertical_datum = vertical_datum_text(index)
+
+    def ground(self, x, y):
+        return bilinear(self.dem, self.grid, x, y)
+
+    def road(self, x, y):
+        return bilinear(self.road_values, self.grid, x, y)
+
+    def smooth(self, x, y):
+        return bilinear(self.smooth_values, self.grid, x, y)
+
+
+def load_surface(input_dir, config: dict) -> DemSurface | None:
+    """DemSurface for a scene whose geometry config has a ``terrain`` block, else None."""
+    if not config.get("terrain"):
+        return None
+    root = Path(input_dir) / config["terrain"].get("dir", "terrain")
+    index = json.loads((root / "index.json").read_text())
+    return DemSurface(np.load(root / index["file"]), index)

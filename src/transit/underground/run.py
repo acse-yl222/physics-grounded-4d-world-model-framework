@@ -37,6 +37,7 @@ from pathlib import Path
 
 from common.contract import validate
 from common.provenance import snapshot_sources
+from urban_geometry.image_to_threejs import terrain
 
 from . import build
 from . import gtfs as gtfs_mod
@@ -101,6 +102,40 @@ def depth_text(dcfg: dict, ref_layers: dict) -> dict:
     }
 
 
+PORTAL_BLEND_M = 6.0
+
+
+def terrain_z(surface, x, y, z_rel):
+    """Absolute height for a point modelled at ``z_rel`` relative to flat ground.
+
+    At and above the surface (surface track, bridges) the point follows the street
+    surface (``road``: river filled from the banks). Below ground it hangs from a
+    75 m low-pass of that surface, since tunnels are far flatter than the streets
+    above them; the two blend over the first PORTAL_BLEND_M of depth at portals.
+    """
+    road = surface.road(x, y)
+    if z_rel >= 0:
+        return float(road) + z_rel
+    w = min(1.0, -z_rel / PORTAL_BLEND_M)
+    return float((1 - w) * road + w * surface.smooth(x, y)) + z_rel
+
+
+def on_terrain(surface, tracks, stations, patterns) -> None:
+    """Convert every modelled height (relative to flat ground) to scene DEM heights."""
+    r2 = lambda v: round(v, 2)
+    for t in tracks:
+        t["shape"] = [[x, y, r2(terrain_z(surface, x, y, z))] for x, y, z in t["shape"]]
+    for s in stations:
+        for p in s["platforms"]:
+            p["shape"] = [[x, y, r2(terrain_z(surface, x, y, z))] for x, y, z in p["shape"]]
+        s["surface_z"] = r2(float(surface.road(s["x"], s["y"])))
+        s["z"] = r2(terrain_z(surface, s["x"], s["y"], s["z"]))
+        for e in s["entrances"]:
+            e["z"] = r2(float(surface.road(e["x"], e["y"])))
+    for p in patterns.values():
+        p["path"] = [[x, y, r2(terrain_z(surface, x, y, z))] for x, y, z in p["path"]]
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter)
     p.add_argument("scene")
@@ -135,6 +170,10 @@ def main(argv=None) -> int:
     log(f"  {len(stations)} stations; {st_report}")
     log("patterns ...")
     patterns, assign = build.build_patterns(net, tt, cfg)
+    surface = terrain.load_surface(storage.assets(scene, "input"), ctx["geo"])
+    if surface:
+        log("placing the network on the scene terrain ...")
+        on_terrain(surface, tracks, stations, patterns)
     ratios = [
         p["match"]["path_over_straight"]
         for p in patterns.values()
@@ -181,8 +220,15 @@ def main(argv=None) -> int:
         "timetables": timetable_prov,
         "depth_model": depth_text(cfg["depth"], net.ref_layers),
         "colours": build.colour_reference(),
-        "coordinates": "scene ENU metres (tfl.Enu equirectangular about the scene origin), z metres "
-        "relative to flat local ground (negative = below)",
+        "coordinates": "scene ENU metres (tfl.Enu equirectangular about the scene origin); "
+        + (
+            "z metres on the scene DEM: surface track and entrances on the street surface "
+            "(river filled from the banks), tunnels at the assumed depth below a 150 m "
+            "low-pass of that surface, blended over the first 6 m at portals; stations "
+            "carry surface_z (street level above them)"
+            if surface
+            else "z metres relative to flat local ground (negative = below)"
+        ),
         "domain": f"|x|, |y| <= {half:g} m; tracks/platforms clipped at the boundary; the "
         f"track graph extends {cfg['buffer_m']} m beyond it for continuity",
     }
@@ -361,9 +407,9 @@ def main(argv=None) -> int:
                 **ctx["origin"],
                 "height_m": 0,
                 # Must equal the project's origin for p4d retain; depths are in provenance.
-                "vertical_datum": "Flat ground at local zero; no terrain model applied",
+                "vertical_datum": terrain.vertical_datum_text(surface.index if surface else None),
             },
-            "bounds_m": {"min": [-half, -half, -60], "max": [half, half, 30]},
+            "bounds_m": {"min": [-half, -half, -60], "max": [half, half, 100 if surface else 30]},
         },
         "time": {"unit": "s", "samples": samples},
         "layers": layers,

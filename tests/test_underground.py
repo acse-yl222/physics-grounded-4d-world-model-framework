@@ -8,11 +8,14 @@ import sys
 import unittest
 from pathlib import Path
 
+import numpy as np
+
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from traffic.corridor_sumo.tfl import Enu
 from transit.underground import build
 from transit.underground import geometry as geo
+from transit.underground import run as run_mod
 from transit.underground.config import line_id
 
 DEPTH = {
@@ -374,3 +377,40 @@ class SyntheticNetworkTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TerrainPlacementTest(unittest.TestCase):
+    """Heights on the scene DEM: river filled from the banks, tunnels below a low-pass."""
+
+    def setUp(self):
+        from urban_geometry.image_to_threejs import terrain
+
+        # 10 m grid: banks at 5 m, a 100 m river at -1.5 m, a 30 m hill to the east.
+        dem = np.full((41, 61), 5.0, dtype=np.float32)
+        dem[:, 20:30] = -1.5
+        dem[:, 45:] = 30.0
+        index = {"x0": 0.0, "y0": 0.0, "dx": 10.0, "vertical_datum": "test datum"}
+        self.terrain = terrain
+        self.surface = terrain.DemSurface(dem, index, smooth_m=30.0)
+
+    def test_river_is_filled_from_the_banks(self):
+        self.assertAlmostEqual(float(self.surface.ground(250, 200)), -1.5, places=3)
+        self.assertGreater(float(self.surface.road(250, 200)), 4.0)
+        self.assertAlmostEqual(float(self.surface.road(100, 200)), 5.0, places=3)
+
+    def test_tunnels_hang_from_the_low_pass_and_blend_at_portals(self):
+        tz = run_mod.terrain_z
+        x, y = 100, 200  # flat bank: low-pass == surface
+        self.assertAlmostEqual(tz(self.surface, x, y, 0.0), 5.0, places=3)
+        self.assertAlmostEqual(tz(self.surface, x, y, -22.0), -17.0, places=3)
+        # At the foot of the hill the low-pass lies between bank and hill.
+        z = tz(self.surface, 440, 200, -22.0)
+        self.assertTrue(5.0 - 22.0 < z < 30.0 - 22.0)
+        # Above ground (bridge decks) the street surface is used as is.
+        self.assertAlmostEqual(
+            tz(self.surface, 250, 200, 6.5), float(self.surface.road(250, 200)) + 6.5
+        )
+
+    def test_datum_text(self):
+        self.assertEqual(self.terrain.vertical_datum_text(None), self.terrain.FLAT_DATUM)
+        self.assertTrue(self.terrain.vertical_datum_text({"vertical_datum": "X"}).endswith("X"))

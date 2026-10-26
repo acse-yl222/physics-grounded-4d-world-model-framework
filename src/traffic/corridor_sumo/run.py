@@ -33,6 +33,7 @@ from pathlib import Path
 from common.contract import validate
 from common.provenance import snapshot_sources
 from common.storage import Storage
+from urban_geometry.image_to_threejs import terrain
 
 from . import (
     bus_status,
@@ -53,6 +54,14 @@ from . import (
 
 SIMULATION = "traffic_sumo"
 FETCH_OVERTURE = Path(__file__).resolve().parents[2] / "urban_geometry/image_to_threejs"
+
+
+def z_bounds(half: float, surface) -> dict:
+    """Spatial bounds; with terrain, z spans the DEM (plus vehicle height)."""
+    if not surface:
+        return {"min": [-half, -half, 0], "max": [half, half, 5]}
+    lo, hi = float(surface.dem.min()), float(surface.road_values.max())
+    return {"min": [-half, -half, int(lo // 1) - 1], "max": [half, half, int(hi // 1) + 6]}
 
 
 def digest(path: Path) -> str:
@@ -315,6 +324,8 @@ def run_synthetic(args) -> int:
     scene = cfg["scene_id"]
     geo_path = meta / cfg.get("geometry_config", "configs/image_to_threejs.json")
     geo = json.loads(geo_path.read_text())
+    # With a scene DEM, vehicles stand on the terrain (river bridges at bank height).
+    surface = terrain.load_surface(storage.assets(scene, "input"), geo)
     sim = cfg["simulation"]
     run_id = args.run_id or datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ_") + secrets.token_hex(3)
     work = storage.scratch(scene, SIMULATION, run_id)
@@ -448,9 +459,13 @@ def run_synthetic(args) -> int:
         "recorded": recorded,
         "config": cfg,
         "coordinates": "SUMO x,y == scene ENU metres (netconvert offset normalisation "
-        "disabled; verified via location offset and node coordinates); z = 0 (flat ground)",
+        "disabled; verified via location offset and node coordinates); z = the scene DEM "
+        "with open water filled from the banks (terrain.DemSurface.road) when the geometry "
+        "config has terrain, else 0 (flat ground); flyovers are not raised",
     }
-    export.write_trajectory_frames(kept, data / "trajectories.json")
+    export.write_trajectory_frames(
+        kept, data / "trajectories.json", surface.road if surface else 0.0
+    )
     export.write_traffic_json(
         kept,
         data / "traffic.json",
@@ -479,9 +494,9 @@ def run_synthetic(args) -> int:
         "origin": {
             **geo["origin"],
             "height_m": 0,
-            "vertical_datum": "Flat ground at local zero; no terrain model applied",
+            "vertical_datum": terrain.vertical_datum_text(surface.index if surface else None),
         },
-        "bounds_m": {"min": [-half, -half, 0], "max": [half, half, 5]},
+        "bounds_m": z_bounds(half, surface),
     }
     inputs = list(built["inputs"])
     inputs.append({"id": "traffic_sumo_config", "sha256": digest(config_path)})
@@ -581,6 +596,8 @@ def run_periods(args) -> int:
     scene = cfg["scene_id"]
     geo_path = meta / cfg.get("geometry_config", "configs/image_to_threejs.json")
     geo = json.loads(geo_path.read_text())
+    # With a scene DEM, vehicles stand on the terrain (river bridges at bank height).
+    surface = terrain.load_surface(storage.assets(scene, "input"), geo)
     dfcfg, pcfg, ccfg = cfg["dft"], cfg["periods"], cfg["calibration"]
     windows = periods.period_windows(pcfg)
     if args.periods:
@@ -732,7 +749,9 @@ def run_periods(args) -> int:
         size = export.write_binary(kept, bin_path)
         if size >= ecfg["max_bin_bytes"]:
             raise RuntimeError(f"{bin_path.name} is {size} bytes, over the budget")
-        export.write_trajectory_frames(kept, data / f"trajectories_{w['id']}.json")
+        export.write_trajectory_frames(
+            kept, data / f"trajectories_{w['id']}.json", surface.road if surface else 0.0
+        )
         recordings[w["id"]] = {
             "window_s": [rec.times[0], rec.times[-1]],
             "window_clock": f"{periods.clock(rec.times[0])}-{periods.clock(rec.times[-1] + 1)}",
@@ -945,7 +964,9 @@ def run_periods(args) -> int:
         "window (the same length for all periods); absolute windows are in periods.*.window.",
         "config": cfg,
         "coordinates": "SUMO x,y == scene ENU metres (netconvert offset normalisation "
-        "disabled; verified via location offset and node coordinates); z = 0 (flat ground)",
+        "disabled; verified via location offset and node coordinates); z = the scene DEM "
+        "with open water filled from the banks (terrain.DemSurface.road) when the geometry "
+        "config has terrain, else 0 (flat ground); flyovers are not raised",
         "runtime_s": round(time.monotonic() - t_start, 1),
     }
     half = geo["domain_m"] / 2
@@ -955,9 +976,9 @@ def run_periods(args) -> int:
         "origin": {
             **geo["origin"],
             "height_m": 0,
-            "vertical_datum": "Flat ground at local zero; no terrain model applied",
+            "vertical_datum": terrain.vertical_datum_text(surface.index if surface else None),
         },
-        "bounds_m": {"min": [-half, -half, 0], "max": [half, half, 5]},
+        "bounds_m": z_bounds(half, surface),
     }
     inputs = list(net_inputs)
     inputs.append({"id": "traffic_sumo_config", "sha256": digest(config_path)})

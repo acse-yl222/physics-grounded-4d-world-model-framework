@@ -208,15 +208,24 @@ def write_traffic_json(
     return doc
 
 
-def write_trajectory_frames(rec: Recording, path: Path, z: float = 0.0) -> None:
-    """Protocol v1.1 ``trajectory_frames`` JSON (ids = SUMO vehicle ids, ENU metres)."""
-    frames = [
-        {
-            "ids": [rec.vehicles[i]["id"] for i, *_ in frame],
-            "positions": [[round(x, 2), round(y, 2), z] for _, x, y, _ in frame],
-        }
-        for frame in rec.frames
-    ]
+def write_trajectory_frames(rec: Recording, path: Path, z=0.0) -> None:
+    """Protocol v1.1 ``trajectory_frames`` JSON (ids = SUMO vehicle ids, ENU metres).
+
+    ``z`` is a height or a function ``z(xs, ys)`` of position arrays (terrain)."""
+    frames = []
+    for frame in rec.frames:
+        xs = np.array([x for _, x, _, _ in frame], dtype=np.float64)
+        ys = np.array([y for _, _, y, _ in frame], dtype=np.float64)
+        zs = z(xs, ys) if callable(z) else np.full(len(frame), float(z))
+        frames.append(
+            {
+                "ids": [rec.vehicles[i]["id"] for i, *_ in frame],
+                "positions": [
+                    [round(float(x), 2), round(float(y), 2), round(float(h), 2)]
+                    for x, y, h in zip(xs, ys, zs, strict=True)
+                ],
+            }
+        )
     path.write_text(json.dumps({"frames": frames}, separators=(",", ":"), allow_nan=False))
 
 

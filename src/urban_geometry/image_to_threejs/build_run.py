@@ -25,6 +25,7 @@ from pathlib import Path
 from common.contract import validate
 from common.provenance import snapshot_sources
 from common.storage import Storage
+from urban_geometry.image_to_threejs.terrain import FLAT_DATUM, vertical_datum_text
 
 HERE = Path(__file__).resolve().parent
 GLTF_TRANSFORM = ["npx", "--yes", "@gltf-transform/cli@4.5.1"]
@@ -159,11 +160,11 @@ def main() -> None:
         # Scene z is the DEM height; the origin's height is the datum zero.
         top = max(b["h"] + b.get("ground_z", 0) for b in prepared["buildings"])
         low = math.floor(prepared["source"]["terrain"]["min_m"] - 2)
-        vertical = "Scene z is the DEM height in metres. " + dem["vertical_datum"]
+        vertical = vertical_datum_text(dem)
     else:
         top = max(b["h"] for b in prepared["buildings"])
         low = 0
-        vertical = "Flat ground at local zero; no terrain model applied"
+        vertical = FLAT_DATUM
     spatial = {
         "frame": "ENU",
         "units": "m",
