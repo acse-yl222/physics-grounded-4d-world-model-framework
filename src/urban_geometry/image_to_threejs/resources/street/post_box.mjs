@@ -23,25 +23,57 @@ export default {
     },
   ],
   notes: 'Royal cypher omitted.',
-  build({ THREE, kit }) {
+  build({ THREE, kit, detail = 'high' }) {
     const g = new THREE.Group();
     const red = kit.mat('#c8102e', { roughness: 0.45 });
-    const add = (geo, m, z) => {
-      const o = new THREE.Mesh(geo.rotateX(Math.PI / 2), m);
-      o.position.z = z;
+    const seg = detail === 'low' ? 8 : 20;
+    const add = (geo, m, x = 0, y = 0, z = 0) => {
+      const o = new THREE.Mesh(geo, m);
+      o.position.set(x, y, z);
       g.add(o);
       return o;
     };
-    add(new THREE.CylinderGeometry(0.3, 0.32, 0.18, 14), kit.mat('black'), 0.09);
-    add(new THREE.CylinderGeometry(0.26, 0.28, 1.2, 14), red, 0.78);
-    add(new THREE.CylinderGeometry(0.31, 0.31, 0.08, 14), red, 1.42);
-    add(new THREE.SphereGeometry(0.29, 14, 5, 0, Math.PI * 2, 0, Math.PI / 2), red, 1.46).scale.z =
-      0.55;
-    const slot = new THREE.Mesh(new THREE.BoxGeometry(0.24, 0.06, 0.04), kit.mat('black'));
-    slot.position.set(0, 0.26, 1.27);
-    const plate = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.02, 0.12), kit.mat('white'));
-    plate.position.set(0, 0.27, 1.08);
-    g.add(slot, plate);
+    // Turned body: black plinth, red shaft with beaded bands, overhanging cap and dome.
+    const profile = [
+      [0, 0],
+      [0.31, 0],
+      [0.31, 0.16],
+      [0.28, 0.2],
+      [0.27, 1.2],
+      [0.29, 1.24],
+      [0.28, 1.28],
+      [0.27, 1.34],
+      [0.32, 1.38],
+      [0.32, 1.44],
+      [0.28, 1.47],
+      [0.2, 1.56],
+      [0.08, 1.62],
+      [0, 1.64],
+    ];
+    const body = new THREE.LatheGeometry(
+      profile.map(([r, h]) => new THREE.Vector2(r, h)),
+      seg,
+    ).rotateX(Math.PI / 2);
+    add(body, red);
+    add(
+      new THREE.CylinderGeometry(0.315, 0.32, 0.18, seg).rotateX(Math.PI / 2),
+      kit.mat('black'),
+      0,
+      0,
+      0.09,
+    );
+    if (detail === 'low') return g;
+    add(new THREE.BoxGeometry(0.26, 0.05, 0.05), kit.mat('black'), 0, 0.27, 1.25);
+    add(new THREE.BoxGeometry(0.3, 0.06, 0.03), red, 0, 0.285, 1.29);
+    add(new THREE.BoxGeometry(0.18, 0.02, 0.13), kit.mat('white'), 0, 0.28, 1.06);
+    add(new THREE.BoxGeometry(0.36, 0.03, 0.62), red, 0, 0.27, 0.7);
+    add(
+      new THREE.BoxGeometry(0.12, 0.02, 0.1),
+      kit.mat('#d6b04c', { metalness: 0.7, roughness: 0.35 }),
+      0,
+      0.29,
+      0.86,
+    );
     return g;
   },
 };

@@ -293,12 +293,13 @@ export function buildGround(scene, { bounds, cutouts } = {}) {
   return group;
 }
 
-/** Instanced trees from mapped points plus scattered trees in parks and woods. */
-export function buildTrees(scene, { bounds, assets } = {}) {
-  const pts = scene.trees.filter((t) => inside(t, bounds)).map(([x, y, s]) => [x, y, s]);
-  let seed = 1;
-  const rand = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
-  // Scattered trees must not stand inside building footprints.
+/**
+ * Cell grids of building rings and road segments, cached per scene, so scattered
+ * trees stay out of footprints and off roads and paths.
+ */
+const exclusionCache = new WeakMap();
+function exclusionGrids(scene) {
+  if (exclusionCache.has(scene)) return exclusionCache.get(scene);
   const cell = 50,
     grid = new Map();
   for (const b of scene.buildings)
@@ -316,6 +317,49 @@ export function buildTrees(scene, { bounds, assets } = {}) {
           grid.get(key).push(poly[0]);
         }
     }
+  const ways = new Map();
+  for (const r of scene.roads)
+    for (let k = 1; k < r.line.length; k++) {
+      const a = r.line[k - 1],
+        b = r.line[k];
+      for (
+        let i = Math.floor(Math.min(a[0], b[0]) / cell);
+        i <= Math.floor(Math.max(a[0], b[0]) / cell);
+        i++
+      )
+        for (
+          let j = Math.floor(Math.min(a[1], b[1]) / cell);
+          j <= Math.floor(Math.max(a[1], b[1]) / cell);
+          j++
+        ) {
+          const key = `${i},${j}`;
+          if (!ways.has(key)) ways.set(key, []);
+          ways.get(key).push([a, b, r.w / 2 + 1.5]);
+        }
+    }
+  const out = { cell, grid, ways };
+  exclusionCache.set(scene, out);
+  return out;
+}
+
+/** Instanced trees from mapped points plus scattered trees in parks and woods. */
+export function buildTrees(scene, { bounds, assets, detail = 'high', cutouts } = {}) {
+  const pts = scene.trees.filter((t) => inside(t, bounds)).map(([x, y, s]) => [x, y, s]);
+  let seed = 1;
+  const rand = () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+  const { cell, grid, ways } = exclusionGrids(scene);
+  const onWay = (x, y) =>
+    (ways.get(`${Math.floor(x / cell)},${Math.floor(y / cell)}`) ?? []).some(([a, b, clear]) => {
+      const dx = b[0] - a[0],
+        dy = b[1] - a[1];
+      const t = Math.max(
+        0,
+        Math.min(1, ((x - a[0]) * dx + (y - a[1]) * dy) / (dx * dx + dy * dy || 1)),
+      );
+      return Math.hypot(x - a[0] - t * dx, y - a[1] - t * dy) < clear;
+    });
+  const keepOut = (x, y) =>
+    (cutouts ?? []).some((c) => x >= c.x0 && x <= c.x1 && y >= c.y0 && y <= c.y1);
   const built = (x, y) =>
     (grid.get(`${Math.floor(x / cell)},${Math.floor(y / cell)}`) ?? []).some((ring) =>
       pointIn(ring, x, y),
@@ -346,28 +390,34 @@ export function buildTrees(scene, { bounds, assets } = {}) {
           py = y + rand() * spacing;
         if (rand() < 0.35 || !inside([px, py], bounds)) continue;
         if (!pointIn(ring, px, py) || a.poly.slice(1).some((h) => pointIn(h, px, py))) continue;
-        if (built(px, py)) continue;
+        if (built(px, py) || onWay(px, py) || keepOut(px, py)) continue;
         pts.push([px, py, rand()]);
       }
   }
-  // Species from the resources/vegetation library; heights in metres per species.
+  // Species mix from the resources/vegetation library (shares sum to 1; heights in m).
   const species = [
-    { id: 'london_plane', h: [12, 24] }, // 60 %
-    { id: 'lime_tree', h: [10, 18] }, // 30 %
-    { id: 'conifer', h: [7, 14] }, // 10 %
+    { id: 'london_plane', share: 0.4, h: [13, 26] },
+    { id: 'lime_tree', share: 0.18, h: [11, 20] },
+    { id: 'horse_chestnut', share: 0.14, h: [10, 18] },
+    { id: 'silver_birch', share: 0.1, h: [9, 16] },
+    { id: 'english_oak', share: 0.08, h: [10, 19] },
+    { id: 'conifer', share: 0.1, h: [8, 15] },
   ];
   const group = new THREE.Group();
   group.name = 'trees';
   const buckets = species.map(() => []);
   for (const p of pts) {
-    const r = (p[2] * 997) % 1;
-    buckets[r < 0.6 ? 0 : r < 0.9 ? 1 : 2].push([p[0], p[1], p[2] * 6.283, p[2]]);
+    let r = (p[2] * 997) % 1,
+      k = 0;
+    while (k < species.length - 1 && r >= species[k].share) r -= species[k++].share;
+    buckets[k].push([p[0], p[1], p[2] * 6.283, p[2]]);
   }
   buckets.forEach((list, k) => {
     const sp = species[k];
     group.add(
       instance(assets.get(sp.id), list, {
         name: `trees:${sp.id}`,
+        detail,
         scaleOf: (p) => sp.h[0] + (sp.h[1] - sp.h[0]) * ((p[3] * 7.13) % 1),
       }),
     );
@@ -377,7 +427,7 @@ export function buildTrees(scene, { bounds, assets } = {}) {
 }
 
 /** Street furniture: mapped (and procedural lamp) placements from the library. */
-export function buildFurniture(scene, { bounds, assets } = {}) {
+export function buildFurniture(scene, { bounds, assets, detail = 'high' } = {}) {
   const group = new THREE.Group();
   group.name = 'street_furniture';
   for (const [id, list] of Object.entries(scene.placements ?? {})) {
@@ -387,7 +437,7 @@ export function buildFurniture(scene, { bounds, assets } = {}) {
       instance(
         def,
         list.filter((p) => inside(p, bounds)),
-        { name: `furniture:${id}` },
+        { name: `furniture:${id}`, detail },
       ),
     );
   }

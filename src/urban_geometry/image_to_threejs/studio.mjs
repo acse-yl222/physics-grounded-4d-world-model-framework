@@ -142,9 +142,11 @@ async function main() {
     // Asset library gallery: every resources/ asset in a row, vehicles and trees scaled.
     let x = 0;
     const gallery = new THREE.Group();
+    const kind = params.get('gallery');
     for (const def of assets.values()) {
+      if (kind !== '1' && def.kind !== kind) continue;
       const tall = def.kind === 'vegetation' ? 12 : 1;
-      const o = assetObject(def);
+      const o = assetObject(def, params.get('detail') ?? 'high');
       o.scale.setScalar(tall);
       o.position.x = x + (def.size[0] * tall) / 2;
       x += def.size[0] * tall + 2;
@@ -189,7 +191,7 @@ async function main() {
   if (params.get('context') !== '0') {
     world.add(buildGeneric(scene, { bounds, skip: allClaims }));
     world.add(buildGround(scene, { bounds, cutouts: free.map((f) => f.box) }));
-    world.add(buildTrees(scene, { bounds, assets }));
+    world.add(buildTrees(scene, { bounds, assets, cutouts: free.map((f) => f.box) }));
     world.add(buildFurniture(scene, { bounds, assets }));
   }
   world.traverse((o) => {
@@ -238,9 +240,12 @@ async function exportLayers(spec) {
       const cutouts = (await freeStanding(index, scene, assets)).map((f) => f.box);
       root.add(buildGround(scene, { bounds: spec.bounds, cutouts }));
     }
-    if (layer === 'trees') root.add(buildTrees(scene, { bounds: spec.bounds, assets }));
+    if (layer === 'trees') {
+      const cutouts = (await freeStanding(index, scene, assets)).map((f) => f.box);
+      root.add(buildTrees(scene, { bounds: spec.bounds, assets, detail: 'low', cutouts }));
+    }
     if (layer === 'street_furniture')
-      root.add(buildFurniture(scene, { bounds: spec.bounds, assets }));
+      root.add(buildFurniture(scene, { bounds: spec.bounds, assets, detail: 'low' }));
     if (layer === 'landmarks')
       for (const l of index) {
         try {

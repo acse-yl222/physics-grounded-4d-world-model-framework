@@ -4,7 +4,7 @@
 //   node render.cjs landmark <id> [--out DIR] [--views ne,sw,street_s] [--shadows]
 //   node render.cjs region <x> <y> <r> [--out DIR] [--views ne,top]
 //   --zoom F scales the camera distance (0.4 = close-up); views also take top.
-//   node render.cjs gallery [--out DIR]            (all resources/ assets)
+//   node render.cjs gallery [--kind street|vehicle|vegetation] [--detail low] [--out DIR]            (all resources/ assets)
 //   node render.cjs export --out DIR [--layers buildings,ground,trees,landmarks] [--tile M]
 //
 // Screenshots are written as <out>/<name>_<view>.png; exports as <out>/*.glb.
@@ -117,7 +117,8 @@ async function main() {
         q = `x=${x}&y=${y}&r=${r}`;
       } else if (mode === 'gallery') {
         name = 'gallery';
-        q = 'gallery=1&context=0';
+        q = `gallery=${o.kind ?? 1}&context=0${o.detail ? '&detail=' + o.detail : ''}`;
+        if (o.kind) name = `gallery_${o.kind}`;
       } else throw new Error('mode must be landmark | region | gallery | export');
       if (o.shadows) q += '&shadows=1';
       if (o.zoom) q += `&zoom=${o.zoom}`;

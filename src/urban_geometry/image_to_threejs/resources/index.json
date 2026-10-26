@@ -156,7 +156,7 @@
           "used_for": "typical 6 m mounting height"
         }
       ],
-      "notes": "One generic heritage column for all roads; lantern simplified. The arm points along +y (towards the road)."
+      "notes": "One generic heritage column for all roads: fluted base, swan-neck bracket and hexagonal lantern (low detail: plain column). The arm points along +y (towards the road)."
     },
     {
       "id": "telephone_box",
@@ -185,7 +185,7 @@
           "used_for": "three feet square plan, shallow domed roof, cast iron painted red"
         }
       ],
-      "notes": "Pane glazing drawn as texture; crown reliefs omitted."
+      "notes": "Glazing bars, pediments and fascias modelled; crown reliefs simplified to blocks."
     },
     {
       "id": "traffic_signal",
@@ -298,8 +298,8 @@
       "name": "Conifer",
       "file": "vegetation/conifer.mjs",
       "size": [
-        0.35,
-        0.35,
+        0.4,
+        0.4,
         1
       ],
       "references": [
@@ -309,7 +309,45 @@
           "used_for": "contrast species set for park planting variety"
         }
       ],
-      "notes": "Generic dark conical tree used sparingly for variety."
+      "notes": "Generic tiered conifer used for variety."
+    },
+    {
+      "id": "english_oak",
+      "kind": "vegetation",
+      "name": "English oak",
+      "file": "vegetation/english_oak.mjs",
+      "size": [
+        0.75,
+        0.75,
+        1
+      ],
+      "references": [
+        {
+          "title": "London plane - Gdansk tree trail",
+          "url": "https://pg.edu.pl/en/sustainable-development/tree-trail/london-plane",
+          "used_for": "park species set used for planting variety"
+        }
+      ],
+      "notes": "Irregular crown from widely spread clusters."
+    },
+    {
+      "id": "horse_chestnut",
+      "kind": "vegetation",
+      "name": "Horse chestnut",
+      "file": "vegetation/horse_chestnut.mjs",
+      "size": [
+        0.65,
+        0.65,
+        1
+      ],
+      "references": [
+        {
+          "title": "London plane - Gdansk tree trail",
+          "url": "https://pg.edu.pl/en/sustainable-development/tree-trail/london-plane",
+          "used_for": "park species set used for planting variety"
+        }
+      ],
+      "notes": "Dense dome crown; species assigned procedurally (Overture trees carry no species)."
     },
     {
       "id": "lime_tree",
@@ -317,18 +355,18 @@
       "name": "Common lime",
       "file": "vegetation/lime_tree.mjs",
       "size": [
-        0.45,
-        0.45,
+        0.5,
+        0.5,
         1
       ],
       "references": [
         {
           "title": "London Plane (Yale Nature Walk)",
           "url": "https://naturewalk.yale.edu/node/126",
-          "used_for": "contrast: plane spreading crown vs. narrower avenue trees"
+          "used_for": "contrast: plane spreading crown vs narrower avenue trees"
         }
       ],
-      "notes": "Generic ovoid broadleaf used for variety."
+      "notes": "Generic tall ovoid broadleaf crown."
     },
     {
       "id": "london_plane",
@@ -336,8 +374,8 @@
       "name": "London plane",
       "file": "vegetation/london_plane.mjs",
       "size": [
-        0.65,
-        0.65,
+        0.7,
+        0.7,
         1
       ],
       "references": [
@@ -349,10 +387,29 @@
         {
           "title": "The London Plane (treetree.co.uk)",
           "url": "https://www.treetree.co.uk/treetree_downloads/The_London_Plane.pdf",
-          "used_for": "London street tree form"
+          "used_for": "London street tree form, mottled bark"
         }
       ],
-      "notes": "Crown as three overlapping low-poly lobes."
+      "notes": "Crown proportions from the cited width/height ranges; clusters are stylised."
+    },
+    {
+      "id": "silver_birch",
+      "kind": "vegetation",
+      "name": "Silver birch",
+      "file": "vegetation/silver_birch.mjs",
+      "size": [
+        0.38,
+        0.38,
+        1
+      ],
+      "references": [
+        {
+          "title": "London plane - Gdansk tree trail",
+          "url": "https://pg.edu.pl/en/sustainable-development/tree-trail/london-plane",
+          "used_for": "park species set used for planting variety"
+        }
+      ],
+      "notes": "Airy crown approximated with many small clusters."
     }
   ]
 }
