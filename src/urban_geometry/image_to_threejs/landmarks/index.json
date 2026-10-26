@@ -156,6 +156,27 @@
     "notes": "Placed on the Overture canopy footprint and the four continent-group footprints (orientation ~7 deg from the group layout). Step and podium dimensions, stage heights (arches springing ~13 m, gables to ~25 m, spire 32-51 m, cross to ~54 m) are proportioned from descriptions. Canopy in 3D: four piers of four polished granite columns with gilt capitals and shaft rings, moulded two-order pointed arches, mosaic gables with crocketed rakes and pierced roundels, groined blue-and-gold vault, corner tabernacles with bronze science figures, cross-gabled lead roof with gilt cresting; flèche with gilt virtues, an arcaded lantern, winged angels, banded crocketed spire, crown, orb and cross. Sculpture (Albert, industrial arts and continent groups) is built from simple robed figures and animal stand-ins, not portraits; mosaics and the Parnassus frieze are painted. Two small unnamed 2 x 8 m strips ~35 m south-east/south-west of the memorial (identity unknown, generic extrusion gave 17 m towers in the park) are claimed and drawn as low granite plinths."
   },
   {
+    "id": "alexandra_court",
+    "name": "Alexandra Court, 171-175 Queen’s Gate",
+    "claims": [
+      "101a2196-ff54-4cc9-8e8d-0c3cde7b3b64",
+      "68ee6802-7627-4728-aa85-1a015c994b10"
+    ],
+    "references": [
+      {
+        "title": "Exterior view of Alexandra Court, 171-175 Queen's Gate - Historic England",
+        "url": "https://historicengland.org.uk/images-books/photos/item/BL20203",
+        "used_for": "block of flats built 1898 by Paul Hoffman at 171-175 Queen’s Gate"
+      },
+      {
+        "title": "Alexandra Court brochure - Knight Frank",
+        "url": "https://content.knightfrank.com/property/stk012491124/brochures/en/stk012491124-en-brochure-b0d3118f-9c50-4a02-a378-9c49704c3156-1.pdf",
+        "used_for": "mansion block set back from the road"
+      }
+    ],
+    "notes": "The two footprints are duplicates of the same outline (one with the light-well holes); both are claimed. Materials were not confirmed by the sources: red brick with stone bands and a slate mansard are assumed from the period and the neighbouring Queen’s Gate mansion blocks. Seven storeys (ground 3.8 m + 6 x 3.1 m) plus a 3 m mansard; gable positions are approximate."
+  },
+  {
     "id": "apsley_house",
     "name": "Apsley House",
     "claims": [
@@ -883,6 +904,26 @@
     "notes": "Storey heights (raised ground 4.2 m, first 4.2 m, second 3.4 m, third 3.0 m) and a 2.8 m slated mansard are assumed from the listing storey count; Overture h=13.9 m is too low. The split between the main house and the ballroom wing (at ~20 m from Cromwell Road) is estimated from the footprint shape. Window rhythm, porch position, chimney positions and the tricolour flag are assumptions; balcony and cornice profiles are simplified."
   },
   {
+    "id": "dana_research_centre",
+    "name": "Dana Research Centre and Library",
+    "claims": [
+      "595cb25a-9b52-48eb-9a97-4140565f505f"
+    ],
+    "references": [
+      {
+        "title": "Dana Research Centre and Library - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Dana_Research_Centre_and_Library",
+        "used_for": "165 Queen’s Gate; MacCormac / MJP Architects; opened 2003; library and research centre since 2015"
+      },
+      {
+        "title": "More about the Science Museum Library - Jisc",
+        "url": "https://libraryservices.jiscinvolve.org/wp/2017/11/more-about-the-science-museum-library/",
+        "used_for": "library collections moved to the Dana Centre"
+      }
+    ],
+    "notes": "No facade description was found. Modelled as a five-storey contemporary block (Overture 18.6 m) with a fully glazed, recessed ground floor (former events space / cafe), buff-brick upper floors with regular deep-set windows and slender piers, a glazed top storey set back behind the parapet and a name board; all of these are assumptions."
+  },
+  {
     "id": "design_museum",
     "name": "Design Museum (former Commonwealth Institute)",
     "claims": [
@@ -1186,6 +1227,37 @@
       }
     ],
     "notes": "Footprint c4732827 (unnamed, Overture h=10 m) identified as Gateway West from its position at the western edge of the Gateway site and its ~950 m2 plate (3,800 m2 / 4 floors). Height (4 x 3.6 m to the eaves plus gables up to ~19 m), the gable rhythm across the long axis, the brick colour (warm red-brown) and the cream glazed-ceramic window reveals/ground-floor piers are assumptions; no photographs were available."
+  },
+  {
+    "id": "goethe_institut_london",
+    "name": "Goethe-Institut London (49-50 Princes Gate)",
+    "claims": [
+      "07eb150b-2830-4610-8f19-d14d756db8c7",
+      "3064de6c-07f9-4f0f-802f-3f4203b80fc9"
+    ],
+    "references": [
+      {
+        "title": "Exhibition Road SW7 (Nos 49 to 58 Princes Gate) - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101066826-exhibition-road-sw7-see-details-for-further-address-information-knightsbridge-and-belgravia-ward",
+        "used_for": "Grade II stucco terrace, 4 storeys + attic + basement, Doric porches, balustraded balconies, area railings"
+      },
+      {
+        "title": "Plate 96: Princes Gate - Survey of London vol. 45",
+        "url": "https://www.british-history.ac.uk/survey-london/vol45/plate-96",
+        "used_for": "Nos 49-58 built by C. J. Freake c. 1868-75; Exhibition Road front"
+      },
+      {
+        "title": "Goethe-Institut Building, Princes Gate - e-architect",
+        "url": "https://www.e-architect.com/london/goethe-institut-london",
+        "used_for": "address 50 Princes Gate, Exhibition Road; 2012 refurbishment by Blauel Architects"
+      },
+      {
+        "title": "Rede von Praesident Klaus-Dieter Lehmann zu 50 Jahre Goethe-Institut London",
+        "url": "https://www.goethe.de/de/uun/prs/int/pra/alt/9408934.html",
+        "used_for": "opened 1962, reopened after rebuilding in 2012"
+      }
+    ],
+    "notes": "Storey heights (4.4 m ground, 4.2/3.6/3.2 m above, 3.0 m slate mansard) are estimates giving ~19 m; No. 49 is assumed to return its stucco front to the Princes Gardens side. The green name board over the entrance stands in for the institute signage; the 2012 interior works are not visible."
   },
   {
     "id": "grosvenor_bridge",
@@ -1620,6 +1692,27 @@
     "notes": "Volumes follow the Overture building parts (tower 29.6 m incl. pinnacles, nave ridge 20 m, aisles 13.6 m, chancel 16.8 m); wall/eave splits within each part, tower stage heights and pinnacle form are estimated. Lancets (pointed heads, Bath stone surrounds, single mullion), buttresses, battlements, crocketed pinnacles and the west doors are real geometry with an estimated rhythm (one lancet per 5.4 m bay); the triple east window, clerestory heights and the churchyard path/lamps are approximations."
   },
   {
+    "id": "holy_trinity_church_house",
+    "name": "Holy Trinity Church House and Vicarage",
+    "claims": [
+      "4d97b705-149f-4cb9-89dc-b1e190f78e8d",
+      "03985a45-7204-4deb-9110-9f07bac98e6a"
+    ],
+    "references": [
+      {
+        "title": "Holy Trinity Churchyard (Kensington & Chelsea) - London Gardens Trust",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record/?ID=KAC079",
+        "used_for": "churchyard garden entered from Ennismore Gardens Mews; setting of the parish buildings"
+      },
+      {
+        "title": "Church of the Holy Trinity, Brompton - Historic England",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1189293",
+        "used_for": "Holy Trinity Brompton, Donaldson 1826, Blomfield extension; address Ennismore Gardens Mews"
+      }
+    ],
+    "notes": "No description of the church house or vicarage was found: both are modelled from the footprints and Overture heights as two-storey London-stock-brick buildings with stone dressings and slate roofs (pitched on the church house, steep hipped on the L-shaped vicarage); window rhythm, porch and chimneys assumed."
+  },
+  {
     "id": "holy_trinity_prince_consort_road",
     "name": "Holy Trinity, Prince Consort Road",
     "claims": [
@@ -1781,6 +1874,25 @@
     "notes": "Height raised from the footprint value (15-17 m) to the documented 24 m glass facade. Drum diameter, position inside the atrium, column spacing (3.6 m), strut levels, mullion module (1.5 m) and the sign lettering are proportioned, not measured. Rear (west) elevations abut older college buildings and are given a plain painted glazed/panel facade. Bollards, cycle stands and benches on the Exhibition Road footway are indicative."
   },
   {
+    "id": "imperial_campus_service_buildings",
+    "name": "Imperial College campus service buildings (west)",
+    "claims": [
+      "c9fa4390-8299-45e8-8c15-db055d90835d",
+      "d170fff8-8916-42a8-9238-831742533d96",
+      "b8750945-fd1c-4924-b4fe-1b868c9fbce1",
+      "8f630484-9ac4-4c09-98d5-e3f3f6e80797",
+      "e49ae9e2-a4d2-4c35-82e6-2aa5e672b0d8"
+    ],
+    "references": [
+      {
+        "title": "Map of South Kensington Campus (pdf) - Imperial College",
+        "url": "https://www.ic.ac.uk/media/imperial-college/research-centres-and-groups/spat/Map-of-South-Kensington-Campus-[pdf].pdf",
+        "used_for": "these footprints are unnumbered ancillary structures within the campus block"
+      }
+    ],
+    "notes": "Use and appearance unknown: each footprint is modelled as a plain service block at its Overture height (4-15 m) - pale concrete or buff brick, louvre bands, steel doors and roof plant / flues. Pure assumption beyond massing."
+  },
+  {
     "id": "imperial_chemistry_building",
     "name": "Chemistry Building, Imperial College",
     "claims": [
@@ -1865,6 +1977,31 @@
       }
     ],
     "notes": "Searches confirmed the Edwardian Baroque style and window types but not the facing materials; red brick with Portland stone dressings is assumed. Bay rhythm, corner treatment and attic are approximate. The 3.4 m strip footprint between RCS1 and the Dyson Building is modelled as a low glazed link. Height 13.6 m from Overture. Refinement: the two street fronts (Imperial College Road, Exhibition Road) have real recessed windows - segmental-headed multi-pane casements with keystones in a channelled stone ground floor, tall box sashes in stone architraves with alternating triangular and segmental pediments (first floor) and keyed heads (second floor), small attic lights - a columned Baroque doorcase with segmental pediment and steps in the middle of the Exhibition Road front (entrance per Wikipedia; exact bay assumed), stepped main cornice with modillions, kit balustrade with dies and urns, and a corner pavilion with oculi, a lathe-turned drum, lead dome, lantern and gilded finial. Rear/west faces keep painted elevations."
+  },
+  {
+    "id": "imperial_early_years_centre",
+    "name": "Imperial College Early Years Education Centre (8-9 Prince’s Gardens)",
+    "claims": [
+      "3749bcde-8930-4089-8528-36687f63a079"
+    ],
+    "references": [
+      {
+        "title": "Early Years Education Centre - Imperial College London",
+        "url": "https://imperial.ac.uk/early-years",
+        "used_for": "nursery for children of Imperial staff and students in Prince’s Gardens"
+      },
+      {
+        "title": "Childcare - Imperial College London",
+        "url": "https://junedeploy.imperial.ac.uk/staff/new-staff/before-you-start/guidance-for-overseas-staff/childcare/",
+        "used_for": "occupies Nos 8 and 9 Prince’s Gardens"
+      },
+      {
+        "title": "8-15 Princes Gardens SW7 - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101227167-8-15-princes-gardens-sw7-knightsbridge-and-belgravia-ward",
+        "used_for": "stucco terrace, five storeys plus basement, three windows per house, Doric porches, first-floor balustrade, area railings"
+      }
+    ],
+    "notes": "Storey heights are estimates; the nursery signage, the colourful play fittings and any rear play-deck are not modelled beyond a small name board. Rear elevations use a stock-brick texture."
   },
   {
     "id": "imperial_ethos",
@@ -2035,6 +2172,26 @@
     "notes": "No facade description found; elevation (concrete mullion fins, dark spandrels, brick ends) is a reconstruction in the 1960s ACP idiom, not traced from photos. Height 23.2 m from Overture (7 floors). Refinement: each 1.6 m bay is a real recessed opening with an aluminium-framed window (centre mullion, transom, opening light) over a recessed dark spandrel panel, between full-height projecting precast fins and floor-edge beams; plain brick returns; the set-back ground floor has a mullioned glazed screen behind columns under the fins, an entrance canopy with a name sign (wording from the 2012 naming, placement assumed) and steps; the roof has a brick plant room with louvre bands, lift motor room, capped extract flues on a frame and guard rails."
   },
   {
+    "id": "imperial_south_building",
+    "name": "South Building (Imperial College)",
+    "claims": [
+      "16f5228c-cf57-44b0-aab3-40b8fecb4841"
+    ],
+    "references": [
+      {
+        "title": "Map of South Kensington Campus (pdf) - Imperial College",
+        "url": "https://www.ic.ac.uk/media/imperial-college/research-centres-and-groups/spat/Map-of-South-Kensington-Campus-[pdf].pdf",
+        "used_for": "campus building location between Royal School of Mines and Electrical Engineering"
+      },
+      {
+        "title": "Imperial College Road - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Imperial_College_Road",
+        "used_for": "post-war (1957 Jubilee Expansion Scheme) rebuilding of the campus context"
+      }
+    ],
+    "notes": "No description of this building was found; storeys (Overture 5 floors, 16.8 m), pale concrete skin, ribbon glazing and the rooftop plant room are assumptions in the palette of the neighbouring 1960s Imperial buildings."
+  },
+  {
     "id": "institut_francais",
     "name": "Institut francais du Royaume-Uni",
     "claims": [
@@ -2103,6 +2260,32 @@
       }
     ],
     "notes": "Overture h=7.2 m is wrong; storey heights are estimates (ground 5 m, first 3.8 m, second 4.4 m, third/prayer hall 5.8 m to a 19 m garden wall, set-back fourth floor to 22.6 m). The footprint hole is used as the roof garden court. Cladding courses, the pier rhythm (2.6 m), window shapes (paired tall slots with pointed heads) and the oriel count are approximations; the main entrance is placed mid-way along Cromwell Gardens."
+  },
+  {
+    "id": "jamaican_high_commission",
+    "name": "High Commission of Jamaica, 1-2 Prince Consort Road",
+    "claims": [
+      "2adaf331-eeb6-4f8d-89cd-1dc6cbd3a442",
+      "debd1fb8-7ae5-49df-864a-ee3cec2a3863"
+    ],
+    "references": [
+      {
+        "title": "High Commission of Jamaica, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/High_Commission_of_Jamaica,_London",
+        "used_for": "address 1-2 Prince Consort Road, SW7"
+      },
+      {
+        "title": "Exhibition Road west side incl. Lowther Gardens - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101211833",
+        "used_for": "No. 29 Exhibition Road (formerly 1 and 2 Lowther Gardens), c. 1877-8, J. J. Stevenson: red brick, steep red tiled roof, 3 storeys + attic + basement, Queen Anne, Prince Consort Road front six windows with outer bays gabled"
+      },
+      {
+        "title": "Plate 101 - Survey of London vol. 38",
+        "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-101",
+        "used_for": "No. 1 Lowther Gardens (now No. 29 Exhibition Road) by J. J. Stevenson, 1876-7"
+      }
+    ],
+    "notes": "That the High Commission occupies the listed Stevenson houses is inferred from the corner position and the matching description; storey heights (3.6 m ground, 3.4 m above) and gable sizes are estimates. The rear footprint (debd1fb8) is modelled in the same brick. A Jamaican flag marks the entrance."
   },
   {
     "id": "kensal_green_anglican_chapel",
@@ -2426,6 +2609,27 @@
     "notes": "Overall height 13.7 m from the 45 ft figure (Overture h = 10.4 m is too low). Plan and column positions from the Overture outline; opening widths, springing heights and attic proportions estimated. Detail pass: veined marble ashlar, fluted Corinthian columns on panelled pedestals, moulded archivolts with scrolled keystones, coffered soffits, dentil cornice with breakforwards, attic pedestals with urn panels and inverted volute consoles; spandrel Victories and the England/Scotland/Ireland panels are low-relief schematic figures; the gates carry a relief horseman roundel, lion and cypher in simplified form. Island lamps and benches are resources assets."
   },
   {
+    "id": "metrogate_house",
+    "name": "Metrogate House (3-7 Queen's Gate Terrace)",
+    "claims": [
+      "2456c8e0-0076-483e-85f4-b2bf945cae8c",
+      "a89207b8-cabb-4268-ad11-061a21515c83"
+    ],
+    "references": [
+      {
+        "title": "Metrogate House - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/images/7561",
+        "used_for": "Metrogate House is 3-7 Queen’s Gate Terrace, SW7"
+      },
+      {
+        "title": "9 Queen’s Gate Terrace - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/7565/london-sw7/9-queen-s-gate-terrace/9-queen-s-gate-terrace",
+        "used_for": "Nos 1-9 Queen’s Gate Terrace Grade II listed, built 1856-7"
+      }
+    ],
+    "notes": "No elevation description of Metrogate House itself was found; modelled as three houses of the 1856-7 stucco terrace (porticos, first-floor balcony, attic storey). The neighbouring footprint (a89207b8) is treated as No. 1-2. Storey heights estimated to ~17-19 m."
+  },
+  {
     "id": "michelin_house",
     "name": "Michelin House",
     "claims": [
@@ -2454,6 +2658,31 @@
       }
     ],
     "notes": "Overture gives a simplified trapezoid (15 m Fulham Road front widening to 35 m at the rear) and an inferred 9.3 m height; walls are raised to 13 m (towers 15 m + cupolas) from the building's three tall storeys. Facades are painted reconstructions from descriptions (no photos available here); the Bibendum window and race tiles are schematic."
+  },
+  {
+    "id": "montrose_court",
+    "name": "Montrose Court",
+    "claims": [
+      "23c96004-81c6-4225-b8d5-06376630c32b"
+    ],
+    "references": [
+      {
+        "title": "Survey of London: Volume 45, Knightsbridge - Princes Gate",
+        "url": "https://prod.british-history.ac.uk/node/38554",
+        "used_for": "Montrose Court built after the Second World War as a large apartment block on Princes Gate"
+      },
+      {
+        "title": "Montrose Court, Exhibition Road - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/2927/london-sw7/exhibition-road/montrose-court",
+        "used_for": "apartment block on Exhibition Road, SW7"
+      },
+      {
+        "title": "Montrose Court listing - LonRes",
+        "url": "https://www.lonres.com/property/5143242228",
+        "used_for": "purpose-built block with lift, porter and forecourt drive"
+      }
+    ],
+    "notes": "Architect, date and materials were not found. Modelled as eight storeys (Overture 26.4 m) in brown-red brick with reconstituted-stone ground floor, string courses and a recessed top storey, typical of late-1940s/1950s Kensington blocks; the window rhythm (3.1 m bays) and entrance canopy are assumptions."
   },
   {
     "id": "more_house",
@@ -2742,6 +2971,33 @@
     "notes": "Shed placed in the Overture station outline (217 m from the Lawn to the north-west screens, spans 20.7/31.2/21.3/33.2 m). Springing (9.5 m) and crown heights (16.5-20.5 m), transept positions and roof glazing pattern are estimates; ribs are modelled in 3D at 10 ft (3.05 m) centres with every third on a column (spacing assumed, not sourced), with capping bars, ridge ventilators, arched column brackets and 3D end-screen tracery (arcs, spokes, roundels, mullions) in the spirit of Digby Wyatt; tracery pattern is schematic. The 1999 Lawn roof is a plain glazed canopy. Hotel: 4 storeys (rusticated ground floor, arched/pedimented/segmental/plain window heads per storey), 7-bay centre with 5-bay pedimented break, attic, steep pavilion roof with pedimented dormers, chimneys and cresting, 6-storey angle towers with quoins, balustraded parapets, ogee roofs and lucarnes; heights (eaves 20 m, towers 28 m) estimated from storey counts, window and dormer counts approximate, entrance canopy and pediment figures schematic. Platform 1 range has 3D windows on the Eastbourne Terrace face (13 m, MacMillan House end 20 m). Lamps and bollards on Praed Street / Eastbourne Terrace are generic resources assets at assumed positions."
   },
   {
+    "id": "pepperdine_princes_gate",
+    "name": "Pepperdine University London and Nos 56-58 Princes Gate",
+    "claims": [
+      "1edd23cf-33d4-4dcb-ae73-3ba6c2b52041",
+      "fc297a59-901b-4e65-81fa-1170be4a5c54",
+      "e3825268-904e-4a78-a6ec-538f05845fdb"
+    ],
+    "references": [
+      {
+        "title": "Pepperdine London - About (Seaver International Programs)",
+        "url": "https://community.pepperdine.edu/seaver/internationalprograms/programs/year-programs/london/about.htm",
+        "used_for": "56 Princes Gate on Exhibition Road; built 1875 for Sir Bernard Samuelson; bought by Pepperdine 1987"
+      },
+      {
+        "title": "Exhibition Road SW7 (Nos 49 to 58 Princes Gate) - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101066826-exhibition-road-sw7-see-details-for-further-address-information-knightsbridge-and-belgravia-ward",
+        "used_for": "Grade II stucco terrace, 4 storeys + attic + basement, Doric porches, balustraded balconies, area railings"
+      },
+      {
+        "title": "South Kensington assembly points - Imperial College",
+        "url": "https://imperial.ac.uk/estates-facilities/health-and-safety/fire-safety/sk-assembly-points",
+        "used_for": "58 Princes Gate is an Imperial College building"
+      }
+    ],
+    "notes": "House numbers are inferred from footprint order; storey heights and the mansard are estimates (~19 m). The south end of No. 58 is treated as a party wall to the 1930s flats at Nos 59-63."
+  },
+  {
     "id": "phoenix_brewery",
     "name": "The Phoenix Brewery",
     "claims": [
@@ -2809,6 +3065,27 @@
     "notes": "Facade proportions, the glazed base and the attic are inferred from the KPF/Kawneer descriptions rather than traced from photos. Height 26.4 m from Overture (8 floors). Refinement: the limestone garden fronts have real recessed windows (aluminium frames, transom, glass Juliet balustrade, stone sills) in a regular 3.4 m rhythm between projecting stone piers every two bays, a stone cornice and plinth; the double-height base is a mullioned and transomed curtain wall set back behind stone piers, with an entrance (doors, canopy, steps) in the middle of each hall; a recessed glazed joint separates the halls; the dark zinc attic has standing seams and punched windows; the stepped brick rear elevations to the mews have punched windows too. Roof: lift / stair overruns, plant louvres, PV-free flat roof with guard rails (assumption). Forecourt paving with benches."
   },
   {
+    "id": "princes_gardens_north_terrace",
+    "name": "Nos 10-15 Prince's Gardens (north side terrace)",
+    "claims": [
+      "8bab940d-4847-47ba-8831-4462612085ec",
+      "5b9d5bfc-a1db-4726-83fc-3df6abb7f66e"
+    ],
+    "references": [
+      {
+        "title": "8-15 Princes Gardens SW7 - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101227167-8-15-princes-gardens-sw7-knightsbridge-and-belgravia-ward",
+        "used_for": "stucco terrace, five storeys plus basement, three windows per house, Doric porches, first-floor balustrade, cast-iron area railings, Grade II 1975"
+      },
+      {
+        "title": "Plate 97: Princes Gardens - Survey of London vol. 45",
+        "url": "https://www.british-history.ac.uk/survey-london/vol45/plate-97",
+        "used_for": "north side built 1859-61; all but Nos 8-15 demolished; No. 15 beside Weeks Hall"
+      }
+    ],
+    "notes": "House widths are taken from equal divisions of the two footprints (about 7 m each); storey heights (4.2 m ground, 3.9/3.4/3.0 m above, 2.9 m attic storey) and the attic treatment are estimates. Porch positions alternate between houses; rear elevations use a stock-brick texture."
+  },
+  {
     "id": "princes_gardens_southside",
     "name": "Southside Halls, Prince's Gardens (Imperial College)",
     "claims": [
@@ -2845,6 +3122,98 @@
       }
     ],
     "notes": "Window grid, glazed joints and attic treatment are inferred from the KPF description, not traced from photos. Front halls 20 m from Overture; Keogh (rear range) kept at its Overture 7.2 m with a set-back upper storey, which may understate it. Refinement: limestone garden fronts with real recessed vertical windows (aluminium frames, transom, glass Juliet balustrades, stone sills) in the terrace rhythm, projecting stone piers, string course over a glazed base of recessed shopfront-like windows and an entrance with canopy and steps per hall, recessed full-height glazed joints with mullions, zinc attic with standing seams and punched windows, stone cornice; the stepped buff-brick rear bays and Keogh have punched windows; roof overruns, plant louvres and guard rails; paved strip with benches along the gardens."
+  },
+  {
+    "id": "princes_gate_51_55",
+    "name": "Nos 51-55 Princes Gate (Imperial Innovations and Business School houses)",
+    "claims": [
+      "bd310c45-16b5-499f-a5f1-39dd75b0d80c",
+      "336f944b-0d2b-4120-b1e7-23f07665f66a",
+      "3fc11414-786a-404b-b2e0-e140356ab733",
+      "878dad82-fc4a-483d-b3ab-13645c7f6676"
+    ],
+    "references": [
+      {
+        "title": "Exhibition Road SW7 (Nos 49 to 58 Princes Gate) - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101066826-exhibition-road-sw7-see-details-for-further-address-information-knightsbridge-and-belgravia-ward",
+        "used_for": "Grade II stucco terrace, 4 storeys + attic + basement, Doric porches, balustraded balconies, area railings"
+      },
+      {
+        "title": "Plate 96: Princes Gate - Survey of London vol. 45",
+        "url": "https://www.british-history.ac.uk/survey-london/vol45/plate-96",
+        "used_for": "Nos 49-58 built by C. J. Freake c. 1868-75"
+      },
+      {
+        "title": "South Kensington assembly points - Imperial College",
+        "url": "https://imperial.ac.uk/estates-facilities/health-and-safety/fire-safety/sk-assembly-points",
+        "used_for": "52 and 53 Princes Gate are Imperial College buildings"
+      },
+      {
+        "title": "Map of South Kensington Campus (pdf) - Imperial College",
+        "url": "https://www.ic.ac.uk/media/imperial-college/research-centres-and-groups/spat/Map-of-South-Kensington-Campus-[pdf].pdf",
+        "used_for": "53 Princes Gate listed as Business School"
+      }
+    ],
+    "notes": "Which footprint is which house number is inferred from their order south of the Goethe-Institut (No. 50). Storey heights and the slate mansard attic are estimates (~19 m); one house per footprint, three windows wide."
+  },
+  {
+    "id": "princes_gate_59_63",
+    "name": "Nos 59-63 Princes Gate",
+    "claims": [
+      "04b27fe8-91ad-49df-ad32-2e27fe469317"
+    ],
+    "references": [
+      {
+        "title": "59-63 Prince’s Gate, Exhibition Road - RIBApix",
+        "url": "https://www.architecture.com/image-library/RIBApix/licensed-image/poster/5963-princes-gate-exhibition-road-south-kensington-london/posterid/RIBA64707.html",
+        "used_for": "ten storeys, 32 flats three per floor, Crittall metal casements"
+      },
+      {
+        "title": "Survey of London: Volume 45, Knightsbridge - Princes Gate",
+        "url": "https://prod.british-history.ac.uk/node/38554",
+        "used_for": "Adie, Button & Partners 1937-8; reinforced concrete faced in reconstituted Portland stone; wrap-around corner windows; replaced five houses"
+      },
+      {
+        "title": "Adie, Button and Partners - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Adie,_Button_and_Partners",
+        "used_for": "architects"
+      },
+      {
+        "title": "Princes Gate, 1930s - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/1930/princesgate.html",
+        "used_for": "Art Deco flats on Exhibition Road"
+      }
+    ],
+    "notes": "Storey heights (4.2 m ground, 9 x 3.0 m) are estimates to the Overture 32.8 m; the casement pattern (three-light windows, 3.4 m bays), the wrap-around corner windows on every storey, the recessed top storey and the entrance canopy are approximations of the described elevation."
+  },
+  {
+    "id": "princes_gate_exhibition_road_north",
+    "name": "Princes Gate houses, Exhibition Road (Austrian Trade Commission, UAE consulate)",
+    "claims": [
+      "bc680937-4996-41c3-baea-3e7639a149f6",
+      "b5265779-614b-4016-98d1-adee3af0b720",
+      "5f3ed9c1-0334-48e2-8d2d-005817f22b8d",
+      "20e81c80-769c-4541-88c6-655605217d50",
+      "6c0423d9-7b33-4050-b4b5-063c5244a157"
+    ],
+    "references": [
+      {
+        "title": "Austrian Embassy Commercial Section, London - WKO",
+        "url": "https://www.wko.at/department/1402",
+        "used_for": "45 Princes Gate (Exhibition Road), SW7 2QA"
+      },
+      {
+        "title": "Exhibition Road SW7 (Nos 49 to 58 Princes Gate) - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101066826-exhibition-road-sw7-see-details-for-further-address-information-knightsbridge-and-belgravia-ward",
+        "used_for": "type of the Freake stucco houses on this side of Exhibition Road (Doric porches, balconies, area railings), applied by analogy"
+      },
+      {
+        "title": "Survey of London: Volume 45, Knightsbridge (Princes Gate)",
+        "url": "https://prod.british-history.ac.uk/node/38554",
+        "used_for": "Princes Gate houses subdivided or moved to institutional/diplomatic use after the war"
+      }
+    ],
+    "notes": "No description of these particular houses was found; they are modelled on the neighbouring Freake terrace (four storeys + attic + basement, stucco, Doric porches, balconies). Storey heights are estimates scaled to the Overture heights (15-19 m); one house per footprint."
   },
   {
     "id": "queen_alexandras_house",
@@ -2895,6 +3264,74 @@
       }
     ],
     "notes": "Footprint and 5 storeys / 16.8 m from the data (modelled 4.2 m ground + 4 x 3.3 m = 17.4 m). The architect and cladding of the c.2000 building were not found: brick with pale string bands, ribbon windows, the glazed entrance hall on the Du Cane Road (south) side and roof plant are interpretations."
+  },
+  {
+    "id": "queens_gate_east_houses",
+    "name": "Queen's Gate east houses",
+    "claims": [
+      "330a15f5-2b7a-4348-8f60-5651e561e771"
+    ],
+    "references": [
+      {
+        "title": "186-188 Queens Gate SW7 - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101265353-186-188-queens-gate-sw7-knightsbridge-and-belgravia-ward",
+        "used_for": "Queen’s Gate east-side stucco houses: rusticated ground floor, Doric porticos, bay windows, cast-iron area railings"
+      },
+      {
+        "title": "Embassy of Thailand, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Embassy_of_Thailand,_London",
+        "used_for": "Queen’s Gate houses in diplomatic use; Grade II listed groups"
+      }
+    ],
+    "notes": "Which listed group these footprints belong to was not confirmed; modelled on the typical Queen’s Gate stucco house with estimated storey heights (~17 m). The large footprint 330a15f5 is divided into ~7.5 m houses."
+  },
+  {
+    "id": "queens_gate_hotel",
+    "name": "The Queen's Gate Hotel",
+    "claims": [
+      "9bd20adf-9fe2-4bf4-9471-08c19ae93086"
+    ],
+    "references": [
+      {
+        "title": "Exterior of the Queens Gate Hotel - Historic England",
+        "url": "https://historicengland.org.uk/images-books/photos/item/BL13338",
+        "used_for": "hotel in Victorian Queen’s Gate houses (catalogued as 96-98 Queen’s Gate)"
+      },
+      {
+        "title": "The Queen’s Gate Hotel - Hotels.com",
+        "url": "https://www.hotels.com/ho286231",
+        "used_for": "symmetrical facade, black entrance door; 90 rooms over 7 floors"
+      },
+      {
+        "title": "The Queen’s Gate Hotel - Oyster",
+        "url": "https://www.oyster.com/london/hotels/the-queens-gate-hotel/",
+        "used_for": "19th-century Victorian townhouse"
+      }
+    ],
+    "notes": "Seven floors read as basement + ground + four + attic storey; storey heights estimated (~20 m to the attic roof against Overture 16.8 m). The footprint is divided into equal ~7.5 m houses; the name board on the central portico is a stand-in for the hotel signage."
+  },
+  {
+    "id": "queens_gate_west_terrace",
+    "name": "Queen's Gate west terrace (Bangladesh High Commission)",
+    "claims": [
+      "db4fd480-13f8-4549-be71-271a74cfe170",
+      "7cd68417-21cf-4beb-a8b1-08de7a4325dc",
+      "33450ae1-1722-4901-82d6-45d74e907597",
+      "246c695a-446f-4cff-bf2e-f87f19b45e36"
+    ],
+    "references": [
+      {
+        "title": "Embassy of Thailand, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Embassy_of_Thailand,_London",
+        "used_for": "Royal Thai Embassy at 29-30 Queen’s Gate, part of a Grade II listed group (27-35 Queen’s Gate) with the Bangladesh High Commission"
+      },
+      {
+        "title": "186-188 Queens Gate SW7 - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101265353-186-188-queens-gate-sw7-knightsbridge-and-belgravia-ward",
+        "used_for": "typical Queen’s Gate stucco elevation: rusticated ground floor, Doric porticos, area railings (by analogy)"
+      }
+    ],
+    "notes": "The exact listing text for 27-35 Queen’s Gate was not found; the elevation follows the typical Queen’s Gate house (rusticated ground floor, Doric portico, balustraded first-floor balcony, four storeys of sashes diminishing upwards, main cornice and attic). Storey heights estimated to match ~17-19 m."
   },
   {
     "id": "queens_tower",
@@ -4478,6 +4915,41 @@
     "notes": "Plan split from the Overture outline: Brighton side west of the chord between the two frontages, Chatham side and the Wilton Road range east of it; the two claimed roof footprints are modelled as Fowler's train shed as two segmental glazed spans (span form and 18 m crown height assumed) with lattice ribs every second bay. Brighton frontage height (20.5 m + mansard to ~27 m), Chatham frontage height (15 m), bay rhythm, canopy depth and concourse ridge heights are estimates. Detail pass: Brighton side brick bays with stone-dressed sashes and keystones, stone bands and modillion cornice, ashlar pavilions with Ionic pilasters and arched windows, two attic storeys of dormers, oeil-de-boeuf windows, iron cresting, chimneys, the clock in a stone scroll; the canopy is ridge-and-furrow glazing on cast-iron columns with brackets and a fretted valance plus modern station signs. Chatham side: channelled ground storey with great arched openings, lettered frieze, paired pilasters, pedimented windows, modillion cornice and balustrade; the mermaid caryatids, cartouches and wreaths are schematic. Lamps and bollards on Terminus Place are resources assets. Grosvenor Hotel and Victoria Place are not claimed."
   },
   {
+    "id": "weeks_hall",
+    "name": "Weeks Hall",
+    "claims": [
+      "6ad090aa-f9ea-4d62-80e0-a13059464d09"
+    ],
+    "references": [
+      {
+        "title": "Weeks Hall - Mainstream Modern",
+        "url": "https://www.mainstreammodern.co.uk/case-study/weeks-hall/",
+        "used_for": "10-storey tower by Sheppard Robson, organised around the study-bedroom unit"
+      },
+      {
+        "title": "Felix 137 (1959) - Imperial College student newspaper",
+        "url": "https://issues.felixonline.co.uk/felix_137.pdf",
+        "used_for": "opened October 1959; eleven storeys; common rooms at ground level, warden’s flat at the top"
+      },
+      {
+        "title": "History of the Halls - Wilkinson Hall",
+        "url": "https://wilkinson.halls.imperial.ac.uk/?p=218",
+        "used_for": "frameless window corners at the extremities; in-situ elliptical spiral rear staircase"
+      },
+      {
+        "title": "Imperial College: why we sometimes have to admit defeat - C20 Society",
+        "url": "https://c20society.org.uk/casework/imperial-college-why-we-sometimes-have-to-admit-defeat",
+        "used_for": "precast concrete facade; north side of Prince’s Gardens"
+      },
+      {
+        "title": "Weeks Hall, Imperial College - BDP",
+        "url": "https://bdp.com/en/projects/p-z/weeks-hall-imperial-college-london",
+        "used_for": "Grade II listed; refurbished for student and academic accommodation"
+      }
+    ],
+    "notes": "Ground floor 4.0 m + ten 2.8 m storeys = 32 m (Overture 32.8 m). The facade module (2.6 m study-bedroom bays), the depth of the precast mullions and spandrels, the glazed ground floor and the size of the rooftop warden’s flat are estimates; the elliptical stair drum is placed in the rounded projection of the footprint’s east end."
+  },
+  {
     "id": "wellington_arch",
     "name": "Wellington Arch",
     "claims": [
@@ -4689,6 +5161,27 @@
       }
     ],
     "notes": "Overture height (14 m) replaced: facade cornice 22 m, attic 25.5 m, rear new-build blocks 30-36 m (storey counts from planning reports, exact profile unknown). Queensway, Porchester Gardens and Redan Place faces in 3D: bronze shopfronts with fascia, string course, giant-order columns on pedestals with pilaster responds framing tall bronze-framed glazing, architrave/frieze/dentilled cornice, attic windows and a balustrade with urn pedestals; corner towers with quoins, arched windows, clock and colonnaded cupolas. Column order (shown with a generic flared capital), bay rhythm (7.5 m), cupola proportions, dome position, the colour of the cupola roofs and the rear blocks (storey bands, glass balustrade, roof plant) are estimates from textual descriptions only; the Gasq \"Summer and Winter\" sculpture is not modelled"
+  },
+  {
+    "id": "william_penney_laboratory",
+    "name": "William Penney Laboratory (Data Science Institute)",
+    "claims": [
+      "d0f36589-f67c-4211-a2c0-51e7c0a991b3",
+      "54ac2459-1195-435d-9161-c83c6bb965ee"
+    ],
+    "references": [
+      {
+        "title": "Andrew Davison: Contact - Imperial College Department of Computing",
+        "url": "https://www.doc.ic.ac.uk/~ajd/info.html",
+        "used_for": "William Penney Laboratory in the centre of the campus, entrance on the east-west Sherfield walkway; same building as the Data Science Institute"
+      },
+      {
+        "title": "Map of South Kensington Campus (pdf) - Imperial College",
+        "url": "https://www.ic.ac.uk/media/imperial-college/research-centres-and-groups/spat/Map-of-South-Kensington-Campus-[pdf].pdf",
+        "used_for": "building 15 location; London e-Science Centre"
+      }
+    ],
+    "notes": "No architectural description was found. Modelled as two storeys (3.9 m + 3.6 m, Overture 7.2 m) of pale precast concrete with continuous ribbon windows, a glazed entrance on the walkway (north) side and rooftop plant; the small eastern footprint (54ac2459, use unknown) as a plain concrete plant annex."
   },
   {
     "id": "wood_lane_station",
