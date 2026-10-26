@@ -1127,7 +1127,7 @@
         "used_for": "date 1888-9, main front to Imperial College Road"
       }
     ],
-    "notes": "Eaves raised to 11.1 m (three tall storeys over a low plinth) with a 5 m hipped roof; the Overture height 10.4 m is inferred from floors. Bay count (7 x 4), door position and dormer sizes are proportioned from the listing text, not measured."
+    "notes": "Eaves raised to 11.1 m (three tall storeys over a low plinth) with a 5 m hipped roof; the Overture height 10.4 m is inferred from floors. Bay count (7 x 4), door position and dormer sizes are proportioned from the listing text, not measured. Refinement: real recessed sash windows (glazing bars, meeting rails, stone sills, gauged brick flat arches with keystones, rubbed-brick aprons, 3D louvred shutters), stone doorcase with pilasters and segmental hood over steps, stone quoins, modillion eaves cornice with bed mould, dormers with framed casements, corbelled stacks with pots, dwarf wall and railings with a gate; the rear and end windows repeat the front pattern without shutters (assumption)."
   },
   {
     "id": "imperial_business_school",
@@ -1196,9 +1196,14 @@
         "title": "chemistry at imperial (history)",
         "url": "https://www.imperial.ac.uk/chemistry/about/our-history/chemistry-at-imperial/",
         "used_for": "relationship with the surviving Aston Webb RCS-1 building"
+      },
+      {
+        "title": "Royal College of Science - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_College_of_Science",
+        "used_for": "site history: the central Webb range was demolished in the 1970s for the new Chemistry building"
       }
     ],
-    "notes": "No facade description was found; the ribbon-window / concrete-spandrel elevation, brick cores and rooftop extract stacks are a generic reconstruction of a 1960s ACP lab block, not traced from photos. Height 26.4 m from Overture (8 floors)."
+    "notes": "No facade description was found; the ribbon-window / concrete-spandrel elevation, brick cores and rooftop extract stacks are a generic reconstruction of a 1960s ACP lab block, not traced from photos. Height 26.4 m from Overture (8 floors). Refinement: ribbon windows are real recessed strips (aluminium mullions every 1.8 m, transoms, opening lights) between projecting exposed-aggregate spandrel bands; the colonnaded ground floor has a mullioned glazed screen, an entrance with canopy and fascia sign to Imperial College Road (wording assumed), and the roof carries a louvred plant room, capped extract flues on steel frames, ducts, lift overruns and guard rails. Short returns and the rear courtyard face keep a painted ribbon texture."
   },
   {
     "id": "imperial_chemistry_rcs1",
@@ -1216,9 +1221,14 @@
         "title": "chemistry at imperial (history)",
         "url": "https://www.imperial.ac.uk/chemistry/about/our-history/chemistry-at-imperial/",
         "used_for": "1906 Aston Webb building on Imperial College Road; part survives as RCS-1, cleaned and refurbished with Wolfson Foundation help"
+      },
+      {
+        "title": "Take a closer look - Imperial College London",
+        "url": "https://www.imperial.ac.uk/stories/take-a-closer-look",
+        "used_for": "Webb design completed 1906, symmetrical with the chemistry wing towards Exhibition Road; only the eastern wing survives; facade resembles his V&A front on Cromwell Road"
       }
     ],
-    "notes": "Banding rhythm, window sizes and the balustrade are generic Webb/Edwardian classical detail, not traced from photographs. The whole Overture footprint (which may include later infill behind the street range) is modelled in the same idiom. Height 12.9 m from Overture."
+    "notes": "Banding rhythm, window sizes and the balustrade are generic Webb/Edwardian classical detail, not traced from photographs. The whole Overture footprint (which may include later infill behind the street range) is modelled in the same idiom. Height 12.9 m from Overture. Refinement: the north (street) faces have real recessed windows - round-headed sashes with keystones in a rusticated Portland stone ground floor, tall sashes in stone architraves with keystones and cornice hoods (first floor) and plain architraves (second floor) in red brick with stone bands - plus a stone doorcase with columns, pediment and steps on the longest street face (position assumed), stepped cornice with modillions, kit balustrade with dies, quoins, glazed ridge lanterns over the former laboratories, ventilation stacks and area railings. Courtyard and rear faces keep the painted elevation."
   },
   {
     "id": "imperial_dyson_building",
@@ -1231,7 +1241,7 @@
       {
         "title": "Dyson School of Design Engineering - Wikipedia",
         "url": "https://en.wikipedia.org/wiki/Dyson_School_of_Design_Engineering",
-        "used_for": "Dyson Building at 25 Exhibition Road since 2018; former Met Office London HQ 1910-19 and Science Museum building"
+        "used_for": "Dyson Building at 25 Exhibition Road since 2018; former Met Office London HQ 1910-19 and Science Museum building; original interiors and signage kept inside the entrance from Exhibition Road"
       },
       {
         "title": "Dyson Building - Imperial College of London (Pascall+Watson)",
@@ -1249,7 +1259,7 @@
         "used_for": "minimalist glazed link structure"
       }
     ],
-    "notes": "Searches confirmed the Edwardian Baroque style and window types but not the facing materials; red brick with Portland stone dressings is assumed. Bay rhythm, corner treatment and attic are approximate. The 3.4 m strip footprint between RCS1 and the Dyson Building is modelled as a low glazed link. Height 13.6 m from Overture."
+    "notes": "Searches confirmed the Edwardian Baroque style and window types but not the facing materials; red brick with Portland stone dressings is assumed. Bay rhythm, corner treatment and attic are approximate. The 3.4 m strip footprint between RCS1 and the Dyson Building is modelled as a low glazed link. Height 13.6 m from Overture. Refinement: the two street fronts (Imperial College Road, Exhibition Road) have real recessed windows - segmental-headed multi-pane casements with keystones in a channelled stone ground floor, tall box sashes in stone architraves with alternating triangular and segmental pediments (first floor) and keyed heads (second floor), small attic lights - a columned Baroque doorcase with segmental pediment and steps in the middle of the Exhibition Road front (entrance per Wikipedia; exact bay assumed), stepped main cornice with modillions, kit balustrade with dies and urns, and a corner pavilion with oculi, a lathe-turned drum, lead dome, lantern and gilded finial. Rear/west faces keep painted elevations."
   },
   {
     "id": "imperial_ethos",
@@ -1266,7 +1276,7 @@
       {
         "title": "Imperial College starts work on sports centre - Leisure Opportunities",
         "url": "https://leisureopportunities.co.uk/news/Imperial-College-starts-work-on-sports-centre/8548",
-        "used_for": "designed by Arup Associates to blend with surrounding architecture"
+        "used_for": "designed by Arup Associates to blend with surrounding architecture; built on the 1960s underground sports centre; pool in the basement, sports hall, squash courts, gym; top two floors residential accommodation for visiting academics; artwork on the facade"
       },
       {
         "title": "Boris Johnson opens restored London square after £160m investment by Imperial College London",
@@ -1274,7 +1284,7 @@
         "used_for": "sports centre as part of the Prince's Gardens redevelopment"
       }
     ],
-    "notes": "No facade description was found by search; the glazed south front (per the brief), stone flanks and canopies are approximate. Height 17.2 m from Overture."
+    "notes": "No facade description was found by search; the glazed south front, stone flanks and canopies are approximate. Height 17.2 m from Overture. Refinement: the south front is a real curtain wall over the two sports floors (mullions every 1.5 m, transoms, spandrel bands, gym interior painted behind the glass) set in a stone frame, while the top two (residential) floors - per the Leisure Opportunities brief - are stone-clad with recessed paired windows and aluminium frames; entrance canopy on slim columns with glazed doors and an ETHOS fascia sign, a coloured-glass artwork strip (the brief mentions facade artwork; its form is not known), slot windows in reveals on the flanks, louvred plant enclosure, roof rail, and a paved forecourt with cycle stands and bollards."
   },
   {
     "id": "imperial_flowers_building",
@@ -1294,7 +1304,7 @@
         "used_for": "opened December 2000, named after Lord Flowers"
       }
     ],
-    "notes": "No facade description was returned by searches; the aluminium-band / louvre elevation and rooftop flues follow Foster lab buildings of that period and are approximate. Main block 29.6 m (9 floors) and west wing 7.2 m from the Overture outline and part."
+    "notes": "No facade description was returned by searches (a search for terracotta louvres found none on this building); the aluminium-band / louvre elevation and rooftop flues follow Foster lab buildings of that period and are approximate. Main block 29.6 m (9 floors) and west wing 7.2 m from the Overture outline and part. Refinement: long elevations are built storey by storey - projecting aluminium spandrel panels with joints, recessed full-width glazing with mullions every 1.5 m and transoms - carrying external louvre blades (three slats each) on outrigger brackets; the ends are solid panel-clad with a recessed glazed stair slot; recessed glazed ground floor behind round columns with an entrance canopy; roof has a slatted plant enclosure, capped stainless flues on a gantry, cable trays, a lift overrun and guard rails; the west wing has mullioned glazing, an aluminium fascia and roof lights."
   },
   {
     "id": "imperial_i_hub",
@@ -1410,9 +1420,14 @@
         "title": "plate 76 - Survey of London vol 38 (Imperial College in 1973)",
         "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-76",
         "used_for": "Biochemistry range 1962-5 by Architects Co-Partnership"
+      },
+      {
+        "title": "Royal College of Science - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_College_of_Science",
+        "used_for": "the western wing of the Webb building was demolished in 1961 for the new biochemistry building on this site"
       }
     ],
-    "notes": "No facade description found; elevation (concrete mullion fins, dark spandrels, brick ends) is a reconstruction in the 1960s ACP idiom, not traced from photos. Height 23.2 m from Overture (7 floors)."
+    "notes": "No facade description found; elevation (concrete mullion fins, dark spandrels, brick ends) is a reconstruction in the 1960s ACP idiom, not traced from photos. Height 23.2 m from Overture (7 floors). Refinement: each 1.6 m bay is a real recessed opening with an aluminium-framed window (centre mullion, transom, opening light) over a recessed dark spandrel panel, between full-height projecting precast fins and floor-edge beams; plain brick returns; the set-back ground floor has a mullioned glazed screen behind columns under the fins, an entrance canopy with a name sign (wording from the 2012 naming, placement assumed) and steps; the roof has a brick plant room with louvre bands, lift motor room, capped extract flues on a frame and guard rails."
   },
   {
     "id": "kensal_green_anglican_chapel",
@@ -1785,7 +1800,7 @@
       {
         "title": "princes gardens redevelopment - KPF",
         "url": "https://www.kpf.com/project/princes-gardens-redevelopment",
-        "used_for": "limestone / brick / stucco palette, rhythmic front fenestration, stepped rear bays"
+        "used_for": "limestone / brick / stucco palette, rhythmic front fenestration taking up the spacing of the neighbouring terrace windows, stepped rear bays relating to the mews"
       },
       {
         "title": "Kawneer restores a princely feel to a historic London Square - Specification Online",
@@ -1801,9 +1816,19 @@
         "title": "Places: Eastside - Imperial video archive",
         "url": "https://blogs.imperial.ac.uk/videoarchive/places-eastside/",
         "used_for": "Gabor, Linstead and Wilkinson halls"
+      },
+      {
+        "title": "Eastside demolition starts in final phase of regeneration of Prince’s Gardens - Imperial News",
+        "url": "https://www.imperial.ac.uk/news/15374/eastside-demolition-starts-final-phase-regeneration/",
+        "used_for": "Eastside as the final phase of the Prince’s Gardens regeneration"
+      },
+      {
+        "title": "Prince's Gardens (Westminster) - London Gardens Trust inventory",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record?ID=WST084",
+        "used_for": "garden square setting the halls face"
       }
     ],
-    "notes": "Facade proportions, the glazed base and the attic are inferred from the KPF/Kawneer descriptions rather than traced from photos. Height 26.4 m from Overture (8 floors)."
+    "notes": "Facade proportions, the glazed base and the attic are inferred from the KPF/Kawneer descriptions rather than traced from photos. Height 26.4 m from Overture (8 floors). Refinement: the limestone garden fronts have real recessed windows (aluminium frames, transom, glass Juliet balustrade, stone sills) in a regular 3.4 m rhythm between projecting stone piers every two bays, a stone cornice and plinth; the double-height base is a mullioned and transomed curtain wall set back behind stone piers, with an entrance (doors, canopy, steps) in the middle of each hall; a recessed glazed joint separates the halls; the dark zinc attic has standing seams and punched windows; the stepped brick rear elevations to the mews have punched windows too. Roof: lift / stair overruns, plant louvres, PV-free flat roof with guard rails (assumption). Forecourt paving with benches."
   },
   {
     "id": "princes_gardens_southside",
@@ -1818,7 +1843,7 @@
       {
         "title": "princes gardens redevelopment - KPF",
         "url": "https://www.kpf.com/project/princes-gardens-redevelopment",
-        "used_for": "limestone / brick / stucco palette, front elevation echoing terrace fenestration, stepped rear bays"
+        "used_for": "limestone / brick / stucco palette, front elevation echoing terrace fenestration, stepped rear bays, two storeys lower than the 1960s blocks"
       },
       {
         "title": "Imperial College Halls of Residence - Wikipedia",
@@ -1829,9 +1854,19 @@
         "title": "Eastside Update - Imperial News",
         "url": "https://www.imperial.ac.uk/news/29454/eastside-update/",
         "used_for": "Southside and Eastside both designed by Kohn Pedersen Fox"
+      },
+      {
+        "title": "Boris Johnson opens restored London square after £160m investment by Imperial College London",
+        "url": "https://imperial.ac.uk/news/80641/boris-johnson-opens-restored-london-square",
+        "used_for": "new blocks sit lower than their predecessors, in line with the adjacent terraces"
+      },
+      {
+        "title": "Southside Halls, Imperial College - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101250855-southside-halls-imperial-college-knightsbridge-and-belgravia-ward",
+        "used_for": "the listed 1960-63 board-marked concrete predecessor (not modelled; context only)"
       }
     ],
-    "notes": "Window grid, glazed joints and attic treatment are inferred from the KPF description, not traced from photos. Front halls 20 m from Overture; Keogh (rear range) kept at its Overture 7.2 m with a set-back upper storey, which may understate it."
+    "notes": "Window grid, glazed joints and attic treatment are inferred from the KPF description, not traced from photos. Front halls 20 m from Overture; Keogh (rear range) kept at its Overture 7.2 m with a set-back upper storey, which may understate it. Refinement: limestone garden fronts with real recessed vertical windows (aluminium frames, transom, glass Juliet balustrades, stone sills) in the terrace rhythm, projecting stone piers, string course over a glazed base of recessed shopfront-like windows and an entrance with canopy and steps per hall, recessed full-height glazed joints with mullions, zinc attic with standing seams and punched windows, stone cornice; the stepped buff-brick rear bays and Keogh have punched windows; roof overruns, plant louvres and guard rails; paved strip with benches along the gardens."
   },
   {
     "id": "queens_tower",

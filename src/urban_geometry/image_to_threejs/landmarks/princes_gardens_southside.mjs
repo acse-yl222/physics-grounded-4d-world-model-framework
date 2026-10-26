@@ -143,6 +143,305 @@ function sash(g, x, y, w, h, r, { frame = '#f2efe6', panesX = 3, panesY = 2, bar
     if (j !== panesY) g.fillRect(x, y + (h * j) / (panesY * 2) - 0.5, w, 1.2);
 }
 // ---- end helpers ----
+// ---- detail helpers (refinement pass; self-contained) ----
+// Quad whose winding is chosen so that its face normal agrees with n.
+function quadN(batch, m, p, uv, n, color) {
+  const ux = p[1][0] - p[0][0],
+    uy = p[1][1] - p[0][1],
+    uz = p[1][2] - p[0][2];
+  const vx = p[2][0] - p[0][0],
+    vy = p[2][1] - p[0][1],
+    vz = p[2][2] - p[0][2];
+  const cx = uy * vz - uz * vy,
+    cy = uz * vx - ux * vz,
+    cz = ux * vy - uy * vx;
+  if (cx * n[0] + cy * n[1] + cz * n[2] < 0) {
+    p = [p[0], p[3], p[2], p[1]];
+    uv = [uv[0], uv[3], uv[2], uv[1]];
+  }
+  batch.quad(m, p[0], p[1], p[2], p[3], uv[0], uv[1], uv[2], uv[3], color);
+}
+// Wall along edge e (z0..z1) pierced by openings [{t0, t1, zb, zt}] (t along the edge),
+// with real reveals of depth d and an optional dark back panel inside each opening.
+// UVs: one texture tile = tile[0] x tile[1] metres measured from (a, uvBase).
+function punchedWall(batch, wallM, revealM, e, z0, z1, holes, opt = {}) {
+  const { d = 0.22, tile = [14.4, 6.4], uvBase = 0, color, back } = opt;
+  const P = (t, z, o = 0) => [e.a[0] + e.tx * t + e.nx * o, e.a[1] + e.ty * t + e.ny * o, z];
+  const UV = (t, z) => [t / tile[0], (z - uvBase) / tile[1]];
+  const n = [e.nx, e.ny, 0];
+  const zs = new Set([z0, z1]);
+  for (const h of holes) {
+    if (h.zb > z0 && h.zb < z1) zs.add(h.zb);
+    if (h.zt > z0 && h.zt < z1) zs.add(h.zt);
+  }
+  const Z = [...zs].sort((p, q) => p - q);
+  for (let i = 0; i < Z.length - 1; i++) {
+    const za = Z[i],
+      zb = Z[i + 1],
+      zm = (za + zb) / 2;
+    const cut = holes.filter((h) => h.zb < zm && h.zt > zm).sort((p, q) => p.t0 - q.t0);
+    const seg = (ta, tb) => {
+      if (tb - ta > 1e-3)
+        quadN(
+          batch,
+          wallM,
+          [P(ta, za), P(tb, za), P(tb, zb), P(ta, zb)],
+          [UV(ta, za), UV(tb, za), UV(tb, zb), UV(ta, zb)],
+          n,
+          color,
+        );
+    };
+    let t = 0;
+    for (const h of cut) {
+      seg(t, h.t0);
+      t = Math.max(t, h.t1);
+    }
+    seg(t, e.len);
+  }
+  const rv = revealM ?? wallM;
+  for (const h of holes) {
+    const dd = h.d ?? d;
+    const sq = [
+      [0, 0],
+      [1, 0],
+      [1, 1],
+      [0, 1],
+    ];
+    quadN(
+      batch,
+      rv,
+      [P(h.t0, h.zb), P(h.t0, h.zb, -dd), P(h.t0, h.zt, -dd), P(h.t0, h.zt)],
+      sq,
+      [e.tx, e.ty, 0],
+      color,
+    );
+    quadN(
+      batch,
+      rv,
+      [P(h.t1, h.zb), P(h.t1, h.zb, -dd), P(h.t1, h.zt, -dd), P(h.t1, h.zt)],
+      sq,
+      [-e.tx, -e.ty, 0],
+      color,
+    );
+    quadN(
+      batch,
+      rv,
+      [P(h.t0, h.zt), P(h.t1, h.zt), P(h.t1, h.zt, -dd), P(h.t0, h.zt, -dd)],
+      sq,
+      [0, 0, -1],
+      color,
+    );
+    quadN(
+      batch,
+      rv,
+      [P(h.t0, h.zb), P(h.t1, h.zb), P(h.t1, h.zb, -dd), P(h.t0, h.zb, -dd)],
+      sq,
+      [0, 0, 1],
+      color,
+    );
+    if (h.back ?? back)
+      quadN(
+        batch,
+        h.back ?? back,
+        [P(h.t0, h.zb, -dd), P(h.t1, h.zb, -dd), P(h.t1, h.zt, -dd), P(h.t0, h.zt, -dd)],
+        sq,
+        n,
+      );
+  }
+}
+// Evenly spaced openings along an edge: n bays, opening width w, from zb to zt.
+function bayHoles(e, n, w, zb, zt, { margin = 0, skip = () => false, d } = {}) {
+  const out = [];
+  const usable = e.len - 2 * margin;
+  for (let k = 0; k < n; k++) {
+    if (skip(k)) continue;
+    const t = margin + (usable * (k + 0.5)) / n;
+    out.push({ t0: t - w / 2, t1: t + w / 2, zb, zt, k, t, d });
+  }
+  return out;
+}
+// A framed window (kit.windowRow) set into an opening at the back of its reveal.
+function fitWindow(kit, batch, e, h, opts = {}) {
+  const dd = (h.d ?? opts.d ?? 0.22) - 0.02;
+  const A = [e.a[0] + e.tx * h.t0 - e.nx * dd, e.a[1] + e.ty * h.t0 - e.ny * dd];
+  const B = [e.a[0] + e.tx * h.t1 - e.nx * dd, e.a[1] + e.ty * h.t1 - e.ny * dd];
+  const { arch = 0, ...rest } = opts;
+  kit.windowRow(batch, A, B, h.zb, {
+    count: 1,
+    margin: 0,
+    width: h.t1 - h.t0 - 0.06,
+    height: h.zt - h.zb - arch,
+    head: arch ? 'arch' : 'none',
+    depth: 0.1,
+    ...rest,
+  });
+}
+// Box placed by edge coordinates (t along the edge, o outwards from the wall plane).
+function boxOn(kit, batch, m, e, t, o, z0, w, d, h, color) {
+  kit.box(
+    batch,
+    m,
+    e.a[0] + e.tx * t + e.nx * o,
+    e.a[1] + e.ty * t + e.ny * o,
+    z0,
+    w,
+    d,
+    h,
+    e.ang,
+    color,
+  );
+}
+// Flight of n steps rising towards the wall at edge position t (w wide).
+function stepsOn(kit, batch, m, e, t, w, n, { rise = 0.16, tread = 0.32, z0 = 0 } = {}) {
+  for (let i = 0; i < n; i++) {
+    const depth = tread * (n - i);
+    boxOn(kit, batch, m, e, t, depth / 2, z0 + i * rise, w, depth, rise);
+  }
+}
+// Railing between points p and q (scene / local plane) with bars, rails and finials.
+function railing(kit, batch, m, p, q, z, { h = 1.1, spacing = 0.13, finial = true } = {}) {
+  const dx = q[0] - p[0],
+    dy = q[1] - p[1],
+    len = Math.hypot(dx, dy);
+  if (len < 0.2) return;
+  const ang = Math.atan2(dy, dx);
+  const mx = (p[0] + q[0]) / 2,
+    my = (p[1] + q[1]) / 2;
+  kit.box(batch, m, mx, my, z + h - 0.06, len, 0.05, 0.05, ang);
+  kit.box(batch, m, mx, my, z + 0.12, len, 0.04, 0.04, ang);
+  const n = Math.max(1, Math.floor(len / spacing));
+  for (let i = 0; i <= n; i++) {
+    const x = p[0] + (dx * i) / n,
+      y = p[1] + (dy * i) / n;
+    kit.box(batch, m, x, y, z, 0.022, 0.022, h + (finial ? 0.08 : 0), ang);
+    if (finial && i % 2 === 0) kit.box(batch, m, x, y, z + h + 0.04, 0.05, 0.05, 0.07, ang + 0.785);
+  }
+}
+// Thin paved slab over a ring (forecourt, area, terrace).
+function paved(kit, batch, m, ring, z = 0.04) {
+  kit.walls(batch, m, [[ring]], 0, z, { bay: 1e6 });
+  kit.cap(batch, m, [[ring]], z, { scale: 4 });
+}
+// Rectangle ring from an edge: from t0..t1 along e, o0..o1 outwards.
+function edgeRect(e, t0, t1, o0, o1) {
+  const P = (t, o) => [e.a[0] + e.tx * t + e.nx * o, e.a[1] + e.ty * t + e.ny * o];
+  const r = [P(t0, o0), P(t1, o0), P(t1, o1), P(t0, o1)];
+  let a = 0;
+  for (let k = 0; k < 4; k++) a += r[k][0] * r[(k + 1) % 4][1] - r[(k + 1) % 4][0] * r[k][1];
+  return a >= 0 ? r : r.reverse();
+}
+// Louvred enclosure: frame box plus horizontal slats on each side.
+function louvreBox(kit, batch, frameM, slatM, x, y, z0, w, d, h, ang, pitch = 0.25) {
+  kit.box(batch, frameM, x, y, z0, w - 0.3, d - 0.3, h, ang);
+  kit.box(batch, frameM, x, y, z0 + h, w + 0.1, d + 0.1, 0.18, ang);
+  const c = Math.cos(ang),
+    s = Math.sin(ang);
+  for (let z = z0 + 0.2; z < z0 + h - 0.1; z += pitch) {
+    for (const sg of [-1, 1]) {
+      kit.box(
+        batch,
+        slatM,
+        x - s * sg * (d / 2 - 0.08),
+        y + c * sg * (d / 2 - 0.08),
+        z,
+        w,
+        0.05,
+        0.12,
+        ang,
+      );
+      kit.box(
+        batch,
+        slatM,
+        x + c * sg * (w / 2 - 0.08),
+        y + s * sg * (w / 2 - 0.08),
+        z,
+        0.05,
+        d,
+        0.12,
+        ang,
+      );
+    }
+  }
+  for (const [su, sv] of [
+    [-1, -1],
+    [1, -1],
+    [1, 1],
+    [-1, 1],
+  ])
+    kit.box(
+      batch,
+      frameM,
+      x + c * su * (w / 2 - 0.05) - s * sv * (d / 2 - 0.05),
+      y + s * su * (w / 2 - 0.05) + c * sv * (d / 2 - 0.05),
+      z0,
+      0.14,
+      0.14,
+      h,
+      ang,
+    );
+}
+// Roof edge guard rail inset from a ring.
+function roofRail(kit, batch, m, ring, z, inset = 0.6, h = 1.1) {
+  const r = kit.offsetRing(ring, -inset);
+  for (let k = 0; k < r.length; k++) {
+    const p = r[k],
+      q = r[(k + 1) % r.length];
+    const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
+    if (len < 0.5) continue;
+    const ang = Math.atan2(q[1] - p[1], q[0] - p[0]);
+    kit.box(batch, m, (p[0] + q[0]) / 2, (p[1] + q[1]) / 2, z + h - 0.05, len, 0.05, 0.05, ang);
+    kit.box(batch, m, (p[0] + q[0]) / 2, (p[1] + q[1]) / 2, z + h / 2, len, 0.04, 0.04, ang);
+    const n = Math.max(1, Math.round(len / 1.6));
+    for (let i = 0; i <= n; i++)
+      kit.box(
+        batch,
+        m,
+        p[0] + ((q[0] - p[0]) * i) / n,
+        p[1] + ((q[1] - p[1]) * i) / n,
+        z,
+        0.05,
+        0.05,
+        h,
+        ang,
+      );
+  }
+}
+// Extract flue with a conical rain cap (lathe) at (x, y) from z0 to z0 + h.
+function flue(THREE, batch, m, x, y, z0, h, r = 0.35) {
+  const g = new THREE.LatheGeometry(
+    [
+      [0.001, 0],
+      [r, 0],
+      [r, h],
+      [r * 1.25, h + 0.05],
+      [r * 1.25, h + 0.12],
+      [r * 1.7, h + 0.35],
+      [r * 1.7, h + 0.4],
+      [0.001, h + 0.7],
+    ].map(([a, b]) => new THREE.Vector2(a, b)),
+    10,
+  ).rotateX(Math.PI / 2);
+  batch.addGeometry(m, g, new THREE.Matrix4().makeTranslation(x, y, z0));
+  g.dispose();
+}
+// Sign panel material with text.
+function signMaterial(
+  kit,
+  key,
+  text,
+  { bg = '#1e2a36', fg = '#f4f1ea', w = 512, h = 64, font = 'bold 34px sans-serif' } = {},
+) {
+  return kit.paintedMaterial(key, w, h, (c, W, H) => {
+    c.fillStyle = bg;
+    c.fillRect(0, 0, W, H);
+    c.fillStyle = fg;
+    c.font = font;
+    c.textAlign = 'center';
+    c.textBaseline = 'middle';
+    c.fillText(text, W / 2, H / 2 + 2);
+  });
+}
+// ---- end detail helpers ----
 
 const IDS = {
   falmouth: 'a4244b77-ceb5-4377-a646-a94e5cdb2714',
@@ -160,7 +459,7 @@ export default {
       title: 'princes gardens redevelopment - KPF',
       url: 'https://www.kpf.com/project/princes-gardens-redevelopment',
       used_for:
-        'limestone / brick / stucco palette, front elevation echoing terrace fenestration, stepped rear bays',
+        'limestone / brick / stucco palette, front elevation echoing terrace fenestration, stepped rear bays, two storeys lower than the 1960s blocks',
     },
     {
       title: 'Imperial College Halls of Residence - Wikipedia',
@@ -173,124 +472,252 @@ export default {
       url: 'https://www.imperial.ac.uk/news/29454/eastside-update/',
       used_for: 'Southside and Eastside both designed by Kohn Pedersen Fox',
     },
+    {
+      title:
+        'Boris Johnson opens restored London square after £160m investment by Imperial College London',
+      url: 'https://imperial.ac.uk/news/80641/boris-johnson-opens-restored-london-square',
+      used_for: 'new blocks sit lower than their predecessors, in line with the adjacent terraces',
+    },
+    {
+      title: 'Southside Halls, Imperial College - British Listed Buildings',
+      url: 'https://britishlistedbuildings.co.uk/101250855-southside-halls-imperial-college-knightsbridge-and-belgravia-ward',
+      used_for: 'the listed 1960-63 board-marked concrete predecessor (not modelled; context only)',
+    },
   ],
   notes:
-    'Window grid, glazed joints and attic treatment are inferred from the KPF description, not traced from photos. Front halls 20 m from Overture; Keogh (rear range) kept at its Overture 7.2 m with a set-back upper storey, which may understate it.',
-  build({ THREE, kit, byId }) {
+    'Window grid, glazed joints and attic treatment are inferred from the KPF description, not traced from photos. Front halls 20 m from Overture; Keogh (rear range) kept at its Overture 7.2 m with a set-back upper storey, which may understate it. Refinement: limestone garden fronts with real recessed vertical windows (aluminium frames, transom, glass Juliet balustrades, stone sills) in the terrace rhythm, projecting stone piers, string course over a glazed base of recessed shopfront-like windows and an entrance with canopy and steps per hall, recessed full-height glazed joints with mullions, zinc attic with standing seams and punched windows, stone cornice; the stepped buff-brick rear bays and Keogh have punched windows; roof overruns, plant louvres and guard rails; paved strip with benches along the gardens.',
+  build({ THREE, kit, byId, placeAssets }) {
     const b = new kit.MeshBatch();
     const stone = kit.mat('#e2dccb'),
-      zinc = kit.mat('#5c6266', { roughness: 0.55 }),
+      stone2 = kit.mat('#d7d0bd'),
+      zinc = kit.mat('#5c6266', { roughness: 0.55, metalness: 0.3 }),
       roofM = kit.roof('flat', 0),
-      glass = kit.mat('dark_glass'),
-      brickM = kit.mat('#b9a27c');
-    const storey = 3.1,
-      gf = 3.6;
-    const frontM = kit.paintedMaterial('princes_gardens_southside:front', 512, 256, (c, w, h) => {
-      const r = kit.rng(0.2007);
+      glass = kit.mat('#2e3d48', { roughness: 0.1, metalness: 0.3 }),
+      frameM = kit.mat('#6d7478', { roughness: 0.45, metalness: 0.4 }),
+      juliet = kit.mat('#5d727e', { roughness: 0.1, metalness: 0.3 }),
+      white = kit.mat('#ece9e1'),
+      paving = kit.mat('#c2bbad'),
+      doorM = kit.mat('#1b2328');
+    const gf = 3.6;
+    const stoneM = kit.paintedMaterial('princes_gardens_southside:stone', 256, 256, (c, w, h) => {
+      const r = kit.rng(0.2008);
       noiseFill(c, w, h, '#e2dccb', r, 0.05, 4);
       c.fillStyle = 'rgba(120,110,90,0.18)';
       for (let y = 0; y < h; y += 21) c.fillRect(0, y, w, 1);
-      for (let x = 0; x < w; x += 64) c.fillRect(x, 0, 1, h);
-      const cw = w / 4,
-        ch = h / 2;
-      for (let j = 0; j < 2; j++)
-        for (let i = 0; i < 4; i++) {
-          const ww = cw * 0.44,
-            wh = ch * 0.72,
-            wx = i * cw + (cw - ww) / 2,
-            wy = j * ch + ch * 0.12;
-          c.fillStyle = '#c9c2b0';
-          c.fillRect(wx - 4, wy - 4, ww + 8, wh + 8);
-          glassPane(c, wx, wy, ww, wh, r, [44, 58, 68]);
-          c.fillStyle = '#8f969a';
-          c.fillRect(wx + ww * 0.62, wy, 3, wh);
-          c.fillRect(wx, wy + wh * 0.78, ww, 3);
-        }
+      for (let y = 0, k = 0; y < h; y += 21, k++)
+        for (let x = k % 2 ? 0 : 32; x < w; x += 64) c.fillRect(x, y, 1, 21);
     });
-    const rearM = kit.paintedMaterial('princes_gardens_southside:rear', 512, 256, (c, w, h) => {
-      const r = kit.rng(0.3007);
+    const brickM = kit.paintedMaterial('princes_gardens_southside:brick', 256, 256, (c, w, h) => {
+      const r = kit.rng(0.3008);
       brickCourses(c, w, h, r, '#b9a27c', 3);
-      const cw = w / 4,
-        ch = h / 2;
-      for (let j = 0; j < 2; j++)
-        for (let i = 0; i < 4; i++) {
-          const ww = cw * 0.5,
-            wh = ch * 0.64,
-            wx = i * cw + (cw - ww) / 2,
-            wy = j * ch + ch * 0.16;
-          c.fillStyle = '#eeeae0';
-          c.fillRect(wx - 3, wy - 3, ww + 6, wh + 6);
-          glassPane(c, wx, wy, ww, wh, r, [44, 58, 68]);
-          c.fillStyle = '#eeeae0';
-          c.fillRect(wx + ww / 2 - 1, wy, 2, wh);
-        }
     });
-    const baseM = kit.paintedMaterial('princes_gardens_southside:base', 512, 256, (c, w, h) => {
-      const r = kit.rng(0.4007);
-      noiseFill(c, w, h, '#d6cfbd', r, 0.05, 4);
-      for (let i = 0; i < 4; i++) {
-        const x = i * (w / 4) + 10;
-        glassPane(c, x, h * 0.12, w / 4 - 20, h * 0.8, r, [52, 70, 82]);
-        c.fillStyle = '#7d8487';
-        c.fillRect(x + (w / 4 - 20) / 2 - 1, h * 0.12, 3, h * 0.8);
-      }
-    });
-    const atticM = kit.paintedMaterial('princes_gardens_southside:attic', 512, 256, (c, w, h) => {
-      const r = kit.rng(0.5007);
+    const zincM = kit.paintedMaterial('princes_gardens_southside:zinc', 128, 128, (c, w, h) => {
+      const r = kit.rng(0.5008);
       noiseFill(c, w, h, '#5c6266', r, 0.05, 4);
-      c.fillStyle = 'rgba(255,255,255,0.08)';
-      for (let x = 0; x < w; x += 16) c.fillRect(x, 0, 2, h); // standing seams
-      for (let j = 0; j < 2; j++)
-        for (let i = 0; i < 4; i++)
-          glassPane(c, i * (w / 4) + 14, j * (h / 2) + 18, w / 4 - 28, h / 2 - 40, r, [60, 78, 90]);
+      c.fillStyle = 'rgba(255,255,255,0.12)';
+      for (let x = 0; x < w; x += 11) c.fillRect(x, 0, 1.5, h);
     });
     const front = (e) => e.ny > 0.8 && e.len > 10;
+    const fronts = [];
+    const brickBays = (e, z0, z1, storeys) => {
+      const n = Math.max(1, Math.round(e.len / 3.4));
+      const holes = [];
+      const sh = (z1 - z0) / storeys;
+      for (let s = 0; s < storeys; s++)
+        for (const h of bayHoles(
+          e,
+          n,
+          Math.min(1.2, e.len - 0.9),
+          z0 + s * sh + 0.8,
+          z0 + (s + 1) * sh - 0.4,
+        ))
+          holes.push(h);
+      punchedWall(b, brickM, stone2, e, z0, z1, holes, {
+        d: 0.22,
+        tile: [7.2, 7.2],
+        uvBase: z0,
+        back: glass,
+      });
+      for (const h of holes) {
+        fitWindow(kit, b, e, h, { d: 0.22, glass, frame: white, sill: white, bars: 0 });
+        boxOn(kit, b, white, e, (h.t0 + h.t1) / 2, -0.15, h.zb, 0.06, 0.06, h.zt - h.zb);
+        boxOn(kit, b, stone, e, (h.t0 + h.t1) / 2, 0.04, h.zb - 0.1, h.t1 - h.t0 + 0.2, 0.12, 0.1);
+      }
+    };
+    const atticBays = (ring, z0, z1) => {
+      for (const e of ringEdges(ring)) {
+        if (e.len < 2.2) {
+          wallQuad(b, zincM, e.a, e.b, z0, z1, { bay: 1.5, storey: 1.5 });
+          continue;
+        }
+        const n = Math.max(1, Math.round(e.len / 3.4));
+        const holes = bayHoles(e, n, Math.min(1.4, e.len - 0.9), z0 + 0.8, z1 - 0.6);
+        punchedWall(b, zincM, zinc, e, z0, z1, holes, {
+          d: 0.2,
+          tile: [3, 3],
+          uvBase: z0,
+          back: glass,
+        });
+        for (const h of holes)
+          fitWindow(kit, b, e, h, { d: 0.2, glass, frame: frameM, sill: frameM, bars: 0 });
+      }
+    };
     for (const key of ['falmouth', 'tizard', 'selkirk']) {
       const bld = byId[IDS[key]];
       if (!bld) continue;
       const ring = ccw(bld.polys[0][0]);
       const H = bld.h,
-        attic = H - storey;
-      edgeWalls(b, ring, 0, gf, (e) =>
-        front(e) ? { m: baseM, bay: 3.4, storey: gf / 2 } : { m: rearM, bay: 3.4, storey },
-      );
-      edgeWalls(b, ring, gf, attic, (e) =>
-        front(e)
-          ? { m: frontM, bay: 3.4, storey, uvBase: gf }
-          : { m: rearM, bay: 3.4, storey, uvBase: gf },
-      );
-      edgeWalls(b, ring, attic, H, () => ({ m: atticM, bay: 3.4, storey: storey }));
-      band(kit, b, stone, ring, attic - 0.3, 0.35, 0.35);
-      band(kit, b, stone, ring, gf - 0.2, 0.25, 0.15);
+        attic = H - 3.1,
+        storey = (attic - gf) / 4;
+      for (const e of ringEdges(ring)) {
+        if (!front(e)) {
+          if (e.len < 2.2) wallQuad(b, brickM, e.a, e.b, 0, attic, { bay: 3.6, storey: 3.6 });
+          else {
+            brickBays(e, 0, gf, 1);
+            brickBays(e, gf, attic, 4);
+          }
+          continue;
+        }
+        fronts.push(e);
+        // Glazed joint at the west end of each hall's front.
+        const joint = 2.0;
+        const L = e.len - joint;
+        const n = Math.max(2, Math.round(L / 3.4));
+        const bw = L / n;
+        const te = joint + Math.floor(n / 2) * bw + bw / 2;
+        const gh = [
+          { t0: 0.15, t1: joint - 0.15, zb: 0, zt: attic - 0.2, d: 0.8, back: false, joint: true },
+        ];
+        for (let i = 0; i < n; i++) {
+          const t = joint + (i + 0.5) * bw;
+          if (Math.abs(t - te) < 0.1)
+            gh.push({ t0: t - 1.2, t1: t + 1.2, zb: 0.15, zt: gf - 0.5, d: 0.45, door: true });
+          else gh.push({ t0: t - 1.15, t1: t + 1.15, zb: 0.5, zt: gf - 0.5, d: 0.35 });
+        }
+        punchedWall(
+          b,
+          stoneM,
+          stone2,
+          e,
+          0,
+          gf,
+          gh.map((h) => (h.joint ? { ...h, zt: gf } : h)),
+          { d: 0.35, tile: [7.2, 7.2], back: glass },
+        );
+        const holes = [{ ...gh[0], zb: gf }];
+        for (let s = 0; s < 4; s++)
+          for (let i = 0; i < n; i++) {
+            const t = joint + (i + 0.5) * bw;
+            holes.push({
+              t0: t - 0.62,
+              t1: t + 0.62,
+              zb: gf + s * storey + 0.5,
+              zt: gf + (s + 1) * storey - 0.35,
+            });
+          }
+        punchedWall(b, stoneM, stone2, e, gf, attic, holes, {
+          d: 0.3,
+          tile: [7.2, 7.2],
+          uvBase: gf,
+          back: glass,
+        });
+        // joint glazing with mullions and floor transoms
+        {
+          const h = gh[0];
+          const tm = (h.t0 + h.t1) / 2;
+          boxOn(kit, b, glass, e, tm, -0.78, 0, h.t1 - h.t0, 0.04, attic - 0.2);
+          boxOn(kit, b, frameM, e, tm, -0.72, 0, 0.08, 0.1, attic - 0.2);
+          for (let z = gf; z < attic - 0.3; z += storey)
+            boxOn(kit, b, frameM, e, tm, -0.72, z, h.t1 - h.t0, 0.1, 0.12);
+        }
+        for (const h of gh.slice(1)) {
+          const tm = (h.t0 + h.t1) / 2,
+            w = h.t1 - h.t0;
+          if (h.door) {
+            boxOn(kit, b, doorM, e, tm, -0.42, h.zb, w - 0.1, 0.05, 2.5);
+            for (const s of [-1, 0, 1])
+              boxOn(
+                kit,
+                b,
+                frameM,
+                e,
+                tm + s * (w / 2 - 0.05),
+                -0.4,
+                h.zb,
+                0.07,
+                0.08,
+                h.zt - h.zb,
+              );
+            boxOn(kit, b, frameM, e, tm, -0.4, h.zb + 2.5, w, 0.08, 0.08);
+            boxOn(kit, b, zinc, e, tm, 1.0, gf - 0.6, 5, 2.0, 0.3);
+            boxOn(kit, b, frameM, e, tm, 1.98, gf - 0.65, 5, 0.06, 0.4);
+            stepsOn(kit, b, stone2, e, tm, 3.6, 1, { rise: 0.15, tread: 0.6 });
+            continue;
+          }
+          fitWindow(kit, b, e, h, { d: 0.35, glass, frame: frameM, sill: frameM, bars: 0 });
+          for (const s of [-1, 0, 1])
+            boxOn(kit, b, frameM, e, tm + (s * w) / 3, -0.27, h.zb, 0.07, 0.08, h.zt - h.zb);
+          boxOn(kit, b, frameM, e, tm, -0.27, h.zt - 0.5, w, 0.08, 0.06);
+        }
+        for (const h of holes.slice(1)) {
+          const tm = (h.t0 + h.t1) / 2,
+            w = h.t1 - h.t0;
+          fitWindow(kit, b, e, h, { d: 0.3, glass, frame: frameM, sill: frameM, bars: 0 });
+          boxOn(kit, b, frameM, e, tm, -0.22, h.zt - 0.5, w, 0.08, 0.06);
+          boxOn(kit, b, juliet, e, tm, -0.05, h.zb + 0.05, w - 0.06, 0.02, 0.9);
+          boxOn(kit, b, frameM, e, tm, -0.05, h.zb + 0.95, w - 0.06, 0.04, 0.04);
+          boxOn(kit, b, stone, e, tm, 0.06, h.zb - 0.1, w + 0.25, 0.16, 0.1);
+        }
+        // projecting stone piers every two bays
+        for (let i = 0; i <= n; i += 2)
+          boxOn(kit, b, stone, e, joint + i * bw, 0.16, 0, 0.6, 0.32, attic);
+      }
+      atticBays(ring, attic, H);
+      kit.cornice(b, stone, ring, attic - 0.3, { height: 0.35, projection: 0.38, steps: 2 });
+      kit.cornice(b, stone, ring, gf - 0.2, { height: 0.25, projection: 0.18 });
+      kit.cornice(b, stone2, ring, 0, { height: 0.4, projection: 0.06 });
       kit.cap(b, roofM, [[ring]], H);
       parapet(kit, b, zinc, ring, H, 0.5, 0.15);
-      // Recessed full-height glazed joint at the west end of each hall's front.
+      kit.cornice(b, frameM, ring, H + 0.45, { height: 0.06, projection: 0.04 });
       for (const e of ringEdges(ring)) {
         if (!front(e)) continue;
-        const p = pointOn(e, 1.0, 0.02);
-        kit.box(b, glass, p[0], p[1], gf, 2.0, 0.08, attic - gf, e.ang);
-        // entrance canopy at the centre of each front
-        const q = pointOn(e, e.len / 2, 1.0);
-        kit.box(b, zinc, q[0], q[1], gf - 0.6, 5, 2.0, 0.3, e.ang);
-        // roof plant / stair overrun
         const s = pointOn(e, e.len * 0.7, -7);
         kit.box(b, zinc, s[0], s[1], H, 6, 4, 2.6, e.ang);
+        kit.box(b, frameM, s[0], s[1], H + 2.6, 6.3, 4.3, 0.15, e.ang);
+        const p2 = pointOn(e, e.len * 0.3, -9);
+        louvreBox(kit, b, frameM, zinc, p2[0], p2[1], H, 5, 3, 1.6, e.ang, 0.22);
       }
+      roofRail(kit, b, frameM, ring, H, 1.2, 1.1);
     }
     // Keogh: lower rear range stepping down to the mews.
     const kb = byId[IDS.keogh];
     if (kb) {
       const ring = ccw(kb.polys[0][0]);
       const H = kb.h;
-      edgeWalls(b, ring, 0, H, () => ({ m: rearM, bay: 3.4, storey: H / 2 }));
+      for (const e of ringEdges(ring)) {
+        if (e.len < 2.2) wallQuad(b, brickM, e.a, e.b, 0, H, { bay: 3.6, storey: 3.6 });
+        else brickBays(e, 0, H, 2);
+      }
+      kit.cornice(b, stone, ring, H - 0.2, { height: 0.2, projection: 0.15 });
       kit.cap(b, roofM, [[ring]], H);
       parapet(kit, b, stone, ring, H, 0.6, 0.2);
       const inner = kit.offsetRing(ring, -1.2);
-      edgeWalls(b, inner, H, H + 3.0, () => ({ m: atticM, bay: 3.4, storey: 3.0 }));
+      atticBays(inner, H, H + 3.0);
       kit.cap(b, roofM, [[inner]], H + 3.0);
+      kit.cornice(b, frameM, inner, H + 2.95, { height: 0.08, projection: 0.06 });
     }
+    for (const e of fronts) paved(kit, b, paving, edgeRect(e, 0, e.len, 0, 3.0), 0.05);
     const g = new THREE.Group();
     g.add(b.toGroup('princes_gardens_southside'));
+    if (placeAssets && fronts.length) {
+      const pl = [];
+      for (const e of fronts)
+        for (const f of [0.25, 0.85]) {
+          const p = pointOn(e, e.len * f, 2.5);
+          pl.push([p[0], p[1], e.ang + Math.PI]);
+        }
+      g.add(placeAssets('bench', pl));
+    }
     return g;
   },
 };

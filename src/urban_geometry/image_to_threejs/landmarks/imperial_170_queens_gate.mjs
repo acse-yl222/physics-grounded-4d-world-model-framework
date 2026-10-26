@@ -142,6 +142,305 @@ function sash(g, x, y, w, h, r, { frame = '#f2efe6', panesX = 3, panesY = 2, bar
     if (j !== panesY) g.fillRect(x, y + (h * j) / (panesY * 2) - 0.5, w, 1.2);
 }
 // ---- end helpers ----
+// ---- detail helpers (refinement pass; self-contained) ----
+// Quad whose winding is chosen so that its face normal agrees with n.
+function quadN(batch, m, p, uv, n, color) {
+  const ux = p[1][0] - p[0][0],
+    uy = p[1][1] - p[0][1],
+    uz = p[1][2] - p[0][2];
+  const vx = p[2][0] - p[0][0],
+    vy = p[2][1] - p[0][1],
+    vz = p[2][2] - p[0][2];
+  const cx = uy * vz - uz * vy,
+    cy = uz * vx - ux * vz,
+    cz = ux * vy - uy * vx;
+  if (cx * n[0] + cy * n[1] + cz * n[2] < 0) {
+    p = [p[0], p[3], p[2], p[1]];
+    uv = [uv[0], uv[3], uv[2], uv[1]];
+  }
+  batch.quad(m, p[0], p[1], p[2], p[3], uv[0], uv[1], uv[2], uv[3], color);
+}
+// Wall along edge e (z0..z1) pierced by openings [{t0, t1, zb, zt}] (t along the edge),
+// with real reveals of depth d and an optional dark back panel inside each opening.
+// UVs: one texture tile = tile[0] x tile[1] metres measured from (a, uvBase).
+function punchedWall(batch, wallM, revealM, e, z0, z1, holes, opt = {}) {
+  const { d = 0.22, tile = [14.4, 6.4], uvBase = 0, color, back } = opt;
+  const P = (t, z, o = 0) => [e.a[0] + e.tx * t + e.nx * o, e.a[1] + e.ty * t + e.ny * o, z];
+  const UV = (t, z) => [t / tile[0], (z - uvBase) / tile[1]];
+  const n = [e.nx, e.ny, 0];
+  const zs = new Set([z0, z1]);
+  for (const h of holes) {
+    if (h.zb > z0 && h.zb < z1) zs.add(h.zb);
+    if (h.zt > z0 && h.zt < z1) zs.add(h.zt);
+  }
+  const Z = [...zs].sort((p, q) => p - q);
+  for (let i = 0; i < Z.length - 1; i++) {
+    const za = Z[i],
+      zb = Z[i + 1],
+      zm = (za + zb) / 2;
+    const cut = holes.filter((h) => h.zb < zm && h.zt > zm).sort((p, q) => p.t0 - q.t0);
+    const seg = (ta, tb) => {
+      if (tb - ta > 1e-3)
+        quadN(
+          batch,
+          wallM,
+          [P(ta, za), P(tb, za), P(tb, zb), P(ta, zb)],
+          [UV(ta, za), UV(tb, za), UV(tb, zb), UV(ta, zb)],
+          n,
+          color,
+        );
+    };
+    let t = 0;
+    for (const h of cut) {
+      seg(t, h.t0);
+      t = Math.max(t, h.t1);
+    }
+    seg(t, e.len);
+  }
+  const rv = revealM ?? wallM;
+  for (const h of holes) {
+    const dd = h.d ?? d;
+    const sq = [
+      [0, 0],
+      [1, 0],
+      [1, 1],
+      [0, 1],
+    ];
+    quadN(
+      batch,
+      rv,
+      [P(h.t0, h.zb), P(h.t0, h.zb, -dd), P(h.t0, h.zt, -dd), P(h.t0, h.zt)],
+      sq,
+      [e.tx, e.ty, 0],
+      color,
+    );
+    quadN(
+      batch,
+      rv,
+      [P(h.t1, h.zb), P(h.t1, h.zb, -dd), P(h.t1, h.zt, -dd), P(h.t1, h.zt)],
+      sq,
+      [-e.tx, -e.ty, 0],
+      color,
+    );
+    quadN(
+      batch,
+      rv,
+      [P(h.t0, h.zt), P(h.t1, h.zt), P(h.t1, h.zt, -dd), P(h.t0, h.zt, -dd)],
+      sq,
+      [0, 0, -1],
+      color,
+    );
+    quadN(
+      batch,
+      rv,
+      [P(h.t0, h.zb), P(h.t1, h.zb), P(h.t1, h.zb, -dd), P(h.t0, h.zb, -dd)],
+      sq,
+      [0, 0, 1],
+      color,
+    );
+    if (h.back ?? back)
+      quadN(
+        batch,
+        h.back ?? back,
+        [P(h.t0, h.zb, -dd), P(h.t1, h.zb, -dd), P(h.t1, h.zt, -dd), P(h.t0, h.zt, -dd)],
+        sq,
+        n,
+      );
+  }
+}
+// Evenly spaced openings along an edge: n bays, opening width w, from zb to zt.
+function bayHoles(e, n, w, zb, zt, { margin = 0, skip = () => false, d } = {}) {
+  const out = [];
+  const usable = e.len - 2 * margin;
+  for (let k = 0; k < n; k++) {
+    if (skip(k)) continue;
+    const t = margin + (usable * (k + 0.5)) / n;
+    out.push({ t0: t - w / 2, t1: t + w / 2, zb, zt, k, t, d });
+  }
+  return out;
+}
+// A framed window (kit.windowRow) set into an opening at the back of its reveal.
+function fitWindow(kit, batch, e, h, opts = {}) {
+  const dd = (h.d ?? opts.d ?? 0.22) - 0.02;
+  const A = [e.a[0] + e.tx * h.t0 - e.nx * dd, e.a[1] + e.ty * h.t0 - e.ny * dd];
+  const B = [e.a[0] + e.tx * h.t1 - e.nx * dd, e.a[1] + e.ty * h.t1 - e.ny * dd];
+  const { arch = 0, ...rest } = opts;
+  kit.windowRow(batch, A, B, h.zb, {
+    count: 1,
+    margin: 0,
+    width: h.t1 - h.t0 - 0.06,
+    height: h.zt - h.zb - arch,
+    head: arch ? 'arch' : 'none',
+    depth: 0.1,
+    ...rest,
+  });
+}
+// Box placed by edge coordinates (t along the edge, o outwards from the wall plane).
+function boxOn(kit, batch, m, e, t, o, z0, w, d, h, color) {
+  kit.box(
+    batch,
+    m,
+    e.a[0] + e.tx * t + e.nx * o,
+    e.a[1] + e.ty * t + e.ny * o,
+    z0,
+    w,
+    d,
+    h,
+    e.ang,
+    color,
+  );
+}
+// Flight of n steps rising towards the wall at edge position t (w wide).
+function stepsOn(kit, batch, m, e, t, w, n, { rise = 0.16, tread = 0.32, z0 = 0 } = {}) {
+  for (let i = 0; i < n; i++) {
+    const depth = tread * (n - i);
+    boxOn(kit, batch, m, e, t, depth / 2, z0 + i * rise, w, depth, rise);
+  }
+}
+// Railing between points p and q (scene / local plane) with bars, rails and finials.
+function railing(kit, batch, m, p, q, z, { h = 1.1, spacing = 0.13, finial = true } = {}) {
+  const dx = q[0] - p[0],
+    dy = q[1] - p[1],
+    len = Math.hypot(dx, dy);
+  if (len < 0.2) return;
+  const ang = Math.atan2(dy, dx);
+  const mx = (p[0] + q[0]) / 2,
+    my = (p[1] + q[1]) / 2;
+  kit.box(batch, m, mx, my, z + h - 0.06, len, 0.05, 0.05, ang);
+  kit.box(batch, m, mx, my, z + 0.12, len, 0.04, 0.04, ang);
+  const n = Math.max(1, Math.floor(len / spacing));
+  for (let i = 0; i <= n; i++) {
+    const x = p[0] + (dx * i) / n,
+      y = p[1] + (dy * i) / n;
+    kit.box(batch, m, x, y, z, 0.022, 0.022, h + (finial ? 0.08 : 0), ang);
+    if (finial && i % 2 === 0) kit.box(batch, m, x, y, z + h + 0.04, 0.05, 0.05, 0.07, ang + 0.785);
+  }
+}
+// Thin paved slab over a ring (forecourt, area, terrace).
+function paved(kit, batch, m, ring, z = 0.04) {
+  kit.walls(batch, m, [[ring]], 0, z, { bay: 1e6 });
+  kit.cap(batch, m, [[ring]], z, { scale: 4 });
+}
+// Rectangle ring from an edge: from t0..t1 along e, o0..o1 outwards.
+function edgeRect(e, t0, t1, o0, o1) {
+  const P = (t, o) => [e.a[0] + e.tx * t + e.nx * o, e.a[1] + e.ty * t + e.ny * o];
+  const r = [P(t0, o0), P(t1, o0), P(t1, o1), P(t0, o1)];
+  let a = 0;
+  for (let k = 0; k < 4; k++) a += r[k][0] * r[(k + 1) % 4][1] - r[(k + 1) % 4][0] * r[k][1];
+  return a >= 0 ? r : r.reverse();
+}
+// Louvred enclosure: frame box plus horizontal slats on each side.
+function louvreBox(kit, batch, frameM, slatM, x, y, z0, w, d, h, ang, pitch = 0.25) {
+  kit.box(batch, frameM, x, y, z0, w - 0.3, d - 0.3, h, ang);
+  kit.box(batch, frameM, x, y, z0 + h, w + 0.1, d + 0.1, 0.18, ang);
+  const c = Math.cos(ang),
+    s = Math.sin(ang);
+  for (let z = z0 + 0.2; z < z0 + h - 0.1; z += pitch) {
+    for (const sg of [-1, 1]) {
+      kit.box(
+        batch,
+        slatM,
+        x - s * sg * (d / 2 - 0.08),
+        y + c * sg * (d / 2 - 0.08),
+        z,
+        w,
+        0.05,
+        0.12,
+        ang,
+      );
+      kit.box(
+        batch,
+        slatM,
+        x + c * sg * (w / 2 - 0.08),
+        y + s * sg * (w / 2 - 0.08),
+        z,
+        0.05,
+        d,
+        0.12,
+        ang,
+      );
+    }
+  }
+  for (const [su, sv] of [
+    [-1, -1],
+    [1, -1],
+    [1, 1],
+    [-1, 1],
+  ])
+    kit.box(
+      batch,
+      frameM,
+      x + c * su * (w / 2 - 0.05) - s * sv * (d / 2 - 0.05),
+      y + s * su * (w / 2 - 0.05) + c * sv * (d / 2 - 0.05),
+      z0,
+      0.14,
+      0.14,
+      h,
+      ang,
+    );
+}
+// Roof edge guard rail inset from a ring.
+function roofRail(kit, batch, m, ring, z, inset = 0.6, h = 1.1) {
+  const r = kit.offsetRing(ring, -inset);
+  for (let k = 0; k < r.length; k++) {
+    const p = r[k],
+      q = r[(k + 1) % r.length];
+    const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
+    if (len < 0.5) continue;
+    const ang = Math.atan2(q[1] - p[1], q[0] - p[0]);
+    kit.box(batch, m, (p[0] + q[0]) / 2, (p[1] + q[1]) / 2, z + h - 0.05, len, 0.05, 0.05, ang);
+    kit.box(batch, m, (p[0] + q[0]) / 2, (p[1] + q[1]) / 2, z + h / 2, len, 0.04, 0.04, ang);
+    const n = Math.max(1, Math.round(len / 1.6));
+    for (let i = 0; i <= n; i++)
+      kit.box(
+        batch,
+        m,
+        p[0] + ((q[0] - p[0]) * i) / n,
+        p[1] + ((q[1] - p[1]) * i) / n,
+        z,
+        0.05,
+        0.05,
+        h,
+        ang,
+      );
+  }
+}
+// Extract flue with a conical rain cap (lathe) at (x, y) from z0 to z0 + h.
+function flue(THREE, batch, m, x, y, z0, h, r = 0.35) {
+  const g = new THREE.LatheGeometry(
+    [
+      [0.001, 0],
+      [r, 0],
+      [r, h],
+      [r * 1.25, h + 0.05],
+      [r * 1.25, h + 0.12],
+      [r * 1.7, h + 0.35],
+      [r * 1.7, h + 0.4],
+      [0.001, h + 0.7],
+    ].map(([a, b]) => new THREE.Vector2(a, b)),
+    10,
+  ).rotateX(Math.PI / 2);
+  batch.addGeometry(m, g, new THREE.Matrix4().makeTranslation(x, y, z0));
+  g.dispose();
+}
+// Sign panel material with text.
+function signMaterial(
+  kit,
+  key,
+  text,
+  { bg = '#1e2a36', fg = '#f4f1ea', w = 512, h = 64, font = 'bold 34px sans-serif' } = {},
+) {
+  return kit.paintedMaterial(key, w, h, (c, W, H) => {
+    c.fillStyle = bg;
+    c.fillRect(0, 0, W, H);
+    c.fillStyle = fg;
+    c.font = font;
+    c.textAlign = 'center';
+    c.textBaseline = 'middle';
+    c.fillText(text, W / 2, H / 2 + 2);
+  });
+}
+// ---- end detail helpers ----
 
 // Segment of a circle (chord w, rise) as a slab of depth d (centred on y), base at z=0.
 function segmentSlab(THREE, w, rise, d) {
@@ -180,8 +479,8 @@ export default {
     },
   ],
   notes:
-    'Eaves raised to 11.1 m (three tall storeys over a low plinth) with a 5 m hipped roof; the Overture height 10.4 m is inferred from floors. Bay count (7 x 4), door position and dormer sizes are proportioned from the listing text, not measured.',
-  build({ THREE, kit, buildings }) {
+    'Eaves raised to 11.1 m (three tall storeys over a low plinth) with a 5 m hipped roof; the Overture height 10.4 m is inferred from floors. Bay count (7 x 4), door position and dormer sizes are proportioned from the listing text, not measured. Refinement: real recessed sash windows (glazing bars, meeting rails, stone sills, gauged brick flat arches with keystones, rubbed-brick aprons, 3D louvred shutters), stone doorcase with pilasters and segmental hood over steps, stone quoins, modillion eaves cornice with bed mould, dormers with framed casements, corbelled stacks with pots, dwarf wall and railings with a gate; the rear and end windows repeat the front pattern without shutters (assumption).',
+  build({ THREE, kit, buildings, placeAssets }) {
     const ring = ccw(buildings[0].polys[0][0]);
     // Main front: the long edge whose outward normal points most to the south.
     const es = ringEdges(ring);
@@ -193,85 +492,217 @@ export default {
       D = v1 - v0,
       um = (u0 + u1) / 2,
       vm = (v0 + v1) / 2;
+    const outer = new THREE.Group();
     const g = new THREE.Group();
     g.rotation.z = ang; // local (u, v) -> world
+    outer.add(g);
     const b = new kit.MeshBatch();
-    const brick = kit.mat('#9a4a36'),
-      stone = kit.mat('portland_stone'),
-      white = kit.mat('white'),
+    const stone = kit.mat('#d9d0bb'),
+      stone2 = kit.mat('#cfc5ad'),
+      white = kit.mat('#f3f0e8'),
       roofM = kit.roof('clay', 2),
       dark = kit.mat('dark_glass'),
-      stackM = kit.mat('#8a4433');
+      stackM = kit.mat('#8a4433'),
+      rubbed = kit.mat('#b65d44'),
+      brickPlain = kit.mat('#93483a'),
+      lead = kit.mat('lead'),
+      doorM = kit.mat('#263229'),
+      iron = kit.mat('#1d2022', { roughness: 0.5 }),
+      potM = kit.mat('#b6693f');
     const storey = 3.4,
       base = 0.9,
       eave = base + 3 * storey,
       rise = 5.0;
-    const bay = L / 7;
-    const facadeM = kit.paintedMaterial('imperial_170qg:bay', 512, 256, (c, w, h) => {
+    const brickM = kit.paintedMaterial('imperial_170qg:brick', 512, 256, (c, w, h) => {
       const r = kit.rng(0.1702);
       brickCourses(c, w, h, r, '#9a4a36', 3);
-      const cw = w / 4,
-        ch = h / 2;
-      for (let j = 0; j < 2; j++)
-        for (let i = 0; i < 4; i++) {
-          const x = i * cw,
-            y = j * ch;
-          const ww = cw * 0.36,
-            wh = ch * 0.6,
-            wx = x + (cw - ww) / 2,
-            wy = y + ch * 0.2;
-          // Gauged rubbed-brick head and apron in brighter brick.
-          c.fillStyle = '#c0644a';
-          c.fillRect(wx - 6, wy - 12, ww + 12, 11);
-          c.fillRect(wx - 3, wy + wh + 3, ww + 6, ch * 0.12);
-          c.fillStyle = 'rgba(0,0,0,0.25)';
-          for (let k = 0; k < 8; k++) c.fillRect(wx - 6 + ((ww + 12) * k) / 8, wy - 12, 1, 11);
-          // Louvred shutters.
-          c.fillStyle = '#3d4a3f';
-          c.fillRect(wx - ww * 0.42 - 3, wy, ww * 0.38, wh);
-          c.fillRect(wx + ww + 5, wy, ww * 0.38, wh);
-          c.fillStyle = 'rgba(255,255,255,0.12)';
-          for (let k = wy; k < wy + wh; k += 3) {
-            c.fillRect(wx - ww * 0.42 - 3, k, ww * 0.38, 1);
-            c.fillRect(wx + ww + 5, k, ww * 0.38, 1);
-          }
-          sash(c, wx, wy, ww, wh, r, { panesX: 3, panesY: 3, bar: 2.5 });
-        }
+      // Flemish bond headers slightly darker
+      c.fillStyle = 'rgba(40,10,5,0.12)';
+      for (let y = 0; y < h; y += 3)
+        for (let x = (y / 3) % 2 ? 0 : 4; x < w; x += 8) c.fillRect(x, y, 3, 2);
     });
-    // Plinth (stone), brick walls with painted sashes.
+    const shutterM = kit.paintedMaterial('imperial_170qg:shutter', 64, 128, (c, w, h) => {
+      c.fillStyle = '#3a4a3c';
+      c.fillRect(0, 0, w, h);
+      c.fillStyle = 'rgba(255,255,255,0.16)';
+      for (let y = 4; y < h - 4; y += 4) c.fillRect(4, y, w - 8, 1.5);
+      c.fillStyle = 'rgba(0,0,0,0.35)';
+      c.fillRect(0, 0, 4, h);
+      c.fillRect(w - 4, 0, 4, h);
+      c.fillRect(0, h / 2 - 2, w, 4);
+    });
     const rect = [
       [u0, v0],
       [u1, v0],
       [u1, v1],
       [u0, v1],
     ];
-    kit.walls(b, stone, [[rect]], 0, base);
-    for (const e of ringEdges(rect))
-      wallQuad(b, facadeM, e.a, e.b, base, eave, {
-        bay: e.len > 20 ? bay : D / 4,
-        storey,
-        uvBase: base,
+    const edges = ringEdges(rect);
+    const fe = edges[0]; // front (normal -v)
+    // Plinth (stone) and string course over it.
+    kit.walls(b, stone2, [[kit.offsetRing(rect, 0.06)]], 0, base);
+    kit.cornice(b, stone, rect, base - 0.12, { height: 0.18, projection: 0.12 });
+    // Brick walls punched with recessed sash windows.
+    const doorT = L / 2;
+    const win = [
+      { zb: base + 0.75, h: 2.35 },
+      { zb: base + storey + 0.65, h: 2.5 },
+      { zb: base + 2 * storey + 0.6, h: 1.95 },
+    ];
+    for (const e of edges) {
+      const nb = e.len > 20 ? 7 : 4;
+      const holes = [];
+      win.forEach((w, s) => {
+        for (const h of bayHoles(e, nb, 1.28, w.zb, w.zb + w.h, {
+          margin: 0.9,
+          skip: (k) => e === fe && s === 0 && k === 3,
+        }))
+          holes.push({ ...h, s });
       });
-    // String courses and quoins in stone.
-    band(kit, b, stone, rect, base + storey - 0.1, 0.22, 0.08);
-    band(kit, b, stone, rect, base - 0.12, 0.18, 0.1);
-    for (const [cu, cv] of rect)
-      for (let z = base, k = 0; z < eave - 0.3; z += 0.6, k++) {
-        const w1 = k % 2 ? 0.9 : 0.55;
-        kit.box(b, stone, cu, cv, z, w1, w1, 0.58);
-      }
-    // White modillion eaves cornice.
-    band(kit, b, white, rect, eave - 0.35, 0.55, 0.5);
-    for (const e of ringEdges(kit.offsetRing(rect, 0.3))) {
-      const n = Math.round(e.len / 0.7);
-      for (let i = 0; i < n; i++) {
-        const p = pointOn(e, (i + 0.5) * (e.len / n));
-        kit.box(b, white, p[0], p[1], eave - 0.6, 0.18, 0.5, 0.25, e.ang);
+      if (e === fe)
+        holes.push({
+          t0: doorT - 0.8,
+          t1: doorT + 0.8,
+          zb: base,
+          zt: base + 2.85,
+          door: true,
+          d: 0.35,
+        });
+      punchedWall(b, brickM, brickPlain, e, base, eave, holes, {
+        d: 0.24,
+        tile: [e.len > 20 ? L : D, 2 * storey],
+        uvBase: base,
+        back: dark,
+      });
+      for (const h of holes) {
+        const w = h.t1 - h.t0,
+          tm = (h.t0 + h.t1) / 2;
+        if (h.door) {
+          // Panelled door with a radial fanlight under a stone doorcase.
+          boxOn(kit, b, doorM, e, tm, -0.33, h.zb, w - 0.1, 0.06, 2.3);
+          for (const s of [-1, 1])
+            for (const z of [0.25, 1.25])
+              boxOn(
+                kit,
+                b,
+                kit.mat('#2f3d33'),
+                e,
+                tm + s * 0.36,
+                -0.29,
+                h.zb + z,
+                0.55,
+                0.03,
+                0.85,
+              );
+          boxOn(kit, b, white, e, tm, -0.3, h.zb + 2.3, w - 0.1, 0.1, 0.1);
+          boxOn(kit, b, dark, e, tm, -0.33, h.zb + 2.4, w - 0.1, 0.04, 0.45);
+          for (let i = -2; i <= 2; i++)
+            boxOn(kit, b, white, e, tm + i * 0.28, -0.31, h.zb + 2.4, 0.04, 0.04, 0.45);
+          // pilasters, entablature and segmental hood
+          for (const s of [-1, 1]) {
+            boxOn(kit, b, stone, e, tm + s * 1.15, 0.12, base, 0.42, 0.24, 2.85);
+            boxOn(kit, b, stone, e, tm + s * 1.15, 0.14, base + 2.8, 0.55, 0.3, 0.2);
+            boxOn(kit, b, stone, e, tm + s * 1.15, 0.14, base, 0.55, 0.3, 0.25);
+          }
+          boxOn(kit, b, stone, e, tm, 0.16, base + 3.0, 3.0, 0.34, 0.3);
+          const ped = segmentSlab(THREE, 3.2, 0.5, 0.42);
+          const p = [e.a[0] + e.tx * tm + e.nx * 0.2, e.a[1] + e.ty * tm + e.ny * 0.2];
+          b.addGeometry(stone, ped, new THREE.Matrix4().makeTranslation(p[0], p[1], base + 3.3));
+          ped.dispose();
+          stepsOn(kit, b, stone2, e, tm, 2.6, 5, { rise: base / 5, tread: 0.34 });
+          continue;
+        }
+        fitWindow(kit, b, e, h, { d: 0.24, glass: dark, frame: white, sill: white, bars: 2 });
+        // meeting rail of the sash
+        const dd = 0.2;
+        boxOn(kit, b, white, e, tm, -dd + 0.06, h.zb + (h.zt - h.zb) * 0.52, w - 0.08, 0.08, 0.07);
+        // stone sill, gauged brick flat arch with keystone, rubbed-brick apron
+        boxOn(kit, b, stone, e, tm, 0.06, h.zb - 0.12, w + 0.3, 0.2, 0.12);
+        boxOn(kit, b, rubbed, e, tm, 0.025, h.zt, w + 0.32, 0.05, 0.4);
+        boxOn(kit, b, stone, e, tm, 0.04, h.zt - 0.02, 0.26, 0.08, 0.46);
+        if (h.s < 2) boxOn(kit, b, rubbed, e, tm, 0.02, h.zb - 0.62, w - 0.1, 0.04, 0.5);
+        // louvred shutters folded back beside the front and Queen's Gate windows
+        if (e === fe || e === edges[3])
+          for (const s of [-1, 1])
+            boxOn(
+              kit,
+              b,
+              shutterM,
+              e,
+              tm + s * (w / 2 + 0.33),
+              0.04,
+              h.zb,
+              0.58,
+              0.05,
+              h.zt - h.zb,
+            );
       }
     }
-    // Hipped tiled roof.
+    // String course at first floor and stone quoins.
+    kit.cornice(b, stone, rect, base + storey - 0.1, { height: 0.22, projection: 0.08 });
+    for (const [cu, cv] of rect)
+      for (let z = base, k = 0; z < eave - 0.6; z += 0.6, k++) {
+        const w1 = k % 2 ? 0.95 : 0.6;
+        kit.box(b, k % 3 ? stone : stone2, cu, cv, z + 0.01, w1, w1, 0.56);
+      }
+    // White modillion eaves cornice with bed mould and fascia.
+    kit.cornice(b, white, rect, eave - 0.75, { height: 0.25, projection: 0.12 });
+    kit.cornice(b, white, rect, eave - 0.35, { height: 0.55, projection: 0.55, steps: 3 });
+    for (const e of ringEdges(kit.offsetRing(rect, 0.28))) {
+      const n = Math.round(e.len / 0.55);
+      for (let i = 0; i < n; i++) {
+        const p = pointOn(e, (i + 0.5) * (e.len / n));
+        kit.box(b, white, p[0], p[1], eave - 0.6, 0.16, 0.48, 0.25, e.ang);
+      }
+    }
+    // Hipped tiled roof with lead hips and ridge.
     const roofRing = kit.offsetRing(rect, 0.15);
-    kit.pitchedRoof(b, roofM, brick, roofRing, 0, eave + 0.2, rise, 'hipped', { overhang: 0.3 });
+    const pr = kit.pitchedRoof(b, roofM, brickPlain, roofRing, 0, eave + 0.2, rise, 'hipped', {
+      overhang: 0.3,
+    });
+    const ridgeZ = eave + 0.2 + rise;
+    const ridgeM = kit.mat('#7a3a2a');
+    {
+      const [r0, r1] = pr.ridge;
+      kit.box(
+        b,
+        ridgeM,
+        (r0[0] + r1[0]) / 2,
+        (r0[1] + r1[1]) / 2,
+        ridgeZ - 0.08,
+        Math.hypot(r1[0] - r0[0], r1[1] - r0[1]) + 0.2,
+        0.3,
+        0.22,
+        0,
+      );
+      // hip rolls
+      const ee = pr.e;
+      const corners = [
+        [ee.u0 - 0.3, ee.v0 - 0.3, r0],
+        [ee.u1 + 0.3, ee.v0 - 0.3, r1],
+        [ee.u1 + 0.3, ee.v1 + 0.3, r1],
+        [ee.u0 - 0.3, ee.v1 + 0.3, r0],
+      ];
+      for (const [cu, cv, r] of corners) {
+        const p = [cu, cv, eave + 0.2];
+        const dx = r[0] - p[0],
+          dy = r[1] - p[1],
+          dz = r[2] - p[2];
+        const len = Math.hypot(dx, dy, dz);
+        const geo = new THREE.CylinderGeometry(0.11, 0.11, len, 6);
+        const q = new THREE.Quaternion().setFromUnitVectors(
+          new THREE.Vector3(0, 1, 0),
+          new THREE.Vector3(dx / len, dy / len, dz / len),
+        );
+        const m = new THREE.Matrix4().compose(
+          new THREE.Vector3(p[0] + dx / 2, p[1] + dy / 2, p[2] + dz / 2),
+          q,
+          new THREE.Vector3(1, 1, 1),
+        );
+        b.addGeometry(ridgeM, geo, m);
+        geo.dispose();
+      }
+    }
     const half = D / 2 + 0.45;
     const slopeZ = (d) => eave + 0.2 + (rise * d) / half; // d: inwards from the eave line
     // Dormers on the front and back slopes.
@@ -282,26 +713,49 @@ export default {
       const depth = 2.4;
       const vc = vFace - (face * depth) / 2;
       kit.box(b, white, u, vc, zb, w, depth, h);
-      // cheeks in tile colour
-      kit.box(b, roofM, u - w / 2 - 0.05, vc - face * 0.1, zb, 0.12, depth, h);
-      kit.box(b, roofM, u + w / 2 + 0.05, vc - face * 0.1, zb, 0.12, depth, h);
-      // windows (Serlian = central arched light with side lights)
-      const vf = vFace + face * 0.04;
+      kit.box(b, lead, u - w / 2 - 0.05, vc - face * 0.1, zb, 0.12, depth, h);
+      kit.box(b, lead, u + w / 2 + 0.05, vc - face * 0.1, zb, 0.12, depth, h);
+      // pilaster strips and an apron in white joinery
+      for (const s of [-1, 1])
+        kit.box(b, white, u + s * (w / 2 - 0.12), vFace + face * 0.06, zb, 0.24, 0.12, h);
+      const fa = (x0, x1) => [
+        [x0, vFace + face * 0.02],
+        [x1, vFace + face * 0.02],
+      ];
+      const win = (x0, x1, z, hh, head) => {
+        const [A, B] = face < 0 ? fa(x0, x1) : fa(x1, x0);
+        kit.windowRow(b, A, B, z, {
+          count: 1,
+          margin: 0,
+          width: Math.abs(x1 - x0),
+          height: hh,
+          head,
+          glass: dark,
+          frame: white,
+          sill: white,
+          bars: 1,
+          depth: 0.1,
+        });
+      };
       if (kind === 'serlian') {
-        const ch = h - 1.5;
-        kit.box(b, dark, u, vf, zb + 0.35, w * 0.3, 0.05, ch);
-        kit.box(b, dark, u - w * 0.32, vf, zb + 0.35, w * 0.17, 0.05, ch * 0.75);
-        kit.box(b, dark, u + w * 0.32, vf, zb + 0.35, w * 0.17, 0.05, ch * 0.75);
-        const arch = segmentSlab(THREE, w * 0.3, w * 0.15, 0.05);
-        b.addGeometry(
-          dark,
-          arch,
-          new THREE.Matrix4().makeTranslation(u, vf + 0.025, zb + 0.35 + ch),
-        );
-        arch.dispose();
-      } else kit.box(b, dark, u, vf, zb + 0.35, w * 0.6, 0.05, h - 0.8);
+        const ch = h - 1.6;
+        win(u - w * 0.14, u + w * 0.14, zb + 0.45, ch - w * 0.14, 'arch');
+        win(u - w * 0.4, u - w * 0.22, zb + 0.45, ch * 0.72, 'lintel');
+        win(u + w * 0.22, u + w * 0.4, zb + 0.45, ch * 0.72, 'lintel');
+        for (const s of [-1, 1])
+          kit.box(
+            b,
+            white,
+            u + s * w * 0.18,
+            vFace + face * 0.1,
+            zb + 0.45,
+            0.14,
+            0.14,
+            ch * 0.72 + 0.1,
+          );
+      } else win(u - w * 0.3, u + w * 0.3, zb + 0.4, h - 1.0, 'none');
       // lead roof behind and a curved (segmental) pediment over the front
-      kit.box(b, kit.mat('lead'), u, vc, zb + h, w + 0.2, depth, 0.15);
+      kit.box(b, lead, u, vc, zb + h, w + 0.2, depth, 0.15);
       const ped = segmentSlab(THREE, w + 0.5, Math.min(1.1, w * 0.28), 0.5);
       b.addGeometry(
         white,
@@ -309,40 +763,124 @@ export default {
         new THREE.Matrix4().makeTranslation(u, vFace - face * 0.15, zb + h - 0.05),
       );
       ped.dispose();
+      kit.box(b, white, u, vFace - face * 0.1, zb + h - 0.2, w + 0.5, 0.6, 0.2);
     };
+    const bay = (L - 1.8) / 7;
     dormer(um, 4.6, 3.3, -1, 'serlian');
-    dormer(u0 + bay * 1.5, 2.0, 2.3, -1, 'seg');
-    dormer(u1 - bay * 1.5, 2.0, 2.3, -1, 'seg');
+    dormer(u0 + 0.9 + bay * 1.5, 2.0, 2.3, -1, 'seg');
+    dormer(u1 - 0.9 - bay * 1.5, 2.0, 2.3, -1, 'seg');
     dormer(um, 2.0, 2.3, 1, 'seg');
-    // Tall brick stacks with stone caps rising well above the ridge.
-    const ridgeZ = eave + 0.2 + rise;
-    const stack = (u, v, w, d) => {
-      kit.box(b, stackM, u, v, eave, w, d, ridgeZ + 3.2 - eave);
-      kit.box(b, stone, u, v, ridgeZ + 3.2, w + 0.3, d + 0.3, 0.35);
-      for (let i = 0; i < 3; i++) {
-        const p = new THREE.CylinderGeometry(0.15, 0.18, 0.7, 6).rotateX(Math.PI / 2);
+    dormer(u0 + 0.9 + bay * 1.5, 2.0, 2.3, 1, 'seg');
+    dormer(u1 - 0.9 - bay * 1.5, 2.0, 2.3, 1, 'seg');
+    // Tall brick stacks with corbelled caps and clay pots rising well above the ridge.
+    const pot = new THREE.LatheGeometry(
+      [
+        [0.001, 0],
+        [0.2, 0],
+        [0.17, 0.08],
+        [0.15, 0.55],
+        [0.19, 0.62],
+        [0.19, 0.7],
+        [0.14, 0.72],
+        [0.001, 0.72],
+      ].map(([r, z]) => new THREE.Vector2(r, z)),
+      8,
+    ).rotateX(Math.PI / 2);
+    const stack = (u, v, w, d, np) => {
+      kit.box(b, stackM, u, v, eave, w, d, ridgeZ + 3.0 - eave);
+      // recessed panels on the faces
+      kit.box(b, kit.mat('#7c3c2e'), u, v, ridgeZ - 0.5, w + 0.04, d - 0.5, 2.6);
+      kit.box(b, kit.mat('#7c3c2e'), u, v, ridgeZ - 0.5, w - 0.5, d + 0.04, 2.6);
+      kit.box(b, stackM, u, v, ridgeZ + 2.75, w + 0.2, d + 0.2, 0.15);
+      kit.box(b, stone, u, v, ridgeZ + 2.9, w + 0.36, d + 0.36, 0.22);
+      kit.box(b, stackM, u, v, ridgeZ + 3.12, w + 0.1, d + 0.1, 0.25);
+      for (let i = 0; i < np; i++) {
+        const t = np === 1 ? 0 : -0.5 + i / (np - 1);
+        const long = w >= d;
         b.addGeometry(
-          kit.mat('terracotta'),
-          p,
-          new THREE.Matrix4().makeTranslation(u - w / 3 + (i * w) / 3, v, ridgeZ + 3.9),
+          potM,
+          pot,
+          new THREE.Matrix4().makeTranslation(
+            u + (long ? t * (w - 0.5) : 0),
+            v + (long ? 0 : t * (d - 0.5)),
+            ridgeZ + 3.37,
+          ),
         );
-        p.dispose();
       }
     };
-    stack(u0 + D / 2 - 0.2, vm, 2.6, 1.3);
-    stack(u1 - D / 2 + 0.2, vm, 2.6, 1.3);
-    stack(u0 + 0.9, vm + 3.2, 1.2, 2.4);
-    stack(u1 - 0.9, vm - 3.2, 1.2, 2.4);
-    // Stone doorcase with segmental hood at the centre of the front, and area railing.
-    kit.box(b, stone, um, v0 - 0.25, 0, 2.8, 0.5, 3.9);
-    kit.box(b, kit.mat('#2d3530'), um, v0 - 0.52, base, 1.4, 0.06, 2.6);
-    kit.box(b, stone, um, v0 - 0.9, 3.8, 3.4, 1.4, 0.3);
-    kit.box(b, stone, um, v0 - 1.0, 0, 2.6, 1.6, base - 0.1);
-    for (let u = u0 - 0.5; u <= u1 + 0.5; u += 0.25)
-      if (Math.abs(u - um) > 1.4) kit.box(b, kit.mat('black'), u, v0 - 1.8, 0, 0.04, 0.04, 1.1);
-    kit.box(b, kit.mat('black'), um - L / 4 - 0.4, v0 - 1.8, 1.05, L / 2 - 2, 0.06, 0.06);
-    kit.box(b, kit.mat('black'), um + L / 4 + 0.4, v0 - 1.8, 1.05, L / 2 - 2, 0.06, 0.06);
+    stack(u0 + D / 2 - 0.2, vm, 2.6, 1.3, 4);
+    stack(u1 - D / 2 + 0.2, vm, 2.6, 1.3, 4);
+    stack(u0 + 0.9, vm + 3.2, 1.2, 2.4, 2);
+    stack(u1 - 0.9, vm - 3.2, 1.2, 2.4, 2);
+    pot.dispose();
+    // Rainwater downpipes with hoppers at the corners of the front and back.
+    for (const [cu, cv, sv] of [
+      [u0 + 1.2, v0, -1],
+      [u1 - 1.2, v0, -1],
+      [u0 + 1.2, v1, 1],
+      [u1 - 1.2, v1, 1],
+    ]) {
+      kit.box(b, iron, cu, cv + sv * 0.08, 0, 0.1, 0.1, eave - 0.6);
+      kit.box(b, iron, cu, cv + sv * 0.12, eave - 1.0, 0.32, 0.22, 0.35);
+    }
+    // Dwarf wall with stone coping and railings along the front; gate on the door axis.
+    const rv = v0 - 2.4;
+    for (const [a0, a1] of [
+      [u0 - 0.6, um - 1.3],
+      [um + 1.3, u1 + 0.6],
+    ]) {
+      kit.box(b, brickPlain, (a0 + a1) / 2, rv, 0, a1 - a0, 0.34, 0.5);
+      kit.box(b, stone, (a0 + a1) / 2, rv, 0.5, a1 - a0 + 0.04, 0.42, 0.1);
+      railing(kit, b, iron, [a0, rv], [a1, rv], 0.6, { h: 1.0, spacing: 0.14 });
+    }
+    for (const s of [-1, 1]) {
+      kit.box(b, stone2, um + s * 1.45, rv, 0, 0.5, 0.5, 1.6);
+      kit.box(b, stone, um + s * 1.45, rv, 1.6, 0.62, 0.62, 0.14);
+      const ball = new THREE.SphereGeometry(0.2, 10, 6);
+      b.addGeometry(stone, ball, new THREE.Matrix4().makeTranslation(um + s * 1.45, rv, 1.94));
+      ball.dispose();
+    }
+    railing(kit, b, iron, [um - 1.15, rv], [um + 1.15, rv], 0, { h: 1.5, spacing: 0.12 });
+    // York stone path from gate to steps, gravel strips either side.
+    kit.box(
+      b,
+      kit.mat('#bdb4a0'),
+      um,
+      (rv + v0 - 1.7) / 2,
+      0,
+      2.2,
+      Math.abs(rv - (v0 - 1.7)),
+      0.05,
+    );
+    kit.box(
+      b,
+      kit.mat('#a9a08a'),
+      (u0 - 0.6 + um - 1.2) / 2,
+      (rv + v0) / 2,
+      0,
+      um - 1.2 - u0 + 0.6,
+      Math.abs(rv - v0) - 0.3,
+      0.035,
+    );
+    kit.box(
+      b,
+      kit.mat('#a9a08a'),
+      (um + 1.2 + u1 + 0.6) / 2,
+      (rv + v0) / 2,
+      0,
+      u1 + 0.6 - um - 1.2,
+      Math.abs(rv - v0) - 0.3,
+      0.035,
+    );
     g.add(b.toGroup('imperial_170_queens_gate'));
-    return g;
+    // Two lamp standards flanking the gate (scene coordinates).
+    const W = (u, v) => ex.at(u, v, 0);
+    const pl = [W(um - 2.2, rv - 0.6), W(um + 2.2, rv - 0.6)].map((p) => [
+      p[0],
+      p[1],
+      ang + Math.PI,
+    ]);
+    if (placeAssets) outer.add(placeAssets('street_lamp', pl));
+    return outer;
   },
 };
