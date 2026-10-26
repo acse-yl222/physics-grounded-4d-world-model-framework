@@ -187,6 +187,36 @@
     "notes": "House walls follow the Overture outline; storey heights (podium 5.6 m, cornice 16 m) are proportioned, not measured (Overture h = 20 m includes roof structures). Window rhythm is a painted 3.3 m bay; the west Waterloo Gallery skylight and chimneys are approximate. Screen column count/spacing and heights estimated from its footprint."
   },
   {
+    "id": "baden_powell_house",
+    "name": "Baden-Powell House",
+    "claims": [
+      "b373c8a0-3122-4412-9c52-159abb298444"
+    ],
+    "references": [
+      {
+        "title": "Baden-Powell House - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Baden-Powell_House",
+        "used_for": "Ralph Tubbs, modern style; site at Cromwell Road / Queen's Gate bought 1956; foundation stone 1959; opened 1961; Don Potter statue; later use"
+      },
+      {
+        "title": "Baden-Powell House, London - Discover with Timothy",
+        "url": "https://penang-traveltips.com/europe/uk/england/london/baden-powell-house.htm",
+        "used_for": "six-storey building"
+      },
+      {
+        "title": "Baden-Powell House, 65-67 Queen's Gate, seen from the east - RIBApix",
+        "url": "https://www.architecture.com/image-library/ribapix/image-information/poster/badenpowell-house-6567-queens-gate-south-kensington-london-seen-from-the-east/posterid/RIBA61695.html",
+        "used_for": "Modern Movement; main front seen from Queen's Gate"
+      },
+      {
+        "title": "Statue of Robert Baden-Powell, Gilwell Park - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Statue_of_Robert_Baden-Powell,_Gilwell_Park",
+        "used_for": "statue formerly in front of the house, now at Gilwell Park (not modelled)"
+      }
+    ],
+    "notes": "No material description was found: the facade is modelled as a pale concrete frame with continuous ribbon windows and buff brick spandrels, a recessed glazed ground floor and a glazed entrance on Queen's Gate, which is an interpretation of the Modern Movement style rather than a traced elevation. Six storeys (4.4 m ground, 5 x 3.0 m) give 19.4 m plus plant (Overture 14.7 m is low). Rooftop plant room position is assumed."
+  },
+  {
     "id": "battersea_bridge",
     "name": "Battersea Bridge",
     "claims": [],
@@ -706,6 +736,26 @@
     "notes": "Footprint and 16.9 m height from Overture; atrium position/size (about 120 x 28 m along the long axis) and the vaulted ETFE roof are inferred from descriptions, not measured. Cladding colour (light panels with blue-grey window bands) is approximate: no returned source specified the materials."
   },
   {
+    "id": "cheval_hyde_park_gate",
+    "name": "Cheval Hyde Park Gate (2-4 Hyde Park Gate)",
+    "claims": [
+      "c104e4b5-ae7c-4e02-956f-0d530c7a9a34"
+    ],
+    "references": [
+      {
+        "title": "Cheval Hyde Park Gate - About us (Cheval Collection)",
+        "url": "https://www.chevalcollection.com/cheval-hyde-park-gate/about-us/",
+        "used_for": "stucco-fronted period building of the mid-1840s by Grissell and Peto; acquired 1995"
+      },
+      {
+        "title": "Cheval Hyde Park Gate - contact us",
+        "url": "https://www.chevalcollection.com/cheval-hyde-park-gate/contact-us/",
+        "used_for": "address 2-4 Hyde Park Gate SW7 5EW"
+      }
+    ],
+    "notes": "Elevations follow the Kensington stucco house type: raised ground floor with rustication, Doric porches, a first-floor balcony, moulded surrounds, cornice and a slated mansard with dormers. Storey heights are assumed (cornice ~15 m, mansard to ~18.5 m vs Overture 19.2 m). The Queen's Gate (east) return is treated as stucco as well; porch positions, window rhythm and chimneys are assumptions."
+  },
+  {
     "id": "city_guilds_building",
     "name": "City & Guilds Building (Imperial College)",
     "claims": [
@@ -729,6 +779,26 @@
       }
     ],
     "notes": "Footprint overlaps the Business School (a07c23b2); the overlapping north-east part is cut out of this model so the Business School landmark/generic can occupy it. Height 20 m from the footprint record. 1960s elevations (ribbon windows between concrete spandrel bands over a glazed ground storey between concrete piers) and the 2017 Exhibition Road front (double-height display glazing with the flight simulator, aluminium-finned curtain wall above) are reconstructed from descriptions only; signage text and roof plant are approximate."
+  },
+  {
+    "id": "consulate_general_of_france",
+    "name": "Consulate General of France (21 Cromwell Road)",
+    "claims": [
+      "a79b481d-d1d3-4014-8710-bdfe1202ca8a"
+    ],
+    "references": [
+      {
+        "title": "21-29, Cromwell Road SW7 - British Listed Buildings (Historic England list entry)",
+        "url": "https://britishlistedbuildings.co.uk/101080677-21-29-cromwell-road-sw7-brompton-hans-town-ward",
+        "used_for": "1857 by Johnson for Freake; stucco; four storeys plus attic and basement; Doric porticoes; first-floor balustraded balcony; No 21 has a large 2-storey ballroom wing to Cromwell Place"
+      },
+      {
+        "title": "Embassy of France, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Embassy_of_France,_London",
+        "used_for": "consular section at 21 Cromwell Road"
+      }
+    ],
+    "notes": "Storey heights (raised ground 4.2 m, first 4.2 m, second 3.4 m, third 3.0 m) and a 2.8 m slated mansard are assumed from the listing storey count; Overture h=13.9 m is too low. The split between the main house and the ballroom wing (at ~20 m from Cromwell Road) is estimated from the footprint shape. Window rhythm, porch position, chimney positions and the tricolour flag are assumptions; balcony and cornice profiles are simplified."
   },
   {
     "id": "design_museum",
@@ -769,6 +839,41 @@
       }
     ],
     "notes": "Roof modelled as a ruled saddle surface (straight rulings across, smooth quadratic profile along the axis) through a profile of 17 m at the centre, 24.4 m peaks at the edges of the central section and 21 m at the front/back edge mid-points, falling to 9.1 m at the sides; the true form of the two central hypars and the warps is approximated. Front assumed to face Kensington High Street (north). Facade grid is a painted pattern, not traced."
+  },
+  {
+    "id": "dormition_cathedral",
+    "name": "Cathedral of the Dormition and All Saints",
+    "claims": [
+      "6d46082c-9441-4f42-b99e-1dd229ed5b87"
+    ],
+    "references": [
+      {
+        "title": "Dormition Cathedral, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Dormition_Cathedral,_London",
+        "used_for": "west facade a close copy of San Zeno, Verona; campanile; Russian Orthodox since 1956"
+      },
+      {
+        "title": "Russian Orthodox Church of the Assumption and All Saints - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101066842-russian-orthodox-patriarchial-church-of-the-assumption-of-all-saints-knightsbridge-and-belgravia-ward",
+        "used_for": "Grade II*; 1848-9 L Vulliamy, additions 1887-97 by Townsend; brick with stone west facade; Italian Romanesque; campanile to the south-west; rose window"
+      },
+      {
+        "title": "All Saints, Ennismore Gardens - victorianweb.org",
+        "url": "https://victorianweb.org/victorian/art/architecture/townsend/9.html",
+        "used_for": "campanile to Vulliamy's design c.1860; Heywood Sumner sgraffito and glass 1896-1903"
+      },
+      {
+        "title": "Assumption and All Saints, Ennismore Gardens - London Church Buildings",
+        "url": "https://londonchurchbuildings.com/2013/02/03/assumption-and-all-saints-ennismore-gardens-russian-orthodox-cathedral/",
+        "used_for": "tower added c.1870"
+      },
+      {
+        "title": "Two similar churches, one in Kensington and the other in Wiltshire - Adam Yamey",
+        "url": "https://adam-yamey-writes.com/tag/sourozh/",
+        "used_for": "tall bell tower stands to the right of the facade seen from the street"
+      }
+    ],
+    "notes": "Basilican section (aisles 7.5 m, clerestory 13.5 m, nave ridge 18 m) and campanile height (34 m) are estimates; no dimensions were found. The campanile is placed on the south projection of the footprint about 16 m east of the west front; brick colour, window counts and the south and east additions are assumptions. The San Zeno front is abstracted to pilaster strips, raking corbel arcades, a wheel window, a gabled porch on two columns and a painted sgraffito tympanum. An Orthodox cross is added on the west gable."
   },
   {
     "id": "eighty_eight_wood_lane",
@@ -824,6 +929,26 @@
       }
     ],
     "notes": "No photographs could be downloaded; elevation rhythm (ribbon windows between precast spandrel bands, blank ends with a stair-window strip) is reconstructed from the 1960s Imperial idiom. Height from the footprint record (45.6 m, 14 floors). The north end abuts the Bessemer Building up to its 23 m roof, so that end is blind below it. Ground-floor reception, signage, roof plant, masts and handrails are approximate."
+  },
+  {
+    "id": "embassy_of_oman",
+    "name": "Embassy of Oman (167 Queen's Gate)",
+    "claims": [
+      "91cbae12-a546-410d-8e47-674b013247e5"
+    ],
+    "references": [
+      {
+        "title": "167 Queen's Gate SW7 - British Listed Buildings (Historic England list entry 1266000)",
+        "url": "https://britishlistedbuildings.co.uk/101266000-167-queens-gate-sw7-brompton-hans-town-ward",
+        "used_for": "Grade II*, Mervyn Macartney 1888-9; red brick and stone; five storeys over basement plus one in the roof; stone loggia to the two northern bays; three-storey canted stone bay to the southern bay"
+      },
+      {
+        "title": "Embassy of the Sultanate of Oman, London - Ministry of Foreign Affairs",
+        "url": "https://fm.gov.om/london/",
+        "used_for": "embassy address 167 Queen's Gate SW7 5HE"
+      }
+    ],
+    "notes": "Storey heights (ground 3.8 m above a 1 m basement plinth, then 4.0/3.4/3.0/2.8 m) and a steep slated roof with dormers and tall stacks are assumptions in keeping with the listing (roof storey); Overture 14.8 m is too low. The loggia is modelled over ground and first floors with Tuscan columns and round arches; bay widths, the rear range down the service road and the flag are assumptions."
   },
   {
     "id": "faculty_building",
@@ -1293,6 +1418,36 @@
     "notes": "Volumes follow the Overture building parts (tower 29.6 m incl. pinnacles, nave ridge 20 m, aisles 13.6 m, chancel 16.8 m); wall/eave splits within each part, tower stage heights and pinnacle form are estimated."
   },
   {
+    "id": "holy_trinity_prince_consort_road",
+    "name": "Holy Trinity, Prince Consort Road",
+    "claims": [
+      "ab070de6-26b8-469c-b8de-22499e66180c"
+    ],
+    "references": [
+      {
+        "title": "Church of the Holy Trinity - Historic England list entry 1265499",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1265499",
+        "used_for": "Grade I; 1901-7 by G F Bodley; Bath stone; pitched slate roof behind parapet; five-bay nave, lean-to aisles, extra four-bay north aisle, chancel, Lady Chapel; bell turret on west gable; seven-light east window"
+      },
+      {
+        "title": "Holy Trinity Church, South Kensington - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Holy_Trinity_Church,_South_Kensington",
+        "used_for": "location on Prince Consort Road, date 1901"
+      },
+      {
+        "title": "Holy Trinity Church, Prince Consort Road - victorianweb.org",
+        "url": "https://victorianweb.org/victorian/art/architecture/bodley/2.html",
+        "used_for": "Bodley, Decorated style, dates"
+      },
+      {
+        "title": "Plate 117: Holy Trinity Church, Prince Consort Road - Survey of London vol 38",
+        "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-117",
+        "used_for": "Prince Consort Road elevation"
+      }
+    ],
+    "notes": "The building is aligned with the long (north-south) axis of the footprint, with the liturgical east end and the seven-light window on Prince Consort Road (south) and the west gable with bell turret to the north. Wall height (12.5 m to the parapet), nave ridge (21 m), window sizes, buttress spacing and the flanking stair turrets are estimates; the Lady Chapel and extra north aisle are covered by the footprint walls but not articulated separately. Tracery is simplified to mullions and transoms."
+  },
+  {
     "id": "huxley_building",
     "name": "Huxley Building (Imperial College)",
     "claims": [
@@ -1321,6 +1476,36 @@
       }
     ],
     "notes": "Massing, light wells and the domed rooftop part (32-36 m) come from the footprint record; the dome is drawn as an observatory-style dome with a shutter slit on a ribbed drum. Facade rhythm (dark ribbon windows between heavy exposed-aggregate spandrels, close-set concrete fins on the Queen's Gate front, recessed ground storey on a column line), colours, entrance and roof plant are reconstructions without photographic confirmation. The north face against the Blackett Laboratory is blind below its 20 m roof."
+  },
+  {
+    "id": "hyde_park_chapel",
+    "name": "Hyde Park Chapel (LDS)",
+    "claims": [
+      "19ea7996-da2b-4900-970b-c3195c5b7daf"
+    ],
+    "references": [
+      {
+        "title": "Hyde Park Chapel - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hyde_Park_Chapel",
+        "used_for": "T. P. Bennett and Son; McLaughlin and Harvey; reinforced concrete with Portland stone; four storeys, six-storey tower, 75 ft gold-leaf spire on the tower west face; dalle de verre window by Fourmaintraux"
+      },
+      {
+        "title": "Hyde Park Chapel on Exhibition Road - Heritage Open Days",
+        "url": "https://www.heritageopendays.org.uk/submission-event/hyde-park-chapel-on-exibition-road.html",
+        "used_for": "completed 26 February 1961 at a cost of 300,000 pounds; structure and spire"
+      },
+      {
+        "title": "Hyde Park Chapel - Manchester History (architecture 1960)",
+        "url": "https://manchesterhistory.net/architecture/1960/hydeparkchapel.html",
+        "used_for": "T. P. Bennett & Son, 1961"
+      },
+      {
+        "title": "The strange new chapel - Church of Jesus Christ UK",
+        "url": "https://uk.churchofjesuschrist.org/the-strange-new-chapel",
+        "used_for": "dedication by David O McKay; building history"
+      }
+    ],
+    "notes": "Storey heights (5.0 m ground, 3.6 m above; main parapet 16.2 m, tower 24 m) are estimates from the storey counts (Overture 14.2 m). The tower is placed at the north end of the Exhibition Road front; the spire is a slender gilded square needle from the tower top (23 m, i.e. 75 ft). Stone fin rhythm, window grid, the entrance canopy and the colours of the dalle de verre panel are assumptions."
   },
   {
     "id": "imperial_170_queens_gate",
@@ -1648,6 +1833,76 @@
     "notes": "No facade description found; elevation (concrete mullion fins, dark spandrels, brick ends) is a reconstruction in the 1960s ACP idiom, not traced from photos. Height 23.2 m from Overture (7 floors). Refinement: each 1.6 m bay is a real recessed opening with an aluminium-framed window (centre mullion, transom, opening light) over a recessed dark spandrel panel, between full-height projecting precast fins and floor-edge beams; plain brick returns; the set-back ground floor has a mullioned glazed screen behind columns under the fins, an entrance canopy with a name sign (wording from the 2012 naming, placement assumed) and steps; the roof has a brick plant room with louvre bands, lift motor room, capped extract flues on a frame and guard rails."
   },
   {
+    "id": "institut_francais",
+    "name": "Institut francais du Royaume-Uni",
+    "claims": [
+      "37d2ad54-5ace-4991-a7fc-14ec63d92e17"
+    ],
+    "references": [
+      {
+        "title": "The French Institute, Queensberry Place - British Listed Buildings (Historic England)",
+        "url": "https://britishlistedbuildings.co.uk/101226079-the-french-institute-brompton-hans-town-ward",
+        "used_for": "Grade II; 1937 by A J Thomas, reception suites by Patrice Bonnet 1939; red brick, some cream faience; six bays to Queensberry Place"
+      },
+      {
+        "title": "Institut francais - Open House London",
+        "url": "https://openhouselondon.open-city.org.uk/listings/708",
+        "used_for": "Art Deco building by Patrice Bonnet inaugurated 1939; ceramics and brickwork; materials made in France"
+      },
+      {
+        "title": "The Institut francais du Royaume-Uni: over 110 years of history",
+        "url": "https://institut-francais.org.uk/?p=42897",
+        "used_for": "inauguration by President Albert Lebrun and Princess Mary on 21 March 1939"
+      },
+      {
+        "title": "Institut francais, Queensberry Place: the main entrance - RIBApix",
+        "url": "https://www.architecture.com/image-library/RIBApix/licensed-image/poster/institut-francais-queensberry-place-south-kensington-london-the-main-entrance/posterid/RIBA24638.html",
+        "used_for": "main entrance on Queensberry Place"
+      }
+    ],
+    "notes": "Four storeys (13.6 m Overture height kept). The Queensberry Place front is split into the six-bay Bonnet range (north) with brick piers, tall recessed windows, cream faience bands, frieze and an entrance frame with name lettering, and the plainer Thomas range (south). Bay widths, faience positions, the stepped parapet and the treatment of the rear elevations are assumptions from the listing summary; no photographs could be viewed."
+  },
+  {
+    "id": "ismaili_centre",
+    "name": "The Ismaili Centre, London",
+    "claims": [
+      "6ee5bdcc-1f0d-4623-8d99-a91ca507c14f"
+    ],
+    "references": [
+      {
+        "title": "Ismaili Centre, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Ismaili_Centre,_London",
+        "used_for": "architects Casson Conder, groundbreaking 1979, completion 1985, island site on Cromwell Road"
+      },
+      {
+        "title": "The Ismaili Centre, London - Twentieth Century Society building of the month",
+        "url": "https://c20society.org.uk/building-of-the-month/the-ismaili-centre-london",
+        "used_for": "bow windows between not-quite colonnades on the bottom two floors; floor uses; set-back top floor; limited garden wall height"
+      },
+      {
+        "title": "Ismaili Centre London Cromwell Gardens Building - e-architect",
+        "url": "https://www.e-architect.com/london/ismaili-centre-building",
+        "used_for": "white, light grey and blue granite cladding, stainless steel and teak window frames, roof-top garden"
+      },
+      {
+        "title": "Ismaili Centre: overhanging teak oriels above the entrance - RIBApix",
+        "url": "https://www.architecture.com/image-library/RIBApix/licensed-image/poster/ismaili-centre-cromwell-gardens-south-kensington-london-closeup-of-the-overhanging-teak-oriels-above/posterid/RIBA56894.html",
+        "used_for": "teak oriels above the main entrance"
+      },
+      {
+        "title": "The Ismaili Centre, London - Archnet",
+        "url": "https://archnet.org/sites/3053",
+        "used_for": "palette of whites, light greys and blues compatible with the surrounding buildings"
+      },
+      {
+        "title": "Ismaili Centre London celebrates 35 years - the.ismaili",
+        "url": "https://the.ismaili/global/news/institutional-news/ismaili-centre-london-celebrates-35-years",
+        "used_for": "chamfered corner, chahar bagh roof garden, central fountain and pools"
+      }
+    ],
+    "notes": "Overture h=7.2 m is wrong; storey heights are estimates (ground 5 m, first 3.8 m, second 4.4 m, third/prayer hall 5.8 m to a 19 m garden wall, set-back fourth floor to 22.6 m). The footprint hole is used as the roof garden court. Cladding courses, the pier rhythm (2.6 m), window shapes (paired tall slots with pointed heads) and the oriel count are approximations; the main entrance is placed mid-way along Cromwell Gardens."
+  },
+  {
     "id": "kensal_green_anglican_chapel",
     "name": "Kensal Green Cemetery Anglican Chapel",
     "claims": [
@@ -1811,6 +2066,39 @@
     "notes": "Overture footprint (named \"Metropolitan Building\", h 85 m = chimney height). Eaves (28 m), twin pitched roofs (glazed over the north turbine-hall atrium), bay rhythm and chimney positions (two middle positions of the original row of four, on the creek side) are estimates."
   },
   {
+    "id": "lycee_francais_charles_de_gaulle",
+    "name": "Lycee Francais Charles de Gaulle",
+    "claims": [
+      "8762f98b-5b41-43f5-b050-9d6ffd2e6302",
+      "3d2b0eb6-d24d-40c8-9365-97ca79658a81",
+      "e90474c1-786c-446c-8b99-cbfc1db6ce8c",
+      "12322380-529b-4dfd-8350-8c5b021a762c"
+    ],
+    "references": [
+      {
+        "title": "Lycee Francais Charles de Gaulle - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lyc%C3%A9e_Fran%C3%A7ais_Charles_de_Gaulle",
+        "used_for": "campus on Cromwell Road opposite the NHM backing onto Harrington Road; late-1930s Neo-Georgian purpose-built school by A. J. Thomas"
+      },
+      {
+        "title": "Lycee Francais Charles de Gaulle - Contracts Finder notice (28 March 2022)",
+        "url": "https://www.contractsfinder.service.gov.uk/Notice/f49ed0bf-c415-4f37-9fbc-62daca3015e1",
+        "used_for": "main site of seven heterogeneous buildings dating from 1850 to 1980, two of them listed"
+      },
+      {
+        "title": "The French Institute, Queensberry Place - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101226079-the-french-institute-brompton-hans-town-ward",
+        "used_for": "1937 work by A. J. Thomas in red brick with some cream faience (adjoining school range)"
+      },
+      {
+        "title": "54-66 Cromwell Road - RBKC Listed Buildings Search",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=203735",
+        "used_for": "Cromwell Road stuccoed terrace type"
+      }
+    ],
+    "notes": "Building names are from OpenStreetMap. The Cromwell Road houses are modelled with the generic stucco terrace type (porches, balconies, mansard with dormers) at 19.2 m to the cornice (Overture 22.5 m including roof); no elevation-level description was found, so porch count/positions, bay rhythm and chimneys are assumptions. The Moliere range is modelled as Neo-Georgian red brick with stone ground storey and dressings, five storeys under a parapet and slated roof; its single-storey part (4 m) is a flat-roofed link. Flags are illustrative."
+  },
+  {
     "id": "marble_arch",
     "name": "Marble Arch",
     "claims": [
@@ -1869,6 +2157,36 @@
       }
     ],
     "notes": "Overture gives a simplified trapezoid (15 m Fulham Road front widening to 35 m at the rear) and an inferred 9.3 m height; walls are raised to 13 m (towers 15 m + cupolas) from the building's three tall storeys. Facades are painted reconstructions from descriptions (no photos available here); the Bibendum window and race tiles are schematic."
+  },
+  {
+    "id": "more_house",
+    "name": "More House (51-55 Cromwell Road)",
+    "claims": [
+      "283e1ceb-dad6-4f81-b537-26c57e119b69"
+    ],
+    "references": [
+      {
+        "title": "More House - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/More_House",
+        "used_for": "51-55 Cromwell Road; student residence 1952-2020; 38,000 sq ft"
+      },
+      {
+        "title": "More House refurbishment - Stantec",
+        "url": "https://www.stantec.com/uk/projects/m/more-house-refurbishment",
+        "used_for": "series of 19th-century buildings later opened up and joined together"
+      },
+      {
+        "title": "Studio Moren secures planning for More House in Kensington",
+        "url": "https://europe-re.com/studio-moren-secures-planning-for-more-house-school-in-kensington-gb/71971",
+        "used_for": "restoration with a mansard roof and rear extensions; Queens Gate Conservation Area"
+      },
+      {
+        "title": "59-79 Cromwell Road - RBKC Listed Buildings Search",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=203741",
+        "used_for": "neighbouring Cromwell Road stuccoed terrace with Doric porches (type reference)"
+      }
+    ],
+    "notes": "Facade detail follows the Cromwell Road stucco terrace type (rusticated raised ground floor, Doric porches, first-floor balcony, moulded surrounds, cornice); three porches assumed, one per original house. Storey heights are assumed (cornice ~15.8 m, Overture 13.9 m too low); the new mansard is modelled as a slated mansard with dormers. The stepped rear is shown in stock brick."
   },
   {
     "id": "mrc_clinical_sciences_centre",
@@ -2142,6 +2460,31 @@
     "notes": "Window grid, glazed joints and attic treatment are inferred from the KPF description, not traced from photos. Front halls 20 m from Overture; Keogh (rear range) kept at its Overture 7.2 m with a set-back upper storey, which may understate it. Refinement: limestone garden fronts with real recessed vertical windows (aluminium frames, transom, glass Juliet balustrades, stone sills) in the terrace rhythm, projecting stone piers, string course over a glazed base of recessed shopfront-like windows and an entrance with canopy and steps per hall, recessed full-height glazed joints with mullions, zinc attic with standing seams and punched windows, stone cornice; the stepped buff-brick rear bays and Keogh have punched windows; roof overruns, plant louvres and guard rails; paved strip with benches along the gardens."
   },
   {
+    "id": "queen_alexandras_house",
+    "name": "Queen Alexandra's House",
+    "claims": [
+      "a126239a-bca7-4ee2-95f6-e01a5e196a38"
+    ],
+    "references": [
+      {
+        "title": "Queen Alexandra's House - Historic England (buildings that celebrate working women)",
+        "url": "https://cms.historicengland.org.uk/research/inclusive-heritage/womens-history/buildings-that-celebrate-working-women/queen-alexandras-house",
+        "used_for": "C. P. Clarke and R. Down; hostel for women students of the Royal Colleges; red brick, slate mansard, free Jacobean / Queen Anne; curved frontage with seven full-height canted bays; porch with Ledward terracotta plaques"
+      },
+      {
+        "title": "Survey of London vol 38, Queen Alexandra's House (british-history.ac.uk)",
+        "url": "https://archive.british-history.ac.uk/node/40257",
+        "used_for": "architects Clarke with R. Down, 1884-6"
+      },
+      {
+        "title": "Caspar Purdon Clarke - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Caspar_Purdon_Clarke",
+        "used_for": "architect"
+      }
+    ],
+    "notes": "Four brick storeys (cornice 14.6 m) under a 4.2 m slate mansard with dormers give ~19 m (Overture 19.3 m). The seven canted bays are spaced evenly along the curved south-east frontage (bay width 3.4 m, projection 0.9 m assumed); stone dressings, shaped gables over the bays, chimney positions and the porch location (centre of the frontage) are assumptions. Rear wings are plain brick with sash windows."
+  },
+  {
     "id": "queen_charlottes_chelsea_hospital",
     "name": "Queen Charlotte's & Chelsea Hospital",
     "claims": [
@@ -2230,6 +2573,66 @@
       }
     ],
     "notes": "Height from the data (26.4 m). Pier/bay rhythm and the glazed top storey with north-light roof glazing are approximations from descriptions; the staggered internal section is not modelled."
+  },
+  {
+    "id": "rca_frayling_building",
+    "name": "Royal College of Art – Frayling Building",
+    "claims": [
+      "e61d01da-e542-42c9-acc6-a3a9c44181e3"
+    ],
+    "references": [
+      {
+        "title": "The RCA renames Kensington Common Room Block honouring former rector Frayling - RCA news",
+        "url": "https://www.rca.ac.uk/news-and-events/news/the-rca-renames-kensington-common-room-block-honouring-former-rector-frayling/",
+        "used_for": "Frayling Building is the former Kensington Common Room Block, renamed 2014"
+      },
+      {
+        "title": "Royal College of Art - Survey of London (british-history.ac.uk)",
+        "url": "https://prod.british-history.ac.uk/node/40147",
+        "used_for": "architects Cadbury-Brown with Casson and Goodden; library, refectory and common-rooms block 1962-4 in the south-west of the site, linked by a bridge"
+      },
+      {
+        "title": "Commons block, RCA: the library terrace - RIBApix",
+        "url": "https://www.architecture.com/image-library/ribapix/image-information/poster/commons-block-royal-college-of-art-kensington-gore-london-the-library-terrace-with-a-glimpse-of-the-/posterid/RIBA44585.html",
+        "used_for": "library terrace on the commons block"
+      },
+      {
+        "title": "Royal College of Art - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_College_of_Art",
+        "used_for": "Grade II listing (2001) of the Kensington Gore buildings"
+      }
+    ],
+    "notes": "Materials follow the neighbouring Darwin Building (purple-brown brick piers, exposed-aggregate concrete bands, dark metal windows). Storeys: ground 4.0 m + 4 x 3.3 m to 17.2 m (Overture 17.8 m), with a glazed refectory/top storey set back to form the terrace on the south and west; the bridge link to the Darwin Building is a 2-storey glazed box on the north edge. Bay rhythm (3.2 m) and the entrance on Jay Mews are assumptions."
+  },
+  {
+    "id": "rca_stevens_building",
+    "name": "Royal College of Art – Stevens Building",
+    "claims": [
+      "f28759c7-5a80-4e6c-85f1-bb30dbfdff0c"
+    ],
+    "references": [
+      {
+        "title": "Royal College of Art - Survey of London (british-history.ac.uk)",
+        "url": "https://prod.british-history.ac.uk/node/40147",
+        "used_for": "Cadbury-Brown campus; proposed Queen's Gate extension refused; extension built at the back of the Queen's Gate buildings entered from Jay Mews"
+      },
+      {
+        "title": "Royal College of Art Kensington campus access guides - AccessAble",
+        "url": "https://www.accessable.co.uk/royal-college-of-art/kensington-campus/access-guides?vtag=false",
+        "used_for": "Stevens Building, Kensington Campus, Jay Mews"
+      },
+      {
+        "title": "Key details - RCA honours former rector Frayling (RCA news)",
+        "url": "https://rca.ac.uk/news-and-events/news/rca-honours-former-rector-frayling",
+        "used_for": "Darwin and Stevens buildings named after former rectors Robin Darwin and Jocelyn Stevens"
+      },
+      {
+        "title": "1-19 Queen's Gate SW7 - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101226082-1-19-queens-gate-sw7-queens-gate-ward",
+        "used_for": "stuccoed mid-19th-century terrace type at the north end of Queen's Gate"
+      }
+    ],
+    "notes": "The identification of the Queen's Gate front as converted terrace houses with the Jay Mews extension behind is inferred from the Survey of London account and the stepped (bayed) footprint; no description of the Stevens Building itself was found. The split line (14 m behind the Queen's Gate building line), storey heights (stucco cornice 15.6 m + mansard; extension 16.4 m data height), bay rhythm and materials of the extension are assumptions."
   },
   {
     "id": "roderic_hill_ace",
@@ -2471,6 +2874,26 @@
       }
     ],
     "notes": "RSM storey heights raised above the footprint record (12.9 m) to Edwardian proportions (cornice 14.2 m, ridge ~19.5 m) per the listing (3 storeys + attic). The Prince Consort Road front, centre block and Exhibition Road return have real windows (rusticated ground floor with keystoned openings, architraved first-floor sashes with console hoods, plain second-floor architraves), plinth, string courses, modillion cornice and a balustrade with dies; courtyard elevations keep the painted bay tile. Bay count (30), niche size, the frieze lettering, the area railings and the attic sculpture groups are proportioned/abstracted, not surveyed. The Bessemer elevation pattern (pale spandrel bands, aluminium ribbon glazing) and pink-glass entrance zone are approximate (no photos available)."
+  },
+  {
+    "id": "royal_thai_embassy",
+    "name": "Royal Thai Embassy (29-30 Queen's Gate)",
+    "claims": [
+      "27fa36ff-12c9-4ca1-9d25-f3b54c896adc"
+    ],
+    "references": [
+      {
+        "title": "27-35, Queen's Gate SW7 - British Listed Buildings (Historic England list entry 1226094)",
+        "url": "https://britishlistedbuildings.co.uk/101226094-27-35-queens-gate-sw7-queens-gate-ward",
+        "used_for": "stuccoed mid C19 terrace, plainer without pilasters except Ionic porticos, five storeys and slated mansard"
+      },
+      {
+        "title": "Embassy of Thailand, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Embassy_of_Thailand,_London",
+        "used_for": "embassy at 29-30 Queen's Gate"
+      }
+    ],
+    "notes": "Storey heights (raised ground 4.2 m, then 4.2/3.6/3.2/2.9 m) and a 2.8 m mansard are assumed from the listed storey count (Overture 17.4 m to the parapet is consistent). Ionic porticos are modelled as plain round columns; two porches assumed, one per house; window rhythm (three per house), chimney positions and the national flag are assumptions. The rear (Elvaston Mews) is shown as plain stock brick."
   },
   {
     "id": "sainsbury_wing_hammersmith",
@@ -2851,6 +3274,82 @@
       }
     ],
     "notes": "Massing from the Overture footprint at 20 m (6 floors). Facade grid (slender precast mullions at 1.6 m over continuous slab bands, recessed dark ground storey on a column line), entrance canopy and signage, north-light rooflights and roof plant are reconstructed from the 1960s Norman & Dawbarn idiom; no photograph could be fetched."
+  },
+  {
+    "id": "sorbonne_house",
+    "name": "Sorbonne House",
+    "claims": [
+      "a538afa5-170a-4e50-bcd8-e34ab2a73ada"
+    ],
+    "references": [
+      {
+        "title": "54-66 Cromwell Road - RBKC Listed Buildings Search",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=203735",
+        "used_for": "Cromwell Road houses are stuccoed terraces of the mid to later C19 (type reference)"
+      },
+      {
+        "title": "Lycee Francais Charles de Gaulle - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lyc%C3%A9e_Fran%C3%A7ais_Charles_de_Gaulle",
+        "used_for": "Lycee campus on Cromwell Road opposite the Natural History Museum"
+      }
+    ],
+    "notes": "No listing text for this house was found; the elevation follows the Cromwell Road stucco terrace type (raised ground, balcony on the first floor, moulded surrounds, cornice, mansard attic). Storey heights, the porch on Cromwell Road, window rhythm and chimneys are assumptions; Overture height 16.8 m is used to the cornice."
+  },
+  {
+    "id": "south_kensington_station",
+    "name": "South Kensington station and arcade",
+    "claims": [
+      "ba224f4d-4d76-45b4-a986-8ab89770845e",
+      "a19bd501-a7cf-4b4f-9552-0c6f4f985f0b"
+    ],
+    "references": [
+      {
+        "title": "South Kensington Underground Station - British Listed Buildings (list entry 1392067)",
+        "url": "https://britishlistedbuildings.co.uk/101392067-south-kensington-underground-station-brompton-hans-town-ward",
+        "used_for": "1867-68, altered 1907; Sherrin arcade between Thurloe Street and Pelham Street with glazed barrel-vaulted roof over shops; wrought-iron screens with the station name; Leslie Green frontage on Pelham Street"
+      },
+      {
+        "title": "South Kensington tube station - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/South_Kensington_tube_station",
+        "used_for": "history of the District/Circle and Piccadilly entrances"
+      },
+      {
+        "title": "Exterior of South Kensington Underground station, c 1908 - London Transport Museum",
+        "url": "https://www.ltmuseum.co.uk/collections/collections-online/photographs/item/1998-57400",
+        "used_for": "Edwardian exterior (catalogue record)"
+      },
+      {
+        "title": "RBKC Listed Buildings Search - South Kensington station",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=491726",
+        "used_for": "listing summary"
+      }
+    ],
+    "notes": "Arcade width (6.5 m), vault springing (4.6 m) and its line are taken from the OSM arcade path; shop unit widths, fascia colours, the curved island parapet and the iron screen design are approximations. The Leslie Green block is modelled as two storeys (7.2 m data height) of ox-blood faience with arched ground-floor openings and semicircular first-floor windows on Pelham Street; its upper back is plain. Roundel signs and lettering are painted."
+  },
+  {
+    "id": "st_augustines_queens_gate",
+    "name": "St Augustine's, Queen's Gate",
+    "claims": [
+      "e49f8324-a028-4223-b1ec-c909ec4b0da3"
+    ],
+    "references": [
+      {
+        "title": "Church of St Augustine - British Listed Buildings (Historic England list entry 1226161)",
+        "url": "https://britishlistedbuildings.co.uk/101226161-church-of-st-augustine-courtfield-ward",
+        "used_for": "Butterfield 1865; yellow brick with red and black brick and stone bands; Gothic bellcote flanked by pinnacles at the west end; five-bay aisled nave; polychromy repainted after whitewash"
+      },
+      {
+        "title": "St Augustine's, Queen's Gate - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Augustine%27s,_Queen%27s_Gate",
+        "used_for": "Grade II*, Butterfield, Queen's Gate site"
+      },
+      {
+        "title": "St Augustine's Queen's Gate - victorianweb.org",
+        "url": "https://victorianweb.org/art/architecture/butterfield/16.html",
+        "used_for": "listing text reproduction"
+      }
+    ],
+    "notes": "Church aligned with the footprint long axis (~25 deg), west front on Queen's Gate. Section (aisles 7.5 m, clerestory 15 m, steep roof ridge 23.5 m), the band spacing, window sizes and the bellcote height are estimates; the stepped west footprint edges (porches/buttresses) are walls with buttresses. Polychrome banding is modelled as thin projecting courses of red and black brick and stone on the yellow brick."
   },
   {
     "id": "st_marys_cambridge_wing",
