@@ -23,6 +23,7 @@ def snapshot_sources(root, destination):
                 "urban_geometry",
                 "urban_flow",
                 "traffic",
+                "transit",
                 "uav_routing",
                 "visualization",
             )

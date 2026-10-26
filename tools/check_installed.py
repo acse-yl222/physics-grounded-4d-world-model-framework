@@ -49,6 +49,7 @@ def check():
                 "src/urban_geometry/",
                 "src/urban_flow/",
                 "src/traffic/",
+                "src/transit/",
                 "src/uav_routing/",
                 "src/visualization/",
                 "schemas/",

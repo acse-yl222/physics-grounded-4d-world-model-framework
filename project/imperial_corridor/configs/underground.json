@@ -1,0 +1,40 @@
+{
+  "scene_id": "imperial_corridor",
+  "geometry_config": "configs/image_to_threejs.json",
+  "input_dir": "underground",
+  "buffer_m": 1500,
+  "overture_release": "2026-10-21.0",
+  "gtfs": {
+    "zip": "traffic_sumo/gtfs_download/gb-unknown-uk-aggregate-feed-gtfs-2014.zip",
+    "agency_name": "London Underground (TfL)",
+    "service_date": "20260625",
+    "service_date_note": "Same representative Thursday as the BODS bus subset (gtfs_bods/index.json); all eleven Underground lines run on it."
+  },
+  "periods": {
+    "am_peak": [8, 9],
+    "inter_peak": [13, 14],
+    "pm_peak": [17, 18]
+  },
+  "lead_s": 600,
+  "trajectory_dt_s": 10,
+  "depth": {
+    "subsurface_m": 6.0,
+    "deep_m": 22.0,
+    "rail_tunnel_m": 12.0,
+    "layer_step_m": 6.0,
+    "min_tunnel_m": 3.0,
+    "max_depth_m": 40.0,
+    "max_layer_steps": 2,
+    "bridge_layer_m": 6.0,
+    "bridge_ramp_m": 100.0,
+    "portal_ramp_m": 200.0,
+    "per_line_m": {
+      "elizabeth": 22.0
+    }
+  },
+  "simplify_m": 1.0,
+  "platform_length_m": 120.0,
+  "station_match_m": 250.0,
+  "max_json_bytes": 12000000,
+  "depth_note": "Typical assumed depths (no measured data). Elizabeth line tunnels are bored at deep-tube depth, so they use 22 m instead of rail_tunnel_m."
+}
