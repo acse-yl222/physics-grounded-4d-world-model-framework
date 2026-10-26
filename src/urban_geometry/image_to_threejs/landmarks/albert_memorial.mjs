@@ -41,42 +41,68 @@ export default {
       title: 'Victorian London - Albert Memorial',
       url: 'https://www.victorianlondon.org/buildings/albertmemorial.htm',
       used_for:
-        'mass of gilt, mosaic and coloured stones; ornamented spire with a cross at the top',
+        'mass of gilt, mosaic and coloured stones; ornamented spire with a cross at the top; canopy about thirty feet square on groups of polished granite columns',
     },
     {
       title: 'The Albert Memorial - A London Inheritance',
       url: 'https://alondoninheritance.com/london-monuments/albert-memorial-19th-century-world-view',
       used_for: 'octagonal grey-banded crocketed spire, gilded crown, angels round the spire base',
     },
+    {
+      title: 'Prince Consort National Memorial - British Listed Buildings',
+      url: 'https://britishlistedbuildings.co.uk/101217741-prince-consort-national-memorial-albert-memorial-knightsbridge-and-belgravia-ward',
+      used_for:
+        'sculptured band breaking outward at the corners for the Agriculture, Manufacture, Commerce and Engineering groups; continent groups at the outer corners',
+    },
   ],
   notes:
     'Placed on the Overture canopy footprint and the four continent-group footprints (orientation ~7 deg from the group layout). ' +
-    'Step and podium dimensions, stage heights (arches, gables at ~24 m, spire 31-51 m, cross to 54 m) are proportioned from ' +
-    'descriptions. Sculpture groups and the statue are blocky stand-ins (marble masses with an animal and figures; gilt seated ' +
-    'figure); mosaics are painted suggestions. Two small unnamed 2 x 8 m strips ~35 m south-east/south-west of the memorial (identity unknown, generic extrusion gave 17 m towers in the park) are claimed and drawn as low granite plinths.',
+    'Step and podium dimensions, stage heights (arches springing ~13 m, gables to ~25 m, spire 32-51 m, cross to ~54 m) are ' +
+    'proportioned from descriptions. Canopy in 3D: four piers of four polished granite columns with gilt capitals and shaft rings, ' +
+    'moulded two-order pointed arches, mosaic gables with crocketed rakes and pierced roundels, groined blue-and-gold vault, ' +
+    'corner tabernacles with bronze science figures, cross-gabled lead roof with gilt cresting; flèche with gilt virtues, an ' +
+    'arcaded lantern, winged angels, banded crocketed spire, crown, orb and cross. Sculpture (Albert, industrial arts and continent ' +
+    'groups) is built from simple robed figures and animal stand-ins, not portraits; mosaics and the Parnassus frieze are painted. ' +
+    'Two small unnamed 2 x 8 m strips ~35 m south-east/south-west of the memorial (identity unknown, generic extrusion gave 17 m ' +
+    'towers in the park) are claimed and drawn as low granite plinths.',
   build({ THREE, kit, byId }) {
     const g = new THREE.Group();
     const batch = new kit.MeshBatch();
     const granite = kit.mat('#8f7f7a', { roughness: 0.45 }),
       greyGranite = kit.mat('#a19d98', { roughness: 0.7 }),
+      stepGranite = kit.mat('#b4aea6', { roughness: 0.8 }),
       stone = kit.mat('#d9d0bf'),
+      stoneD = kit.mat('#c9bfab'),
       marble = kit.mat('#ece8df', { roughness: 0.6 }),
       lead = kit.mat('#5d6266', { roughness: 0.5, metalness: 0.35 }),
-      gold = kit.mat('gold'),
-      redStone = kit.mat('#9c5e52');
+      gold = kit.mat('#e2b94f', { roughness: 0.35, metalness: 0.35 }),
+      leadL = kit.mat('#767c80', { roughness: 0.5, metalness: 0.3 }),
+      bronze = kit.mat('#5a4630', { roughness: 0.45, metalness: 0.6 }),
+      redStone = kit.mat('#9c5e52', { roughness: 0.3 }),
+      pinkGranite = kit.mat('#b98b80', { roughness: 0.3 }),
+      darkVoid = kit.mat('#1c2126'),
+      shade = kit.mat('#3b4146'),
+      blueMosaic = kit.mat('#2c4f86', { roughness: 0.5 });
     const M4 = () => new THREE.Matrix4();
-    const put = (geo, m, x, y, z, rz = 0, sx = 1, sy = 1, sz = 1) => {
-      const mat = M4().compose(
-        new THREE.Vector3(x, y, z),
-        new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), rz),
-        new THREE.Vector3(sx, sy, sz),
+    const Q = (rz) => new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 0, 1), rz);
+    const put = (geo, m, x, y, z, rz = 0, sx = 1, sy = 1, sz = 1) =>
+      batch.addGeometry(
+        m,
+        geo,
+        M4().compose(new THREE.Vector3(x, y, z), Q(rz), new THREE.Vector3(sx, sy, sz)),
       );
-      batch.addGeometry(m, geo, mat);
-    };
     const B = (m, x, y, z0, w, d, h, a = 0) => kit.box(batch, m, x, y, z0, w, d, h, a);
     const cyl = (rt, rb, h, n = 8) => new THREE.CylinderGeometry(rt, rb, h, n).rotateX(Math.PI / 2);
     const cone = (r, h, n = 8) => new THREE.ConeGeometry(r, h, n).rotateX(Math.PI / 2);
     const sph = (r, n = 8) => new THREE.SphereGeometry(r, n, Math.max(4, n / 2));
+    const latheG = (prof, n = 10) =>
+      new THREE.LatheGeometry(
+        prof.map(([r, z]) => new THREE.Vector2(Math.max(0.001, r), z)),
+        n,
+      ).rotateX(Math.PI / 2);
+    // Geometry cache for repeated profiles.
+    const cache = new Map();
+    const memo = (key, make) => (cache.has(key) ? cache.get(key) : cache.set(key, make()).get(key));
 
     // Local frame from the four continent groups.
     const grp = [
@@ -102,346 +128,1196 @@ export default {
       return [dx * c + dy * s, -dx * s + dy * c];
     };
 
-    // ---- Steps on all four sides and upper platform.
+    // ---- Figures: robed standing / seated figure built from a lathe, head and arms.
+    const robeGeo = memo('robe', () =>
+      latheG(
+        [
+          [0, 0],
+          [0.3, 0],
+          [0.27, 0.35],
+          [0.21, 0.9],
+          [0.17, 1.2],
+          [0.22, 1.38],
+          [0.12, 1.5],
+          [0.07, 1.55],
+          [0, 1.56],
+        ],
+        8,
+      ),
+    );
+    const headGeo = memo('head', () => sph(0.12, 8));
+    const armGeo = memo('arm', () => cyl(0.05, 0.06, 0.62, 5));
+    const figure = (m, x, y, z, h, rz = 0, pose = 0) => {
+      const s = h / 1.8;
+      put(robeGeo, m, x, y, z, rz, s, s * 0.8, s);
+      put(headGeo, m, x, y, z + 1.66 * s, rz, s, s, s * 1.1);
+      const c = Math.cos(rz),
+        sn = Math.sin(rz);
+      for (const side of [-1, 1]) {
+        const lift = side === 1 ? pose : 0;
+        const ax = x + c * side * 0.24 * s,
+          ay = y + sn * side * 0.24 * s;
+        batch.addGeometry(
+          m,
+          armGeo,
+          M4().compose(
+            new THREE.Vector3(ax, ay, z + (1.15 + lift * 0.3) * s),
+            new THREE.Quaternion().setFromEuler(new THREE.Euler(lift * 1.2 - 0.15, side * 0.2, rz)),
+            new THREE.Vector3(s, s, s),
+          ),
+        );
+      }
+    };
+    const seated = (m, x, y, z, h, rz = 0) => {
+      // seat block, thighs forward, lower robe, torso, head
+      const s = h / 1.4;
+      const c = Math.cos(rz),
+        sn = Math.sin(rz);
+      const fwd = (d) => [x - sn * d * s * -1, y + c * d * s * -1]; // facing -y local when rz = 0
+      put(robeGeo, m, x, y, z + 0.35 * s, rz, s * 1.1, s * 0.9, s * 0.62);
+      const [kx, ky] = fwd(0.32);
+      B(m, kx, ky, z + 0.3 * s, 0.5 * s, 0.55 * s, 0.22 * s, rz);
+      const [fx, fy] = fwd(0.55);
+      B(m, fx, fy, z, 0.5 * s, 0.22 * s, 0.45 * s, rz);
+      put(headGeo, m, x, y, z + 1.38 * s, rz, s, s, s * 1.1);
+    };
+
+    // ---- Steps on all four sides and the lower platform.
     const nSteps = 9,
       rise = 0.33,
       base = 16.2,
       top = 11.4;
     for (let k = 0; k < nSteps; k++) {
       const hs = base - ((base - top) * k) / (nSteps - 1);
-      B(k % 3 === 2 ? greyGranite : kit.mat('#b4aea6'), 0, 0, k * rise, hs * 2, hs * 2, rise);
+      B(k % 3 === 2 ? greyGranite : stepGranite, 0, 0, k * rise, hs * 2, hs * 2, rise);
+      // nosing line
+      B(greyGranite, 0, 0, k * rise + rise - 0.05, hs * 2 + 0.06, hs * 2 + 0.06, 0.05);
     }
     const zP = nSteps * rise; // ~3.0
-    // Parnassus podium (marble frieze of figures) with a granite base and cornice.
-    const friezeMat = kit.paintedMaterial('albert_memorial:parnassus', 512, 64, (c, w, h) => {
-      c.fillStyle = '#e4dfd4';
+    // Paved platform pattern (polychrome bands) on the lower terrace.
+    const paveMat = kit.paintedMaterial('albert_memorial:pave', 256, 256, (c, w, h) => {
+      c.fillStyle = '#bdb6aa';
+      c.fillRect(0, 0, w, h);
+      c.strokeStyle = '#8f8379';
+      c.lineWidth = 3;
+      for (let k = 0; k <= 8; k++) {
+        c.beginPath();
+        c.moveTo((k * w) / 8, 0);
+        c.lineTo((k * w) / 8, h);
+        c.moveTo(0, (k * h) / 8);
+        c.lineTo(w, (k * h) / 8);
+        c.stroke();
+      }
+      c.fillStyle = '#9a6e62';
+      for (let i = 0; i < 8; i++)
+        for (let j = 0; j < 8; j++)
+          if ((i + j) % 2 === 0) c.fillRect((i * w) / 8 + 10, (j * h) / 8 + 10, 12, 12);
+    });
+    kit.cap(
+      batch,
+      paveMat,
+      [
+        [
+          [
+            [-top, -top],
+            [top, -top],
+            [top, top],
+            [-top, top],
+          ],
+        ],
+      ],
+      zP + 0.005,
+      {
+        scale: 4,
+      },
+    );
+
+    // ---- Parnassus podium: granite base, marble frieze in relief (painted), cornice.
+    const friezeMat = kit.paintedMaterial('albert_memorial:parnassus2', 1024, 128, (c, w, h) => {
+      c.fillStyle = '#e8e3d8';
       c.fillRect(0, 0, w, h);
       const r = kit.rng(4.2);
-      for (let x = 4; x < w; x += 9 + r() * 6) {
-        c.fillStyle = `rgba(120,110,95,${0.25 + r() * 0.25})`;
-        c.fillRect(x, 14 + r() * 6, 3, 34);
+      c.fillStyle = '#d3cbbb';
+      c.fillRect(0, 0, w, 14);
+      c.fillRect(0, h - 14, w, 14);
+      for (let x = 14; x < w - 14; x += 38 + r() * 16) {
+        const hh = 74 + r() * 16,
+          base = h - 16,
+          fw = 9 + r() * 4,
+          lean = (r() - 0.5) * 6;
+        // shadow side then lit side of a robed figure in relief
+        c.fillStyle = 'rgba(95,85,70,0.5)';
         c.beginPath();
-        c.arc(x + 1.5, 12 + r() * 4, 3, 0, Math.PI * 2);
+        c.moveTo(x - fw + 3, base);
+        c.lineTo(x + fw + 3, base);
+        c.lineTo(x + fw * 0.5 + 3 + lean, base - hh * 0.8);
+        c.lineTo(x - fw * 0.5 + 3 + lean, base - hh * 0.8);
         c.fill();
+        c.fillStyle = '#f6f3ec';
+        c.beginPath();
+        c.moveTo(x - fw, base);
+        c.lineTo(x + fw, base);
+        c.lineTo(x + fw * 0.5 + lean, base - hh * 0.8);
+        c.lineTo(x - fw * 0.5 + lean, base - hh * 0.8);
+        c.fill();
+        c.beginPath();
+        c.arc(x + lean, base - hh * 0.88, 5.5, 0, Math.PI * 2);
+        c.fill();
+        c.fillStyle = 'rgba(95,85,70,0.45)';
+        c.fillRect(x + lean + 2, base - hh * 0.88, 3, 5);
+        c.fillRect(x - fw * 0.3, base - hh * 0.5, fw * 0.9, 2); // drapery fold
+        if (r() < 0.4) {
+          c.fillStyle = '#f6f3ec';
+          c.fillRect(x + fw * 0.4, base - hh * 0.72, 10, 3); // arm / attribute
+        }
       }
-      c.fillStyle = '#cfc8b8';
-      c.fillRect(0, 0, w, 6);
-      c.fillRect(0, h - 6, w, 6);
     });
     const ph = 9.4;
     B(granite, 0, 0, zP, ph * 2 + 0.6, ph * 2 + 0.6, 0.6);
+    B(greyGranite, 0, 0, zP + 0.6, ph * 2 + 0.3, ph * 2 + 0.3, 0.15);
     {
       const geo = new THREE.BoxGeometry(ph * 2, ph * 2, 2.0);
       const uv = geo.attributes.uv;
-      for (let k = 0; k < uv.count; k++) uv.setX(k, uv.getX(k) * 4);
-      put(geo, friezeMat, 0, 0, zP + 0.6 + 1.0);
+      for (let k = 0; k < uv.count; k++) uv.setX(k, uv.getX(k) * 2);
+      put(geo, friezeMat, 0, 0, zP + 0.75 + 1.0);
+      geo.dispose();
     }
-    B(stone, 0, 0, zP + 2.6, ph * 2 + 0.5, ph * 2 + 0.5, 0.45);
-    const zC = zP + 3.05; // canopy floor
-    // Upper steps to the canopy on the south (front).
+    B(stoneD, 0, 0, zP + 2.75, ph * 2 + 0.3, ph * 2 + 0.3, 0.12);
+    B(stone, 0, 0, zP + 2.87, ph * 2 + 0.6, ph * 2 + 0.6, 0.25);
+    const zC = zP + 3.12; // canopy floor
+    // Corner projections carrying the Industrial Arts groups.
+    for (const sx of [-1, 1])
+      for (const sy of [-1, 1]) {
+        const x = sx * (ph - 0.4),
+          y = sy * (ph - 0.4);
+        B(granite, x, y, zP, 4.4, 4.4, 0.6);
+        B(marble, x, y, zP + 0.6, 4.1, 4.1, 2.27);
+        B(stone, x, y, zP + 2.87, 4.6, 4.6, 0.25);
+      }
+    // Upper flight to the canopy on the south (front) and inlaid floor.
     for (let k = 0; k < 6; k++)
-      B(greyGranite, 0, -ph - 0.4 - (5 - k) * 0.45, zP + k * 0.5, 7, 0.45, 0.5);
+      B(greyGranite, 0, -ph - 0.5 - (5 - k) * 0.45, zP + k * 0.52, 7.4, 0.45, 0.52);
+    const floorMat = kit.paintedMaterial('albert_memorial:floor', 256, 256, (c, w, h) => {
+      c.fillStyle = '#c8bfae';
+      c.fillRect(0, 0, w, h);
+      c.fillStyle = '#8a5a4e';
+      c.fillRect(20, 20, w - 40, h - 40);
+      c.fillStyle = '#d9cfbd';
+      c.fillRect(34, 34, w - 68, h - 68);
+      const r = kit.rng(6.6);
+      for (let i = 0; i < 6; i++)
+        for (let j = 0; j < 6; j++) {
+          c.fillStyle =
+            (i + j) % 2 ? '#cdc3b1' : ['#b39a8c', '#a7a49e', '#bba78a'][Math.floor(r() * 3)];
+          c.fillRect(40 + i * 29.3, 40 + j * 29.3, 27, 27);
+        }
+      c.beginPath();
+      c.fill();
+    });
+    {
+      const e = ph + 0.3;
+      batch.quad(
+        floorMat,
+        [-e, -e, zC + 0.01],
+        [e, -e, zC + 0.01],
+        [e, e, zC + 0.01],
+        [-e, e, zC + 0.01],
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 1],
+      );
+    }
 
-    // ---- Canopy: clustered granite piers, pointed arches, gables with mosaics.
+    // ---- Canopy geometry.
     const hw = 4.7, // half spacing of pier centres
-      zSpring = zC + 7.4,
-      zWall = zC + 13.4,
+      zSpring = zC + 7.3,
+      zWall = zC + 13.3,
       zApex = zC + 19.0;
+    const faceW = 2 * hw + 1.4,
+      a = hw - 1.3, // arch half-span at the springing
+      R = 1.6 * a,
+      c0 = R - a;
+    // Pointed arch outline offset by g (same centres), from left foot to right foot.
+    const archPts = (g, n = 9) => {
+      const r = R + g,
+        yA = Math.sqrt(r * r - c0 * c0);
+      const t1 = Math.atan2(yA, -c0);
+      const left = [];
+      for (let k = 0; k <= n; k++) {
+        const t = Math.PI + ((t1 - Math.PI) * k) / n;
+        left.push([c0 + r * Math.cos(t), r * Math.sin(t)]);
+      }
+      const right = left
+        .slice(0, -1)
+        .reverse()
+        .map(([x, y]) => [-x, y]);
+      return [...left, ...right];
+    };
+    const archTop = (g) => Math.sqrt((R + g) * (R + g) - c0 * c0);
+    const H1 = zWall - zSpring,
+      H2 = zApex - zSpring;
+    const extr = (pts, depth, holes = []) => {
+      const s = new THREE.Shape(pts.map(([x, y]) => new THREE.Vector2(x, y)));
+      for (const h of holes)
+        s.holes.push(new THREE.Path(h.map(([x, y]) => new THREE.Vector2(x, y))));
+      const geo = new THREE.ExtrudeGeometry(s, { depth, bevelEnabled: false });
+      geo.rotateX(Math.PI / 2); // shape y -> z, extrusion -> -y
+      return geo;
+    };
+    const G = 0.95;
+    const plateGeo = extr(
+      [[-faceW / 2, 0], ...archPts(G), [faceW / 2, 0], [faceW / 2, H1], [0, H2], [-faceW / 2, H1]],
+      1.4,
+    );
+    const ringGeo = (g0, g1, d) => extr([...archPts(g1), ...archPts(g0).reverse()], d);
+    const order1 = ringGeo(0.5, G, 1.1),
+      order2 = ringGeo(0.12, 0.5, 0.9),
+      order3 = ringGeo(0, 0.12, 1.3);
+    // Triangle mosaic in the gable and a pierced roundel above the arch.
+    const mosaic = kit.paintedMaterial('albert_memorial:mosaic2', 512, 256, (c, w, h) => {
+      c.fillStyle = '#c9a640';
+      c.fillRect(0, 0, w, h);
+      const r = kit.rng(9.1);
+      for (let k = 0; k < 900; k++) {
+        c.fillStyle = `rgba(${150 + r() * 80},${120 + r() * 60},${30 + r() * 30},0.5)`;
+        c.fillRect(r() * w, r() * h, 3, 3);
+      }
+      // seated central figure under a throne and flanking standing figures
+      c.fillStyle = '#efe2c0';
+      c.fillRect(w / 2 - 30, 120, 60, 90);
+      c.fillStyle = '#7a2630';
+      c.fillRect(w / 2 - 22, 140, 44, 90);
+      c.fillStyle = '#efd9b8';
+      c.beginPath();
+      c.arc(w / 2, 128, 12, 0, Math.PI * 2);
+      c.fill();
+      const robes = ['#264f7a', '#3d6b3a', '#7a2630', '#5a3d6e', '#264f7a', '#3d6b3a'];
+      for (let k = 0; k < 6; k++) {
+        const side = k < 3 ? -1 : 1,
+          j = k % 3;
+        const x = w / 2 + side * (70 + j * 52),
+          hh = 100 - j * 22;
+        c.fillStyle = robes[k];
+        c.fillRect(x - 11, h - 18 - hh, 22, hh);
+        c.fillStyle = '#efd9b8';
+        c.beginPath();
+        c.arc(x, h - 26 - hh, 9, 0, Math.PI * 2);
+        c.fill();
+      }
+      c.fillStyle = '#8a6a20';
+      c.fillRect(0, h - 14, w, 14);
+    });
+    const triGeo = (() => {
+      const geo = new THREE.BufferGeometry();
+      const y0 = archTop(G) + 0.15,
+        y1 = H2 - 0.9;
+      const xs = (y) => (faceW / 2 - 0.5) * Math.min(1, (H2 - y) / (H2 - H1));
+      const p = [-xs(y0), 0, y0, xs(y0), 0, y0, xs(H1), 0, H1, 0, 0, y1, -xs(H1), 0, H1];
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(p, 3));
+      const uv = [];
+      for (let k = 0; k < 5; k++)
+        uv.push(p[k * 3] / (faceW - 1) + 0.5, (p[k * 3 + 2] - y0) / (y1 - y0));
+      geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2));
+      geo.setIndex([0, 1, 2, 0, 2, 4, 4, 2, 3]);
+      return geo;
+    })();
+    const roundel = new THREE.TorusGeometry(0.75, 0.12, 5, 16);
+    roundel.rotateX(Math.PI / 2);
+    const roundelVoid = cyl(0.72, 0.72, 0.1, 16);
+    roundelVoid.rotateX(0);
+    const crocket = memo('crocket', () => cone(0.18, 0.5, 5));
+    // Faces: rotate the south face (outward -y) by k * 90 degrees.
+    const faceM = (k, x, y, z, extra = M4()) =>
+      M4()
+        .makeRotationZ((k * Math.PI) / 2)
+        .multiply(M4().makeTranslation(x, y, z))
+        .multiply(extra);
+    const yF = -(hw + 0.7); // outer face plane
+    for (let k = 0; k < 4; k++) {
+      const add = (geo, m, x, y, z, extra) => batch.addGeometry(m, geo, faceM(k, x, y, z, extra));
+      add(plateGeo, stone, 0, -(hw - 0.7), zSpring);
+      add(order1, stoneD, 0, yF + 0.25 + 1.1, zSpring);
+      add(order2, pinkGranite, 0, yF + 0.45 + 0.9, zSpring);
+      add(order3, gold, 0, yF + 0.6 + 1.3, zSpring);
+      add(triGeo, mosaic, 0, yF - 0.02, zSpring);
+      // Roundel above the arch apex (in the upper gable).
+      const rz = zSpring + H2 - 2.0;
+      add(roundelVoid, darkVoid, 0, yF - 0.01, rz, M4().makeRotationX(Math.PI / 2));
+      add(roundel, gold, 0, yF - 0.08, rz);
+      // Raking copings with crockets and the gable finial.
+      for (const side of [-1, 1]) {
+        const L = Math.hypot(faceW / 2, H2 - H1),
+          t = Math.atan2(H2 - H1, faceW / 2);
+        const geo = memo('rake', () => new THREE.BoxGeometry(L + 0.3, 1.7, 0.4));
+        add(
+          geo,
+          stoneD,
+          (side * faceW) / 4,
+          yF + 0.7,
+          zSpring + (H1 + H2) / 2 + 0.2,
+          M4().makeRotationY(side * t),
+        );
+        for (let i = 1; i < 7; i++) {
+          const u = i / 7;
+          add(
+            crocket,
+            gold,
+            side * (faceW / 2) * (1 - u),
+            yF - 0.05,
+            zSpring + H1 + (H2 - H1) * u + 0.5,
+          );
+        }
+      }
+      // Cusped arcade band (blind arcading) under the gable foot.
+      for (let i = 0; i < 2; i++) {
+        const x = (i ? 1 : -1) * (faceW / 2 - 0.9);
+        add(
+          memo('blind', () => new THREE.BoxGeometry(0.9, 0.12, 2.6)),
+          darkVoid,
+          x,
+          yF - 0.02,
+          zSpring + 1.1,
+        );
+      }
+      // Gable finial: gilt cross-flower.
+      add(
+        memo('fin1', () => cyl(0.18, 0.25, 1.6, 8)),
+        stone,
+        0,
+        yF + 0.6,
+        zApex + 0.7,
+      );
+      add(
+        memo('fin2', () => sph(0.42, 10)),
+        gold,
+        0,
+        yF + 0.6,
+        zApex + 1.7,
+      );
+      add(
+        memo('fin3', () => new THREE.BoxGeometry(0.16, 0.16, 1.5)),
+        gold,
+        0,
+        yF + 0.6,
+        zApex + 2.6,
+      );
+      add(
+        memo('fin4', () => new THREE.BoxGeometry(0.9, 0.16, 0.16)),
+        gold,
+        0,
+        yF + 0.6,
+        zApex + 2.8,
+      );
+      // Inscription band along the cornice at the foot of the gables.
+      add(
+        memo('frieze', () => new THREE.BoxGeometry(faceW - 0.4, 0.2, 0.7)),
+        blueMosaic,
+        0,
+        yF - 0.05,
+        zSpring + H1 - 0.4,
+      );
+      add(
+        memo('friezeL', () => new THREE.BoxGeometry(faceW - 0.4, 0.22, 0.08)),
+        gold,
+        0,
+        yF - 0.06,
+        zSpring + H1 - 0.36,
+      );
+    }
+
+    // ---- Corner piers: four polished granite columns round a core, gilt capitals.
+    const shaft = memo('shaft', () =>
+      latheG(
+        [
+          [0, 0],
+          [0.48, 0],
+          [0.48, 0.18],
+          [0.4, 0.28],
+          [0.34, 0.4],
+          [0.31, 0.5],
+          [0.3, 1],
+        ],
+        12,
+      ),
+    );
+    const colH = zSpring - 0.9 - (zC + 1.2);
+    const shaftBody = memo('shaftBody', () => cyl(0.3, 0.3, 1, 12));
+    const capital = memo('capital', () =>
+      latheG(
+        [
+          [0.3, 0],
+          [0.36, 0.12],
+          [0.48, 0.45],
+          [0.6, 0.7],
+          [0.62, 0.82],
+          [0, 0.82],
+        ],
+        12,
+      ),
+    );
+    const ringBand = memo('ringBand', () => cyl(0.36, 0.36, 0.14, 12));
     for (const sx of [-1, 1])
       for (const sy of [-1, 1]) {
         const px = sx * hw,
           py = sy * hw;
-        B(stone, px, py, zC, 2.8, 2.8, 1.0);
+        // moulded pier base
+        B(granite, px, py, zC, 3.0, 3.0, 0.7);
+        B(stoneD, px, py, zC + 0.7, 2.8, 2.8, 0.5);
+        B(stone, px, py, zC + 1.2, 1.5, 1.5, zSpring - zC - 1.2); // core
         for (const [ox, oy] of [
-          [-0.55, -0.55],
-          [0.55, -0.55],
-          [-0.55, 0.55],
-          [0.55, 0.55],
-          [0, 0],
-        ])
+          [-0.72, -0.72],
+          [0.72, -0.72],
+          [-0.72, 0.72],
+          [0.72, 0.72],
+        ]) {
+          const x = px + ox,
+            y = py + oy;
+          put(shaft, granite, x, y, zC + 1.2, 0, 1, 1, 1);
           put(
-            cyl(0.38, 0.38, zSpring - zC - 1.6, 10),
-            ox || oy ? redStone : granite,
+            shaftBody,
+            ox * sx > 0 && oy * sy > 0 ? pinkGranite : redStone,
+            x,
+            y,
+            zC + 1.2 + 0.5 + (colH - 0.5) / 2,
+            0,
+            1,
+            1,
+            colH - 0.5,
+          );
+          put(ringBand, gold, x, y, zC + 1.2 + colH * 0.5);
+          put(capital, gold, x, y, zSpring - 0.9);
+        }
+        // abacus and the pier block above (with niches and bronze sciences)
+        B(stone, px, py, zSpring - 0.1, 3.0, 3.0, 0.35);
+        B(stone, px, py, zSpring + 0.25, 2.6, 2.6, H1 + 0.6);
+        for (const [ox, oy] of [
+          [-1.3, -1.3],
+          [1.3, -1.3],
+          [-1.3, 1.3],
+          [1.3, 1.3],
+        ]) {
+          put(
+            memo('colt', () => cyl(0.13, 0.13, H1 + 0.6, 8)),
+            pinkGranite,
             px + ox,
             py + oy,
-            (zC + 1.0 + zSpring - 0.6) / 2,
+            zSpring + 0.25 + (H1 + 0.6) / 2,
           );
-        B(gold, px, py, zSpring - 0.6, 2.6, 2.6, 0.6); // gilt capitals
-        B(stone, px, py, zSpring, 2.6, 2.6, zWall - zSpring + 0.6);
-        // diagonal buttress (cross-shaped footprint arms)
+          put(
+            memo('coltC', () => cyl(0.22, 0.14, 0.25, 8)),
+            gold,
+            px + ox,
+            py + oy,
+            zWall + 0.72,
+          );
+        }
+        B(stoneD, px, py, zWall - 0.5, 2.8, 2.8, 0.25);
+        for (const [nx, ny] of [
+          [sx, 0],
+          [0, sy],
+        ]) {
+          const fx = px + nx * 1.31,
+            fy = py + ny * 1.31;
+          const rz = Math.atan2(ny, nx) + Math.PI / 2;
+          B(darkVoid, fx, fy, zSpring + 1.0, 1.0, 0.06, 3.1, rz);
+          B(stoneD, fx + nx * 0.05, fy + ny * 0.05, zSpring + 0.8, 1.4, 0.2, 0.2, rz);
+          put(
+            memo('canopyN', () => cone(0.75, 1.0, 4)),
+            stoneD,
+            fx + nx * 0.1,
+            fy + ny * 0.1,
+            zSpring + 4.6,
+            Math.PI / 4 + rz,
+          );
+          figure(bronze, fx + nx * 0.25, fy + ny * 0.25, zSpring + 1.0, 2.2, rz - Math.PI, 0.6);
+        }
+        // Corner tabernacle: octagonal open stage with gilt shafts and a crocketed spirelet.
+        const zt = zWall + 0.85;
         put(
-          new THREE.BoxGeometry(2.4, 1.0, 2.4),
-          granite,
-          px + sx * 1.8,
-          py + sy * 1.8,
-          zC + 1.2,
-          Math.atan2(sy, sx),
+          memo('tab0', () => cyl(1.35, 1.45, 0.4, 8)),
+          stoneD,
+          px,
+          py,
+          zt + 0.2,
+          Math.PI / 8,
         );
-        // tabernacle pinnacles above the piers
-        B(stone, px, py, zWall + 0.6, 1.7, 1.7, 3.2);
-        put(cone(1.15, 6.2, 8), stone, px, py, zWall + 3.8 + 3.1, Math.PI / 8);
-        put(sph(0.35), gold, px, py, zWall + 7.1);
+        put(
+          memo('tab1', () => cyl(1.0, 1.0, 3.2, 8)),
+          shade,
+          px,
+          py,
+          zt + 2.0,
+          Math.PI / 8,
+        );
+        for (let j = 0; j < 8; j++) {
+          const t = (j * Math.PI) / 4 + Math.PI / 8;
+          put(
+            memo('tabShaft', () => cyl(0.13, 0.13, 3.2, 6)),
+            gold,
+            px + Math.cos(t) * 1.15,
+            py + Math.sin(t) * 1.15,
+            zt + 2.0,
+          );
+        }
+        put(
+          memo('tab2', () => cyl(1.3, 1.25, 0.45, 8)),
+          stone,
+          px,
+          py,
+          zt + 3.8,
+          Math.PI / 8,
+        );
+        figure(bronze, px, py, zt + 0.4, 2.4, Math.atan2(sy, sx) + Math.PI / 2, 0.3);
+        put(
+          memo('tab3', () => cone(1.15, 5.6, 8)),
+          stone,
+          px,
+          py,
+          zt + 4.0 + 2.8,
+          Math.PI / 8,
+        );
+        for (let j = 0; j < 8; j++) {
+          const t = (j * Math.PI) / 4 + Math.PI / 8;
+          for (let i = 1; i < 4; i++) {
+            const u = i / 4.5;
+            put(
+              crocket,
+              gold,
+              px + Math.cos(t) * 1.15 * (1 - u),
+              py + Math.sin(t) * 1.15 * (1 - u),
+              zt + 4.0 + 5.6 * u,
+            );
+          }
+        }
+        put(
+          memo('tabOrb', () => sph(0.3, 8)),
+          gold,
+          px,
+          py,
+          zt + 9.75,
+        );
+        put(
+          memo('tabFin', () => cone(0.14, 0.9, 6)),
+          gold,
+          px,
+          py,
+          zt + 10.4,
+        );
+        // four little corner pinnacles round the tabernacle
         for (const [ox, oy] of [
           [-1, -1],
           [1, -1],
           [-1, 1],
           [1, 1],
-        ])
-          put(cone(0.28, 2.2, 6), stone, px + ox * 0.95, py + oy * 0.95, zWall + 2.4);
-      }
-    const mosaic = kit.paintedMaterial('albert_memorial:mosaic', 256, 128, (c, w, h) => {
-      c.fillStyle = '#c9a640';
-      c.fillRect(0, 0, w, h);
-      const r = kit.rng(9.1);
-      for (let k = 0; k < 5; k++) {
-        const x = 30 + k * 48;
-        c.fillStyle = ['#7a2630', '#264f7a', '#3d6b3a', '#7a2630', '#264f7a'][k];
-        c.fillRect(x, 60, 18, 58);
-        c.fillStyle = '#efd9b8';
-        c.beginPath();
-        c.arc(x + 9, 52, 8, 0, Math.PI * 2);
-        c.fill();
-      }
-      c.strokeStyle = '#8a6a20';
-      c.lineWidth = 4;
-      c.beginPath();
-      c.arc(w / 2, 32, 18 + r() * 2, 0, Math.PI * 2);
-      c.stroke();
-    });
-    const faceW = 2 * hw + 1.4,
-      a = hw - 1.3; // arch half-span
-    const gableShape = () => {
-      const s = new THREE.Shape();
-      const H0 = 0,
-        H1 = zWall - zSpring,
-        H2 = zApex - zSpring;
-      s.moveTo(-faceW / 2, H0 - 0.0);
-      s.lineTo(-a, H0);
-      const R = 1.6 * a,
-        c0 = R - a;
-      // left arc from (-a,0) to apex (0, yA) centred at (c0, 0)
-      const yA = Math.sqrt(R * R - c0 * c0);
-      const t0 = Math.PI,
-        t1 = Math.atan2(yA, -c0);
-      for (let k = 1; k <= 8; k++) {
-        const t = t0 + ((t1 - t0) * k) / 8;
-        s.lineTo(c0 + R * Math.cos(t), R * Math.sin(t));
-      }
-      for (let k = 7; k >= 0; k--) {
-        const t = t0 + ((t1 - t0) * k) / 8;
-        s.lineTo(-(c0 + R * Math.cos(t)), R * Math.sin(t));
-      }
-      s.lineTo(faceW / 2, H0);
-      s.lineTo(faceW / 2, H1);
-      s.lineTo(0, H2);
-      s.lineTo(-faceW / 2, H1);
-      return { s, yA, H1, H2 };
-    };
-    const gs = gableShape();
-    const plate = new THREE.ExtrudeGeometry(gs.s, {
-      depth: 1.0,
-      bevelEnabled: false,
-      curveSegments: 4,
-    });
-    plate.rotateX(Math.PI / 2); // shape y -> z, extrude along -y
-    // the arch opening continues down to the floor between piers: plate spans spring..apex
-    const triGeo = () => {
-      const geo = new THREE.BufferGeometry();
-      // mosaic gable triangle (x across, z up) slightly in front of the plate
-      const H1 = gs.H1 + 0.25,
-        H2 = gs.H2 - 0.9,
-        x1 = (faceW / 2) * (1 - 0.9 / (gs.H2 - gs.H1)) - 0.5;
-      const p = [-x1, 0, H1, x1, 0, H1, 0, 0, H2];
-      geo.setAttribute('position', new THREE.Float32BufferAttribute(p, 3));
-      geo.setAttribute('uv', new THREE.Float32BufferAttribute([0, 0, 1, 0, 0.5, 1], 2));
-      geo.setIndex([0, 1, 2]);
-      return geo;
-    };
-    const tri = triGeo();
-    for (let k = 0; k < 4; k++) {
-      const rz = (k * Math.PI) / 2; // k=0: south face
-      const c = Math.cos(rz),
-        s = Math.sin(rz);
-      // face centre at (0,-hw) rotated; plate normal facing outwards
-      const fx = -(-hw - 0.2) * s,
-        fy = (-hw - 0.2) * c;
-      const m = M4()
-        .makeRotationZ(rz)
-        .setPosition(fx + -s * 0.5, fy + c * 0.5, zSpring);
-      batch.addGeometry(stone, plate, m);
-      const m2 = M4()
-        .makeRotationZ(rz)
-        .setPosition(fx + s * 0.56, fy - c * 0.56, zSpring);
-      // tri lies in the x-z plane facing -y in its own frame
-      batch.addGeometry(mosaic, tri, m2);
-      // crockets / gilt finial on the gable apex
-      put(sph(0.45), gold, fx, fy, zApex + 0.4);
-      put(cone(0.5, 2.2, 6), stone, fx, fy, zApex + 1.5);
-      // cresting along the rakes
-      for (let t = 0.15; t < 0.95; t += 0.2)
-        for (const side of [-1, 1]) {
-          const u = side * (faceW / 2) * (1 - t);
-          put(sph(0.22, 6), gold, fx + c * u, fy + s * u, zWall + (zApex - zWall) * t + 0.35);
+        ]) {
+          B(stone, px + ox * 1.1, py + oy * 1.1, zWall + 0.85, 0.45, 0.45, 1.6);
+          put(
+            memo('pinC', () => cone(0.3, 2.0, 6)),
+            stone,
+            px + ox * 1.1,
+            py + oy * 1.1,
+            zWall + 2.45 + 1.0,
+          );
+          put(
+            memo('pinO', () => sph(0.12, 6)),
+            gold,
+            px + ox * 1.1,
+            py + oy * 1.1,
+            zWall + 4.5,
+          );
         }
+      }
+
+    // ---- Groined vault (blue mosaic with gilt stars) and gilt diagonal ribs.
+    const vaultMat = kit.paintedMaterial('albert_memorial:vault', 256, 256, (c, w, h) => {
+      c.fillStyle = '#284a80';
+      c.fillRect(0, 0, w, h);
+      const r = kit.rng(3.3);
+      c.fillStyle = '#e0c060';
+      for (let k = 0; k < 70; k++) {
+        const x = r() * w,
+          y = r() * h;
+        c.fillRect(x - 3, y - 0.8, 6, 1.6);
+        c.fillRect(x - 0.8, y - 3, 1.6, 6);
+      }
+    });
+    const archH = (s) => {
+      const d = c0 + Math.abs(s);
+      return Math.sqrt(Math.max(0, R * R - d * d));
+    };
+    {
+      const n = 12,
+        S = a;
+      const pts = [],
+        uvs = [];
+      for (let i = 0; i <= n; i++)
+        for (let j = 0; j <= n; j++) {
+          const x = -S + (2 * S * i) / n,
+            y = -S + (2 * S * j) / n;
+          pts.push([x, y, zSpring + Math.min(archH(x), archH(y))]);
+          uvs.push([i / n, j / n]);
+        }
+      const idx = [];
+      for (let i = 0; i < n; i++)
+        for (let j = 0; j < n; j++) {
+          const p = i * (n + 1) + j;
+          idx.push(p, p + 1, p + n + 2, p, p + n + 2, p + n + 1); // facing down
+        }
+      batch.add(vaultMat, pts, uvs, idx);
+      for (const d of [1, -1])
+        for (let i = 0; i < n; i++) {
+          const x0 = -S + (2 * S * i) / n,
+            x1 = -S + (2 * S * (i + 1)) / n;
+          const za = zSpring + archH(x0) - 0.12,
+            zb = zSpring + archH(x1) - 0.12;
+          const mx = (x0 + x1) / 2;
+          const L = Math.hypot((x1 - x0) * Math.SQRT2, zb - za);
+          const geo = new THREE.BoxGeometry(L, 0.18, 0.18);
+          const m = M4().compose(
+            new THREE.Vector3(mx, d * mx, (za + zb) / 2),
+            new THREE.Quaternion().setFromEuler(
+              new THREE.Euler(
+                0,
+                -Math.atan2(zb - za, (x1 - x0) * Math.SQRT2),
+                (d * Math.PI) / 4,
+                'ZYX',
+              ),
+            ),
+            new THREE.Vector3(1, 1, 1),
+          );
+          batch.addGeometry(gold, geo, m);
+          geo.dispose();
+        }
+      // flat soffits between vault and gables
+      B(blueMosaic, 0, 0, zWall - 0.3, 2 * hw + 0.4, 2 * hw + 0.4, 0.3);
     }
-    // Vault soffit and canopy ceiling (blue and gold mosaic).
-    B(kit.mat('#2c4f86'), 0, 0, zWall - 0.4, 2 * hw + 1.0, 2 * hw + 1.0, 0.4);
-    // Cross-gabled lead roof behind the gables.
+    // Cross-gabled lead roof behind the gables, gilt ridge cresting.
     const sq = [
       [-hw, -hw],
       [hw, -hw],
       [hw, hw],
       [-hw, hw],
     ];
-    kit.pitchedRoof(batch, lead, stone, sq, 0, zWall + 0.4, zApex - zWall - 1.2, 'gabled', {
-      overhang: 0,
-    });
-    kit.pitchedRoof(
-      batch,
-      lead,
-      stone,
-      sq,
-      Math.PI / 2,
-      zWall + 0.4,
-      zApex - zWall - 1.2,
-      'gabled',
-      { overhang: 0 },
-    );
+    const roofRise = zApex - zWall - 1.2;
+    for (const ra of [0, Math.PI / 2])
+      kit.pitchedRoof(batch, lead, stone, sq, ra, zWall + 0.4, roofRise, 'gabled', { overhang: 0 });
+    for (let i = -6; i <= 6; i++) {
+      if (Math.abs(i) < 2) continue;
+      const t = i / 7;
+      B(gold, t * hw, 0, zWall + 0.4 + roofRise, 0.12, 0.12, 0.55);
+      B(gold, 0, t * hw, zWall + 0.4 + roofRise, 0.12, 0.12, 0.55);
+    }
 
-    // ---- Spire: square stage with figures, octagonal tiers, crocketed spire, cross.
+    // ---- Flèche: virtues stage, arcaded lantern, angels, banded crocketed spire, cross.
     const z1 = zApex - 0.8;
-    B(stone, 0, 0, z1 - 1.6, 5.6, 5.6, 3.2);
+    put(
+      memo('sp0', () =>
+        latheG(
+          [
+            [0, 0],
+            [3.2, 0],
+            [3.2, 0.5],
+            [2.95, 0.7],
+            [2.95, 2.6],
+            [3.2, 2.8],
+            [3.25, 3.1],
+            [0, 3.1],
+          ],
+          8,
+        ),
+      ),
+      stone,
+      0,
+      0,
+      z1 - 1.5,
+      Math.PI / 8,
+    );
     for (let k = 0; k < 8; k++) {
       const t = (k * Math.PI) / 4 + Math.PI / 8;
-      put(cyl(0.32, 0.4, 2.2, 6), gold, Math.cos(t) * 3.3, Math.sin(t) * 3.3, z1 + 1.1 + 0.6); // virtues/angels
-      put(sph(0.3, 6), gold, Math.cos(t) * 3.3, Math.sin(t) * 3.3, z1 + 2.9);
+      const x = Math.cos(t) * 3.35,
+        y = Math.sin(t) * 3.35;
+      put(
+        memo('brk', () => cyl(0.45, 0.32, 0.5, 8)),
+        stoneD,
+        x,
+        y,
+        z1 + 1.85,
+      );
+      figure(gold, x, y, z1 + 2.1, 2.1, t + Math.PI / 2 - Math.PI, k % 3 === 0 ? 0.8 : 0.2); // virtues
     }
-    const tiers = [
-      [z1 + 1.6, 2.9, 2.6, 2.2, lead],
-      [z1 + 3.8, 2.5, 2.2, 2.4, stone],
-      [z1 + 6.2, 2.0, 1.8, 2.0, lead],
-    ];
-    for (const [z, r0, r1, h, m] of tiers) {
-      put(cyl(r1, r0, h, 8), m, 0, 0, z + h / 2, Math.PI / 8);
-      put(cyl(r0 + 0.12, r0 + 0.12, 0.25, 8), gold, 0, 0, z + h - 0.1, Math.PI / 8);
-    }
-    // Lancets around the open tier
+    // Arcaded lantern stage.
+    const zl = z1 + 1.6;
+    put(
+      memo('lan0', () => cyl(2.6, 2.6, 3.4, 8)),
+      darkVoid,
+      0,
+      0,
+      zl + 1.7,
+      Math.PI / 8,
+    );
     for (let k = 0; k < 8; k++) {
       const t = (k * Math.PI) / 4;
       put(
-        new THREE.BoxGeometry(0.2, 0.7, 1.6),
-        kit.mat('#1e2328'),
-        Math.cos(t) * 2.4,
-        Math.sin(t) * 2.4,
-        z1 + 4.9,
+        memo('lanP', () => new THREE.BoxGeometry(0.5, 0.5, 3.4)),
+        stone,
+        Math.cos(t) * 2.7,
+        Math.sin(t) * 2.7,
+        zl + 1.7,
         t,
       );
+      put(
+        memo('lanS', () => cyl(0.1, 0.1, 2.6, 6)),
+        gold,
+        Math.cos(t + Math.PI / 8) * 2.75,
+        Math.sin(t + Math.PI / 8) * 2.75,
+        zl + 1.3,
+      );
+      // little gablet over each opening
+      put(
+        memo('lanG', () => cone(0.95, 1.1, 3).rotateY(0)),
+        stone,
+        Math.cos(t + Math.PI / 8) * 2.6,
+        Math.sin(t + Math.PI / 8) * 2.6,
+        zl + 3.7,
+        t + Math.PI / 8 + Math.PI / 2,
+        1,
+        0.35,
+        1,
+      );
     }
-    const zs = z1 + 8.2,
+    put(
+      memo('lan1', () => cyl(2.85, 2.75, 0.4, 8)),
+      gold,
+      0,
+      0,
+      zl + 3.6,
+      Math.PI / 8,
+    );
+    put(
+      memo('lan2', () => cyl(2.4, 2.6, 1.2, 8)),
+      lead,
+      0,
+      0,
+      zl + 4.4,
+      Math.PI / 8,
+    );
+    // Angels with outspread wings.
+    const zAng = zl + 4.0;
+    for (let k = 0; k < 8; k++) {
+      const t = (k * Math.PI) / 4 + Math.PI / 8;
+      const x = Math.cos(t) * 2.75,
+        y = Math.sin(t) * 2.75;
+      figure(gold, x, y, zAng, 1.8, t - Math.PI / 2, 0.9);
+      for (const side of [-1, 1])
+        put(
+          memo('wing', () => new THREE.BoxGeometry(0.6, 0.05, 1.3)),
+          gold,
+          x - Math.sin(t) * side * 0.45 - Math.cos(t) * 0.15,
+          y + Math.cos(t) * side * 0.45 - Math.sin(t) * 0.15,
+          zAng + 1.55,
+          t + Math.PI / 2 + side * 0.35,
+        );
+    }
+    // Spire: banded octagonal frusta with gilt rings and crockets on the arrises.
+    const zs = zl + 5.0,
       zt = 51.2;
-    // Banded spire: alternating dark and gold rings, tapering octagonal frusta.
-    const nb = 10;
+    const nb = 12;
+    const r0s = 2.2;
     for (let k = 0; k < nb; k++) {
       const za = zs + ((zt - zs) * k) / nb,
         zb = zs + ((zt - zs) * (k + 1)) / nb;
-      const ra = 1.7 * (1 - k / nb) + 0.12,
-        rb = 1.7 * (1 - (k + 1) / nb) + 0.12;
-      put(cyl(rb, ra, zb - za, 8), k % 2 ? gold : lead, 0, 0, (za + zb) / 2, Math.PI / 8);
-      // crockets on the eight arrises
-      if (k > 1 && k < nb - 1)
+      const ra = r0s * (1 - k / nb) + 0.12,
+        rb = r0s * (1 - (k + 1) / nb) + 0.12;
+      put(
+        cyl(rb, ra, zb - za, 8),
+        k % 3 === 2 ? gold : k % 2 ? leadL : lead,
+        0,
+        0,
+        (za + zb) / 2,
+        Math.PI / 8,
+      );
+      put(cyl(ra + 0.06, ra + 0.06, 0.14, 8), gold, 0, 0, za + 0.07, Math.PI / 8);
+      if (k > 0 && k < nb - 1)
         for (let j = 0; j < 8; j++) {
           const t = (j * Math.PI) / 4;
-          put(sph(0.16, 4), gold, Math.cos(t) * (ra + 0.1), Math.sin(t) * (ra + 0.1), za + 0.4);
+          put(
+            crocket,
+            gold,
+            Math.cos(t) * (ra + 0.05),
+            Math.sin(t) * (ra + 0.05),
+            za + 0.6,
+            0,
+            0.8,
+            0.8,
+            0.8,
+          );
         }
     }
+    // Lucarnes (gabled openings) on the lower spire.
+    for (let k = 0; k < 4; k++) {
+      const t = (k * Math.PI) / 2 + Math.PI / 8;
+      const r = r0s * 0.86;
+      const x = Math.cos(t) * r,
+        y = Math.sin(t) * r;
+      B(stone, x, y, zs + 0.6, 0.8, 0.8, 1.4, t);
+      B(darkVoid, x + Math.cos(t) * 0.41, y + Math.sin(t) * 0.41, zs + 0.8, 0.04, 0.4, 0.9, t);
+      put(
+        memo('luc', () => cone(0.6, 1.0, 4)),
+        stone,
+        x,
+        y,
+        zs + 2.5,
+        t + Math.PI / 4,
+      );
+    }
     // Gilt crown, orb and cross.
-    put(cyl(0.55, 0.4, 0.6, 8), gold, 0, 0, zt + 0.1);
-    put(sph(0.4, 10), gold, 0, 0, zt + 0.8);
-    B(gold, 0, 0, zt + 1.1, 0.22, 0.22, 2.0);
-    B(gold, 0, 0, zt + 2.3, 1.1, 0.22, 0.22);
-
-    // ---- Seated gilt statue of Albert (faces south, -y local).
-    const zs0 = zC;
-    B(granite, 0, 0.3, zs0, 3.6, 3.6, 0.6);
-    B(stone, 0, 0.3, zs0 + 0.6, 3.0, 3.0, 1.6);
-    const zb = zs0 + 2.2;
-    B(gold, 0, 0.9, zb, 2.0, 1.2, 1.1); // seat
-    B(gold, 0, 1.4, zb, 2.0, 0.4, 3.0); // chair back
     put(
-      new THREE.CylinderGeometry(0.85, 1.05, 2.0, 10).rotateX(Math.PI / 2),
+      memo('crown', () =>
+        latheG(
+          [
+            [0.3, 0],
+            [0.62, 0.15],
+            [0.7, 0.6],
+            [0.55, 0.7],
+            [0.0, 0.7],
+          ],
+          10,
+        ),
+      ),
       gold,
       0,
-      0.7,
-      zb + 1.1 + 1.0,
-    ); // torso and robe
-    put(sph(0.42, 10), gold, 0, 0.6, zb + 3.55); // head
-    for (const sx of [-0.45, 0.45]) {
-      B(gold, sx, 0.05, zb + 0.75, 0.6, 1.5, 0.6); // thighs
-      B(gold, sx, -0.6, zb, 0.55, 0.5, 0.9); // shins
+      0,
+      zt - 0.2,
+    );
+    for (let j = 0; j < 8; j++) {
+      const t = (j * Math.PI) / 4;
+      put(
+        memo('fleur', () => cone(0.12, 0.45, 4)),
+        gold,
+        Math.cos(t) * 0.62,
+        Math.sin(t) * 0.62,
+        zt + 0.72,
+      );
     }
-    put(new THREE.ConeGeometry(1.25, 2.4, 10).rotateX(Math.PI / 2), gold, 0, 0.6, zb + 1.2); // Garter robe drape
-    B(gold, 0.55, -0.15, zb + 1.6, 0.25, 0.9, 0.7); // catalogue in hand
+    put(
+      memo('stem', () => cyl(0.1, 0.16, 0.8, 8)),
+      gold,
+      0,
+      0,
+      zt + 0.9,
+    );
+    put(
+      memo('orb', () => sph(0.42, 12)),
+      gold,
+      0,
+      0,
+      zt + 1.6,
+    );
+    B(gold, 0, 0, zt + 1.9, 0.22, 0.22, 2.0);
+    B(gold, 0, 0, zt + 3.0, 1.1, 0.22, 0.22);
 
-    // ---- Industrial Arts groups at the podium corners (marble).
-    const figureGroup = (x, y, z, scale, seed, animal) => {
-      const r = kit.rng(seed);
-      B(granite, x, y, z, 3.6 * scale, 3.6 * scale, 1.2 * scale);
-      B(marble, x, y, z + 1.2 * scale, 3.2 * scale, 3.2 * scale, 0.5 * scale);
-      const zf = z + 1.7 * scale;
-      if (animal) {
-        const [bl, bh, hd] = animal;
-        put(sph(1, 10), marble, x, y, zf + 1.6 * scale, 0, bl * scale, 0.75 * scale, bh * scale);
-        for (const [ox, oy] of [
-          [-0.6, -0.4],
-          [0.6, -0.4],
-          [-0.6, 0.4],
-          [0.6, 0.4],
-        ])
-          put(
-            cyl(0.18 * scale, 0.2 * scale, 1.3 * scale, 6),
-            marble,
-            x + ox * bl * scale,
-            y + oy * scale,
-            zf + 0.65 * scale,
-          );
+    // ---- Seated gilt statue of Albert (faces south, -y local) on a granite pedestal.
+    const zs0 = zC;
+    B(granite, 0, 0.3, zs0, 3.8, 3.8, 0.4);
+    B(greyGranite, 0, 0.3, zs0 + 0.4, 3.4, 3.4, 0.3);
+    B(stone, 0, 0.3, zs0 + 0.7, 3.0, 3.0, 1.4);
+    B(gold, 0, 0.3 - 1.51, zs0 + 1.1, 1.8, 0.04, 0.5); // inscription panel
+    B(stone, 0, 0.3, zs0 + 2.1, 3.3, 3.3, 0.2);
+    const zb = zs0 + 2.3;
+    // chair with arms and a tall back
+    B(gold, 0, 0.9, zb, 2.1, 1.3, 1.0);
+    B(gold, 0, 1.5, zb, 2.1, 0.3, 3.3);
+    for (const sx of [-1, 1]) B(gold, sx * 1.0, 0.7, zb + 1.0, 0.25, 1.2, 0.5);
+    // Garter robe falling from the shoulders over the chair back and seat.
+    put(
+      memo('robeA', () =>
+        latheG(
+          [
+            [0, 0],
+            [1.0, 0],
+            [0.95, 0.4],
+            [0.7, 0.9],
+            [0.62, 1.4],
+            [0.68, 1.85],
+            [0.5, 2.15],
+            [0.2, 2.3],
+            [0, 2.32],
+          ],
+          12,
+        ),
+      ),
+      gold,
+      0,
+      0.8,
+      zb + 1.0,
+      0,
+      1,
+      0.75,
+      1,
+    );
+    put(
+      memo('cloak', () =>
+        latheG(
+          [
+            [1.1, 0],
+            [1.05, 0.6],
+            [0.8, 1.6],
+            [0.72, 2.3],
+            [0.0, 2.35],
+          ],
+          12,
+        ),
+      ),
+      gold,
+      0,
+      1.15,
+      zb,
+      0,
+      1,
+      0.45,
+      1,
+    );
+    put(
+      memo('neck', () => cyl(0.15, 0.18, 0.3, 8)),
+      gold,
+      0,
+      0.72,
+      zb + 3.4,
+    );
+    put(
+      memo('headA', () => sph(0.3, 12)),
+      gold,
+      0,
+      0.68,
+      zb + 3.78,
+      0,
+      1,
+      1.05,
+      1.18,
+    );
+    for (const sx of [-0.4, 0.4]) {
+      B(gold, sx, 0.1, zb + 0.85, 0.55, 1.55, 0.5); // thighs
+      put(
+        memo('knee', () => sph(0.3, 8)),
+        gold,
+        sx,
+        -0.62,
+        zb + 1.1,
+      );
+      B(gold, sx, -0.66, zb, 0.48, 0.46, 1.05); // shins
+      B(gold, sx, -0.86, zb, 0.4, 0.42, 0.16); // feet
+    }
+    // arms: right hand holding the Great Exhibition catalogue on the knee
+    put(
+      memo('uarm', () => cyl(0.16, 0.19, 1.0, 8)),
+      gold,
+      0.72,
+      0.6,
+      zb + 2.35,
+      0,
+      1,
+      1,
+      1,
+    );
+    B(gold, 0.62, 0.0, zb + 1.7, 0.3, 1.1, 0.3, 0);
+    B(gold, 0.45, -0.55, zb + 1.35, 0.6, 0.1, 0.8, 0);
+    put(
+      memo('uarm', () => cyl(0.16, 0.19, 1.0, 8)),
+      gold,
+      -0.72,
+      0.6,
+      zb + 2.35,
+      0,
+      1,
+      1,
+      1,
+    );
+    B(gold, -0.72, 0.15, zb + 1.75, 0.3, 0.9, 0.3, 0.1);
+
+    // ---- Industrial Arts groups at the podium corners (marble, at canopy-floor level).
+    const props = [
+      (x, y, z) => B(marble, x + 0.6, y, z, 1.4, 0.3, 0.4), // Agriculture: plough
+      (x, y, z) => B(marble, x - 0.5, y + 0.4, z, 0.7, 0.5, 0.7), // Manufacture: anvil
+      (x, y, z) =>
         put(
-          sph(hd * scale, 8),
+          memo('bale', () => cyl(0.35, 0.35, 0.9, 8).rotateY(Math.PI / 2)),
           marble,
-          x - (bl + 0.2) * scale,
-          y - 0.1,
-          zf + (1.6 + bh * 0.6) * scale,
-        );
+          x + 0.4,
+          y - 0.5,
+          z + 0.35,
+        ), // Commerce
+      (x, y, z) =>
+        put(
+          memo('wheel', () => new THREE.TorusGeometry(0.5, 0.08, 4, 12)),
+          marble,
+          x - 0.6,
+          y - 0.3,
+          z + 0.6,
+        ), // Engineering
+    ];
+    [
+      [-1, -1],
+      [1, -1],
+      [-1, 1],
+      [1, 1],
+    ].forEach(([sx, sy], k) => {
+      const x = sx * (ph - 0.4),
+        y = sy * (ph - 0.4),
+        z = zC;
+      B(marble, x, y, z, 3.2, 3.2, 0.4);
+      const r = kit.rng(2.1 + k);
+      const face = Math.atan2(sy, sx) - Math.PI / 2;
+      figure(marble, x, y, z + 0.4, 2.6, face, 0.7);
+      for (let i = 0; i < 3; i++) {
+        const t = face + Math.PI / 2 + (i - 1) * 1.6 + (r() - 0.5) * 0.4;
+        const fx = x + Math.cos(t) * 1.05,
+          fy = y + Math.sin(t) * 1.05;
+        if (i === 1) seated(marble, fx, fy, z + 0.4, 1.7, face);
+        else figure(marble, fx, fy, z + 0.4, 2.2 - r() * 0.3, face + (r() - 0.5), r());
       }
-      for (let k = 0; k < 4; k++) {
-        const t = r() * Math.PI * 2,
-          d = (animal ? 1.25 : 0.7) * scale;
-        const fx = x + Math.cos(t) * d,
-          fy = y + Math.sin(t) * d,
-          fh = (animal ? 1.7 : 2.0) * scale * (0.85 + r() * 0.3);
-        put(cyl(0.22 * scale, 0.36 * scale, fh, 7), marble, fx, fy, zf + fh / 2);
-        put(sph(0.2 * scale, 6), marble, fx, fy, zf + fh + 0.15 * scale);
-      }
-    };
-    for (const [sx, sy, k] of [
-      [-1, -1, 0],
-      [1, -1, 1],
-      [-1, 1, 2],
-      [1, 1, 3],
-    ])
-      figureGroup(sx * (ph + 0.9), sy * (ph + 0.9), zP, 0.72, 2.1 + k, null);
+      props[k](x, y, z + 0.4);
+    });
 
-    // ---- Continent groups on their footprints (animal + figures).
-    const animals = {
-      'a8cfc47f-900b-451f-a15e-c92c0ef63be0': [1.2, 0.8, 0.4], // America: bison
-      '6ff7d995-360f-4bc4-8d89-8ecb29b3d08b': [1.1, 0.9, 0.35], // Africa: camel
-      'c8159e6a-0e6d-4454-ad80-950285fe166d': [1.25, 0.75, 0.45], // Europe: bull
-      '93e65965-7e61-49fc-9473-1ff35f5b0360': [1.4, 1.1, 0.6], // Asia: elephant
+    // ---- Continent groups on their footprints: stepped granite pedestal, animal, figures.
+    const animal = (kind, x, y, z, rz, s) => {
+      const c = Math.cos(rz),
+        sn = Math.sin(rz);
+      const at = (u, v) => [x + c * u - sn * v, y + sn * u + c * v];
+      const P = (geo, u, v, w, sx = 1, sy = 1, sz = 1) => {
+        const [px, py] = at(u * s, v * s);
+        put(geo, marble, px, py, z + w * s, rz, sx * s, sy * s, sz * s);
+      };
+      const body = memo('body', () => sph(1, 12));
+      const leg = memo('leg', () => cyl(0.16, 0.2, 1, 6));
+      const kneel = kind === 'elephant';
+      const legH = kneel ? 0.5 : kind === 'camel' ? 1.5 : 1.0;
+      const bl = kind === 'elephant' ? 1.4 : kind === 'camel' ? 1.05 : 1.2;
+      const bh = kind === 'elephant' ? 1.0 : 0.72;
+      const bz = legH + bh * 0.8;
+      P(body, 0, 0, bz, bl, 0.68 * (kind === 'elephant' ? 1.3 : 1), bh);
+      for (const [lu, lv] of [
+        [-0.65, -0.35],
+        [0.65, -0.35],
+        [-0.65, 0.35],
+        [0.65, 0.35],
+      ])
+        P(leg, lu * bl, lv, (legH + 0.2) / 2, kneel ? 1.6 : 1, kneel ? 1.6 : 1, legH + 0.2);
+      if (kind === 'elephant') {
+        P(
+          memo('eh', () => sph(0.6, 10)),
+          -bl - 0.2,
+          0,
+          bz + 0.3,
+        );
+        P(
+          memo('trunk', () => cyl(0.12, 0.2, 1.4, 6)),
+          -bl - 0.65,
+          0,
+          bz - 0.5,
+        );
+        for (const v of [-0.55, 0.55])
+          P(
+            memo('ear', () => cyl(0.5, 0.5, 0.06, 10).rotateY(Math.PI / 2)),
+            -bl - 0.05,
+            v,
+            bz + 0.3,
+          );
+        // howdah with rider
+        P(
+          memo('howdah', () => new THREE.BoxGeometry(1.2, 1.0, 0.6)),
+          0,
+          0,
+          bz + bh * 0.95,
+        );
+      } else if (kind === 'camel') {
+        P(
+          memo('hump', () => sph(0.45, 8)),
+          0.1,
+          0,
+          bz + bh * 0.85,
+        );
+        P(
+          memo('cneck', () => cyl(0.16, 0.24, 1.3, 6).rotateY(-0.7)),
+          -bl - 0.2,
+          0,
+          bz + 0.55,
+        );
+        P(
+          memo('chead', () => sph(0.25, 8)),
+          -bl - 0.65,
+          0,
+          bz + 1.15,
+          1.6,
+          0.9,
+          0.9,
+        );
+      } else {
+        // bison / bull: heavy shoulder hump, low head with horns
+        if (kind === 'bison')
+          P(
+            memo('bhump', () => sph(0.6, 8)),
+            -0.55,
+            0,
+            bz + 0.4,
+            1,
+            1,
+            0.9,
+          );
+        P(
+          memo('bhead', () => sph(0.4, 8)),
+          -bl - 0.15,
+          0,
+          bz - 0.1,
+          1.2,
+          1,
+          1,
+        );
+        for (const v of [-0.3, 0.3])
+          P(
+            memo('horn', () => cone(0.07, 0.45, 5)),
+            -bl - 0.2,
+            v,
+            bz + 0.3,
+          );
+      }
+      // rider seated on the back
+      const [rx, ry] = at(0.1 * s, 0);
+      seated(
+        marble,
+        rx,
+        ry,
+        z + (bz + bh * (kind === 'elephant' ? 1.6 : 0.85)) * s,
+        1.3 * s,
+        rz + Math.PI / 2,
+      );
+    };
+    const kinds = {
+      'a8cfc47f-900b-451f-a15e-c92c0ef63be0': 'bison', // America
+      '6ff7d995-360f-4bc4-8d89-8ecb29b3d08b': 'camel', // Africa
+      'c8159e6a-0e6d-4454-ad80-950285fe166d': 'bull', // Europe
+      '93e65965-7e61-49fc-9473-1ff35f5b0360': 'elephant', // Asia
     };
     let seed = 11;
     for (const b of grp) {
       if (!b) continue;
       const [x, y] = local(b);
-      figureGroup(x, y, 0, 1.15, seed++, animals[b.id]);
+      const r = kit.rng(seed++);
+      const s = 1.15;
+      B(granite, x, y, 0, 4.3, 4.3, 0.5);
+      B(greyGranite, x, y, 0.5, 4.0, 4.0, 0.9);
+      B(granite, x, y, 1.4, 4.2, 4.2, 0.2);
+      B(marble, x, y, 1.6, 3.8, 3.8, 0.45);
+      const zf = 2.05;
+      const out = Math.atan2(y, x); // facing outwards from the memorial
+      animal(kinds[b.id], x, y, zf, out + Math.PI / 2, 0.95 * s);
+      for (let k = 0; k < 4; k++) {
+        const t = out + Math.PI / 4 + (k * Math.PI) / 2 + (r() - 0.5) * 0.3;
+        const fx = x + Math.cos(t) * 1.45,
+          fy = y + Math.sin(t) * 1.45;
+        if (k === 1) seated(marble, fx, fy, zf, 1.45, t + Math.PI / 2);
+        else figure(marble, fx, fy, zf, 1.95 + r() * 0.25, t + Math.PI / 2, r());
+      }
     }
 
     const out = batch.toGroup('albert_memorial');

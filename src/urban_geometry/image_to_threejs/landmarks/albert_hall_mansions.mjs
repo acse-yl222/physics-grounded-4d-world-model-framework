@@ -39,14 +39,15 @@ export default {
   notes:
     'Eaves/roof heights from the listing storey counts rather than the inferred data heights: Nos 1-30 eaves 17 m + 6 m roof, ' +
     'Nos 31-48 eaves 16 m + 5 m roof, Nos 49-86 eaves 27 m + 6 m roof. Roofs are mansard-style slopes following the ' +
-    'simplified footprint; gables are placed procedurally on the longer street edges (not traced per bay). Window rhythm is a ' +
-    'painted tile.',
+    'simplified footprint; gables are placed procedurally on the longer street edges (not traced per bay). Outer elevations ' +
+    'carry 3D white sashes (3.4 m bay rhythm assumed) under rubbed-brick heads with string courses; light wells keep a ' +
+    'painted tile. Dormers and chimney pots are placed procedurally.',
   build({ THREE, kit, byId }) {
     const g = new THREE.Group();
     const batch = new kit.MeshBatch();
     const BRICK = '#a2513a';
     const brick = kit.mat(BRICK),
-      slate = kit.mat('#525960'),
+      slate = kit.roof('slate', 0),
       white = kit.mat('#ece8de'),
       stoneMat = kit.mat('#d9cdb2');
     const facade = kit.paintedMaterial('albert_hall_mansions:bay', 512, 256, (c, w, h) => {
@@ -75,6 +76,177 @@ export default {
         }
       }
     });
+    const plainBrick = kit.paintedMaterial('albert_hall_mansions:plain', 256, 256, (c, w, h) => {
+      c.fillStyle = BRICK;
+      c.fillRect(0, 0, w, h);
+      const r = kit.rng(8.8);
+      for (let y = 0; y < h; y += 4) {
+        c.fillStyle = `rgba(0,0,0,${0.05 + r() * 0.04})`;
+        c.fillRect(0, y, w, 1);
+      }
+      for (let k = 0; k < 300; k++) {
+        c.fillStyle = r() < 0.5 ? 'rgba(255,200,170,0.07)' : 'rgba(60,15,5,0.07)';
+        c.fillRect(r() * w, r() * h, 8, 3);
+      }
+    });
+    const glass = kit.mat('#26303a', { roughness: 0.15, metalness: 0.3 }),
+      rubbed = kit.mat('#c47a5e'),
+      potMat = kit.mat('#9a5a3e');
+    // ---- Lean framed windows (local x along the wall a -> b, y up, z outward; outward
+    // normal on the right of a -> b), cached per spec: glass, moulded surround, mullion
+    // and transom, sill, keystone or pediment.
+    const winKit = (() => {
+      const cache = new Map();
+      const outline = (w, h, head, grow) => {
+        const s = new THREE.Shape();
+        const x0 = -w / 2 - grow,
+          x1 = w / 2 + grow;
+        s.moveTo(x0, -grow);
+        s.lineTo(x1, -grow);
+        if (head === 'arch') {
+          s.lineTo(x1, h);
+          s.absarc(0, h, w / 2 + grow, 0, Math.PI, false);
+        } else {
+          s.lineTo(x1, h + grow);
+          s.lineTo(x0, h + grow);
+        }
+        s.lineTo(x0, -grow);
+        return s;
+      };
+      const parts = (spec) => {
+        const key = JSON.stringify(spec, (k, v) => (v && v.isMaterial ? v.uuid : v));
+        if (cache.has(key)) return cache.get(key);
+        const {
+          w,
+          h,
+          head = 'flat',
+          bars = 1,
+          f = 0.18,
+          glass,
+          sur,
+          bar,
+          sill: sillMat,
+          depth = 0.13,
+        } = spec;
+        const out = [];
+        const gs = new THREE.ShapeGeometry(outline(w, h, head, 0), 5);
+        gs.translate(0, 0, 0.02);
+        out.push([gs, glass]);
+        if (f > 0) {
+          const ring = outline(w, h, head, f);
+          ring.holes.push(new THREE.Path(outline(w, h, head, 0).getPoints(5).reverse()));
+          out.push([
+            new THREE.ExtrudeGeometry(ring, { depth, bevelEnabled: false, curveSegments: 5 }),
+            sur,
+          ]);
+        }
+        const top = head === 'arch' ? h + w / 2 : h;
+        if (bars) {
+          const nv = bars === 2 ? 2 : 1;
+          for (let i = 1; i <= nv; i++) {
+            const vb = new THREE.BoxGeometry(0.07, top, 0.07);
+            vb.translate(-w / 2 + (w * i) / (nv + 1), top / 2, 0.06);
+            out.push([vb, bar]);
+          }
+          const hb = new THREE.BoxGeometry(w, 0.07, 0.07);
+          hb.translate(0, head === 'arch' ? h : h * 0.66, 0.06);
+          out.push([hb, bar]);
+        }
+        const sl = new THREE.BoxGeometry(w + 2 * f + 0.2, 0.14, 0.26);
+        sl.translate(0, -f - 0.07, 0.13);
+        out.push([sl, sillMat ?? sur]);
+        if (head === 'arch') {
+          const ks = new THREE.BoxGeometry(Math.max(0.22, w * 0.18), f + 0.12, 0.2);
+          ks.translate(0, top + f / 2, 0.1);
+          out.push([ks, sur]);
+        } else if (head === 'pediment' || head === 'lintel') {
+          const hw = w / 2 + f + 0.15;
+          const lt = new THREE.BoxGeometry(2 * hw, 0.16, 0.24);
+          lt.translate(0, h + f + 0.08, 0.12);
+          out.push([lt, spec.headMat ?? sur]);
+          if (head === 'pediment') {
+            const t = new THREE.Shape();
+            t.moveTo(-hw, 0);
+            t.lineTo(hw, 0);
+            t.lineTo(0, hw * 0.42);
+            t.closePath();
+            const pg = new THREE.ExtrudeGeometry(t, { depth: 0.22, bevelEnabled: false });
+            pg.translate(0, h + f + 0.16, 0);
+            out.push([pg, sur]);
+          }
+        }
+        cache.set(key, out);
+        return out;
+      };
+      const edge = (a, b) => {
+        const L = Math.hypot(b[0] - a[0], b[1] - a[1]) || 1;
+        const ux = (b[0] - a[0]) / L,
+          uy = (b[1] - a[1]) / L;
+        return { a, b, L, ux, uy, nx: uy, ny: -ux, ang: Math.atan2(uy, ux) };
+      };
+      const place = (e, geo, m, lx, z, out = 0) => {
+        const mm = new THREE.Matrix4().makeBasis(
+          new THREE.Vector3(e.ux, e.uy, 0),
+          new THREE.Vector3(0, 0, 1),
+          new THREE.Vector3(e.nx, e.ny, 0),
+        );
+        mm.setPosition(e.a[0] + e.ux * lx + e.nx * out, e.a[1] + e.uy * lx + e.ny * out, z);
+        batch.addGeometry(m, geo, mm);
+      };
+      const row = (a, b, z, n, margin, spec) => {
+        const e = edge(a, b);
+        const usable = e.L - 2 * margin;
+        const xs = [];
+        for (let k = 0; k < n; k++) {
+          const lx = margin + (usable * (k + 0.5)) / n;
+          for (const [geo, m] of parts(spec)) place(e, geo, m, lx, z);
+          xs.push(lx);
+        }
+        return xs;
+      };
+      // Projecting band (string course) along an edge.
+      const band = (a, b, z, h, proj, m) => {
+        const e = edge(a, b);
+        kit.box(
+          batch,
+          m,
+          (a[0] + b[0]) / 2 + (e.nx * proj) / 2,
+          (a[1] + b[1]) / 2 + (e.ny * proj) / 2,
+          z,
+          e.L + proj,
+          proj,
+          h,
+          e.ang,
+        );
+      };
+      return { parts, edge, place, row, band };
+    })();
+    const wallQuad = (mat, a, b, z0, z1) => {
+      const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      batch.quad(
+        mat,
+        [a[0], a[1], z0],
+        [b[0], b[1], z0],
+        [b[0], b[1], z1],
+        [a[0], a[1], z1],
+        [0, z0 / 6],
+        [len / 6, z0 / 6],
+        [len / 6, z1 / 6],
+        [0, z1 / 6],
+      );
+    };
+    const sash = {
+      w: 1.25,
+      h: 2.0,
+      head: 'lintel',
+      glass,
+      sur: white,
+      headMat: rubbed,
+      bar: white,
+      bars: 2,
+      f: 0.08,
+      depth: 0.1,
+    };
     const ccw = (r) => (kit.ringArea(r) < 0 ? r.slice().reverse() : r);
     // Douglas-Peucker simplification of a closed ring.
     const simplify = (ring, tol) => {
@@ -145,12 +317,12 @@ export default {
           [inner[j][0], inner[j][1], zr],
           [inner[k][0], inner[k][1], zr],
           [0, 0],
-          [1, 0],
-          [1, 1],
-          [0, 1],
+          [Math.hypot(ring[j][0] - ring[k][0], ring[j][1] - ring[k][1]) / 3, 0],
+          [Math.hypot(inner[j][0] - inner[k][0], inner[j][1] - inner[k][1]) / 3, rise / 3],
+          [0, rise / 3],
         );
       }
-      kit.cap(batch, kit.mat('#5d6369'), [[inner, ...holes]], zr);
+      kit.cap(batch, kit.roof('flat', 1), [[inner, ...holes]], zr, { scale: 6 });
       return { inner, zr };
     };
     // Shaped ("scrolly") gable plate in an edge plane.
@@ -189,27 +361,23 @@ export default {
       // window and stone coping strip on the gable face
       const nx = Math.sin(ang),
         ny = -Math.cos(ang);
-      kit.box(
-        batch,
-        white,
-        cx + nx * 0.05,
-        cy + ny * 0.05,
-        z + hgt * 0.15,
-        w * 0.32,
-        0.08,
-        hgt * 0.32,
-        ang,
+      const ux = Math.cos(ang),
+        uy = Math.sin(ang);
+      winKit.row(
+        [cx - ux * w * 0.3 + nx * 0.02, cy - uy * w * 0.3 + ny * 0.02],
+        [cx + ux * w * 0.3 + nx * 0.02, cy + uy * w * 0.3 + ny * 0.02],
+        z + hgt * 0.12,
+        2,
+        0.25,
+        { ...sash, w: Math.min(1.1, w * 0.18), h: hgt * 0.3 },
       );
-      kit.box(
-        batch,
-        kit.mat('#26303a'),
-        cx + nx * 0.1,
-        cy + ny * 0.1,
-        z + hgt * 0.18,
-        w * 0.26,
-        0.04,
-        hgt * 0.26,
-        ang,
+      winKit.row(
+        [cx - ux * 0.8 + nx * 0.02, cy - uy * 0.8 + ny * 0.02],
+        [cx + ux * 0.8 + nx * 0.02, cy + uy * 0.8 + ny * 0.02],
+        z + hgt * 0.56,
+        1,
+        0.2,
+        { ...sash, w: 0.8, h: hgt * 0.18, head: 'arch' },
       );
       kit.box(batch, stoneMat, cx, cy, z + hgt - 0.1, w * 0.3, 0.9, 0.35, ang);
     };
@@ -219,7 +387,21 @@ export default {
       for (const poly of b.polys) {
         const outer = ccw(poly[0]);
         const holes = poly.slice(1).map((h) => (kit.ringArea(h) > 0 ? h.slice().reverse() : h));
-        kit.walls(batch, facade, [[outer, ...holes]], 0, eave, { bay: 3.4, storey: 3.4 });
+        if (holes.length) kit.walls(batch, facade, [holes], 0, eave, { bay: 3.4, storey: 3.4 });
+        // Outer elevations: brick with 3D white sashes under rubbed-brick heads, string courses.
+        const storeys = Math.floor((eave - 0.6) / 3.4);
+        for (let k = 0; k < outer.length; k++) {
+          const a = outer[k],
+            c2 = outer[(k + 1) % outer.length];
+          const L = Math.hypot(c2[0] - a[0], c2[1] - a[1]);
+          wallQuad(L >= 1.9 ? plainBrick : facade, a, c2, 0, eave);
+          if (L < 1.9) continue;
+          const n = Math.max(1, Math.round(L / 3.4));
+          for (let st = 0; st < storeys; st++) {
+            winKit.row(a, c2, st * 3.4 + 1.0, n, 0, st === 0 ? { ...sash, h: 2.1 } : sash);
+            if (st > 0) winKit.band(a, c2, st * 3.4 + 0.55, 0.22, 0.07, rubbed);
+          }
+        }
         // ground-floor stone band and eaves cornice
         const o = kit.offsetRing(outer, 0.25);
         kit.walls(batch, white, [[o]], eave - 0.45, eave);
@@ -242,6 +424,36 @@ export default {
           for (let j = 0; j < n; j++) {
             const t = n === 1 ? 0.5 : (j + 0.5) / n;
             gable(a[0] + (c2[0] - a[0]) * t, a[1] + (c2[1] - a[1]) * t, ang, eave, w, rise + 1.2);
+          }
+        }
+        // Dormers (roof storeys) along the outer edges between the gables.
+        for (let k = 0; k < s.length; k++) {
+          const a = s[k],
+            c2 = s[(k + 1) % s.length];
+          const L = Math.hypot(c2[0] - a[0], c2[1] - a[1]);
+          if (L < 4 || !roof) continue;
+          const ed = winKit.edge(a, c2);
+          const gw = L < 6.5 ? 0 : Math.min(5.6, L * 0.6);
+          const ng = L < 6.5 ? 0 : L < 13 ? 1 : Math.floor(L / 11);
+          const gs = [];
+          for (let j = 0; j < ng; j++) gs.push((ng === 1 ? 0.5 : (j + 0.5) / ng) * L);
+          const nd = Math.floor(L / 3.4);
+          for (let j = 0; j < nd; j++) {
+            const t = ((j + 0.5) / nd) * L;
+            if (gs.some((x) => Math.abs(x - t) < gw / 2 + 1.0)) continue;
+            const inset = 1.1;
+            const px = a[0] + ed.ux * t - ed.nx * inset,
+              py = a[1] + ed.uy * t - ed.ny * inset;
+            kit.box(batch, slate, px, py, eave, 1.7, 1.6, 2.4, ed.ang);
+            winKit.row(
+              [px - ed.ux * 0.85 + ed.nx * 0.8, py - ed.uy * 0.85 + ed.ny * 0.8],
+              [px + ed.ux * 0.85 + ed.nx * 0.8, py + ed.uy * 0.85 + ed.ny * 0.8],
+              eave + 0.45,
+              1,
+              0.2,
+              { ...sash, w: 1.0, h: 1.5, head: 'flat' },
+            );
+            kit.box(batch, white, px, py, eave + 2.4, 1.9, 1.8, 0.2, ed.ang);
           }
         }
         // Tall chimney stacks along the roof ridge line.
@@ -273,6 +485,22 @@ export default {
               0.4,
               ang,
             );
+            for (const d of [-1.0, -0.33, 0.33, 1.0]) {
+              const mx = p[0] + (q[0] - p[0]) * 0.5 + Math.cos(ang) * d,
+                my = p[1] + (q[1] - p[1]) * 0.5 + Math.sin(ang) * d;
+              const pm = kit.lathe(
+                potMat,
+                [
+                  [0.17, 0],
+                  [0.14, 0.55],
+                  [0.18, 0.65],
+                ],
+                { x: mx, y: my, z: roof.zr + 3.5, segments: 6 },
+              );
+              pm.updateMatrix();
+              batch.addGeometry(potMat, pm.geometry, pm.matrix);
+              pm.geometry.dispose();
+            }
           }
         }
       }

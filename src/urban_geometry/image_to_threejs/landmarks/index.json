@@ -75,7 +75,7 @@
         "used_for": "street view of the Prince Consort Road front"
       }
     ],
-    "notes": "Eaves raised to 22.5 m (7 storeys + semi-basement) above the 19.3 m data height, with a 4 m slate roof slope following the footprint. Light wells are the footprint holes. Balcony and turret positions are placed on the south (Prince Consort Road side) frontage ends; dimensions are estimated."
+    "notes": "Eaves raised to 22.5 m (7 storeys + semi-basement) above the 19.3 m data height, with a 4 m slate roof slope following the footprint. Light wells are the footprint holes. Balcony and turret positions are placed on the south (Prince Consort Road side) frontage ends; dimensions are estimated. Outer elevations carry 3D stone-dressed sashes (3.5 m bays, 3.0 m storeys assumed) with stone bands; light wells keep a painted tile. Balcony railings, stacked Corinthian columns, dormers and chimney pots are procedural."
   },
   {
     "id": "albert_hall_mansions",
@@ -107,7 +107,7 @@
         "used_for": "Nos 49-82 block of eight storeys plus two in the roof"
       }
     ],
-    "notes": "Eaves/roof heights from the listing storey counts rather than the inferred data heights: Nos 1-30 eaves 17 m + 6 m roof, Nos 31-48 eaves 16 m + 5 m roof, Nos 49-86 eaves 27 m + 6 m roof. Roofs are mansard-style slopes following the simplified footprint; gables are placed procedurally on the longer street edges (not traced per bay). Window rhythm is a painted tile."
+    "notes": "Eaves/roof heights from the listing storey counts rather than the inferred data heights: Nos 1-30 eaves 17 m + 6 m roof, Nos 31-48 eaves 16 m + 5 m roof, Nos 49-86 eaves 27 m + 6 m roof. Roofs are mansard-style slopes following the simplified footprint; gables are placed procedurally on the longer street edges (not traced per bay). Outer elevations carry 3D white sashes (3.4 m bay rhythm assumed) under rubbed-brick heads with string courses; light wells keep a painted tile. Dormers and chimney pots are placed procedurally."
   },
   {
     "id": "albert_memorial",
@@ -140,15 +140,20 @@
       {
         "title": "Victorian London - Albert Memorial",
         "url": "https://www.victorianlondon.org/buildings/albertmemorial.htm",
-        "used_for": "mass of gilt, mosaic and coloured stones; ornamented spire with a cross at the top"
+        "used_for": "mass of gilt, mosaic and coloured stones; ornamented spire with a cross at the top; canopy about thirty feet square on groups of polished granite columns"
       },
       {
         "title": "The Albert Memorial - A London Inheritance",
         "url": "https://alondoninheritance.com/london-monuments/albert-memorial-19th-century-world-view",
         "used_for": "octagonal grey-banded crocketed spire, gilded crown, angels round the spire base"
+      },
+      {
+        "title": "Prince Consort National Memorial - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101217741-prince-consort-national-memorial-albert-memorial-knightsbridge-and-belgravia-ward",
+        "used_for": "sculptured band breaking outward at the corners for the Agriculture, Manufacture, Commerce and Engineering groups; continent groups at the outer corners"
       }
     ],
-    "notes": "Placed on the Overture canopy footprint and the four continent-group footprints (orientation ~7 deg from the group layout). Step and podium dimensions, stage heights (arches, gables at ~24 m, spire 31-51 m, cross to 54 m) are proportioned from descriptions. Sculpture groups and the statue are blocky stand-ins (marble masses with an animal and figures; gilt seated figure); mosaics are painted suggestions. Two small unnamed 2 x 8 m strips ~35 m south-east/south-west of the memorial (identity unknown, generic extrusion gave 17 m towers in the park) are claimed and drawn as low granite plinths."
+    "notes": "Placed on the Overture canopy footprint and the four continent-group footprints (orientation ~7 deg from the group layout). Step and podium dimensions, stage heights (arches springing ~13 m, gables to ~25 m, spire 32-51 m, cross to ~54 m) are proportioned from descriptions. Canopy in 3D: four piers of four polished granite columns with gilt capitals and shaft rings, moulded two-order pointed arches, mosaic gables with crocketed rakes and pierced roundels, groined blue-and-gold vault, corner tabernacles with bronze science figures, cross-gabled lead roof with gilt cresting; flèche with gilt virtues, an arcaded lantern, winged angels, banded crocketed spire, crown, orb and cross. Sculpture (Albert, industrial arts and continent groups) is built from simple robed figures and animal stand-ins, not portraits; mosaics and the Parnassus frieze are painted. Two small unnamed 2 x 8 m strips ~35 m south-east/south-west of the memorial (identity unknown, generic extrusion gave 17 m towers in the park) are claimed and drawn as low granite plinths."
   },
   {
     "id": "apsley_house",
@@ -2567,12 +2572,22 @@
         "used_for": "Nairn: sombre purple-toned facing brick with concrete aggregate"
       },
       {
+        "title": "Darwin Building, RCA: fenestration detail - RIBApix",
+        "url": "https://www.architecture.com/image-library/ribapix/image-information/poster/darwin-building-royal-college-of-art-kensington-gore-london-fenestration-detail/posterid/RIBA45859.html",
+        "used_for": "concrete, brickwork and metal windows (photo subject tags)"
+      },
+      {
+        "title": "Twentieth Century Society - Royal College of Art",
+        "url": "https://c20society.org.uk/news/twentieth-century-society-stands-alone-in-fight-to-save-royal-college-of-art",
+        "used_for": "the east elevation is the most conspicuous part of the listed building"
+      },
+      {
         "title": "Darwin Building, Royal College of Art - manchesterhistory.net",
         "url": "https://manchesterhistory.net/architecture/1960/collegeofart.html",
         "used_for": "eight-storey building of glass and dark brick for workshops and studios, opposite the Albert Hall"
       }
     ],
-    "notes": "Height from the data (26.4 m). Pier/bay rhythm and the glazed top storey with north-light roof glazing are approximations from descriptions; the staggered internal section is not modelled."
+    "notes": "Height from the data (26.4 m). Pier/bay rhythm and the glazed top storey with north-light roof glazing are approximations from descriptions; the staggered internal section is not modelled. Elevations are 3D: brick piers proud of the panels, exposed-aggregate floor bands and metal-framed studio windows (bay 3.2 m, storey 3.25 m assumed); the glazed top storey has 3D mullions; a terrace rail on the setback is assumed."
   },
   {
     "id": "rca_frayling_building",
@@ -2707,9 +2722,24 @@
         "title": "Royal Albert Hall - Bluffton University photo page",
         "url": "https://homepages.bluffton.edu/~sullivanm/england/london/alberthall/alberthall.html",
         "used_for": "terracotta frieze of 16 allegorical groups; south porch rebuilt 1996-2004"
+      },
+      {
+        "title": "Royal Albert Hall - Historic England list entry 1217742",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1217742",
+        "used_for": "red brick and buff terracotta, five stages with two tiers of windows and decorative pilasters, mosaic frieze; four projecting two-storey porches with moulded pilasters, balustrades and cornices"
+      },
+      {
+        "title": "ROYAL ALBERT HALL (Londres) - amithe.es",
+        "url": "https://amithe.es/?p=370",
+        "used_for": "about 6 million bricks and 80,000 terracotta blocks; frieze runs above the balustraded smoking gallery"
+      },
+      {
+        "title": "Royal Albert Hall - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_Albert_Hall",
+        "used_for": "dome of wrought iron and glazing designed by Rowland Mason Ordish"
       }
     ],
-    "notes": "Drum, porches and dome follow the 11 Overture parts (drum 25 m, dome springing ~29 m to 43.8 m, lantern 46.6 m). Bay count (40) and storey divisions of the facade are proportioned from photo descriptions, not measured. Frieze figures are suggested by an abstract buff-on-brown pattern; porch elevations are simplified (arched ground floor, windows, pediment). Chimney stack height kept at the data value."
+    "notes": "Drum, porches and dome follow the 11 Overture parts (drum 25 m, dome springing ~29 m to 43.8 m, lantern 46.6 m). Bay count (~40 bays of ~6.2 m) and the storey levels are proportioned from photo descriptions, not measured. Windows, pilasters, string courses, balcony and parapet balustrades, the open gallery arcade with columns, modillioned cornice, dome ribs and porches are real geometry; the mosaic frieze and inscription are painted (figures abstracted). Porches are generic two-storey blocks with arched openings, the rebuilt south porch is not distinguished. Porch roofs are flat behind balustrades at the part heights (18-20 m). Ground is flat, so the south steps down to Prince Consort Road are not modelled. Chimney stack height kept at the data value."
   },
   {
     "id": "royal_college_of_music",
@@ -2741,7 +2771,7 @@
         "used_for": "Britten Theatre lies west of the courtyard behind the front range"
       }
     ],
-    "notes": "Eaves raised to ~17 m with a ~6 m slate roof; towers to ~25 m walls plus pyramidal caps (~33 m) proportioned from the listing description, not measured. The 8a4fa60d footprint is assumed to be the Britten Theatre block (modelled as a plain brick volume). Window rhythm is a painted 4-bay tile; the clock gable is simplified."
+    "notes": "Eaves raised to ~17 m with a ~6 m slate roof; towers to ~25 m walls plus pyramidal caps (~33 m) proportioned from the listing description, not measured. The 8a4fa60d footprint is assumed to be the Britten Theatre block (modelled as a plain brick volume). The north (Prince Consort Road) elevations have 3D stone-dressed windows, string courses, quoins, a columned entrance portal with steps, name band and area railings; side and rear elevations keep a painted 4-bay tile. Chimney positions, dormer count and tourelle details are approximations; the clock gable is simplified."
   },
   {
     "id": "royal_college_of_organists",
@@ -2771,7 +2801,7 @@
         "used_for": "H. H. Cole as architect, Moody sgraffiti"
       }
     ],
-    "notes": "The Overture footprint is larger than the narrow street building and is decorated throughout; the canted bay is placed at the centre of the street (north) frontage. Sgraffito figures are abstracted to putti silhouettes and scrolls; slate roof pitch is assumed. Eaves at the data height (17.9 m less roof)."
+    "notes": "The Overture footprint is larger than the narrow street building and is decorated throughout; the canted bay is placed at the centre of the street (north) frontage. Sgraffito figures are abstracted to putti silhouettes and scrolls; slate roof pitch is assumed. Eaves at the data height (17.9 m less roof). Windows are 3D mullion-and-transom frames placed on the painted sgraffito panels (bay rhythm 3.4 m assumed on every elevation); chimney and door positions are assumed."
   },
   {
     "id": "royal_geographical_society",
@@ -2796,12 +2826,27 @@
         "used_for": "Lowther Lodge as RGS headquarters, 1928-30 lecture room and 2004 extension"
       },
       {
+        "title": "Lowther Lodge - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lowther_Lodge",
+        "used_for": "Shaw 1873-75 for William Lowther; RGS home since 1913, Grade II*"
+      },
+      {
+        "title": "What London cabbies call hot-cold corner - London Shoes",
+        "url": "https://www.londonshoes.blog/2019/06/22/what-london-cabbies-call-hot-cold-corner-the-kensington-gore/",
+        "used_for": "Livingstone and Shackleton statues set into the walls either side of the corner"
+      },
+      {
+        "title": "Shackleton statue - London Remembers",
+        "url": "https://www.londonremembers.com/memorial_types/statue?page=33",
+        "used_for": "Shackleton in a niche on the Exhibition Road facade; Livingstone on the Kensington Gore facade"
+      },
+      {
         "title": "Richard Norman Shaw - Wikipedia",
         "url": "https://en.wikipedia.org/wiki/Richard_Norman_Shaw",
         "used_for": "Shaw Queen Anne style context"
       }
     ],
-    "notes": "The whole footprint (house plus later extensions) is treated in the Lodge idiom: eaves 11.5 m with a 6 m tiled roof slope following the simplified outline (data height 15.7 m), shaped gables placed procedurally on longer edges and tall stacks. The 1928-30 and 2004 additions are not differentiated; the Livingstone and Shackleton statues are not modelled."
+    "notes": "The whole footprint (house plus later extensions) is treated in the Lodge idiom: eaves 11.5 m with a 6 m tiled roof slope following the simplified outline (data height 15.7 m), shaped gables placed procedurally on longer edges and tall stacks. The 1928-30 and 2004 additions are not differentiated. Outer elevations have 3D white sashes under rubbed-brick heads (3.4 m bays assumed), string courses and quoin strips; the Livingstone and Shackleton statues stand in stone niches either side of the north-east corner (heights and niche form assumed; figures are simple robed stand-ins)."
   },
   {
     "id": "royal_hospital_chelsea",
