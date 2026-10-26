@@ -41,6 +41,32 @@ sun.castShadow = renderer.shadowMap.enabled;
 sun.shadow.mapSize.set(4096, 4096);
 sun.shadow.bias = -0.0005;
 
+// Sky environment so glass and metal reflect a sky instead of reading black.
+function skyEnvironment() {
+  const sky = new THREE.Scene();
+  const geo = new THREE.SphereGeometry(100, 32, 16);
+  const colors = [];
+  const p = geo.attributes.position;
+  for (let k = 0; k < p.count; k++) {
+    const t = Math.max(-1, Math.min(1, p.getY(k) / 100));
+    const c =
+      t > 0
+        ? new THREE.Color('#9fc0dc').lerp(new THREE.Color('#e8f0f6'), 1 - t)
+        : new THREE.Color('#6d7466');
+    colors.push(c.r, c.g, c.b);
+  }
+  geo.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+  sky.add(
+    new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ vertexColors: true, side: THREE.BackSide })),
+  );
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  const env = pmrem.fromScene(sky, 0.02).texture;
+  pmrem.dispose();
+  return env;
+}
+scene3.environment = skyEnvironment();
+scene3.environmentIntensity = 0.6;
+
 const enu = (x, y, z) => new THREE.Vector3(x, z, -y);
 let focus = { x: 0, y: 0, z: 0, size: 1000 };
 
