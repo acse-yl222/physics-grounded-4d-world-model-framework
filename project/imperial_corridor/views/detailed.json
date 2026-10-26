@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "imperial_corridor",
+  "title": "City model",
+  "time_alignment": "relative",
+  "runs": ["20261026T012952Z_f0fc1c"],
+  "layers": [
+    {
+      "run_id": "20261026T012952Z_f0fc1c",
+      "layer_id": "buildings",
+      "visible": true
+    },
+    {
+      "run_id": "20261026T012952Z_f0fc1c",
+      "layer_id": "landmarks",
+      "visible": true
+    },
+    {
+      "run_id": "20261026T012952Z_f0fc1c",
+      "layer_id": "ground",
+      "visible": true
+    },
+    {
+      "run_id": "20261026T012952Z_f0fc1c",
+      "layer_id": "trees",
+      "visible": true
+    },
+    {
+      "run_id": "20261026T012952Z_f0fc1c",
+      "layer_id": "street_furniture",
+      "visible": true
+    }
+  ],
+  "camera": {
+    "position": [2600.0, -2600.0, 1500.0],
+    "target": [-200.0, 0.0, 0.0]
+  }
+}
