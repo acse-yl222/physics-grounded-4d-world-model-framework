@@ -538,14 +538,20 @@ export function windowRow(batch, a, b, z, opts = {}) {
       box(batch, sill, ox, oy, z + height, width + 0.2, depth * 1.4, 0.18, f.angle);
     else if (head === 'pediment') {
       box(batch, sill, ox, oy, z + height, width + 0.3, depth * 1.6, 0.14, f.angle);
-      const g = new THREE.CylinderGeometry(width * 0.62, width * 0.62, depth * 1.4, 3, 1).rotateX(
-        Math.PI / 2,
-      );
-      g.scale(1, 0.32, 1);
+      // Triangular pediment drawn in the wall plane (apex up), extruded outward.
+      const half = width / 2 + 0.2,
+        rise = width * 0.28;
+      const tri = new THREE.Shape([
+        new THREE.Vector2(-half, 0),
+        new THREE.Vector2(half, 0),
+        new THREE.Vector2(0, rise),
+      ]);
+      const g = new THREE.ExtrudeGeometry(tri, { depth: depth * 1.4, bevelEnabled: false });
+      // Shape x -> along the wall, shape y -> up, extrusion -> outward normal.
       const m = new THREE.Matrix4()
         .makeRotationZ(f.angle)
         .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2));
-      m.setPosition(ox, oy, z + height + 0.14 + width * 0.12);
+      m.setPosition(ox - f.nx * depth * 0.7, oy - f.ny * depth * 0.7, z + height + 0.14);
       batch.addGeometry(sill, g, m);
       g.dispose();
     } else if (head === 'arch' || head === 'segment') {

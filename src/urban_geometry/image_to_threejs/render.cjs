@@ -129,7 +129,7 @@ async function main() {
       for (const v of (o.views ?? 'ne,sw,street_s').split(',')) {
         await page.evaluate((vv) => window.studio.view(vv), v);
         const file = path.join(outDir, `${name}_${v}.png`);
-        await page.screenshot({ path: file });
+        await page.screenshot({ path: file, timeout: 180000 });
         console.log(file);
       }
       console.log(JSON.stringify(await page.evaluate(() => window.studio.stats)));
