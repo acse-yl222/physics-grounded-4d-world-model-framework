@@ -1,8 +1,11 @@
 """Count points -> SUMO edges, hourly edge targets and routeSampler calibration.
 
-Matching: Overture names are street names ("Cromwell Road") while DfT major roads carry
-route numbers ("A4"), so a name test only applies when the DfT road name is a street
-name. Otherwise a count point direction is matched to the nearest passenger edge within
+Matching: DfT major roads carry route numbers ("A4"). On an OSM network the edges keep
+the OSM ``ref`` tag (e.g. "A4;A315"), so an edge whose ref contains the DfT route number
+is preferred and edges with only other refs are skipped. Overture names are street names
+("Cromwell Road") without refs, so there a name test only applies when the DfT road name
+is a street name. Otherwise a count point direction is matched to the nearest passenger
+edge within
 ``radius_m`` that has a class compatible with the DfT road type and whose heading agrees
 with the direction of travel; edges named after the link's start/end junction roads (the
 crossing streets) are not used. The match quality is recorded per count.
@@ -20,6 +23,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from . import sumo_env
+from .osm_net import road_class
 
 # ENU heading (radians CCW from east) of each DfT direction of travel.
 CARDINAL = {"E": 0.0, "N": math.pi / 2, "W": math.pi, "S": -math.pi / 2}
@@ -54,6 +58,11 @@ def normalise_name(name: str | None) -> str:
     """Lower case, punctuation removed, common GB street abbreviations expanded."""
     words = re.sub(r"[^a-z0-9 ]+", " ", (name or "").lower().replace("'", "")).split()
     return " ".join(ABBREVIATIONS.get(w, w) for w in words)
+
+
+def refs_of(value: str | None) -> set[str]:
+    """OSM ``ref`` values of an edge ("A4;A315" -> {"A4", "A315"}), upper case, no spaces."""
+    return {r.strip().replace(" ", "").upper() for r in (value or "").split(";") if r.strip()}
 
 
 def is_ref(road_name: str) -> bool:
@@ -110,8 +119,12 @@ def choose_edge(candidates: list[dict], point: dict, direction: str, cfg: dict) 
     tol = cfg.get("heading_tolerance_deg", 75.0)
     junctions = {normalise_name(point.get(k)) for k in ("start_junction", "end_junction")}
     junctions.discard("")
+    junction_refs = set().union(
+        *(refs_of(point.get(k)) for k in ("start_junction", "end_junction"))
+    )
     road = point.get("road_name", "")
-    want_name = "" if is_ref(road) else normalise_name(road)
+    want_ref = road.strip().replace(" ", "").upper() if is_ref(road) else ""
+    want_name = "" if want_ref else normalise_name(road)
     options, reasons = [], defaultdict(int)
     for c in candidates:
         if not c["passenger"]:
@@ -119,6 +132,26 @@ def choose_edge(candidates: list[dict], point: dict, direction: str, cfg: dict) 
             continue
         if not heading_matches(c["heading"], direction, tol):
             reasons["heading"] += 1
+            continue
+        refs = refs_of(c.get("ref"))
+        if want_ref and want_ref in refs:
+            options.append((0, 0, c["dist"], c, "ref+heading"))
+            continue
+        if want_ref and refs and len(want_ref) > 1:
+            # Another numbered road (a crossing or parallel route): only as a last resort
+            # when it is near and class-compatible (OSM and DfT numbering can disagree).
+            fit = class_fit(point.get("road_type", ""), c["cls"])
+            if (
+                fit is not None
+                and not refs & junction_refs
+                and c["dist"] <= cfg.get("near_m", 20.0)
+            ):
+                options.append((2, fit, c["dist"], c, "class+heading (other ref)"))
+            else:
+                reasons["other_ref"] += 1
+            continue
+        if refs & junction_refs:
+            reasons["junction_road"] += 1
             continue
         name = normalise_name(c["name"])
         if want_name and name == want_name:
@@ -155,7 +188,8 @@ def edge_candidates(net, x: float, y: float, radius: float) -> list[dict]:
                 {
                     "id": edge.getID(),
                     "name": edge.getName(),
-                    "cls": edge.getType(),
+                    "cls": road_class(edge.getType()),
+                    "ref": edge.getParam("ref"),
                     "dist": dist,
                     "heading": heading,
                     "passenger": edge.allows("passenger"),
@@ -299,7 +333,9 @@ def sampled_counts(routes: Path, begin: float, end: float) -> dict[str, int]:
 def edge_capacities(net, per_lane: dict[str, float], default: float) -> dict[str, float]:
     """Hourly capacity per edge: class capacity per lane x lanes (sumolib network)."""
     return {
-        e.getID(): per_lane.get(e.getType(), default) * e.getLaneNumber() for e in net.getEdges()
+        e.getID(): per_lane.get(road_class(e.getType()), default)
+        * max(1, sum(1 for ln in e.getLanes() if ln.allows("passenger")))
+        for e in net.getEdges()
     }
 
 

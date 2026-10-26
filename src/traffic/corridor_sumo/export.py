@@ -61,12 +61,18 @@ def _open(path: Path):
 
 
 def parse_fcd(
-    path: Path, t_from: float, t_to: float, kinds: dict[str, str] | None = None
+    path: Path,
+    t_from: float,
+    t_to: float,
+    kinds: dict[str, str] | None = None,
+    half: float | None = None,
 ) -> Recording:
     """Read SUMO FCD XML (optionally gzipped), keeping time steps within [t_from, t_to].
 
     ``kinds`` maps SUMO vType ids that do not start with a known kind (e.g. buses from
-    another demand source) to a kind in ``VEHICLE_TYPES``.
+    another demand source) to a kind in ``VEHICLE_TYPES``. With ``half``, only samples
+    inside the square ``|x|, |y| <= half`` are kept (a network buffer beyond the scene
+    domain is simulated but not recorded); vehicles never inside are omitted.
     """
     kinds = kinds or {}
     rec = Recording()
@@ -79,6 +85,9 @@ def parse_fcd(
             frame = []
             for v in el.iter("vehicle"):
                 vid = v.get("id")
+                x, y = float(v.get("x")), float(v.get("y"))
+                if half is not None and (abs(x) > half or abs(y) > half):
+                    continue
                 if vid not in index:
                     index[vid] = len(rec.vehicles)
                     sumo_type = v.get("type", "car")
@@ -87,8 +96,8 @@ def parse_fcd(
                 frame.append(
                     (
                         index[vid],
-                        float(v.get("x")),
-                        float(v.get("y")),
+                        x,
+                        y,
                         heading_from_sumo_angle(float(v.get("angle"))),
                     )
                 )

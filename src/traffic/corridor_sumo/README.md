@@ -1,6 +1,7 @@
 # corridor_sumo
 
-SUMO traffic simulation for Overture-based city scenes (first user: `imperial_corridor`,
+SUMO traffic simulation for city scenes on an OpenStreetMap (default) or Overture road
+network (first user: `imperial_corridor`,
 8 km × 8 km around Imperial College South Kensington and White City). By default the car
 demand is calibrated to UK Department for Transport (DfT) road traffic counts and
 simulated for configurable clock hours (AM peak, inter-peak, PM peak); the output is a
@@ -10,6 +11,12 @@ and one sparse `trajectories` layer plus a compact viewer binary per period.
 
 ```sh
 python3 -m pip install eclipse-sumo rtree   # SUMO binaries + tools; rtree speeds up sumolib
+PYTHONPATH=src python3 -m traffic.corridor_sumo.osm_extract imperial_corridor   # ~40 min, once
+PYTHONPATH=src python3 -m traffic.corridor_sumo.run imperial_corridor --network-only
+PYTHONPATH=src python3 -m traffic.corridor_sumo.gtfs_bus build imperial_corridor \
+    --net cache/imperial_corridor/traffic_sumo/<net_run_id>/net/net.net.xml
+PYTHONPATH=src python3 -m traffic.corridor_sumo.run imperial_corridor --reuse <net_run_id>
+# or everything in one go (buses only when the GTFS step was built on the same network):
 PYTHONPATH=src python3 -m traffic.corridor_sumo.run imperial_corridor
 # periods only, reusing the network and candidate routes of an earlier run:
 PYTHONPATH=src python3 -m traffic.corridor_sumo.run imperial_corridor --reuse <run_id> [--periods am_peak,pm_peak]
@@ -25,6 +32,8 @@ come from `configs/image_to_threejs.json`.
 
 | File              | Role                                                                    |
 | ----------------- | ----------------------------------------------------------------------- |
+| `osm_extract.py`  | OSM subset of the buffered domain from the planet ORC (AWS Open Data)   |
+| `osm_net.py`      | netconvert OSM import (eqc = scene ENU), checks, network report         |
 | `overture_net.py` | Overture segments/connectors → SUMO plain XML (`.nod.xml`, `.edg.xml`)  |
 | `network.py`      | netconvert options, network statistics, ENU coordinate check            |
 | `tfl.py`          | TfL Unified API download/cache, route/timetable parsing, bus routes     |
@@ -37,6 +46,49 @@ come from `configs/image_to_threejs.json`.
 | `export.py`       | FCD parsing, vehicle selection, `trajectory_frames` JSON, `traffic.bin` |
 | `run.py`          | end-to-end CLI                                                          |
 | `sumo_env.py`     | locating SUMO binaries, tools and `sumolib`                             |
+
+## OpenStreetMap network (default, `network.source: "osm"`)
+
+1. **Extraction** (`osm_extract.py`). The OSM planet is read selectively from
+   `s3://osm-pds/planet/planet-latest.orc` (anonymous, us-east-1; ODbL 1.0,
+   © OpenStreetMap contributors). Rows are sorted by type (node, way, relation) and id,
+   so the stripes holding an id set are found by bisection over stripe first keys
+   (`locate`), and only `id, tags, nds` (ways), `id, lat, lon, tags` (nodes) or
+   `id, tags, members` (relations) of those stripes are read, in a thread pool. Way ids
+   are the OSM sources (`sources[].record_id` `w<id>@<v>`) of the Overture road
+   segments of the domain plus `osm.buffer_m` (1500 m: boundary junctions, Putney and
+   Wandsworth Bridges, Barnes connectivity). Ways whose `highway` can carry motor
+   vehicles or buses are kept (footways, paths, cycleways, steps, rail not); ways newer
+   than the Overture snapshot that share a node with a kept way are added from the
+   newest way stripes. All their nodes (coordinates exactly as stored, 7 decimals; tags
+   when tagged), turn restrictions (`type=restriction`/`restriction:*` with all ways
+   kept) and, separately, bus route relations are written to
+   `project/<scene>/input/osm/` (`osm.xml.gz`, `bus_route_relations.json.gz`,
+   `index.json` with object ETag/LastModified, bbox, rules, counts, sha256, licence).
+   Per-stripe results are cached in `cache/<scene>/traffic_sumo/osm/` (resume).
+2. **Network** (`osm_net.py`): netconvert's OSM importer with
+   `+proj=eqc +lat_ts=lat0 +lat_0=lat0 +lon_0=lon0 +R=6378137` and offset normalisation
+   disabled, i.e. exactly `tfl.Enu`; the build fails unless at least 1000 unjoined OSM
+   nodes sit within 0.05 m of `Enu(lon, lat)`. Left-hand traffic; OSM `lanes`,
+   `lanes:forward/backward`, `turn:lanes`, `maxspeed` (mph), `oneway`, roundabouts,
+   access/`motor_vehicle`/`bus`/`psv` and lane access (`bus:lanes`, busways) are used;
+   untagged speeds use GB urban defaults (`DEFAULT_SPEED_MPH`), untagged lanes SUMO's
+   `osmNetconvert` typemap. Signals are OSM `highway=traffic_signals` nodes, clustered
+   onto their junctions (`tls.guess-signals`, `tls.join`), as actuated signals with
+   netconvert phase plans (real timings unknown). Edges keep `ref`, `lanes`, `maxspeed`
+   and access tags as parameters. Edges outside domain + buffer are cut and the largest
+   connected component is kept. Optional plain-XML patch files (`network.osm.patches`,
+   relative to `project/<scene>/configs/`) are applied in a second netconvert pass and
+   recorded with their hashes. `network_report.json` gives tag completeness (share of
+   main-road length with `lanes`/`maxspeed`/`ref`), lane-km by class, OSM signal nodes vs
+   SUMO traffic lights, junction joins, connectivity of `network.osm.places` from/to the
+   domain centre by car and bus, and the same figures for the comparison network
+   (`network.osm.compare_run`).
+3. **Recorded domain.** The buffer is simulated but not recorded: edge state, count
+   points, `count_state.json` shapes and the playback (FCD samples) are restricted to the
+   scene square.
+
+`network.source: "overture"` keeps the earlier Overture network (below).
 
 ## DfT-calibrated periods (default)
 
@@ -62,8 +114,10 @@ come from `configs/image_to_threejs.json`.
    median profile of its road type (`profile_source: pooled_*_fallback`). DfT counts do not
    cover 19:00–07:00: no night profile is made; the mean share of AADF outside 07–19 is
    reported as an aggregate only.
-4. **Matching.** Overture edges carry street names, not route numbers, so a count point
-   direction goes to the nearest passenger edge within `match.radius_m` whose class fits
+4. **Matching.** On the OSM network an edge whose `ref` contains the DfT route number
+   (A4, A315, ...) wins (`ref+heading`), and edges with only other route numbers are
+   skipped. Overture edges carry street names, not route numbers, so otherwise a count
+   point direction goes to the nearest passenger edge within `match.radius_m` whose class fits
    the DfT road type (major: motorway–secondary, minor: secondary–living street; weaker
    pairings recorded as `weak_class`) and whose heading is within
    `heading_tolerance_deg` of the direction of travel. A DfT street name, when given,
@@ -83,17 +137,25 @@ come from `configs/image_to_threejs.json`.
    flows, whether good or poor. Vehicle types follow the pooled DfT class mix of the hour
    (car/taxi, LGV, HGV, two-wheeler; passenger permissions).
 6. **Simulation** per period in seconds since midnight: `start − warmup … end`.
-   `simulation.mesosim` (default true for `imperial_corridor`) uses SUMO's mesoscopic
-   model without junction control (overtaking, interpolated FCD positions): microscopic
-   runs of the calibrated demand on this Overture network deadlocked at junctions
-   (≈ 75 000 teleports in the AM peak, network mean speed < 1 m/s), and mesoscopic runs
-   take minutes instead of ≈ 25 min per period. `max_depart_delay_s` drops vehicles that
-   cannot enter (counted in statistics), `extra_options` passes further SUMO options.
+   `simulation.mesosim` with `extra_options: {"meso-junction-control": true}` (the
+   `imperial_corridor` default) uses SUMO's mesoscopic model _with_ junction control:
+   vehicles wait at red signals and give way at priority junctions (overtaking,
+   interpolated FCD positions). `mesosim: false` runs the microscopic model; on the
+   OSM network it is no longer the Overture deadlock (≈ 75 000 teleports, mean speed
+   < 1 m/s) but still congests progressively: AM peak with GTFS buses, 12 338 teleports
+   (7 367 jam, 4 257 yield, 714 wrong lane), 22 000 vehicles still in the network at
+   09:00, 18 min per period, simulated counts R² 0.05; reducing demand to 60 % still
+   left ≈ 1 500 teleports in 50 min (Marylebone Road, Shepherd's Bush Green, Goldhawk
+   Road, A4 Great West Road). Without real signal timings and junction calibration the
+   microscopic model is not used for the recorded runs. `max_depart_delay_s` drops
+   vehicles that cannot enter (counted in statistics), `extra_options` passes further
+   SUMO options (e.g. `ignore-junction-blocker`, `time-to-impatience` for micro tests).
    edgeData over the measured hour at 300 s and 3600 s (all vehicles) and 3600 s for
-   general traffic only (GEH check). Mesoscopic caveats: without junction control,
-   signals cause no delay, so speeds on uncongested edges are optimistic; interpolated
-   FCD positions can step back by tens of metres when a queued vehicle's segment exit is
-   delayed (about 10 % of moving steps in `heading_vs_motion`).
+   general traffic only (GEH check). Mesoscopic caveats: queues are per edge segment
+   (no lane-level interactions, no spillback inside junctions); interpolated FCD
+   positions can step back by tens of metres when a queued vehicle's segment exit is
+   delayed (`heading_vs_motion`). Without junction control (Overture runs before the
+   OSM network) signals caused no delay and speeds were optimistic.
 7. **Buses (GTFS step).** If `cache/<scene>/traffic_sumo/<gtfs_dir>/<period_id>/`
    contains `bus_stops.add.xml` and `buses.rou.xml`, both are added to that period with
    `--stop-output <period dir>/stopinfos.xml`; departures must use the same
@@ -113,6 +175,11 @@ Bundle `data/` files:
   `{q, v, k, k_lane, occ, wait, los}`, per-period `summary` and `calibration`,
   `count_points` (observed/simulated flow and GEH per period), `thresholds`, `provenance`.
 - `traffic_state_5min.json`: 5-minute `[q, v, k_lane, los_index]` per edge and period.
+- `count_state.json` (`corridor-count-state-v1`, see below) on the same network.
+- `bus_status.json` (`bus_status.compute` over this run's period stop output) and
+  `bus_stops.json` (the GTFS step's `stops.json`), when the GTFS step was built.
+- `network_report.json` (OSM networks): tag completeness, lane-km by class, signals,
+  junction joins, connectivity and the comparison with `network.osm.compare_run`.
 - `traffic_<period>.json` + `.bin` (format below) and `trajectories_<period>.json`
   (one protocol `trajectories` layer `traffic_<period>` each) for the last
   `periods.fcd_window_s` seconds of the hour. Manifest samples are seconds since the
@@ -121,10 +188,12 @@ Bundle `data/` files:
 
 ## Count-based hourly state (`count_state.py`)
 
-The calibrated periods carry only part of the observed flow on this network (see the
-fit in provenance), so `count_state.py` gives an observation-led estimate for every
-hour 07:00-19:00 on counted roads: DfT directional AADF x weekday hourly share for the
-flow; assumed lanes and per-lane capacity by road type; HCM 2000 signal control delay
+The calibrated periods carry only part of the observed flow (see the fit in
+provenance), so `count_state.py` gives an observation-led estimate for every hour
+07:00-19:00 on counted roads: DfT directional AADF x weekday hourly share for the
+flow; lanes from OSM `lanes` tags where tagged (`lanes_source: osm`, general-traffic
+lanes of the matched edge) or else the assumed minimum per direction
+(`lanes_source: assumed`) and per-lane capacity by road type; HCM 2000 signal control delay
 (junction-controlled roads) or BPR (grade-separated roads) for speed; density
 `k = q / v`; LOS from the volume/capacity ratio (speed ratio on grade-separated roads).
 Every assumption is written into the output. No hour outside 07:00-19:00 is estimated.

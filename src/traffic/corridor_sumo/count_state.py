@@ -7,8 +7,10 @@ not depend on the simulation:
 * flow ``q`` (veh/h, general traffic, per direction) for every hour 07:00-19:00 is the
   count point's directional AADF times its hourly share from DfT raw counts (the same
   records ``periods.prepare_counts`` builds for calibration);
-* capacity ``c`` = assumed lanes x assumed per-lane capacity by road type
-  (``ASSUMPTIONS``);
+* capacity ``c`` = lanes x assumed per-lane capacity by road type (``ASSUMPTIONS``);
+  lanes are the edge's general-traffic lanes when the OSM way has a ``lanes`` tag
+  (``lanes_source: osm``), otherwise at least the minimum lanes per direction
+  (``lanes_source: assumed``);
 * travel time per km: on grade-separated roads the BPR volume-delay function
   ``t = t0 (1 + a (q/c)^b)``; on signalised and junction-controlled roads the running
   time at the edge free speed plus HCM 2000 control delay per signal (uniform delay
@@ -42,7 +44,7 @@ from pathlib import Path
 from common.storage import Storage
 
 from . import dft, periods, tfl
-from .state import simplify
+from .state import clip_square, simplify
 
 LOS = ("free", "moderate", "heavy", "congested")
 LOS_BOUNDS = (0.5, 0.75, 0.9)  # x = q/c: < 0.5 free, < 0.75 moderate, < 0.9 heavy, else congested
@@ -79,8 +81,10 @@ ASSUMPTIONS = {
             "they are assumptions, not measured at these sites."
         ),
         (
-            "Overture lane counts are often missing, so major roads get at least the "
-            "minimum lanes per direction above."
+            "Lanes come from the OSM lanes / lanes:forward / lanes:backward tags of the "
+            "matched edge (general-traffic lanes, bus-only lanes excluded) when tagged "
+            "(lanes_source 'osm'); untagged edges, and Overture networks, get at least the "
+            "minimum lanes per direction above (lanes_source 'assumed')."
         ),
         "Flows are general traffic (all motor vehicles minus buses and coaches).",
         (
@@ -114,6 +118,18 @@ def lanes_for(kind: str, edge_lanes: int) -> int:
         else floor["other"]
     )
     return max(edge_lanes, minimum)
+
+
+def lanes_tagged(edge) -> bool:
+    """Whether the SUMO edge carries an OSM lanes tag (``--osm.all-attributes``)."""
+    return any(edge.getParam(k) for k in ("lanes", "lanes:forward", "lanes:backward"))
+
+
+def choose_lanes(kind: str, general_lanes: int, tagged: bool) -> tuple[int, str]:
+    """(lanes, lanes_source): OSM-tagged general lanes, else the assumed minimum."""
+    if tagged and general_lanes > 0:
+        return general_lanes, "osm"
+    return lanes_for(kind, max(general_lanes, 1)), "assumed"
 
 
 def classify(x: float, bounds=LOS_BOUNDS) -> str:
@@ -195,8 +211,11 @@ def extend(edge, limit_m: float, taken: set[str]) -> list:
     return [*reversed(walk(edge, False)), edge, *walk(edge, True)]
 
 
-def estimate(counts: dict) -> dict:
-    """Segments with hourly BPR states for every matched count record."""
+def estimate(counts: dict, half: float | None = None) -> dict:
+    """Segments with hourly BPR states for every matched count record.
+
+    With ``half`` the drawn shapes are clipped to the scene domain square.
+    """
     net = counts["net"]
     taken: set[str] = set()
     segments = []
@@ -207,7 +226,8 @@ def estimate(counts: dict) -> dict:
         point = counts["points"][r["cp"]]
         speed = edge.getSpeed()
         kind = road_kind(point.road_name, edge.getType() or "", speed)
-        lanes = lanes_for(kind, sum(1 for ln in edge.getLanes() if ln.allows("passenger")) or 1)
+        general = sum(1 for ln in edge.getLanes() if ln.allows("passenger"))
+        lanes, lanes_source = choose_lanes(kind, general, lanes_tagged(edge))
         capacity = lanes * ASSUMPTIONS["capacity_veh_h_lane"][kind]
         chain = extend(edge, EXTEND_M, taken)
         taken.update(e.getID() for e in chain)
@@ -215,6 +235,9 @@ def estimate(counts: dict) -> dict:
         for e in chain:
             pts = [(round(x, 1), round(y, 1)) for x, y in e.getShape()]
             shape += pts[1:] if shape and pts[0] == shape[-1] else pts
+        shape = clip_square(shape, half)
+        if len(shape) < 2:
+            continue
         hourly = {}
         for h in dft.DFT_HOURS:
             q = r["aadf_general_dir"] * r["fraction"] * r["share"][h]
@@ -231,14 +254,22 @@ def estimate(counts: dict) -> dict:
                 "match_quality": r["quality"],
                 "edges": [e.getID() for e in chain],
                 "kind": kind,
-                "lanes_assumed": lanes,
+                "lanes": lanes,
+                "lanes_source": lanes_source,
                 "capacity_veh_h": capacity,
                 "free_speed": round(speed, 2),
                 "shape": [list(p) for p in simplify(shape, 1.0)],
                 "hourly": hourly,
             }
         )
-    return {"segments": segments, "summary": summarise(segments)}
+    sources = defaultdict(int)
+    for seg in segments:
+        sources[seg["lanes_source"]] += 1
+    return {
+        "segments": segments,
+        "summary": summarise(segments),
+        "lanes_sources": dict(sorted(sources.items())),
+    }
 
 
 def summarise(segments: list[dict]) -> dict:
@@ -279,12 +310,22 @@ def main() -> None:
     )
     enu = tfl.Enu(geo["origin"]["longitude"], geo["origin"]["latitude"])
     counts = periods.prepare_counts(args.net, dfcfg, tables, enu, [])
-    doc = {
+    doc = document(counts, dft_dir, args.net, geo["domain_m"] / 2)
+    args.out.write_text(json.dumps(doc, separators=(",", ":")) + "\n")
+    print(f"{len(doc['segments'])} segments -> {args.out} ({args.out.stat().st_size} bytes)")
+    print("lanes_source:", doc["lanes_sources"])
+    for h, s in doc["summary"].items():
+        print(h, s["mean_speed_kmh"], s["share"])
+
+
+def document(counts: dict, dft_dir: Path, net_path: Path, half: float | None) -> dict:
+    """The ``count_state.json`` document for prepared counts on a network."""
+    return {
         "schema": "corridor-count-state-v1",
         "coordinate_frame": "ENU",
         "units": {"q": "veh/h", "v": "m/s", "k": "veh/km", "k_lane": "veh/km/lane"},
         "hours": list(dft.DFT_HOURS),
-        **estimate(counts),
+        **estimate(counts, half),
         "los_rules": {
             "junction_controlled": {"x_below": dict(zip(LOS[:-1], LOS_BOUNDS, strict=True))},
             "grade_separated": {
@@ -297,17 +338,14 @@ def main() -> None:
             "counts": "UK DfT road traffic counts (AADF, AADF by direction, raw manual "
             "counts), Open Government Licence v3.0; estimation_method per point",
             "dft_index": str(dft_dir / "index.json"),
-            "net": str(args.net),
+            "net": str(net_path),
             "flows": "observation-based: directional AADF x weekday hourly share 07-19",
             "state": "speed, density and LOS are BPR / HCM control-delay estimates from "
             "assumed capacities and signal settings",
             "hours_not_covered": "19:00-07:00 (no DfT hourly counts)",
+            "domain": None if half is None else f"shapes clipped to |x|, |y| <= {half:g} m",
         },
     }
-    args.out.write_text(json.dumps(doc, separators=(",", ":")) + "\n")
-    print(f"{len(doc['segments'])} segments -> {args.out} ({args.out.stat().st_size} bytes)")
-    for h, s in doc["summary"].items():
-        print(h, s["mean_speed_kmh"], s["share"])
 
 
 if __name__ == "__main__":

@@ -102,3 +102,14 @@
   三个时段（运行 `20261026T043740Z_e64e19`，视图 `traffic_dft`，并入默认视图 `resolved`），
   但拟合较差（GEH<5 仅 14–18%，主干道流量约为观测的 43%），已写入 provenance。公交线路状态为
   仿真估计，超过 25% 站点未到达的线路标为 `model gap`；无实时车辆位置与客流数据。
+- 2026-10-26 OSM 路网：`osm_extract.py` 从 AWS Open Data 的 OSM planet ORC（ETag
+  `64feb52fbc43f746316a007c518728a8-7743`，2026-10-22；ODbL 1.0，© OpenStreetMap contributors）
+  按 stripe 二分查找只读取所需列，提取域外扩 1.5 km 内的 37,161 条车行道路、133,695 个节点与
+  1,083 条转向限制；`osm_net.py` 用与 `tfl.Enu` 等价的 eqc 投影导入 netconvert（15,237 个节点
+  偏差 ≤ 0.005 m），车道、限速、公交道、信号灯与限制来自 OSM 标签，Hogarth 环岛信号为记录在
+  `configs/sumo_patches/` 的补丁。Barnes 经 Putney Bridge 连通（Hammersmith Bridge 在 OSM 中禁行
+  机动车）。微观仿真仍逐步拥堵（AM 12,338 次 teleport），故三时段改用带路口控制的中观仿真重跑
+  （运行 `20261026T122854Z_d1fc54`，未注册视图）：GEH<5 为 15.1/19.8/12.9%，R² 0.31/0.31/0.24
+  （此前 14–18%、≈ 0.05），仿真流量约为观测的 49%；teleport 2,393–3,275（此前约 8,000）。
+  公交 `model gap` 由 55 降至 5（AM），Barnes 线路 209/33/378/419/485/533 现可仿真。
+  `count_state.json` 323 段中 245 段车道数来自 OSM 标签（`lanes_source`）。

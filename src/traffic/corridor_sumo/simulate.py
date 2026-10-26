@@ -116,7 +116,8 @@ def run_period(
     rel = lambda paths: ",".join(str(Path(p).resolve()) for p in paths)
     meso = sim.get("mesosim", False)
     stop = f'\n        <stop-output value="{(out_dir / "stopinfos.xml").resolve()}"/>'
-    # Mesoscopic queues without junction control; positions interpolated for the FCD.
+    # Mesoscopic queues (junction control via extra_options "meso-junction-control");
+    # positions interpolated for the FCD.
     meso_opts = (
         '\n        <meso-overtaking value="true"/>\n        <meso-interpolate-pos value="true"/>'
         if meso

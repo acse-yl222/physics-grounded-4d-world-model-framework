@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Hot-spot patch for the OSM-built imperial_corridor SUMO network (applied by
+  traffic.corridor_sumo.osm_net in a second netconvert pass; recorded with its sha256).
+
+  Hogarth Roundabout (A4 / A316 Great Chertsey Road, ENU ~(-3600, -2160)): OSM maps a
+  signal on each of its four entry nodes. netconvert builds four independent traffic
+  lights whose red phases stop the circulating carriageway, so the ring fills and
+  deadlocks in test runs (~250 "yield" teleports in 50 min). The nodes become priority
+  junctions: entries give way to circulating traffic, as at an unsignalised roundabout.
+  This removes the (unknown) real signal timing there; it is a model simplification.
+-->
+<nodes>
+    <node id="1769049694" type="priority"/>
+    <node id="1681545653" type="priority"/>
+    <node id="1715004787" type="priority"/>
+    <node id="1681545654" type="priority"/>
+</nodes>

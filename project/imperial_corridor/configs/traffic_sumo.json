@@ -2,7 +2,29 @@
   "scene_id": "imperial_corridor",
   "geometry_config": "configs/image_to_threejs.json",
   "overture_dir": "overture_transport",
+  "osm": {
+    "dir": "osm",
+    "buffer_m": 1500,
+    "fetch_if_missing": true,
+    "newest_way_stripes": 40
+  },
   "network": {
+    "source": "osm",
+    "osm": {
+      "netconvert": {},
+      "default_speed_mph": {},
+      "patches": ["sumo_patches/hot_spots.nod.xml"],
+      "compare_run": "20261026T043740Z_e64e19",
+      "places": {
+        "Barnes (Church Road)": [-0.2425, 51.4727],
+        "Castelnau": [-0.2307, 51.4818],
+        "Putney Bridge": [-0.2133, 51.4668],
+        "Wandsworth Bridge": [-0.1881, 51.4656],
+        "Hammersmith Bridge": [-0.2303, 51.4882],
+        "Shepherd's Bush Green": [-0.2215, 51.5035],
+        "Queen's Circus": [-0.1497, 51.4776]
+      }
+    },
     "skip_subclasses": ["parking_aisle", "driveway"],
     "include_tunnels": true,
     "include_private": false,
@@ -67,12 +89,12 @@
       "enabled": true,
       "veh_h_lane": {
         "motorway": 1800,
-        "trunk": 1500,
-        "primary": 900,
-        "secondary": 800,
-        "tertiary": 700
+        "trunk": 900,
+        "primary": 800,
+        "secondary": 700,
+        "tertiary": 600
       },
-      "default_veh_h_lane": 500
+      "default_veh_h_lane": 450
     }
   },
   "periods": {
@@ -96,7 +118,7 @@
       }
     ]
   },
-  "gtfs_dir": "gtfs",
+  "gtfs_dir": "gtfs_osm",
   "simulation": {
     "begin_s": 0,
     "end_s": 1200,
@@ -106,7 +128,9 @@
     "time_to_teleport_s": 120,
     "mesosim": true,
     "max_depart_delay_s": 300,
-    "extra_options": {}
+    "extra_options": {
+      "meso-junction-control": true
+    }
   },
   "demand": {
     "seed": 42,
@@ -147,7 +171,7 @@
     "enabled": true,
     "source_url": "https://storage.googleapis.com/storage/v1/b/mdb-latest/o/gb-unknown-uk-aggregate-feed-gtfs-2014.zip?alt=media",
     "input_dir": "gtfs_bods",
-    "output_dir": "gtfs",
+    "output_dir": "gtfs_osm",
     "service_date": null,
     "periods": {
       "am_peak": [8, 9],

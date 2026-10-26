@@ -14,6 +14,7 @@ Edges without vehicles in an interval have no state (absent, never zero-filled).
 
 from __future__ import annotations
 
+import itertools
 import math
 import xml.etree.ElementTree as ET
 from pathlib import Path
@@ -135,3 +136,39 @@ def summary(states: dict[str, dict], lengths: dict[str, float]) -> dict:
         "mean_speed_kmh_length_weighted": round(3.6 * vkm / km, 1) if km else None,
         "los_edge_km_share": los_shares(states, lengths),
     }
+
+
+def clip_square(points: list, half: float) -> list:
+    """Longest run of the polyline inside ``|x|, |y| <= half`` (crossings interpolated)."""
+    if half is None:
+        return points
+
+    def inside(p):
+        return abs(p[0]) <= half + 1e-9 and abs(p[1]) <= half + 1e-9
+
+    def cut(a, b):
+        # Parameter where segment a->b (a inside, b outside) leaves the square.
+        t = 1.0
+        for k in (0, 1):
+            d = b[k] - a[k]
+            if d > 0:
+                t = min(t, (half - a[k]) / d)
+            elif d < 0:
+                t = min(t, (-half - a[k]) / d)
+        return (round(a[0] + t * (b[0] - a[0]), 1), round(a[1] + t * (b[1] - a[1]), 1))
+
+    runs, cur = [], []
+    for i, p in enumerate(points):
+        if inside(p):
+            if not cur and i > 0:
+                cur.append(cut(p, points[i - 1]))
+            cur.append(p)
+        elif cur:
+            cur.append(cut(points[i - 1], p))
+            runs.append(cur)
+            cur = []
+    if cur:
+        runs.append(cur)
+    if not runs:
+        return []
+    return max(runs, key=lambda r: sum(math.dist(a, b) for a, b in itertools.pairwise(r)))

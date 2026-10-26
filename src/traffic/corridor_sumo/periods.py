@@ -22,6 +22,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from . import calibrate, demand, dft, export, simulate, state, sumo_env
+from .osm_net import road_class
 
 
 def log(message: str) -> None:
@@ -82,8 +83,30 @@ def opposite_edge(edge):
     return None
 
 
-def prepare_counts(net_path: Path, dfcfg: dict, tables: dict, enu, periods: list[dict]) -> dict:
-    """Count points, edge matches and hourly general-traffic targets per period."""
+def domain_edges(net, half: float | None) -> set[str] | None:
+    """Ids of edges with a shape point inside ``|x|, |y| <= half`` (None: no limit)."""
+    if half is None:
+        return None
+    return {
+        e.getID()
+        for e in net.getEdges()
+        if any(abs(x) <= half and abs(y) <= half for x, y in (p[:2] for p in e.getShape()))
+    }
+
+
+def prepare_counts(
+    net_path: Path,
+    dfcfg: dict,
+    tables: dict,
+    enu,
+    periods: list[dict],
+    half: float | None = None,
+) -> dict:
+    """Count points, edge matches and hourly general-traffic targets per period.
+
+    ``half``: the recorded domain (edge state is only reported for edges reaching into
+    it; the network may extend beyond it as a buffer).
+    """
     pcfg = dfcfg.get("profile", {})
     min_year = pcfg.get("min_year", 2015)
     points = dft.latest_points(tables["aadf"], enu)
@@ -161,6 +184,8 @@ def prepare_counts(net_path: Path, dfcfg: dict, tables: dict, enu, periods: list
         "profiles_n": len(profiles),
         "night_share": night,
         "net": net,
+        "half": half,
+        "domain_edges": domain_edges(net, half),
     }
 
 
@@ -359,6 +384,12 @@ def simulate_period(
             if s:
                 states[eid] = s
         five.append({"begin": iv["begin"], "end": iv["end"], "edges": states})
+    keep = counts.get("domain_edges")
+    if keep is not None:
+        # The buffer beyond the scene domain is simulated but not reported.
+        hourly = {e: s for e, s in hourly.items() if e in keep}
+        for iv in five:
+            iv["edges"] = {e: s for e, s in iv["edges"].items() if e in keep}
     general_q = {}
     for iv in state.read_edgedata(meandata["general_3600s"]):
         dur = iv["end"] - iv["begin"]
@@ -472,11 +503,13 @@ def state_document(counts: dict, results: list[dict], tolerance: float, provenan
     for eid in used:
         e = net.getEdge(eid)
         shape = state.simplify([tuple(p[:2]) for p in e.getShape()], tolerance)
+        if counts.get("half") is not None:
+            shape = state.clip_square(shape, counts["half"]) or shape
         edges.append(
             {
                 "id": eid,
                 "name": e.getName() or "",
-                "cls": e.getType(),
+                "cls": road_class(e.getType()),
                 "lanes": e.getLaneNumber(),
                 "free_speed": round(e.getSpeed(), 2),
                 "length": round(e.getLength(), 1),

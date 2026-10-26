@@ -1,6 +1,7 @@
-"""End-to-end SUMO traffic run for an Overture-based scene.
+"""End-to-end SUMO traffic run for a scene.
 
-Default (config has ``periods``): network (Overture -> plain XML -> netconvert) ->
+Default (config has ``periods``): network (``network.source``: ``osm`` = OpenStreetMap
+subset -> netconvert OSM importer, or ``overture`` = Overture -> plain XML -> netconvert) ->
 DfT count targets per edge and period -> routeSampler-calibrated demand (+ GTFS buses
 when present) -> SUMO per period with edgeData and an FCD window -> protocol v1.1 bundle
 with per-edge traffic state and per-period viewer binaries.
@@ -10,6 +11,7 @@ TfL or synthetic buses. Everything is written under ``cache/<scene>/traffic_sumo
 
   PYTHONPATH=src python3 -m traffic.corridor_sumo.run imperial_corridor
   PYTHONPATH=src python3 -m traffic.corridor_sumo.run imperial_corridor --reuse <run_id>
+  PYTHONPATH=src python3 -m traffic.corridor_sumo.run imperial_corridor --network-only
   p4d retain cache/imperial_corridor/traffic_sumo/<run_id>/bundle
 """
 
@@ -32,7 +34,22 @@ from common.contract import validate
 from common.provenance import snapshot_sources
 from common.storage import Storage
 
-from . import calibrate, demand, dft, export, network, periods, simulate, state, sumo_env, tfl
+from . import (
+    bus_status,
+    calibrate,
+    count_state,
+    demand,
+    dft,
+    export,
+    network,
+    osm_extract,
+    osm_net,
+    periods,
+    simulate,
+    state,
+    sumo_env,
+    tfl,
+)
 
 SIMULATION = "traffic_sumo"
 FETCH_OVERTURE = Path(__file__).resolve().parents[2] / "urban_geometry/image_to_threejs"
@@ -66,6 +83,137 @@ def ensure_overture(config_path: Path, overture: Path) -> dict:
         subprocess.run([*map(str, cmd), "--layers", "segments", "connectors"], check=True)
         index = json.loads(index_path.read_text())
     return index
+
+
+def ensure_osm(storage: Storage, scene: str, cfg: dict) -> tuple[Path, dict]:
+    """The scene's OSM subset (``osm_extract``), extracted when missing and allowed."""
+    ocfg = cfg.get("osm", {})
+    directory = storage.assets(scene, "input") / ocfg.get("dir", "osm")
+    index_path, xml_path = directory / "index.json", directory / "osm.xml.gz"
+    if not (index_path.is_file() and xml_path.is_file()):
+        if not ocfg.get("fetch_if_missing", True):
+            raise SystemExit(f"no OSM subset at {directory}; run osm_extract {scene}")
+        log(f"OSM subset missing; extracting into {directory} (planet ORC on AWS Open Data)")
+        osm_extract.extract(scene)
+    index = json.loads(index_path.read_text())
+    recorded = index["files"]["osm.xml.gz"]["sha256"]
+    if digest(xml_path) != recorded:
+        raise RuntimeError(f"{xml_path} does not match its index.json sha256")
+    return directory, index
+
+
+def build_scene_network(storage, scene, cfg, geo, geo_path, out_dir: Path) -> dict:
+    """Build the configured network (``network.source``); paths, stats, inputs, report."""
+    ncfg = cfg["network"]
+    source = ncfg.get("source", "overture")
+    half = geo["domain_m"] / 2
+    if source == "overture":
+        overture = storage.assets(scene, "input") / cfg.get("overture_dir", "overture_transport")
+        index = ensure_overture(geo_path, overture)
+        built = network.build_network(overture, out_dir, ncfg)
+        inputs = [
+            {"id": f"overture_{k}", "sha256": v["sha256"]}
+            for k, v in sorted(index["layers"].items())
+            if k in ("segments", "connectors")
+        ]
+        return {**built, "source": source, "inputs": inputs, "report": None, "osm_index": None}
+    if source != "osm":
+        raise SystemExit(f"unknown network.source {source!r} (osm or overture)")
+    osm_dir, osm_index = ensure_osm(storage, scene, cfg)
+    ocfg = ncfg.get("osm", {})
+    buffer_m = osm_index["selection"]["buffer_m"]
+    built = osm_net.build_network(
+        osm_dir / "osm.xml.gz",
+        out_dir,
+        ocfg,
+        geo["origin"],
+        half + buffer_m,
+        storage.metadata(scene) / "configs",
+    )
+    compare = None
+    if ocfg.get("compare_run"):
+        old = storage.scratch(scene, SIMULATION, ocfg["compare_run"]) / "net/net.net.xml"
+        if old.is_file():
+            compare = sumo_env.sumolib().net.readNet(str(old), withInternal=False)
+        else:
+            log(f"comparison network {old} not found; report without comparison")
+    enu = tfl.Enu(geo["origin"]["longitude"], geo["origin"]["latitude"])
+    report = osm_net.network_report(
+        built["net_obj"],
+        half,
+        enu,
+        built["tagged_nodes"],
+        built["coords"],
+        built["stats"],
+        {k: tuple(v) for k, v in ocfg.get("places", {}).items()},
+        compare,
+    )
+    report["osm_subset"] = {
+        k: osm_index[k] for k in ("source", "licence", "selection", "counts", "files")
+    }
+    if compare is not None:
+        report["previous_network"]["run_id"] = ocfg["compare_run"]
+        report["previous_network"]["source"] = "overture"
+    (out_dir / "network_report.json").write_text(json.dumps(report, indent=2) + "\n")
+    inputs = [{"id": "osm_subset", "sha256": osm_index["files"]["osm.xml.gz"]["sha256"]}]
+    inputs += [
+        {"id": f"network_patch_{Path(p['file']).stem.replace('.', '_')}", "sha256": p["sha256"]}
+        for p in built["stats"]["patches"]
+    ]
+    return {
+        "net": built["net"],
+        "stats": built["stats"],
+        "source": source,
+        "inputs": inputs,
+        "report": report,
+        "osm_index": osm_index,
+    }
+
+
+def network_text(source: str, cfg: dict) -> tuple[str, str]:
+    """(statement, assumptions) describing the network source."""
+    if source == "osm":
+        statement = (
+            "OpenStreetMap road network (ODbL 1.0, (c) OpenStreetMap contributors; planet "
+            "ORC snapshot on AWS Open Data) imported with netconvert: lanes, turn lanes, "
+            "bus lanes, speed limits, one-ways, access, signal locations and turn "
+            "restrictions from OSM tags; left-hand traffic."
+        )
+        assumptions = (
+            "OSM tags where present (lanes, lanes:forward/backward, turn:lanes, maxspeed in "
+            "mph, oneway, junction=roundabout, access/motor_vehicle/bus/psv, bus:lanes/"
+            "busway); untagged lanes from SUMO's osmNetconvert typemap and untagged speeds "
+            "from GB urban defaults (osm_net.DEFAULT_SPEED_MPH); OSM traffic_signals nodes "
+            "clustered onto junctions (tls.guess-signals) as actuated signals with "
+            "netconvert's default phase plans (the real signal timings are unknown); "
+            "service roads open to delivery only unless OSM allows more (SUMO typemap); "
+            "the network extends a buffer beyond the scene domain (see network stats) "
+            "that is simulated but not recorded. LGV/HGV/motorcycle vTypes use passenger "
+            "permissions."
+        )
+        return statement, assumptions
+    statement = (
+        "Overture road network; signal locations are assumed (Overture has no signal "
+        "data), lanes/speeds by class unless tagged; left-hand traffic."
+    )
+    assumptions = (
+        "Lanes and default speeds by Overture class (speed_limits when tagged); one-way and "
+        "bus-only from access_restrictions; signals at junctions of >= "
+        f"{cfg['network'].get('tls_min_major', 3)} tertiary-or-higher road pieces plus "
+        "netconvert TLS guessing (Overture has no signal data); left-hand traffic. "
+        "LGV/HGV/motorcycle vTypes use passenger permissions (the network encodes "
+        "passenger/taxi/bus access only)."
+    )
+    return statement, assumptions
+
+
+def sim_model(sim: dict) -> str:
+    """Short description of the SUMO traffic model of a simulation configuration."""
+    if not sim.get("mesosim"):
+        return "microscopic"
+    if sim.get("extra_options", {}).get("meso-junction-control"):
+        return "mesoscopic (with junction control: signals and right of way delay vehicles)"
+    return "mesoscopic (without junction control)"
 
 
 def bus_demand(
@@ -142,12 +290,18 @@ def main(argv=None) -> int:
         "configuration is unchanged) of cache/<scene>/traffic_sumo/RUN_ID",
     )
     p.add_argument("--periods", help="comma-separated period ids to run (default: all)")
+    p.add_argument(
+        "--network-only",
+        action="store_true",
+        help="build the network (and its report) into a new run directory and stop; "
+        "build GTFS buses on it, then run the periods with --reuse",
+    )
     args = p.parse_args(argv)
     cfg = json.loads(
         (Storage.load().metadata(args.scene) / "configs/traffic_sumo.json").read_text()
     )
     if args.synthetic or "periods" not in cfg:
-        if args.reuse or args.periods:
+        if args.reuse or args.periods or args.network_only:
             p.error("--reuse/--periods apply to the DfT period runs only")
         return run_synthetic(args)
     return run_periods(args)
@@ -171,9 +325,7 @@ def run_synthetic(args) -> int:
     log(f"SUMO {sumo_env.version()} at {sumo_env.sumo_home()}")
 
     # 1. network
-    overture = storage.assets(scene, "input") / cfg.get("overture_dir", "overture_transport")
-    index = ensure_overture(geo_path, overture)
-    built = network.build_network(overture, work / "net", cfg["network"])
+    built = build_scene_network(storage, scene, cfg, geo, geo_path, work / "net")
     net_path, net_stats = built["net"], built["stats"]
     log(f"network: {built['net']}")
     log(
@@ -289,10 +441,7 @@ def run_synthetic(args) -> int:
         },
         "sumo_version": sumo_env.version(),
         "network": {k: v for k, v in net_stats.items() if k != "bbox_xy"},
-        "network_assumptions": "Lanes and default speeds by Overture class (speed_limits when "
-        "tagged); one-way and bus-only from access_restrictions; signals at junctions of >= "
-        f"{cfg['network'].get('tls_min_major', 3)} tertiary-or-higher road pieces plus netconvert "
-        "TLS guessing (Overture has no signal data); left-hand traffic.",
+        "network_assumptions": network_text(built["source"], cfg)[1],
         "net_sha256": digest(net_path),
         "demand_sha256": demand_hashes,
         "simulation": {**sim, "statistics": stats},
@@ -334,11 +483,7 @@ def run_synthetic(args) -> int:
         },
         "bounds_m": {"min": [-half, -half, 0], "max": [half, half, 5]},
     }
-    inputs = [
-        {"id": f"overture_{k}", "sha256": v["sha256"]}
-        for k, v in sorted(index["layers"].items())
-        if k in ("segments", "connectors")
-    ]
+    inputs = list(built["inputs"])
     inputs.append({"id": "traffic_sumo_config", "sha256": digest(config_path)})
     if bus_info.get("cache_sha256"):
         inputs.append({"id": "tfl_cache", "sha256": bus_info["cache_sha256"]})
@@ -453,29 +598,38 @@ def run_periods(args) -> int:
     log(f"SUMO {sumo_env.version()} at {sumo_env.sumo_home()}")
 
     # 1. network (built, or reused from an earlier run of this scene)
-    overture = storage.assets(scene, "input") / cfg.get("overture_dir", "overture_transport")
-    index = ensure_overture(geo_path, overture)
-    reused = None
+    half = geo["domain_m"] / 2
+    reused, report, net_inputs = None, None, None
+    source = cfg["network"].get("source", "overture")
     if args.reuse:
-        source = storage.scratch(scene, SIMULATION, args.reuse)
-        net_path = source / "net/net.net.xml"
+        prior = storage.scratch(scene, SIMULATION, args.reuse)
+        net_path = prior / "net/net.net.xml"
         if not net_path.is_file():
             raise SystemExit(f"no network at {net_path}")
         net_stats = network.describe(net_path)
-        stats_file = source / "net/network_stats.json"
+        stats_file = prior / "net/network_stats.json"
         if stats_file.is_file():
             net_stats = {**json.loads(stats_file.read_text()), **net_stats}
+        reused_source = net_stats.get("source", "overture")
         net_path = net_path.resolve()
-        reused = {"run_id": args.reuse, "net": str(net_path)}
+        reused = {"run_id": args.reuse, "net": str(net_path), "source": reused_source}
         # Link the reused network so this run can itself be reused.
         (work / "net").mkdir()
         (work / "net/net.net.xml").symlink_to(net_path)
-        if stats_file.is_file():
-            shutil.copy2(stats_file, work / "net/network_stats.json")
+        for name in ("network_stats.json", "network_report.json", "network_inputs.json"):
+            if (prior / "net" / name).is_file():
+                shutil.copy2(prior / "net" / name, work / "net" / name)
+        if (work / "net/network_report.json").is_file():
+            report = json.loads((work / "net/network_report.json").read_text())
+        if (work / "net/network_inputs.json").is_file():
+            net_inputs = json.loads((work / "net/network_inputs.json").read_text())
+        source = reused_source
         log(f"network reused from {args.reuse}: {net_path}")
     else:
-        built = network.build_network(overture, work / "net", cfg["network"])
-        net_path, net_stats = built["net"], built["stats"]
+        built = build_scene_network(storage, scene, cfg, geo, geo_path, work / "net")
+        net_path, net_stats, report = built["net"], built["stats"], built["report"]
+        net_inputs = built["inputs"]
+        (work / "net/network_inputs.json").write_text(json.dumps(net_inputs, indent=2) + "\n")
         log(f"network: {net_path}")
     if net_stats["location_offset"] != [0.0, 0.0]:
         raise RuntimeError("network is not in scene ENU coordinates")
@@ -483,6 +637,18 @@ def run_periods(args) -> int:
         f"  {net_stats['edges']} edges, {net_stats['junctions']} junctions, "
         f"{net_stats['traffic_lights']} traffic lights, {net_stats['edge_length_km']} km"
     )
+    if net_inputs is None:
+        # A reused network from before network_inputs.json: Overture inputs as recorded.
+        overture = storage.assets(scene, "input") / cfg.get("overture_dir", "overture_transport")
+        index = ensure_overture(geo_path, overture)
+        net_inputs = [
+            {"id": f"overture_{k}", "sha256": v["sha256"]}
+            for k, v in sorted(index["layers"].items())
+            if k in ("segments", "connectors")
+        ]
+    if args.network_only:
+        log(json.dumps({"workspace": str(work), "network": str(net_path)}, indent=2))
+        return 0
 
     # 2. DfT counts -> edge targets
     dft_dir = storage.assets(scene, "input") / dfcfg.get("dir", "dft_traffic")
@@ -496,7 +662,7 @@ def run_periods(args) -> int:
     bbox = dft.domain_bbox(geo["origin"], geo["domain_m"] / 2)
     tables = periods.load_tables(dft_dir, la_ids, bbox)
     enu = tfl.Enu(geo["origin"]["longitude"], geo["origin"]["latitude"])
-    counts = periods.prepare_counts(net_path, dfcfg, tables, enu, windows)
+    counts = periods.prepare_counts(net_path, dfcfg, tables, enu, windows, half)
     matches = periods.match_report(counts)
     log(
         f"DfT: {matches['points_inside_domain']} count points inside the domain, "
@@ -554,7 +720,7 @@ def run_periods(args) -> int:
     recordings, samples = {}, None
     for res in results:
         w = res["period"]
-        rec = export.parse_fcd(res["fcd"], w["fcd_begin_s"], w["end_s"] - 1, res["kinds"])
+        rec = export.parse_fcd(res["fcd"], w["fcd_begin_s"], w["end_s"] - 1, res["kinds"], half)
         max_records = (ecfg["max_bin_bytes"] - 4 * len(rec.frames)) // export.RECORD.itemsize
         kept = export.select(rec, max_records, ecfg.get("max_concurrent_vehicles"))
         rel = [round(t - w["fcd_begin_s"], 6) for t in rec.times]
@@ -605,10 +771,8 @@ def run_periods(args) -> int:
         "(calibration.capacity_screening) are dropped before simulation; the fit before and "
         "after screening and after simulation is reported per period.",
         "state": "Speeds, densities, occupancies, waiting times and LOS classes are SUMO "
-        f"{'mesoscopic' if cfg['simulation'].get('mesosim') else 'microscopic'} model output, "
-        "not observations.",
-        "network": "Overture road network; signal locations are assumed (Overture has no "
-        "signal data), lanes/speeds by class unless tagged; left-hand traffic.",
+        f"{sim_model(cfg['simulation'])} model output, not observations.",
+        "network": network_text(source, cfg)[0],
         "buses": "Bus demand from GTFS (separate step) where present for a period; "
         + (
             "present for: " + ", ".join(r["period"]["id"] for r in results if r["bus"]["source"])
@@ -623,6 +787,7 @@ def run_periods(args) -> int:
         "simulation": SIMULATION,
         "statement": statement,
         "licence": dft.LICENCE,
+        "network_licence": osm_extract.LICENCE if source == "osm" else None,
         "dft_files": {n: dft_index["files"][n]["url"] for n in used_files},
         "sumo_version": sumo_env.version(),
     }
@@ -633,6 +798,25 @@ def run_periods(args) -> int:
     five_bytes = periods.write_json(data / "traffic_state_5min.json", five)
     if state_bytes > ecfg.get("max_state_bytes", 14_000_000):
         raise RuntimeError(f"traffic_state.json is {state_bytes} bytes, over the budget")
+    extra_artifacts = []
+    # Count-based hourly state on the same network (observation-led, all hours 07-19).
+    cs_doc = count_state.document(counts, dft_dir, net_path, half)
+    cs_bytes = periods.write_json(data / "count_state.json", cs_doc)
+    extra_artifacts.append(("count_state", "data/count_state.json", "application/json"))
+    log(f"count_state: {len(cs_doc['segments'])} segments, lanes {cs_doc['lanes_sources']}")
+    # Bus status of the period runs against the GTFS schedule (when GTFS was built).
+    bus_doc = None
+    if (gtfs_dir / "schedule.json").is_file():
+        bus_doc = bus_status_document(gtfs_dir, results, cfg)
+        periods.write_json(data / "bus_status.json", bus_doc)
+        shutil.copy2(gtfs_dir / "stops.json", data / "bus_stops.json")
+        extra_artifacts += [
+            ("bus_status", "data/bus_status.json", "application/json"),
+            ("bus_stops", "data/bus_stops.json", "application/json"),
+        ]
+    if report is not None:
+        periods.write_json(data / "network_report.json", report)
+        extra_artifacts.append(("network_report", "data/network_report.json", "application/json"))
 
     for res in results:
         w = res["period"]
@@ -739,11 +923,20 @@ def run_periods(args) -> int:
         "sumo_version": sumo_env.version(),
         "network": {k: v for k, v in net_stats.items() if k != "bbox_xy"},
         "network_reused": reused,
-        "network_assumptions": "Lanes and default speeds by Overture class (speed_limits when "
-        "tagged); one-way and bus-only from access_restrictions; signals at junctions of >= "
-        f"{cfg['network'].get('tls_min_major', 3)} tertiary-or-higher road pieces plus netconvert "
-        "TLS guessing (Overture has no signal data); left-hand traffic. LGV/HGV/motorcycle "
-        "vTypes use passenger permissions (the network encodes passenger/taxi/bus access only).",
+        "network_source": source,
+        "network_licence": osm_extract.LICENCE if source == "osm" else None,
+        "network_report": None
+        if report is None
+        else {k: report[k] for k in ("tag_completeness", "signals", "connectivity")},
+        "network_assumptions": network_text(source, cfg)[1],
+        "recorded_domain": f"state, count points, count_state and playback restricted to "
+        f"|x|, |y| <= {half:g} m (scene domain); the network may extend beyond it",
+        "count_state": {
+            "segments": len(cs_doc["segments"]),
+            "lanes_sources": cs_doc["lanes_sources"],
+            "bytes": cs_bytes,
+        },
+        "bus_status": None if bus_doc is None else bus_doc.get("status_counts"),
         "net_sha256": digest(net_path),
         "simulation": cfg["simulation"],
         "selection": selection,
@@ -766,11 +959,7 @@ def run_periods(args) -> int:
         },
         "bounds_m": {"min": [-half, -half, 0], "max": [half, half, 5]},
     }
-    inputs = [
-        {"id": f"overture_{k}", "sha256": v["sha256"]}
-        for k, v in sorted(index["layers"].items())
-        if k in ("segments", "connectors")
-    ]
+    inputs = list(net_inputs)
     inputs.append({"id": "traffic_sumo_config", "sha256": digest(config_path)})
     inputs += [{"id": f"dft_{Path(n).stem}", "sha256": h} for n, h in sorted(dft_inputs.items())]
     for res in results:
@@ -783,6 +972,7 @@ def run_periods(args) -> int:
         ("sumo_network", "sumo/net.net.xml.gz", "application/gzip"),
         ("sumo_demand", "sumo/demand.tar.gz", "application/gzip"),
         ("config", "traffic_sumo.json", "application/json"),
+        *extra_artifacts,
     ]
     for res in results:
         pid = res["period"]["id"]
@@ -875,6 +1065,33 @@ def run_periods(args) -> int:
     }
     log(json.dumps(summary, indent=2))
     return 0
+
+
+def bus_status_document(gtfs_dir: Path, results: list[dict], cfg: dict) -> dict:
+    """``bus_status.compute`` over this run's period directories (stop output)."""
+    schedule = json.loads((gtfs_dir / "schedule.json").read_text())
+    stops = json.loads((gtfs_dir / "stops.json").read_text())
+    thresholds = dict(bus_status.THRESHOLDS)
+    for k, v in cfg.get("gtfs", {}).get("status", {}).items():
+        key = k if k in thresholds else k.removesuffix("_min") + "_min"
+        if key in thresholds:
+            thresholds[key] = v
+    by_period = {r["period"]["id"]: r for r in results}
+    runs = {}
+    for period in schedule["periods"]:
+        trips_path = gtfs_dir / period / "trips.json"
+        trips = json.loads(trips_path.read_text()) if trips_path.is_file() else {}
+        res = by_period.get(period)
+        info = res["stopinfos"] if res and res["bus"]["source"] == "gtfs" else None
+        runs[period] = {"trips": trips, "stopinfos": info if info and info.is_file() else None}
+    doc = bus_status.compute(schedule, stops, runs, thresholds)
+    counts: dict[str, dict[str, int]] = {}
+    for r in doc["routes"]:
+        for period, cls in r["status"].items():
+            counts.setdefault(period, {}).setdefault(cls, 0)
+            counts[period][cls] += 1
+    doc["status_counts"] = counts
+    return doc
 
 
 if __name__ == "__main__":
