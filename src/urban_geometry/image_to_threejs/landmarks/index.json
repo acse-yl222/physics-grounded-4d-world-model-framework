@@ -388,9 +388,14 @@
         "title": "From the Royal College of Science to the Blackett Laboratory - Imperial College",
         "url": "https://www.imperial.ac.uk/physics/about-us/department-history/a-history-of-the-imperial-physics-department/",
         "used_for": "Blackett's role in the design; common room on level 8"
+      },
+      {
+        "title": "Historical facts and figures - Imperial College centenary",
+        "url": "https://www.imperial.ac.uk/centenary/historical_facts_and_figures.shtml",
+        "used_for": "the Prince Consort Road fascia of the Blackett Laboratory shows the state of physics knowledge in the 1960s"
       }
     ],
-    "notes": "Main block kept at the footprint height (20 m, 6 floors) plus a set-back top storey for the level-8 common room (~23.6 m). Cladding material and grid rhythm are not confirmed by the sources found (no photos fetched)."
+    "notes": "Main block kept at the footprint height (20 m, 6 floors) plus a set-back glazed top storey for the level-8 common room (~23.6 m). The stem south face abuts the Huxley Building and is left blind. Cladding material and grid rhythm (stone-faced frame, piers every 3.6 m, recessed two-light windows) are not confirmed by the sources found; the physics fascia over the Prince Consort Road entrance is recorded but its content is unknown, so it is drawn as a frieze of standard equations and diagrams."
   },
   {
     "id": "bone_building",
@@ -408,9 +413,19 @@
         "title": "South Kensington campus map (Imperial College)",
         "url": "https://www.sbg.bio.ic.ac.uk/files/SouthKensingtonCampus.pdf",
         "used_for": "Bone Building houses Aeronautics and Chemical Engineering"
+      },
+      {
+        "title": "History - Department of Chemical Engineering, Imperial College",
+        "url": "https://imperial.ac.uk/chemical-engineering/about/history",
+        "used_for": "department opened 1912 under Professor William Bone; new building in Prince Consort Road completed 1914"
+      },
+      {
+        "title": "ACEX & Bone - BMJ Architects",
+        "url": "https://www.bmjarchitects.co.uk/projects/acex-%26-bone",
+        "used_for": "later phased refurbishment of the ACEX and Bone buildings (not modelled)"
       }
     ],
-    "notes": "Construction date and elevation are not documented in the sources found; red brick with stone dressings is an assumption matched to the pre-war Imperial laboratory buildings. Height from the footprint record (13.6 m, 4 floors)."
+    "notes": "Imperial gives 1914 for the completion of the department's new building in Prince Consort Road, taken here as the Bone Building; its elevation is not documented in the sources found. Red brick with Portland stone plinth, string course, window surrounds, modillion cornice and a stone doorcase is an assumption matched to the pre-war Imperial laboratory buildings; the later BMJ refurbishment (overcladding/render) is not represented. Height from the footprint record (13.6 m, 4 floors)."
   },
   {
     "id": "brompton_cemetery",
@@ -673,7 +688,7 @@
         "used_for": "1960-9 Norman and Dawbarn buildings around the Queen's Tower"
       }
     ],
-    "notes": "Footprint overlaps the Business School (a07c23b2); the overlapping north-east part is cut out of this model so the Business School landmark/generic can occupy it. Height 20 m from the footprint record. 1960s elevations and the 2017 curtain-wall pattern are reconstructed from descriptions only."
+    "notes": "Footprint overlaps the Business School (a07c23b2); the overlapping north-east part is cut out of this model so the Business School landmark/generic can occupy it. Height 20 m from the footprint record. 1960s elevations (ribbon windows between concrete spandrel bands over a glazed ground storey between concrete piers) and the 2017 Exhibition Road front (double-height display glazing with the flight simulator, aluminium-finned curtain wall above) are reconstructed from descriptions only; signage text and roof plant are approximate."
   },
   {
     "id": "design_museum",
@@ -758,12 +773,17 @@
         "used_for": "lower-level facade stripped and re-formed as a glazed reception (2002)"
       },
       {
+        "title": "Imperial College of Science, Technology and Medicine - AIM25 identity statement",
+        "url": "https://aim25.com/cats/3/1082.htm",
+        "used_for": "South Kensington site largely rebuilt 1950s-mid 1970s under the 1957 Jubilee Expansion Scheme"
+      },
+      {
         "title": "Survey of London vol. 38, plate 76",
         "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-76",
         "used_for": "1960-9 Imperial College buildings by Norman and Dawbarn behind the Queen's Tower"
       }
     ],
-    "notes": "No photographs could be downloaded; elevation rhythm (ribbon windows, slab bands, blank ends) is reconstructed from memory of the tower and the generic 1960s Imperial idiom. Height from the footprint record (45.6 m, 14 floors); plant storey and masts are approximate."
+    "notes": "No photographs could be downloaded; elevation rhythm (ribbon windows between precast spandrel bands, blank ends with a stair-window strip) is reconstructed from the 1960s Imperial idiom. Height from the footprint record (45.6 m, 14 floors). The north end abuts the Bessemer Building up to its 23 m roof, so that end is blind below it. Ground-floor reception, signage, roof plant, masts and handrails are approximate."
   },
   {
     "id": "faculty_building",
@@ -1042,7 +1062,7 @@
         "used_for": "building identity / use"
       }
     ],
-    "notes": "Massing, light wells and the domed rooftop part (32-36 m) come from the footprint record; facade rhythm, colours and the drum under the dome are reconstructions without photographic confirmation."
+    "notes": "Massing, light wells and the domed rooftop part (32-36 m) come from the footprint record; the dome is drawn as an observatory-style dome with a shutter slit on a ribbed drum. Facade rhythm (dark ribbon windows between heavy exposed-aggregate spandrels, close-set concrete fins on the Queen's Gate front, recessed ground storey on a column line), colours, entrance and roof plant are reconstructions without photographic confirmation. The north face against the Blackett Laboratory is blind below its 20 m roof."
   },
   {
     "id": "imperial_170_queens_gate",
@@ -1860,9 +1880,19 @@
         "title": "Roderic Maxwell Hill - Grace's Guide",
         "url": "https://www.gracesguide.co.uk/Roderic_Maxwell_Hill",
         "used_for": "namesake (Rector)"
+      },
+      {
+        "title": "ACEX & Bone - BMJ Architects",
+        "url": "https://www.bmjarchitects.co.uk/projects/acex-%26-bone",
+        "used_for": "phased refurbishment: overcladding of the existing buildings, new render and windows, new welcoming entrance, rooftop extension"
+      },
+      {
+        "title": "d+b facades to refurbish ACE building, Imperial College London",
+        "url": "https://www.dbfacades.com/db-facades-to-refurbish-ace-building-imperial-college-london/",
+        "used_for": "ACE building aluminium overcladding and replacement windows (2012)"
       }
     ],
-    "notes": "Heights from the footprint records (Roderic Hill 20 m / 6 floors, ACE Extension 16.8 m / 5 floors). Facade materials and patterns are plausible reconstructions for their periods; no photographs were available."
+    "notes": "Heights from the footprint records (Roderic Hill 20 m / 6 floors, ACE Extension 16.8 m / 5 floors). Roderic Hill is drawn as a 1950s brick block with a rusticated Portland stone ground storey, stone window surrounds and a full-height stone-framed glazed entrance bay to Prince Consort Road; ACE as its 2010s aluminium overcladding with replacement ribbon windows and a glazed stair tower/entrance. Window rhythm, colours and signage are plausible reconstructions; no photographs were available."
   },
   {
     "id": "royal_albert_hall",
@@ -2044,7 +2074,7 @@
       {
         "title": "Wernher and Beit memorials - Victorian Web",
         "url": "https://victorianweb.org/victorian/sculpture/montford/7.html",
-        "used_for": "P. R. Montford 1910 memorials with allegorical figures"
+        "used_for": "P. R. Montford 1910 memorials: busts plus four allegorical figures (a digging figure for mining and a woman for prosperity on the Wernher side; an armoured figure with a curved sword and one in animal skins on the Beit side); foundation stone on the Wernher plinth"
       },
       {
         "title": "London Remembers - RSM name panels",
@@ -2062,7 +2092,7 @@
         "used_for": "joint RSM/Bessemer refurbishment programme"
       }
     ],
-    "notes": "RSM storey heights raised above the footprint record (12.9 m) to Edwardian proportions (cornice 14.2 m, ridge ~19.5 m) per the listing (3 storeys + attic). Bay count (30) and niche size are proportioned, not surveyed; sculptured groups are abstracted. The Bessemer elevation pattern and pink-glass entrance zone are approximate (no photos available)."
+    "notes": "RSM storey heights raised above the footprint record (12.9 m) to Edwardian proportions (cornice 14.2 m, ridge ~19.5 m) per the listing (3 storeys + attic). The Prince Consort Road front, centre block and Exhibition Road return have real windows (rusticated ground floor with keystoned openings, architraved first-floor sashes with console hoods, plain second-floor architraves), plinth, string courses, modillion cornice and a balustrade with dies; courtyard elevations keep the painted bay tile. Bay count (30), niche size, the frieze lettering, the area railings and the attic sculpture groups are proportioned/abstracted, not surveyed. The Bessemer elevation pattern (pale spandrel bands, aluminium ribbon glazing) and pink-glass entrance zone are approximate (no photos available)."
   },
   {
     "id": "scale_space",
@@ -2405,9 +2435,14 @@
         "title": "Survey of London vol. 38, plate 76",
         "url": "https://www.british-history.ac.uk/survey-london/vol38/plate-76",
         "used_for": "1960-9 Norman and Dawbarn buildings around the Queen's Tower"
+      },
+      {
+        "title": "Contact us - Civil and Environmental Engineering, Imperial College",
+        "url": "https://www.imperial.ac.uk/engineering/departments/civil-engineering/about-us/contact/",
+        "used_for": "department housed in the Skempton Building on Imperial College Road (entrance side)"
       }
     ],
-    "notes": "Massing from the Overture footprint at 20 m (6 floors). Facade grid, rooflights and plinth treatment are reconstructed from the 1960s Norman & Dawbarn idiom; no photograph could be fetched."
+    "notes": "Massing from the Overture footprint at 20 m (6 floors). Facade grid (slender precast mullions at 1.6 m over continuous slab bands, recessed dark ground storey on a column line), entrance canopy and signage, north-light rooflights and roof plant are reconstructed from the 1960s Norman & Dawbarn idiom; no photograph could be fetched."
   },
   {
     "id": "stamford_bridge",
