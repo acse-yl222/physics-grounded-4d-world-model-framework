@@ -360,8 +360,8 @@ def main(argv=None) -> int:
             "origin": {
                 **ctx["origin"],
                 "height_m": 0,
-                "vertical_datum": "Flat ground at local zero; track depths assumed (see "
-                "provenance depth_model)",
+                # Must equal the project's origin for p4d retain; depths are in provenance.
+                "vertical_datum": "Flat ground at local zero; no terrain model applied",
             },
             "bounds_m": {"min": [-half, -half, -60], "max": [half, half, 30]},
         },
