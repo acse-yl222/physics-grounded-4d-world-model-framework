@@ -87,3 +87,11 @@
   新运行 `20261026T012952Z_f0fc1c` 以视图 `detailed` 保留（设为默认），五图层约 155 MB；
   其中 landmarks 约 925 万三角面（dedup + weld + Meshopt 后 104 MB）。车站与停车场中的
   车辆为示意摆放，不是记录数据。验证：113 项 Python、23 项 JavaScript、格式/lint 与 E2E smoke 通过。
+- 2026-10-26 冲突修正与交通：`resolve_conflicts.py` 按建筑立面逐侧收窄车行道和人行道、隐藏穿过建筑的
+  路段、为未标注桥梁的跨水路段加护栏、把船屋和水中小型无名 footprint 画成停泊船只、移除或挪开
+  落在建筑/水面/车行道上的树。`check_conflicts.py` 复查：建筑压车行道 4459 → 422、建筑在水中
+  119 → 14、树木冲突 1379 → 124。新运行 `20261026T023258Z_c188dd` 以视图 `resolved` 保留
+  （默认视图，叠加交通图层）。`src/traffic/corridor_sumo` 用 SUMO 1.28 在 Overture 路网上模拟交通，
+  运行 `20261026T021606Z_72cdfd`（视图 `traffic_sumo`，900 s 稀疏轨迹）。构建环境无法访问 TfL API，
+  本次车辆、出租车与公交需求全部为合成数据，并在 provenance 中标明；信号灯位置为按路口等级的假设。
+  统一查看器 6/6 图层加载。

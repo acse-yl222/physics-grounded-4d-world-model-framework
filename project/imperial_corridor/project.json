@@ -25,5 +25,5 @@
       "license": "Overture Maps (ODbL for OSM-derived features; see docs.overturemaps.org)"
     }
   ],
-  "default_view": "detailed"
+  "default_view": "resolved"
 }

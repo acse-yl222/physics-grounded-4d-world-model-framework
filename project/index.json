@@ -17,7 +17,7 @@
     {
       "scene_id": "imperial_corridor",
       "title": "Imperial South Kensington to White City (8 km)",
-      "views": ["default", "detailed"]
+      "views": ["default", "detailed", "resolved", "traffic_sumo"]
     },
     {
       "scene_id": "south_ken",
