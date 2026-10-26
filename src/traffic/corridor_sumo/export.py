@@ -12,6 +12,7 @@ degrees clockwise from north, so ``heading = radians(90 - angle)``.
 
 from __future__ import annotations
 
+import gzip
 import hashlib
 import itertools
 import json
@@ -25,7 +26,9 @@ import numpy as np
 
 RECORD = np.dtype([("i", "<u4"), ("x", "<f4"), ("y", "<f4"), ("h", "<f4")])
 SCHEMA = "corridor-traffic-v1"
-VEHICLE_TYPES = ("car", "taxi", "bus")
+# Vehicle kinds in the viewer index (prefix of the SUMO vType id); lgv/hgv/motorcycle
+# come from the DfT-calibrated demand.
+VEHICLE_TYPES = ("car", "taxi", "bus", "lgv", "hgv", "motorcycle")
 
 
 @dataclass
@@ -50,11 +53,25 @@ def vehicle_type(sumo_type: str) -> str:
     raise ValueError(f"Unknown SUMO vehicle type {sumo_type!r}")
 
 
-def parse_fcd(path: Path, t_from: float, t_to: float) -> Recording:
-    """Read SUMO FCD XML, keeping time steps within [t_from, t_to]."""
+def _open(path: Path):
+    """Path for plain XML; a gzip stream for ``.gz`` (released when garbage collected)."""
+    if str(path).endswith(".gz"):
+        return gzip.open(path, "rb")
+    return path
+
+
+def parse_fcd(
+    path: Path, t_from: float, t_to: float, kinds: dict[str, str] | None = None
+) -> Recording:
+    """Read SUMO FCD XML (optionally gzipped), keeping time steps within [t_from, t_to].
+
+    ``kinds`` maps SUMO vType ids that do not start with a known kind (e.g. buses from
+    another demand source) to a kind in ``VEHICLE_TYPES``.
+    """
+    kinds = kinds or {}
     rec = Recording()
     index: dict[str, int] = {}
-    for _, el in ET.iterparse(path, events=("end",)):
+    for _, el in ET.iterparse(_open(path), events=("end",)):
         if el.tag != "timestep":
             continue
         t = float(el.get("time"))
@@ -64,7 +81,9 @@ def parse_fcd(path: Path, t_from: float, t_to: float) -> Recording:
                 vid = v.get("id")
                 if vid not in index:
                     index[vid] = len(rec.vehicles)
-                    rec.vehicles.append({"id": vid, "type": vehicle_type(v.get("type", "car"))})
+                    sumo_type = v.get("type", "car")
+                    kind = kinds.get(sumo_type) or vehicle_type(sumo_type)
+                    rec.vehicles.append({"id": vid, "type": kind})
                 frame.append(
                     (
                         index[vid],

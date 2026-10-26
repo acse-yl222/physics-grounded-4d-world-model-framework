@@ -20,6 +20,49 @@ VTYPES = """<additional>
 """
 
 
+# General traffic of the DfT-calibrated demand. The network encodes access only for
+# passenger/taxi/bus (Overture), so LGVs, HGVs and motorcycles drive with passenger
+# permissions; they differ in size and dynamics only.
+GENERAL_VTYPES = {
+    "car": '<vType id="car" vClass="passenger" length="4.5" minGap="2.5" maxSpeed="50" '
+    'accel="2.6" decel="4.5" sigma="0.5" guiShape="passenger"/>',
+    "lgv": '<vType id="lgv" vClass="passenger" length="5.8" minGap="2.5" maxSpeed="40" '
+    'accel="2.0" decel="4.5" sigma="0.5" guiShape="delivery"/>',
+    "hgv": '<vType id="hgv" vClass="passenger" length="10.0" minGap="3.0" maxSpeed="25" '
+    'accel="1.0" decel="4.0" sigma="0.5" guiShape="truck"/>',
+    "motorcycle": '<vType id="motorcycle" vClass="passenger" length="2.2" minGap="1.5" '
+    'maxSpeed="40" accel="3.0" decel="6.0" sigma="0.5" guiShape="motorcycle"/>',
+}
+BUS_VTYPE = (
+    '<vType id="bus" vClass="bus" length="11.2" minGap="3.0" maxSpeed="20" accel="1.2" '
+    'decel="4.0" sigma="0.5" guiShape="bus"/>'
+)
+# DfT class column -> general vType.
+DFT_CLASS_VTYPE = {
+    "cars_and_taxis": "car",
+    "lgvs": "lgv",
+    "all_hgvs": "hgv",
+    "two_wheeled_motor_vehicles": "motorcycle",
+}
+GENERAL_DISTRIBUTION = "general"
+
+
+def write_general_vtypes(path: Path, mix: dict[str, float], include_bus: bool = True) -> Path:
+    """General vTypes plus a ``general`` vTypeDistribution weighted by the DfT class mix."""
+    ids = list(GENERAL_VTYPES)
+    probs = [mix.get(next(c for c, v in DFT_CLASS_VTYPE.items() if v == i), 0.0) for i in ids]
+    lines = ["<additional>", *(f"    {GENERAL_VTYPES[i]}" for i in ids)]
+    if include_bus:
+        lines.append(f"    {BUS_VTYPE}")
+    lines.append(
+        f'    <vTypeDistribution id="{GENERAL_DISTRIBUTION}" vTypes="{" ".join(ids)}" '
+        f'probabilities="{" ".join(f"{p:.4f}" for p in probs)}"/>'
+    )
+    lines.append("</additional>")
+    path.write_text("\n".join(lines) + "\n")
+    return path
+
+
 def write_vtypes(out_dir: Path) -> Path:
     path = out_dir / "vtypes.add.xml"
     path.write_text(VTYPES)
@@ -117,3 +160,13 @@ def synthetic_buses(
             )
         f.write("</routes>\n")
     return out, {"lines": len(lines), "headway_s": headway, "synthetic": True}
+
+
+def count_vehicles_or_routes(routes: Path) -> int:
+    """Number of vehicles, trips or top-level named routes in a route file."""
+    n = 0
+    for _, el in ET.iterparse(routes):
+        if el.tag in ("vehicle", "trip") or (el.tag == "route" and el.get("id")):
+            n += 1
+        el.clear()
+    return n

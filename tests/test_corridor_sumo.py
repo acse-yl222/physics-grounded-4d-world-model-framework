@@ -1,4 +1,4 @@
-"""Overture -> SUMO plain XML, TfL parsing and traffic export (small synthetic fixtures)."""
+"""Overture -> SUMO plain XML, TfL/DfT parsing, calibration, state and export (synthetic fixtures)."""
 
 import json
 import math
@@ -13,7 +13,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
 from common.contract import validate
-from traffic.corridor_sumo import export, overture_net, tfl
+from traffic.corridor_sumo import calibrate, dft, export, overture_net, periods, state, tfl
 
 FIXTURE = ROOT / "tests/fixtures/corridor_sumo/tfl_synthetic"
 
@@ -376,6 +376,277 @@ class TrafficExport(unittest.TestCase):
         self.assertEqual(validate(path), 1)
         frames = json.loads((data / "trajectories.json").read_text())["frames"]
         self.assertEqual(frames[2], {"ids": ["taxi_3"], "positions": [[-7.0, -7.0, 0.0]]})
+
+
+# ---------------------------------------------------------------- DfT counts (SYNTHETIC rows)
+
+ORIGIN = {"longitude": -0.200473, "latitude": 51.506427}
+
+
+def aadf_row(cp, year, lon, lat, amv, buses=0, **extra):
+    return {
+        "count_point_id": str(cp),
+        "year": str(year),
+        "longitude": str(lon),
+        "latitude": str(lat),
+        "road_name": extra.pop("road_name", "A4"),
+        "road_type": extra.pop("road_type", "Major"),
+        "estimation_method": extra.pop("estimation_method", "Counted"),
+        "all_motor_vehicles": str(amv),
+        "buses_and_coaches": str(buses),
+        **extra,
+    }
+
+
+def raw_row(cp, direction, day, hour, amv, buses=0):
+    return {
+        "count_point_id": str(cp),
+        "direction_of_travel": direction,
+        "year": day[:4],
+        "count_date": day + " 00:00:00",
+        "hour": str(hour),
+        "all_motor_vehicles": str(amv),
+        "buses_and_coaches": str(buses),
+        "cars_and_taxis": str(amv - buses),
+    }
+
+
+class DftCounts(unittest.TestCase):
+    """DfT-shaped rows are SYNTHETIC test values, not DfT data."""
+
+    def test_domain_bbox_matches_scene(self):
+        lon0, lat0, lon1, lat1 = dft.domain_bbox(ORIGIN, 4000)
+        self.assertAlmostEqual(lon0, -0.258203, places=5)
+        self.assertAlmostEqual(lat0, 51.470494, places=5)
+        self.assertAlmostEqual(lon1, -0.142743, places=5)
+        self.assertAlmostEqual(lat1, 51.542360, places=5)
+
+    def test_count_point_bbox_filter(self):
+        bbox = dft.domain_bbox(ORIGIN, 4000)
+        rows = [
+            aadf_row(1, 2025, -0.2, 51.5, 1000),
+            aadf_row(2, 2025, -0.26, 51.5, 1000),  # west of the domain
+            aadf_row(3, 2025, -0.2, 51.55, 1000),  # north of the domain
+            aadf_row(4, 2025, -0.1428, 51.4705, 1000),  # just inside the SE corner
+            {**aadf_row(5, 2025, 0, 0, 1000), "longitude": ""},  # unparsable
+        ]
+        self.assertEqual([r["count_point_id"] for r in dft.inside(rows, bbox)], ["1", "4"])
+
+    def test_latest_year_and_general_traffic(self):
+        enu = tfl.Enu(ORIGIN["longitude"], ORIGIN["latitude"])
+        rows = [aadf_row(1, 2019, -0.2, 51.5, 900, 90), aadf_row(1, 2025, -0.2, 51.5, 1100, 100)]
+        point = dft.latest_points(rows, enu)["1"]
+        self.assertEqual(point.year, 2025)
+        self.assertEqual(dft.general(rows[1]), 1000)
+        self.assertAlmostEqual(point.x, (-0.2 - ORIGIN["longitude"]) * enu.kx, places=1)
+
+    def test_profile_from_raw_counts_and_fallback(self):
+        # Point 1 direction E: weekday (2024-06-12 is a Wednesday) 07-19 counts of 60 veh/h
+        # (+10 buses, excluded) against a directional general AADF of 1200 -> share 0.05.
+        raw = [raw_row(1, "E", "2024-06-12", h, 70, 10) for h in dft.DFT_HOURS]
+        raw += [raw_row(1, "E", "2024-06-15", h, 999) for h in dft.DFT_HOURS]  # Saturday
+        raw += [raw_row(1, "W", "2024-06-12", h, 60) for h in dft.DFT_HOURS[:-1]]  # incomplete
+        by_dir = {("1", 2024): {"E": 1200.0, "W": 1000.0}}
+        profiles = dft.point_profiles(raw, by_dir, min_year=2015)
+        self.assertEqual(set(profiles), {("1", "E")})
+        own = profiles[("1", "E")]
+        self.assertEqual(own["dates"], ["2024-06-12"])
+        self.assertAlmostEqual(own["share"][8], 0.05)
+        pooled = dft.pooled_profiles(profiles, {"1": "Major"})
+        fb = dft.profile_for("1", "W", "Major", profiles, pooled)
+        self.assertTrue(fb["fallback"])
+        self.assertEqual(fb["source"], "pooled_major_fallback")
+        minor = dft.profile_for("2", "N", "Minor", profiles, pooled)
+        self.assertEqual(minor["source"], "pooled_all_fallback")
+        self.assertIs(dft.profile_for("1", "E", "Major", profiles, pooled), own)
+
+    def test_direction_split_sources(self):
+        enu = tfl.Enu(ORIGIN["longitude"], ORIGIN["latitude"])
+        rows = [aadf_row(cp, 2025, -0.2, 51.5, 1000) for cp in (1, 2, 3)]
+        points = dft.latest_points(rows, enu)
+        by_dir = {("1", 2025): {"N": 600.0, "S": 200.0}}
+        dft.assign_directions(points, by_dir, {"2": {"E": 0.25, "W": 0.75}})
+        self.assertEqual(points["1"].direction_source, "dft_aadf_by_direction")
+        self.assertAlmostEqual(points["1"].directions["N"]["general"], 750)
+        self.assertAlmostEqual(points["2"].directions["W"]["general"], 750)
+        self.assertEqual(points["3"].direction_source, "unknown_split_50_50")
+        self.assertEqual(set(points["3"].directions), {"C"})
+
+    def test_periods_reject_hours_without_counts(self):
+        cfg = {"warmup_s": 900, "fcd_window_s": 600, "list": [{"id": "am_peak", "hour": 8}]}
+        (w,) = periods.period_windows(cfg)
+        self.assertEqual((w["sim_begin_s"], w["start_s"], w["end_s"]), (27900, 28800, 32400))
+        self.assertEqual(w["fcd_begin_s"], 31800)
+        cfg["list"] = [{"id": "night", "hour": 22}]
+        with self.assertRaises(ValueError):
+            periods.period_windows(cfg)
+
+
+class CountMatching(unittest.TestCase):
+    def cand(self, eid, heading_deg, dist, cls="primary", name="Cromwell Road", passenger=True):
+        return {
+            "id": eid,
+            "name": name,
+            "cls": cls,
+            "dist": dist,
+            "heading": math.radians(heading_deg),
+            "passenger": passenger,
+        }
+
+    def test_heading_matches_direction(self):
+        self.assertTrue(calibrate.heading_matches(math.radians(10), "E"))
+        self.assertTrue(calibrate.heading_matches(math.radians(60), "E"))  # diagonal road
+        self.assertFalse(calibrate.heading_matches(math.radians(180), "E"))
+        self.assertTrue(calibrate.heading_matches(math.radians(-90), "S"))
+        self.assertFalse(calibrate.heading_matches(math.radians(90), "S"))
+        self.assertTrue(calibrate.heading_matches(math.radians(123), "C"))
+
+    def test_choose_edge_by_heading_class_and_junction_names(self):
+        point = {"road_name": "A4", "road_type": "Major", "start_junction": "Earl's Ct Rd"}
+        cands = [
+            self.cand("e1", 0, 8),
+            self.cand("-e1", 180, 8),
+            self.cand("side", 0, 3, cls="residential", name="Side Street"),
+            self.cand("cross", 5, 2, name="Earls Court Road"),
+        ]
+        cfg = {"radius_m": 40, "near_m": 20}
+        east = calibrate.choose_edge(cands, point, "E", cfg)
+        self.assertEqual((east["edge"], east["quality"]), ("e1", "class+heading"))
+        self.assertEqual(calibrate.choose_edge(cands, point, "W", cfg)["edge"], "-e1")
+        miss = calibrate.choose_edge([self.cand("x", 90, 5)], point, "E", cfg)
+        self.assertIsNone(miss["edge"])
+        self.assertIn("heading", miss["reason"])
+        self.assertIn("within", calibrate.choose_edge([], point, "E", cfg)["reason"])
+
+    def test_street_name_match_wins(self):
+        point = {"road_name": "Ladbroke Grove", "road_type": "Minor"}
+        cands = [
+            self.cand("near", 90, 2, cls="residential", name="Other Road"),
+            self.cand("named", 80, 15, cls="tertiary", name="Ladbroke Gr"),
+        ]
+        choice = calibrate.choose_edge(cands, point, "N", {})
+        self.assertEqual((choice["edge"], choice["quality"]), ("named", "name+heading"))
+        self.assertTrue(calibrate.is_ref("A315") and calibrate.is_ref("U"))
+        self.assertFalse(calibrate.is_ref("Ladbroke Grove"))
+
+    def test_heading_at_shape(self):
+        dist, heading = calibrate.heading_at([(0, 0), (10, 0), (10, 10)], 11, 5)
+        self.assertAlmostEqual(dist, 1)
+        self.assertAlmostEqual(heading, math.pi / 2)
+
+
+class CalibrationFit(unittest.TestCase):
+    def test_geh(self):
+        self.assertAlmostEqual(calibrate.geh(150, 100), math.sqrt(2 * 50**2 / 250))
+        self.assertEqual(calibrate.geh(0, 0), 0.0)
+        self.assertLess(calibrate.geh(1050, 1000), 5)
+        self.assertGreater(calibrate.geh(500, 1000), 10)
+
+    def test_fit_summary_and_r2(self):
+        fit = calibrate.fit_summary([(100, 100), (1000, 1050), (500, 300)])
+        self.assertEqual(fit["n"], 3)
+        self.assertAlmostEqual(fit["geh_lt_5_pct"], 66.7)
+        self.assertEqual(calibrate.r_squared([1, 2, 3], [1, 2, 3]), 1.0)
+        self.assertIsNone(calibrate.r_squared([5, 5], [4, 6]))
+
+    def test_edgedata_targets(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "t.xml"
+            calibrate.write_edgedata(
+                [{"id": "am", "begin": 28800, "end": 32400, "counts": {"e1": 812.6}}], path
+            )
+            el = ET.parse(path).getroot().find("interval/edge")
+            self.assertEqual((el.get("id"), el.get("entered")), ("e1", "813"))
+
+
+class CapacityScreening(unittest.TestCase):
+    def test_overloaded_uncounted_edge_is_relieved(self):
+        vehicles = "".join(
+            f'<vehicle id="v{i}" depart="{i}"><route edges="{"a b" if i < 6 else "a"}"/></vehicle>'
+            for i in range(10)
+        )
+        with tempfile.TemporaryDirectory() as tmp:
+            src, out = Path(tmp) / "in.rou.xml", Path(tmp) / "out.rou.xml"
+            src.write_text(f"<routes>{vehicles}</routes>")
+            # b (uncounted) carries 4 veh/h; a is counted at 10 veh/h despite capacity 2.
+            res = calibrate.screen_capacity(
+                src, out, {"a": 2, "b": 4}, {"a": 10}, [(0, 3600)], seed=1
+            )
+            self.assertEqual((res["vehicles_dropped"], res["edges_over_capacity_before"]), (2, 1))
+            counts = calibrate.sampled_counts(out, 0, 3600)
+            self.assertEqual(counts, {"a": 8, "b": 4})
+
+
+class LevelOfService(unittest.TestCase):
+    def test_speed_ratio_classes(self):
+        self.assertEqual(state.classify(0.9, 20), "free")
+        self.assertEqual(state.classify(0.7, 20), "moderate")
+        self.assertEqual(state.classify(0.5, 20), "heavy")
+        self.assertEqual(state.classify(0.3, 20), "congested")
+
+    def test_density_modifiers(self):
+        self.assertEqual(state.classify(0.9, 45), "heavy")  # dense despite speed
+        self.assertEqual(state.classify(0.9, 80), "congested")
+        self.assertEqual(state.classify(0.2, 3), "moderate")  # few vehicles at a signal
+
+    def test_edge_state_from_meandata(self):
+        attrs = {"sampledSeconds": 500.0, "entered": 50.0, "speed": 6.0, "density": 20.0}
+        s = state.edge_state(attrs, 300, 12.0, 2)
+        self.assertEqual((s["q"], s["k_lane"], s["ratio"], s["los"]), (600, 10.0, 0.5, "heavy"))
+        self.assertIsNone(state.edge_state({"sampledSeconds": 0}, 300, 12.0, 1))
+
+    def test_simplify_and_shares(self):
+        line = [(0, 0), (5, 0.5), (10, 0), (10, 10)]
+        self.assertEqual(state.simplify(line, 2.0), [(0, 0), (10, 0), (10, 10)])
+        shares = state.los_shares(
+            {"a": {"los": "free"}, "b": {"los": "congested"}}, {"a": 300.0, "b": 100.0}
+        )
+        self.assertEqual(shares["free"], 0.75)
+        self.assertEqual(shares["congested"], 0.25)
+
+
+class SumoCountMatching(unittest.TestCase):
+    """Matching and routeSampler on a tiny netconvert network (skipped without SUMO)."""
+
+    def test_match_and_route_sampler(self):
+        try:
+            from traffic.corridor_sumo import sumo_env
+
+            sumo_env.binary("netconvert")
+            sumolib = sumo_env.sumolib()
+        except Exception as exc:  # noqa: BLE001
+            self.skipTest(f"SUMO unavailable: {exc}")
+        net = overture_net.build(SEGMENTS, CONNECTORS)
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp = Path(tmp)
+            nod, edg, net_path = tmp / "n.nod.xml", tmp / "e.edg.xml", tmp / "net.net.xml"
+            overture_net.write_plain_xml(net, nod, edg)
+            sumo_env.run(
+                [sumo_env.binary("netconvert"), "--node-files", nod, "--edge-files", edg]
+                + ["-o", net_path, "--offset.disable-normalization", "true", "--lefthand"]
+                + ["true", "--no-warnings", "true"]
+            )
+            snet = sumolib.net.readNet(str(net_path))
+            cands = calibrate.edge_candidates(snet, 150, 3, 40)
+            point = {"road_name": "U", "road_type": "Minor"}
+            east = calibrate.choose_edge(cands, point, "E", {})
+            west = calibrate.choose_edge(cands, point, "W", {})
+            self.assertNotEqual(east["edge"], west["edge"])
+            e = snet.getEdge(east["edge"])
+            self.assertGreater(e.getToNode().getCoord()[0], e.getFromNode().getCoord()[0])
+            self.assertEqual(periods.opposite_edge(e).getID(), west["edge"])
+            # routeSampler reproduces a single count exactly from one candidate route.
+            cand = tmp / "cand.rou.xml"
+            cand.write_text(f'<routes><route id="r0" edges="{east["edge"]}"/></routes>')
+            counts = tmp / "counts.xml"
+            calibrate.write_edgedata(
+                [{"id": "h", "begin": 0, "end": 3600, "counts": {east["edge"]: 120}}], counts
+            )
+            out = tmp / "out.rou.xml"
+            calibrate.route_sampler(
+                cand, counts, out, prefix="t_", vtype="car", seed=1, log=tmp / "rs.log"
+            )
+            self.assertEqual(calibrate.sampled_counts(out, 0, 3600), {east["edge"]: 120})
 
 
 if __name__ == "__main__":
