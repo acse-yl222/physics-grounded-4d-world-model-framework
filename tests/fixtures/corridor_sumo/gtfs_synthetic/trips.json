@@ -1,0 +1,46 @@
+{
+  "_synthetic": "SYNTHETIC test fixture: invented route S1, stops and timetable for unit tests; not BODS data",
+  "period": {
+    "period": "am_peak",
+    "begin_s": 27600,
+    "end_s": 32400
+  },
+  "vehicles": {
+    "v1": {
+      "trip_id": "T1",
+      "key": "S1|0",
+      "stops": [
+        ["SYN_A", "SYN_A", 28800, 28800, 0.0],
+        ["SYN_B", "SYN_B", 29100, 29100, 1000.0],
+        ["SYN_C", "SYN_C", 29400, 29400, 2000.0]
+      ]
+    },
+    "v2": {
+      "trip_id": "T2",
+      "key": "S1|0",
+      "stops": [
+        ["SYN_A", "SYN_A", 29400, 29400, 0.0],
+        ["SYN_B", "SYN_B", 29700, 29700, 1000.0],
+        ["SYN_C", "SYN_C", 30000, 30000, 2000.0]
+      ]
+    },
+    "v3": {
+      "trip_id": "T3",
+      "key": "S1|0",
+      "stops": [
+        ["SYN_A", "SYN_A", 30000, 30000, 0.0],
+        ["SYN_B", "SYN_B", 30300, 30300, 1000.0],
+        ["SYN_C", "SYN_C", 30600, 30600, 2000.0]
+      ]
+    },
+    "v4": {
+      "trip_id": "T4",
+      "key": "S1|0",
+      "stops": [
+        ["SYN_A", "SYN_A", 30600, 30600, 0.0],
+        ["SYN_B", "SYN_B", 30900, 30900, 1000.0],
+        ["SYN_C", "SYN_C", 31200, 31200, 2000.0]
+      ]
+    }
+  }
+}

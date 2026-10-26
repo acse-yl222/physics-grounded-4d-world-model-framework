@@ -1,0 +1,35 @@
+[
+  {
+    "_synthetic": "SYNTHETIC test fixture: invented route S1, stops and timetable for unit tests; not BODS data",
+    "id": "SYN_A",
+    "code": null,
+    "name": "Synthetic A",
+    "x": 0.0,
+    "y": 0.0,
+    "lat": 51.5,
+    "lon": -0.2,
+    "routes": ["S1"]
+  },
+  {
+    "_synthetic": "SYNTHETIC test fixture: invented route S1, stops and timetable for unit tests; not BODS data",
+    "id": "SYN_B",
+    "code": null,
+    "name": "Synthetic B",
+    "x": 1000.0,
+    "y": 0.0,
+    "lat": 51.5,
+    "lon": -0.2,
+    "routes": ["S1"]
+  },
+  {
+    "_synthetic": "SYNTHETIC test fixture: invented route S1, stops and timetable for unit tests; not BODS data",
+    "id": "SYN_C",
+    "code": null,
+    "name": "Synthetic C",
+    "x": 2000.0,
+    "y": 0.0,
+    "lat": 51.5,
+    "lon": -0.2,
+    "routes": ["S1"]
+  }
+]

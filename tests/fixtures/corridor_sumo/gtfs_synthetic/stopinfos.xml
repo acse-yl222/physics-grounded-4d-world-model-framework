@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- SYNTHETIC test fixture in the shape of SUMO stop output (stop-output). Invented
+     vehicles, stops and times for unit tests; not a simulation result. -->
+<stops _synthetic="SYNTHETIC fixture: invented SUMO stopinfos, not a simulation result">
+    <stopinfo id="v1" type="bus" lane="e1_0" pos="10.00" parking="0" started="28800.00" ended="28820.00" busStop="SYN_A"/>
+    <stopinfo id="v1" type="bus" lane="e2_0" pos="10.00" parking="0" started="29100.00" ended="29120.00" busStop="SYN_B"/>
+    <stopinfo id="v1" type="bus" lane="e3_0" pos="10.00" parking="0" started="29400.00" ended="29420.00" busStop="SYN_C"/>
+    <stopinfo id="v2" type="bus" lane="e1_0" pos="10.00" parking="0" started="29400.00" ended="29420.00" busStop="SYN_A"/>
+    <stopinfo id="v2" type="bus" lane="e2_0" pos="10.00" parking="0" started="29760.00" ended="29780.00" busStop="SYN_B"/>
+    <stopinfo id="v2" type="bus" lane="e3_0" pos="10.00" parking="0" started="30120.00" ended="30140.00" busStop="SYN_C"/>
+    <stopinfo id="v3" type="bus" lane="e2_0" pos="10.00" parking="0" started="30540.00" ended="30560.00" busStop="SYN_B"/>
+    <stopinfo id="v3" type="bus" lane="e1_0" pos="10.00" parking="0" started="30000.00" ended="30020.00" busStop="SYN_A"/>
+    <stopinfo id="v3" type="bus" lane="e3_0" pos="10.00" parking="0" started="31020.00" ended="31040.00" busStop="SYN_C"/>
+    <stopinfo id="v4" type="bus" lane="e1_0" pos="10.00" parking="0" started="30600.00" ended="30620.00" busStop="SYN_A"/>
+    <stopinfo id="v4" type="bus" lane="e2_0" pos="10.00" parking="0" started="30780.00" ended="30800.00" busStop="SYN_B"/>
+</stops>

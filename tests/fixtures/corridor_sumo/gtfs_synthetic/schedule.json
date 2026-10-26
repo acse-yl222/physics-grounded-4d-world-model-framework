@@ -1,0 +1,52 @@
+{
+  "_synthetic": "SYNTHETIC test fixture: invented route S1, stops and timetable for unit tests; not BODS data",
+  "schema": "corridor-bus-schedule-v1",
+  "service_date": "20260625",
+  "periods": {
+    "am_peak": [8, 9],
+    "inter_peak": [13, 14]
+  },
+  "routes": [
+    {
+      "key": "S1|0",
+      "route": "S1",
+      "direction": "0",
+      "route_id": "R1",
+      "agency": "Synthetic Buses",
+      "headsign": "Synthetic Terminus",
+      "stops": ["SYN_A", "SYN_B", "SYN_C"],
+      "path": [
+        [0, 0],
+        [1000, 0],
+        [2000, 0]
+      ],
+      "busiest_stop": "SYN_B",
+      "schedule": {
+        "am_peak": {
+          "trips_per_h": 6.0,
+          "headway_min": 10.0,
+          "runtime_min": 10.0,
+          "speed_kmh": 12.0
+        },
+        "inter_peak": {
+          "trips_per_h": 4.0,
+          "headway_min": 15.0,
+          "runtime_min": 9.0,
+          "speed_kmh": 13.33
+        }
+      }
+    }
+  ],
+  "stop_buses_per_h": {
+    "SYN_A": {
+      "am_peak": 6.0
+    },
+    "SYN_B": {
+      "am_peak": 6.0,
+      "inter_peak": 4.0
+    }
+  },
+  "provenance": {
+    "synthetic": true
+  }
+}
