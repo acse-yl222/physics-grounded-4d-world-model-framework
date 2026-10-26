@@ -258,6 +258,36 @@
     "notes": "No material description was found: the facade is modelled as a pale concrete frame with continuous ribbon windows and buff brick spandrels, a recessed glazed ground floor and a glazed entrance on Queen's Gate, which is an interpretation of the Modern Movement style rather than a traced elevation. Six storeys (4.4 m ground, 5 x 3.0 m) give 19.4 m plus plant (Overture 14.7 m is low). Rooftop plant room position is assumed."
   },
   {
+    "id": "barkers_building",
+    "name": "Barkers of Kensington",
+    "claims": [
+      "d4583ef7-4665-42a1-b038-bdbc6831c295"
+    ],
+    "references": [
+      {
+        "title": "Messrs Barkers Store - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101222712-messers-barkers-store-queens-gate-ward",
+        "used_for": "Portland stone, glass and gilded metal; symmetrical convex facade of seven storeys, top two set back; two stone stair towers with diagonal strip windows and glass lanterns; reliefs, bronze ground-floor mullions, cantilevered canopy"
+      },
+      {
+        "title": "Barkers of Kensington - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Barkers_of_Kensington",
+        "used_for": "store history; Whole Foods Market in part of the building"
+      },
+      {
+        "title": "Former Barkers Department Store - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/1930/barkers.html",
+        "used_for": "design 1937-38, completion 1958, Art Deco facade"
+      },
+      {
+        "title": "Bernard George - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Bernard_George",
+        "used_for": "architect, Barkers in-house chief architect 1928-62"
+      }
+    ],
+    "notes": "Five lower storeys to 18.6 m on the whole footprint and the two set-back storeys to 25.4 m on the Overture setback part (Overture gives 13.6 / 23.2 m); stair towers follow the two small Overture tower parts, extended to the ground and raised to 30 m with 4 m glass lanterns (heights estimated). Window bands use an even 1.6 m mullion module; reliefs are plain stone panels; the third small roof part is a plain lift motor room. Party/rear walls are plain stone."
+  },
+  {
     "id": "battersea_bridge",
     "name": "Battersea Bridge",
     "claims": [],
@@ -829,6 +859,31 @@
     "notes": "Street front taken as the north edge (Sloane Terrace). Front height 15 m, auditorium walls 17 m with a low octagonal metal roof to ~22 m, and the campanile (5.5 m square, ~31 m to the finial) at the east end of the front are estimates; arcade bay count and parapet piercing are simplified."
   },
   {
+    "id": "campden_hill_towers",
+    "name": "Campden Hill Towers",
+    "claims": [
+      "7e653d9a-578e-4633-b906-285f5a411677"
+    ],
+    "references": [
+      {
+        "title": "Campden Hill Towers - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/2331/england/london-w11/112-notting-hill-gate/campden-hill-towers",
+        "used_for": "address 112 Notting Hill Gate W11"
+      },
+      {
+        "title": "Campden Hill Towers - Domus Nova",
+        "url": "https://domusnova.com/london-lettings/campden-hill-towers/",
+        "used_for": "1960s modernist landmark, marble-clad lobby with glass mosaic panels"
+      },
+      {
+        "title": "Notting Hill tower rejected - Building",
+        "url": "https://www.building.co.uk/news/notting-hill-tower-rejected/5080969.article",
+        "used_for": "the two towers dubbed the 'ugly sisters' above the six-lane trunk road"
+      }
+    ],
+    "notes": "Height and floor count from Overture (61.6 m, 19 floors: 3.2 m shop floor + 18 x 3.2 m + plant). The Overture part raised from 3.2 m along Notting Hill Gate is read as a shop canopy/undercroft. Balcony bands on the two long faces, the window module, the solid gable ends and the plant-room size are assumptions from the general type; the architect is not identified in the sources."
+  },
+  {
     "id": "cassini_tower",
     "name": "Cassini Tower, White City Living",
     "claims": [
@@ -1072,6 +1127,72 @@
     "notes": "Storey heights (raised ground 4.2 m, first 4.2 m, second 3.4 m, third 3.0 m) and a 2.8 m slated mansard are assumed from the listing storey count; Overture h=13.9 m is too low. The split between the main house and the ballroom wing (at ~20 m from Cromwell Road) is estimated from the footprint shape. Window rhythm, porch position, chimney positions and the tricolour flag are assumptions; balcony and cornice profiles are simplified."
   },
   {
+    "id": "coronet_theatre",
+    "name": "The Coronet Theatre",
+    "claims": [
+      "46881efd-b826-4857-acc1-908c09a37f8f"
+    ],
+    "references": [
+      {
+        "title": "Coronet Cinema - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101227644-coronet-cinema-campden-ward",
+        "used_for": "Sprague 1898; painted once-rendered stone, three and four storeys, giant fluted Composite pilasters, nine-bay elevation, three round-arched corner bays, tall corner cupola with columns on console brackets"
+      },
+      {
+        "title": "Coronet Theatre, Notting Hill - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Coronet_Theatre,_Notting_Hill",
+        "used_for": "dates of theatre and cinema use"
+      },
+      {
+        "title": "Coronet Theatre - Cinema Treasures",
+        "url": "https://www.cinematreasures.org/theaters/1463",
+        "used_for": "statue on the dome: Gavin Turk's 'The Spirit of Painting' replacing the lost winged figure"
+      },
+      {
+        "title": "Coronet Theatre - Theatres Trust database",
+        "url": "https://database.theatrestrust.org.uk/resources/theatres/show/440",
+        "used_for": "short round corner tower crowned by a dome"
+      }
+    ],
+    "notes": "Front parapet at 15 m and the rear stage house at the Overture 13.6 m; the cupola follows the Overture round part (radius ~3.6 m) with the drum to 20 m and the dome to ~24 m (estimated). Pilaster rhythm is an even nine-bay split of the Notting Hill Gate front; the statue is a simple standing figure. Painted stone colour (cream) and the canopy over the entrance are assumptions."
+  },
+  {
+    "id": "czech_slovak_embassies",
+    "name": "Czech and Slovak Embassies",
+    "claims": [
+      "2ec1ce3d-f03e-4ce0-926b-d24f1eaecc00",
+      "d8212253-04f9-4470-b4a7-6f1bf09cd77e"
+    ],
+    "references": [
+      {
+        "title": "Embassy of the Czech Republic, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Embassy_of_the_Czech_Republic,_London",
+        "used_for": "Brutalist building begun 1965, architects Bočan, Šrámek and Štěpánský, shared with Slovakia, RIBA award"
+      },
+      {
+        "title": "Czech and Slovak Embassies - C20 Society",
+        "url": "https://c20society.org.uk/botm/czech-and-slovak-embassies-london/",
+        "used_for": "1965-70, statement of the new style adopted by Czech architects: Brutalism"
+      },
+      {
+        "title": "Czechoslovak Embassies Under Communism - Sigmar",
+        "url": "https://www.sigmarlondon.com/products/czechoslovak-embassies-under-communism",
+        "used_for": "concrete skeleton punctuated by banks of glass; RMJM collaboration"
+      },
+      {
+        "title": "Czech and Slovak Embassies - Mainstream Modern",
+        "url": "https://mainstreammodern.co.uk/CaseStudies.aspx/Detail/229/czech-and-slovak-embassies",
+        "used_for": "curved concrete wall facing Notting Hill Gate by Stanislav Kolíbal"
+      },
+      {
+        "title": "About the embassy building - Embassy of the Czech Republic in London",
+        "url": "https://mzv.gov.cz/london/en/about_us/about_the_embassy_building/x26_30_kensington_palace_gardens.html",
+        "used_for": "address 26-30 Kensington Palace Gardens, Czechoslovak embassy there from 1970"
+      }
+    ],
+    "notes": "Heights from Overture (slab 23.2 m as six 3.6 m storeys over a 1.6 m plinth; south block 13.6 m). The facade rhythm - ribbed precast spandrels, slender mullions with deep fins every 7.2 m and dark bronze glazing bands - and the recessed ground floor are a generic reading of the \"concrete skeleton with banks of glass\"; the Kolíbal wall is placed along the slab front with an assumed 20 m length and 3 m height."
+  },
+  {
     "id": "dana_research_centre",
     "name": "Dana Research Centre and Library",
     "claims": [
@@ -1090,6 +1211,36 @@
       }
     ],
     "notes": "No facade description was found. Modelled as a five-storey contemporary block (Overture 18.6 m) with a fully glazed, recessed ground floor (former events space / cafe), buff-brick upper floors with regular deep-set windows and slender piers, a glazed top storey set back behind the parapet and a name board; all of these are assumptions."
+  },
+  {
+    "id": "derry_and_toms",
+    "name": "Derry & Toms and the Kensington Roof Gardens",
+    "claims": [
+      "7e685d1e-46bc-44dd-a638-0950af3d4ba4"
+    ],
+    "references": [
+      {
+        "title": "Derry & Toms - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Derry_%26_Toms",
+        "used_for": "seven-storey Art Deco store opened 1933, Bernard George, Walter Gilbert metalwork, Mabey reliefs"
+      },
+      {
+        "title": "Marks and Spencers, British Home Stores and the Roof Garden - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101222781-marks-and-spencers-british-home-stores-and-the-roof-garden-queens-gate-ward",
+        "used_for": "Portland stone front and sides, bronze glazing bars and shopfront, 7 storeys 9 bays 2:5:2 divided by staircase bays, bronze panels between floors, splayed balconettes, top storey frieze with metopes and zodiac grilles"
+      },
+      {
+        "title": "The Roof Garden, 99 High St, Kensington - Historic England",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1001406",
+        "used_for": "roof garden by Ralph Hancock covering the whole roof, opened May 1938"
+      },
+      {
+        "title": "Kensington Roof Gardens - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Kensington_Roof_Gardens",
+        "used_for": "Spanish, Tudor and English woodland gardens on the roof"
+      }
+    ],
+    "notes": "Main roof at 24.5 m (seven storeys: 5.5 m shop floor, five 3.4 m floors and a 2 m frieze storey) instead of the Overture 23.2 m. The roof-garden pavilions follow the Overture roof parts, raised onto the roof slab; their arcades, pantiled hipped roofs and the woodland trees, lawns and canal are schematic. Bay widths are an even split of each facade; reliefs, metopes and zodiac grilles are reduced to stone panels and bronze grilles. Rear (party) walls are left plain."
   },
   {
     "id": "design_museum",
@@ -1200,6 +1351,36 @@
       }
     ],
     "notes": "Overture h=7.7 m is wrong; height 34 storeys x 3.15 m + crown = ~111 m (no metric height found). Taper modelled as four stepped sections (1.1 m inset per section, railed ledges) on the oriented rectangle of the footprint. Each 1.5 m unitised panel is real geometry (mullions, slab transoms, terracotta plates on ~45% of panels in a seeded random mix); the actual panel pattern, the lift box position (west face) and size, the louvred crown, canopy and forecourt are approximations."
+  },
+  {
+    "id": "electric_cinema",
+    "name": "Electric Cinema",
+    "claims": [
+      "81045757-e336-417f-98a6-7db78a4259e1"
+    ],
+    "references": [
+      {
+        "title": "The Electric Cinema - Historic England",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1266083",
+        "used_for": "Grade II*, 1910-12 by G S Valentin"
+      },
+      {
+        "title": "The Electric Cinema - RBKC listed buildings",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=423089",
+        "used_for": "glazed white tile front over machine brick, rendered upper floor, Ionic pilasters and Baroque swags to ground floor, dome on upper storey to one side of the central bay"
+      },
+      {
+        "title": "Electric Cinema, Notting Hill - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Electric_Cinema,_Notting_Hill",
+        "used_for": "architect Gerald Seymour Valentin, opening 1910"
+      },
+      {
+        "title": "Designer icon: Electric Cinema - Livingetc",
+        "url": "https://www.livingetc.com/spaces/design-destination/designer-icon-electric-cinema-london-188233",
+        "used_for": "domed corner roof as the telltale feature"
+      }
+    ],
+    "notes": "Front 10.5 m high with the raised central bay to 12.2 m and the dome (on the Overture round part at the south end of the front) to ~15 m; the auditorium eaves at 9 m under a 2.5 m pitched roof. Pilaster count, swags (reduced to small panels), the red name sign and canopy, and the dome profile are estimated."
   },
   {
     "id": "electrical_engineering_building",
@@ -1873,6 +2054,41 @@
       }
     ],
     "notes": "South front reduced to single-storey arcades per the RBKC listing text (earlier two-storey shell removed). Cross windows, pilasters, clustered octagonal chimney shafts and the slated tower behind the wing are real geometry with estimated sizes and positions; the seasonal Opera Holland Park canopy/stage is not modelled. E-plan read from the Overture outline (wings to the south-south-east). East wing eaves 11 m and gables to ~15 m are estimates (Overture 8.9 m). Ruin wall heights and the extent of surviving fabric in the centre/west are approximated; the 1950s hostel block (Safestay) is a separate footprint left to the generic layer."
+  },
+  {
+    "id": "holland_park_school",
+    "name": "Holland Park School",
+    "claims": [
+      "16be01b1-921e-42ed-963a-1820165e1ea3"
+    ],
+    "references": [
+      {
+        "title": "Holland Park School - Lang and Fulton",
+        "url": "https://langandfulton.co.uk/projects/holland-park-school/",
+        "used_for": "new six-storey school for 1,500 pupils"
+      },
+      {
+        "title": "Holland Park School - Haver & Boecker",
+        "url": "https://www.haverboecker.com/en/products/wire-mesh-products/architectural-wire-mesh/references/details/holland-park-school/",
+        "used_for": "undulating skin of bronze and copper fins (west), curved wire-mesh brise soleil (east)"
+      },
+      {
+        "title": "Holland Park School, London - SteelConstruction.info",
+        "url": "https://steelconstruction.info/Holland_Park_School,_London",
+        "used_for": "five above-ground levels plus basement across the whole footprint, steel frame"
+      },
+      {
+        "title": "Holland Park School - architectsdatafile",
+        "url": "https://architectsdatafile.co.uk/?p=52821",
+        "used_for": "north-south block with full-length central atrium, classrooms east, specialist rooms and sports west"
+      },
+      {
+        "title": "Holland Park School - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Holland_Park_School",
+        "used_for": "school identity and location"
+      }
+    ],
+    "notes": "Five storeys of 4.2 m (21 m) above ground instead of the Overture 14.8 m. Fin pitch (0.6 m), undulation period (~24 m) and depth, the bronze/copper alternation, the mesh-band curvature on the east face, the atrium rooflight width (8 m) and the glazed ends are estimated from the descriptions; the basement is not visible and not modelled."
   },
   {
     "id": "holy_trinity_brompton",
@@ -2634,6 +2850,31 @@
     "notes": "Overture h=9.6 m is too low for a four-storey secondary school; modelled as four storeys (4.2 m + 3 x 3.7 m, ~16 m). Panel module (1.5 m x storey), the random distribution of the four greens, window ribbons and the roof plant are assumptions; the RAL names were matched to approximate hex values."
   },
   {
+    "id": "kensington_central_library",
+    "name": "Kensington Central Library",
+    "claims": [
+      "f0820754-c7d6-4b7d-9cbe-d53b54f87d1c"
+    ],
+    "references": [
+      {
+        "title": "Kensington Central Library Including Adjoining Pylons - Historic England",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1119724",
+        "used_for": "Grade II*, 1958-60 by E Vincent Harris, steel frame with hand-made brick and Bath/Portland stone, six-bay centre with projecting end pavilions, two storeys over basement and attic, stone base, cornice and parapet, pylons"
+      },
+      {
+        "title": "Kensington Central Library - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Kensington_Central_Library",
+        "used_for": "opening 13 July 1960, location on Phillimore Walk"
+      },
+      {
+        "title": "Vincent Harris - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Vincent_Harris",
+        "used_for": "architect and his civic classical style"
+      }
+    ],
+    "notes": "Height kept near the Overture 15.6 m (5.2 m + 5.6 m storeys, attic, parapet). The main front is taken as the Phillimore Walk side; pavilion projection follows the footprint notches. Window sizes, arched ground floor openings, doorcase, the low hipped slate roof behind the parapet, and the pylon size and the abstracted heraldic beasts on them are estimates."
+  },
+  {
     "id": "kensington_leisure_centre",
     "name": "Kensington Leisure Centre",
     "claims": [
@@ -2718,6 +2959,31 @@
     "notes": "Massing from the Overture outlines; parapet heights raised slightly over the 11.3 m footprint value for the state ranges (three tall storeys). Roofs are hipped per wing rectangle (approximate ridge layout); the position of the clock tower on the west range, of the Victoria statue east of the palace and of the William III statue south of the King's Gallery are estimated. Sash windows are real geometry (frames, glazing bars, rubbed-brick surrounds, stone sills) at a regular 3.3 m bay on every elevation, not traced per elevation; storey heights estimated. Statues are simplified figures. Orangery end pavilions estimated."
   },
   {
+    "id": "kensington_temple",
+    "name": "Kensington Temple",
+    "claims": [
+      "0af4842f-09f7-461f-9e91-0b5d4ee0a30b"
+    ],
+    "references": [
+      {
+        "title": "Kensington Temple - British Listed Buildings",
+        "url": "https://www.britishlistedbuildings.co.uk/101224188-kensington-temple-pembridge-ward",
+        "used_for": "Grade II 1974; Geometrical Gothic, square towers capped by low spires, cruciform plan with 4-bay nave, transepts and shallow sanctuary, random rubble Kentish ragstone with ashlar dressings, galleries on three sides"
+      },
+      {
+        "title": "Kensington Temple - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Kensington_Temple",
+        "used_for": "founded 1848 as Horbury Chapel, bought by George Jeffreys 1930, Elim opening 1931"
+      },
+      {
+        "title": "Horbury Chapel, Kensington Park Road - AIM25",
+        "url": "https://atom.aim25.com/index.php/horbury-chapel-kensington-park-road-notting-hill-gate-kensington",
+        "used_for": "architect J Tarring, built 1848-49 at the junction of Ladbroke Road and Kensington Park Road"
+      }
+    ],
+    "notes": "Front taken as the north-east face on Kensington Park Road (the projecting centre of the footprint), with the towers at its two corners; tower height 18 m and spires to 24 m are estimates for \"low spires\". Nave eaves 9.5 m with a 7 m roof, the transept across the middle of the plan and the window tracery (simplified to framed pointed windows) are proportioned, not measured."
+  },
+  {
     "id": "kensington_town_hall",
     "name": "Kensington Town Hall",
     "claims": [
@@ -2757,6 +3023,61 @@
       }
     ],
     "notes": "Terracing applied to every outer face of the main block (sources only describe it for Hornton Street); storey heights (3.5 m) and the 5-level section to ~17 m exceed the Overture 13.9 m. The two south lobes of the outline are taken as the blind great hall (west) and the council chamber raised on piers over a garden (east); the north-west lobe is modelled as a brick pavilion of unknown use. Window bands are recessed glazing with 3D mullions, sills and white concrete fascias; mullion spacing (1.5 m), the terrace handrails, the Hornton Street entrance canopy position and all pavilion heights are estimated."
+  },
+  {
+    "id": "leighton_house",
+    "name": "Leighton House",
+    "claims": [
+      "d55e13ca-0c77-4e83-8684-557adf082917"
+    ],
+    "references": [
+      {
+        "title": "Leighton House - RBKC listed buildings",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=203946",
+        "used_for": "Grade II*, Aitchison 1865-95, red brick with tiled dome on the left projection and modillion cornice to the right"
+      },
+      {
+        "title": "Leighton House - victorianweb.org",
+        "url": "https://victorianweb.org/art/architecture/london/72.html",
+        "used_for": "Suffolk red brick and Caen stone dressings; plain front, picturesque garden side"
+      },
+      {
+        "title": "Leighton House - Hidden London",
+        "url": "https://hidden-london.com/?p=8798",
+        "used_for": "dome at one side topped by a crescent, modelled on Arab mosque domes"
+      },
+      {
+        "title": "'An Oriental Kiosk': The Building of the 'Arab Hall' - Orientations",
+        "url": "https://www.orientations.com.hk/highlights/an-oriental-kiosk-the-building-of-the-arab-hall-at-leighton-house-in-london",
+        "used_for": "Arab Hall added 1877"
+      }
+    ],
+    "notes": "Eaves at 9 m (two tall storeys) instead of the Overture 7.85 m. The Arab Hall projection is placed at the south-west, jagged part of the footprint; its dome profile (springing 9.5 m, apex ~13.5 m) and the tile colour are estimates. Hipped slate roof over the main body only; studio north window, Winter Studio glazing at the east end and window positions are schematic."
+  },
+  {
+    "id": "linley_sambourne_house",
+    "name": "Linley Sambourne House",
+    "claims": [
+      "24f4e68d-7188-482b-b8df-16a98e433058"
+    ],
+    "references": [
+      {
+        "title": "Linley Sambourne House - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101409861-linley-sambourne-house-campden-ward",
+        "used_for": "three storeys plus basement and attic, stock brick and stucco, slated mansard, two unequal bays, porch with rustication and Doric half-columns, steps with urns, polygonal bay basement to first floor, cornice and balustrade, segmental dormers"
+      },
+      {
+        "title": "Stafford Terrace - victorianweb.org",
+        "url": "https://victorianweb.org/victorian/art/architecture/homes/40.html",
+        "used_for": "big mid-Victorian brick townhouses with Italianate stucco trim"
+      },
+      {
+        "title": "Linley Sambourne House - Atlas Obscura",
+        "url": "https://wWw.atlasobscura.Com/places/linley-sambourne-house",
+        "used_for": "house museum of the Sambourne family"
+      }
+    ],
+    "notes": "Front taken as the north-north-west short edge on Stafford Terrace. Storey heights (raised ground 3.6 m from 1.2 m, first 3.4 m, second 2.9 m), the 2.5 m entrance bay, bay-window projection (1.1 m) and mansard pitch are estimated. The rear is plain brick; the basement area is shown as a sunken strip with railings."
   },
   {
     "id": "loftus_road",
@@ -3192,6 +3513,31 @@
       }
     ],
     "notes": "Footprint from Overture (front measured 207 m). Heights are estimates from descriptions: towers 58 m (192 ft), front eaves 19 m, pavilions 24 m + steep roofs, Hintze Hall ridge 34 m; the Overture h (13.7 m) is inferred and ignored. The Cromwell Road front (wings, pavilions, centrepiece, towers) is real geometry: wall slabs with through openings and reveals, plate-tracery panels with coupled round-headed lights, colonnettes, banded voussoirs, banded buttress piers, string courses and corbel tables; the receding orders of the portal and the rose window are modelled; terracotta animal figures and foliage carving are omitted. Bay rhythm (10 bays per wing, 2 per pavilion face) and opening sizes are estimated from the listing and general views, not drawings. Entrance terrace raised 2.4 m over the forecourt (steps from the mapped OSM steps line). Plan behind the front (gallery wings, light courts, north range) is schematic and painted. Darwin Centre height (28 m) assumed from its eight storeys; Earth Galleries height (22 m + attic) and window grid estimated. Railing, pier spacing and gate positions follow the mapped fence lines; lion and lantern finials are simplified."
+  },
+  {
+    "id": "newcombe_house",
+    "name": "Newcombe House",
+    "claims": [
+      "ee80d466-2075-41ee-9437-e2953da70eaf"
+    ],
+    "references": [
+      {
+        "title": "Notting Hill tower rejected - Building",
+        "url": "https://building.co.uk/news/notting-hill-tower-rejected/5080969.article",
+        "used_for": "Cotton, Ballard & Blow's 1950s Newcombe House; the 'ugly sisters' with Campden Hill Towers"
+      },
+      {
+        "title": "Squire and Partners Notting Hill office refurb approved - BD Online",
+        "url": "https://bdonline.co.uk/news/squire-and-partners-notting-hill-office-refurb-okd-following-sites-eight-year-planning-saga/5127436.article",
+        "used_for": "approved refurbishment and two-storey extension of the existing building"
+      },
+      {
+        "title": "Royal Borough of Kensington and Chelsea recommended to approve replacement for Newcombe House - Building",
+        "url": "https://www.building.co.uk/news/notting-hill-tower-set-for-approval-despite-objections/5080598.article",
+        "used_for": "site context at Notting Hill Gate / Kensington Church Street"
+      }
+    ],
+    "notes": "Models the existing slab at the Overture height (39.2 m: 4.4 m ground floor + eleven 3.2 m floors + plant room); the approved Squire & Partners refurbishment and extension and the new low-rise blocks are not shown, as their completion is not confirmed. Window module (1.5 m), spandrel colour and the recessed glazed ground floor are generic for the period, not taken from photographs."
   },
   {
     "id": "olympia_london",
@@ -4089,6 +4435,31 @@
     "notes": "Facade height ~17 m with storey split 4.6 / 4.2 / 3.4 / 3.4 m, the auditorium/fly-tower massing behind (19 m) and the modern canopy with the name in lights are estimates. Corinthian columns are applied three-quarter columns on the second-floor storey of the centre bay; the carved pediments are drawn as segmental heads."
   },
   {
+    "id": "royal_garden_hotel",
+    "name": "Royal Garden Hotel",
+    "claims": [
+      "f1f01b9a-0526-44ad-ae0a-a1f48a5927f8"
+    ],
+    "references": [
+      {
+        "title": "Royal Garden Hotel - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_Garden_Hotel",
+        "used_for": "Seifert, Brutalist rebuild opened 1965, floor count 10"
+      },
+      {
+        "title": "The notorious work of Richard Seifert - Building",
+        "url": "https://www.building.co.uk/buildings/the-notorious-work-of-richard-seifert/5027597.article",
+        "used_for": "11-storey hotel on the edge of Hyde Park"
+      },
+      {
+        "title": "Royal Garden Hotel - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/1960/royalgarden.html",
+        "used_for": "concrete massing, criticism of materials and proportions"
+      }
+    ],
+    "notes": "Height 31.2 m for ten storeys (4.5 m lobby + 2.7 m mezzanine podium, eight 3.0 m bedroom floors) replaces the Overture 7.2 / 23.2 m; both wings are given the same height as the Overture part. Spandrel/ribbon rhythm, the 1.5 m mullion module, podium recess, entrance canopy position (middle of the High Street wing) and the plant room height are estimated from general descriptions, not measured."
+  },
+  {
     "id": "royal_geographical_society",
     "name": "Royal Geographical Society (Lowther Lodge)",
     "claims": [
@@ -4224,6 +4595,27 @@
       }
     ],
     "notes": "Storey heights (raised ground 4.2 m, then 4.2/3.6/3.2/2.9 m) and a 2.8 m mansard are assumed from the listed storey count (Overture 17.4 m to the parapet is consistent). Ionic porticos are modelled as plain round columns; two porches assumed, one per house; window rhythm (three per house), chimney positions and the national flag are assumptions. The rear (Elvaston Mews) is shown as plain stock brick."
+  },
+  {
+    "id": "russian_embassy",
+    "name": "Embassy of Russia (6-7 and 5 Kensington Palace Gardens)",
+    "claims": [
+      "e81adfcf-25b4-4ae3-868f-e022e64f0cfd",
+      "2dd73431-5edd-4d36-87b7-62f9beafbc60"
+    ],
+    "references": [
+      {
+        "title": "6 and 7 Kensington Palace Gardens W8 - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101223939-6-and-7-kensington-palace-gardens-w8-campden-ward",
+        "used_for": "1844-6 by T H Wyatt and Brandon; symmetrical semi-detached pair, stucco, Italianate, three storeys over basement, seven windows with central blind window, square bays to outer bays, first-floor pediments, Ionic/Corinthian orders on central windows, cornice and openwork parapet, entrances in the returns"
+      },
+      {
+        "title": "Embassy of Russia, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Embassy_of_Russia,_London",
+        "used_for": "main building and consular section at 5 and 6-7 Kensington Palace Gardens, junction with Bayswater Road"
+      }
+    ],
+    "notes": "Storey heights (basement 1.0 m exposed, 4.2 / 4.2 / 3.4 m) fitted to the Overture 14.2 m. The front is the long west face on Kensington Palace Gardens. No. 5 (consular section) is modelled as a plainer three-storey stucco block with cornice and parapet at the Overture 11.8 m; its detailing is not researched. The flag and flagpole position are assumptions; railings, security fences and the forecourt are omitted."
   },
   {
     "id": "saatchi_gallery",
@@ -4783,6 +5175,61 @@
       }
     ],
     "notes": "Church aligned with the footprint long axis (~25 deg), west front on Queen's Gate. Section (aisles 7.5 m, clerestory 15 m, steep roof ridge 23.5 m), the band spacing, window sizes and the bellcote height are estimates; the stepped west footprint edges (porches/buttresses) are walls with buttresses. Polychrome banding is modelled as thin projecting courses of red and black brick and stone on the yellow brick."
+  },
+  {
+    "id": "st_johns_notting_hill",
+    "name": "St John's, Notting Hill",
+    "claims": [
+      "2e10f5b4-b71e-46a3-b41c-facc657d7d36"
+    ],
+    "references": [
+      {
+        "title": "Church of St John Notting Hill - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101225121-church-of-st-john-notting-hill-norland-ward",
+        "used_for": "Kentish ragstone coursed rubble with Bath stone ashlar, Early English, aisled nave, transepts, crossing tower and broached stone spire 150 ft high"
+      },
+      {
+        "title": "St John's, Notting Hill - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_John%27s,_Notting_Hill",
+        "used_for": "Stevens and Alexander 1845, centrepiece of the Ladbroke Estate, spire like St Mary Witney, 1,500 seats"
+      },
+      {
+        "title": "Church of St John Notting Hill - Historic England",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1225121",
+        "used_for": "Grade II listing"
+      }
+    ],
+    "notes": "Spire apex 46 m (150 ft); tower to 25.5 m with the broach spire above (split estimated). Transepts and chancel follow the footprint projections (crossing ~27 m from the west end). Aisle walls 7.5 m, clerestory 12 m and roof pitches are proportioned; lancet sizes and buttress rhythm are estimated, the west front is simplified to a triple lancet group."
+  },
+  {
+    "id": "st_mary_abbots",
+    "name": "St Mary Abbots",
+    "claims": [
+      "c9132e61-7dfb-4fc7-9ca8-a11586fae9f2"
+    ],
+    "references": [
+      {
+        "title": "St Mary Abbots - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Mary_Abbots",
+        "used_for": "Scott design, consecration 1872, tallest spire in London"
+      },
+      {
+        "title": "Parish Church of St Mary Abbot and railings to churchyard - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101239529-parish-church-of-st-mary-abbot-and-railings-to-churchyard-campden-ward",
+        "used_for": "rebuilt 1869-72 by Scott; eastern tower with broach spire, double corner pinnacles and lucarnes; entrance cloister 1889-93"
+      },
+      {
+        "title": "St Mary Abbots, Kensington - Ship of Fools",
+        "url": "https://shipoffools.com/?p=1264",
+        "used_for": "tower and spire 278 ft high"
+      },
+      {
+        "title": "St Mary Abbots - manchestervictorianarchitects.org.uk",
+        "url": "https://manchestervictorianarchitects.org.uk/buildings/church-of-st-mary-abbot-kensington",
+        "used_for": "spire modelled on St Mary Redcliffe, Bristol; completion 1879"
+      }
+    ],
+    "notes": "Total height 85 m (278 ft) from the references; the split (tower 36 m, spire 49 m) and the tower plan size (9.5 m) are estimated. Tower placed at the north-east corner of the footprint on Kensington Church Street. Aisle walls 9.5 m, clerestory to 17 m and a 50-degree nave roof are proportioned, not measured; aisle roofs are flat leaded caps rather than lean-to slopes. Window tracery is reduced to framed lancets; the 1889-93 cloister to the High Street is a separate footprint and not modelled."
   },
   {
     "id": "st_marys_cambridge_wing",
