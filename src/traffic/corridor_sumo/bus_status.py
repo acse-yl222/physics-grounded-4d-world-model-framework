@@ -35,11 +35,12 @@ SCHEDULE_ONLY = "schedule only"
 NO_CALLS = "no simulated calls"
 NO_SERVICE = "no service"
 NOT_SIMULATED = "not simulated"
+MODEL_GAP = "model gap"
 THRESHOLDS = {
     "classes": CLASSES,
     "mean_delay_min": [2.0, 5.0, 10.0],
     "p90_delay_min": [5.0, 10.0, 20.0],
-    "unreached_share_severe": 0.25,
+    "unreached_share_gap": 0.25,
     "bunching_factor": 0.5,
     "censor_margin_min": 10.0,
     "other_statuses": {
@@ -47,11 +48,13 @@ THRESHOLDS = {
         "no service": "no scheduled trips of the route-direction in the period",
         "not simulated": "scheduled, but its stops could not be mapped onto the SUMO net",
         "no simulated calls": "simulated, but no scheduled call fell inside the evaluated window",
+        "model gap": "more than unreached_share_gap of the scheduled calls were never reached "
+        "in the model (buses teleported past simulated jams), so its delays are not reliable",
     },
     "rule": "class = worse of (mean arrival delay vs mean_delay_min) and (90th percentile "
     "delay vs p90_delay_min): below the first bound 'on time', below the second "
-    "'minor delay', below the third 'major delay', else 'severe'; 'severe' also when "
-    "more than unreached_share_severe of the scheduled calls in the window were not "
+    "'minor delay', below the third 'major delay', else 'severe'; 'model gap' instead "
+    "when more than unreached_share_gap of the scheduled calls in the window were not "
     "reached. Delay = simulated arrival (stopinfo 'started') - scheduled arrival, over "
     "calls scheduled in [period start, period end - censor_margin_min] (warm-up and the "
     "last minutes, whose late buses would be cut off by the end of the run, excluded). "
@@ -121,8 +124,8 @@ def classify(mean_delay_s, p90_delay_s, unreached_share=0.0, thresholds=THRESHOL
     def level(value_min, bounds):
         return next((i for i, b in enumerate(bounds) if value_min < b), len(bounds))
 
-    if unreached_share > thresholds["unreached_share_severe"]:
-        return CLASSES[-1]
+    if unreached_share > thresholds["unreached_share_gap"]:
+        return MODEL_GAP
     lvl = max(
         level(mean_delay_s / 60, thresholds["mean_delay_min"]),
         level(p90_delay_s / 60, thresholds["p90_delay_min"]),

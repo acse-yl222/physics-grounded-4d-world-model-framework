@@ -234,7 +234,7 @@ class BusStatusMetrics(unittest.TestCase):
         self.assertEqual(c(60, 420), "minor delay")  # p90 7 min
         self.assertEqual(c(400, 500), "major delay")
         self.assertEqual(c(60, 1300), "severe")  # p90 > 20 min
-        self.assertEqual(c(0, 0, unreached_share=0.3), "severe")
+        self.assertEqual(c(0, 0, unreached_share=0.3), "model gap")  # buses teleported past jams
 
     def test_regularity_and_bunching(self):
         out = bus_status.regularity([0, 600, 1200, 1300], 600, 0.5)
