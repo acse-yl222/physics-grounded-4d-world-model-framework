@@ -129,7 +129,8 @@
     "mesosim": true,
     "max_depart_delay_s": 300,
     "extra_options": {
-      "meso-junction-control": true
+      "meso-junction-control": true,
+      "meso-edgelength": 25
     }
   },
   "demand": {
