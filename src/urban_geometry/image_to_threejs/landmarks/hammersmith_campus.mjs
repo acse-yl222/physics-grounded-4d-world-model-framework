@@ -49,13 +49,21 @@ export default {
       used_for:
         'tiered structure, perforated stainless steel and glass facades, 2007, Sheppard Robson',
     },
+    {
+      title: 'Lyons Israel Ellis - Wikipedia',
+      url: 'https://en.wikipedia.org/wiki/Lyons_Israel_Ellis',
+      used_for: 'practice background: exposed, angular concrete architecture of the 1960s',
+    },
   ],
   notes:
     'Footprints and Overture heights (Commonwealth 36 m / 11 floors, ICTEM 20 m, Burlington Danes 19.6 m). ' +
-    'Facade patterns are generic interpretations of "brutalist concrete", "six-floor glazed lab" and ' +
-    '"perforated stainless steel and glass" (no photographs available); bridge position, ' +
-    'Burlington Danes tiering and roof plant are estimates. Historic 1905 hospital blocks are left generic.',
-  build({ THREE, kit, byId }) {
+    'Commonwealth Building and Wolfson block in 3D: board-marked concrete, projecting spandrel bands, chunky piers ' +
+    'and recessed steel-framed windows (an interpretation of the Lyons Israel Ellis concrete idiom, not traced from ' +
+    'photographs); ICTEM curtain wall with fins, floor bands and transoms; Burlington Danes with stand-off ' +
+    'perforated stainless screens (alpha-cut texture) on walkways over glazed ribbons; mullioned ground-floor ' +
+    'lobbies and louvred roof plant. Bridge position, Burlington Danes tiering, colours and the courtyard furniture ' +
+    '(generic resources assets) are estimates. Historic 1905 hospital blocks are left generic',
+  build({ THREE, kit, byId, placeAssets }) {
     const g = new THREE.Group();
     const b = new kit.MeshBatch();
     const A = (9 * Math.PI) / 180;
@@ -65,6 +73,7 @@ export default {
       return r;
     };
     const conc = kit.mat('#a7a39a', { roughness: 0.95 });
+    const plantBoxes = [];
     const concDark = kit.mat('#7d7a73', { roughness: 0.95 });
     const plant = kit.mat('#8d8f8c');
     const roofM = kit.mat('#6e6d69');
@@ -79,26 +88,6 @@ export default {
         c.fillRect(r() * w, r() * h, 2, 2);
       }
     };
-    // tile = 4 bays x 2 storeys (kit.walls UV convention)
-    const brutal = kit.paintedMaterial('hammersmith_campus:commonwealth', 512, 256, (c, w, h) => {
-      concNoise(c, w, h, '#a8a49a', 0.12);
-      for (let s = 0; s < 2; s++) {
-        const y0 = s * (h / 2);
-        for (let k = 0; k < 4; k++) {
-          const x = (k * w) / 4;
-          c.fillStyle = '#26323a';
-          c.fillRect(x + 12, y0 + 34, w / 4 - 24, h / 2 - 66);
-          c.fillStyle = 'rgba(170,190,200,0.25)';
-          c.fillRect(x + 12, y0 + 34, w / 4 - 24, 12);
-          c.fillStyle = '#8f8b82';
-          c.fillRect(x + w / 8 - 2, y0 + 34, 4, h / 2 - 66);
-        }
-        c.fillStyle = 'rgba(80,76,70,0.5)';
-        c.fillRect(0, y0 + h / 2 - 30, w, 3);
-      }
-      c.fillStyle = '#958f85';
-      for (let k = 0; k <= 4; k++) c.fillRect((k * w) / 4 - 6, 0, 12, h); // frame columns
-    });
     const labGlass = kit.paintedMaterial('hammersmith_campus:ictem', 512, 256, (c, w, h) => {
       c.fillStyle = '#5f7685';
       c.fillRect(0, 0, w, h);
@@ -132,7 +121,76 @@ export default {
       c.fillStyle = '#e1e4e5';
       for (let k = 0; k <= 4; k++) c.fillRect((k * w) / 4 - 2, 0, 4, h);
     });
+    const perfM = kit.paintedMaterial(
+      'hammersmith_campus:perf',
+      128,
+      128,
+      (c, w, h) => {
+        c.fillStyle = '#c7cbcd';
+        c.fillRect(0, 0, w, h);
+        for (let y = 3; y < h; y += 6)
+          for (let x = (y / 6) % 2 ? 0 : 3; x < w; x += 6) c.clearRect(x, y, 3, 3);
+        c.fillStyle = '#c7cbcd';
+        c.fillRect(0, 0, 4, h); // panel joint
+      },
+      {
+        transparent: true,
+        alphaTest: 0.35,
+        side: THREE.DoubleSide,
+        roughness: 0.35,
+        metalness: 0.7,
+      },
+    );
+    // perforated stainless steel screens standing off a ring's faces between z0 and z1
+    const screens = (ring, z0, z1) =>
+      edges(ring, (a, c, len, ux, uy, ang, nx, ny) => {
+        const n = Math.max(1, Math.round(len / 3.2));
+        for (let j = 0; j < n; j++) {
+          if (j % 4 === 3) continue; // glazed bays left open
+          const t0 = (j + 0.04) / n,
+            t1 = (j + 0.96) / n;
+          const p = [a[0] + (c[0] - a[0]) * t0 + nx * 0.7, a[1] + (c[1] - a[1]) * t0 + ny * 0.7],
+            q = [a[0] + (c[0] - a[0]) * t1 + nx * 0.7, a[1] + (c[1] - a[1]) * t1 + ny * 0.7];
+          const wl = (len / n) * 0.92;
+          b.quad(
+            perfM,
+            [p[0], p[1], z0 + 0.3],
+            [q[0], q[1], z0 + 0.3],
+            [q[0], q[1], z1 - 0.3],
+            [p[0], p[1], z1 - 0.3],
+            [0, 0],
+            [wl / 2, 0],
+            [wl / 2, (z1 - z0 - 0.6) / 2],
+            [0, (z1 - z0 - 0.6) / 2],
+          );
+        }
+        // support arms and a maintenance walkway at each floor
+        for (let z = z0 + 0.1; z < z1; z += 3.6) {
+          const mx = (a[0] + c[0]) / 2 + nx * 0.4,
+            my = (a[1] + c[1]) / 2 + ny * 0.4;
+          kit.box(b, steel, mx, my, z, len, 0.75, 0.08, ang);
+        }
+      });
     const lectureM = kit.facade('concrete', 1);
+    const boardConc = kit.paintedMaterial('hammersmith_campus:board', 256, 256, (c, w, h) => {
+      concNoise(c, w, h, '#a9a59c', 0.37);
+      c.fillStyle = 'rgba(80,76,70,0.18)';
+      for (let y = 0; y < h; y += 10) c.fillRect(0, y, w, 1.5); // board marking
+    });
+    const winFrame = kit.mat('#3f4549', { roughness: 0.5, metalness: 0.4 });
+    const winGlass = kit.mat('#34434d', { roughness: 0.12, metalness: 0.3 });
+    // per-edge helper for an outward CCW ring
+    const edges = (ring, fn) => {
+      for (let k = 0; k < ring.length; k++) {
+        const a = ring[k],
+          c = ring[(k + 1) % ring.length];
+        const len = Math.hypot(c[0] - a[0], c[1] - a[1]);
+        if (len < 2) continue;
+        const ux = (c[0] - a[0]) / len,
+          uy = (c[1] - a[1]) / len;
+        fn(a, c, len, ux, uy, Math.atan2(uy, ux), uy, -ux);
+      }
+    };
 
     // ---------- Commonwealth Building ----------
     const cw = ringOf('f438d558-eec4-4b55-af66-dc5593556773');
@@ -140,12 +198,44 @@ export default {
       ST = 3.3;
     const inset = kit.offsetRing(cw, -1.2);
     kit.walls(b, glass, [[inset]], 0, 4.2);
-    kit.walls(b, brutal, [[cw]], 4.2, CH - 1.4, { bay: 3.5, storey: ST, uvBase: 4.2 });
+    kit.walls(b, boardConc, [[cw]], 4.2, CH - 1.4, { bay: 3.5, storey: ST, uvBase: 4.2 });
     kit.walls(b, conc, [[kit.offsetRing(cw, 0.25)]], CH - 1.4, CH);
     kit.cap(b, roofM, [[cw]], CH);
     kit.cap(b, conc, [[cw]], 4.2, { down: true });
+    // deep precast spandrel bands at each floor, chunky piers between the window bays,
+    // recessed steel-framed windows with a transom (pattern interpreted, not traced)
     for (let z = 4.2; z < CH - 2; z += ST)
-      kit.walls(b, concDark, [[kit.offsetRing(cw, 0.45)]], z - 0.15, z + 0.3);
+      kit.cornice(b, concDark, cw, z - 0.15, { height: 0.75, projection: 0.55, steps: 2 });
+    edges(cw, (a, c, len, ux, uy, ang, nx, ny) => {
+      const n = Math.max(1, Math.round(len / 3.5));
+      for (let j = 0; j <= n; j++) {
+        const t = j / n;
+        kit.box(
+          b,
+          conc,
+          a[0] + (c[0] - a[0]) * t + nx * 0.35,
+          a[1] + (c[1] - a[1]) * t + ny * 0.35,
+          4.2,
+          0.55,
+          0.7,
+          CH - 5.6,
+          ang,
+        );
+      }
+      for (let s2 = 0; s2 < 9; s2++)
+        kit.windowRow(b, a, c, 4.2 + s2 * ST + 0.75, {
+          count: n,
+          margin: 0.3,
+          width: len / n - 0.9,
+          height: ST - 1.15,
+          bars: 1,
+          glass: winGlass,
+          frame: winFrame,
+          sill: concDark,
+          head: 'none',
+          depth: 0.1,
+        });
+    });
     // pilotis under the slab
     const fr = kit.ringFrame(cw);
     const P = (u, v) => [
@@ -164,10 +254,27 @@ export default {
     ]) {
       const [x, y] = P(u, 0);
       kit.box(b, plant, x, y, CH, w, d, h, fr.angle);
+      plantBoxes.push([x, y, w, d, CH, h, fr.angle]);
     }
     // ---------- Wolfson lecture building and the link bridge ----------
     const wo = ringOf('eee43564-1df1-439c-a52f-1fbc98cc164a');
-    kit.walls(b, lectureM, [[wo]], 0, 7.9, { bay: 4, storey: 3.6 });
+    kit.walls(b, boardConc, [[wo]], 0, 7.9, { bay: 4, storey: 3.6 });
+    edges(wo, (a, c, len) => {
+      if (len < 5) return;
+      for (const z of [0.9, 4.6])
+        kit.windowRow(b, a, c, z, {
+          bay: 2.4,
+          margin: 0.8,
+          width: 1.9,
+          height: 2.0,
+          bars: 1,
+          glass: winGlass,
+          frame: winFrame,
+          sill: concDark,
+          head: 'none',
+        });
+    });
+    kit.cornice(b, concDark, wo, 3.7, { height: 0.5, projection: 0.4 });
     kit.walls(b, conc, [[kit.offsetRing(wo, 0.3)]], 6.4, 8.3);
     kit.cap(b, roofM, [[wo]], 8.3);
     {
@@ -193,6 +300,26 @@ export default {
     kit.cap(b, roofM, [[ic]], IH);
     kit.cap(b, kit.mat('#e7e8e6'), [[ic]], 4.4, { down: true });
     kit.walls(b, kit.mat('#e7e8e6'), [[kit.offsetRing(ic, 0.4)]], IH - 0.6, IH + 0.6);
+    for (let z = 4.4; z < IH - 1; z += 3.9)
+      kit.cornice(b, kit.mat('#eceeed'), ic, z - 0.2, { height: 0.45, projection: 0.5 });
+    edges(ic, (a, c, len, ux, uy, ang, nx, ny) => {
+      // transoms of the curtain wall between the fins
+      for (let z = 4.4 + 1.3; z < IH - 1; z += 3.9) {
+        const mx = (a[0] + c[0]) / 2 + nx * 0.06,
+          my = (a[1] + c[1]) / 2 + ny * 0.06;
+        kit.box(
+          b,
+          kit.mat('#c9cfd2', { roughness: 0.4, metalness: 0.5 }),
+          mx,
+          my,
+          z,
+          len - 0.4,
+          0.12,
+          0.1,
+          ang,
+        );
+      }
+    });
     // vertical fins on all faces
     for (let k = 0; k < ic.length; k++) {
       const a = ic[k],
@@ -210,6 +337,7 @@ export default {
     {
       const fi = kit.ringFrame(ic);
       kit.box(b, plant, fi.cx, fi.cy, IH, fi.length * 0.55, fi.width * 0.5, 4.0, fi.angle);
+      plantBoxes.push([fi.cx, fi.cy, fi.length * 0.55, fi.width * 0.5, IH, 4.0, fi.angle]);
       kit.box(
         b,
         kit.mat('#a9b3b8'),
@@ -228,6 +356,7 @@ export default {
     const BH = 19.6;
     kit.walls(b, glass, [[kit.offsetRing(bd, -0.5)]], 0, 4.0);
     kit.walls(b, perforated, [[bd]], 4.0, BH - 7.2, { bay: 3.2, storey: 3.6, uvBase: 4.0 });
+    screens(bd, 4.0, BH - 7.2);
     kit.cap(b, roofM, [[bd]], BH - 7.2);
     kit.cap(b, steel, [[bd]], 4.0, { down: true });
     // upper tiers stepping back from the south (Du Cane Road) side
@@ -242,11 +371,75 @@ export default {
           .offsetRing(bd, -d / 2)
           .map(([x, y]) => [x - Math.sin(A) * (d / 2) * -1 * 0, y + (d / 2) * Math.cos(A)]);
         kit.walls(b, perforated, [[sh]], top - 3.6, top, { bay: 3.2, storey: 3.6, uvBase: 4.0 });
+        screens(sh, top - 3.6, top);
         kit.cap(b, roofM, [[sh]], top);
         kit.walls(b, steel, [[kit.offsetRing(sh, 0.15)]], top - 0.3, top + 0.5);
       }
       const fb = kit.ringFrame(bd);
       kit.box(b, plant, fb.cx + 10, fb.cy + 4, BH, 18, 6, 2.6, A);
+    }
+    // ground-floor glazing: mullions, transom and head beam on each recessed lobby wall
+    const mull = kit.mat('#5a6266', { roughness: 0.4, metalness: 0.5 });
+    for (const [ring, d, h] of [
+      [cw, -1.2, 4.2],
+      [ic, -0.6, 4.4],
+      [bd, -0.5, 4.0],
+    ])
+      edges(kit.offsetRing(ring, d), (a, c, len, ux, uy, ang, nx, ny) => {
+        const n = Math.max(1, Math.round(len / 1.6));
+        for (let j = 0; j <= n; j++) {
+          const t = j / n;
+          kit.box(
+            b,
+            mull,
+            a[0] + (c[0] - a[0]) * t + nx * 0.06,
+            a[1] + (c[1] - a[1]) * t + ny * 0.06,
+            0,
+            0.1,
+            0.14,
+            h,
+            ang,
+          );
+        }
+        const mx = (a[0] + c[0]) / 2 + nx * 0.06,
+          my = (a[1] + c[1]) / 2 + ny * 0.06;
+        kit.box(b, mull, mx, my, 2.7, len, 0.14, 0.1, ang);
+        kit.box(b, mull, mx, my, 0, len, 0.2, 0.15, ang);
+      });
+    // louvred roof plant enclosures
+    for (const [x, y, w, d, z, h, ang] of plantBoxes)
+      for (let k = 0.4; k < h - 0.2; k += 0.45) {
+        kit.box(b, roofM, x, y, z + k, w + 0.12, d + 0.12, 0.08, ang);
+      }
+
+    // courtyard between the Commonwealth Building and ICTEM: benches, cycle stands, lamps
+    if (placeAssets) {
+      const hd = Math.atan2(-Math.cos(A), Math.sin(A)) + Math.PI / 2;
+      const along = (t, off) => [
+        -2399 + 56 * t + Math.sin(A) * off,
+        1213 + 9 * t - Math.cos(A) * off,
+      ];
+      g.add(
+        placeAssets(
+          'bench',
+          [0.25, 0.5, 0.75].map((t) => [...along(t, 4.5), hd + Math.PI]),
+          { name: 'hammersmith_campus:benches' },
+        ),
+      );
+      g.add(
+        placeAssets(
+          'bicycle_stand',
+          [0.05, 0.08, 0.11, 0.14, 0.17].map((t) => [...along(t, 3.2), hd]),
+          { name: 'hammersmith_campus:cycles' },
+        ),
+      );
+      g.add(
+        placeAssets(
+          'street_lamp',
+          [0.15, 0.6, 0.95].map((t) => [...along(t, 6.5), hd]),
+          { name: 'hammersmith_campus:lamps' },
+        ),
+      );
     }
     g.add(b.toGroup('hammersmith_campus'));
     return g;

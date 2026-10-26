@@ -39,12 +39,29 @@ export default {
       used_for:
         'retained facade, clock and glass dome, new central courtyard, up to 10 upper levels',
     },
+    {
+      title: 'Tour of architectural sculpture - Victorian Web',
+      url: 'https://victorianweb.org/victorian/sculpture/architectural/102.html',
+      used_for:
+        'Belcher & Joass building carries the Summer and Winter sculpture by Paul Gasq (not modelled)',
+    },
+    {
+      title: 'The Whiteley in London - Baunetz Wissen',
+      url: 'https://www.baunetzwissen.de/bauen-im-bestand/objekte/wohnen/the-whiteley-in-london-10396176',
+      used_for:
+        'Portland stone construction with large upper-floor windows, Grade II listing, extension 1925-27',
+    },
   ],
   notes:
     'Overture height (14 m) replaced: facade cornice 22 m, attic 25.5 m, rear new-build blocks 30-36 m ' +
-    '(storey counts from planning reports, exact profile unknown). Column rhythm, cupola proportions, ' +
-    'dome position and the colour of the cupola roofs are estimates from textual descriptions only.',
-  build({ THREE, kit, byId }) {
+    '(storey counts from planning reports, exact profile unknown). Queensway, Porchester Gardens and Redan Place ' +
+    'faces in 3D: bronze shopfronts with fascia, string course, giant-order columns on pedestals with pilaster ' +
+    'responds framing tall bronze-framed glazing, architrave/frieze/dentilled cornice, attic windows and a ' +
+    'balustrade with urn pedestals; corner towers with quoins, arched windows, clock and colonnaded cupolas. ' +
+    'Column order (shown with a generic flared capital), bay rhythm (7.5 m), cupola proportions, dome position, ' +
+    'the colour of the cupola roofs and the rear blocks (storey bands, glass balustrade, roof plant) are estimates ' +
+    'from textual descriptions only; the Gasq "Summer and Winter" sculpture is not modelled',
+  build({ THREE, kit, byId, placeAssets }) {
     const g = new THREE.Group();
     const O = [871.6, 827.92],
       A = (100 * Math.PI) / 180,
@@ -83,64 +100,51 @@ export default {
       b.addGeometry(m, geo, new THREE.Matrix4().makeRotationZ(A).setPosition(x, y, z));
       geo.dispose();
     };
+    // kit.windowRow with round / segmental heads built as vertical glass sectors and
+    // projecting archivolts with a keystone (lintel, pediment and plain heads pass through).
+    const archRow = (batch, a, c, z, opts) => {
+      const head = opts.head;
+      if (head !== 'arch' && head !== 'segment') return kit.windowRow(batch, a, c, z, opts);
+      const cs = kit.windowRow(batch, a, c, z, { ...opts, head: 'none' });
+      const w = opts.width ?? 1.2,
+        h = opts.height ?? 2.0,
+        d = opts.depth ?? 0.12;
+      const glassM = opts.glass ?? kit.mat('dark_glass'),
+        trimM = opts.sill ?? opts.frame ?? kit.mat('white');
+      const L = Math.hypot(c[0] - a[0], c[1] - a[1]) || 1;
+      const ux = (c[0] - a[0]) / L,
+        uy = (c[1] - a[1]) / L;
+      const seg = head === 'arch' ? Math.PI : Math.PI / 2.5;
+      const R = head === 'arch' ? w / 2 : w / 2 / Math.sin(seg / 2);
+      const zc = z + h - (head === 'arch' ? 0 : R * Math.cos(seg / 2));
+      const X = new THREE.Vector3(ux, uy, 0),
+        Y = new THREE.Vector3(0, 0, 1),
+        Z = new THREE.Vector3(uy, -ux, 0);
+      const gl = new THREE.CircleGeometry(R, 12, Math.PI / 2 - seg / 2, seg);
+      const tor = new THREE.TorusGeometry(R + 0.06, 0.08, 4, 12, seg).rotateZ(
+        Math.PI / 2 - seg / 2,
+      );
+      const key = new THREE.BoxGeometry(0.28, 0.34, d * 1.6);
+      const m = new THREE.Matrix4();
+      for (const [cx, cy] of cs) {
+        m.makeBasis(X, Y, Z).setPosition(cx + Z.x * 0.03, cy + Z.y * 0.03, zc);
+        batch.addGeometry(glassM, gl, m);
+        m.makeBasis(X, Y, Z).setPosition(cx + Z.x * d * 0.8, cy + Z.y * d * 0.8, zc);
+        batch.addGeometry(trimM, tor, m);
+        m.makeBasis(X, Y, Z).setPosition(cx + Z.x * d * 0.8, cy + Z.y * d * 0.8, zc + R + 0.08);
+        batch.addGeometry(trimM, key, m);
+      }
+      [gl, tor, key].forEach((q) => q.dispose());
+      return cs;
+    };
     const stone = kit.mat('#e3dccb');
     const stoneDark = kit.mat('#cfc6b2');
     const lead = kit.mat('#5f676b', { roughness: 0.6, metalness: 0.3 });
     const flat = kit.mat('#77766f');
     const glassDome = kit.mat('#9fb6c2', { roughness: 0.15, metalness: 0.3 });
 
-    // Queensway elevation, one bay = 7.5 m: shopfront, giant columns with glazing, entablature, attic.
     const H = 22,
       ATT = 25.5;
-    const facadeM = kit.paintedMaterial('whiteleys:queensway', 256, 768, (c, w, h) => {
-      const zToY = (z) => h - (z / ATT) * h;
-      c.fillStyle = '#e4ddcc';
-      c.fillRect(0, 0, w, h);
-      const r = kit.rng(0.91);
-      for (let k = 0; k < 1500; k++) {
-        c.fillStyle = `rgba(120,110,90,${r() * 0.08})`;
-        c.fillRect(r() * w, r() * h, 2, 2);
-      }
-      // shopfront
-      c.fillStyle = '#1f2a30';
-      c.fillRect(20, zToY(4.6), w - 40, zToY(0.2) - zToY(4.6));
-      c.fillStyle = 'rgba(235,220,180,0.35)';
-      c.fillRect(20, zToY(3.2), w - 40, zToY(0.2) - zToY(3.2));
-      c.fillStyle = '#2a3b33';
-      c.fillRect(20, zToY(5.4), w - 40, zToY(4.6) - zToY(5.4)); // fascia
-      c.fillStyle = '#d3cab6';
-      c.fillRect(0, zToY(6.2), w, zToY(5.4) - zToY(6.2)); // string course
-      // giant order: two columns per bay framing a tall glazed opening with bronze transoms
-      c.fillStyle = '#2b363d';
-      c.fillRect(46, zToY(18.6), w - 92, zToY(6.6) - zToY(18.6));
-      c.fillStyle = 'rgba(170,190,200,0.28)';
-      c.fillRect(46, zToY(18.6), w - 92, (zToY(6.6) - zToY(18.6)) * 0.3);
-      c.fillStyle = '#7b5b3a';
-      for (const z of [10.3, 14.4]) c.fillRect(46, zToY(z), w - 92, 7);
-      for (let x = 46 + (w - 92) / 4; x < w - 50; x += (w - 92) / 4)
-        c.fillRect(x - 2, zToY(18.6), 4, zToY(6.6) - zToY(18.6));
-      for (const x of [0, w]) {
-        const g2 = c.createLinearGradient(x - 24, 0, x + 24, 0);
-        g2.addColorStop(0, '#c9c0ab');
-        g2.addColorStop(0.5, '#f1ebdc');
-        g2.addColorStop(1, '#c4bba6');
-        c.fillStyle = g2;
-        c.fillRect(x - 24, zToY(19.2), 48, zToY(6.6) - zToY(19.2));
-        c.fillStyle = '#d8cfbb';
-        c.fillRect(x - 30, zToY(19.8), 60, 14);
-        c.fillRect(x - 28, zToY(6.9), 56, 10);
-      }
-      // entablature and cornice
-      c.fillStyle = '#d6cdb8';
-      c.fillRect(0, zToY(21.2), w, zToY(19.8) - zToY(21.2));
-      c.fillStyle = '#f2ecdf';
-      c.fillRect(0, zToY(22), w, zToY(21.2) - zToY(22));
-      // attic windows
-      c.fillStyle = '#2b363d';
-      for (const x of [56, 150]) c.fillRect(x, zToY(24.6), 50, zToY(22.8) - zToY(24.6));
-      c.fillStyle = '#efe8da';
-      c.fillRect(0, 0, w, zToY(25.1));
-    });
     const sideM = kit.facade('portland_stone', 0);
     const rearM = kit.facade('modern_clad', 1);
 
@@ -148,55 +152,212 @@ export default {
     if (kit.ringArea(lr) < 0) lr = lr.slice().reverse();
     const FD = 22; // depth of the historic range behind the Queensway facade
     const front = clip(lr, (p) => FD - p[1]);
-    // historic range walls: painted on the Queensway face, stone elsewhere
+    // historic range walls: Portland stone; the Queensway, Porchester Gardens and
+    // Redan Place faces carry the 3D order, glazing and shopfronts below.
+    const stoneWall = kit.paintedMaterial('whiteleys:stone', 256, 256, (c, w, h) => {
+      c.fillStyle = '#e4ddcc';
+      c.fillRect(0, 0, w, h);
+      const r = kit.rng(0.91);
+      for (let k = 0; k < 1200; k++) {
+        c.fillStyle = `rgba(120,110,90,${r() * 0.07})`;
+        c.fillRect(r() * w, r() * h, 2, 2);
+      }
+      c.fillStyle = 'rgba(140,128,105,0.35)';
+      for (let y = 0; y < h; y += 32) c.fillRect(0, y, w, 2); // ashlar courses (0.5 m)
+      for (let y = 0; y < h; y += 64) {
+        c.fillRect(64, y, 2, 32);
+        c.fillRect(192, y + 32, 2, 32);
+      }
+    });
     for (let k = 0; k < front.length; k++) {
       const p = front[k],
         q = front[(k + 1) % front.length];
       const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
       if (len < 0.1) continue;
-      const isFront = Math.abs(q[1] - p[1]) < 2 && p[1] < 3 && q[1] < 3;
-      const isInner = p[1] > FD - 0.1 && q[1] > FD - 0.1;
-      if (isInner) continue;
       const P = W(...p),
         Q = W(...q);
-      const m = isFront ? facadeM : facadeM;
-      const ur = Math.max(1, Math.round(len / 7.5));
+      if (p[1] > FD - 0.1 && q[1] > FD - 0.1) {
+        kit.walls(b, sideM, [[[P, Q]]], 0, ATT, { bay: 3.75, storey: 3.6 });
+        continue;
+      }
       b.quad(
-        m,
+        stoneWall,
         [P[0], P[1], 0],
         [Q[0], Q[1], 0],
         [Q[0], Q[1], ATT],
         [P[0], P[1], ATT],
         [0, 0],
-        [ur, 0],
-        [ur, 1],
-        [0, 1],
+        [len / 4, 0],
+        [len / 4, ATT / 4],
+        [0, ATT / 4],
       );
-      if (isFront)
-        // giant-order columns standing proud of the facade at every bay division
-        for (let j = 1; j < ur; j++) {
-          const t = j / ur,
-            cu = p[0] + (q[0] - p[0]) * t,
-            cv = p[1] + (q[1] - p[1]) * t - 0.45;
-          if (cu < 13 || cu > 159) continue;
-          add(
-            new THREE.CylinderGeometry(0.5, 0.56, 12.6, 10).rotateX(Math.PI / 2),
-            stone,
-            cu,
-            cv,
-            6.6 + 6.3,
-          );
-          box(cu, cv, 6.2, 1.5, 1.5, 0.5, stoneDark);
-          box(cu, cv, 19.0, 1.6, 1.6, 0.7, stoneDark);
-        }
     }
     kit.cap(b, flat, [[toW(front)]], ATT);
-    // balustrade along the Queensway attic
-    box(85.25, 0.2, ATT, 170.5, 0.4, 1.1, stone);
-    for (let u = 3; u < 168; u += 7.5) box(u, 0.2, ATT, 1.2, 0.6, 1.6, stoneDark);
-    // central entrance feature: pediment-like raised attic over the middle bays
+    const bronze = kit.mat('#5e4a33', { roughness: 0.45, metalness: 0.6 });
+    const shopGlass = kit.mat('#46565e', { roughness: 0.1, metalness: 0.3 });
+    const upperGlass = kit.mat('#5a6f7b', { roughness: 0.12, metalness: 0.3 });
+    const fasciaM = kit.mat('#23362e', { roughness: 0.5 });
+    // band along a local edge p -> q at outward offset `off`, z0..z0+h, projecting `dep`
+    const band = (p, q, off, z0, h, dep, m) => {
+      const L = Math.hypot(q[0] - p[0], q[1] - p[1]);
+      const nu = (q[1] - p[1]) / L,
+        nv = -(q[0] - p[0]) / L; // outward (right-hand) normal in local coords
+      const [x, y] = W(
+        (p[0] + q[0]) / 2 + nu * (off + dep / 2),
+        (p[1] + q[1]) / 2 + nv * (off + dep / 2),
+      );
+      kit.box(b, m, x, y, z0, L, dep, h, A + Math.atan2(q[1] - p[1], q[0] - p[0]));
+    };
+    const lerpL = (p, q, t) => [p[0] + (q[0] - p[0]) * t, p[1] + (q[1] - p[1]) * t];
+    const facadeSegs = [
+      [
+        [12.0, 0.29],
+        [41.0, 1.0],
+      ],
+      [
+        [41.0, 1.0],
+        [159.5, 0.64],
+      ],
+      [
+        [1.33, 22],
+        [0.72, 12.2],
+      ],
+      [
+        [170.15, 11],
+        [169.8, 22],
+      ],
+    ];
+    const urnG = new THREE.LatheGeometry(
+      [
+        [0, 0],
+        [0.32, 0],
+        [0.22, 0.15],
+        [0.36, 0.5],
+        [0.3, 0.75],
+        [0.12, 0.85],
+        [0.18, 1.0],
+        [0, 1.05],
+      ].map(([r, h]) => new THREE.Vector2(r, h)),
+      10,
+    ).rotateX(Math.PI / 2);
+    for (const [p, q] of facadeSegs) {
+      const L = Math.hypot(q[0] - p[0], q[1] - p[1]);
+      const n = Math.max(1, Math.round(L / 7.5));
+      const M = 0.7;
+      const a = W(...p),
+        c = W(...q);
+      const nrm = [(c[1] - a[1]) / L, -(c[0] - a[0]) / L];
+      // plinth, shopfronts with stall risers, fascia and cornice over the ground floor
+      band(p, q, 0, 0, 0.5, 0.25, stoneDark);
+      archRow(b, a, c, 0.5, {
+        count: n,
+        margin: M,
+        width: 7.5 * (L / n / 7.5) - 2.0,
+        height: 3.7,
+        bars: 2,
+        glass: shopGlass,
+        frame: bronze,
+        sill: stoneDark,
+        head: 'none',
+        depth: 0.2,
+      });
+      band(p, q, 0, 4.4, 0.9, 0.18, fasciaM);
+      band(p, q, 0, 5.3, 0.25, 0.3, kit.mat('gold'));
+      band(p, q, 0, 5.55, 0.65, 0.45, stoneDark); // string course
+      // giant order: columns at the bay divisions framing the tall bronze-framed glazing
+      const pa = lerpL(p, q, M / L),
+        pb = lerpL(p, q, 1 - M / L);
+      kit.colonnade(b, stone, W(...pa), W(...pb), 6.8, 12.4, {
+        count: n + 1,
+        radius: 0.55,
+        offset: 0.75,
+        capital: 'corinthian',
+      });
+      for (let j = 0; j <= n; j++) {
+        const [x, y] = W(...lerpL(pa, pb, j / n));
+        const ang = A + Math.atan2(q[1] - p[1], q[0] - p[0]);
+        kit.box(b, stoneDark, x + nrm[0] * 0.75, y + nrm[1] * 0.75, 6.2, 1.5, 1.5, 0.6, ang); // pedestal
+        kit.box(b, stoneDark, x + nrm[0] * 0.75, y + nrm[1] * 0.75, 19.0, 1.6, 1.6, 0.3, ang); // abacus
+        kit.box(b, stoneDark, x + nrm[0] * 0.1, y + nrm[1] * 0.1, 6.8, 1.2, 0.2, 12.4, ang); // pilaster
+      }
+      archRow(b, a, c, 7.0, {
+        count: n,
+        margin: M,
+        width: L / n - 2.2,
+        height: 11.6,
+        bars: 3,
+        glass: upperGlass,
+        frame: bronze,
+        sill: stone,
+        head: 'none',
+        depth: 0.25,
+      });
+      // entablature: architrave, frieze, dentilled cornice
+      band(p, q, 0, 19.2, 0.9, 0.55, stoneDark);
+      band(p, q, 0, 20.1, 1.0, 0.35, stone);
+      band(p, q, 0, 21.1, 0.25, 0.85, stoneDark);
+      band(p, q, 0, 21.35, 0.65, 1.15, stone);
+      for (let t = 0.2; t < L - 0.1; t += 0.45) {
+        const d0 = lerpL(p, q, t / L),
+          d1 = lerpL(p, q, (t + 0.22) / L);
+        band(d0, d1, 0.85, 21.05, 0.3, 0.2, stone);
+      }
+      // attic: paired small windows per bay, balustrade with pedestals at the bays
+      archRow(b, a, c, 22.7, {
+        count: 2 * n,
+        margin: M + 0.8,
+        width: 1.5,
+        height: 1.7,
+        bars: 1,
+        glass: shopGlass,
+        frame: kit.mat('white'),
+        sill: stone,
+        head: 'lintel',
+        depth: 0.15,
+      });
+      const pa2 = a,
+        pb2 = c;
+      kit.balustrade(
+        b,
+        stone,
+        [
+          [pa2[0] + nrm[0] * 0.25, pa2[1] + nrm[1] * 0.25],
+          [pb2[0] + nrm[0] * 0.25, pb2[1] + nrm[1] * 0.25],
+        ],
+        ATT,
+        { height: 1.1, spacing: 0.38 },
+      );
+      for (let j = 0; j <= n; j++) {
+        const t = (M + ((L - 2 * M) * j) / n) / L;
+        const [x, y] = W(...lerpL(p, q, t));
+        kit.box(
+          b,
+          stoneDark,
+          x + nrm[0] * 0.25,
+          y + nrm[1] * 0.25,
+          ATT,
+          0.9,
+          0.9,
+          1.5,
+          A + Math.atan2(q[1] - p[1], q[0] - p[0]),
+        );
+        b.addGeometry(
+          stone,
+          urnG,
+          new THREE.Matrix4().makeTranslation(x + nrm[0] * 0.25, y + nrm[1] * 0.25, ATT + 1.5),
+        );
+      }
+    }
+    // central feature: raised attic over the middle bays
     box(85, 1.5, ATT, 22, 3, 3.5, stone);
     box(85, 0.3, ATT + 3.5, 23, 3.6, 0.6, stoneDark);
+    // Queensway street lamps on the pavement
+    if (placeAssets) {
+      const lamps = [];
+      const hd = Math.atan2(-sa, -ca); // arm towards -v (the carriageway)
+      for (let u = 20; u < 160; u += 22) lamps.push([...W(u, -6.0), hd]);
+      g.add(placeAssets('street_lamp', lamps, { name: 'whiteleys:lamps' }));
+    }
 
     // Rear new-build blocks stepping up behind the facade, around a central courtyard.
     const rear = clip(lr, (p) => p[1] - FD);
@@ -222,6 +383,30 @@ export default {
       kit.walls(b, kit.mat('#8f9599'), [[kit.offsetRing(wr, -2.0)]], bl.h - 3, bl.h);
       kit.cap(b, flat, [[wr]], bl.h - 3);
       kit.cap(b, flat, [[kit.offsetRing(wr, -2.0)]], bl.h);
+      for (let z = 3.6; z < bl.h - 3.2; z += 3.2)
+        kit.cornice(b, kit.mat('#d8d3c6'), wr, z, { height: 0.3, projection: 0.35 });
+      kit.cornice(b, kit.mat('#d8d3c6'), wr, bl.h - 3.4, { height: 0.4, projection: 0.5 });
+      kit.walls(
+        b,
+        kit.mat('#a9bcc6', { roughness: 0.1, metalness: 0.2, transparent: true, opacity: 0.55 }),
+        [[wr]],
+        bl.h - 3,
+        bl.h - 1.9,
+      );
+      {
+        const fr = kit.ringFrame(kit.offsetRing(wr, -2.0));
+        kit.box(
+          b,
+          kit.mat('#8f9599'),
+          fr.cx,
+          fr.cy,
+          bl.h,
+          Math.min(12, fr.length * 0.4),
+          Math.min(6, fr.width * 0.5),
+          2.2,
+          fr.angle,
+        );
+      }
     }
     // low courtyard infill (retail) between the rear blocks, with the retained glass dome
     {
@@ -369,6 +554,53 @@ export default {
     };
     cupola(5.8, 5.8, 12.2, 32, 1.0, true);
     cupola(165, 5.3, 11, 29, 0.85, false);
+    // tower elevations: arched corner entrance, tall arched windows, quoins
+    for (const [u, v, s, base, faces] of [
+      [5.8, 5.8, 12.2, 32, ['front', 'south']],
+      [165, 5.3, 11, 29, ['front', 'north']],
+    ]) {
+      const h = s / 2 + 0.02;
+      const edges = {
+        front: [W(u - h, v - h), W(u + h, v - h)],
+        south: [W(u - h, v + h), W(u - h, v - h)],
+        north: [W(u + h, v - h), W(u + h, v + h)],
+      };
+      for (const f of faces) {
+        const [a, c] = edges[f];
+        const wo = { glass: upperGlass, frame: bronze, sill: stoneDark, depth: 0.25, margin: 1.2 };
+        archRow(b, a, c, 0.3, { ...wo, count: 1, width: 4.2, height: 4.4, head: 'arch', bars: 2 });
+        archRow(b, a, c, 7.2, { ...wo, count: 2, width: 2.4, height: 9.6, head: 'arch', bars: 3 });
+        archRow(b, a, c, 22.6, {
+          ...wo,
+          count: 2,
+          width: 1.6,
+          height: 2.2,
+          head: 'pediment',
+          bars: 1,
+        });
+      }
+      for (const [du, dv] of [
+        [-1, -1],
+        [1, -1],
+        [-1, 1],
+        [1, 1],
+      ])
+        for (let z = 6.2; z < base - 1.2; z += 1.0)
+          box(
+            u + du * (h - 0.3),
+            v + dv * (h - 0.3),
+            z,
+            ((z | 0) % 2 ? 1.4 : 0.9) + 0.1,
+            ((z | 0) % 2 ? 0.9 : 1.4) + 0.1,
+            0.5,
+            stoneDark,
+          );
+      box(u, v, base - 7.6, s + 0.8, s + 0.8, 0.6, stoneDark); // string course under the clock stage
+      box(u, v, 6.0, s + 0.6, s + 0.6, 0.6, stoneDark);
+    }
+    // entrance canopy at the Queensway / Porchester Gardens corner
+    box(5.8, -1.6, 4.9, 7.5, 2.6, 0.35, fasciaM);
+    box(-1.6, 5.8, 4.9, 2.6, 7.5, 0.35, fasciaM);
     g.add(b.toGroup('whiteleys'));
     return g;
   },

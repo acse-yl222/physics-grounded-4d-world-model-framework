@@ -1216,9 +1216,14 @@
         "title": "Burlington Danes Imaging Centre - AKT II",
         "url": "https://akt-uk.com/projects/burlington-danes-imaging-centre",
         "used_for": "tiered structure, perforated stainless steel and glass facades, 2007, Sheppard Robson"
+      },
+      {
+        "title": "Lyons Israel Ellis - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lyons_Israel_Ellis",
+        "used_for": "practice background: exposed, angular concrete architecture of the 1960s"
       }
     ],
-    "notes": "Footprints and Overture heights (Commonwealth 36 m / 11 floors, ICTEM 20 m, Burlington Danes 19.6 m). Facade patterns are generic interpretations of \"brutalist concrete\", \"six-floor glazed lab\" and \"perforated stainless steel and glass\" (no photographs available); bridge position, Burlington Danes tiering and roof plant are estimates. Historic 1905 hospital blocks are left generic."
+    "notes": "Footprints and Overture heights (Commonwealth 36 m / 11 floors, ICTEM 20 m, Burlington Danes 19.6 m). Commonwealth Building and Wolfson block in 3D: board-marked concrete, projecting spandrel bands, chunky piers and recessed steel-framed windows (an interpretation of the Lyons Israel Ellis concrete idiom, not traced from photographs); ICTEM curtain wall with fins, floor bands and transoms; Burlington Danes with stand-off perforated stainless screens (alpha-cut texture) on walkways over glazed ribbons; mullioned ground-floor lobbies and louvred roof plant. Bridge position, Burlington Danes tiering, colours and the courtyard furniture (generic resources assets) are estimates. Historic 1905 hospital blocks are left generic"
   },
   {
     "id": "hammersmith_house",
@@ -1935,7 +1940,7 @@
         "used_for": "registered landscape context"
       }
     ],
-    "notes": "Plan from the Overture outline (chapel, portico bay, two L-shaped colonnade wings). Heights (cornice 10 m, pediment apex 13.5 m, colonnades 7 m) and column counts are estimates; the westward return arms are shown as lower colonnaded walks; anthemion ornament and the catacomb entrances are omitted."
+    "notes": "Plan from the Overture outline (chapel, portico bay, two L-shaped colonnade wings). Heights (cornice 10 m, pediment apex 13.5 m, colonnades 7 m) and column counts are estimates; the westward return arms are shown as lower colonnaded walks. 3D detail: baseless fluted Doric columns with necking, echinus and abacus; triglyphs, taenia, bed moulding, corona and cymatium on every entablature; pilasters on the walls; raking cornices, palmette acroteria and eaves antefixes (the listing mentions anthemia; their exact positions are assumed); doorway with architrave and consoles; podium steps; ribbed lead dome with a small lantern (assumed). Surrounding monuments are a deterministic scatter of generic headstones and chest tombs kept off mapped paths, not a survey; catacomb entrances are omitted"
   },
   {
     "id": "kensington_palace",
@@ -2380,9 +2385,24 @@
         "title": "Great Western Hotel - Historic England list entry 1227144",
         "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1227144",
         "used_for": "stuccoed brick, 4 storeys and attic, 7-bay centre and side ranges, 6-storey angle towers, steep pavilion roof, pedimented dormers, ogee tower roofs"
+      },
+      {
+        "title": "Paddington Station including the Lawn - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101066881-paddington-station-including-the-lawn-gwr-office-block-on-london-street-and-offices-along-eastbourne-terrace-hyde-park-ward",
+        "used_for": "listed extent: shed, the Lawn, GWR office block on London Street, offices along Eastbourne Terrace"
+      },
+      {
+        "title": "Brunel's starting point - Mike Higginbottom Interesting Times",
+        "url": "https://www.mikehigginbottominterestingtimes.co.uk/2024/10/09/brunels-starting-point/",
+        "used_for": "wrought-iron ribs (span 4 in steel), columns originally cast iron replaced in steel 1922-24, span 4 without transepts"
+      },
+      {
+        "title": "Great Western Hotel - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101227144-great-western-hotel-hyde-park-ward",
+        "used_for": "stone-faced ground and first floor of the centre, 5-bay pedimented break, pedimented dormers above the attic"
       }
     ],
-    "notes": "Shed placed in the Overture station outline (217 m from the Lawn to the north-west screens, spans 20.7/31.2/21.3/33.2 m). Springing (9.5 m) and crown heights (16.5-20.5 m), transept positions and roof glazing pattern are estimates; the 1999 Lawn roof is shown as a plain glazed canopy. Hotel heights (eaves 20 m, towers 28 m + ogee roofs) are estimated from the storey counts in the listing; dormer and window counts approximate. The Platform 1 range is lowered to 13 m except the MacMillan House end; north-west platform canopies and the outer station strip are flat roofs."
+    "notes": "Shed placed in the Overture station outline (217 m from the Lawn to the north-west screens, spans 20.7/31.2/21.3/33.2 m). Springing (9.5 m) and crown heights (16.5-20.5 m), transept positions and roof glazing pattern are estimates; ribs are modelled in 3D at 10 ft (3.05 m) centres with every third on a column (spacing assumed, not sourced), with capping bars, ridge ventilators, arched column brackets and 3D end-screen tracery (arcs, spokes, roundels, mullions) in the spirit of Digby Wyatt; tracery pattern is schematic. The 1999 Lawn roof is a plain glazed canopy. Hotel: 4 storeys (rusticated ground floor, arched/pedimented/segmental/plain window heads per storey), 7-bay centre with 5-bay pedimented break, attic, steep pavilion roof with pedimented dormers, chimneys and cresting, 6-storey angle towers with quoins, balustraded parapets, ogee roofs and lucarnes; heights (eaves 20 m, towers 28 m) estimated from storey counts, window and dormer counts approximate, entrance canopy and pediment figures schematic. Platform 1 range has 3D windows on the Eastbourne Terrace face (13 m, MacMillan House end 20 m). Lamps and bollards on Praed Street / Eastbourne Terrace are generic resources assets at assumed positions."
   },
   {
     "id": "princes_gardens_eastside",
@@ -3708,9 +3728,19 @@
         "title": "The future passed: Trellick Tower at 50 - Modernism in Metro-Land",
         "url": "https://www.modernism-in-metroland.co.uk/blog/the-future-passed-the-trellick-tower-at-50",
         "used_for": "deep recessed cedar-lined balconies; boiler house projecting like a ship bridge"
+      },
+      {
+        "title": "Trellick Tower - RBKC listed buildings search",
+        "url": "https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=471992",
+        "used_for": "balconies forming a pattern across the main facades, interrupted at the maisonette floor; corridors on the north face marked by pre-cast panels"
+      },
+      {
+        "title": "Trellick Tower - Open House Festival",
+        "url": "https://programme.openhouse.org.uk/listings/2203",
+        "used_for": "on the main south elevation every flat sits behind a balcony; access galleries and north facade with concrete infill panels"
       }
     ],
-    "notes": "Slab and service tower from the Overture footprints; slab roof 92 m, boiler house top 98 m (reference roof height). Facade rhythm (two flat storeys + corridor storey per 3-storey group) is schematic; balcony pattern and window counts are approximate, colours from textual descriptions only."
+    "notes": "Slab and service tower from the Overture footprints; slab roof 92 m, boiler house top 98 m (reference roof height). Facades are built in 3D bay by bay (11 bays x 27 storeys in 9 three-storey groups): on the south elevation every flat sits behind a deep cedar-lined recessed balcony (concrete upstand, rail, cedar soffit) chequered with framed bedroom windows, with a changed rhythm on the maisonette floors; the north elevation has pebble-finished precast panels with small windows along each access-corridor storey and occasional kitchen balconies. Floor-slab lips, cross-wall fins, pilotis, staggered stair slots on the service tower, enclosed bridges with glazed slots and joints, and a two-level ribbed, louvred boiler house cantilevered on raked brackets with flue stacks are modelled. Bay count, balcony pattern, window sizes and boiler house profile are interpretations of the textual sources (no photographs); lamps/benches/bollards are generic resources assets at assumed positions"
   },
   {
     "id": "victoria_and_albert_museum",
@@ -3931,9 +3961,19 @@
         "title": "Whiteleys shopping centre report - GLA",
         "url": "https://data.london.gov.uk/download/2zw6q/5e02b63e-524f-44fc-8e61-938bf8699a15/whiteleys_shopping_centre_report.pdf",
         "used_for": "retained facade, clock and glass dome, new central courtyard, up to 10 upper levels"
+      },
+      {
+        "title": "Tour of architectural sculpture - Victorian Web",
+        "url": "https://victorianweb.org/victorian/sculpture/architectural/102.html",
+        "used_for": "Belcher & Joass building carries the Summer and Winter sculpture by Paul Gasq (not modelled)"
+      },
+      {
+        "title": "The Whiteley in London - Baunetz Wissen",
+        "url": "https://www.baunetzwissen.de/bauen-im-bestand/objekte/wohnen/the-whiteley-in-london-10396176",
+        "used_for": "Portland stone construction with large upper-floor windows, Grade II listing, extension 1925-27"
       }
     ],
-    "notes": "Overture height (14 m) replaced: facade cornice 22 m, attic 25.5 m, rear new-build blocks 30-36 m (storey counts from planning reports, exact profile unknown). Column rhythm, cupola proportions, dome position and the colour of the cupola roofs are estimates from textual descriptions only."
+    "notes": "Overture height (14 m) replaced: facade cornice 22 m, attic 25.5 m, rear new-build blocks 30-36 m (storey counts from planning reports, exact profile unknown). Queensway, Porchester Gardens and Redan Place faces in 3D: bronze shopfronts with fascia, string course, giant-order columns on pedestals with pilaster responds framing tall bronze-framed glazing, architrave/frieze/dentilled cornice, attic windows and a balustrade with urn pedestals; corner towers with quoins, arched windows, clock and colonnaded cupolas. Column order (shown with a generic flared capital), bay rhythm (7.5 m), cupola proportions, dome position, the colour of the cupola roofs and the rear blocks (storey bands, glass balustrade, roof plant) are estimates from textual descriptions only; the Gasq \"Summer and Winter\" sculpture is not modelled"
   },
   {
     "id": "wood_lane_station",
@@ -4021,8 +4061,13 @@
         "title": "Listed Building Status for Wormwood Scrubs",
         "url": "https://fulhamsw6.com/page/shared/common/sbwormwoodscrubs1.htm",
         "used_for": "Grade II* chapel and gatehouse; terracotta busts of John Howard and Elizabeth Fry"
+      },
+      {
+        "title": "Wormwood Scrubs, Hammersmith - The Prison",
+        "url": "https://theprison.org.uk/LondonWormwood/",
+        "used_for": "context for the Du Cane gatehouse and its towers"
       }
     ],
-    "notes": "Plan from the Overture \"Gate Lodge\" outline (tower bays, gateway, rear lodges). Tower height (21 m to cornice, 26 m to finial), gateway height, band spacing and roof tile colour are estimates; the busts are shown as plain terracotta roundels. Prison perimeter wall not modelled (no footprint)."
+    "notes": "Plan from the Overture \"Gate Lodge\" outline (tower bays, gateway, rear lodges). Tower height (21 m to cornice, 26 m to finial), gateway height, band spacing and roof tile colour are estimates. Modelled in 3D: round-arched entrance cut through the gateway wall with alternating stone voussoirs, slender shafts with capitals, stone soffit, recessed strapped timber gates with wicket, heavy corbel table under a flat moulded parapet (per the listing); octagonal towers in English-bond brick with stone bands, narrow round-headed windows, a corbel table and colonnettes on the blind-arcaded upper stage, hip rolls on the tiled roofs; lodges with round-headed sash windows and chimney stacks. The busts are simplified terracotta reliefs, window counts and the flagpole are assumptions; the prison perimeter wall is not modelled (no footprint)"
   }
 ]

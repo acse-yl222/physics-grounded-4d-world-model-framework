@@ -39,14 +39,38 @@ export default {
       used_for:
         'stuccoed brick, 4 storeys and attic, 7-bay centre and side ranges, 6-storey angle towers, steep pavilion roof, pedimented dormers, ogee tower roofs',
     },
+    {
+      title: 'Paddington Station including the Lawn - British Listed Buildings',
+      url: 'https://britishlistedbuildings.co.uk/101066881-paddington-station-including-the-lawn-gwr-office-block-on-london-street-and-offices-along-eastbourne-terrace-hyde-park-ward',
+      used_for:
+        'listed extent: shed, the Lawn, GWR office block on London Street, offices along Eastbourne Terrace',
+    },
+    {
+      title: "Brunel's starting point - Mike Higginbottom Interesting Times",
+      url: 'https://www.mikehigginbottominterestingtimes.co.uk/2024/10/09/brunels-starting-point/',
+      used_for:
+        'wrought-iron ribs (span 4 in steel), columns originally cast iron replaced in steel 1922-24, span 4 without transepts',
+    },
+    {
+      title: 'Great Western Hotel - British Listed Buildings',
+      url: 'https://britishlistedbuildings.co.uk/101227144-great-western-hotel-hyde-park-ward',
+      used_for:
+        'stone-faced ground and first floor of the centre, 5-bay pedimented break, pedimented dormers above the attic',
+    },
   ],
   notes:
     'Shed placed in the Overture station outline (217 m from the Lawn to the north-west screens, spans 20.7/31.2/21.3/33.2 m). ' +
     'Springing (9.5 m) and crown heights (16.5-20.5 m), transept positions and roof glazing pattern are estimates; ' +
-    'the 1999 Lawn roof is shown as a plain glazed canopy. Hotel heights (eaves 20 m, towers 28 m + ogee roofs) ' +
-    'are estimated from the storey counts in the listing; dormer and window counts approximate. The Platform 1 range ' +
-    'is lowered to 13 m except the MacMillan House end; north-west platform canopies and the outer station strip are flat roofs.',
-  build({ THREE, kit, byId }) {
+    'ribs are modelled in 3D at 10 ft (3.05 m) centres with every third on a column (spacing assumed, not sourced), ' +
+    'with capping bars, ridge ventilators, arched column brackets and 3D end-screen tracery (arcs, spokes, roundels, ' +
+    'mullions) in the spirit of Digby Wyatt; tracery pattern is schematic. The 1999 Lawn roof is a plain glazed canopy. ' +
+    'Hotel: 4 storeys (rusticated ground floor, arched/pedimented/segmental/plain window heads per storey), 7-bay centre ' +
+    'with 5-bay pedimented break, attic, steep pavilion roof with pedimented dormers, chimneys and cresting, 6-storey ' +
+    'angle towers with quoins, balustraded parapets, ogee roofs and lucarnes; heights (eaves 20 m, towers 28 m) estimated ' +
+    'from storey counts, window and dormer counts approximate, entrance canopy and pediment figures schematic. Platform 1 ' +
+    'range has 3D windows on the Eastbourne Terrace face (13 m, MacMillan House end 20 m). Lamps and bollards on Praed ' +
+    'Street / Eastbourne Terrace are generic resources assets at assumed positions.',
+  build({ THREE, kit, byId, placeAssets }) {
     const g = new THREE.Group();
     const O = [1654, 1043],
       A = (132 * Math.PI) / 180,
@@ -137,6 +161,7 @@ export default {
     const brickM = kit.mat('#8d6e58');
     const flatRoof = kit.mat('#6d6c68');
     const darkM = kit.mat('dark_glass');
+    const louvreM = kit.mat('#7d8a90', { roughness: 0.6, metalness: 0.3 });
     const roofGlass = kit.paintedMaterial(
       'paddington_station:vault',
       128,
@@ -235,6 +260,81 @@ export default {
       }
     });
 
+    // ---------- 3D helpers ----------
+    // kit.windowRow with round / segmental heads built as vertical glass sectors and
+    // projecting archivolts with a keystone (lintel, pediment and plain heads pass through).
+    const archRow = (batch, a, c, z, opts) => {
+      const head = opts.head;
+      if (head !== 'arch' && head !== 'segment') return kit.windowRow(batch, a, c, z, opts);
+      const cs = kit.windowRow(batch, a, c, z, { ...opts, head: 'none' });
+      const w = opts.width ?? 1.2,
+        h = opts.height ?? 2.0,
+        d = opts.depth ?? 0.12;
+      const glassM = opts.glass ?? kit.mat('dark_glass'),
+        trimM = opts.sill ?? opts.frame ?? kit.mat('white');
+      const L = Math.hypot(c[0] - a[0], c[1] - a[1]) || 1;
+      const ux = (c[0] - a[0]) / L,
+        uy = (c[1] - a[1]) / L;
+      const seg = head === 'arch' ? Math.PI : Math.PI / 2.5;
+      const R = head === 'arch' ? w / 2 : w / 2 / Math.sin(seg / 2);
+      const zc = z + h - (head === 'arch' ? 0 : R * Math.cos(seg / 2));
+      const X = new THREE.Vector3(ux, uy, 0),
+        Y = new THREE.Vector3(0, 0, 1),
+        Z = new THREE.Vector3(uy, -ux, 0);
+      const gl = new THREE.CircleGeometry(R, 12, Math.PI / 2 - seg / 2, seg);
+      const tor = new THREE.TorusGeometry(R + 0.06, 0.08, 4, 12, seg).rotateZ(
+        Math.PI / 2 - seg / 2,
+      );
+      const key = new THREE.BoxGeometry(0.28, 0.34, d * 1.6);
+      const m = new THREE.Matrix4();
+      for (const [cx, cy] of cs) {
+        m.makeBasis(X, Y, Z).setPosition(cx + Z.x * 0.03, cy + Z.y * 0.03, zc);
+        batch.addGeometry(glassM, gl, m);
+        m.makeBasis(X, Y, Z).setPosition(cx + Z.x * d * 0.8, cy + Z.y * d * 0.8, zc);
+        batch.addGeometry(trimM, tor, m);
+        m.makeBasis(X, Y, Z).setPosition(cx + Z.x * d * 0.8, cy + Z.y * d * 0.8, zc + R + 0.08);
+        batch.addGeometry(trimM, key, m);
+      }
+      [gl, tor, key].forEach((q) => q.dispose());
+      return cs;
+    };
+    const uDir = new THREE.Vector3(ca, sa, 0),
+      vDir = new THREE.Vector3(-sa, ca, 0),
+      zDir = new THREE.Vector3(0, 0, 1);
+    const V3 = (u, v, z) => {
+      const [x, y] = W(u, v);
+      return new THREE.Vector3(x, y, z);
+    };
+    const unitBox = new THREE.BoxGeometry(1, 1, 1);
+    const bm = new THREE.Matrix4();
+    // Rectangular bar from P to Q; ty along the hint direction, tz perpendicular to both.
+    const beam = (P, Q, ty, tz, hint, m) => {
+      const x = Q.clone().sub(P);
+      const len = x.length();
+      if (len < 1e-3) return;
+      x.divideScalar(len);
+      const y = hint.clone().addScaledVector(x, -hint.dot(x));
+      if (y.lengthSq() < 1e-6) y.copy(zDir).addScaledVector(x, -x.z);
+      y.normalize();
+      const z = new THREE.Vector3().crossVectors(x, y);
+      bm.makeBasis(x.multiplyScalar(len), y.multiplyScalar(ty), z.multiplyScalar(tz));
+      bm.setPosition(P.clone().add(Q).multiplyScalar(0.5));
+      b.addGeometry(m, unitBox, bm);
+    };
+    // Windows on a local wall edge (outward normal on the right of a -> b).
+    const rowL = (a, c, z, opts) => archRow(b, W(...a), W(...c), z, opts);
+    const corniceL = (u0, u1, v0, v1, z, opts, m = creamM) => {
+      let r = [W(u0, v0), W(u1, v0), W(u1, v1), W(u0, v1)];
+      if (kit.ringArea(r) < 0) r = r.reverse();
+      kit.cornice(b, m, r, z, opts);
+    };
+    const castM = kit.mat('#2f3b42', { roughness: 0.55, metalness: 0.45 });
+    const screenGlass = kit.mat('#aebfc8', {
+      roughness: 0.2,
+      metalness: 0.15,
+      side: THREE.DoubleSide,
+    });
+
     // ---------- Train shed ----------
     const U0 = 28,
       U1 = 245;
@@ -243,12 +343,29 @@ export default {
       { va: 0, vb: -20.7, rise: 7 },
       { va: -20.7, vb: -51.9, rise: 11 },
       { va: -51.9, vb: -73.2, rise: 7 },
-      { va: -73.2, vb: -106.4, rise: 9.5 },
+      { va: -73.2, vb: -106.4, rise: 9.5, steel: true },
     ];
-    const N = 20;
+    const N = 20,
+      NR = 12; // vault facets / rib segments
     const prof = (s, t) => [s.va + (s.vb - s.va) * t, SPRING + s.rise * Math.sin(Math.PI * t)];
+    // unit normal of the arch profile in the (v, z) plane, pointing out of the vault
+    const profN = (s, t) => {
+      const dv = s.vb - s.va,
+        dz = s.rise * Math.PI * Math.cos(Math.PI * t);
+      let nv = -dz,
+        nz = dv;
+      if (nz < 0 || (Math.abs(nz) < 1e-6 && nv * (t - 0.5) * dv < 0)) {
+        nv = -nv;
+        nz = -nz;
+      }
+      const l = Math.hypot(nv, nz);
+      return [nv / l, nz / l];
+    };
+    const RIB = 3.05; // ribs at 10 ft centres, every third one on a column (estimate)
+    const ribUs = [];
+    for (let u = U0 + 3; u <= U1 - 1; u += RIB) ribUs.push(u);
     for (const s of spans) {
-      // vault: strip along u
+      // vault skin: strip along u
       const pts = [];
       for (let k = 0; k <= N; k++) pts.push(prof(s, k / N));
       const ur = (U1 - U0) / 3.05;
@@ -271,15 +388,43 @@ export default {
           [0, (k + 1) / N],
         );
       }
-      // ridge capping and eaves gutters
-      box((U0 + U1) / 2, (s.va + s.vb) / 2, SPRING + s.rise, U1 - U0, 0.8, 0.35, ironM);
-      // end screens (lunettes) at both ends
+      // wrought-iron (span 4: steel) arched ribs under the skin and capping bars over it
+      const depth = s.steel ? 1.0 : 0.75;
+      for (const u of ribUs) {
+        let prevIn = null,
+          prevOut = null;
+        for (let k = 0; k <= NR; k++) {
+          const t = k / NR;
+          const [v, z] = prof(s, t);
+          const [nv, nz] = profN(s, t);
+          const pin = V3(u, v - nv * (depth / 2 + 0.05), z - nz * (depth / 2 + 0.05));
+          const pout = V3(u, v + nv * 0.09, z + nz * 0.09);
+          if (prevIn) {
+            beam(prevIn, pin, 0.22, depth, uDir, castM);
+            beam(prevOut, pout, 0.12, 0.14, uDir, ironM);
+          }
+          prevIn = pin;
+          prevOut = pout;
+        }
+      }
+      // ridge ventilator: raised louvred lantern along the crown
+      {
+        const vm = (s.va + s.vb) / 2,
+          zc = SPRING + s.rise;
+        const wv = Math.abs(s.vb - s.va) * 0.06;
+        box((U0 + U1) / 2, vm, zc - 0.1, U1 - U0, wv, 0.9, louvreM);
+        box((U0 + U1) / 2, vm, zc + 0.8, U1 - U0 + 0.4, wv + 1.0, 0.18, ironM);
+        box((U0 + U1) / 2, vm, zc + 0.98, U1 - U0 + 0.2, 0.4, 0.2, ironM);
+      }
+      // eaves gutters on each span line
+      for (const v of [s.va, s.vb]) box((U0 + U1) / 2, v, SPRING - 0.2, U1 - U0, 0.9, 0.5, ironM);
+      // end screens (lunettes): glazing plus 3D Digby Wyatt style iron tracery
+      const vm = (s.va + s.vb) / 2;
       for (const ue of [U0, U1]) {
         const verts = [],
           uvs = [],
           tris = [];
-        const mid = (s.va + s.vb) / 2;
-        const c0 = W(ue, mid);
+        const c0 = W(ue, vm);
         verts.push([c0[0], c0[1], SPRING]);
         uvs.push([0.5, 0]);
         for (let k = 0; k <= N; k++) {
@@ -289,9 +434,59 @@ export default {
           uvs.push([(v - s.va) / (s.vb - s.va), (z - SPRING) / s.rise]);
           if (k > 0) tris.push(0, k, k + 1);
         }
-        b.add(screenM, verts, uvs, tris);
-        // decorative valance / girder under the screen
-        box(ue, mid, SPRING - 1.2, 0.6, Math.abs(s.vb - s.va), 1.2, ironM);
+        b.add(screenGlass, verts, uvs, tris);
+        const ue2 = ue + (ue === U0 ? -0.12 : 0.12);
+        // outer arch frame and two inner concentric arcs
+        for (const sc of [1, 0.78, 0.52]) {
+          let prev = null;
+          for (let k = 0; k <= NR; k++) {
+            const [v, z] = prof(s, k / NR);
+            const P = V3(ue2, vm + (v - vm) * sc, SPRING + (z - SPRING) * sc);
+            if (prev) beam(prev, P, 0.3, sc === 1 ? 0.45 : 0.22, uDir, castM);
+            prev = P;
+          }
+        }
+        // radial spokes between the arcs and vertical mullions below the inner arc
+        const nSp = 12;
+        for (let k = 1; k < nSp; k++) {
+          const t = k / nSp;
+          const [v, z] = prof(s, t);
+          beam(
+            V3(ue2, vm + (v - vm) * 0.52, SPRING + (z - SPRING) * 0.52),
+            V3(ue2, v, z),
+            0.25,
+            0.14,
+            uDir,
+            castM,
+          );
+        }
+        for (let k = 1; k < 8; k++) {
+          const t = 0.24 + (0.52 * k) / 8;
+          const [v, z] = prof(s, t);
+          const zz = SPRING + (z - SPRING) * 0.52;
+          beam(
+            V3(ue2, v * 0 + vm + (v - vm) * 0.52, SPRING),
+            V3(ue2, vm + (v - vm) * 0.52, zz),
+            0.2,
+            0.12,
+            uDir,
+            castM,
+          );
+        }
+        // roundels between the middle and outer arcs
+        for (let k = 0; k < 7; k++) {
+          const t = (k + 0.5) / 7;
+          const [v, z] = prof(s, t);
+          const P = V3(ue2, vm + (v - vm) * 0.89, SPRING + (z - SPRING) * 0.89);
+          const tor = new THREE.TorusGeometry(Math.abs(s.vb - s.va) * 0.025 + 0.25, 0.07, 4, 12);
+          const m = new THREE.Matrix4().makeBasis(vDir, zDir, uDir).setPosition(P);
+          b.addGeometry(castM, tor, m);
+          tor.dispose();
+        }
+        // decorative valance girder under the screen
+        box(ue, vm, SPRING - 1.2, 0.6, Math.abs(s.vb - s.va), 1.2, ironM);
+        for (let v = Math.max(s.va, s.vb) - 0.6; v > Math.min(s.va, s.vb); v -= 1.2)
+          box(ue2, v, SPRING - 1.5, 0.12, 0.5, 0.35, castM);
       }
     }
     // Transepts crossing the three original spans (estimated positions), crown 20.5 m.
@@ -323,7 +518,31 @@ export default {
           [0, k / N],
         );
       }
-      box(uc, (va + vb) / 2, SPRING + rise, 0.8, Math.abs(vb - va), 0.35, ironM);
+      box(uc, (va + vb) / 2, SPRING + rise - 0.1, 1.4, Math.abs(vb - va), 0.8, louvreM);
+      box(uc, (va + vb) / 2, SPRING + rise + 0.7, 2.2, Math.abs(vb - va), 0.18, ironM);
+      // transverse ribs of the transept vault
+      for (let v = va - 1.5; v > vb + 0.5; v -= RIB) {
+        let prev = null,
+          prevO = null;
+        for (let k = 0; k <= NR; k++) {
+          const t = k / NR;
+          const u = uc - half + 2 * half * t,
+            z = SPRING + rise * Math.sin(Math.PI * t);
+          const du = 2 * half,
+            dz = rise * Math.PI * Math.cos(Math.PI * t);
+          const l = Math.hypot(dz, du);
+          const nu = -dz / l,
+            nz = du / l;
+          const P = V3(u - nu * 0.4, v, z - nz * 0.4),
+            Po = V3(u + nu * 0.09, v, z + nz * 0.09);
+          if (prev) {
+            beam(prev, P, 0.2, 0.65, vDir, castM);
+            beam(prevO, Po, 0.12, 0.14, vDir, ironM);
+          }
+          prev = P;
+          prevO = Po;
+        }
+      }
       for (const ve of [va, vb]) {
         const verts = [],
           uvs = [],
@@ -338,15 +557,67 @@ export default {
           uvs.push([k / N, (z - SPRING) / rise]);
           if (k > 0) tris.push(0, k, k + 1);
         }
-        b.add(screenM, verts, uvs, tris);
+        b.add(screenGlass, verts, uvs, tris);
+        const ve2 = ve + (ve === va ? 0.12 : -0.12);
+        for (const sc of [1, 0.6]) {
+          let prev = null;
+          for (let k = 0; k <= NR; k++) {
+            const [u, z] = pts[Math.round((k / NR) * N)];
+            const P = V3(uc + (u - uc) * sc, ve2, SPRING + (z - SPRING) * sc);
+            if (prev) beam(prev, P, 0.3, 0.3, vDir, castM);
+            prev = P;
+          }
+        }
+        for (let k = 1; k < 8; k++) {
+          const [u, z] = pts[Math.round((k / 8) * N)];
+          beam(
+            V3(uc + (u - uc) * 0.6, ve2, SPRING + (z - SPRING) * 0.6),
+            V3(u, ve2, z),
+            0.22,
+            0.14,
+            vDir,
+            castM,
+          );
+        }
+        for (let k = 1; k < 6; k++) {
+          const u = uc - half * 0.6 + (1.2 * half * k) / 6;
+          const zz = SPRING + rise * 0.6 * Math.sin((Math.PI * (u - uc + half)) / (2 * half));
+          beam(V3(u, ve2, SPRING), V3(u, ve2, zz), 0.2, 0.12, vDir, castM);
+        }
       }
     }
-    // Columns and longitudinal girders on the span lines; side walls.
-    const colGeo = () => new THREE.CylinderGeometry(0.32, 0.4, SPRING, 8).rotateX(Math.PI / 2);
+    // Columns (cast iron, replaced in steel 1922-24) with capitals and arched
+    // brackets carrying the longitudinal girders on the span lines.
+    const shaftG = new THREE.CylinderGeometry(0.3, 0.36, SPRING - 2.2, 8).rotateX(Math.PI / 2);
+    const baseG = new THREE.CylinderGeometry(0.55, 0.62, 1.1, 8).rotateX(Math.PI / 2);
+    const capG = new THREE.CylinderGeometry(0.62, 0.34, 0.9, 8).rotateX(Math.PI / 2);
+    const colM = new THREE.Matrix4();
     for (const v of [-20.7, -51.9, -73.2]) {
-      for (let u = U0 + 3; u <= U1 - 2; u += 9.15) add(colGeo(), ironM, u, v, SPRING / 2);
+      for (let k = 0; k < ribUs.length; k += 3) {
+        const u = ribUs[k];
+        const [x, y] = W(u, v);
+        b.addGeometry(castM, baseG, colM.makeTranslation(x, y, 0.55));
+        b.addGeometry(ironM, shaftG, colM.makeTranslation(x, y, 1.1 + (SPRING - 2.2) / 2));
+        b.addGeometry(castM, capG, colM.makeTranslation(x, y, SPRING - 1.55));
+        // arched spandrel brackets towards the neighbouring columns
+        for (const sgn of [-1, 1]) {
+          let prev = null;
+          for (let j = 0; j <= 5; j++) {
+            const a = (j / 5) * (Math.PI / 2);
+            const P = V3(
+              u + sgn * (1 - Math.cos(a)) * 2.6,
+              v,
+              SPRING - 1.1 - (1 - Math.sin(a)) * 2.0,
+            );
+            if (prev) beam(prev, P, 0.16, 0.2, vDir, castM);
+            prev = P;
+          }
+        }
+      }
       box((U0 + U1) / 2, v, SPRING - 1.4, U1 - U0, 0.7, 1.4, ironM);
+      box((U0 + U1) / 2, v, SPRING - 1.5, U1 - U0, 0.9, 0.12, castM);
     }
+    [shaftG, baseG, capG].forEach((q) => q.dispose());
     // London Street side wall of span 4 (brick with arched openings) and gutter beam on the Eastbourne side.
     const sideWall = kit.paintedMaterial('paddington_station:sidewall', 256, 128, (c, w, h) => {
       c.fillStyle = '#8f705a';
@@ -374,9 +645,12 @@ export default {
         q = W(U1, -106.4);
       quad(sideWall, q, p, 0, SPRING, (U1 - U0) / 10, 0, 1);
       quad(sideWall, p, q, 0, SPRING, (U1 - U0) / 10, 0, 1);
+      // brick pilasters and coping on the London Street side wall
+      for (let u = U0 + 5; u < U1; u += 10) box(u, -106.9, 0, 1.2, 1.0, SPRING - 0.2, brickM);
+      box((U0 + U1) / 2, -106.7, SPRING - 0.6, U1 - U0, 1.3, 0.6, stoneM);
     }
     box((U0 + U1) / 2, -0.3, SPRING - 1, U1 - U0, 0.8, 1.2, ironM);
-    // Platforms and tracks under the shed.
+    // Platforms and tracks under the shed: track bed plus raised platform slabs.
     {
       const p0 = W(U0, 0),
         p1 = W(U1, 0),
@@ -400,6 +674,9 @@ export default {
         ],
         [0, 1, 2, 0, 2, 3],
       );
+      const platM = kit.mat('#a9a49a');
+      for (let v = -1.9; v > -106; v -= 8.0)
+        box((U0 + 8 + U1) / 2, v, 0.12, U1 - U0 - 8, 3.6, 0.8, platM);
     }
 
     // ---------- Rest of the station outline ----------
@@ -409,7 +686,11 @@ export default {
     const ringW = st.polys[0][0];
     const wallMat = kit.facade('london_stock', 1);
     kit.walls(b, wallMat, [[ringW]], 0, 6.5, { bay: 4.5, storey: 3.25 });
-    // Lawn concourse roof (u < U0): glazed canopy on slender columns.
+    kit.cornice(b, stoneM, kit.ringArea(ringW) < 0 ? ringW.slice().reverse() : ringW, 6.1, {
+      height: 0.4,
+      projection: 0.25,
+    });
+    // Lawn concourse roof (u < U0): glazed canopy on slender columns with roof beams.
     const lawn = clip(ring, (p) => U0 - p[0]);
     const lawnGlass = kit.paintedMaterial(
       'paddington_station:lawn',
@@ -428,7 +709,10 @@ export default {
     );
     capLocal(lawnGlass, lawn, 10.5);
     capLocal(lawnGlass, lawn, 10.5, true);
-    for (let v = -6; v > -58; v -= 12) box(U0 - 0.5, v, 6.5, 0.4, 0.4, 4, kit.mat('white_steel'));
+    const wsteel = kit.mat('white_steel');
+    for (let v = -6; v > -58; v -= 12) box(U0 - 0.5, v, 6.5, 0.4, 0.4, 4, wsteel);
+    for (let u = 2; u < U0; u += 4.5) box(u, -30, 10.5, 0.25, 59, 0.35, wsteel);
+    for (let v = -3; v > -60; v -= 9) box(U0 / 2, v, 10.2, U0 - 1, 0.25, 0.3, wsteel);
     // north-west platform canopies (u > U1) and outer strip on the London Street side
     for (const reg of [
       clip(ring, (p) => p[0] - U1),
@@ -445,12 +729,14 @@ export default {
 
     // ---------- Platform 1 office range (Eastbourne Terrace) ----------
     const mh = byId['5c55db4c-2e46-4a30-9cd6-95ab5c5fb5e2'];
-    const rangeFacade = kit.facade('stucco', 2);
+    const rangeFacade = kit.mat('#e2d9c6');
+    const stoneFacade = kit.mat('#d9d2c1');
+    const winDark = kit.mat('#2a3439', { roughness: 0.2, metalness: 0.2 });
     for (const poly of mh.polys) {
       const lr = poly[0].map(toL);
-      for (const [f, h, mat] of [
-        [(p) => 46 - p[0], 20, kit.facade('portland_stone', 1)],
-        [(p) => p[0] - 46, 13, rangeFacade],
+      for (const [f, h, mat, storeys, sz] of [
+        [(p) => 46 - p[0], 20, stoneFacade, 5, 3.7],
+        [(p) => p[0] - 46, 13, rangeFacade, 3, 4.0],
       ]) {
         const r = clip(lr, f);
         if (r.length < 3 || Math.abs(ringArea(r)) < 2) continue;
@@ -458,134 +744,250 @@ export default {
         if (kit.ringArea(wr) < 0) wr = wr.slice().reverse();
         kit.walls(b, mat, [[wr]], 0, h, { bay: 3.6, storey: 3.4 });
         kit.cap(b, flatRoof, [[wr]], h);
-        // cornice
-        kit.walls(b, stoneM, [[kit.offsetRing(wr, 0.35)]], h - 0.6, h);
+        kit.cornice(b, stoneM, wr, h - 0.7, { height: 0.7, projection: 0.45, steps: 2 });
+        kit.cornice(b, stoneM, wr, 0, { height: 0.6, projection: 0.15 });
+        kit.cornice(b, stoneM, wr, sz + 0.3, { height: 0.3, projection: 0.15 });
+        kit.cornice(b, creamM, kit.offsetRing(wr, -0.1), h, { height: 0.9, projection: 0.12 });
+        // 3D windows on the Eastbourne Terrace (and Praed Street end) faces
+        for (let k = 0; k < wr.length; k++) {
+          const a = wr[k],
+            c = wr[(k + 1) % wr.length];
+          const al = toL(a),
+            cl = toL(c);
+          const len = Math.hypot(c[0] - a[0], c[1] - a[1]);
+          const outerV = al[1] > 7 && cl[1] > 7 && cl[0] < al[0];
+          const praedEnd = al[0] < -20 && cl[0] < -20 && Math.abs(cl[1] - al[1]) > 5;
+          if (len < 5 || !(outerV || praedEnd)) continue;
+          for (let s = 0; s < storeys; s++)
+            archRow(b, a, c, s === 0 ? 1.0 : sz * s + 0.9, {
+              width: s === 0 ? 1.6 : 1.3,
+              height: s === 0 ? 2.8 : sz - 1.6,
+              bay: 3.6,
+              margin: 0.8,
+              glass: winDark,
+              frame: kit.mat('white'),
+              sill: stoneM,
+              head: s === 0 ? 'arch' : s === 1 ? 'pediment' : 'lintel',
+              bars: 1,
+            });
+        }
       }
     }
     // Three oriel windows overlooking the transepts on the platform 1 side.
     for (const uc of [U0 + 0.36 * (U1 - U0), U0 + 0.49 * (U1 - U0), U0 + 0.62 * (U1 - U0)]) {
       box(uc, -0.9, 7, 6, 1.8, 4.5, creamM);
       box(uc, -1.85, 7.6, 4.6, 0.1, 3.3, darkM);
+      for (const du of [-1.5, 0, 1.5]) box(uc + du, -1.92, 7.6, 0.15, 0.12, 3.3, creamM);
+      box(uc, -1.0, 6.6, 6.6, 2.1, 0.4, stoneM);
+      box(uc, -1.0, 11.5, 6.6, 2.1, 0.5, stoneM);
     }
 
     // ---------- Great Western Royal Hotel ----------
     const hot = byId['360408b3-6867-4a89-9cc6-8e3548e0ffe1'];
     const hotW = hot.polys[0][0];
-    kit.walls(b, kit.facade('stucco', 0), [[hotW]], 0, 20, { bay: 3.2, storey: 3.6 });
-    kit.cap(b, flatRoof, [[hotW]], 20);
-    // Front (Praed Street) facade drawn bay by bay: rusticated stone ground floor
-    // with arched openings, three stuccoed storeys with pedimented windows, attic.
-    const bayTex = (key, storeys, attic) =>
-      kit.paintedMaterial(key, 128, 64 * (storeys + 1), (c, w, h) => {
-        const sh = h / (storeys + 1);
-        c.fillStyle = '#e5dccb';
-        c.fillRect(0, 0, w, h);
-        // ground floor: rusticated, arched opening
-        const gy = h - sh * 1.25;
-        c.fillStyle = '#d8d0bf';
-        c.fillRect(0, gy, w, h - gy);
-        c.fillStyle = 'rgba(120,110,95,0.5)';
-        for (let y = gy + 10; y < h; y += 12) c.fillRect(0, y, w, 2);
-        c.fillStyle = '#2b3439';
-        c.beginPath();
-        c.moveTo(34, h - 4);
-        c.lineTo(34, gy + 34);
-        c.arc(64, gy + 34, 30, Math.PI, 0);
-        c.lineTo(94, h - 4);
-        c.fill();
-        // upper storeys
-        for (let s = 0; s < storeys - 1; s++) {
-          const y = gy - (s + 1) * sh;
-          c.fillStyle = '#2b3439';
-          c.fillRect(42, y + 18, 44, sh - 26);
-          c.fillStyle = 'rgba(170,190,200,0.3)';
-          c.fillRect(42, y + 18, 44, 10);
-          c.fillStyle = '#f2ebde';
-          c.fillRect(36, y + sh - 10, 56, 6); // sill
-          if (s === 0) {
-            c.beginPath();
-            c.moveTo(34, y + 16);
-            c.lineTo(64, y + 4);
-            c.lineTo(94, y + 16);
-            c.fill();
-          } else c.fillRect(36, y + 10, 56, 6);
-          c.fillStyle = 'rgba(150,135,110,0.5)';
-          c.fillRect(0, y + sh - 3, w, 3);
-        }
-        if (attic) {
-          c.fillStyle = '#d6ccb9';
-          c.fillRect(0, 0, w, 14);
-        }
-        c.fillStyle = '#f4eee3';
-        c.fillRect(0, 0, w, 6);
-      });
-    const frontTex = bayTex('paddington_station:hotel_bay', 5, true);
-    const towerTex = bayTex('paddington_station:hotel_tower', 7, true);
-    const UF = -48.1,
-      UB = -31;
-    // front range
+    // rear parts of the hotel (towards the Lawn): stucco with painted windows; the
+    // Praed Street range and towers are modelled below with real window openings.
     {
-      const corners = [
-        [UF, -63.7],
-        [UB, -63.7],
-        [UB, 0.2],
-        [UF, 0.2],
+      const hr = kit.ringArea(hotW) < 0 ? hotW.slice().reverse() : hotW;
+      for (let k = 0; k < hr.length; k++) {
+        const a = hr[k],
+          c = hr[(k + 1) % hr.length];
+        if (toL(a)[0] < -40 && toL(c)[0] < -40) continue;
+        kit.walls(b, kit.facade('stucco', 0), [[[a, c]]], 0, 20, { bay: 3.2, storey: 3.6 });
+      }
+      kit.cap(b, flatRoof, [[hr]], 20);
+      kit.cornice(b, creamM, hr, 19.2, { height: 0.8, projection: 0.4, steps: 2 });
+    }
+    const stuccoM = kit.paintedMaterial('paddington_station:stucco', 256, 256, (c, w, h) => {
+      c.fillStyle = '#e6ddcb';
+      c.fillRect(0, 0, w, h);
+      const r = kit.rng(0.17);
+      for (let k = 0; k < 900; k++) {
+        c.fillStyle = `rgba(140,125,100,${r() * 0.06})`;
+        c.fillRect(r() * w, r() * h, 3, 3);
+      }
+      c.fillStyle = 'rgba(150,135,110,0.25)';
+      for (let y = 0; y < h; y += 32) c.fillRect(0, y, w, 1.5); // faint ashlar lining
+    });
+    const rusticM = kit.paintedMaterial('paddington_station:rustic', 256, 256, (c, w, h) => {
+      c.fillStyle = '#d9d0bd';
+      c.fillRect(0, 0, w, h);
+      c.fillStyle = 'rgba(105,95,80,0.65)';
+      for (let y = 0; y < h; y += 32) c.fillRect(0, y, w, 4); // banded rustication
+      for (let y = 0; y < h; y += 64) {
+        c.fillRect(0, y, 3, 32);
+        c.fillRect(w / 2, y + 32, 3, 32);
+      }
+    });
+    const frameM = kit.mat('#f4efe4');
+    const sashGlass = kit.mat('#27323a', { roughness: 0.15, metalness: 0.25 });
+    const greenM = kit.mat('#2e3a33', { roughness: 0.5, metalness: 0.3 });
+    // rendered wall block in local coords: rustic stone ground floor, stucco above
+    const wallL = (u0, u1, v0, v1, z1, skip = []) => {
+      const cs = [
+        [u0, v0],
+        [u1, v0],
+        [u1, v1],
+        [u0, v1],
       ].map(([u, v]) => W(u, v));
       for (let k = 0; k < 4; k++) {
-        const p = corners[k],
-          q = corners[(k + 1) % 4];
+        if (skip.includes(k)) continue;
+        const p = cs[k],
+          q = cs[(k + 1) % 4];
         const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
-        quad(frontTex, p, q, 0, 21, Math.round(len / 3.05), 0, 1);
+        quad(rusticM, p, q, 0, 5.4, len / 8, 0, 5.4 / 8);
+        quad(stuccoM, p, q, 5.4, z1, len / 8, 5.4 / 8, z1 / 8);
       }
-      // cornice and steep pavilion roof with pedimented dormers
-      box((UF + UB) / 2, -31.75, 20.6, UB - UF + 1.2, 65.1, 0.8, creamM);
+    };
+    // storey scheme of the 4-storey front: sills, heights and heads
+    const FLOORS = [
+      { z: 0.9, h: 3.1, w: 1.7, head: 'arch', bars: 1 },
+      { z: 6.3, h: 3.0, w: 1.35, head: 'pediment', bars: 2, surround: 0.16 },
+      { z: 11.0, h: 2.7, w: 1.3, head: 'segment', bars: 2, surround: 0.14 },
+      { z: 15.4, h: 2.3, w: 1.25, head: 'lintel', bars: 2 },
+    ];
+    const winOpts = (f, extra = {}) => ({
+      width: f.w,
+      height: f.h,
+      head: f.head,
+      bars: f.bars,
+      surround: f.surround ?? 0,
+      surroundMat: creamM,
+      glass: sashGlass,
+      frame: frameM,
+      sill: creamM,
+      depth: 0.16,
+      ...extra,
+    });
+    // front face (u = const, outward -u): edge runs from high v to low v
+    const frontRow = (u, va, vb, n, f, extra) =>
+      rowL(
+        [u, Math.max(va, vb)],
+        [u, Math.min(va, vb)],
+        f.z,
+        winOpts(f, { count: n, margin: 0.2, ...extra }),
+      );
+    const UF = -48.1,
+      UB = -31;
+    // side ranges (7 bays each) and the centre (7 bays, 5-bay pedimented break)
+    const C0 = -42.5,
+      C1 = -21.2,
+      UC = UF - 1.0,
+      UP = UF - 1.8;
+    const P0 = C0 + 3.05,
+      P1 = C1 - 3.05;
+    wallL(UF, UB, -63.7, C0, 21, [0, 1, 2]);
+    wallL(UF, UB, C1, 0.2, 21, [0, 1, 2]);
+    wallL(UC, UF, C0, C1, 21, [1]);
+    wallL(UP, UC, P0, P1, 21, [1]);
+    for (const f of FLOORS) {
+      frontRow(UF, -63.7, C0, 7, f);
+      frontRow(UF, C1, 0.2, 7, f);
+      if (f.z > 1) {
+        frontRow(UC, C0, P0, 1, f);
+        frontRow(UC, P1, C1, 1, f);
+        frontRow(UP, P0, P1, 5, f, f.head === 'pediment' ? { head: 'arch', height: 3.2 } : {});
+      }
+    }
+    // centre ground floor: arcaded entrance with five doorways
+    frontRow(UC, C0, P0, 1, FLOORS[0]);
+    frontRow(UC, P1, C1, 1, FLOORS[0]);
+    frontRow(UP, P0, P1, 5, { ...FLOORS[0], z: 0.15 }, { width: 2.0, height: 3.8, bars: 0 });
+    // string courses, cornice with blocking course, plinth
+    corniceL(UF, UB, -63.7, 0.2, 0, { height: 0.7, projection: 0.15 }, stoneM);
+    corniceL(UF, UB, -63.7, 0.2, 5.4, { height: 0.45, projection: 0.25 });
+    corniceL(UF, UB, -63.7, 0.2, 10.2, { height: 0.3, projection: 0.15 });
+    corniceL(UF, UB, -63.7, 0.2, 19.6, { height: 1.2, projection: 0.75, steps: 3 });
+    corniceL(UC, UB, C0, C1, 5.4, { height: 0.45, projection: 0.25 });
+    corniceL(UC, UB, C0, C1, 19.6, { height: 1.2, projection: 0.75, steps: 3 });
+    corniceL(UP, UC, P0, P1, 5.4, { height: 0.45, projection: 0.25 });
+    corniceL(UP, UC, P0, P1, 19.6, { height: 1.2, projection: 0.75, steps: 3 });
+    // pilasters between the bays of the centre break
+    for (let k = 0; k <= 5; k++) {
+      const v = P0 + ((P1 - P0) * k) / 5;
+      box(UP - 0.2, v, 5.85, 0.4, 0.75, 13.75, creamM);
+      box(UP - 0.3, v, 19.1, 0.6, 1.0, 0.5, creamM); // capital
+    }
+    // steep pavilion roof with pedimented dormers, chimneys and ridge cresting
+    {
       const rr = [
         [UF, -63.7],
         [UB, -63.7],
         [UB, 0.2],
         [UF, 0.2],
       ].map(([u, v]) => W(u, v));
-      kit.pitchedRoof(b, slateM, creamM, rr, A + Math.PI / 2, 21.4, 6.5, 'hipped', {
+      kit.pitchedRoof(b, slateM, creamM, rr, A + Math.PI / 2, 21.0, 6.5, 'hipped', {
         overhang: 0.2,
       });
+      const um = (UF + UB) / 2;
+      beam(V3(um, -55, 27.55), V3(um, -8.5, 27.55), 0.12, 0.12, uDir, greenM);
+      for (let v = -55; v <= -8.5; v += 1.5) box(um, v, 27.5, 0.08, 0.08, 0.7, greenM);
+      for (const v of [-56, -47, -16, -7])
+        for (const du of [-2.2, 2.2]) {
+          box(um + du, v, 24.5, 1.1, 3.4, 4.4, stuccoM);
+          box(um + du, v, 28.9, 1.4, 3.7, 0.3, creamM);
+          for (let j = 0; j < 4; j++)
+            box(um + du, v - 1.2 + j * 0.8, 29.2, 0.35, 0.35, 0.6, kit.mat('#a5583e'));
+        }
       for (let v = -60.5; v <= -2; v += 3.05) {
         if (v > -40.5 && v < -23) continue;
-        box(UF + 2.2, v, 21.2, 1.6, 1.6, 2.6, creamM);
-        box(UF + 1.39, v, 21.6, 0.05, 1.0, 1.7, darkM);
-        add(
-          new THREE.CylinderGeometry(1.15, 1.15, 1.7, 3).rotateZ(Math.PI / 2).rotateY(Math.PI / 2),
-          creamM,
-          UF + 2.2,
-          v,
-          24.0,
-          Math.PI / 2,
-        );
+        box(UF + 2.2, v, 21.2, 1.6, 1.8, 2.6, creamM);
+        rowL([UF + 1.39, v + 0.6], [UF + 1.39, v - 0.6], 21.6, {
+          count: 1,
+          margin: 0,
+          width: 0.9,
+          height: 1.6,
+          head: 'pediment',
+          bars: 1,
+          glass: sashGlass,
+          frame: frameM,
+          sill: creamM,
+          depth: 0.12,
+        });
+        // small slate roof over the dormer cheeks
+        const dg = new THREE.CylinderGeometry(1.15, 1.15, 1.7, 3)
+          .rotateZ(Math.PI / 2)
+          .rotateY(Math.PI / 2);
+        add(dg, slateM, UF + 2.6, v, 24.2, Math.PI / 2);
       }
     }
-    // 7-bay centre breaking forward, with pediment and sculpture panel; porte-cochere
+    // 7-bay centre: attic storey, pediment with sculpture panel, porte-cochere
     {
-      const v0 = -42.5,
-        v1 = -21.2,
-        u0 = UF - 1.6;
-      const cs = [
-        [u0, v0],
-        [UF, v0],
-        [UF, v1],
-        [u0, v1],
-      ].map(([u, v]) => W(u, v));
-      for (let k = 0; k < 4; k++) {
-        const p = cs[k],
-          q = cs[(k + 1) % 4];
-        const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
-        quad(frontTex, p, q, 0, 22, Math.max(1, Math.round(len / 3.05)), 0, 22 / 21);
-      }
-      // attic storey over the centre
-      lbox(u0 + 0.3, UB - 4, v0 + 0.5, v1 - 0.5, 22, 25.5, creamM, slateM);
-      box(u0 + 0.3, (v0 + v1) / 2, 24.2, 0.1, v1 - v0 - 3, 0.6, darkM);
-      // pediment (triangular prism)
+      const v0 = C0,
+        v1 = C1,
+        u0 = UC;
+      // attic storey over the centre with small square windows and a blocking course
+      wallL(u0 + 0.3, UB - 4, v0 + 0.5, v1 - 0.5, 25.5);
+      capLocal(
+        slateM,
+        [
+          [u0 + 0.3, v0 + 0.5],
+          [UB - 4, v0 + 0.5],
+          [UB - 4, v1 - 0.5],
+          [u0 + 0.3, v1 - 0.5],
+        ],
+        25.5,
+      );
+      rowL([u0 + 0.3, v1 - 0.5], [u0 + 0.3, v0 + 0.5], 22.5, {
+        count: 7,
+        margin: 0.6,
+        width: 1.2,
+        height: 1.6,
+        head: 'none',
+        bars: 1,
+        glass: sashGlass,
+        frame: frameM,
+        sill: creamM,
+      });
+      corniceL(u0 + 0.3, UB - 4, v0 + 0.5, v1 - 0.5, 24.9, {
+        height: 0.6,
+        projection: 0.4,
+        steps: 2,
+      });
+      // pediment (triangular prism) over the 5-bay break
       const pg = new THREE.BufferGeometry();
-      const pw = (v1 - v0) / 2,
-        ph = 5;
+      const pw = (P1 - P0) / 2 + 0.6,
+        ph = 4.2;
       const pa = [
         [0, -pw, 0],
         [0, pw, 0],
@@ -609,8 +1011,20 @@ export default {
           2,
         ),
       );
-      add(pg, creamM, u0 - 0.2, (v0 + v1) / 2, 25.5);
-      // sculpted tympanum (Peace, Plenty, Science, Industry) as a darker relief panel
+      add(pg, creamM, UP - 0.4, (P0 + P1) / 2, 20.8);
+      // raking cornices of the pediment
+      const pc = (P0 + P1) / 2;
+      for (const sgn of [-1, 1])
+        beam(
+          V3(UP - 0.7, pc + sgn * (pw + 0.3), 20.75),
+          V3(UP - 0.7, pc, 20.8 + ph + 0.35),
+          0.7,
+          0.45,
+          uDir,
+          creamM,
+        );
+      box(UP - 0.4, pc, 20.5, 1.4, 2 * pw + 0.8, 0.4, creamM);
+      // sculpted tympanum (Peace, Plenty, Science, Industry by John Thomas) in relief
       const tym = kit.paintedMaterial('paddington_station:tympanum', 256, 64, (c, w, h) => {
         c.fillStyle = '#e5dccb';
         c.fillRect(0, 0, w, h);
@@ -628,14 +1042,14 @@ export default {
         }
       });
       {
-        const p = W(u0 - 0.25, v0 + 1.5),
-          q = W(u0 - 0.25, v1 - 1.5);
+        const p = W(UP - 0.45, pc - pw + 1.0),
+          q = W(UP - 0.45, pc + pw - 1.0);
         b.add(
           tym,
           [
-            [q[0], q[1], 25.6],
-            [p[0], p[1], 25.6],
-            [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2, 25.6 + ph * 0.86],
+            [q[0], q[1], 20.95],
+            [p[0], p[1], 20.95],
+            [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2, 20.95 + ph * 0.82],
           ],
           [
             [0, 0],
@@ -644,30 +1058,44 @@ export default {
           ],
           [0, 1, 2],
         );
+        for (let k = 0; k < 4; k++) {
+          const fg = new THREE.SphereGeometry(0.5, 8, 6).scale(0.6, 0.6, 1.6);
+          add(fg, stoneM, UP - 0.5, pc - 4.5 + k * 3, 21.6 + (k === 1 || k === 2 ? 0.9 : 0.2));
+        }
       }
-      // entrance canopy
-      box(u0 - 2.5, (v0 + v1) / 2, 4.2, 5, 12, 0.6, kit.mat('#2e3a33'));
-      for (const v of [v0 + 4, v1 - 4]) box(u0 - 4.6, v, 0, 0.3, 0.3, 4.2, kit.mat('#2e3a33'));
+      // acroteria on the pediment
+      for (const [dv, z] of [
+        [-pw, 21.2],
+        [pw, 21.2],
+        [0, 20.8 + ph + 0.7],
+      ])
+        add(new THREE.SphereGeometry(0.35, 8, 6), creamM, UP - 0.5, pc + dv, z);
+      // entrance canopy (glazed, on iron columns) over the pavement
+      box(UP - 3.0, pc, 4.4, 5.0, 14, 0.5, greenM);
+      box(UP - 3.0, pc, 4.9, 4.6, 13.6, 0.15, kit.mat('#b7c5cc', { roughness: 0.2 }));
+      box(UP - 5.45, pc, 4.1, 0.12, 14, 0.4, kit.mat('gold'));
+      for (const v of [pc - 6.5, pc - 2.2, pc + 2.2, pc + 6.5]) {
+        box(UP - 5.2, v, 0, 0.25, 0.25, 4.4, greenM);
+        add(
+          new THREE.CylinderGeometry(0.28, 0.32, 0.4, 8).rotateX(Math.PI / 2),
+          greenM,
+          UP - 5.2,
+          v,
+          0.2,
+        );
+      }
+      // steps up to the doors
+      for (let k = 0; k < 3; k++)
+        box(UP - 0.6 - k * 0.35, pc, k * 0.05, 0.6, 2 * pw - 1, 0.15 * (k + 1), stoneM);
     }
     // Projecting angle towers: 6 storeys, pierced parapet, ogee roofs with finials.
     const towers = [
-      { u0: -53.2, u1: -40, v0: -74.2, v1: -63.7 },
-      { u0: -52.2, u1: -40, v0: 0.2, v1: 9.0 },
+      { u0: -53.35, u1: -40, v0: -74.35, v1: -63.7, out: 'v0' },
+      { u0: -52.35, u1: -40, v0: 0.2, v1: 9.15, out: 'v1' },
     ];
     for (const t of towers) {
       const H = 28;
-      const cs = [
-        [t.u0, t.v0],
-        [t.u1, t.v0],
-        [t.u1, t.v1],
-        [t.u0, t.v1],
-      ].map(([u, v]) => W(u, v));
-      for (let k = 0; k < 4; k++) {
-        const p = cs[k],
-          q = cs[(k + 1) % 4];
-        const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
-        quad(towerTex, p, q, 0, H, Math.max(1, Math.round(len / 4.5)), 0, 1);
-      }
+      wallL(t.u0, t.u1, t.v0, t.v1, H);
       capLocal(
         flatRoof,
         [
@@ -682,27 +1110,79 @@ export default {
         vc = (t.v0 + t.v1) / 2,
         du = t.u1 - t.u0,
         dv = t.v1 - t.v0;
-      box(uc, vc, H - 0.6, du + 1.0, dv + 1.0, 0.8, creamM);
-      // pierced parapet: posts and rail
-      for (const [pu, pv, lu, lv] of [
-        [uc, t.v0 - 0.4, du + 0.8, 0.3],
-        [uc, t.v1 + 0.4, du + 0.8, 0.3],
-        [t.u0 - 0.4, vc, 0.3, dv + 0.8],
-        [t.u1 + 0.4, vc, 0.3, dv + 0.8],
+      // windows: 2 bays on Praed Street, 3 bays on the outer return
+      const TF = [
+        ...FLOORS,
+        { z: 21.4, h: 2.1, w: 1.2, head: 'lintel', bars: 2 },
+        { z: 24.9, h: 1.9, w: 1.1, head: 'arch', bars: 1 },
+      ];
+      for (const f of TF) {
+        rowL([t.u0, t.v1], [t.u0, t.v0], f.z, winOpts(f, { count: 2, margin: 1.4 }));
+        if (t.out === 'v0')
+          rowL([t.u0, t.v0], [t.u1, t.v0], f.z, winOpts(f, { count: 3, margin: 1.2 }));
+        else rowL([t.u1, t.v1], [t.u0, t.v1], f.z, winOpts(f, { count: 3, margin: 1.2 }));
+      }
+      // quoins at the tower corners
+      for (const [qu, qv] of [
+        [t.u0, t.v0],
+        [t.u0, t.v1],
+        [t.u1, t.v0],
+        [t.u1, t.v1],
       ])
-        box(pu, pv, H + 1.1, lu, lv, 0.3, creamM);
-      for (let k = 0; k <= 6; k++) {
-        for (const v of [t.v0 - 0.4, t.v1 + 0.4])
-          box(t.u0 + (du * k) / 6, v, H + 0.2, 0.35, 0.35, 0.9, creamM);
-        for (const u of [t.u0 - 0.4, t.u1 + 0.4])
-          box(u, t.v0 + (dv * k) / 6, H + 0.2, 0.35, 0.35, 0.9, creamM);
+        for (let z = 5.8; z < H - 1; z += 1.2)
+          box(
+            qu,
+            qv,
+            z,
+            ((z / 1.2) | 0) % 2 ? 1.3 : 0.9,
+            ((z / 1.2) | 0) % 2 ? 0.9 : 1.3,
+            0.55,
+            creamM,
+          );
+      for (const [z, hgt, pr] of [
+        [0, 0.7, 0.15],
+        [5.4, 0.45, 0.25],
+        [19.6, 1.0, 0.5],
+        [H - 1.0, 1.0, 0.7],
+      ])
+        corniceL(
+          t.u0,
+          t.u1,
+          t.v0,
+          t.v1,
+          z,
+          { height: hgt, projection: pr, steps: hgt > 0.8 ? 2 : 1 },
+          z === 0 ? stoneM : creamM,
+        );
+      // pierced parapet (balustrade) round the tower top
+      kit.balustrade(
+        b,
+        creamM,
+        [
+          [t.u0 - 0.3, t.v0 - 0.3],
+          [t.u1 + 0.3, t.v0 - 0.3],
+          [t.u1 + 0.3, t.v1 + 0.3],
+          [t.u0 - 0.3, t.v1 + 0.3],
+          [t.u0 - 0.3, t.v0 - 0.3],
+        ].map(([u, v]) => W(u, v)),
+        H,
+        { height: 1.1, spacing: 0.45 },
+      );
+      for (const [pu, pv] of [
+        [t.u0 - 0.3, t.v0 - 0.3],
+        [t.u1 + 0.3, t.v0 - 0.3],
+        [t.u1 + 0.3, t.v1 + 0.3],
+        [t.u0 - 0.3, t.v1 + 0.3],
+      ]) {
+        box(pu, pv, H, 0.7, 0.7, 1.5, creamM);
+        add(new THREE.SphereGeometry(0.3, 8, 6), creamM, pu, pv, H + 1.8);
       }
       // ogee roof: square lathe (4 segments) scaled to the tower plan
       const pr = [];
       const R = 1,
         RH = 8;
-      for (let k = 0; k <= 12; k++) {
-        const t2 = k / 12;
+      for (let k = 0; k <= 16; k++) {
+        const t2 = k / 16;
         const r =
           R *
           (t2 < 0.5
@@ -711,16 +1191,57 @@ export default {
         pr.push(new THREE.Vector2(Math.max(0.02, r), t2 * RH));
       }
       const og = new THREE.LatheGeometry(pr, 4, Math.PI / 4).rotateX(Math.PI / 2);
-      og.scale((du - 0.6) / Math.SQRT2, (dv - 0.6) / Math.SQRT2, 1);
+      og.scale((du - 1.2) / Math.SQRT2, (dv - 1.2) / Math.SQRT2, 1);
       add(og, slateM, uc, vc, H + 0.2);
+      // lucarne (oval dormer) on each face of the ogee roof
+      for (const [ou, ov, rot] of [
+        [t.u0 + 1.4, vc, 0],
+        [t.u1 - 1.4, vc, Math.PI],
+        [uc, t.v0 + 1.4, Math.PI / 2],
+        [uc, t.v1 - 1.4, -Math.PI / 2],
+      ]) {
+        box(ou, ov, H + 1.2, rot % Math.PI ? 1.6 : 0.9, rot % Math.PI ? 0.9 : 1.6, 1.8, creamM);
+        const og2 = new THREE.CylinderGeometry(0.55, 0.55, 0.95, 10, 1, false, 0, Math.PI).rotateZ(
+          Math.PI / 2,
+        );
+        add(og2, creamM, ou, ov, H + 3.0, rot);
+      }
       add(
         new THREE.CylinderGeometry(0.08, 0.2, 3, 6).rotateX(Math.PI / 2),
-        kit.mat('#2e3a33'),
+        greenM,
         uc,
         vc,
         H + RH + 1.3,
       );
       add(new THREE.SphereGeometry(0.35, 8, 6), kit.mat('gold'), uc, vc, H + RH + 0.4);
+    }
+
+    // paved forecourt / area between the hotel front and the Praed Street kerb
+    capLocal(
+      kit.mat('paving'),
+      [
+        [-54.6, -74.3],
+        [UF, -74.3],
+        [UF, 9.2],
+        [-54.6, 9.2],
+      ],
+      0.05,
+    );
+
+    // ---------- Street furniture on Praed Street and Eastbourne Terrace ----------
+    if (placeAssets) {
+      const head = (du, dv) => {
+        const Dx = du * ca - dv * sa,
+          Dy = du * sa + dv * ca;
+        return Math.atan2(-Dx, Dy);
+      };
+      const lamps = [];
+      for (let v = -68; v <= 6; v += 13) lamps.push([...W(-58.2, v), head(-1, 0)]);
+      for (let u = -20; u < 240; u += 22) lamps.push([...W(u, 18.6), head(0, 1)]);
+      g.add(placeAssets('street_lamp', lamps, { name: 'paddington_station:lamps' }));
+      const bollards = [];
+      for (let v = -42; v <= -20; v += 1.8) bollards.push([...W(UP - 6.4, v), head(-1, 0)]);
+      g.add(placeAssets('bollard', bollards, { name: 'paddington_station:bollards' }));
     }
     g.add(b.toGroup('paddington_station'));
     return g;

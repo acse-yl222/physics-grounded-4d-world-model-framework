@@ -29,12 +29,31 @@ export default {
       url: 'https://www.modernism-in-metroland.co.uk/blog/the-future-passed-the-trellick-tower-at-50',
       used_for: 'deep recessed cedar-lined balconies; boiler house projecting like a ship bridge',
     },
+    {
+      title: 'Trellick Tower - RBKC listed buildings search',
+      url: 'https://www.rbkc.gov.uk/planning/listedbuildings/listeddetails.asp?ID=471992',
+      used_for:
+        'balconies forming a pattern across the main facades, interrupted at the maisonette floor; corridors on the north face marked by pre-cast panels',
+    },
+    {
+      title: 'Trellick Tower - Open House Festival',
+      url: 'https://programme.openhouse.org.uk/listings/2203',
+      used_for:
+        'on the main south elevation every flat sits behind a balcony; access galleries and north facade with concrete infill panels',
+    },
   ],
   notes:
     'Slab and service tower from the Overture footprints; slab roof 92 m, boiler house top 98 m (reference ' +
-    'roof height). Facade rhythm (two flat storeys + corridor storey per 3-storey group) is schematic; ' +
-    'balcony pattern and window counts are approximate, colours from textual descriptions only.',
-  build({ THREE, kit, byId }) {
+    'roof height). Facades are built in 3D bay by bay (11 bays x 27 storeys in 9 three-storey groups): on the ' +
+    'south elevation every flat sits behind a deep cedar-lined recessed balcony (concrete upstand, rail, cedar ' +
+    'soffit) chequered with framed bedroom windows, with a changed rhythm on the maisonette floors; the north ' +
+    'elevation has pebble-finished precast panels with small windows along each access-corridor storey and ' +
+    'occasional kitchen balconies. Floor-slab lips, cross-wall fins, pilotis, staggered stair slots on the ' +
+    'service tower, enclosed bridges with glazed slots and joints, and a two-level ribbed, louvred boiler house ' +
+    'cantilevered on raked brackets with flue stacks are modelled. Bay count, balcony pattern, window sizes and ' +
+    'boiler house profile are interpretations of the textual sources (no photographs); lamps/benches/bollards ' +
+    'are generic resources assets at assumed positions',
+  build({ THREE, kit, byId, placeAssets }) {
     const g = new THREE.Group();
     const O = [-343, 1914],
       A = (-23 * Math.PI) / 180,
@@ -66,7 +85,7 @@ export default {
     const b = new kit.MeshBatch();
     const conc = kit.mat('#9d978c', { roughness: 0.95 });
     const concDark = kit.mat('#77736c', { roughness: 0.95 });
-    const glassM = kit.mat('dark_glass');
+    const glassM = kit.mat('#34434d', { roughness: 0.12, metalness: 0.3 });
     const cedar = kit.mat('#8a5a3a', { roughness: 0.9 });
     const roofM = kit.mat('#6f6c67');
 
@@ -88,36 +107,6 @@ export default {
       for (let k = 1; k < 3; k++) g2.fillRect(x + (k * w) / 3 - 1, y, 2, h);
       g2.fillRect(x, y + h * 0.62, w, 2);
     };
-    // Long elevation (one tile = 4 bays x one 3-storey group): two flat storeys with
-    // cedar-lined recessed balconies alternating with glazing, then the narrow
-    // corridor storey with its strip of small windows.
-    const longFace = kit.paintedMaterial('trellick_tower:long', 512, 384, (g2, w, h) => {
-      concBg(g2, w, h, 0.31);
-      const fh = h / 3;
-      for (let bay = 0; bay < 4; bay++) {
-        const x = (bay * w) / 4;
-        // two flat storeys (rows 2 and 1 from top in canvas = lower storeys)
-        for (let s = 0; s < 2; s++) {
-          const y = h - (s + 1) * fh;
-          const balcony = (bay + s) % 2 === 0;
-          if (balcony) {
-            g2.fillStyle = '#5d3b26';
-            g2.fillRect(x + 8, y + 10, w / 4 - 16, fh - 16);
-            g2.fillStyle = '#8b5b3b';
-            g2.fillRect(x + 8, y + 10, w / 4 - 16, 12);
-            win(g2, x + 22, y + 26, w / 4 - 44, fh - 40);
-            g2.fillStyle = '#b5afa4';
-            g2.fillRect(x + 8, y + fh - 26, w / 4 - 16, 10); // balcony parapet
-          } else {
-            win(g2, x + 10, y + 18, w / 4 - 20, fh - 34);
-          }
-        }
-        // corridor storey: small square windows
-        for (let k = 0; k < 3; k++) win(g2, x + 14 + k * 38, 30, 22, fh - 62);
-      }
-      g2.fillStyle = 'rgba(70,66,60,0.6)';
-      for (let s = 0; s <= 3; s++) g2.fillRect(0, s * fh - 2, w, 4);
-    });
     const endFace = kit.paintedMaterial('trellick_tower:end', 256, 384, (g2, w, h) => {
       concBg(g2, w, h, 0.47);
       g2.fillStyle = 'rgba(70,66,60,0.45)';
@@ -201,20 +190,136 @@ export default {
       const [x, y] = W(u, v);
       kit.box(b, m, x, y, z0, du, dv, h, A);
     };
+    const add = (geo, m, u, v, z) => {
+      const [x, y] = W(u, v);
+      b.addGeometry(m, geo, new THREE.Matrix4().makeRotationZ(A).setPosition(x, y, z));
+      geo.dispose();
+    };
+
+    // --- 3D facade kit ----------------------------------------------------------
+    const cedarDark = kit.mat('#6e4329', { roughness: 0.9 });
+    const frameM = kit.mat('#4b4f50', { roughness: 0.5, metalness: 0.4 });
+    const railM = kit.mat('#3a3d3f', { roughness: 0.5, metalness: 0.5 });
+    const pebble = kit.paintedMaterial('trellick_tower:pebble', 128, 128, (g2, w, h) => {
+      const r = kit.rng(0.29);
+      g2.fillStyle = '#b2aa9b';
+      g2.fillRect(0, 0, w, h);
+      for (let k = 0; k < 1400; k++) {
+        const t = 110 + r() * 70;
+        g2.fillStyle = `rgba(${t + 8},${t + 2},${t - 10},0.45)`;
+        g2.beginPath();
+        g2.arc(r() * w, r() * h, 0.8 + r() * 1.6, 0, 7);
+        g2.fill();
+      }
+      g2.fillStyle = 'rgba(70,66,60,0.6)';
+      g2.fillRect(0, 0, w, 2);
+      g2.fillRect(0, 0, 2, h);
+    });
+    const bushConc = kit.paintedMaterial('trellick_tower:bush', 256, 256, (g2, w, h) =>
+      concBg(g2, w, h, 0.61),
+    );
+    // wall quad on a slab face at outward offset d (F.s = outward sign along v)
+    const faceAt = (F, ua, ub, d) => {
+      const v = F.v + F.s * d;
+      return F.s < 0 ? [W(ua, v), W(ub, v)] : [W(ub, v), W(ua, v)];
+    };
+    const panel = (F, ua, ub, z0, z1, d, m) => {
+      const [p, q] = faceAt(F, ua, ub, d);
+      quad(m, p, q, z0, z1, (ub - ua) / 4, (z1 - z0) / 4, z0 / 4);
+    };
+    const vAt = (F, d) => F.v + F.s * d;
+    const win3 = (F, ua, ub, z, d, opts) => {
+      const [p, q] = faceAt(F, ua, ub, d);
+      kit.windowRow(b, p, q, z, {
+        glass: glassM,
+        frame: frameM,
+        sill: conc,
+        head: 'none',
+        depth: 0.1,
+        margin: 0,
+        ...opts,
+      });
+    };
+    const windowCell = (F, ua, ub, z0, z1) => {
+      panel(F, ua, ub, z0, z1, 0, bushConc);
+      win3(F, ua, ub, z0 + 0.85, 0, {
+        count: 1,
+        width: ub - ua - 1.3,
+        height: z1 - z0 - 1.35,
+        bars: 1,
+      });
+    };
+    const balconyCell = (F, ua, ub, z0, z1, D = 1.8) => {
+      const vm = vAt(F, -D / 2),
+        um = (ua + ub) / 2,
+        hh = z1 - z0;
+      panel(F, ua, ub, z0, z1, -D, cedar);
+      win3(F, ua + 0.2, ub - 0.2, z0 + 0.25, -D, {
+        count: 2,
+        width: (ub - ua - 0.9) / 2,
+        height: hh - 0.75,
+        bars: 1,
+        sill: frameM,
+      });
+      for (const u of [ua + 0.12, ub - 0.12]) box(u, vm, z0, 0.24, D, hh, cedar);
+      box(um, vm, z1 - 0.22, ub - ua, D, 0.22, cedarDark); // cedar-boarded soffit
+      box(um, vm, z0, ub - ua, D, 0.18, concDark); // balcony floor
+      box(um, vAt(F, -0.12), z0, ub - ua - 0.1, 0.24, 1.05, conc); // concrete upstand
+      box(um, vAt(F, -0.12), z0 + 1.05, ub - ua - 0.1, 0.12, 0.06, railM);
+    };
+    const corridorCell = (F, ua, ub, z0, z1) => {
+      panel(F, ua, ub, z0, z1, 0, pebble);
+      win3(F, ua, ub, z0 + 1.2, 0.0, { count: 2, width: 0.7, height: 1.0, bars: 0, margin: 0.6 });
+    };
 
     // --- Main slab -------------------------------------------------------------
-    const bays = (len, bw) => Math.max(1, Math.round(len / bw)) / 4;
-    lbox(slab, BASE, BASE + 9 * GROUP, [longFace, endFace, longFace, endFace], (k, len) =>
-      k % 2 === 0 ? [bays(len, 5.4), 9, 0] : [1, 9, 0],
-    );
+    const NB = 11,
+      bw = (slab.u1 - slab.u0) / NB;
+    const FS = { v: slab.v0, s: -1 },
+      Nf = { v: slab.v1, s: 1 };
+    const ST = GROUP / 3;
+    for (let k = 0; k < 9; k++) {
+      for (let s = 0; s < 3; s++) {
+        const z0 = BASE + k * GROUP + s * ST,
+          z1 = z0 + ST;
+        const corridor = s === 2;
+        const maisonette = k === 7; // floors 23-24: changed balcony rhythm
+        for (let j = 0; j < NB; j++) {
+          const ua = slab.u0 + j * bw,
+            ub = ua + bw;
+          // south elevation: every flat behind a balcony, chequered with bedroom windows
+          const balS = maisonette ? j % 3 !== 2 : corridor ? j % 2 === 1 : (j + s) % 2 === 0;
+          (balS ? balconyCell : windowCell)(FS, ua, ub, z0, z1);
+          // north elevation: precast panels along the access corridors, kitchen balconies
+          if (corridor) corridorCell(Nf, ua, ub, z0, z1);
+          else if (j % 4 === 1 && s === 0) balconyCell(Nf, ua, ub, z0, z1, 1.1);
+          else windowCell(Nf, ua, ub, z0, z1);
+        }
+      }
+    }
+    // slab ends: blank bush-hammered concrete with the narrow window slot per group
+    for (const [p, q] of [
+      [W(slab.u0, slab.v1), W(slab.u0, slab.v0)],
+      [W(slab.u1, slab.v0), W(slab.u1, slab.v1)],
+    ])
+      quad(endFace, p, q, BASE, BASE + 9 * GROUP, 1, 9, 0);
     // top storey / parapet band and roof
     lbox(
       { u0: slab.u0 - 0.2, u1: slab.u1 + 0.2, v0: slab.v0 - 0.2, v1: slab.v1 + 0.2 },
       BASE + 9 * GROUP,
       TOP,
-      [conc, conc, conc, conc],
+      [bushConc, bushConc, bushConc, bushConc],
       null,
       roofM,
+    );
+    box(
+      (slab.u0 + slab.u1) / 2,
+      (slab.v0 + slab.v1) / 2,
+      TOP,
+      slab.u1 - slab.u0 + 0.4,
+      slab.v1 - slab.v0 + 0.4,
+      0.35,
+      conc,
     );
     // recessed glazed ground floor under the slab with pilotis
     lbox({ u0: slab.u0 + 1.2, u1: slab.u1 - 1.2, v0: slab.v0 + 1.2, v1: slab.v1 - 1.2 }, 0, BASE, [
@@ -223,29 +328,60 @@ export default {
       glassM,
       glassM,
     ]);
-    for (let u = slab.u0 + 0.6; u <= slab.u1 - 0.5; u += (slab.u1 - slab.u0 - 1.2) / 6)
-      for (const v of [slab.v0 + 0.6, slab.v1 - 0.6]) box(u, v, 0, 1.0, 1.0, BASE, concDark);
-    // horizontal floor-slab lips every group, vertical cross-wall fins
-    for (let k = 0; k <= 9; k++) {
-      const z = BASE + k * GROUP - 0.25;
-      for (const v of [slab.v0 - 0.25, slab.v1 + 0.25])
-        box((slab.u0 + slab.u1) / 2, v, z, slab.u1 - slab.u0 + 0.5, 0.5, 0.5, conc);
+    box(
+      (slab.u0 + slab.u1) / 2,
+      (slab.v0 + slab.v1) / 2,
+      BASE - 0.6,
+      slab.u1 - slab.u0,
+      slab.v1 - slab.v0,
+      0.6,
+      conc,
+    );
+    for (let j = 0; j <= NB; j += 2)
+      for (const v of [slab.v0 + 0.6, slab.v1 - 0.6])
+        box(slab.u0 + j * bw, v, 0, 0.9, 1.1, BASE - 0.6, concDark);
+    // floor-slab lips at each storey, deeper at the corridor levels; cross-wall fins
+    for (let k = 0; k <= 27; k++) {
+      const z = BASE + k * ST - 0.15;
+      const deep = k % 3 === 0;
+      for (const v of [slab.v0 - 0.15, slab.v1 + 0.15])
+        box(
+          (slab.u0 + slab.u1) / 2,
+          v,
+          z,
+          slab.u1 - slab.u0 + 0.6,
+          deep ? 0.55 : 0.3,
+          deep ? 0.4 : 0.25,
+          conc,
+        );
     }
-    const nf = 8;
-    for (let k = 0; k <= nf; k++) {
-      const u = slab.u0 + ((slab.u1 - slab.u0) * k) / nf;
-      for (const v of [slab.v0 - 0.3, slab.v1 + 0.3]) box(u, v, BASE, 0.45, 0.6, 9 * GROUP, conc);
+    for (let j = 0; j <= NB; j++) {
+      const u = slab.u0 + j * bw;
+      for (const v of [slab.v0 - 0.2, slab.v1 + 0.2]) box(u, v, BASE, 0.35, 0.5, 9 * GROUP, conc);
     }
     // roof plant / lift motor rooms
-    box(slab.u0 + 8, (slab.v0 + slab.v1) / 2, TOP, 6, 6, 2.5, concDark);
-    box(slab.u1 - 8, (slab.v0 + slab.v1) / 2, TOP, 5, 5, 2, concDark);
+    box(slab.u0 + 8, (slab.v0 + slab.v1) / 2, TOP + 0.35, 6, 6, 2.5, concDark);
+    box(slab.u1 - 8, (slab.v0 + slab.v1) / 2, TOP + 0.35, 5, 5, 2, concDark);
 
     // --- Podium on the south-west side ------------------------------------------
     lbox(pod, 0, 7.2, [glassM, conc, conc, conc], (k, len) => [len / 4, 7.2 / 4], roofM);
     box((pod.u0 + pod.u1) / 2, pod.v0 - 0.2, 5.6, pod.u1 - pod.u0, 0.5, 1.6, conc);
+    {
+      const F = { v: pod.v0, s: -1 };
+      for (let u = pod.u0 + 0.5; u < pod.u1 - 0.5; u += 4.2) {
+        box(u, pod.v0 - 0.15, 0, 0.35, 0.35, 5.6, concDark);
+        win3(F, u + 0.25, Math.min(u + 4.0, pod.u1 - 0.4), 0.4, 0.06, {
+          count: 1,
+          width: 3.3,
+          height: 4.0,
+          bars: 1,
+        });
+      }
+      box((pod.u0 + pod.u1) / 2, pod.v0 - 1.4, 4.4, pod.u1 - pod.u0, 2.6, 0.25, conc); // canopy
+    }
 
     // --- Service tower -----------------------------------------------------------
-    lbox(svc, 0, TOP, [svcFace, svcFace, conc, svcFace], (k, len) => [1, 9, 0], roofM);
+    lbox(svc, 0, TOP, [svcFace, svcFace, bushConc, svcFace], (k, len) => [1, 9, 0], roofM);
     for (let k = 0; k <= 9; k++)
       box(
         (svc.u0 + svc.u1) / 2,
@@ -256,46 +392,128 @@ export default {
         0.3,
         concDark,
       );
-    // Boiler house: cantilevered plant room with ribbed walls and a jutting nose.
+    // staggered narrow stair and lift-lobby slot windows on the three free faces
+    for (let st = 1; st < 30; st++) {
+      const z = BASE + st * ST + 0.6;
+      const off = st % 2 ? 0.25 : -0.25;
+      const vm = (svc.v0 + svc.v1) / 2,
+        um = (svc.u0 + svc.u1) / 2;
+      box(svc.u0 - 0.05, vm + off * 4, z, 0.12, 0.55, 1.9, glassM);
+      box(svc.u0 - 0.12, vm + off * 4, z - 0.12, 0.25, 0.9, 0.12, conc);
+      for (const v of [svc.v0 - 0.05, svc.v1 + 0.05]) {
+        box(um + off * 6, v, z, 0.55, 0.12, 1.9, glassM);
+        box(um + off * 6, v, z - 0.12, 0.9, 0.25, 0.12, conc);
+      }
+    }
+    // Boiler house: two-storey plant room cantilevered beyond the service tower like a
+    // ship's bridge, ribbed walls, louvre bands, raked brackets and flue head.
     const bh = { u0: svc.u0 - 3.2, u1: svc.u1 + 0.4, v0: svc.v0 - 1.5, v1: svc.v1 + 1.5 };
-    lbox(bh, TOP - 1, TOP + 5.5, [conc, conc, conc, conc], null, roofM);
+    lbox(bh, TOP - 1, TOP + 2.8, [bushConc, bushConc, bushConc, bushConc], null, roofM);
+    const bh2 = { u0: bh.u0 + 0.8, u1: bh.u1 - 0.4, v0: bh.v0 + 0.6, v1: bh.v1 - 0.6 };
+    lbox(bh2, TOP + 2.8, TOP + 6.2, [bushConc, bushConc, bushConc, bushConc], null, roofM);
+    box(
+      (bh.u0 + bh.u1) / 2,
+      (bh.v0 + bh.v1) / 2,
+      TOP - 1.4,
+      bh.u1 - bh.u0 + 0.4,
+      bh.v1 - bh.v0 + 0.4,
+      0.4,
+      conc,
+    );
+    box(
+      (bh.u0 + bh.u1) / 2,
+      (bh.v0 + bh.v1) / 2,
+      TOP + 2.6,
+      bh.u1 - bh.u0 + 0.5,
+      bh.v1 - bh.v0 + 0.5,
+      0.35,
+      conc,
+    );
+    box(
+      (bh2.u0 + bh2.u1) / 2,
+      (bh2.v0 + bh2.v1) / 2,
+      TOP + 6.2,
+      bh2.u1 - bh2.u0 + 0.4,
+      bh2.v1 - bh2.v0 + 0.4,
+      0.35,
+      conc,
+    );
+    // vertical ribs on the cantilevered nose and sides
     for (let k = 0; k <= 10; k++) {
       const v = bh.v0 + ((bh.v1 - bh.v0) * k) / 10;
-      box(bh.u0 - 0.25, v, TOP - 1, 0.5, 0.35, 6.5, concDark);
+      box(bh.u0 - 0.25, v, TOP - 1, 0.5, 0.35, 3.6, concDark);
+      box(
+        bh2.u0 - 0.2,
+        v * 0.92 + ((bh.v0 + bh.v1) / 2) * 0.08,
+        TOP + 2.95,
+        0.4,
+        0.3,
+        3.2,
+        concDark,
+      );
     }
-    for (const v of [bh.v0 + 2, bh.v1 - 2]) box(bh.u0 - 1.2, v, TOP + 0.5, 2.4, 1.2, 4, conc);
-    box((bh.u0 + bh.u1) / 2, (bh.v0 + bh.v1) / 2, TOP + 5.5, 4, 3, 1.5, concDark); // flue head
+    for (let k = 0; k <= 8; k++) {
+      const u = bh.u0 + ((bh.u1 - bh.u0) * k) / 8;
+      for (const v of [bh.v0 - 0.2, bh.v1 + 0.2]) box(u, v, TOP - 1, 0.35, 0.4, 3.6, concDark);
+    }
+    // louvre bands (horizontal slats) on the upper plant level
+    for (let z = TOP + 3.4; z < TOP + 5.8; z += 0.4) {
+      box(bh2.u0 - 0.1, (bh2.v0 + bh2.v1) / 2, z, 0.2, bh2.v1 - bh2.v0 - 1.2, 0.12, railM);
+      for (const v of [bh2.v0 - 0.08, bh2.v1 + 0.08])
+        box((bh2.u0 + bh2.u1) / 2, v, z, bh2.u1 - bh2.u0 - 1.2, 0.16, 0.12, railM);
+    }
+    // the "bridge" windows looking out from the cantilevered nose
+    box(bh.u0 - 0.06, (bh.v0 + bh.v1) / 2, TOP + 0.6, 0.1, bh.v1 - bh.v0 - 2, 1.0, glassM);
+    // flue head and stacks
+    box((bh2.u0 + bh2.u1) / 2, (bh2.v0 + bh2.v1) / 2, TOP + 6.55, 4, 3, 1.6, concDark);
+    for (const dv of [-0.8, 0.8])
+      add(
+        new THREE.CylinderGeometry(0.35, 0.35, 2.2, 10).rotateX(Math.PI / 2),
+        railM,
+        (bh2.u0 + bh2.u1) / 2 + 0.6,
+        (bh2.v0 + bh2.v1) / 2 + dv,
+        TOP + 8.6,
+      );
     // tapering brackets under the boiler house overhang
-    for (const v of [bh.v0 + 1, bh.v1 - 1]) {
-      const geo = new THREE.BufferGeometry();
+    for (const v of [bh.v0 + 1, (bh.v0 + bh.v1) / 2, bh.v1 - 1]) {
       const p0 = W(svc.u0, v),
         p1 = W(bh.u0, v);
       const verts = [
-        [p0[0], p0[1], TOP - 7],
-        [p1[0], p1[1], TOP - 1],
-        [p0[0], p0[1], TOP - 1],
+        [p0[0], p0[1], TOP - 8],
+        [p1[0], p1[1], TOP - 1.4],
+        [p0[0], p0[1], TOP - 1.4],
       ];
+      const off = [Math.sin(A) * 0.25, -Math.cos(A) * 0.25];
+      for (const sg of [-1, 1]) {
+        const vv = verts.map(([x, y, z]) => [x + off[0] * sg, y + off[1] * sg, z]);
+        b.add(
+          conc,
+          vv,
+          [
+            [0, 0],
+            [1, 1],
+            [0, 1],
+          ],
+          sg > 0 ? [0, 1, 2] : [0, 2, 1],
+        );
+      }
+      const P0 = [verts[0], verts[1]].map(([x, y, z]) => [x, y, z]);
       b.add(
-        conc,
-        verts,
+        concDark,
+        [
+          [P0[0][0] - off[0], P0[0][1] - off[1], P0[0][2]],
+          [P0[0][0] + off[0], P0[0][1] + off[1], P0[0][2]],
+          [P0[1][0] + off[0], P0[1][1] + off[1], P0[1][2]],
+          [P0[1][0] - off[0], P0[1][1] - off[1], P0[1][2]],
+        ],
         [
           [0, 0],
+          [1, 0],
           [1, 1],
           [0, 1],
         ],
-        [0, 1, 2],
+        [0, 1, 2, 0, 2, 3, 0, 2, 1, 0, 3, 2],
       );
-      b.add(
-        conc,
-        verts,
-        [
-          [0, 0],
-          [1, 1],
-          [0, 1],
-        ],
-        [0, 2, 1],
-      );
-      geo.dispose();
     }
 
     // --- Bridges every third storey (corridor level of each group) ---------------
@@ -304,10 +522,41 @@ export default {
     for (let k = 0; k < 9; k++) {
       const z = BASE + k * GROUP + GROUP * (2 / 3);
       const br = { u0: svc.u1 - 0.1, u1: slab.u0 + 0.1, v0: bv0, v1: bv1 };
-      lbox(br, z - 0.4, z + GROUP / 3, [conc, conc, conc, conc], null, conc);
-      // slot window along the bridge
-      for (const v of [bv0 - 0.06, bv1 + 0.06])
-        box((br.u0 + br.u1) / 2, v, z + 0.7, br.u1 - br.u0 - 1, 0.1, 1.0, glassM);
+      lbox(br, z - 0.4, z + GROUP / 3 - 0.3, [bushConc, bushConc, bushConc, bushConc], null, conc);
+      // glazed slot along the bridge with mullions, neoprene joint bands at each end
+      for (const v of [bv0 - 0.06, bv1 + 0.06]) {
+        box((br.u0 + br.u1) / 2, v, z + 0.8, br.u1 - br.u0 - 1, 0.1, 1.0, glassM);
+        for (let u = br.u0 + 0.5; u <= br.u1 - 0.4; u += 1.1)
+          box(u, v + (v < bv0 ? -0.03 : 0.03), z + 0.8, 0.08, 0.1, 1.0, frameM);
+        box(
+          (br.u0 + br.u1) / 2,
+          v + (v < bv0 ? -0.05 : 0.05),
+          z + 0.7,
+          br.u1 - br.u0 - 0.8,
+          0.14,
+          0.12,
+          conc,
+        );
+      }
+      for (const u of [br.u0 + 0.15, br.u1 - 0.15])
+        box(u, (bv0 + bv1) / 2, z - 0.4, 0.3, bv1 - bv0 + 0.1, GROUP / 3 - 0.1, railM);
+    }
+
+    // --- Entrance surroundings ------------------------------------------------------
+    if (placeAssets) {
+      const head = (du, dv) => Math.atan2(-(du * ca - dv * sa), du * sa + dv * ca);
+      const lamps = [],
+        bollards = [],
+        benches = [];
+      for (let u = slab.u0 + 2; u < slab.u1; u += 11)
+        lamps.push([...W(u, slab.v1 + 6), head(0, 1)]);
+      for (let u = svc.u0; u < svc.u1 + 1; u += 1.6)
+        bollards.push([...W(u, svc.v1 + 4), head(0, 1)]);
+      for (const u of [slab.u0 + 6, slab.u0 + 16, slab.u0 + 26])
+        benches.push([...W(u, slab.v1 + 4), head(0, -1)]);
+      g.add(placeAssets('street_lamp', lamps, { name: 'trellick_tower:lamps' }));
+      g.add(placeAssets('bollard', bollards, { name: 'trellick_tower:bollards' }));
+      g.add(placeAssets('bench', benches, { name: 'trellick_tower:benches' }));
     }
     g.add(b.toGroup('trellick_tower'));
     return g;
