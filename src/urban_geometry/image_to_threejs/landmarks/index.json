@@ -320,6 +320,33 @@
     "notes": "Outline from Overture; the old building is taken as the west arm of the U-shaped footprint (west of the piazza line) and the rest as the Peel wing / link extension. Old BH heights: 24.2 m (Overture) to the main parapet, then two set-back storeys to 31.5 m and the clock stage to ~33 m - set-back depths are estimated. The lattice mast, clock and Gill group are schematic. The Peel wing is drawn at a single 24.2 m height (the 16.8 m part lies inside the taller part in the source data)."
   },
   {
+    "id": "bbc_studios_stage_6",
+    "name": "BBC Studios (Stage 6, 1 Television Centre)",
+    "claims": [
+      "006fded0-8393-46e9-b517-8b0726dbeae3",
+      "55853097-e588-4d8d-9e8b-1ec17b15bc0f",
+      "67873c1d-32b4-4a8c-b992-77d3e8c4ce4b"
+    ],
+    "references": [
+      {
+        "title": "Television Centre, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Television_Centre,_London",
+        "used_for": "BBC Studios leasing back Stage 6 (former BBC News) as offices; Television Centre redevelopment"
+      },
+      {
+        "title": "Publicis Media moves to Television Centre - Knight Frank",
+        "url": "https://knightfrank.com/blog/amp/2018/05/15/publicis-media-moves-to-television-centre",
+        "used_for": "1 Television Centre: nine floors of offices behind a new facade of brick and expansive glazing; AHMM and Duggan Morris; BBC Worldwide move 2015"
+      },
+      {
+        "title": "Television Centre BBC Studios - AHMM",
+        "url": "https://www.ahmm.co.uk/projects/reuse/television-centre-bbc-studios/",
+        "used_for": "AHMM refurbishment approach (stripping back to expose concrete and brick structure)"
+      }
+    ],
+    "notes": "Identification of these three overlapping Overture footprints (labelled \"BBC Studios\") with Stage 6 / 1 Television Centre is from their position at the north-east corner of the site. Overture heights (10 / 23 / 20 m) are inconsistent; modelled as seven storeys (4.5 m + 6 x 3.6 m, ~27 m) with the plant storey making up the \"nine floors\". Brick colour, pier rhythm, the drum glazing and roof plant are assumptions."
+  },
+  {
     "id": "bbc_television_centre",
     "name": "BBC Television Centre",
     "claims": [
@@ -461,6 +488,31 @@
       }
     ],
     "notes": "Imperial gives 1914 for the completion of the department's new building in Prince Consort Road, taken here as the Bone Building; its elevation is not documented in the sources found. Red brick with Portland stone plinth, string course, window surrounds, modillion cornice and a stone doorcase is an assumption matched to the pre-war Imperial laboratory buildings; the later BMJ refurbishment (overcladding/render) is not represented. Height from the footprint record (13.6 m, 4 floors)."
+  },
+  {
+    "id": "broadcast_centre",
+    "name": "Broadcast Centre",
+    "claims": [
+      "62687cd9-7abb-44c6-81d0-cf3c417675ab"
+    ],
+    "references": [
+      {
+        "title": "White City Place - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/White_City_Place",
+        "used_for": "Allies and Morrison / Buro Happold / Bovis Lend Lease, opened 2004; 1908 athletes inscribed on the Broadcast Centre, finish line in the paving"
+      },
+      {
+        "title": "And now from the BBC - Building",
+        "url": "https://www.building.co.uk/focus/and-now-from-the-bbc-/3032924.article",
+        "used_for": "west/south facades fronted by projecting banks of louvred sunscreens; east (piazza) facades alternate storey-height glazing with narrow louvre strips that act as smoke vents"
+      },
+      {
+        "title": "BBC Media Village - Cayford",
+        "url": "https://www.cayford.com/work/bbc-media-village/",
+        "used_for": "Broadcast Centre as the BBC playout facility; RIBA award 2005"
+      }
+    ],
+    "notes": "Storey split (4.4 m ground + 5 x 3.12 m to the 20 m Overture height) is assumed. The sunscreen bank depth (1.3 m), blade pitch, outrigger spacing and the louvre-strip rhythm on the piazza side (3.0 m glass / 0.9 m louvre) are estimates of the described system, not measured. The inscription band is a painted stand-in for the athletes list. Roof plant and the finish-line strip position are approximate."
   },
   {
     "id": "brompton_cemetery",
@@ -976,6 +1028,36 @@
     "notes": "Storey heights (ground 3.8 m above a 1 m basement plinth, then 4.0/3.4/3.0/2.8 m) and a steep slated roof with dormers and tall stacks are assumptions in keeping with the listing (roof storey); Overture 14.8 m is too low. The loggia is modelled over ground and first floors with Tuscan columns and round arches; bay widths, the rear range down the service road and the flag are assumptions."
   },
   {
+    "id": "exhibition_white_city",
+    "name": "Exhibition White City (Dimco Buildings)",
+    "claims": [
+      "8421dc8d-3655-4ad8-8aa5-0eaa3173edd8"
+    ],
+    "references": [
+      {
+        "title": "Dimco Machine Tools - Historic England list entry 1079757",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1079757",
+        "used_for": "Grade II; 1898-9 for the Central London Railway, Harry Bell Measures / H. F. Parshall; red and pink brick, iron roofs, stone coping; two gable-ended sheds, boiler house west, generating house east"
+      },
+      {
+        "title": "Dimco Buildings - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Dimco_Buildings",
+        "used_for": "pair of 19th-century buildings; closed as a power station 1928; Dimco tools; bus station built around them"
+      },
+      {
+        "title": "Exhibition White City - VenueScanner",
+        "url": "https://www.venuescanner.com/gb/venues/london/white-city/book/exhibition-white-city",
+        "used_for": "restored Victorian engine house at Ariel Way within Westfield London"
+      },
+      {
+        "title": "Exhibition White City, First Floor - VenueScanner",
+        "url": "https://venuescanner.com/white-city/exhibition-white-city/first-floor",
+        "used_for": "high ceilings with exposed roof trusses and original crane structure, tiled walls, factory arch windows"
+      }
+    ],
+    "notes": "Shed split taken from the footprint (east block 28 x 62 m, west block 27 x 46 m). Eaves (10.5 / 9.5 m) and ridge (15.5 / 14 m) heights are estimates around the 14 m Overture height. Pilaster bay spacing, the round-arched windows, the stone bands, the ridge ventilator on the generating house and the slate-grey colour of the iron roofs are assumptions from the listing summary and venue descriptions, not traced from photographs."
+  },
+  {
     "id": "faculty_building",
     "name": "Faculty Building",
     "claims": [
@@ -1029,6 +1111,66 @@
       }
     ],
     "notes": "Footprint and 4 storeys / 13.6 m from the data. No description found; brick, ribbon glazing and the glazed stair tower are generic."
+  },
+  {
+    "id": "gateway_central",
+    "name": "Gateway Central",
+    "claims": [
+      "e1da6d1d-896b-43e5-b5b1-1e0cc3f02d53"
+    ],
+    "references": [
+      {
+        "title": "Gateway Central - Allies and Morrison",
+        "url": "https://www.alliesandmorrison.com/projects/gateway-central",
+        "used_for": "glossy white aluminium fins and shelves proud of anodised spandrels and darker textured panels; scalloped fin bottoms; two south-facing terraces where the building steps back"
+      },
+      {
+        "title": "White City Place Gateway Central - AKT II",
+        "url": "https://www.akt-uk.com/projects/white-city-place-gateway-central/",
+        "used_for": "massing progressively steps back across the upper floors; retail at ground level"
+      },
+      {
+        "title": "Gateway Central - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/10073/london-w12/195-wood-lane/gateway-central",
+        "used_for": "11 storeys, terraces on levels 4 and 8, 195 Wood Lane"
+      },
+      {
+        "title": "Beauty giant L'Oreal unveils new headquarters in White City - LBHF",
+        "url": "https://lbhf.gov.uk/news/2023/10/beauty-giant-loreal-unveils-new-headquarters-white-city",
+        "used_for": "L'Oreal UK & Ireland HQ in Gateway Central"
+      }
+    ],
+    "notes": "Footprint e1da6d1d (unnamed in Overture, h=11.7 m from the construction period) identified as Gateway Central from its position beside MediaWorks on Arrival Square. 11 storeys modelled as 5.2 m ground + 10 x 3.9 m (~45 m, no published height). Terrace setback depths (12 m and 24 m from the south face), fin pitch (3 m), shelf projection, spandrel colours and the scallop (a shallower lower third of each fin) are estimates."
+  },
+  {
+    "id": "gateway_west",
+    "name": "Gateway West",
+    "claims": [
+      "c4732827-f0e3-4bff-9f10-a928e761603e"
+    ],
+    "references": [
+      {
+        "title": "Gateway West - Gort Scott",
+        "url": "https://gortscott.com/projects/gateway-west",
+        "used_for": "sculpted rock-like anchor, masonry facades recalling the brick of the neighbouring estates, irregular layered planes and asymmetric gables"
+      },
+      {
+        "title": "Gateway West / Gateway Central - Architecture Today",
+        "url": "https://architecturetoday.co.uk/gateway-west-gateway-central/",
+        "used_for": "four-storey brick and ceramic office building at the west edge of White City Place"
+      },
+      {
+        "title": "Gateway West - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/10653/england/london-w12/wood-lane/gateway-west",
+        "used_for": "4 storeys, ~25,000 sq ft, completed 2022"
+      },
+      {
+        "title": "Gateway West - New London Architecture",
+        "url": "https://nla.london/projects/gateway-west",
+        "used_for": "3,800 sq m; Stanhope, AKT II, Sir Robert McAlpine"
+      }
+    ],
+    "notes": "Footprint c4732827 (unnamed, Overture h=10 m) identified as Gateway West from its position at the western edge of the Gateway site and its ~950 m2 plate (3,800 m2 / 4 floors). Height (4 x 3.6 m to the eaves plus gables up to ~19 m), the gable rhythm across the long axis, the brick colour (warm red-brown) and the cream glazed-ceramic window reveals/ground-floor piers are assumptions; no photographs were available."
   },
   {
     "id": "grosvenor_bridge",
@@ -1978,6 +2120,66 @@
     "notes": "Plan from the Overture outline (chapel, portico bay, two L-shaped colonnade wings). Heights (cornice 10 m, pediment apex 13.5 m, colonnades 7 m) and column counts are estimates; the westward return arms are shown as lower colonnaded walks. 3D detail: baseless fluted Doric columns with necking, echinus and abacus; triglyphs, taenia, bed moulding, corona and cymatium on every entablature; pilasters on the walls; raking cornices, palmette acroteria and eaves antefixes (the listing mentions anthemia; their exact positions are assumed); doorway with architrave and consoles; podium steps; ribbed lead dome with a small lantern (assumed). Surrounding monuments are a deterministic scatter of generic headstones and chest tombs kept off mapped paths, not a survey; catacomb entrances are omitted"
   },
   {
+    "id": "kensington_aldridge_academy",
+    "name": "Kensington Aldridge Academy",
+    "claims": [
+      "17b9f967-c0b6-49bd-99f4-28d551ad57ef"
+    ],
+    "references": [
+      {
+        "title": "Top marks for Metalline at BREEAM Excellent rated Academy - Specification Online",
+        "url": "https://mail.specificationonline.co.uk/articles/2016-03-23/top-marks-for-metalline-at-breeam-excellent-rated-academy",
+        "used_for": "2,000+ insulated aluminium panels in reed green, pastel green, light green and mint turquoise; Studio E; BREEAM Excellent"
+      },
+      {
+        "title": "Kawneer helps academy to BREEAM excellence - The Construction Index",
+        "url": "https://www.theconstructionindex.co.uk/news/view/kawneer-helps-academy-to-breeam-excellence",
+        "used_for": "aluminium curtain walling and windows"
+      },
+      {
+        "title": "Billington Structures - KAA",
+        "url": "https://billington-structures.co.uk/?p=1594",
+        "used_for": "steel frame with long-span floor beams; sports hall on lattice trusses"
+      },
+      {
+        "title": "Leadbitter Group to build new academy and leisure centre - Building",
+        "url": "https://www.building.co.uk/news/green-light-for-58m-west-london-academy/5043469.article",
+        "used_for": "academy and leisure centre built together by Leadbitter"
+      }
+    ],
+    "notes": "Overture h=9.6 m is too low for a four-storey secondary school; modelled as four storeys (4.2 m + 3 x 3.7 m, ~16 m). Panel module (1.5 m x storey), the random distribution of the four greens, window ribbons and the roof plant are assumptions; the RAL names were matched to approximate hex values."
+  },
+  {
+    "id": "kensington_leisure_centre",
+    "name": "Kensington Leisure Centre",
+    "claims": [
+      "5567e08b-3837-44f7-81ab-f723a1c20925"
+    ],
+    "references": [
+      {
+        "title": "Kensington Leisure Centre - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Kensington_Leisure_Centre",
+        "used_for": "Studio E, built with the Kensington Aldridge Academy on former Lancaster West estate land; run by Better"
+      },
+      {
+        "title": "Kensington Leisure Centre - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/4201/england/london-w10/silchester-road/kensington-leisure-centre",
+        "used_for": "25 m eight-lane pool, 20 m teaching pool, leisure pool, 120-station gym, eight-court hall; opened March 2015"
+      },
+      {
+        "title": "Green light for Kensington leisure centre - CLAD",
+        "url": "https://www.cladglobal.com/CLADnews/architecture-design/Green-light-for-Kensington-leisure-centre/293933",
+        "used_for": "three-storey building, 50-year design life, spectator seating"
+      },
+      {
+        "title": "Billington Structures - KAA and leisure centre steelwork",
+        "url": "https://billington-structures.co.uk/?p=1594",
+        "used_for": "sports hall and pools on universal columns with long-span lattice trusses"
+      }
+    ],
+    "notes": "Overture height 10.4 m kept for the three-storey front; the pool and sports hall volumes are raised to 13 m on the eastern half of the footprint (positions assumed). Facade treatment (white/silver panel cladding with a ribbon of glazing to the pool hall, coloured vertical fins echoing the academy greens, clerestory over the halls) is an assumption: no facade description was found."
+  },
+  {
     "id": "kensington_palace",
     "name": "Kensington Palace and Orangery",
     "claims": [
@@ -2443,6 +2645,31 @@
     "notes": "Grand Hall barrel crown set to 35 m (sources give 115-135 ft), nave span ~50 m within the Overture outline; side aisles 15 m under lean-to glazing. Vault ribs are arched lattice trusses (outer and inner chords with diagonal webs) at ~6.5 m centres - rib spacing and depth are not published in the sources found. National Hall barrel assumed parallel to the Grand Hall, crown 26 m. Hall walls carry real stone plinths, string courses, pilasters, round-arched upper and segmental lower windows per ~6 m bay (rhythm approximate); the Olympia Way entrance front (two storeys of arched windows, central arched entrance with steps, pediment, domed corner pavilions) and the National Hall front to Hammersmith Road (tall glazing-barred windows, glazed ground floor, canopy, OLYMPIA LONDON sign) are reconstructed from listing text, not photographs. The 2026 Heatherwick/SPPARC redevelopment (theatre, hotels, offices, canopy) is not in the footprint data and is not modelled."
   },
   {
+    "id": "one_wood_crescent",
+    "name": "1 Wood Crescent",
+    "claims": [
+      "77563a15-968a-474e-9dc6-e463ebd28b3a"
+    ],
+    "references": [
+      {
+        "title": "1 Wood Crescent completed at Television Centre - Stanhope",
+        "url": "https://www.stanhopeplc.com/latest/1-wood-crescent-completed-at-television-centre",
+        "used_for": "nine storeys, 112,247 sq ft, west side of the Television Centre campus, Morris+Company / Arup / Laing O'Rourke"
+      },
+      {
+        "title": "1 Wood Crescent tops out - Laing O'Rourke",
+        "url": "https://laingorourke.com/company/news/2022/1-wood-crescent-tops-out",
+        "used_for": "construction from March 2021, topped out May 2022"
+      },
+      {
+        "title": "White City scheme designed by Morris + Company - Building",
+        "url": "https://building.co.uk/news/laing-orourke-to-start-work-on-calvin-kleins-new-uk-hq/5110982.article",
+        "used_for": "PVH / Calvin Klein UK HQ; architect Morris+Company"
+      }
+    ],
+    "notes": "Storey split 4.5 m ground + 3.8 m upper floors gives 35 m for nine storeys, matching the Overture part heights (24 m crescent wing = six storeys, 35 m west block). The facade - a grid of terracotta-red precast piers and spandrels with deep reveals, bronze window frames and a recessed double-height ground floor - and the roof terrace on the six-storey wing are assumptions; no photographs or facade descriptions were available."
+  },
+  {
     "id": "paddington_station",
     "name": "London Paddington station and Great Western Royal Hotel",
     "claims": [
@@ -2488,6 +2715,31 @@
       }
     ],
     "notes": "Shed placed in the Overture station outline (217 m from the Lawn to the north-west screens, spans 20.7/31.2/21.3/33.2 m). Springing (9.5 m) and crown heights (16.5-20.5 m), transept positions and roof glazing pattern are estimates; ribs are modelled in 3D at 10 ft (3.05 m) centres with every third on a column (spacing assumed, not sourced), with capping bars, ridge ventilators, arched column brackets and 3D end-screen tracery (arcs, spokes, roundels, mullions) in the spirit of Digby Wyatt; tracery pattern is schematic. The 1999 Lawn roof is a plain glazed canopy. Hotel: 4 storeys (rusticated ground floor, arched/pedimented/segmental/plain window heads per storey), 7-bay centre with 5-bay pedimented break, attic, steep pavilion roof with pedimented dormers, chimneys and cresting, 6-storey angle towers with quoins, balustraded parapets, ogee roofs and lucarnes; heights (eaves 20 m, towers 28 m) estimated from storey counts, window and dormer counts approximate, entrance canopy and pediment figures schematic. Platform 1 range has 3D windows on the Eastbourne Terrace face (13 m, MacMillan House end 20 m). Lamps and bollards on Praed Street / Eastbourne Terrace are generic resources assets at assumed positions."
+  },
+  {
+    "id": "phoenix_brewery",
+    "name": "The Phoenix Brewery",
+    "claims": [
+      "87e58350-95e4-415c-b188-403d5662dbc6"
+    ],
+    "references": [
+      {
+        "title": "Phoenix Brewery, 13 Bramley Road - EG Propertylink",
+        "url": "https://propertylink.estatesgazette.com/property-details/6550215-phoenix-brewery-13-bramley-road",
+        "used_for": "refurbished Victorian warehouse retaining its original facade; tenants; 13 Bramley Road W10 6UX"
+      },
+      {
+        "title": "Phoenix Brewery managed office suites (agent sheet)",
+        "url": "https://s3-eu-west-1.amazonaws.com/agents-society-assets-files/55f37cac55f6af5e6932717df23b4568-phoenix-brewery-managed-office-suites-london-w10.pdf",
+        "used_for": "suites on ground to fifth floors; lift, reception"
+      },
+      {
+        "title": "Office to let, Phoenix Brewery - Primelocation",
+        "url": "https://www.primelocation.com/to-rent/details/74029430/",
+        "used_for": "Latimer Road station ~200 m; managed offices"
+      }
+    ],
+    "notes": "Six storeys in the main block (suites to the fifth floor) at 3.6 m to the 23.2 m Overture height incl. parapet, flat roof with a hipped-roofed lift/tank house; wings three storeys (10.4 m). Brick colour (yellow London stock with red brick dressings), segmental-arched windows, the loading-door bay with hoist beam, the painted name band and the rooftop tank house are generic Victorian brewery details assumed in the absence of photographs or a listing description."
   },
   {
     "id": "princes_gardens_eastside",
@@ -2753,6 +3005,51 @@
       }
     ],
     "notes": "The identification of the Queen's Gate front as converted terrace houses with the Jay Mews extension behind is inferred from the Survey of London account and the stepped (bayed) footprint; no description of the Stevens Building itself was found. The split line (14 m behind the Queen's Gate building line), storey heights (stucco cornice 15.6 m + mansard; extension 16.4 m data height), bay rhythm and materials of the extension are assumptions."
+  },
+  {
+    "id": "rca_white_city",
+    "name": "Royal College of Art, White City (Garden House)",
+    "claims": [
+      "511d69b9-bad2-4e02-a488-17f9e2713950"
+    ],
+    "references": [
+      {
+        "title": "The Royal College of Art is opening a new campus in White City - Time Out",
+        "url": "https://www.timeout.com/london/blog/the-royal-college-of-art-is-opening-a-new-campus-in-white-city-122216",
+        "used_for": "RCA White City hub in the former BBC Media Village"
+      },
+      {
+        "title": "Royal College of Art - White City Campus - Education Snapshots",
+        "url": "https://educationsnapshots.com/projects/2454/royal-college-of-art-white-city-campus/",
+        "used_for": "Garden House: three storeys, 40,000 sq ft, shares a garden with MediaWorks; 1990 core and shell retained; iDEA / Overbury"
+      },
+      {
+        "title": "Royal College of Art sets up creative hub in White City - LBHF",
+        "url": "https://www.lbhf.gov.uk/news/2017/01/royal-college-art-sets-creative-hub-white-city",
+        "used_for": "School of Communication / Humanities move, 201 Wood Lane"
+      }
+    ],
+    "notes": "Three storeys (Overture h=10.4 m) modelled as 4.0 + 2 x 3.4 m plus parapet. The 1990 BBC-era cladding (pale grey aluminium spandrel ribbons with dark glazing, similar to the WestWorks of the same date), the glazed stair/entrance bays and the RCA signage position are assumptions. The garden is shown as a lawn strip along the MediaWorks side."
+  },
+  {
+    "id": "ribbon_w10",
+    "name": "Ribbon W10",
+    "claims": [
+      "cba2adfd-6b35-48c9-b3a4-ee8e612fe7d5"
+    ],
+    "references": [
+      {
+        "title": "The Ribbon Building - Stiff + Trevillion",
+        "url": "https://www.stiffandtrevillion.com/projects/the-ribbon-building",
+        "used_for": "triangular backland site at 136-142 Bramley Road next to the A40 Westway; replaces a 1970s 5-storey podium and block; massing regulated by set-backs and terraces"
+      },
+      {
+        "title": "Bramley Road W10 granted planning consent - Stiff + Trevillion",
+        "url": "https://www.stiffandtrevillion.com/news/bramley-road-w10-granted-planning-consent",
+        "used_for": "planning consent at RBKC, November 2016"
+      }
+    ],
+    "notes": "Five storeys modelled (4.2 m ground + 4 x 3.6 m), the top two set back ~3 m behind planted terraces; Overture h=12 m may record the earlier building. The continuous horizontal \"ribbon\" spandrel bands in pale glazed terracotta with dark-framed glazing are an interpretation of the name; the actual cladding was not found."
   },
   {
     "id": "roderic_hill_ace",
@@ -3366,6 +3663,29 @@
     "notes": "No architectural description of the facades was found; the precast concrete ribbon-window elevation, recessed glazed ground floor and plant rooms follow the 1960s campus style and are approximate. The elevated walkway linking east to the Main Entrance crosses other footprints and is not modelled. Height kept close to the footprint value (main slab 17.5 m, plant to ~20 m). Spandrel bands, mullion module (1.7 m), entrance positions on the Queen's Lawn side, flues and roof rail are indicative. The architect is not confirmed by the sources found; Norman and Dawbarn were the college architects for the 1960s rebuilding."
   },
   {
+    "id": "silchester_towers",
+    "name": "Silchester Estate towers (Frinstead, Markland, Dixon, Whitstable Houses)",
+    "claims": [
+      "91af52b9-22fb-44ad-92a4-eefdb987ab43",
+      "91556969-b154-4f73-97a7-3bdd0311d247",
+      "a0290a3a-8a9b-494e-825e-04c6e776be83",
+      "861dab50-9676-431c-937d-e375643d254f"
+    ],
+    "references": [
+      {
+        "title": "Latimer Road and Silchester Road - Tower Block (University of Edinburgh)",
+        "url": "https://www.towerblock.eca.ed.ac.uk/node/55081.html",
+        "used_for": "Frinstead House and Whitstable House: 22-storey blocks, Latimer Estate, W10"
+      },
+      {
+        "title": "Silchester Road, Stage II - Tower Block (University of Edinburgh)",
+        "url": "https://www.towerblock.eca.ed.ac.uk/node/55100.html",
+        "used_for": "Dixon House and Markland House: 22 storeys, 80 dwellings each"
+      }
+    ],
+    "notes": "Heights from the Overture parts (ground 4.5 m, slab bands every 2.67 m to the 57.9 m roof, lift/tank room to 61.7 m), i.e. 21 floors above a tall ground storey (the database counts 22). Facade materials (dark brown brick panels between exposed concrete slab edges, paired windows, recessed corner balconies) and the plant-room position are assumptions; no photographs or descriptions of the elevations were found."
+  },
+  {
     "id": "sir_alexander_fleming_building",
     "name": "Sir Alexander Fleming Building",
     "claims": [
@@ -3778,6 +4098,31 @@
     "notes": "Footprint from the data; height 21 m kept, as 7 storeys (3.8 m ground + 6 x 2.9 m) rather than the data 8 floors. Date and finishes not found: exposed concrete frame with brick infill panels and ribbon glazing are generic."
   },
   {
+    "id": "stadium_house",
+    "name": "Stadium House (Imperial College)",
+    "claims": [
+      "e7f26ce0-8f74-44d3-b130-2706719edab6"
+    ],
+    "references": [
+      {
+        "title": "Stadium House, White City - Imperial Clinical Trials Unit",
+        "url": "https://imperial.ac.uk/clinical-trials-unit/location",
+        "used_for": "68 Wood Lane W12 7RH beside the A40, ICTU main office on the first floor, entrance on Wood Lane after Depot Road"
+      },
+      {
+        "title": "Imperial White City Campus map (PDF)",
+        "url": "https://www.imperial.ac.uk/media/imperial-college/visit/public/WhiteCityCampus.pdf",
+        "used_for": "The Invention Rooms / Stadium House listed together on the campus map"
+      },
+      {
+        "title": "Wood Lane - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Wood_Lane",
+        "used_for": "location on Wood Lane near White City and Wood Lane stations"
+      }
+    ],
+    "notes": "No architectural description was found. Height (three storeys, 10.4 m) follows Overture. The two small courts in the Overture footprint are read as stair/lift cores and modelled as roof stair housings. Buff brick with strip windows, the ground-floor entrance glazing and the Imperial signage are assumptions."
+  },
+  {
     "id": "stamford_bridge",
     "name": "Stamford Bridge (Chelsea FC)",
     "claims": [
@@ -3825,6 +4170,146 @@
       }
     ],
     "notes": "Stand roof heights estimated (West 31 m, East 30 m, Matthew Harding 23 m, Shed End 21 m; Overture gives 7-9 m). Seating is modelled as stepped concrete rows (0.8 m treads) with blue seat strips broken by gangways: two tiers for the Matthew Harding and Shed End, three for the East and West Stands, upper tiers cantilevered over glazed hospitality / box bands; row counts and rakes are fitted to the footprint depth and roof height, not surveyed. Roofs carry a lattice front truss with floodlight luminaires and a translucent leading edge (wider on the West Stand); exterior cladding, the CHELSEA seat lettering on the East Stand lower tier, the dugout / tunnel position in front of the West Stand and the big screens (omitted) are approximate. The Millennium hotel footprint is left to the generic layer."
+  },
+  {
+    "id": "the_mediaworks",
+    "name": "The MediaWorks",
+    "claims": [
+      "10f04b37-d73f-4e24-a5ff-dcd315a1d9d5"
+    ],
+    "references": [
+      {
+        "title": "White City Place - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/White_City_Place",
+        "used_for": "Media Centre (now MediaWorks) part of the 2004 Allies and Morrison / Buro Happold Media Village"
+      },
+      {
+        "title": "Three buildings are latest development at White City Place - BD",
+        "url": "https://www.bdonline.co.uk/consent-for-trio-of-allies-and-morrison-office-buildings-/5090536.article",
+        "used_for": "Allies and Morrison's 2004 MediaWorks refurbished and re-let"
+      },
+      {
+        "title": "OAG facade at West Works / Media Works",
+        "url": "https://www.oag.uk.com/architectural-glass-specialists/oag-facade-unveiled-west-works-old-bbc-studios-white-city/",
+        "used_for": "low-iron atrium glazing, double-height curtain walling and lift lobby screens at Media Works"
+      },
+      {
+        "title": "And now from the BBC - Building",
+        "url": "https://www.building.co.uk/focus/and-now-from-the-bbc-/3032924.article",
+        "used_for": "Media Village facade system: louvred sunscreens west/south, glazing alternating with louvre strips on the piazza"
+      }
+    ],
+    "notes": "Atrium position (along the long axis, ~14 m wide), its sawtooth-free flat glazed roof and the storey split (4.6 m ground + 5 x 2.9 m + parapet to the 20 m Overture height) are assumptions. Facade rhythm reuses the Broadcast Centre system as described for the whole Media Village; louvre depths, outrigger pitch and entrance positions are estimates. Signage is generic."
+  },
+  {
+    "id": "the_studio_building",
+    "name": "The Studio Building",
+    "claims": [
+      "9b8d6a47-576d-43c7-bdd0-cce04d8858ed"
+    ],
+    "references": [
+      {
+        "title": "Studio Building - AHMM",
+        "url": "https://www.ahmm.co.uk/projects/office/studio-building/",
+        "used_for": "white render, strip windows, grey aluminium louvres; stop-end at the northern corner; 54,000 sq ft offices"
+      },
+      {
+        "title": "Office to let, The Studio Building, Notting Dale W11 - Primelocation",
+        "url": "https://www.primelocation.com/to-rent/details/54371738/",
+        "used_for": "seven storeys, 21 Evesham Street W11 4AR, louvres matching the White Building"
+      }
+    ],
+    "notes": "Seven storeys at 4.0 m ground + 6 x 3.1 m plus parapet (Overture 23.2 m). Strip window proportions, the vertical louvre panels between window runs and the ground-floor workshop glazing are assumptions consistent with the description."
+  },
+  {
+    "id": "the_westworks",
+    "name": "The WestWorks",
+    "claims": [
+      "46219c96-8da3-47a2-8094-807542e36258"
+    ],
+    "references": [
+      {
+        "title": "White City Place - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/White_City_Place",
+        "used_for": "BBC White City by Scott Brownrigg & Turner opened 1990 on the 1908 stadium site; renamed WestWorks"
+      },
+      {
+        "title": "Gateway West / Gateway Central - Architecture Today",
+        "url": "https://architecturetoday.co.uk/gateway-west-gateway-central/",
+        "used_for": "former BBC administrative HQ: seven-storey aluminium-clad building"
+      },
+      {
+        "title": "White City Place - Allies and Morrison",
+        "url": "https://www.alliesandmorrison.com/projects/white-city-place",
+        "used_for": "conversion of White City One: original dark glazing, symmetrical plan and formal atrium"
+      },
+      {
+        "title": "OAG facade unveiled at West Works",
+        "url": "https://www.oag.uk.com/architectural-glass-specialists/oag-facade-unveiled-west-works-old-bbc-studios-white-city/",
+        "used_for": "52 m courtyard feature facade, dark blue/grey anodised finish beneath bespoke spandrel cladding; new shopfronts"
+      },
+      {
+        "title": "6,400 jobs to be created in White City Place - FulhamSW6",
+        "url": "https://fulhamsw6.com/page/shepherdsbushw12/info/whitecityplace002.htm",
+        "used_for": "WestWorks improved facade and relocated entrance (2016-17)"
+      }
+    ],
+    "notes": "Seven storeys from the sources; storey split 4.2 m ground + 6 x 2.95 m to the 23.2 m Overture height. Ribbon proportions (spandrel 1.15 m), aluminium colour, the location of the relocated entrance (south-east face, towards the piazza), the courtyard glass roof and its height are assumptions; the 52 m feature facade is placed on the longest courtyard face. Core projections follow the footprint notches and are taken one storey above the roof."
+  },
+  {
+    "id": "the_white_building",
+    "name": "The White Building",
+    "claims": [
+      "90a7fcc3-b9b5-46c6-988c-cbaff6d5a3ef"
+    ],
+    "references": [
+      {
+        "title": "Notting Dale campus brochure (The White Building)",
+        "url": "https://images.loopnet.fr/d2/dxUF_o4u9Hw8gQMSnbx8S39vbAL3n9SmwuhmQnSnuwU/Brochure.pdf",
+        "used_for": "diamond-shaped floorplan, large concrete fins, seven storeys"
+      },
+      {
+        "title": "The George Building tops out - AHMM",
+        "url": "https://www.ahmm.co.uk/news/2018/the-george-building-tops-out/",
+        "used_for": "Yellow Building (phase 1), White and Studio Buildings (phase 2) beside the West Cross Route"
+      },
+      {
+        "title": "Office to let, The Studio Building - Primelocation",
+        "url": "https://www.primelocation.com/to-rent/details/54371738/",
+        "used_for": "grey aluminium louvres shared with the White Building next door"
+      }
+    ],
+    "notes": "Seven storeys plus a set-back plant floor: 4.4 m ground + 6 x 3.3 m (~24 m) with plant to the 26.4 m Overture height. The facets of the footprint stand in for the diamond plan; fin pitch (1.8 m), fin depth (0.9 m), the grey louvre bands at the floor lines and the entrance position are assumptions."
+  },
+  {
+    "id": "the_yellow_building",
+    "name": "The Yellow Building",
+    "claims": [
+      "bb3ed43b-ec16-4777-9151-2aa2c2e9df7c"
+    ],
+    "references": [
+      {
+        "title": "The Yellow Building - AHMM",
+        "url": "https://www.ahmm.co.uk/projects/interiors/the-yellow-building/",
+        "used_for": "seven-storey yellow-striped volume crowned in a saw-tooth roof; landmark on the West Cross Route"
+      },
+      {
+        "title": "The Yellow Building / AHMM - ArchDaily",
+        "url": "https://www.archdaily.com/532912/the-yellow-building-allford-hall-monaghan-morris",
+        "used_for": "diagonal concrete grid wraps the building inside and out; full-height atrium with the main stair; 161,500 sq ft"
+      },
+      {
+        "title": "The Yellow Building - AKT II",
+        "url": "https://www.akt-uk.com/projects/the-yellow-building",
+        "used_for": "in-situ as-struck concrete diagrid giving rigidity without cores"
+      },
+      {
+        "title": "Yellow Building - e-architect",
+        "url": "https://mail.e-architect.com/london/yellow-building",
+        "used_for": "1 Nicholas Road W11, Monsoon Accessorize HQ, completed 2008, phase 1 of Notting Dale Village"
+      }
+    ],
+    "notes": "Seven storeys at 4.6 m ground + 6 x 3.1 m to ~23 m (Overture 23.2 m) with the saw-tooth adding 3.2 m. The stripe treatment (yellow enamelled spandrel bands at every floor), the diagrid pitch (one diagonal per two storeys, ~7.5 m bays), north-facing saw-tooth glazing in five teeth and the atrium size are interpretations of the descriptions, not traced from photos."
   },
   {
     "id": "trellick_tower",
@@ -4038,6 +4523,56 @@
       }
     ],
     "notes": "Mall street layout is taken from the Overture building parts that trace the figure-of-eight (they are unroofed inside the 13.6 m box), so the glass vaults follow those outlines; vault rise (4-5 m), node domes and the lattice pattern are stylised. Upper volumes in the northern extension other than John Lewis are drawn as clad decks. External cladding colours, entrance positions and signage are approximate."
+  },
+  {
+    "id": "westway_sports_centre",
+    "name": "Westway Sports & Fitness Centre",
+    "claims": [
+      "543324f4-8c18-4edc-ba99-2af6930f2529"
+    ],
+    "references": [
+      {
+        "title": "Westway Sports Centre reopens - Health Club Management",
+        "url": "https://www.healthclubmanagement.co.uk/health-club-management-news/Westway-Sports-Centre-reopens/1029",
+        "used_for": "built 1994, extended 2004 after an £8.5m Sport England grant"
+      },
+      {
+        "title": "Westway Sports Centre - Time Out",
+        "url": "https://www.timeout.com/london/sport-fitness/westway-sports-fitness-centre",
+        "used_for": "eight indoor tennis courts, clay courts; climbing centre roofed by the flyover; eight-acre site"
+      },
+      {
+        "title": "Westway Sports & Fitness Centre - Everyone Active",
+        "url": "https://www.everyoneactive.com:443/centre/westway-sports-fitness-centre/",
+        "used_for": "7 indoor acrylic courts, outdoor floodlit clay court, largest climbing wall in London"
+      }
+    ],
+    "notes": "Overture gives only 9 m; an indoor tennis hall needs ~10 m clear, so the hall is modelled with 8.5 m eaves rising to a 12.5 m ridge on a shallow-pitched portal roof (ridge along the long axis), with a lower 2-storey entrance / gym block along the curved south edge. The green profiled-metal cladding, translucent rooflight strips and glazed entrance are assumptions."
+  },
+  {
+    "id": "white_city_energy_centre",
+    "name": "Energy Centre (White City Place)",
+    "claims": [
+      "a6dccd2a-eba6-4062-bbbf-03695c841495"
+    ],
+    "references": [
+      {
+        "title": "White City Place - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/White_City_Place",
+        "used_for": "Energy Centre part of the 2004 Media Village; Olympic rings marking the 1908 marathon finish, plaque by Jacques Rogge 2005; pre-let to the BBC"
+      },
+      {
+        "title": "White City Stadium - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/White_City_Stadium",
+        "used_for": "1908 marathon from Windsor Castle to the White City stadium finish"
+      },
+      {
+        "title": "And now from the BBC - Building",
+        "url": "https://www.building.co.uk/focus/and-now-from-the-bbc-/3032924.article",
+        "used_for": "Media Village facade family (glazing alternating with louvre strips)"
+      }
+    ],
+    "notes": "Height 13.6 m / four storeys from Overture. The plant-room character (full-height louvre panels on the upper floors, flues above the roof), the exact position and size of the Olympic rings and the rounded north-east end treatment are inferred rather than traced from photographs."
   },
   {
     "id": "white_city_station",
