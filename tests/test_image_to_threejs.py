@@ -10,7 +10,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from urban_geometry.image_to_threejs import fetch_overture, prepare_scene
+from urban_geometry.image_to_threejs import (
+    check_conflicts,
+    fetch_overture,
+    prepare_scene,
+    resolve_conflicts,
+)
 
 SQUARE_CW = [[0, 0], [0, 10], [6, 10], [6, 0], [0, 0]]
 
@@ -153,7 +158,7 @@ class PrepareCommandTest(unittest.TestCase):
                     }
                 ],
                 "land": [
-                    {"id": "t", "geometry": {"type": "Point", "point": [3, 3]}, "subtype": "tree"}
+                    {"id": "t", "geometry": {"type": "Point", "point": [3, 12]}, "subtype": "tree"}
                 ],
                 "land_cover": [],
                 "water": [],
@@ -191,8 +196,80 @@ class PrepareCommandTest(unittest.TestCase):
             self.assertEqual(scene["buildings"][0]["landmark"], "hall")
             self.assertEqual(scene["areas"][0]["kind"], "park")
             self.assertEqual(len(scene["roads"]), 1)
-            self.assertEqual(scene["trees"][0][:2], [3, 3])
+            self.assertEqual(scene["trees"][0][:2], [3, 12])
+            self.assertIn("conflicts_resolved", scene["source"])
             self.assertEqual(scene["source"]["overture_release"], "test")
+
+
+def scene_with(buildings=(), roads=(), water=(), trees=()):
+    return {
+        "buildings": list(buildings),
+        "roads": list(roads),
+        "water": list(water),
+        "trees": list(trees),
+    }
+
+
+def footprint_record(id_, ring, **props):
+    return {"id": id_, "c": ring[0], "polys": [[ring]], "h": 10, **props}
+
+
+def road(line, w=10.0, cls="residential", **props):
+    return {"line": line, "cls": cls, "w": w, "bridge": False, "level": 0, **props}
+
+
+BOX = lambda x0, y0, x1, y1: [[x0, y0], [x1, y0], [x1, y1], [x0, y1]]
+
+
+class ResolveConflictsTest(unittest.TestCase):
+    def test_carriageway_stops_short_of_a_building_on_one_side_only(self):
+        # Road along y=0, 10 m wide; a building face 3 m north of the centreline.
+        scene = scene_with(
+            buildings=[footprint_record("b", BOX(0, 3, 40, 20))],
+            roads=[road([[0, 0], [40, 0]])],
+        )
+        counts = resolve_conflicts.resolve(scene)
+        r = scene["roads"][0]
+        self.assertEqual(counts["roads_narrowed"], 1)
+        mid = len(r["line"]) // 2
+        self.assertAlmostEqual(r["wl"][mid], 3 - resolve_conflicts.CLEARANCE_M, places=2)
+        self.assertEqual(r["wr"][mid], 5.0)
+        self.assertLessEqual(r["pl"][mid], 3.0)
+        self.assertEqual(r["pr"][mid], 5.0 + resolve_conflicts.PAVEMENT_M)
+        self.assertEqual(check_conflicts.check(scene)["building_on_road"], [])
+
+    def test_passage_under_building_and_crossing_water_are_marked(self):
+        scene = scene_with(
+            buildings=[footprint_record("arch", BOX(9, -6, 22, 6))],
+            roads=[road([[0, 0], [40, 0]], w=4.0, cls="footway")],
+            water=[{"kind": "water", "poly": [BOX(25, -20, 39, 20)]}],
+        )
+        resolve_conflicts.resolve(scene)
+        r = scene["roads"][0]
+        # Densified every 8 m: segment midpoints at x = 4, 12, 20, 28, 36.
+        self.assertEqual(r["covered"], [1, 2])
+        self.assertEqual(r["wet"], [3, 4])
+        self.assertNotIn("wl", r)  # footways keep their width
+
+    def test_houseboats_float_and_trees_leave_buildings_water_and_roads(self):
+        scene = scene_with(
+            buildings=[
+                footprint_record("boat", BOX(50, 50, 70, 54), cls="houseboat"),
+                footprint_record("house", BOX(100, 100, 110, 110)),
+            ],
+            roads=[road([[0, -50], [40, -50]])],
+            water=[{"kind": "water", "poly": [BOX(40, 40, 80, 60)]}],
+            trees=[[105, 105, 0.1], [45, 45, 0.2], [20, -49, 0.3], [20, -80, 0.4]],
+        )
+        counts = resolve_conflicts.resolve(scene)
+        self.assertTrue(scene["buildings"][0]["vessel"])
+        self.assertNotIn("vessel", scene["buildings"][1])
+        self.assertEqual(counts["trees_dropped_in_buildings"], 1)
+        self.assertEqual(counts["trees_dropped_in_water"], 1)
+        self.assertEqual(counts["trees_moved_to_kerb"], 1)
+        moved, kept = scene["trees"]
+        self.assertGreater(moved[1], -50 + 5)
+        self.assertEqual(kept, [20, -80, 0.4])
 
 
 if __name__ == "__main__":

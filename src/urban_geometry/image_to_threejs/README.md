@@ -10,6 +10,8 @@ unified viewer.
 | ----------------------- | ------------------------------------------------------------------- |
 | `fetch_overture.py`     | Downloads the scene's square domain from Overture (S3, bbox filter) |
 | `prepare_scene.py`      | Resolves heights, roofs, facade styles; roads, areas, water, trees  |
+| `resolve_conflicts.py`  | Fits roads, pavements and trees around footprints and water         |
+| `check_conflicts.py`    | Reports remaining overlaps in a prepared scene (needs `shapely`)    |
 | `three/`                | three.js kit, facade textures, generic buildings, ground and trees  |
 | `landmarks/<id>.mjs`    | One module per landmark (see [AUTHORING.md](AUTHORING.md))          |
 | `collect_landmarks.mjs` | Validates modules and writes `landmarks/index.json` (`--check`)     |
@@ -42,5 +44,14 @@ prepared scene and raw exports.
 - Tunnels and underground rail are omitted; bridges and flyovers are lifted by
   `DECK_M` per OSM layer level. Park and woodland trees beyond the mapped tree points
   are scattered deterministically and are not survey data.
+- Overture roads are centrelines with class widths, so `resolve_conflicts.py`
+  narrows each side of a carriageway and pavement to clear the nearest footprint,
+  hides segments that pass under a building, adds parapets where a way crosses water
+  without a mapped bridge, draws houseboats and small unnamed footprints in water as
+  moored vessels, and drops or moves mapped trees inside buildings, in water or on
+  carriageways. Counts are recorded in the scene's `source.conflicts_resolved`;
+  `check_conflicts.py <scene.json>` lists what is left.
+- Viewers may animate water with `three/water.mjs` (`studio.html?water=animate`);
+  exported GLBs keep the static water material.
 - Landmark modules record their references and approximations in
   `landmarks/index.json`, copied into each run as `data/landmarks.json`.

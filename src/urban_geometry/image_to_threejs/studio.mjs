@@ -12,6 +12,7 @@ import { buildGeneric } from './three/generic.mjs';
 import { assetObject, loadAssets } from './three/assets.mjs';
 import { buildFurniture, buildGround, buildTrees } from './three/ground.mjs';
 import { buildLandmark, loadLandmark } from './three/landmarks.mjs';
+import { animateWater } from './three/water.mjs';
 
 const params = new URLSearchParams(location.search);
 const info = document.getElementById('info');
@@ -228,6 +229,14 @@ async function main() {
   });
   placeSun();
   view(params.get('view') ?? 'ne');
+  if (params.get('water') === 'animate') {
+    // Opt-in: continuous rendering is slow in headless (software) previews.
+    const tick = animateWater();
+    renderer.setAnimationLoop((ms) => {
+      tick(ms / 1000);
+      renderer.render(scene3, camera);
+    });
+  }
   say(`${params.get('landmark') ?? 'region'} · ${triangles(world).toLocaleString()} triangles`);
   stats.triangles = triangles(world);
 }

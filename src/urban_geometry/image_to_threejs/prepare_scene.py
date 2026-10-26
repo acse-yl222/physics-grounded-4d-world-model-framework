@@ -16,6 +16,11 @@ import statistics
 from collections import defaultdict
 from pathlib import Path
 
+try:  # imported as part of the package (tests) or run as a script (build_run)
+    from .resolve_conflicts import resolve
+except ImportError:
+    from resolve_conflicts import resolve
+
 FLOOR_M = 3.2
 PITCHED = {"gabled", "hipped", "half_hipped", "saltbox", "gambrel", "mansard", "pyramidal"}
 HOUSE = {"house", "terrace", "semidetached_house", "detached", "bungalow", "houseboat"}
@@ -698,6 +703,7 @@ def main() -> None:
         "fixtures": build_fixtures(infra),
         "placements": build_placements(infra, roads),
     }
+    scene["source"]["conflicts_resolved"] = resolve(scene)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text(json.dumps(scene, separators=(",", ":")))
     inferred = sum(
@@ -709,7 +715,8 @@ def main() -> None:
     print(
         f"buildings={len(buildings)} (height estimated without floors: {inferred}) "
         f"roads={len(roads)} rails={len(rails)} areas={len(areas)} water={len(water)} "
-        f"trees={len(trees)} claimed={len(claimed)} -> {args.out}"
+        f"trees={len(scene['trees'])} claimed={len(claimed)} "
+        f"conflicts={scene['source']['conflicts_resolved']} -> {args.out}"
     )
 
 

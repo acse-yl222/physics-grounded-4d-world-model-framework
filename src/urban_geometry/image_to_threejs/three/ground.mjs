@@ -53,11 +53,19 @@ function inside(p, b) {
 /**
  * Ribbon along a polyline: u across (0..1), v along (metres / vScale).
  * Miter joins are clamped; z may be a number or a function of the vertex index.
+ * `left`/`right` give per-vertex half widths on each side (overriding `width`);
+ * segments listed in `skip` are left out.
  */
-export function ribbon(batch, material, line, width, z, { vScale = 16, side = null } = {}) {
+export function ribbon(
+  batch,
+  material,
+  line,
+  width,
+  z,
+  { vScale = 16, side = null, left: wl = null, right: wr = null, skip = null } = {},
+) {
   const n = line.length;
   if (n < 2) return;
-  const half = width / 2;
   const left = [],
     right = [],
     vs = [0];
@@ -82,11 +90,14 @@ export function ribbon(batch, material, line, width, z, { vScale = 16, side = nu
     my /= ml;
     const cos = Math.max(0.5, mx * n1[0] + my * n1[1]);
     const zz = typeof z === 'function' ? z(k) : z;
-    left.push([b[0] + (mx * half) / cos, b[1] + (my * half) / cos, zz]);
-    right.push([b[0] - (mx * half) / cos, b[1] - (my * half) / cos, zz]);
+    const hl = wl ? wl[k] : width / 2,
+      hr = wr ? wr[k] : width / 2;
+    left.push([b[0] + (mx * hl) / cos, b[1] + (my * hl) / cos, zz]);
+    right.push([b[0] - (mx * hr) / cos, b[1] - (my * hr) / cos, zz]);
     if (k > 0) vs.push(vs[k - 1] + Math.hypot(b[0] - line[k - 1][0], b[1] - line[k - 1][1]));
   }
   for (let k = 0; k < n - 1; k++) {
+    if (skip?.has(k)) continue;
     const v0 = vs[k] / vScale,
       v1 = vs[k + 1] / vScale;
     batch.quad(
@@ -103,8 +114,12 @@ export function ribbon(batch, material, line, width, z, { vScale = 16, side = nu
   }
   if (side) {
     // Vertical side skirts for elevated decks (to `side.bottom`).
-    for (const edge of [left, right.slice().reverse()]) {
+    for (const [edge, reversed] of [
+      [left, false],
+      [right.slice().reverse(), true],
+    ]) {
       for (let k = 0; k < edge.length - 1; k++) {
+        if (skip?.has(reversed ? n - 2 - k : k)) continue;
         const a = edge[k],
           b = edge[k + 1];
         batch.quad(
@@ -146,6 +161,15 @@ function clipLine(line, b) {
  * as bridges): a segment is dropped when both ends lie in a cutout and its midpoint
  * is over mapped water, so riverside roads inside the same box are kept.
  */
+/** Sub-polyline of a way from vertex i0 to i1, with its per-vertex/segment fields. */
+function sliceWay(way, i0, i1) {
+  const out = { ...way, line: way.line.slice(i0, i1 + 1) };
+  for (const key of ['wl', 'wr', 'pl', 'pr']) if (way[key]) out[key] = way[key].slice(i0, i1 + 1);
+  for (const key of ['covered', 'wet'])
+    if (way[key]) out[key] = way[key].filter((k) => k >= i0 && k < i1).map((k) => k - i0);
+  return out;
+}
+
 function avoidCutouts(ways, cutouts, water) {
   if (!cutouts?.length) return ways;
   const inBox = (p) =>
@@ -153,17 +177,17 @@ function avoidCutouts(ways, cutouts, water) {
   const wet = (p) => water.some((w) => w.poly && pointIn(w.poly[0], p[0], p[1]));
   const out = [];
   for (const way of ways) {
-    let run = [way.line[0]];
+    let start = 0;
     for (let k = 1; k < way.line.length; k++) {
       const a = way.line[k - 1],
         b = way.line[k];
       const cut = inBox(a) && inBox(b) && wet([(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]);
       if (cut) {
-        if (run.length > 1) out.push({ ...way, line: run });
-        run = [b];
-      } else run.push(b);
+        if (k - 1 > start) out.push(sliceWay(way, start, k - 1));
+        start = k;
+      }
     }
-    if (run.length > 1) out.push({ ...way, line: run });
+    if (way.line.length - 1 > start) out.push(sliceWay(way, start, way.line.length - 1));
   }
   return out;
 }
@@ -211,8 +235,16 @@ export function buildGround(scene, { bounds, cutouts } = {}) {
   for (const r of roads) {
     const kind = ROAD_KIND[r.cls] ?? 'minor';
     if (r.level || !['major', 'minor'].includes(kind)) continue;
-    ribbon(batch, road('pavement'), r.line, r.w + 5, Z.pavement, { vScale: 8 });
+    // Pavements stop at building faces (widths from resolve_conflicts.py).
+    const skip = r.covered ? new Set(r.covered) : null;
+    ribbon(batch, road('pavement'), r.line, r.w + 5, Z.pavement, {
+      vScale: 8,
+      left: r.pl,
+      right: r.pr,
+      skip,
+    });
   }
+  const parapet = mat('portland_stone');
   for (const r of roads) {
     const kind = ROAD_KIND[r.cls] ?? 'minor';
     const rank = RANK[kind] ?? 0;
@@ -221,7 +253,36 @@ export function buildGround(scene, { bounds, cutouts } = {}) {
     ribbon(batch, road(kind), r.line, r.w, zBase, {
       vScale: kind === 'steps' ? 4 : 16,
       side: lifted ? { material: deck, depth: 1.2 } : null,
+      left: r.wl,
+      right: r.wr,
+      skip: r.covered ? new Set(r.covered) : null,
     });
+    // Parapets where a way crosses water without a mapped bridge structure.
+    for (const k of r.wet ?? []) {
+      const p = r.line[k],
+        q = r.line[k + 1];
+      const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
+      if (len < 0.2) continue;
+      const ux = (q[0] - p[0]) / len,
+        uy = (q[1] - p[1]) / len;
+      for (const [sgn, w] of [
+        [1, r.wl],
+        [-1, r.wr],
+      ]) {
+        const half = (w ? Math.min(w[k], w[k + 1]) : r.w / 2) + 0.2;
+        box(
+          batch,
+          parapet,
+          (p[0] + q[0]) / 2 - uy * half * sgn,
+          (p[1] + q[1]) / 2 + ux * half * sgn,
+          zBase,
+          len + 0.1,
+          0.35,
+          1.05,
+          Math.atan2(uy, ux),
+        );
+      }
+    }
     if (lifted) {
       // Piers every ~35 m along flyovers.
       let acc = 0;
@@ -245,8 +306,11 @@ export function buildGround(scene, { bounds, cutouts } = {}) {
         acc = (acc + len) % 35;
       }
     } else if (rank >= 3) {
-      for (const end of [r.line[0], r.line[r.line.length - 1]])
-        disc(batch, road(kind), end, r.w / 2, zBase - 0.002);
+      for (const [end, k] of [
+        [r.line[0], 0],
+        [r.line[r.line.length - 1], r.line.length - 1],
+      ])
+        disc(batch, road(kind), end, r.wl ? Math.min(r.wl[k], r.wr[k]) : r.w / 2, zBase - 0.002);
     }
   }
   for (const r of avoidCutouts(scene.rails, cutouts, scene.water)) {

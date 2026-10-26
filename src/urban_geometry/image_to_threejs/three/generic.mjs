@@ -1,6 +1,17 @@
 // Generic building generator for every footprint not replaced by a landmark module.
 import * as THREE from 'three';
-import { MeshBatch, box, cap, facade, mat, pitchedRoof, roof, shopfront, walls } from './kit.mjs';
+import {
+  MeshBatch,
+  box,
+  cap,
+  facade,
+  mat,
+  orientedExtent,
+  pitchedRoof,
+  roof,
+  shopfront,
+  walls,
+} from './kit.mjs';
 import { FACADES } from '../resources/materials/textures.mjs';
 
 const PITCHED = {
@@ -147,6 +158,54 @@ function centroidOf(ring) {
   return [x / ring.length, y / ring.length];
 }
 
+const HULLS = ['blue', 'red', 'black', 'dark_steel', 'timber'];
+
+/**
+ * Moored vessel (houseboat, narrowboat, pontoon cabin) fitted to the footprint's
+ * minimum-area rectangle: hull in the water, a narrower cabin and a flat roof.
+ */
+function vessel(batch, b) {
+  const ring = b.polys[0][0];
+  let best = null;
+  for (let k = 0; k < ring.length; k++) {
+    const p = ring[k],
+      q = ring[(k + 1) % ring.length];
+    const e = orientedExtent(ring, Math.atan2(q[1] - p[1], q[0] - p[0]));
+    const area = (e.u1 - e.u0) * (e.v1 - e.v0);
+    if (!best || area < best.area) best = { e, area };
+  }
+  let { e } = best;
+  let angle = Math.atan2(e.s, e.c);
+  let len = e.u1 - e.u0,
+    beam = e.v1 - e.v0;
+  if (beam > len) {
+    [len, beam] = [beam, len];
+    angle += Math.PI / 2;
+  }
+  const [x, y] = e.at((e.u0 + e.u1) / 2, (e.v0 + e.v1) / 2, 0);
+  const hull = mat(HULLS[Math.floor((b.seed ?? 0.5) * HULLS.length) % HULLS.length]);
+  const along = (t) => [x + Math.cos(angle) * t, y + Math.sin(angle) * t];
+  box(batch, hull, x, y, -0.4, len * 0.92, beam, 1.1, angle);
+  // Tapered bow block.
+  const [bx, by] = along(len * 0.46);
+  box(batch, hull, bx, by, -0.4, len * 0.08, beam * 0.6, 1.0, angle);
+  const cabinH = Math.min(2.2, Math.max(1.4, (b.h ?? 3) - 1));
+  const [cx, cy] = along(-len * 0.04);
+  box(batch, mat('white'), cx, cy, 0.7, len * 0.72, beam * 0.82, cabinH, angle);
+  box(
+    batch,
+    mat('dark_glass'),
+    cx,
+    cy,
+    0.7 + cabinH * 0.45,
+    len * 0.7,
+    beam * 0.84,
+    cabinH * 0.3,
+    angle,
+  );
+  box(batch, mat('dark_steel'), cx, cy, 0.7 + cabinH, len * 0.75, beam * 0.86, 0.12, angle);
+}
+
 /**
  * Build all generic buildings whose centroid falls inside `bounds`
  * ({x0,y0,x1,y1}); landmark-claimed footprints are skipped.
@@ -158,6 +217,11 @@ export function buildGeneric(scene, { bounds, skip = new Set() } = {}) {
     if (b.landmark || skip.has(b.id)) continue;
     const [x, y] = b.c;
     if (bounds && (x < bounds.x0 || x >= bounds.x1 || y < bounds.y0 || y >= bounds.y1)) continue;
+    if (b.vessel) {
+      vessel(batch, b);
+      count++;
+      continue;
+    }
     const style = b.style;
     const color = tint(b, style);
     if (b.parts?.length)
