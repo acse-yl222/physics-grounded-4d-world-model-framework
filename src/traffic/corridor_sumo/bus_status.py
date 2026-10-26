@@ -13,7 +13,7 @@ are reported from the schedule alone (status ``"schedule only"``).
 
 Schedule (stop locations, timetables, trips/h, headways, run times) is real BODS
 GTFS data; simulated delays, speeds, regularity and status are SUMO model estimates
-driven partly by synthetic car/taxi demand. No real-time vehicle positions or
+with the general traffic of the period run (DfT-calibrated by default). No real-time vehicle positions or
 passenger loads were available.
 """
 

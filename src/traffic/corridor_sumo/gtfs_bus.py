@@ -64,7 +64,8 @@ BANK_HOLIDAYS = {
 NATURE = {
     "stops_and_timetables": "BODS GTFS: real NaPTAN stop locations and real *scheduled* "
     "timetables (not real-time, not observed running times)",
-    "delays_speeds_status": "SUMO model estimates (synthetic car/taxi demand), not observations",
+    "delays_speeds_status": "SUMO model estimates, not observations; general traffic is "
+    "whatever the period run used (DfT-calibrated by default, synthetic with --synthetic)",
     "unavailable": "no real-time vehicle positions (AVL/SIRI-VM) or passenger loads were used",
 }
 
