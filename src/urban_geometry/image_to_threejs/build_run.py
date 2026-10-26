@@ -114,14 +114,19 @@ def main() -> None:
     target = bundle / run_id
     (target / "data").mkdir(parents=True)
     for layer in LAYERS:
+        # Merge duplicate materials/accessors and weld shared vertices before Meshopt;
+        # flat-shaded batches carry no normals, so welding shrinks them considerably.
+        welded = raw / f"{layer}.welded.glb"
+        run([*GLTF_TRANSFORM, "dedup", raw / f"{layer}.glb", welded])
+        run([*GLTF_TRANSFORM, "weld", welded, welded])
         run(
             [
                 *GLTF_TRANSFORM,
                 "meshopt",
-                raw / f"{layer}.glb",
+                welded,
                 target / f"data/{layer}.glb",
                 "--level",
-                "medium",
+                "high",
             ]
         )
     shutil.copy2(landmark_index, target / "data/landmarks.json")
@@ -157,7 +162,7 @@ def main() -> None:
                 "landmarks": len(landmarks),
                 "claimed_footprints": sum(len(l["claims"]) for l in landmarks),
                 "triangles": {k: report[k]["triangles"] for k in LAYERS},
-                "compression": "EXT_meshopt_compression + KHR_mesh_quantization (gltf-transform 4.5.1)",
+                "compression": "dedup, weld, EXT_meshopt_compression + KHR_mesh_quantization (gltf-transform 4.5.1)",
                 "heights": "Overture height/num_floors where tagged; otherwise estimated "
                 "(per-building flags in the prepared scene)",
                 "landmark_references": "data/landmarks.json lists every source per landmark",

@@ -161,6 +161,8 @@ export class MeshBatch {
       g.computeVertexNormals();
       const mesh = new THREE.Mesh(g, material);
       mesh.name = `${name}:${material.name}`;
+      // Faces never share vertices, so normals are flat and exports may drop them.
+      mesh.userData.flat = true;
       group.add(mesh);
     }
     this.buckets.clear();
