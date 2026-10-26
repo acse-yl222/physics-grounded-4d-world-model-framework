@@ -187,6 +187,34 @@
     "notes": "The two footprints are duplicates of the same outline (one with the light-well holes); both are claimed. Materials were not confirmed by the sources: red brick with stone bands and a slate mansard are assumed from the period and the neighbouring Queen’s Gate mansion blocks. Seven storeys (ground 3.8 m + 6 x 3.1 m) plus a 3 m mansard; gable positions are approximate."
   },
   {
+    "id": "animals_in_war_memorial",
+    "name": "Animals in War Memorial",
+    "claims": [],
+    "references": [
+      {
+        "title": "Animals in War Memorial - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Animals_in_War_Memorial",
+        "used_for": "David Backhouse, 2004; curved Portland stone wall 55 x 58 ft; bas-relief animals; two laden bronze mules climbing steps to a gap, bronze horse and dog beyond; coordinates 51.5111 N 0.1572 W at Upper Brook Street"
+      },
+      {
+        "title": "Animals in War Memorial - Donald Insall Associates",
+        "url": "https://www.donaldinsallassociates.co.uk/projects/animals-in-war-memorial/",
+        "used_for": "Brook Gate, Park Lane, on the edge of Hyde Park; carving and contractor details"
+      },
+      {
+        "title": "Animals in War - War Memorials Online",
+        "url": "https://www.warmemorialsonline.org.uk/memorial/72030",
+        "used_for": "inscriptions (\"Animals in War\", \"They had no choice\") and setting"
+      },
+      {
+        "title": "New war memorial for animals - Horse & Hound",
+        "url": "https://www.horseandhound.co.uk/news/new-war-memorial-for-animals-59397",
+        "used_for": "unveiling by the Princess Royal in November 2004"
+      }
+    ],
+    "notes": "Placed on the Park Lane central reservation beside the scene footway that runs along it (within ~15 m of the published coordinates). The wall is one curved arc (17.7 m chord, 0.9 m thick, 2.6-4.2 m high) with a 2.4 m gap; reliefs and lettering are painted on its faces. Which side the mules and the horse and dog stand on, the number of steps and all animal forms are simplified reconstructions."
+  },
+  {
     "id": "apsley_house",
     "name": "Apsley House",
     "claims": [
@@ -1167,6 +1195,31 @@
     "notes": "Front parapet at 15 m and the rear stage house at the Overture 13.6 m; the cupola follows the Overture round part (radius ~3.6 m) with the drum to 20 m and the dome to ~24 m (estimated). Pilaster rhythm is an even nine-bay split of the Notting Hill Gate front; the statue is a simple standing figure. Painted stone colour (cream) and the canopy over the entrance are assumptions."
   },
   {
+    "id": "cumberland_lodge",
+    "name": "Cumberland Lodge",
+    "claims": [
+      "c0a40a5e-5f0e-430f-9989-57368080ef11"
+    ],
+    "references": [
+      {
+        "title": "Cumberland Lodge, Marble Arch - British Listed Buildings (Historic England 1356752)",
+        "url": "https://britishlistedbuildings.co.uk/101356752-cumberland-lodge-marble-arch-hyde-park-ward",
+        "used_for": "Grade II, c.1825, Decimus Burton; Portland stone ashlar, slate roof; one storey and attic, three-bay front, east front central projection with Doric pilasters and columns, attic with clock face; small Greek Revival composition"
+      },
+      {
+        "title": "Hyde Park by Decimus Burton - Forgotten Victorians",
+        "url": "https://fhpkg.forgottenvictorians.com/?p=264",
+        "used_for": "Burton's series of Hyde Park lodges and gates of the 1820s"
+      },
+      {
+        "title": "Decimus Burton - Victorian Web",
+        "url": "https://victorianweb.org/victorian/art/architecture/burton/1.html",
+        "used_for": "Greek Revival lodges in Hyde Park"
+      }
+    ],
+    "notes": "Footprint 6.9 x 12.5 m with the east (long) side as the main front. Heights (4.4 m to the cornice, attic to 6.3 m), the in-antis pair of Doric columns, window sizes and the shallow hipped roof are proportioned from the description; the clock dial is painted."
+  },
+  {
     "id": "czech_slovak_embassies",
     "name": "Czech and Slovak Embassies",
     "claims": [
@@ -1301,6 +1354,34 @@
       }
     ],
     "notes": "Roof modelled as a ruled saddle surface (straight rulings across, smooth quadratic profile along the axis) through a profile of 17 m at the centre, 24.4 m peaks at the edges of the central section and 21 m at the front/back edge mid-points, falling to 9.1 m at the sides; the true form of the two central hypars and the warps is approximated. Front assumed to face Kensington High Street (north). Curtain-wall mullions (1.5 m) and transoms are 3D over a painted fritted glazing; copper standing seams follow the roof rulings. Entrance doors, canopy, plaza depth, fountain and flagpole positions and flag colours are estimated."
+  },
+  {
+    "id": "diana_memorial_fountain",
+    "name": "Diana, Princess of Wales Memorial Fountain",
+    "claims": [],
+    "references": [
+      {
+        "title": "Diana, Princess of Wales Memorial Fountain - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Diana,_Princess_of_Wales_Memorial_Fountain",
+        "used_for": "designer, opening 2004, ring-shaped stream of Cornish granite, location south-west of the Serpentine"
+      },
+      {
+        "title": "Diana, Princess of Wales Memorial Fountain - Landscape Institute case study",
+        "url": "https://my.landscapeinstitute.org/case-study/diana,-princess-of-wales-memorial-fountain/36156c22-d37b-e911-a99b-00224801ab04",
+        "used_for": "545 pieces of Cornish granite, digitally cut, varied channel textures"
+      },
+      {
+        "title": "Diana Princess of Wales Memorial Fountain - Free Tours by Foot",
+        "url": "https://freetoursbyfoot.com/diana-princess-wales-memorial-fountain/",
+        "used_for": "oval about 50 m x 80 m around a grass area, channel ~3-6 m wide"
+      },
+      {
+        "title": "Diana Memorial Fountain - Gustafson Porter + Bowman (PDF)",
+        "url": "https://www.gp-b.com/s/Diana_A4_PORTRAIT.pdf",
+        "used_for": "stream flowing both ways from a high point to a still pool, bridges across the channel"
+      }
+    ],
+    "notes": "Channel plan taken from the scene water polygon (outer and inner ring) so it matches the map. The site is modelled flat (the real ring follows a gentle slope). Granite coping widths, channel depth, the positions of the three bridges, the cascade/step locations and the perimeter railing line (offset 5 m) are estimates."
   },
   {
     "id": "dormition_cathedral",
@@ -2252,6 +2333,31 @@
     "notes": "Massing, light wells and the domed rooftop part (32-36 m) come from the footprint record; the dome is drawn as an observatory-style dome with a shutter slit on a ribbed drum. Facade rhythm (dark ribbon windows between heavy exposed-aggregate spandrels, close-set concrete fins on the Queen's Gate front, recessed ground storey on a column line), colours, entrance and roof plant are reconstructions without photographic confirmation. The north face against the Blackett Laboratory is blind below its 20 m roof."
   },
   {
+    "id": "hyde_park_bandstand",
+    "name": "Hyde Park Bandstand",
+    "claims": [
+      "bf387034-7616-4b7a-b8d6-ac018f8f3093"
+    ],
+    "references": [
+      {
+        "title": "Bandstand on north side of Serpentine Road - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101231392-bandstand-on-north-side-of-serpentine-road-near-east-end-of-serpentine-road-knightsbridge-and-belgravia-ward",
+        "used_for": "octagonal stock brick stone-dressed platform with basement; cast iron decorative columns with foliated brackets, tent roof with wooden valance, blind lantern with spike finial; location"
+      },
+      {
+        "title": "Where's London's oldest...bandstand? - Exploring London",
+        "url": "https://exploring-london.com/tag/bandstand/",
+        "used_for": "built 1869 in Kensington Gardens near Mount Gate, moved to Hyde Park in 1886"
+      },
+      {
+        "title": "Hyde Park Bandstand - Time Out",
+        "url": "https://www.timeout.com/london/attractions/hyde-park-bandstand",
+        "used_for": "concerts since the 1890s, general appearance"
+      }
+    ],
+    "notes": "Octagon fitted to the 95 m2 footprint (circumradius ~5.6 m). Platform height (1.5 m), column height (3.4 m), roof rise and lantern size are estimates; dark green ironwork, cream valance and grey roof colours are assumptions (not stated in the listing). Steps assumed on the Serpentine Road (south) side."
+  },
+  {
     "id": "hyde_park_barracks",
     "name": "Hyde Park Barracks",
     "claims": [
@@ -2313,6 +2419,41 @@
       }
     ],
     "notes": "Storey heights (5.0 m ground, 3.6 m above; main parapet 16.2 m, tower 24 m) are estimates from the storey counts (Overture 14.2 m). The tower is placed at the north end of the Exhibition Road front; the spire is a slender gilded square needle from the tower top (23 m, i.e. 75 ft). Stone fin rhythm, window grid, the entrance canopy and the colours of the dalle de verre panel are assumptions."
+  },
+  {
+    "id": "hyde_park_police_station",
+    "name": "The Old Police House (Hyde Park Police Station)",
+    "claims": [
+      "9694fb35-2a33-475e-ab0c-3eb9bd562468"
+    ],
+    "references": [
+      {
+        "title": "The Old Police House - Historic England list entry 1022332",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1022332",
+        "used_for": "Grade II listed, first listed 1988"
+      },
+      {
+        "title": "Hidden in Hyde Park - Adam Yamey",
+        "url": "https://www.goodreads.com/author_blog_posts/21033318-hidden-in-hyde-park",
+        "used_for": "built 1900-02 by John Dixon Butler; beside the Ranger's Lodge; police horse stables in the yard"
+      },
+      {
+        "title": "Old Police House - VoiceMap (German tour)",
+        "url": "https://voicemap.me/tour/london/hyde-park-und-kensington-gardens-konigtum-entspannung-und-rebellion/sites/old-police-house-2",
+        "used_for": "dates from 1902, now the main office of The Royal Parks"
+      },
+      {
+        "title": "John Butler (architect) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/John_Butler_(architect)",
+        "used_for": "Metropolitan Police architect 1895-1920"
+      },
+      {
+        "title": "Pinner Police Station listing - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101411163-pinner-police-station-including-stable-block-boundary-wall-gate-pier-and-fences-bollards-and-police-lamps-pinner-ward",
+        "used_for": "Butler's usual palette: red brick with Portland stone dressings, tiled roofs, Domestic Revival manner"
+      }
+    ],
+    "notes": "The listing text was not available: the red brick / Portland stone / tiled-roof palette, the two storeys with attic gables, chimneys and the entrance with a blue police lamp on the north (Policeman's Path) front follow Butler's typical stations, not this building's description. The large footprint is treated as ranges round a covered core: walls follow the outline, a ring of pitched roof on the fitted rectangle with a flat centre. Storey heights (3.7 m) are estimates."
   },
   {
     "id": "imperial_170_queens_gate",
@@ -2774,6 +2915,41 @@
     "notes": "Overture h=7.2 m is wrong; storey heights are estimates (ground 5 m, first 3.8 m, second 4.4 m, third/prayer hall 5.8 m to a 19 m garden wall, set-back fourth floor to 22.6 m). The footprint hole is used as the roof garden court. Cladding courses, the pier rhythm (2.6 m), window shapes (paired tall slots with pointed heads) and the oriel count are approximations; the main entrance is placed mid-way along Cromwell Gardens."
   },
   {
+    "id": "italian_gardens",
+    "name": "Italian Gardens and Pumphouse",
+    "claims": [
+      "29bfc20d-a259-4bc7-bae6-c5526007ac6c"
+    ],
+    "references": [
+      {
+        "title": "Kensington Gardens - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Kensington_Gardens",
+        "used_for": "Italian Gardens c.1860, gift of Prince Albert, at the north end of the Long Water"
+      },
+      {
+        "title": "Italian Gardens - The Royal Parks",
+        "url": "https://www.royalparks.org.uk/node/1051",
+        "used_for": "four main basins with Carrara marble rosettes, Tazza fountain of Portland stone and marble on mermen, pumphouse steam engine and disguised flue in the roof pillar, Grade II"
+      },
+      {
+        "title": "The Italian Gardens - Victorian Web",
+        "url": "https://www.victorianweb.org/victorian/art/parks/11b.html",
+        "used_for": "pumphouse/shelter by Sir Charles Barry and R. R. Banks; Pennethorne layout"
+      },
+      {
+        "title": "CWO restores Italian Gardens for Royal Parks project - Stone Specialist",
+        "url": "https://www.stonespecialist.com/news/stone-projects/cwo-restores-italian-gardens-royal-parks-project",
+        "used_for": "Portland stone and marble fabric of the basins, urns and Tazza"
+      },
+      {
+        "title": "List of public art in Kensington Gardens - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/List_of_public_art_in_Kensington_Gardens",
+        "used_for": "reliefs and statuary of the gardens by John Thomas"
+      }
+    ],
+    "notes": "Basin outlines are read from the scene water layer so they match the map; the garden axis (8.6 deg west of north) and terrace extent follow them. Pumphouse built on its 12 m footprint at 6.2 m to the cornice with a 3-bay arcaded south loggia, balustraded parapet, low hipped lead roof and an 11 m chimney column with an urn; arcade spans, parapet and chimney proportions are estimates. Rosette, Tazza mermen and urn forms are simplified lathes; jets are drawn as translucent spouts. Overture h=13 m for the pumphouse is not used."
+  },
+  {
     "id": "jamaican_high_commission",
     "name": "High Commission of Jamaica, 1-2 Prince Consort Road",
     "claims": [
@@ -2798,6 +2974,34 @@
       }
     ],
     "notes": "That the High Commission occupies the listed Stevenson houses is inferred from the corner position and the matching description; storey heights (3.6 m ground, 3.4 m above) and gable sizes are estimates. The rear footprint (debd1fb8) is modelled in the same brick. A Jamaican flag marks the entrance."
+  },
+  {
+    "id": "joy_of_life_fountain",
+    "name": "Joy of Life Fountain",
+    "claims": [],
+    "references": [
+      {
+        "title": "List of public art in Hyde Park, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/List_of_public_art_in_Hyde_Park,_London",
+        "used_for": "Joy of Life / Four Winds Fountain by T. B. Huxley-Jones, 1963, near Park Lane; basins redesigned 2000-01"
+      },
+      {
+        "title": "London's Most Beautiful Fountains - Londonist",
+        "url": "https://londonist.com/london/great-outdoors/londons-most-beautiful-fountains",
+        "used_for": "two bronze figures dancing above a pond, four bronze children emerging from the water at the edges; unveiled 25 June 1963"
+      },
+      {
+        "title": "T. B. Huxley-Jones - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/T._B._Huxley-Jones",
+        "used_for": "sculptor and the 1963 Hyde Park commission"
+      },
+      {
+        "title": "Archive: pioneering women - Royal Society of Sculptors",
+        "url": "https://sculptors.org.uk/blog/2019/04/archive-pioneering-women",
+        "used_for": "replacement West Wind figure by Gwynneth Holt"
+      }
+    ],
+    "notes": "Pool aligned on the round basin of the scene water layer near Park Lane (centre ~ (3089, 231), r 8.5 m), which lies ~70 m east of the listed point. The tall central bronze stem carrying the dancing couple, its height (5.5 m to the figures), the jets and the children placed at the four points are simplified reconstructions from the descriptions."
   },
   {
     "id": "kensal_green_anglican_chapel",
@@ -2883,6 +3087,31 @@
       }
     ],
     "notes": "Height kept near the Overture 15.6 m (5.2 m + 5.6 m storeys, attic, parapet). The main front is taken as the Phillimore Walk side; pavilion projection follows the footprint notches. Window sizes, arched ground floor openings, doorcase, the low hipped slate roof behind the parapet, and the pylon size and the abstracted heraldic beasts on them are estimates."
+  },
+  {
+    "id": "kensington_gardens_bandstand",
+    "name": "Kensington Gardens Bandstand",
+    "claims": [
+      "1ff9c3db-dc4c-462a-a578-00441e43336d"
+    ],
+    "references": [
+      {
+        "title": "Bandstand to north west of Queen's Gate - Historic England",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1275317",
+        "used_for": "Grade II, 1930, J H Markham; neo-Regency metal composition, canted pedestal, eight slender columns, octagonal canopy with convex painted sounding board, copper tented roof with polygonal finial"
+      },
+      {
+        "title": "Bandstand to North West of Queen's Gate - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101275317-bandstand-to-north-west-of-queens-gate-knightsbridge-and-belgravia-ward",
+        "used_for": "listing text and location"
+      },
+      {
+        "title": "Kensington Bandstand, Kensington Park Gardens - Dulux contractor listing",
+        "url": "https://connectdirectory.dulux.co.uk/contractor-listing/349/1009",
+        "used_for": "installed 1931, J. Markham of the Office of Works, repainting"
+      }
+    ],
+    "notes": "Octagon fitted to the scene footprint (Overture h=14.6 m ignored). Pedestal 1.2 m, columns 3.3 m, roof rise and finial are proportioned, not measured; white/cream metalwork and the blue sounding-board colour are assumptions; the copper is shown weathered green."
   },
   {
     "id": "kensington_leisure_centre",
@@ -3755,6 +3984,29 @@
     "notes": "Storey heights (5.2 m ground, 3.6 m upper) and the set-back depths of the fifth and sixth floors are estimates giving ~27 m overall (Overture parts 20-23 m). Mullion pitch 1.05 m, the spandrel panel proportions, the position of the lettering above the canopy on the curved corner and the rooftop plant are approximations."
   },
   {
+    "id": "peter_pan_statue",
+    "name": "Peter Pan statue",
+    "claims": [],
+    "references": [
+      {
+        "title": "Peter Pan statue - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Peter_Pan_statue",
+        "used_for": "Frampton 1912, about 14 ft (4.3 m) high, boy blowing a pipe on a tree-stump base decorated with squirrels, rabbits, mice and fairies; west of the Long Water"
+      },
+      {
+        "title": "Peter Pan statue, west of Serpentine - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101217595-peter-pan-statue-west-of-serpentine-lancaster-gate-ward",
+        "used_for": "Grade II*, position 51.5086, -0.176"
+      },
+      {
+        "title": "Peter Pan in Kensington Gardens - London Remembers",
+        "url": "https://www.londonremembers.com/memorials/peter-pan-in-kensington-gardens",
+        "used_for": "placed 1 May 1912, gift of J. M. Barrie"
+      }
+    ],
+    "notes": "Centred in the small circular footway of the scene beside the listed coordinates. Total height 4.3 m: stump base ~3.1 m with root buttresses, boy figure ~1.2 m. Fairies and animals are small bronze lumps scattered round the stump; the boy faces east towards the Long Water (assumption)."
+  },
+  {
     "id": "phoenix_brewery",
     "name": "The Phoenix Brewery",
     "claims": [
@@ -3778,6 +4030,34 @@
       }
     ],
     "notes": "Six storeys in the main block (suites to the fifth floor) at 3.6 m to the 23.2 m Overture height incl. parapet, flat roof with a hipped-roofed lift/tank house; wings three storeys (10.4 m). Brick colour (yellow London stock with red brick dressings), segmental-arched windows, the loading-door bay with hoist beam, the painted name band and the rooftop tank house are generic Victorian brewery details assumed in the absence of photographs or a listing description."
+  },
+  {
+    "id": "physical_energy_statue",
+    "name": "Physical Energy",
+    "claims": [],
+    "references": [
+      {
+        "title": "Physical Energy (sculpture) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Physical_Energy_(sculpture)",
+        "used_for": "Watts, bronze casts, Kensington Gardens cast unveiled 1907, form of horse and rider"
+      },
+      {
+        "title": "Physical Energy - Art UK",
+        "url": "https://batch.artuk.org/discover/artworks/physical-energy-303930",
+        "used_for": "bronze H 300 x W 380 x D 145 cm; granite plinth H 130 x W 503 x D 280 cm"
+      },
+      {
+        "title": "Physical Energy equestrian statue, Lancaster Walk - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101216829-physical-energy-equestrian-statue-lancaster-walk-knightsbridge-and-belgravia-ward/maps",
+        "used_for": "position 51.5068, -0.1783 on Lancaster Walk; Grade II"
+      },
+      {
+        "title": "Physical Energy - Victorian Web",
+        "url": "https://www.victorianweb.org/victorian/sculpture/watts/3.html",
+        "used_for": "rider shading his eyes, energy of the horse, Elgin Marbles influence"
+      }
+    ],
+    "notes": "Placed at the centre of the path junction in the scene (about 6 m from the listed coordinates). Pedestal and bronze sizes from Art UK; the horse and rider are a simplified low-poly reconstruction (body, straining neck, raised foreleg, rider leaning back with raised arm). The westward facing direction is an assumption."
   },
   {
     "id": "princes_gardens_eastside",
@@ -3996,6 +4276,56 @@
       }
     ],
     "notes": "Four brick storeys (cornice 14.6 m) under a 4.2 m slate mansard with dormers give ~19 m (Overture 19.3 m). The seven canted bays are spaced evenly along the curved south-east frontage (bay width 3.4 m, projection 0.9 m assumed); stone dressings, shaped gables over the bays, chimney positions and the porch location (centre of the frontage) are assumptions. Rear wings are plain brick with sash windows."
+  },
+  {
+    "id": "queen_annes_alcove",
+    "name": "Queen Anne's Alcove",
+    "claims": [
+      "4b6e2d30-048f-45a4-9f1c-c8adb4c8dee5"
+    ],
+    "references": [
+      {
+        "title": "Shelter (Alcove) opposite the north end of the Serpentine - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101217602-shelter-alcove-opposite-the-north-end-of-the-serpentine-hyde-park-ward",
+        "used_for": "Grade II*, early C18, Wren; Portland stone with brick flanks, lead roof; tall pedimented structure open to the south with giant semi-domed panelled niche, paired fluted Corinthian pilasters, shell niches, swags, monogram cartouche on keystone"
+      },
+      {
+        "title": "Queen Anne's Alcove, Kensington Gardens - Look Up London",
+        "url": "https://lookup.london/queen-annes-alcove-kensington-gardens/",
+        "used_for": "1705 date, Wren design, large pedimental niche beside the Italian Gardens"
+      },
+      {
+        "title": "Kensington Gardens - A View on Cities",
+        "url": "https://aviewoncities.com/london/kensington-gardens",
+        "used_for": "moved from the palace gardens to the edge of Kensington Gardens in 1867"
+      }
+    ],
+    "notes": "Built on the 10.4 x 6.0 m footprint, open face on its south-south-east long side. Height (7.4 m to the top of the cornice, 9.4 m to the pediment apex), niche width (4.4 m) and pilaster/shell-niche positions are proportioned from the description, not measured. Carving (capitals, swags, cartouche, panelling) is reduced to simple solids; interior painted decoration is omitted."
+  },
+  {
+    "id": "queen_carolines_temple",
+    "name": "Queen Caroline's Temple",
+    "claims": [
+      "3de42fa5-2432-4a0a-a735-88fb5d9ce7f8"
+    ],
+    "references": [
+      {
+        "title": "The Temple - British Listed Buildings (Historic England list entry)",
+        "url": "https://britishlistedbuildings.co.uk/101275724-the-temple-knightsbridge-and-belgravia-ward",
+        "used_for": "single storey, three bays each with rusticated arched recess and pediment, centre bay higher with attic, open east face, apses with leaded semidomes on the returns, Bath stone, low pitched polygonal slate roof"
+      },
+      {
+        "title": "Treasures of London - Queen Caroline's Temple - Exploring London",
+        "url": "https://exploring-london.com/2014/11/21/treasures-of-london-queen-carolines-temple/",
+        "used_for": "William Kent design of 1734-35, sight lines from the Round Pond avenues, restoration in 1976"
+      },
+      {
+        "title": "Queen Caroline's Temple - VoiceMap",
+        "url": "https://voicemap.me/tour/london/hyde-park-and-kensington-gardens-royalty-relaxation-and-rebellion/sites/queen-caroline-s-temple",
+        "used_for": "setting beside the Long Water, summer-house use"
+      }
+    ],
+    "notes": "Footprint (11.4 x 4.2 m with the centre bay projecting) is followed in plan; heights (4.6 m to the side-bay cornices, 6.0 m to the attic cornice, pediments 1.0 / 1.2 m) are proportioned from the listing, not measured (Overture h=12.6 m is far too high). Rustication is a painted texture on the arched faces; apse size and the hipped forms of the \"polygonal\" roofs are estimates."
   },
   {
     "id": "queen_charlottes_chelsea_hospital",
@@ -4822,6 +5152,126 @@
       }
     ],
     "notes": "Plan from the Overture outline. Heights are proportioned from the elevation (ground floor 6.6 m, giant order to 23 m, cornice 26 m, attic 29.5 m, set-back top floor 33 m) because Overture h = 18.2 m is clearly too low; no measured section was found. Column spacing (~6 m bays) is an estimate; columns are modelled unfluted. Detail pass: bronze-framed display windows with transom lights and fascias, three tiers of tripartite bronze-and-glass panels with decorated spandrels between the columns, plinth blocks, stepped entablature and corona, attic windows and pilaster strips, bronze plaques on the corner piers, bronze-and-glass shop canopy; main entrance centred on the bay east of the mid-frontage column (position estimated) with doors, gilded grille, canopy, the Queen of Time on a blue-faience prow with two attendant figures and clock (schematic). The Wigmore Street (north) side and rear additions keep a plainer painted elevation."
+  },
+  {
+    "id": "serpentine_bar_kitchen",
+    "name": "Serpentine Bar & Kitchen (Dell Restaurant)",
+    "claims": [
+      "b147e576-892d-4feb-97a4-b21e0e2e318e"
+    ],
+    "references": [
+      {
+        "title": "Dell Restaurant - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Dell_Restaurant",
+        "used_for": "Grade II* restaurant at the eastern end of the Serpentine, Patrick Gwynne, 1964"
+      },
+      {
+        "title": "Dell Restaurant - British Listed Buildings (Historic England 1251150)",
+        "url": "https://britishlistedbuildings.co.uk/101251150-dell-restaurant-knightsbridge-and-belgravia-ward",
+        "used_for": "polygonal plan with octagonal underlying form; single storey with office hidden in tent-like GRP roof; central concrete core; steel trusses cantilevered over the Serpentine; balcony with tilted steel railings"
+      },
+      {
+        "title": "Serpentine Bar & Kitchen - The Royal Parks",
+        "url": "https://www.royalparks.org.uk/parks/hyde-park/food-and-drink/serpentine-bar-and-kitchen",
+        "used_for": "modernist building by Patrick Gwynne opened 1964, overlooking the lake"
+      },
+      {
+        "title": "Serpentine cafe by Mizzi Studio - Dezeen",
+        "url": "https://www.dezeen.com/2018/06/21/serpentine-cafe-mizzi-studio-architecture/",
+        "used_for": "reference to Gwynne's Dell Restaurant (1965) and its curving roof"
+      }
+    ],
+    "notes": "Walls follow the footprint inset by 1.2 m (the roof overhang); glazing height (3.2 m), the eight-sided tent roof with up-turned eaves rising to 8.2 m, the office lantern near the apex, and the extent of the timber balcony over the water on the west (lake) side are estimates; the white GRP and dark-framed glazing colours are assumptions."
+  },
+  {
+    "id": "serpentine_boathouses",
+    "name": "Serpentine Boathouses",
+    "claims": [
+      "288fd68e-70b6-4776-aa9f-4cb3b9f582e0",
+      "18d11f52-09a0-40ae-adf1-9f1b456639b2",
+      "f4ffae48-13f9-4e99-9f12-736b282631f1"
+    ],
+    "references": [
+      {
+        "title": "The Serpentine - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Serpentine",
+        "used_for": "boating on the lake, boathouses on the north bank"
+      },
+      {
+        "title": "Court blocks removal of Serpentine boathouse - Inner Temple Library / Law Society Gazette",
+        "url": "https://www.innertemplelibrary.com/2021/08/court-blocks-removal-of-serpentine-boathouse-law-societys-gazette",
+        "used_for": "wooden boathouse on the north bank built by the rowing and pedal boat operator"
+      },
+      {
+        "title": "Victorian London - Royal Humane Society",
+        "url": "https://www.victorianlondon.org/organisations/humanesociety.htm",
+        "used_for": "receiving house on the north bank of the Serpentine (context)"
+      },
+      {
+        "title": "Hidden in Hyde Park - Adam Yamey",
+        "url": "https://adam-yamey-writes.com/tag/drowning/",
+        "used_for": "stone marking the Royal Humane Society receiving house site, damaged in WW2"
+      }
+    ],
+    "notes": "No architectural description found. The two sheds (6 x 11 m footprints at the shoreline) are modelled as timber weatherboarded boat sheds with slate gable roofs and open lake ends; the boat-hire boathouse as a single-storey timber kiosk on a deck over the water with pontoons. Colours, heights (eaves 3.4 m, ridge 6.3 m), the pontoon layout and the number of moored rowing boats and pedalos are assumptions."
+  },
+  {
+    "id": "serpentine_bridge",
+    "name": "Serpentine Bridge",
+    "claims": [],
+    "references": [
+      {
+        "title": "Serpentine Bridge - British Listed Buildings (Historic England list entry)",
+        "url": "https://britishlistedbuildings.co.uk/101217600-serpentine-bridge-knightsbridge-and-belgravia-ward",
+        "used_for": "Grade II, 1826 by George Rennie; Bath stone, five segmental arches, semicircular cutwaters, balustraded parapet"
+      },
+      {
+        "title": "The Serpentine - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Serpentine",
+        "used_for": "bridge divides the Serpentine from the Long Water and carries West Carriage Drive"
+      },
+      {
+        "title": "Serpentine Bridge - Structurae",
+        "url": "https://structurae.net/structures/serpentine-bridge",
+        "used_for": "arch bridge, Rennie design, date"
+      },
+      {
+        "title": "Serpentine Bridge (Rennie) - Gardenvisit",
+        "url": "https://www.gardenvisit.com/jcl/11_serpentine_bridge_rennie",
+        "used_for": "general description of the bridge in its landscape setting"
+      }
+    ],
+    "notes": "No footprint: axis taken from the scene West Carriage Drive / \"Serpentine Bridge\" ways and the length from the gap between the scene water edges along it (~85 m). Span (14 m), pier width (3.4 m), deck width (13 m), arch rises and the 4.5 m hump of the deck are estimates for a flat scene (the real banks stand higher than the water), not measured. Baluster spacing, die positions over the piers and the voussoir ring width are typical, not counted."
+  },
+  {
+    "id": "serpentine_lido",
+    "name": "Serpentine Lido and Lido Cafe",
+    "claims": [
+      "24c98acf-e80d-4b80-b0a5-d142937836c3"
+    ],
+    "references": [
+      {
+        "title": "Lido (swimming pool) - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lido_(swimming_pool)",
+        "used_for": "1930 revamp under George Lansbury, mixed bathing, \"Lansbury's Lido\", Lansbury plaque on the pavilion"
+      },
+      {
+        "title": "London's lidos are swimming in history - London Museum",
+        "url": "https://www.londonmuseum.org.uk/collections/london-stories/londons-lidos-swimming-history/",
+        "used_for": "Serpentine Lido as the first British lido, opened 1930"
+      },
+      {
+        "title": "The Serpentine near Lansbury's Lido - Sarah Colegrave",
+        "url": "https://sarahcolegrave.co.uk/generate/pdf/open/medium/oil/the-serpentine-near-landsburys-lido",
+        "used_for": "mixed bathing pavilion on the banks of the Serpentine completed 1930"
+      },
+      {
+        "title": "Cool pools, luxury London edition - Luxury Travel Advisor",
+        "url": "https://www.luxurytraveladvisor.com/destinations/cool-pools-luxury-london-edition",
+        "used_for": "Lido Cafe Bar alongside the lido with waterside tables"
+      }
+    ],
+    "notes": "No architectural description of the 1930 pavilion was found: the single-storey brick ranges with hipped tiled roofs, the raised central cafe block with a small clock lantern, the white timber veranda on the lake side, the terrace and the buoyed swimming area (placed in the scene lake in front, ~100 x 30 m) are plausible reconstructions, not documented. Walls follow the footprint at 3.6 m (Overture h=10.6 m not used)."
   },
   {
     "id": "serpentine_north",
@@ -5909,6 +6359,31 @@
       }
     ],
     "notes": "Three 1932 storeys (11.6 m) plus the set-back 1960s storey to 15.4 m (Overture). Tower at the Buckingham Palace Road / Elizabeth Street corner rising to ~26 m with stepped fins and flagpole; the window bands, vertical piers, lettering and corner entrance canopy are drawn from the general Art Deco character, not traced. The covered yard/departure hall inside the C-shaped plan is not modelled."
+  },
+  {
+    "id": "victoria_gate_lodge",
+    "name": "Victoria Gate Lodge",
+    "claims": [
+      "4f480c23-72fe-4a81-b3a2-423151588aca"
+    ],
+    "references": [
+      {
+        "title": "Victoria Lodge and Adjoining Gate and Gate Piers - Historic England",
+        "url": "https://historicengland.org.uk/listing/the-list/list-entry/1275316",
+        "used_for": "Grade II, mid C19; white brick, slate roof; single storey, square plan, three windows each side with pilasters; six openwork wrought iron piers and two taller Portland stone piers with finials, wrought iron gates"
+      },
+      {
+        "title": "Victoria Lodge and adjoining gate and gate piers - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101275316-victoria-lodge-and-adjoining-gate-and-gate-piers-hyde-park-ward",
+        "used_for": "listing text, formerly listed as Victoria Gate"
+      },
+      {
+        "title": "Hyde Park: Victoria Gate, Bayswater Road - The National Archives",
+        "url": "https://beta.nationalarchives.gov.uk/catalogue/id/C553706",
+        "used_for": "gate position on Bayswater Road"
+      }
+    ],
+    "notes": "Lodge body fitted to the main 8.6 m square of the footprint (the small west wing kept as a lower annexe); eaves 3.9 m, hipped roof rise 2.2 m, sash proportions and the central stack are estimates. Gate line placed across North Carriage Drive on the Bayswater Road boundary from the scene roads; pier spacing (two carriage and two side gates) is an assumption consistent with six iron and two stone piers."
   },
   {
     "id": "victoria_station",
