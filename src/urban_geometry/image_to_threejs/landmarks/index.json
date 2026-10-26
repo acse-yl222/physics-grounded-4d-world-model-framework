@@ -1120,6 +1120,36 @@
     "notes": "Elevations follow the Kensington stucco house type: raised ground floor with rustication, Doric porches, a first-floor balcony, moulded surrounds, cornice and a slated mansard with dormers. Storey heights are assumed (cornice ~15 m, mansard to ~18.5 m vs Overture 19.2 m). The Queen's Gate (east) return is treated as stucco as well; porch positions, window rhythm and chimneys are assumptions."
   },
   {
+    "id": "christ_church_lancaster_gate",
+    "name": "Christ Church Lancaster Gate (tower and spire) and Spire House",
+    "claims": [
+      "7f973bcd-f35a-44ce-b996-eb3092a2993f"
+    ],
+    "references": [
+      {
+        "title": "Tower and Spire of Christ Church, Lancaster Gate - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101275008-tower-and-spire-of-christ-church-lancaster-gate-ward",
+        "used_for": "1855 by F and H Francis; rubblestone with ashlar dressings; Geometrical/Decorated Gothic; recessed spire behind an openwork parapet linked to corner pinnacles by openwork flying buttresses"
+      },
+      {
+        "title": "Tower and Spire of Christ Church - Historic England list entry 1275008",
+        "url": "https://www.historicengland.org.uk/listing/the-list/list-entry/1275008",
+        "used_for": "listing of the surviving tower and spire"
+      },
+      {
+        "title": "Lancaster Gate - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lancaster_Gate",
+        "used_for": "asymmetrical gothic church with needle spire; demolition 1977; Spire House housing scheme 1983 on the rest of the site"
+      },
+      {
+        "title": "Barrie House, Lancaster Gate, with Christ Church - RIBApix",
+        "url": "https://www.architecture.com/image-library/RIBApix/licensed-image/poster/barrie-house-lancaster-gate-bayswater-london-seen-from-the-southeast-with-christ-church-lancaster-ga/posterid/RIBA64479.html",
+        "used_for": "Spire House credited to Covell Matthews Partnership"
+      }
+    ],
+    "notes": "Spire height is not given by the sources found; the tip is modelled at ~62 m (tower 31 m + recessed octagonal spire), judged from its prominence over the 6-storey terraces. Spire House is modelled as a 5-storey buff-brick block with stone bands and a flat roof (materials and window pattern approximate). Tower placed on the Overture part polygon at the south end of the site."
+  },
+  {
     "id": "city_guilds_building",
     "name": "City & Guilds Building (Imperial College)",
     "claims": [
@@ -1582,6 +1612,36 @@
       }
     ],
     "notes": "Height set to ~18.5 m (four storeys plus a recessed plant level) instead of the 23 m footprint value, following the four-storey description. Panel distribution is a deterministic random pattern, not traced; position of the orange columns/ramp and the roof plant are approximate. Mullions follow the 1.5 m panel module of the texture; entrance doors, steps, roof rail and condensers are indicative."
+  },
+  {
+    "id": "five_merchant_square",
+    "name": "5 Merchant Square",
+    "claims": [
+      "02705216-4086-4199-9ae6-e66c568a6456"
+    ],
+    "references": [
+      {
+        "title": "5 Merchant Square - Mossessian",
+        "url": "https://www.mossessian.com/projects/5-merchant-square/",
+        "used_for": "three contrasting triangular elements; red shard bursting through the side and top; suspended aluminium-profile facade"
+      },
+      {
+        "title": "Paddington Basin - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Paddington_Basin",
+        "used_for": "14-storey, 255,000 sq ft office block (formerly Carmine) by Mossessian and Partners"
+      },
+      {
+        "title": "European Land by Mossessian Partners - OnOffice",
+        "url": "https://www.onofficemagazine.com/architecture/european-land-by-mossessian-partners",
+        "used_for": "15-storey atrium covered in red screen-printed glass frit panels; 14 floors including an executive penthouse"
+      },
+      {
+        "title": "Administrative Building 5 Merchant Square - archiweb",
+        "url": "https://www.archiweb.cz/en/b/administrativna-budova-5-merchant-square",
+        "used_for": "completion date and triangular-prism massing"
+      }
+    ],
+    "notes": "Height from 14 office storeys (~54 m to the main roof; the Overture 25 m is too low). The split of the footprint into the three triangles, the shard outline and its sloping top are reconstructed from descriptions; frit pattern drawn procedurally."
   },
   {
     "id": "garry_weston_centre",
@@ -2112,6 +2172,36 @@
     "notes": "Facade materials (red brick with stone dressings above, stone ground and first floors), storey split (6 m shop storey, three 3.7 m upper storeys, mansard), the canted corner with its lead cupola, and the pilaster rhythm are reconstructed from general knowledge of the building; the searched sources do not describe materials. Overture height 14.9 m is raised to ~23 m to the mansard top."
   },
   {
+    "id": "hilton_london_metropole",
+    "name": "Hilton London Metropole",
+    "claims": [
+      "fe3d16e8-a1d7-44e0-b109-7c8dc624e729"
+    ],
+    "references": [
+      {
+        "title": "Hilton London Metropole - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hilton_London_Metropole",
+        "used_for": "Richard Seifert; 24-storey 91 m tower opened 1972; 11-storey second wing 1989; bounded by the Marylebone Flyover and Paddington Basin"
+      },
+      {
+        "title": "Hilton London Metropole - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/1970/hiltonmetropole.html",
+        "used_for": "main tower with east and west wings"
+      },
+      {
+        "title": "The First Metropole Hotel Extension - locallocalhistory",
+        "url": "https://www.locallocalhistory.co.uk/mp/p200/page223.htm",
+        "used_for": "bedrooms up to the 25th floor with a plant room above"
+      },
+      {
+        "title": "Hilton London Metropole - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/1881/england/london-w2/225-edgware-road/hilton-london-metropole",
+        "used_for": "HOK conference extension completed 2000"
+      }
+    ],
+    "notes": "The whole site is a single Overture footprint; the split into podium (10 m), 11-storey west wing along the flyover, 7-storey east wing and the 91 m tower slab parallel to Edgware Road is reconstructed from the descriptions (positions approximate). Facade treatments are generic Seifert precast mullions / 1980s ribbon glazing."
+  },
+  {
     "id": "holland_house",
     "name": "Holland House",
     "claims": [
@@ -2419,6 +2509,104 @@
       }
     ],
     "notes": "Storey heights (5.0 m ground, 3.6 m above; main parapet 16.2 m, tower 24 m) are estimates from the storey counts (Overture 14.2 m). The tower is placed at the north end of the Exhibition Road front; the spire is a slender gilded square needle from the tower top (23 m, i.e. 75 ft). Stone fin rhythm, window grid, the entrance canopy and the colours of the dalle de verre panel are assumptions."
+  },
+  {
+    "id": "hyde_park_connaught_squares",
+    "name": "Hyde Park Square and Connaught Square terraces",
+    "claims": [
+      "c86d26e5-d0e3-43c1-8a0c-9d1662b3b5de",
+      "6f9fb5ec-5c49-4793-8d33-f9d6fe3c7b2a",
+      "6d1910df-6f67-416c-818a-91a3582e966b",
+      "873ec5b4-379c-4436-814f-82e9e80c08ce",
+      "73b3071b-2fd4-49ad-80a6-534f6c151cce",
+      "dc663202-cf3b-41de-8cc9-52f18a7252c5",
+      "14cd2d3a-44cd-47bd-bae9-f0993b1e74ce",
+      "4e05f06c-a588-493a-b1f8-3e924543d09e",
+      "378f8d8e-ed11-4bc6-aa7c-56ed188a8424",
+      "ae836a74-3de0-460f-bd12-12b0a958ef5b",
+      "b215dd8d-1ebb-4dc3-9b35-1a2ddc15cd20",
+      "9e6c1235-1e26-48a5-904c-a47f31870819",
+      "ab36fd32-8654-47db-8df2-ba067d21b55d",
+      "79fc9585-6f63-41be-9c7b-2198469eddc5",
+      "091de08c-9f37-4a28-9e0c-16b3199f29cc",
+      "9e062e5b-5389-4280-a394-75af3d439c73",
+      "afa8ec95-3542-4ce5-a327-4c42f556e2af",
+      "dc760552-09d3-4144-ab5f-e333c014def6",
+      "c17f20ee-33a0-4bb8-9f84-b3c078ed6c63",
+      "9b53cbc4-b424-4d68-a219-27a34c3c42c0",
+      "c420146d-e233-486b-bfe5-78cb8165983b",
+      "62a543a9-1694-4ba3-85ad-92af43c9b890",
+      "7c9cde64-5dcb-4262-8c08-b300259e044c",
+      "7bb2999d-e746-4dc9-932e-a6a3bdc091f5",
+      "04a45ef0-544d-4284-91bd-22004b945ed8",
+      "7c27c783-7959-4026-9ee3-0eb1b9854bd4",
+      "a649c3bc-0ff3-42ae-bfb2-2518cc35208e",
+      "71607da9-4071-45ce-b0bc-c22983ac550b",
+      "3ed29c70-edcf-4922-a85f-fefc074535b7",
+      "a6b10330-08b3-4ec1-88d2-25e3343d8b88",
+      "2ba75174-9421-4ca4-a7fb-204b3daf462b",
+      "ecbec7b5-1f3d-4c3d-9c41-6972c978834a",
+      "c0febee5-d4d1-44e6-a479-b6a44383feba",
+      "16f046c2-429f-44ed-aaa1-f76634553cc1",
+      "99fa613d-0d01-4e47-a3c8-fd4ddb5ffb86",
+      "5823f184-8544-48e1-a482-5e434bac2a67",
+      "d39836fd-9635-49dc-93f2-cfa47222e560",
+      "723f9dee-13d0-4f79-9489-888fff831aab",
+      "079223ae-a79f-40a3-90af-d857dfbebfce",
+      "a5612e2b-9fe7-4228-a4f4-58f6b45db04d",
+      "2d6cc1cc-266d-40d0-bdb2-2cbde5e0a254",
+      "2324fcc5-5b2d-4c52-af01-cf5c00229da1",
+      "8f4b27ef-3889-4676-8207-54b31e7028a6",
+      "d983b254-4a6c-4e36-9d92-b773cb5ae8e4",
+      "0fda8876-10df-47ce-9224-65352690d69f",
+      "df8c6d45-471a-4ade-ac6d-c63ddc4224f7",
+      "daadca8d-cd53-444f-a851-e69e01c39888",
+      "f1a0f339-a7da-48a8-a918-84be56febc4d",
+      "707a99a2-248f-4181-9e79-1d0eefda1584",
+      "4887bb06-6e37-4972-bab0-cd2667b66901",
+      "844b79ec-f130-4171-b823-e8f3887c902d",
+      "23b0fddb-fa4e-4366-b944-5572b0e8fa5d",
+      "dce39eba-a166-4554-a2c5-995335d7e2a8",
+      "b423ddbd-2114-497e-8565-3b9214b507bc",
+      "cf0f85eb-c505-44c6-91ba-6d733214a4a7",
+      "d140b6bb-631f-462d-a58e-32fcd1c31ab5",
+      "f25aa64a-7aa5-4d7f-b8d3-8a46042ee30f",
+      "0f187323-f107-4533-8a24-a3914494ebe1",
+      "a283d91a-9dd1-4893-9a60-03b0f455446c",
+      "29a55933-f5d4-48fb-92da-f31032879d22",
+      "81c43016-c05d-4a8f-a679-11393c35a057",
+      "d76570c0-5f1f-448d-b1e4-e9d877d55154",
+      "10c431e3-f843-4ede-a48d-4614885211ec",
+      "8e790919-fdc2-4734-af85-dc91812d64f3"
+    ],
+    "references": [
+      {
+        "title": "Hyde Park Square - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Hyde_Park_Square",
+        "used_for": "garden square of 200 x 500 ft with listed classical buildings; Tyburnia plan by S. P. Cockerell (1827) laid out by George Gutch"
+      },
+      {
+        "title": "Connaught Square - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Connaught_Square",
+        "used_for": "first square of town houses in Bayswater, predominantly four-storey terraced houses"
+      },
+      {
+        "title": "1-15 Connaught Square - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101219945-1-15-connaught-square-w2-hyde-park-ward",
+        "used_for": "brown brick with channelled stucco ground floors, concealed slate roofs, 4 storeys and basements, stucco plat bands over the ground floor and at third floor"
+      },
+      {
+        "title": "39-46 Connaught Square - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101219972-39-46-connaught-square-w2-hyde-park-ward",
+        "used_for": "south side: same materials, attic storeys to nos 45 and 46"
+      },
+      {
+        "title": "23-37 Connaught Square - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101291228-23-37-connaught-square-w2-hyde-park-ward",
+        "used_for": "west side: brown brick in Flemish bond, channelled stucco ground floor; c. 1828-30, probably George Gutch"
+      }
+    ],
+    "notes": "Group module: footprints along Hyde Park Square (23, excluding the 9-storey post-war block and low mews buildings) and Connaught Square (41). Hyde Park Square houses are given generic stucco fronts with Doric porches and balconies (5 storeys, ~17 m); Connaught Square houses brown brick over a channelled stucco ground floor with plat bands, 4 storeys (~13 m) and a parapet hiding the roof. Individual doorcases, balconies and later attic storeys are not distinguished; rear faces use the stock-brick facade texture."
   },
   {
     "id": "hyde_park_police_station",
@@ -3264,6 +3452,117 @@
     "notes": "Terracing applied to every outer face of the main block (sources only describe it for Hornton Street); storey heights (3.5 m) and the 5-level section to ~17 m exceed the Overture 13.9 m. The two south lobes of the outline are taken as the blind great hall (west) and the council chamber raised on piers over a garden (east); the north-west lobe is modelled as a brick pavilion of unknown use. Window bands are recessed glazing with 3D mullions, sills and white concrete fascias; mullion spacing (1.5 m), the terrace handrails, the Hornton Street entrance canopy position and all pavilion heights are estimated."
   },
   {
+    "id": "kingdom_street_offices",
+    "name": "One, Two and Four Kingdom Street",
+    "claims": [
+      "69d17f41-0f43-4bab-bb52-23fcee721044",
+      "8aea86f3-d0f3-4535-beb7-eb0d28d3728c",
+      "29eb3704-9440-4cc8-8684-df40fcbe449c"
+    ],
+    "references": [
+      {
+        "title": "Paddington Waterside - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Paddington_Waterside",
+        "used_for": "Two Kingdom Street (KPF) 10 storeys; Four Kingdom Street square 10-storey block approved 2010; One Kingdom Street by Sheppard Robson"
+      },
+      {
+        "title": "1 Kingdom Street - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/2000/1kingdom.html",
+        "used_for": "260,000 sq ft, 2008, Sheppard Robson; glass fins whose colour appears to shift with the viewing angle"
+      },
+      {
+        "title": "Two Kingdom Street - RIBA Find an Architect (KPF)",
+        "url": "https://find-an-architect.architecture.com/kpf-kohn-pedersen-fox-associates-int-pa/london/two-kingdom-street-",
+        "used_for": "steel mullions fixed to full-height glazing panels giving a shimmering effect"
+      },
+      {
+        "title": "Paddington Waterside - chrismrogers.net",
+        "url": "https://www.chrismrogers.net/architecturepaddingtonwate1",
+        "used_for": "International Modernist treatment of narrow channelled mullions (Two Kingdom Street)"
+      }
+    ],
+    "notes": "Heights from storey counts at office storey height (~4 m): One KS 10 storeys (40 m), Two KS 10 storeys (40 m), Four KS 10 storeys (40 m); the Overture heights (20-33 m) look low. Dichroic fins are approximated by alternating tinted fin materials. Setbacks / roof plant are approximate."
+  },
+  {
+    "id": "lancaster_gate_terraces",
+    "name": "Lancaster Gate terraces",
+    "claims": [
+      "c26d4001-b745-4617-90a2-911d6db43f77",
+      "f0ee53c1-0782-4440-ab64-f52e76a1982c",
+      "0f00df5b-4409-4843-a9da-ac9658953bab",
+      "8ae71415-9c62-490b-b50f-f70ec6a3e339",
+      "678a0a8c-2cf5-40a9-97ec-988e343e80d6",
+      "1d88735a-16bf-4dcd-8f17-dc81e1c28245",
+      "c362e99e-148d-4aa3-b6e1-cf2e1e6b27df",
+      "f98f9e31-5ca0-48f3-ae2c-6992255367ea",
+      "b006b851-b9e9-4ac3-95b4-4123c8a18315",
+      "9bddcf92-018c-406e-ad4d-a83b1b240584",
+      "b1296a76-9e74-42d1-8e6c-c47416b860a3",
+      "882b6e59-9ceb-40c4-9c47-fac5ed382ef1",
+      "d989041e-0d22-4a4b-b720-0dedebbb13d3",
+      "fa6cb85f-0644-4304-b194-cadf4aadec31",
+      "a771c40f-a9fc-4515-b69c-87074bc4e1b2",
+      "2f8d1891-fb6a-4f57-ad67-87cf0c974003",
+      "c19031c1-dadc-4fab-acbf-333aa6370b2b",
+      "013f96b7-f643-4ac2-ae7e-2e946bf9795e",
+      "79fe7512-c9a4-459e-9712-f8f86e2b38ef",
+      "bf300d2f-2bf1-48d4-aa0d-e8e4bbe4ba18",
+      "11fac3e3-ba03-47cd-9c16-fddf11cd41cf",
+      "bab38223-8297-4a20-ab96-02b06834e25e",
+      "373994f4-3813-4b75-b17c-9c2330390089",
+      "88049337-d251-4106-a909-a8a8909e374d",
+      "d355421b-ac4a-4d84-bedd-1461376b8cb1",
+      "59c00bc9-aade-4e93-9a9e-a44804dcb488",
+      "c4549c8b-ebf0-49b8-969d-e2adbc900428",
+      "bc236cff-8d3a-4c9c-8b1a-5e831701d962",
+      "ee1edbad-9c0a-4919-a777-486b6ddec4d1",
+      "401fc0e3-e7d3-4f83-a2f8-98d66ad81cdc",
+      "768e2ebd-ce82-435a-8498-f149da21f54d",
+      "a9344f46-01ef-4c5d-b0f7-def8a1fa5eab",
+      "405b2b18-1425-4b2b-84e9-b12bdf224336",
+      "74906bd6-e469-4f34-ae38-909692a81749",
+      "743d219f-d183-425c-9c70-a2dc4b96de69",
+      "cc8142c5-e6bb-4c1a-8ba8-f2d3d02eff7a",
+      "0d4fd396-cb37-4101-97c3-e998a7a7db98",
+      "b30d0780-a39d-48b9-9dd0-a4a0a08467f0",
+      "1f1edf60-1af2-484d-80a3-4b7d1c7f4608",
+      "e6dc78e7-ae02-4bc7-b882-a12b43ea30ea",
+      "a04877e1-dc39-4a7b-9521-6f54b702eb4a",
+      "0ba6f759-7d66-42cd-ae9f-0873e098b9b0",
+      "dfd31947-c0dd-452c-916b-d0b3beb95406",
+      "bfa278e1-7750-4cd2-b891-91fba00d7431",
+      "1507a77d-3107-4175-a056-85fde7654bdc"
+    ],
+    "references": [
+      {
+        "title": "Lancaster Gate - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Lancaster_Gate",
+        "used_for": "stuccoed terraces in an eclectic classical style with English Baroque details and French touches, around the Christ Church square"
+      },
+      {
+        "title": "Terraces at Lancaster Gate, Bayswater, by John Johnson - Victorian Web",
+        "url": "https://victorianweb.org/art/architecture/johnson/3.html",
+        "used_for": "Johnson designed the terraces flanking the square; the others by Sancton Wood, 1857; stuccoed and richly ornamented"
+      },
+      {
+        "title": "104-109 Lancaster Gate - British Listed Buildings",
+        "url": "https://www.britishlistedbuildings.co.uk/101221756-104-109-lancaster-gate-w2-lancaster-gate-ward",
+        "used_for": "Sancton Wood, stucco; Corinthian half columns to the second floor; main rich dentil cornice with key frieze above the third floor"
+      },
+      {
+        "title": "23-35 Lancaster Gate - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101275009-23-35-lancaster-gate-w2-lancaster-gate-ward",
+        "used_for": "paired projecting Doric porches (John Johnson, 1865)"
+      },
+      {
+        "title": "The Lancasters - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Lancasters",
+        "used_for": "75-89 Lancaster Gate facing Kensington Gardens, rebuilt behind the retained facade"
+      }
+    ],
+    "notes": "Group module over 45 Overture footprints (terraces facing the Christ Church square and the Bayswater Road frontages, excluding the post-war infill blocks Heron Court, Lancaster Court and the 10-storey block west of Thistle Hyde Park). Each footprint gets a generic stucco elevation on the faces towards Lancaster Gate / Bayswater Road: rusticated ground floor, paired Doric porches with balustraded balconies, pedimented first-floor windows, cornices and a slate mansard attic with dormers (heights ~21 m to the parapet + attic). Bay windows, pavilion towers and individual house variations are not modelled; rear faces use the stock-brick facade texture."
+  },
+  {
     "id": "leighton_house",
     "name": "Leighton House",
     "claims": [
@@ -3292,6 +3591,36 @@
       }
     ],
     "notes": "Eaves at 9 m (two tall storeys) instead of the Overture 7.85 m. The Arab Hall projection is placed at the south-west, jagged part of the footprint; its dome profile (springing 9.5 m, apex ~13.5 m) and the tile colour are estimates. Hipped slate roof over the main body only; studio north window, Winter Studio glazing at the east end and window positions are schematic."
+  },
+  {
+    "id": "leinster_gardens_fake_houses",
+    "name": "23-24 Leinster Gardens (false facades)",
+    "claims": [
+      "b56a88ab-9e6f-447a-99aa-04c5e48edf94"
+    ],
+    "references": [
+      {
+        "title": "Leinster Gardens - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Leinster_Gardens",
+        "used_for": "nos 23 and 24 demolished for the Metropolitan Railway (1868); 5 ft thick false front matching the five-storey terrace; venting of steam locomotives"
+      },
+      {
+        "title": "A deceptive facade at 23/24 Leinster Gardens - urban75",
+        "url": "https://www.urban75.org/blog/the-incredible-fake-houses-in-paddington/amp/",
+        "used_for": "facade copies the neighbours (balconies, columns, decoration); windows painted on, no rooms behind"
+      },
+      {
+        "title": "Leinster Gardens False Facades - Atlas Obscura",
+        "url": "https://Www.atlasobscura.com/places/leinster-gardens-false-facades",
+        "used_for": "exposed section still used by the Circle line; owned by TfL; listed"
+      },
+      {
+        "title": "The fake houses at 23 and 24 Leinster Gardens - urban75",
+        "url": "https://www.urban75.org/blog/the-fake-houses-at-23-and-24-leinster-gardens-bayswater-london-w2/",
+        "used_for": "wall thickness ~1.5 m, only about six inches at the windows; rear view of the bracing"
+      }
+    ],
+    "notes": "Modelled on the 1.8 m deep Overture strip between the Henry Hotel and the Blakemore Hyde Park. Ornament follows the generic Leinster Gardens stucco terrace (porches, balcony, pedimented first-floor windows, cornice, parapet); exact mouldings approximated. The rear (cutting side) is shown as bare brick with iron stays; the railway cutting itself is not modelled."
   },
   {
     "id": "linley_sambourne_house",
@@ -3483,6 +3812,73 @@
       }
     ],
     "notes": "Overall height 13.7 m from the 45 ft figure (Overture h = 10.4 m is too low). Plan and column positions from the Overture outline; opening widths, springing heights and attic proportions estimated. Detail pass: veined marble ashlar, fluted Corinthian columns on panelled pedestals, moulded archivolts with scrolled keystones, coffered soffits, dentil cornice with breakforwards, attic pedestals with urn panels and inverted volute consoles; spandrel Victories and the England/Scotland/Ireland panels are low-relief schematic figures; the gates carry a relief horseman roundel, lion and cypher in simplified form. Island lamps and benches are resources assets."
+  },
+  {
+    "id": "marble_arch_place",
+    "name": "Marble Arch Place (The Bryanston)",
+    "claims": [
+      "6a24a710-3171-48f9-b037-d257df1c9f1b",
+      "ce690736-73de-46db-8733-8bbb73c6de23"
+    ],
+    "references": [
+      {
+        "title": "Marble Arch Place construction update - Rafael Viñoly Architects",
+        "url": "https://vinoly.com/article/marble-arch-place-construction-update/",
+        "used_for": "18-storey residential tower (54 flats) and 7-storey commercial building, variable massing"
+      },
+      {
+        "title": "The Bryanston: Rafael Viñoly's Hyde Park residential development completes - Knight Frank",
+        "url": "https://www.knightfrank.co.uk/blog/2021/12/16/the-bryanston-rafael-vinolys-iconic-hyde-park-residential-development-completes",
+        "used_for": "podium with curved terraces and the tower; curved full-height windows towards Hyde Park"
+      },
+      {
+        "title": "Marble Arch Place - Interface Facades",
+        "url": "https://interface-facades.com/?p=5664",
+        "used_for": "Portland stone facades of 3D precast units with deep reveals and curved elevations; office crown of pre-stressed stone columns on the upper terrace"
+      },
+      {
+        "title": "Marble Arch Place - FMDC",
+        "url": "https://fmdc.co.uk/marble-arch-place",
+        "used_for": "about 850 stone-faced precast units and curved glass curtain walling"
+      },
+      {
+        "title": "Marble Arch Tower - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/1960/marblearch.html",
+        "used_for": "the former 82 m Marble Arch Tower (1962-66) on the site"
+      }
+    ],
+    "notes": "Massing from the Overture parts (tower 64.8 m; podium terraces 23-36 m; office 26-33 m). Storey heights, the rhythm of stone fins and the terrace balustrades are approximate; the column crown of the office is shown as a colonnade on the top terrace."
+  },
+  {
+    "id": "merchant_square_3_4",
+    "name": "3 and 4 Merchant Square",
+    "claims": [
+      "b4b7ddfd-e745-4403-8cc1-ae3c45662e91",
+      "e53c4a1b-8645-4c10-9de9-194848d44da5"
+    ],
+    "references": [
+      {
+        "title": "3 Merchant Square, Paddington, London - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/2010/3merchantsquare.html",
+        "used_for": "Robin Partington Architects, 2014; 21 storeys, 201 flats; double-height stone bays with bronze cladding and glazing; recessed balconies, Juliet balconies and winter gardens"
+      },
+      {
+        "title": "Paddington Basin - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Paddington_Basin",
+        "used_for": "4 Merchant Square: 16 storeys, 196 flats, Tryfon Kalyvides Partnership, 2013"
+      },
+      {
+        "title": "Carea Cladding holds the key to Merchant Square Development - Specification Online",
+        "url": "https://www.specificationonline.co.uk/articles/2016-03-22/general/carea-cladding-holds-the-key-to-merchant-square-development",
+        "used_for": "glass, curtain walling and Carea mineral rainscreen panels (Acantha and Artema) forming a chequerboard pattern"
+      },
+      {
+        "title": "Mace to build next stage of Paddington Basin scheme - The Construction Index",
+        "url": "https://www.theconstructionindex.co.uk/news/view/mace-to-build-next-stage-of-paddington-basin-scheme",
+        "used_for": "Mace contract, 159 private + 42 affordable flats at 3 Merchant Square"
+      }
+    ],
+    "notes": "3 Merchant Square height set from 21 storeys at ~3.1 m (66 m) rather than the Overture 50 m; 4 Merchant Square tower height (50 m) from the Overture part, podium 14.5 m. Bay rhythm, balcony positions and the chequerboard colours are approximate."
   },
   {
     "id": "metrogate_house",
@@ -4058,6 +4454,37 @@
       }
     ],
     "notes": "Placed at the centre of the path junction in the scene (about 6 m from the listed coordinates). Pedestal and bronze sizes from Art UK; the horse and rider are a simplified low-poly reconstruction (body, straining neck, raised foreleg, rider leaning back with raised arm). The westward facing direction is an assumption."
+  },
+  {
+    "id": "porchester_hall",
+    "name": "Porchester Hall and Porchester Centre",
+    "claims": [
+      "af877570-0c6e-4d31-a260-6089f7a6e397",
+      "fdb74a09-944b-498f-91a1-ab0b195d2a9b"
+    ],
+    "references": [
+      {
+        "title": "Porchester Hall - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Porchester_Hall",
+        "used_for": "1923-25 by Herbert Shepherd; 1927-29 extension with Thomerson adding Turkish baths, library and assembly rooms"
+      },
+      {
+        "title": "Porchester Centre listing - British Listed Buildings 1262987",
+        "url": "https://britishlistedbuildings.co.uk/101262987",
+        "used_for": "steel frame with Portland stone and red, purple and stock brick; earliest part along Queensway, 1927-29 part fronting Porchester Road; wedge-shaped plot"
+      },
+      {
+        "title": "The Porchester Spa - Time Out",
+        "url": "https://www.timeout.com/london/health-and-beauty/the-porchester-spa",
+        "used_for": "spa opened 1929"
+      },
+      {
+        "title": "Porchester baths interior - Historic England DP052718",
+        "url": "https://historicengland.org.uk/images-books/photos/item/DP052718",
+        "used_for": "top-lit pool hall (roof lantern over the baths)"
+      }
+    ],
+    "notes": "Facade composition (stone ground storey and giant pilasters on the Porchester Road front, brick upper storeys with stone bands, arched ground-floor windows on Queensway) is a simplified reconstruction; the pool-hall roof lanterns are schematic. Heights from Overture (12.7 m) plus parapets."
   },
   {
     "id": "princes_gardens_eastside",
@@ -4880,6 +5307,42 @@
     "notes": "Footprint from Overture (h 7.5 m there is too low; eaves set to 12 m for the three-storey wards and 17 m for the Hall/Chapel range). Roofs are hipped volumes over hand-fitted rectangles, so junctions are simplified. Cupola/lantern top at ~39 m (130 ft per the Chelsea Pensioners page). Window, dormer and chimney rhythm, quoins and the river-front pavilion pediments are estimated, not measured; sash glazing bars are painted on the glass."
   },
   {
+    "id": "royal_lancaster_london",
+    "name": "Royal Lancaster London",
+    "claims": [
+      "0fadde72-f23f-49ee-bcb2-fa013415d097",
+      "ec3aedfe-960c-4457-a2ea-5aa77fb2cc81"
+    ],
+    "references": [
+      {
+        "title": "Royal Lancaster Hotel - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Royal_Lancaster_Hotel",
+        "used_for": "opened 1 August 1967, 411 rooms on 18 floors"
+      },
+      {
+        "title": "Our History - Royal Lancaster London",
+        "url": "https://www.royallancaster.com/?p=1766",
+        "used_for": "tower designed by Richard Seifert, originally intended as offices"
+      },
+      {
+        "title": "Royal Lancaster Hotel - Eric Parry Architects",
+        "url": "https://ericparryarchitects.co.uk/projects/royal-lancaster-hotel/",
+        "used_for": "1980s glass extensions removed, podium streamlined with a new stone facade"
+      },
+      {
+        "title": "Royal Lancaster London unveils £80 million renovation - eHotelier",
+        "url": "https://insights.ehotelier.com/properties/2017/10/11/royal-lancaster-london-unveils-80-million-renovation/",
+        "used_for": "8 m high glazed facade revealing a double-height reception"
+      },
+      {
+        "title": "Royal Lancaster London to reopen in autumn - Business Traveller",
+        "url": "https://www.businesstraveller.com/news/2017/03/21/royal-lancaster-london-reopen-autumn/",
+        "used_for": "exterior based on a series of vertical strata"
+      }
+    ],
+    "notes": "Tower facade is a grid of slim vertical precast mullions and storey spandrel bands (typical Seifert treatment, approximate). Roof plant/crown height and the podium openings are estimated; podium height kept at the Overture 10.4 m."
+  },
+  {
     "id": "royal_school_of_mines",
     "name": "Royal School of Mines and Bessemer Building",
     "claims": [
@@ -5346,6 +5809,45 @@
     "notes": "Plan built as the clean square fitted to the Overture outline (the small jags of the outline are ignored); body/core heights (4.8 m / 8.6 m) and core size proportioned from the listing description, not measured. Sash windows, red brick surrounds and quoins, paired Doric columns, balustrades and the cupola are real geometry; window and glazing-bar counts are typical of the period, not counted from photographs. The cupola balustrade is omitted (stated missing in the listing). The temporary summer pavilion is not modelled."
   },
   {
+    "id": "sheldon_square",
+    "name": "Sheldon Square, Paddington Central",
+    "claims": [
+      "c400f1e4-a59d-4701-af3b-8289ce8c6335",
+      "2b278c4a-1f01-43b8-b43e-d84b38e608ef",
+      "47fde65d-9868-4936-bed9-dd1206ba6e24",
+      "687eb83b-e5d2-4113-b570-a82b2f08057b",
+      "12838147-fdeb-45ec-a597-08c91bb28e1f"
+    ],
+    "references": [
+      {
+        "title": "Paddington Waterside - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Paddington_Waterside",
+        "used_for": "Sheldon Square designed by Sidell Gibson; two large office blocks; 219 flats"
+      },
+      {
+        "title": "Architecture Today - Paddington Central / Abundance",
+        "url": "https://architecturetoday.co.uk/?p=256681",
+        "used_for": "One Sheldon Square: curved, glass-clad, ten-storey office block beside the amphitheatre, Sidell Gibson"
+      },
+      {
+        "title": "Planted balconies will be added to one of the earliest offices - Building Design",
+        "url": "https://www.bdonline.co.uk/news/morris-and-co-wins-approval-for-hanging-gardens-in-paddington/5113369.article",
+        "used_for": "3 Sheldon Square: 2001 glass-and-steel building by Sidell Gibson; nine levels of planted balconies approved on its front elevation"
+      },
+      {
+        "title": "British Land buys 1 Sheldon Square - QuotedData",
+        "url": "https://quoteddata.com/2015/04/british-land-buys-1-sheldon-square/",
+        "used_for": "nearly 200,000 sq ft of offices over nine floors"
+      },
+      {
+        "title": "Changes to Paddington Central Amphitheatre - This is Paddington",
+        "url": "https://thisispaddington.com/article/changes-paddington-central-amphitheatre",
+        "used_for": "amphitheatre built in phase 1, Sidell Gibson"
+      }
+    ],
+    "notes": "Heights: 1 Sheldon Square 10 storeys (~40 m), 3 Sheldon Square 10 storeys (~40 m), the residential blocks 13 storeys (~42 m), 1a a 4-storey pavilion. Overture heights are lower and were not used. The planted balconies of 3 Sheldon Square are shown as approved (green planters on the north-east face). Residential facade (brick/render with punched windows and balconies) is approximate."
+  },
+  {
     "id": "shepherds_bush_empire",
     "name": "Shepherd's Bush Empire",
     "claims": [
@@ -5652,6 +6154,36 @@
     "notes": "Church aligned with the footprint long axis (~25 deg), west front on Queen's Gate. Section (aisles 7.5 m, clerestory 15 m, steep roof ridge 23.5 m), the band spacing, window sizes and the bellcote height are estimates; the stepped west footprint edges (porches/buttresses) are walls with buttresses. Polychrome banding is modelled as thin projecting courses of red and black brick and stone on the yellow brick."
   },
   {
+    "id": "st_james_sussex_gardens",
+    "name": "St James, Sussex Gardens",
+    "claims": [
+      "a8641f56-b859-41ed-b264-2aa7b8da99fe"
+    ],
+    "references": [
+      {
+        "title": "Church of St James, Hyde Park Ward - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101237437-church-of-st-james-hyde-park-ward",
+        "used_for": "1881 by G.E. Street retaining 1841-43 work by Goldicutt and Gutch; Decorated style; yellow brick, knapped flint; two-stage east tower with recessed spire; aisled nave"
+      },
+      {
+        "title": "St James Paddington - Church of England Church Heritage Record",
+        "url": "https://heritage.churchofengland.org/buildings/7600",
+        "used_for": "Street turned the church round, building over the old church and keeping the 1843 tower, spire, porches and crypt"
+      },
+      {
+        "title": "Sussex Gardens Open Space - London Gardens Trust",
+        "url": "https://londongardenstrust.org/conservation/inventory/site-record?ID=WST120",
+        "used_for": "remodelling date 1882 and setting on Sussex Gardens"
+      },
+      {
+        "title": "St James Paddington - Geograph",
+        "url": "https://www.geograph.org.uk/photo/3918033",
+        "used_for": "completion c. 1884"
+      }
+    ],
+    "notes": "Spire height is not given by the sources found; the tip is modelled at ~52 m (tower 25 m + spire). Tower placed at the north-east (Sussex Gardens) end of the footprint; nave/aisle widths, clerestory and window tracery are simplified (pointed lights with a single transom)."
+  },
+  {
     "id": "st_johns_notting_hill",
     "name": "St John's, Notting Hill",
     "claims": [
@@ -5943,6 +6475,36 @@
     "notes": "Footprint from the data; height 21 m kept, as 7 storeys (3.8 m ground + 6 x 2.9 m) rather than the data 8 floors. Date and finishes not found: exposed concrete frame with brick infill panels and ribbon glazing are generic."
   },
   {
+    "id": "st_matthews_bayswater",
+    "name": "St Matthew's, Bayswater",
+    "claims": [
+      "61fea737-6706-455c-af47-c3a76f0d6a69"
+    ],
+    "references": [
+      {
+        "title": "St Matthew's, Bayswater - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/St_Matthew%27s,_Bayswater",
+        "used_for": "John Johnson, 1880-82, Victorian Gothic revival, Grade II*, replacing the Bayswater Chapel of 1818"
+      },
+      {
+        "title": "St Matthew's Bayswater - Victorian Web",
+        "url": "https://victorianweb.org/art/architecture/johnsonj/5.html",
+        "used_for": "Bargate rag-stone with Box-ground and Bath-stone dressings; spire 240 ft (73 m); nave 50 ft wide"
+      },
+      {
+        "title": "Church of St Matthew, Lancaster Gate Ward - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101236098-church-of-st-matthew-lancaster-gate-ward/maps",
+        "used_for": "listing and location on St Petersburgh Place"
+      },
+      {
+        "title": "St Matthew, Bayswater (Exterior) - Ship of Fools",
+        "url": "https://steam2.shipoffools.com/?p=1845",
+        "used_for": "soaring spire dominating the narrow road"
+      }
+    ],
+    "notes": "Spire height 73 m from the Victorian Web figure. The tower is placed on the square projection at the north-east corner of the footprint (St Petersburgh Place side); nave/transept roof heights and the window tracery are estimated. Footprint is nearly square, so a cruciform roof (wide nave, transepts) over aisled walls is assumed."
+  },
+  {
     "id": "st_pauls_knightsbridge",
     "name": "St Paul's Knightsbridge",
     "claims": [
@@ -5991,6 +6553,36 @@
       }
     ],
     "notes": "Portico placed on the south-west end of the footprint (facing down Eaton Square). Wall height 14 m, portico order height 10 m, and the tower (square clock stage, columned circular belfry, small cupola; ~38 m) are proportioned from general photographs, not measured. The Blomfield chancel/apse at the north-east end is drawn as the plain stepped footprint with round-headed windows."
+  },
+  {
+    "id": "st_sophia_cathedral_bayswater",
+    "name": "Greek Orthodox Cathedral of St Sophia",
+    "claims": [
+      "2a3ce69b-72c3-4990-bc33-880fa6cd9513"
+    ],
+    "references": [
+      {
+        "title": "Saint Sophia Cathedral, London - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Saint_Sophia_Cathedral,_London",
+        "used_for": "John Oldrid Scott; neo-Byzantine Greek cross; dates"
+      },
+      {
+        "title": "Cathedral of St Sophia - Historic England list entry 1223553",
+        "url": "https://HistoricEngland.org.uk/listing/the-list/list-entry/1223553",
+        "used_for": "Grade I; 1878-9; yellow brick with red brick banding, stone and red brick dressings; copper dome with twelve round-arched lights (lead until 1901) and gilded cross; copper semi-domes"
+      },
+      {
+        "title": "St Sophia's Cathedral - Gilbert Scott",
+        "url": "https://gilbertscott.org/st-sophias-cathedral",
+        "used_for": "decorated terracotta banding around the arched doors and windows; modest exterior"
+      },
+      {
+        "title": "St Sophia, Bayswater - Victorian Web",
+        "url": "https://victorianweb.org/victorian/art/architecture/byzantine/1.html",
+        "used_for": "built 1878-79, consecrated 1882, decoration completed 1892"
+      }
+    ],
+    "notes": "Dome diameter (~12 m) and heights (walls 14 m, drum to 19.5 m, dome crown ~26 m, cross ~29 m) are estimated from the footprint and photographs descriptions; the copper is shown with a green patina. Arm roofs are modelled as low gables behind parapets."
   },
   {
     "id": "stadium_house",
@@ -6120,6 +6712,31 @@
       }
     ],
     "notes": "Atrium position (along the long axis, ~14 m wide), its sawtooth-free flat glazed roof and the storey split (4.6 m ground + 5 x 2.9 m + parapet to the 20 m Overture height) are assumptions. Facade rhythm reuses the Broadcast Centre system as described for the whole Media Village; louvre depths, outrigger pitch and entrance positions are estimates. Signage is generic."
+  },
+  {
+    "id": "the_point_paddington",
+    "name": "The Point, Paddington Basin",
+    "claims": [
+      "c4ffe861-68ca-4c1f-a2c3-a4f5069f4e92"
+    ],
+    "references": [
+      {
+        "title": "The Point - Farrells",
+        "url": "https://farrells.com/project/the-point/",
+        "used_for": "222,000 sq ft of offices over 10 storeys in a wedge shape"
+      },
+      {
+        "title": "The Point, Paddington - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/2000/point.html",
+        "used_for": "ship's-prow form following the canal curve; full-height glazing behind vertical metal fins; 2000-2003"
+      },
+      {
+        "title": "Paddington Basin - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Paddington_Basin",
+        "used_for": "first building completed in the basin, Terry Farrell masterplan"
+      }
+    ],
+    "notes": "Height from 10 office storeys at ~3.7 m (Overture gives 28 m, too low for 10 office floors). Fin spacing, the recessed top storey and the roof plant are approximate; the flat (west) end is treated as a solid stone-clad core."
   },
   {
     "id": "the_studio_building",
@@ -6416,6 +7033,76 @@
       }
     ],
     "notes": "Plan split from the Overture outline: Brighton side west of the chord between the two frontages, Chatham side and the Wilton Road range east of it; the two claimed roof footprints are modelled as Fowler's train shed as two segmental glazed spans (span form and 18 m crown height assumed) with lattice ribs every second bay. Brighton frontage height (20.5 m + mansard to ~27 m), Chatham frontage height (15 m), bay rhythm, canopy depth and concourse ridge heights are estimates. Detail pass: Brighton side brick bays with stone-dressed sashes and keystones, stone bands and modillion cornice, ashlar pavilions with Ionic pilasters and arched windows, two attic storeys of dormers, oeil-de-boeuf windows, iron cresting, chimneys, the clock in a stone scroll; the canopy is ridge-and-furrow glazing on cast-iron columns with brackets and a fretted valance plus modern station signs. Chatham side: channelled ground storey with great arched openings, lettered frieze, paired pilasters, pedimented windows, modillion cornice and balustrade; the mermaid caryatids, cartouches and wreaths are schematic. Lamps and bollards on Terminus Place are resources assets. Grosvenor Hotel and Victoria Place are not claimed."
+  },
+  {
+    "id": "water_gardens_estate",
+    "name": "The Water Gardens",
+    "claims": [
+      "14ee681a-edad-431a-93e4-ba234d230274",
+      "caddc3d5-7d8c-487d-a8ee-4bf966a5d05a",
+      "92691686-02ca-4bfb-a61a-5ba5608586a8",
+      "bbad4679-1234-44cf-a9ac-01bc6344ae22",
+      "45486ea2-b6e9-43dd-b2e2-20eec9b6c5e2",
+      "cfc2d9a3-630b-4ef4-b9fd-b55a080b473d",
+      "29ec0926-9253-4b4c-96e9-aff1a5979383",
+      "3ac28727-1fe8-4623-ac16-1663c535a646",
+      "717c0cfd-c9cd-4752-a150-1ec4eeeca562",
+      "b3c1b47d-59e3-415c-8458-be35fce2c51d",
+      "21781a84-81d5-4629-842f-a2b3a258fb8d"
+    ],
+    "references": [
+      {
+        "title": "The Water Gardens, Burwood Place - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/The_Water_Gardens,_Burwood_Place",
+        "used_for": "architects Trehearne and Norman, Preston and Partners; landscape by Philip Hicks; registered 2020"
+      },
+      {
+        "title": "The Water Gardens (Westminster) - London Gardens Trust",
+        "url": "https://www.londongardenstrust.org/inventory/site-record/?ID=WST136",
+        "used_for": "1961-66; three 17-storey towers, smaller blocks and a terrace of houses around communal gardens on a raised podium deck over basement garaging; rocks, willows and falling water; split levels and strong horizontals"
+      },
+      {
+        "title": "The Water Gardens - New London Architecture",
+        "url": "https://nla.london/projects/the-water-gardens",
+        "used_for": "5,000 sqm podium deck, two-thirds covered by water; 2018 refurbishment"
+      },
+      {
+        "title": "The Water Gardens W2 - National Garden Scheme",
+        "url": "https://ngs.org.uk/gardens/the-water-gardens-w2",
+        "used_for": "Grade II listed gardens and ponds"
+      }
+    ],
+    "notes": "Tower facades (brown brick piers with continuous white balcony slabs on the long faces) and the 5-storey block treatment are approximate. The water-garden deck outline is reconstructed west of the towers (no footprint) with deck level ~2.4 m; pool shapes, stepping stones and the willows (silver birch asset as stand-in) are schematic. The Heron and Norfolk Crescent are not part of this module."
+  },
+  {
+    "id": "waterside_house_paddington",
+    "name": "Waterside House (Marks & Spencer HQ) and the Rolling Bridge",
+    "claims": [
+      "ec3b52b5-3b94-47a5-9c3d-ce83d507f1c6"
+    ],
+    "references": [
+      {
+        "title": "Waterside House - Buildington",
+        "url": "https://www.buildington.co.uk/buildings/1847/england/london-w2/35-north-wharf-road/waterside-house",
+        "used_for": "Richard Rogers Partnership; two interlinking wings; M&S corporate headquarters"
+      },
+      {
+        "title": "Waterside House, M&S Paddington Basin - e-architect",
+        "url": "https://e-architect.com/london/waterside-house-paddington",
+        "used_for": "220,000 sq ft of offices over 11 floors"
+      },
+      {
+        "title": "Waterside - Paddington, London, UK - manchesterhistory.net",
+        "url": "https://manchesterhistory.net/architecture/2000/waterside.html",
+        "used_for": "two triangular wings joined by the entrance hall and linked floor plates; two full-height atria; canal inlet between the wings spanned by the Heatherwick curling bridge"
+      },
+      {
+        "title": "Paddington Basin - Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Paddington_Basin",
+        "used_for": "Rolling Bridge by Heatherwick Studio curling into an octagon"
+      }
+    ],
+    "notes": "Height from 11 office storeys (~41 m; Overture 26 m); a 13-storey figure also appears in one source. Facade detailing (mullion pitch, floor-edge bands, roof plant) is generic. The Rolling Bridge is shown curled up on the east bank of the inlet; its exact position and colours are approximate."
   },
   {
     "id": "weeks_hall",
