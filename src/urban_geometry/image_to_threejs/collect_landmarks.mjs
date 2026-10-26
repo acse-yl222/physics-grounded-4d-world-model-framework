@@ -67,6 +67,8 @@ export async function collect(dir = LANDMARKS) {
     const def = (await import(pathToFileURL(path.join(dir, file)).href)).default;
     if (!contract(id, source, def, problems)) continue;
     const refs = def.references;
+    if ((def.claims ?? []).some((c) => typeof c !== 'string'))
+      problems.push(`${id}: claims must be Overture id strings`);
     for (const c of def.claims ?? []) {
       if (owner.has(c)) problems.push(`${id}: claim ${c} already claimed by ${owner.get(c)}`);
       owner.set(c, id);
