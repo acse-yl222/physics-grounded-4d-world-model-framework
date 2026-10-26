@@ -1,9 +1,9 @@
 {
   "schema_version": "1.1.0",
   "scene_id": "imperial_corridor",
-  "title": "City model with DfT-calibrated SUMO traffic and BODS buses",
+  "title": "City model with SUMO traffic on the OSM network and BODS buses",
   "time_alignment": "relative",
-  "runs": ["20261026T023258Z_c188dd", "20261026T043740Z_e64e19"],
+  "runs": ["20261026T023258Z_c188dd", "20261026T122854Z_d1fc54"],
   "layers": [
     {
       "run_id": "20261026T023258Z_c188dd",
@@ -31,17 +31,17 @@
       "visible": true
     },
     {
-      "run_id": "20261026T043740Z_e64e19",
+      "run_id": "20261026T122854Z_d1fc54",
       "layer_id": "traffic_am_peak",
       "visible": true
     },
     {
-      "run_id": "20261026T043740Z_e64e19",
+      "run_id": "20261026T122854Z_d1fc54",
       "layer_id": "traffic_inter_peak",
       "visible": false
     },
     {
-      "run_id": "20261026T043740Z_e64e19",
+      "run_id": "20261026T122854Z_d1fc54",
       "layer_id": "traffic_pm_peak",
       "visible": false
     }
