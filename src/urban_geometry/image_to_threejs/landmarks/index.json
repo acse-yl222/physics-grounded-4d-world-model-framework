@@ -725,7 +725,7 @@
       {
         "title": "Eighty Eight Wood Lane - PLP Architecture",
         "url": "https://plparchitecture.com/?p=5788",
-        "used_for": "34-storey residential tower, glass and terracotta cladding, four sections divided by horizontal bands, tapering form"
+        "used_for": "34-storey residential tower, glass and terracotta cladding, four sections divided by horizontal bands, tapering form, floor-to-ceiling glazing, glazed lift box running the full height"
       },
       {
         "title": "Imperial College White City Campus Block F - Lindner",
@@ -738,7 +738,7 @@
         "used_for": "masterplan context with Wood Lane Studios"
       }
     ],
-    "notes": "Overture h=7.7 m is wrong; height 34 storeys x 3.15 m + crown = ~111 m (no metric height found). Taper modelled as four stepped sections (1.1 m inset per section) on the oriented rectangle of the footprint; the terracotta / glass panel mix and band design are approximations."
+    "notes": "Overture h=7.7 m is wrong; height 34 storeys x 3.15 m + crown = ~111 m (no metric height found). Taper modelled as four stepped sections (1.1 m inset per section, railed ledges) on the oriented rectangle of the footprint. Each 1.5 m unitised panel is real geometry (mullions, slab transoms, terracotta plates on ~45% of panels in a seeded random mix); the actual panel pattern, the lift box position (west face) and size, the louvred crown, canopy and forecourt are approximations."
   },
   {
     "id": "electrical_engineering_building",
@@ -1259,7 +1259,7 @@
         "used_for": "architects PLP and Aukett Swanke, cost"
       }
     ],
-    "notes": "Overture h=11 m is wrong. Heights from storey counts: 13-storey block ~54 m, 7-storey Westway wing ~30 m (6 m ground + 4.0 m floors, estimated). Which part of the footprint carries the tall block (north, away from the Westway) and the atrium position/roof shape are inferred from the \"buffer wing\" description, not from drawings. Terracotta colour and sun-shade spacing approximate."
+    "notes": "Overture h=11 m is wrong. Heights from storey counts: 13-storey block ~54 m, 7-storey Westway wing ~30 m (6 m ground + 4.0 m floors, estimated). Which part of the footprint carries the tall block (north, away from the Westway) and the atrium position/roof shape are inferred from the \"buffer wing\" description, not from drawings. Facade detail is a reading of \"unitised glazing + terracotta + metal sun-shading\": recessed glass, terracotta piers every 3 m and floor spandrels, slim mullions, cantilevered aluminium blades on brackets; pier pitch, colours, blade depth, the west atrium entrance (canopy, revolving door, sign), louvred rooftop plant, flues and forecourt furniture are assumptions."
   },
   {
     "id": "imperial_msrh",
@@ -1289,7 +1289,7 @@
         "used_for": "perforated TECU Brass panels with patinated finish on a flat concrete facade"
       }
     ],
-    "notes": "Overture h=11.9 m is wrong; 9 storeys at 5.5 m + 8 x 4.2 m = ~39 m plus plant (estimate). The fold geometry of the outer glass skin, the extent of brass panels and the number of roof stacks are interpretations of the text descriptions, not measured."
+    "notes": "Overture h=11.9 m is wrong; 9 storeys at 5.5 m + 8 x 4.2 m = ~39 m plus plant (estimate). The fold geometry of the outer glass skin, the stone grid / brass panel rhythm on the Imperial Square (west) frontage, the entrance position and canopy, the roof stack count and bracing are interpretations of the text descriptions, not measured. Imperial Square is represented only by the paved strip, tree pits, benches and lamps directly in front of the west elevation; its real layout was not found."
   },
   {
     "id": "imperial_school_of_public_health",
@@ -1317,12 +1317,17 @@
         "used_for": "Wood Lane address, entrance to the North Campus, public square on its east side"
       },
       {
+        "title": "About our building - Imperial College London (Campaign for the School of Public Health)",
+        "url": "https://imperial.ac.uk/giving/discover/campaign-for-the-school-of-public-health/about-our-building",
+        "used_for": "nine storeys, nearly 58,000 sq ft"
+      },
+      {
         "title": "Imperial opens major new building for School of Public Health - Imperial News",
         "url": "https://www.imperial.ac.uk/news/251877/imperial-opens-major-building-school-public/",
         "used_for": "opening, ten-storey description"
       }
     ],
-    "notes": "Not in the Overture footprints used by this scene (completed 2023), so claims are empty and the plan is a reconstruction: a 34 m x 24 m block on the vacant plot between Wood Lane, Shinfield Street and Wood Lane Studios, matching the descriptions (Wood Lane entrance, square to the east, accommodation and terrace neighbours). Exact plan, step positions (south terraces at 8 and 6 storeys, 4-storey NW corner) and storey heights are estimates; sources disagree on 8/9/10 storeys."
+    "notes": "Not in the Overture footprints used by this scene (completed 2023), so claims are empty and the plan is a reconstruction: a 34 m x 24 m block on the vacant plot between Wood Lane, Shinfield Street and Wood Lane Studios, matching the descriptions (Wood Lane entrance, square to the east, accommodation and terrace neighbours). Exact plan, step positions (south terraces at 8 and 6 storeys, 4-storey NW corner) and storey heights are estimates; sources disagree on 8/9/10 storeys. The precast lattice (3 m bays, 0.6 m piers and floor bands) framing pink metal reveals is modelled in 3D; the east-face screening (alternate storeys of solid pink panels with slot windows), sedum terraces with glass balustrades, louvred plant, sign and the furnished east square (lime trees, benches, cycle stands) are assumptions."
   },
   {
     "id": "imperial_sir_ernst_chain",
@@ -2072,7 +2077,7 @@
         "used_for": "incubator moved into Scale Space, 58 Wood Lane"
       }
     ],
-    "notes": "Cladding colour and window pattern are NOT documented in the sources found: charcoal metal module cladding with light frames is an assumption. Atria are placed at equal spacing along the footprint; height 4 storeys (~18 m) replaces Overture h=9.5 m. The Invention Rooms could not be located in the footprint data and are not modelled separately."
+    "notes": "Cladding colour and window pattern are NOT documented in the sources found: charcoal metal cassette cladding with light module joints every 3 m and one framed window per module is an assumption, as are the rooftop PV arrays and louvred plant enclosures. Atria are placed at equal spacing along the footprint with ridged rooflights and entrance canopies on their outer faces; height 4 storeys (~18 m) replaces Overture h=9.5 m. The Invention Rooms could not be located in the footprint data and are not modelled separately."
   },
   {
     "id": "science_museum",
@@ -2334,12 +2339,17 @@
       {
         "title": "Research hub covered in precast concrete fins completed in London - CTBUH",
         "url": "https://www.ctbuh.org/news/research-hub-covered-in-precast-concrete-fins-completed-in-london",
-        "used_for": "two long sides covered in 1,300 precast fins, ~4 m high, seven variants in a randomised pattern"
+        "used_for": "two long sides covered in 1,300 precast fins, ~4 m high, seven variants in a randomised pattern, GGBS-rich white concrete, glazed curtain walls behind"
       },
       {
         "title": "Sir Michael Uren Hub - RIBA London Award 2022",
         "url": "https://www.architecture.com/awards-and-competitions-landing-page/awards/riba-regional-awards/riba-london-award-winners/2022/sir-michael-uren-hub",
-        "used_for": "white precast-concrete fins"
+        "used_for": "white precast-concrete fins, full-height windows in a shallow plan"
+      },
+      {
+        "title": "Sir Michael Uren Hub - New London Architecture",
+        "url": "https://nla.london/projects/sir-michael-uren-hub",
+        "used_for": "ground-floor main entrance with function / exhibition space"
       },
       {
         "title": "Milestone building reaches heights - Imperial News",
@@ -2347,7 +2357,7 @@
         "used_for": "54 m height"
       }
     ],
-    "notes": "Height 54 m from Imperial (Overture h=5.8 m is wrong). Storey split (5.5 m ground + 12 x 4.0 m) and fin spacing (1.5 m), depth and the exact seven fin permutations are estimated; the plant tower height above the roof and the glazing tint are assumptions. Fins start at level 1; the ground floor is a recessed glazed base."
+    "notes": "Height 54 m from Imperial (Overture h=5.8 m is wrong). Storey split (5.5 m ground + 12 x 4.0 m), the fin pitch (1.5 m), the seven fin permutations (tapered precast blades varying in depth, width and plan angle) and their random sequence are estimates of the described pattern, not measured. Curtain-wall mullion pitch, ground-floor colonnade, entrance position on the wide east end, rooftop plant screen, flues and the forecourt furniture/trees are assumptions; the plant tower height above the roof and the glazing tint are approximate."
   },
   {
     "id": "skempton_building",
@@ -2725,7 +2735,7 @@
         "used_for": "first phase of four 10-storey accommodation blocks for 600 students"
       }
     ],
-    "notes": "Overture h=6.1 m is wrong. Block heights are estimates: linked blocks at 7 storeys with the railway-side block raised to 10 storeys (the press figure). Facade materials were not found in any source: pale grey rainscreen panels with storey-high window strips and coloured reveals are an assumption."
+    "notes": "Overture h=6.1 m is wrong. Block heights are estimates: linked blocks at 7 storeys with the railway-side block raised to 10 storeys (the press figure). Facade materials were not found in any source: pale grey rainscreen cassettes with one framed studio window per 2.4 m bay (projecting coloured reveals, mullion, transom, sill), a dark plinth with glazed common rooms, roof cores and plant are assumptions."
   },
   {
     "id": "wormwood_scrubs_gatehouse",
