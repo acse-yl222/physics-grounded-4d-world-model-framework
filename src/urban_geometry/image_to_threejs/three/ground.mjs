@@ -358,6 +358,8 @@ export function buildTrees(scene, { bounds, assets, detail = 'high', cutouts } =
       );
       return Math.hypot(x - a[0] - t * dx, y - a[1] - t * dy) < clear;
     });
+  // ... and not in lakes, ponds or the river.
+  const wet = (x, y) => scene.water.some((w) => w.poly && pointIn(w.poly[0], x, y));
   const keepOut = (x, y) =>
     (cutouts ?? []).some((c) => x >= c.x0 && x <= c.x1 && y >= c.y0 && y <= c.y1);
   const built = (x, y) =>
@@ -390,7 +392,7 @@ export function buildTrees(scene, { bounds, assets, detail = 'high', cutouts } =
           py = y + rand() * spacing;
         if (rand() < 0.35 || !inside([px, py], bounds)) continue;
         if (!pointIn(ring, px, py) || a.poly.slice(1).some((h) => pointIn(h, px, py))) continue;
-        if (built(px, py) || onWay(px, py) || keepOut(px, py)) continue;
+        if (built(px, py) || onWay(px, py) || keepOut(px, py) || wet(px, py)) continue;
         pts.push([px, py, rand()]);
       }
   }
