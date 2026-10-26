@@ -27,7 +27,12 @@
   {
     "id": "albert_bridge",
     "name": "Albert Bridge",
-    "claims": [],
+    "claims": [
+      "d85ba4b8-44a7-4d37-bd3e-8c49705ca880",
+      "7f266239-05fb-47c4-8063-8c80e884cecb",
+      "200b92cb-9e77-415b-a259-73864e007937",
+      "25ff9683-288c-4324-92ab-553213b0e403"
+    ],
     "references": [
       {
         "title": "Albert Bridge, London - Wikipedia",
@@ -45,12 +50,17 @@
         "used_for": "towers of a central column surrounded by eight octagonal ones, cast-iron cylinder foundations, 1992 colour scheme"
       },
       {
+        "title": "Albert Bridge including tollbooths, lamp standards and stairs - British Listed Buildings",
+        "url": "https://britishlistedbuildings.co.uk/101358138",
+        "used_for": "16 octagonal cast-iron lamp standards with dog-tooth mouldings and crown finials, Gothic embellishment"
+      },
+      {
         "title": "The Glorious Albert Bridge - Battersea Society",
         "url": "https://www.batterseasociety.org.uk/heritage-blog/the-glorious-albert-bridge",
         "used_for": "octagonal tollbooths, pink blue and green paintwork"
       }
     ],
-    "notes": "No footprint; centreline taken from the scene \"Albert Bridge\" road segment and the Thames polygon (banks at about (2310,-2587) and (2373,-2797)). The scene is flat (water at ground level), so the deck is drawn with a gentle 4 m camber that returns to road level at the banks. Tower spacing from the 384 ft original main span; stay count, tower ornament and the exact distribution of pink/blue/green are approximate."
+    "notes": "No footprint; centreline taken from the scene \"Albert Bridge\" road segment and the Thames polygon (banks at about (2310,-2587) and (2373,-2797)). The scene is flat (water at ground level), so the deck is drawn with a gentle 4 m camber that returns to road level at the banks. Tower positions from the four Overture tower-base footprints (claimed so they are not extruded twice; main span ~122 m there vs 384 ft quoted). Parapet lattice, deck cross-girders, portal lattice, tower brackets/pinnacles and the 16 lamp standards are drawn from the listing text and general photo knowledge; the troops-break-step notice is from general knowledge. stay count, tower ornament and the exact distribution of pink/blue/green are approximate."
   },
   {
     "id": "albert_court",
@@ -260,7 +270,12 @@
       {
         "title": "Battersea Bridge - British Listed Buildings",
         "url": "https://britishlistedbuildings.co.uk/101080752-battersea-bridge-chelsea-riverside-ward",
-        "used_for": "listing: 5 spans of unequal radii rising to a central apex, iron spans springing from stone-faced piers"
+        "used_for": "listing: 5 spans of unequal radii rising to a central apex, iron spans springing from stone-faced piers, channelled cutwaters with a stone pilaster rising to road level, stone pedestals between iron balustrades of coupled colonnettes with stilted arches"
+      },
+      {
+        "title": "Battersea Bridge - Grace's Guide",
+        "url": "https://gracesguide.co.uk/Battersea_Bridge",
+        "used_for": "Moorish-Arabesque cornice and parapet of cast-iron panels, clustered columns and handrails"
       },
       {
         "title": "Battersea's river crossings - Battersea Society",
@@ -268,7 +283,7 @@
         "used_for": "history and general appearance"
       }
     ],
-    "notes": "No footprint; centreline from the scene \"Battersea Bridge\" road, pier positions from the gaps in the scene Thames polygons along it (4 piers, 5 spans). Flat scene: deck rises to a 5 m apex and returns to road level at the banks. Dark green paint with gilt details is from general knowledge, not confirmed by a returned source."
+    "notes": "No footprint; centreline from the scene \"Battersea Bridge\" road, pier positions from the gaps in the scene Thames polygons along it (4 piers, 5 spans). Flat scene: deck rises to a 5 m apex and returns to road level at the banks. Dark green paint with gilt details is from general knowledge, not confirmed by a returned source. Balustrade arches are a cut-out painted panel plus 3D colonnette pairs; lamp standards on the pier pedestals, rib count (4) and spandrel posts are estimates."
   },
   {
     "id": "battersea_power_station",
@@ -306,9 +321,34 @@
         "title": "Michaelis Boyd unveils apartments inside Battersea Power Station - Dezeen",
         "url": "https://www.dezeen.com/?p=1763325",
         "used_for": "glazed floors added on top of the switch houses"
+      },
+      {
+        "title": "Battersea Power Station Chimney Rebuild Project - e-architect",
+        "url": "https://www.e-architect.com/london/battersea-power-station-chimney-rebuild",
+        "used_for": "rebuilt chimneys: jump-form shuttering rings, hand-poured concrete, original design"
+      },
+      {
+        "title": "Was it worth spending £48m on Battersea Power Station chimneys? - BD Online",
+        "url": "https://bdonline.co.uk/opinion/was-it-worth-spending-48m-on-battersea-power-stations-chimneys/5089447.article",
+        "used_for": "fluted, slightly rippled chimney finish, ivory paint colour"
+      },
+      {
+        "title": "Lift 109 - Battersea Power Station",
+        "url": "https://batterseapowerstation.co.uk/retailers/lift-109/",
+        "used_for": "circular glass lift in the north-west chimney, 109 m viewpoint"
+      },
+      {
+        "title": "Temporary Removal of Historic Cranes from Power Station Jetty - Port of London Authority",
+        "url": "https://server1.pla.co.uk/Temporary-Removal-of-Historic-Cranes-from-Power-Station-Jetty",
+        "used_for": "Stothert & Pitt jetty cranes removed in 2014 (so the jetty is drawn without cranes)"
+      },
+      {
+        "title": "Battersea cranes - The Twentieth Century Society",
+        "url": "https://c20society.org.uk/?p=24237",
+        "used_for": "cranes still in storage at Tilbury, not reinstated"
       }
     ],
-    "notes": "Massing from the Overture parts (30 m outer halls, 50 m boiler house, 55 m corner towers, 103 m chimneys). Brick fluting, window strips and stepped tower tiers are proportioned from general photo knowledge, not measured; rooftop villas and glazed top storeys are schematic. Jetty cranes omitted."
+    "notes": "Massing from the Overture parts (30 m outer halls, 50 m boiler house, 55 m corner towers, 103 m chimneys), modelled in a local frame (u north along 77.5 deg, v west). Brick fluting ribs, window strip sizes, tower step tiers, entrance canopies and sky-villa layout are proportioned from general photo knowledge, not measured. Lift 109 capsule drawn rising ~6 m above the north-west chimney rim (109 m). Jetty drawn without its cranes (removed 2014, in storage). Riverside lamps/benches are reused generic assets."
   },
   {
     "id": "bbc_broadcasting_house",
@@ -766,6 +806,16 @@
         "used_for": "1937 self-anchored suspension bridge, first in Britain, steel, dimensions"
       },
       {
+        "title": "Chelsea Bridge - Historic England list entry 1393009",
+        "url": "https://HistoricEngland.org.uk/listing/the-list/list-entry/1393009",
+        "used_for": "mostly white with red trim and greyish blue balustrades, five sets of lampposts either side, heraldic designs on the towers"
+      },
+      {
+        "title": "Secrets Of Chelsea Bridge - Londonist",
+        "url": "https://londonist.com/london/features/secrets-of-chelsea-bridge",
+        "used_for": "gilt galleons with shields on the lamp posts, red and white repaint"
+      },
+      {
         "title": "Grace's Guide - Chelsea Suspension Bridge",
         "url": "https://www.gracesguide.co.uk/Chelsea_Suspension_Bridge",
         "used_for": "history of the earlier and present suspension bridges"
@@ -776,7 +826,7 @@
         "used_for": "general appearance"
       }
     ],
-    "notes": "No footprint; centreline from the scene \"Chelsea Bridge\" road, tower positions from the two gaps in the scene Thames polygons (main span ~108 m). Flat scene: 3.5 m deck camber. Tower height (~22 m above water), lamp finials and the red/white/blue paint split are approximate (one lower-quality source for the colours)."
+    "notes": "No footprint; centreline from the scene \"Chelsea Bridge\" road, tower positions from the two gaps in the scene Thames polygons (main span ~108 m). Flat scene: 3.5 m deck camber. Tower height (~22 m above water), lamp finials and the red/white/blue paint split are approximate. Galleons, shields, lamp-standard design and their exact positions are schematic; the listing only says five sets of lampposts either side."
   },
   {
     "id": "chelsea_harbour_belvedere",
@@ -788,7 +838,7 @@
       {
         "title": "Chelsea Harbour - Wikipedia",
         "url": "https://en.wikipedia.org/wiki/Chelsea_Harbour",
-        "used_for": "Moxley Jenner & Partners, 1986-89 development, Belvedere tower"
+        "used_for": "Moxley Jenner & Partners, 1986-89 development, 18-storey Belvedere tower"
       },
       {
         "title": "Belvedere Tower, Chelsea Harbour, London - Manchester History",
@@ -806,7 +856,7 @@
         "used_for": "photograph record (caption only)"
       }
     ],
-    "notes": "Square Overture footprint chamfered into an octagon; body to 52 m and pagoda roof to ~61 m (200 ft), mast and gilded ball above. The tide ball is drawn at mid height on its mast; it is named in the brief but no returned source confirmed it. Balcony rhythm and roof tier proportions estimated."
+    "notes": "Square Overture footprint chamfered into an octagon; body to 52 m and pagoda roof to ~61 m (200 ft), mast and gilded ball above. The tide ball is drawn at mid height on its mast; it is named in the brief but no returned source confirmed it. 18 storeys per the Chelsea Harbour history (lobby + 16 typical floors + roof storey here). Balcony rhythm, window counts per face, corner fins, standing seams and roof tier proportions estimated; street furniture round the base is reused assets placed schematically."
   },
   {
     "id": "chelsea_westminster_hospital",
@@ -836,7 +886,7 @@
         "used_for": "existence of the large atrium (Laing construction photo record, caption only)"
       }
     ],
-    "notes": "Footprint and 16.9 m height from Overture; atrium position/size (about 120 x 28 m along the long axis) and the vaulted ETFE roof are inferred from descriptions, not measured. Cladding colour (light panels with blue-grey window bands) is approximate: no returned source specified the materials."
+    "notes": "Footprint and 16.9 m height from Overture; atrium position/size (about 120 x 28 m along the long axis) and the vaulted ETFE roof are inferred from descriptions, not measured. Cladding colour (light panels with blue-grey window bands) is approximate: no returned source specified the materials. Ribbon-window module (1.75 m), spandrel bands, atrium galleries, plant louvres, entrance canopy/revolving door/sign and the atrium trees are schematic."
   },
   {
     "id": "cheval_hyde_park_gate",
@@ -1283,9 +1333,14 @@
         "title": "Two Bridges in One - Shady Old Lady",
         "url": "https://www.shadyoldlady.com/location/1438",
         "used_for": "ten separate bridges, one per line, original piers encased in concrete"
+      },
+      {
+        "title": "Grosvenor Bridge - Structurae",
+        "url": "https://structurae.net/en/structures/grosvenor-bridge",
+        "used_for": "ten separate bridges joined together, each holding one line; maintained by Network Rail"
       }
     ],
-    "notes": "No footprint; extent from the scene rail segments (level 1, deck 6.5 m) crossing the Thames at x~3657-3698 and pier positions from the gaps in the scene river polygons. Arch rise, rib count and colour (grey steel) are approximate. The generic rail layer still draws solid brick sides under each elevated track ribbon."
+    "notes": "No footprint; extent from the scene rail segments (level 1, deck 6.5 m) crossing the Thames at x~3657-3698 and pier positions from the gaps in the scene river polygons. Arch rise, rib count and colour (grey steel) are approximate. Rib pairs per track, spandrel post spacing, bracing, handrails and signal posts are schematic. The generic rail layer still draws solid brick sides under each elevated track ribbon."
   },
   {
     "id": "hammersmith_administration_blocks",
@@ -2533,7 +2588,7 @@
         "used_for": "large red-brick structure with arched windows"
       }
     ],
-    "notes": "Overture footprint (named \"Metropolitan Building\", h 85 m = chimney height). Eaves (28 m), twin pitched roofs (glazed over the north turbine-hall atrium), bay rhythm and chimney positions (two middle positions of the original row of four, on the creek side) are estimates."
+    "notes": "Overture footprint (named \"Metropolitan Building\", h 85 m = chimney height). Eaves (28 m), twin pitched roofs (rise 7.5 m), 7 m bay rhythm with pilasters, arcade/arched-window sizes, terracotta courses, attic windows, chimney banding and corbelled caps are estimates from descriptions. Street lamps, plane trees and benches are reused assets placed schematically. (glazed over the north turbine-hall atrium), bay rhythm and chimney positions (two middle positions of the original row of four, on the creek side) are estimates."
   },
   {
     "id": "lycee_francais_charles_de_gaulle",
@@ -2657,7 +2712,7 @@
         "used_for": "general appearance of the front and side elevations"
       }
     ],
-    "notes": "Overture gives a simplified trapezoid (15 m Fulham Road front widening to 35 m at the rear) and an inferred 9.3 m height; walls are raised to 13 m (towers 15 m + cupolas) from the building's three tall storeys. Facades are painted reconstructions from descriptions (no photos available here); the Bibendum window and race tiles are schematic."
+    "notes": "Overture gives a simplified trapezoid (15 m Fulham Road front widening to 35 m at the rear) and an inferred 9.3 m height; walls are raised to 13 m (towers 15 m + cupolas) from the building's three tall storeys. Facades are painted reconstructions from descriptions (no photos available here); the Bibendum window and race tiles are schematic. Side elevations now carry 3D pilasters, metal-framed windows, segmental pediments with faience tyres and inset tile panels on a 6 m bay rhythm (estimated); front arch reveal, window mullions and name panel are schematic."
   },
   {
     "id": "montrose_court",
@@ -3722,7 +3777,7 @@
       {
         "title": "The Royal Hospital: Architectural description - British History Online",
         "url": "https://prod.british-history.ac.uk/node/84422",
-        "used_for": "central cupola over the vestibule between Great Hall and Chapel, court layout"
+        "used_for": "central cupola over the vestibule, court layout, portico of four three-quarter Roman Doric columns with painted-wood pediment furnished with a clock, lantern over the door"
       },
       {
         "title": "Royal Hospital Chelsea - Bluffton University photo pages",
@@ -3737,10 +3792,10 @@
       {
         "title": "Royal Hospital Chelsea - Chelsea Pensioners",
         "url": "https://www.chelsea-pensioners.co.uk/node/23",
-        "used_for": "general building description"
+        "used_for": "four-floor wards with square-headed windows and dormers, round-headed windows of the north building, octagon cupola and lantern rising to 130 ft"
       }
     ],
-    "notes": "Footprint from Overture (h 7.5 m there is too low; eaves set to 12 m for the three-storey wards and 16 m for the Hall/Chapel range). Roofs are hipped volumes over hand-fitted rectangles, so junctions are simplified. Cupola height (~38 m) and dormer/chimney rhythm estimated; not measured."
+    "notes": "Footprint from Overture (h 7.5 m there is too low; eaves set to 12 m for the three-storey wards and 17 m for the Hall/Chapel range). Roofs are hipped volumes over hand-fitted rectangles, so junctions are simplified. Cupola/lantern top at ~39 m (130 ft per the Chelsea Pensioners page). Window, dormer and chimney rhythm, quoins and the river-front pavilion pediments are estimated, not measured; sash glazing bars are painted on the glass."
   },
   {
     "id": "royal_school_of_mines",

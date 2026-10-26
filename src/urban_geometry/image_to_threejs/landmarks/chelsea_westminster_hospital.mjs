@@ -33,8 +33,10 @@ export default {
   notes:
     'Footprint and 16.9 m height from Overture; atrium position/size (about 120 x 28 m along the long axis) and the ' +
     'vaulted ETFE roof are inferred from descriptions, not measured. Cladding colour (light panels with blue-grey ' +
-    'window bands) is approximate: no returned source specified the materials.',
-  build({ THREE, kit, buildings, frame }) {
+    'window bands) is approximate: no returned source specified the materials. Ribbon-window module (1.75 m), ' +
+    'spandrel bands, atrium galleries, plant louvres, entrance canopy/revolving door/sign and the atrium trees are ' +
+    'schematic.',
+  build({ THREE, kit, buildings, frame, placeAssets }) {
     const b = buildings[0];
     const g = new THREE.Group();
     const batch = new kit.MeshBatch();
@@ -43,28 +45,6 @@ export default {
       sa = Math.sin(frame.angle);
     const W = (u, v) => [frame.cx + u * ca - v * sa, frame.cy + u * sa + v * ca];
 
-    const clad = kit.paintedMaterial(
-      'chelsea_westminster_hospital:clad',
-      256,
-      256,
-      (c, w, h) => {
-        // tile: 4 bays x 2 storeys
-        c.fillStyle = '#e6e3da';
-        c.fillRect(0, 0, w, h);
-        for (let s = 0; s < 2; s++) {
-          const y = s * 128;
-          c.fillStyle = '#4f6878';
-          c.fillRect(0, y + 34, w, 58);
-          c.fillStyle = '#8fa6b3';
-          for (let k = 0; k < 16; k++) c.fillRect(k * 16, y + 34, 2, 58);
-          c.fillStyle = '#cfcbc0';
-          c.fillRect(0, y + 92, w, 6);
-        }
-        c.fillStyle = 'rgba(0,0,0,0.06)';
-        for (let k = 0; k < 4; k++) c.fillRect(k * 64, 0, 3, h);
-      },
-      { roughness: 0.6 },
-    );
     const ground = kit.facade('glass', 2);
     const white = kit.mat('#ecebe6', { roughness: 0.6 });
     const roofM = kit.mat('#9a9893', { roughness: 0.95 });
@@ -95,10 +75,55 @@ export default {
       { roughness: 0.3, metalness: 0.1 },
     );
 
-    // Perimeter walls: glazed ground floor, clad upper storeys, parapet.
-    kit.walls(batch, ground, b.polys, 0, 4.6, { bay: 3.6, storey: 4.6 });
-    kit.walls(batch, clad, b.polys, 4.6, H - 0.9, { bay: 3.6, storey: 3.6, uvBase: 4.6 });
-    kit.walls(batch, white, b.polys, H - 0.9, H + 0.4, {});
+    // Perimeter walls: glazed ground floor, clad upper storeys with 3D ribbon
+    // windows, projecting spandrel bands, parapet with coping.
+    const panels = kit.paintedMaterial(
+      'chelsea_westminster_hospital:panels',
+      128,
+      128,
+      (c, w, h) => {
+        c.fillStyle = '#e6e3da';
+        c.fillRect(0, 0, w, h);
+        c.fillStyle = '#cfcbc0';
+        for (let x = 0; x < w; x += 32) c.fillRect(x, 0, 2, h);
+        for (let y = 0; y < h; y += 64) c.fillRect(0, y, w, 2);
+      },
+      { roughness: 0.6 },
+    );
+    const alu = kit.mat('#c4c9cc', { roughness: 0.35, metalness: 0.6 });
+    const ribbon = kit.mat('#4f6878', { roughness: 0.15, metalness: 0.3 });
+    let outerRing = b.polys[0][0].slice();
+    if (kit.ringArea(outerRing) < 0) outerRing.reverse();
+    kit.walls(batch, ground, [[outerRing]], 0, 4.6, { bay: 3.6, storey: 4.6 });
+    kit.walls(batch, panels, [[outerRing]], 4.6, H - 0.9, { bay: 3.6, storey: 3.6, uvBase: 4.6 });
+    kit.walls(batch, white, [[outerRing]], H - 0.9, H + 0.4, {});
+    kit.cornice(batch, white, outerRing, 0, { height: 0.5, projection: 0.15 });
+    kit.cornice(batch, white, outerRing, 4.3, { height: 0.5, projection: 0.6 }); // canopy band over the ground floor
+    kit.cornice(batch, alu, outerRing, H + 0.3, { height: 0.15, projection: 0.12 });
+    const FL = Math.max(1, Math.floor((H - 0.9 - 4.6) / 3.6));
+    const fh = (H - 0.9 - 4.6) / FL;
+    for (let f = 0; f < FL; f++) {
+      const z = 4.6 + f * fh;
+      for (let k = 0; k < outerRing.length; k++) {
+        const p = outerRing[k],
+          q = outerRing[(k + 1) % outerRing.length];
+        const len = Math.hypot(q[0] - p[0], q[1] - p[1]);
+        if (len < 2.5) continue;
+        kit.windowRow(batch, p, q, z + 1.0, {
+          width: 1.5,
+          height: 1.7,
+          bay: 1.75,
+          margin: 0.3,
+          depth: 0.1,
+          glass: ribbon,
+          frame: alu,
+          sill: alu,
+          head: 'none',
+          bars: 0,
+        });
+      }
+      if (f > 0) kit.cornice(batch, white, outerRing, z - 0.1, { height: 0.25, projection: 0.2 });
+    }
 
     // Roof with the atrium cut out.
     const AU = Math.min(60, frame.length / 2 - 18),
@@ -183,7 +208,49 @@ export default {
       }
     }
 
-    // Rooftop plant enclosures and lift overruns.
+    // Atrium galleries: white balcony edges with handrails on each floor.
+    for (let f = 1; f <= FL; f++) {
+      const z = 4.6 + (f - 1) * fh;
+      const inner = atrium.slice().reverse();
+      kit.cornice(batch, white, inner, z - 0.6, { height: 0.6, projection: 0.8 });
+      kit.balustrade(
+        batch,
+        alu,
+        [...kit.offsetRing(inner, 0.7), kit.offsetRing(inner, 0.7)[0]],
+        z,
+        {
+          height: 1.1,
+          spacing: 1.2,
+        },
+      );
+    }
+    // atrium planting and seating on the floor of the "street"
+    {
+      const tr = [],
+        bn = [];
+      for (let u = -AU + 8; u < AU - 4; u += 14) {
+        tr.push([...W(u, 0), u]);
+        bn.push([...W(u + 4, 3), frame.angle], [...W(u + 4, -3), frame.angle + Math.PI]);
+      }
+      g.add(
+        placeAssets('lime_tree', tr, {
+          z: 0.2,
+          scaleOf: () => 6,
+          name: 'chelsea_westminster_hospital:atrium_trees',
+        }),
+      );
+      g.add(
+        placeAssets('bench', bn, { z: 0.2, name: 'chelsea_westminster_hospital:atrium_benches' }),
+      );
+    }
+
+    // Rooftop plant enclosures (louvred) and lift overruns, with roof-edge handrail.
+    const louvre = kit.paintedMaterial('chelsea_westminster_hospital:louvre', 64, 64, (c, w, h) => {
+      c.fillStyle = '#b7b4ac';
+      c.fillRect(0, 0, w, h);
+      c.fillStyle = '#8e8b84';
+      for (let y = 4; y < h; y += 8) c.fillRect(0, y, w, 3);
+    });
     const r = kit.rng(0.4242);
     for (const [u, v, lw, lv] of [
       [-AU - 9, 0, 10, 22],
@@ -194,25 +261,93 @@ export default {
       [40, -AV - 10, 12, 6],
     ]) {
       const [x, y] = W(u, v);
-      kit.box(batch, kit.mat('#b7b4ac'), x, y, H, lw, lv, 2.8 + r() * 1.2, frame.angle);
+      const hh = 2.8 + r() * 1.2;
+      kit.box(batch, louvre, x, y, H, lw, lv, hh, frame.angle);
+      kit.box(batch, kit.mat('#9a9893'), x, y, H + hh, lw + 0.4, lv + 0.4, 0.2, frame.angle);
+      for (let k = 0; k < 2; k++) {
+        const [fx, fy] = W(u - lw / 4 + (k * lw) / 2, v);
+        batch.addGeometry(
+          kit.mat('#7d7b76'),
+          new THREE.CylinderGeometry(1.0, 1.0, 0.6, 12).rotateX(Math.PI / 2),
+          new THREE.Matrix4().makeTranslation(fx, fy, H + hh + 0.5),
+        );
+      }
     }
+    kit.balustrade(
+      batch,
+      alu,
+      [...kit.offsetRing(outerRing, -1.0), kit.offsetRing(outerRing, -1.0)[0]],
+      H,
+      {
+        height: 1.1,
+        spacing: 3,
+      },
+    );
 
-    // Glazed entrance canopy on the Fulham Road (north-west) front.
+    // Glazed main entrance on the Fulham Road (north-west) front: canopy on
+    // columns, signage, revolving door, bollards, lamps and trees.
     {
-      // pick the end of the long axis nearer Fulham Road (to the north-west)
       const uEnd =
         W(frame.length / 2, 0)[1] > W(-frame.length / 2, 0)[1]
           ? frame.length / 2
           : -frame.length / 2;
       const sgn = Math.sign(uEnd);
-      const [x, y] = W(uEnd + sgn * 2.5, 0);
-      kit.box(batch, glassM, x, y, 4.2, 5, 22, 0.3, frame.angle);
-      for (const v of [-10, 10]) {
-        const [px, py] = W(uEnd + sgn * 4.6, v);
-        kit.box(batch, white, px, py, 0, 0.4, 0.4, 4.2, frame.angle);
+      const rz = frame.angle;
+      const [x, y] = W(uEnd + sgn * 3, 0);
+      kit.box(batch, glassM, x, y, 4.6, 6, 24, 0.2, rz);
+      kit.box(batch, white, x, y, 4.8, 6.4, 24.4, 0.45, rz);
+      for (const v of [-11, -5.5, 5.5, 11]) {
+        const [px, py] = W(uEnd + sgn * 5.6, v);
+        batch.addGeometry(
+          white,
+          new THREE.CylinderGeometry(0.22, 0.22, 4.6, 12).rotateX(Math.PI / 2),
+          new THREE.Matrix4().makeTranslation(px, py, 2.3),
+        );
       }
       const [ex, ey] = W(uEnd + sgn * 0.15, 0);
-      kit.box(batch, kit.mat('dark_glass'), ex, ey, 0, 0.4, 16, 9, frame.angle);
+      kit.box(batch, kit.mat('dark_glass'), ex, ey, 0, 0.4, 16, 4.4, rz);
+      for (let k = -8; k <= 8; k += 1.6) {
+        const [mx, my] = W(uEnd + sgn * 0.4, k);
+        kit.box(batch, alu, mx, my, 0, 0.12, 0.12, 4.4, rz);
+      }
+      // revolving door drum
+      const [dx, dy] = W(uEnd + sgn * 1.4, 0);
+      batch.addGeometry(
+        glassM,
+        new THREE.CylinderGeometry(1.4, 1.4, 2.6, 16).rotateX(Math.PI / 2),
+        new THREE.Matrix4().makeTranslation(dx, dy, 1.3),
+      );
+      batch.addGeometry(
+        alu,
+        new THREE.CylinderGeometry(1.5, 1.5, 0.3, 16).rotateX(Math.PI / 2),
+        new THREE.Matrix4().makeTranslation(dx, dy, 2.75),
+      );
+      // NHS-blue name sign on the canopy fascia
+      const sign = kit.paintedMaterial('chelsea_westminster_hospital:sign', 512, 64, (c, w, h) => {
+        c.fillStyle = '#005eb8';
+        c.fillRect(0, 0, w, h);
+        c.fillStyle = '#ffffff';
+        c.font = 'bold 30px sans-serif';
+        c.textAlign = 'center';
+        c.fillText('Chelsea and Westminster Hospital', w / 2, 43);
+      });
+      const [sx, sy] = W(uEnd + sgn * 6.25, 0);
+      kit.box(batch, sign, sx, sy, 4.75, 0.08, 14, 0.55, rz);
+      const bol = [],
+        lp = [],
+        tr = [];
+      for (let v = -14; v <= 14; v += 2) bol.push([...W(uEnd + sgn * 8, v), 0]);
+      for (const v of [-20, 20])
+        lp.push([...W(uEnd + sgn * 9, v), rz + (sgn > 0 ? Math.PI / 2 : -Math.PI / 2)]);
+      for (const v of [-30, -24, 24, 30]) tr.push([...W(uEnd + sgn * 9, v), v]);
+      g.add(placeAssets('bollard', bol, { name: 'chelsea_westminster_hospital:bollards' }));
+      g.add(placeAssets('street_lamp', lp, { name: 'chelsea_westminster_hospital:lamps' }));
+      g.add(
+        placeAssets('london_plane', tr, {
+          scaleOf: () => 10,
+          name: 'chelsea_westminster_hospital:trees',
+        }),
+      );
     }
 
     g.add(batch.toGroup('chelsea_westminster_hospital'));
