@@ -1,13 +1,14 @@
 import { solarPosition, londonInstant } from './solar.mjs';
-export function installLighting({ scene, sun, renderer, direction, controls, redraw }) {
+export function installLighting({ scene, sun, renderer, direction, controls, setShadows, redraw }) {
   const panel = document.createElement('details');
   panel.innerHTML = `<summary>Sunlight & shadows</summary>
     <div class="note">London local time · independent of traffic replay</div>
+    <label><input id="sun-shadows" type="checkbox" checked> Building shadows</label>
     <label>Date <input id="sun-date" type="date" value="2026-06-25"></label>
     <label>Time <input id="sun-time" type="range" min="0" max="23.75" step="0.25" value="13"></label>
     <output id="sun-state" class="note" aria-live="polite"></output>
     <label>Cloud cover <input id="sun-cloud" type="range" min="0" max="1" step="0.05" value="0.2"></label>
-    <p class="note">Enable High quality for building shadows and ambient occlusion. Sun direction is calculated; clouds and sky brightness are illustrative, not measured irradiance.</p>`;
+    <p class="note">High quality adds ambient occlusion and finer shadows. Sun direction is calculated; clouds and sky brightness are illustrative, not measured irradiance.</p>`;
   document.querySelector('.card').append(panel);
   const get = (id) => document.getElementById(id);
   const ambient = scene.children.find((child) => child.isHemisphereLight);
@@ -39,6 +40,8 @@ export function installLighting({ scene, sun, renderer, direction, controls, red
       get('sun-state').textContent = error.message;
     }
   }
+  get('sun-shadows').addEventListener('change', () => setShadows(get('sun-shadows').checked));
+  setShadows(true);
   panel.addEventListener('input', update);
   update();
 }

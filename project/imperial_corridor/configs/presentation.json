@@ -9,9 +9,12 @@
   },
   "frame": "ENU",
   "web_axis_mapping": ["east", "up", "-north"],
-  "traffic_mode": "recorded",
+  "traffic_mode": "rebuilt-experimental-with-original-comparison",
   "max_interpolated_speed_m_s": 55,
   "utc_epoch": null,
   "solar_default_london": "2026-06-25T13:00",
-  "reproducible_original_simulation": false
+  "reproducible_original_simulation": false,
+  "microscopic_solver": "SUMO 1.28.0",
+  "reproducible_rebuilt_experiment": true,
+  "vehicle_dimensions": "nominal class dimensions; not measured fleet data"
 }

@@ -12,17 +12,21 @@ export function recordedSampler(frames, dt, maxSpeed = 55) {
     for (let i = 0; i < first.idx.length; i++) {
       const id = first.idx[i];
       let [x, y, heading] = first.xyh.slice(i * 3, i * 3 + 3);
+      let z = first.z?.[i],
+        speed = first.speed?.[i];
       if (fraction > 1e-9) {
         const j = indices[a + 1]?.get(id);
         // An absent vehicle or a teleport is not a continuous trajectory.
         if (j === undefined) continue;
         const [nx, ny, nh] = second.xyh.slice(j * 3, j * 3 + 3);
         if (Math.hypot(nx - x, ny - y) > maxSpeed * dt) continue;
+        if (z !== undefined && second.z) z += (second.z[j] - z) * fraction;
+        if (speed !== undefined && second.speed) speed += (second.speed[j] - speed) * fraction;
         x += (nx - x) * fraction;
         y += (ny - y) * fraction;
         heading += Math.atan2(Math.sin(nh - heading), Math.cos(nh - heading)) * fraction;
       }
-      result.push({ id, x, y, heading });
+      result.push({ id, x, y, heading, ...(z === undefined ? {} : { z, speed }) });
     }
     return result;
   };

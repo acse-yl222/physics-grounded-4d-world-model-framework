@@ -34,3 +34,34 @@ test('London daylight saving and geographic sun direction', () => {
   assert.ok(winter.altitude > 14 && winter.altitude < 16);
   assert.ok(solarPosition(londonInstant('2026-06-25', 0), 51.506427, -0.200473).up < 0);
 });
+
+test('rebuilt data preserves elevation and speed, rejects corrupt records', async () => {
+  const { decodeTraffic } = await import('../src/visualization/corridor/traffic-data.mjs');
+  const buffer = new ArrayBuffer(56),
+    view = new DataView(buffer);
+  for (const [offset, z, speed] of [
+    [0, 12, 5],
+    [28, 14, 7],
+  ]) {
+    view.setUint32(offset, 1, true);
+    view.setUint32(offset + 4, 0, true);
+    view.setFloat32(offset + 8, 100, true);
+    view.setFloat32(offset + 12, 200, true);
+    view.setFloat32(offset + 16, 0, true);
+    view.setFloat32(offset + 20, z, true);
+    view.setFloat32(offset + 24, speed, true);
+  }
+  const meta = {
+    dt: 0.5,
+    frames: 2,
+    binary: { record_bytes: 24, bytes: 56 },
+    vehicles: [{ id: 'bridge-bus', type: 'bus' }],
+  };
+  const decoded = decodeTraffic(meta, buffer),
+    point = recordedSampler(decoded.frames, 0.5)(0.25)[0];
+  assert.equal(point.z, 13);
+  assert.equal(point.speed, 6);
+  view.setUint32(4, 99, true);
+  assert.throws(() => decodeTraffic(meta, buffer), /identity/);
+  assert.throws(() => decodeTraffic(meta, buffer.slice(0, 20)), /truncated/);
+});

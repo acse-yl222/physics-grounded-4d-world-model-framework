@@ -12,11 +12,19 @@ try {
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: 800 });
   const errors = [];
+  page.on('console', (message) => {
+    if (message.type() === 'error') console.log('console:', message.text());
+  });
   page.on('pageerror', (error) => errors.push(error.message));
   await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
   await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 300000 });
-  await page.waitForFunction(() => window.cityTraffic?.data.meta?.frames === 600, {
+  await page.waitForFunction(() => window.cityTraffic?.data.meta?.frames > 0, {
     timeout: 300000,
+  });
+  console.log('scene loaded');
+  await page.evaluate(() => {
+    window.cityTraffic.playback.playing = false;
+    window.cityTraffic.playback.dirty = true;
   });
   const frame = () =>
     page.evaluate(
@@ -34,6 +42,17 @@ try {
       t0,
     );
     assert.equal(await page.evaluate(() => window.cityTraffic.playback.t), 0);
+  }
+  console.log('periods passed');
+  if (await page.$('#traffic-model')) {
+    await page.select('#traffic-model', 'recorded');
+    await page.waitForFunction(() => !window.cityTraffic.data.meta.provenance.rebuilt, {
+      timeout: 60000,
+    });
+    await page.select('#traffic-model', 'rebuilt');
+    await page.waitForFunction(() => window.cityTraffic.data.meta.provenance.rebuilt, {
+      timeout: 60000,
+    });
   }
   await page.evaluate(() => {
     const p = window.cityTraffic.playback;
@@ -57,6 +76,7 @@ try {
     document.querySelector('#sun-time').closest('details').open = true;
   });
   await frame();
+  console.log('playback passed');
   await page.screenshot({ path: 'cache/corridor-day.png' });
   await page.evaluate(() => {
     const input = document.getElementById('sun-time');
@@ -70,7 +90,8 @@ try {
     const input = document.getElementById('sun-time');
     input.value = '17';
     input.dispatchEvent(new Event('input', { bubbles: true }));
-    document.getElementById('hq').click();
+    const shadows = document.getElementById('sun-shadows');
+    if (!shadows.checked) shadows.click();
   });
   await frame();
   assert.equal(await page.evaluate(() => window.cityLighting.sun.castShadow), true);
