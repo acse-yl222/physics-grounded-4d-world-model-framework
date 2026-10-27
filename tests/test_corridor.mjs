@@ -65,3 +65,14 @@ test('rebuilt data preserves elevation and speed, rejects corrupt records', asyn
   assert.throws(() => decodeTraffic(meta, buffer), /identity/);
   assert.throws(() => decodeTraffic(meta, buffer.slice(0, 20)), /truncated/);
 });
+
+test('a discontinuous road join is not animated as high-speed driving', () => {
+  const a = frame([0], [0, 0, 0]),
+    b = frame([0], [10, 0, 0]);
+  a.speed = Float32Array.of(1);
+  b.speed = Float32Array.of(1);
+  const sample = recordedSampler([a, b], 0.5);
+  assert.equal(sample(0.25).length, 0);
+  assert.equal(sample(0)[0].x, 0);
+  assert.equal(sample(0.5)[0].x, 10);
+});

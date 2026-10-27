@@ -173,7 +173,7 @@ def build(export, destination, data_url=None, micro_url=None):
     script = (
         script[:start]
         + """function zG(i) {
-  if(i.provenance?.rebuilt) return `Experimental microscopic SUMO rebuild: 25% of eligible source routes, regenerated signals and conservative junction reservations; not measured or count-calibrated traffic. ${i.vehicles.length} vehicles in this replay, 0 detected collisions and 0 teleports in validation. Vehicles use simulated elevation and class-specific dimensions. Bus service schedules are not reconstructed. Traffic-state overlays still describe the original model, not this experiment.`;
+  if(i.provenance?.rebuilt) return `Experimental microscopic SUMO rebuild: 25% of eligible source routes, regenerated signals and conservative junction reservations; not measured or count-calibrated traffic. ${i.vehicles.length} vehicles in this replay, 0 detected collisions and 0 teleports in validation. Vehicles use simulated elevation and class-specific dimensions. Discontinuous road joins are cut in replay. Bus service schedules are not reconstructed. Traffic-state overlays still describe the original model, not this experiment.`;
   return `Recorded SUMO mesoscopic simulation, not observed vehicle trajectories. ${i.vehicles.length.toLocaleString()} selected vehicles; ${i.frames} frames at ${i.dt} s. Exact positions at recorded times, linear interpolation only between adjacent samples. Missing samples and jumps over 55 m/s are hidden between frames. No lane reconstruction or queue compression. Traffic demand and congestion remain unvalidated; source model flow is about half the observed counts. Ground height follows the exported road surface; bridge assignment is not recorded.`;
 }
 """

@@ -54,6 +54,9 @@ Origin: longitude -0.200473, latitude 51.506427. ENU metres map to the Three.js
 viewer as `(east, up, -north)`. Rebuilt vehicles use SUMO lane elevation. The
 original elevation survey datum is unknown; this is not surveyed bridge geometry.
 Original replay has no elevation and follows the exported road surface.
+A small number of inherited lane joins have discontinuous coordinates. Rebuilt
+replay does not interpolate a step exceeding its simulated travel distance plus
+a 2 m allowance for lateral motion and bumper rotation; raw samples remain intact.
 
 Windows start at 31800, 49800 and 64200 source clock seconds. No UTC epoch is
 inferred. Protocol runs use relative seconds; metadata retains the source clock.
