@@ -6,9 +6,9 @@
       "scene_id": "imperial_corridor",
       "title": "Imperial Corridor",
       "tag": "City & sunlight",
-      "description": "Explore west London with geographic sunlight, building shadows and recorded SUMO traffic. Model estimates, not live traffic.",
+      "description": "Explore west London with geographic sunlight, building shadows and experimental microscopic traffic. Compare original SUMO records; neither mode is live traffic.",
       "viewer_url": "scenes/imperial_corridor/",
-      "resource_ids": ["imperial_corridor_input_export_v1"]
+      "resource_ids": ["imperial_corridor_input_export_v1", "imperial_corridor_runs_micro_v7"]
     },
     {
       "scene_id": "south_ken",

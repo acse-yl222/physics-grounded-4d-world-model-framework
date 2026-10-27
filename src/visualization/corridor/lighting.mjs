@@ -35,6 +35,7 @@ export function installLighting({ scene, sun, renderer, direction, controls, set
       get('sun-state').textContent =
         `${String(Math.floor(hour)).padStart(2, '0')}:${String(Math.round((hour % 1) * 60)).padStart(2, '0')} · sun ${position.altitude.toFixed(1)}°${daylight ? '' : ' · night'}`;
       window.cityLighting = { update, position, sun, direction };
+      renderer.shadowMap.needsUpdate = true;
       redraw();
     } catch (error) {
       get('sun-state').textContent = error.message;

@@ -43,10 +43,21 @@ def build(export, destination, data_url=None, micro_url=None):
     script = replace_once(script, "Bo.render()", "!corridorBuilding && Bo.render()")
     script = replace_once(
         script,
+        '_n.addEventListener("change", () => (en = !0))',
+        '_n.addEventListener("change", () => (vr.shadowMap.needsUpdate = true, en = !0))',
+    )
+    script = replace_once(
+        script,
         "B.castShadow = a && OG.has(S)",
-        "B.castShadow = (a || corridorShadows) && OG.has(S)",
+        'B.castShadow = (a || corridorShadows) && OG.has(S) && (a || S !== "traffic")',
     )
     script = replace_once(script, "B.receiveShadow = a", "B.receiveShadow = a || corridorShadows")
+    script = replace_once(
+        script,
+        "i.shadowMap.type = fa",
+        "i.shadowMap.autoUpdate = a, i.shadowMap.needsUpdate = true, i.shadowMap.type = fa",
+    )
+
     script = replace_once(
         script, "i.shadowMap.enabled = a", "i.shadowMap.enabled = a || corridorShadows"
     )
@@ -56,7 +67,11 @@ def build(export, destination, data_url=None, micro_url=None):
         "r.shadow.mapSize.set(4096, 4096)",
         "r.shadow.mapSize.set(a ? 4096 : 2048, a ? 4096 : 2048)",
     )
-    script = replace_once(script, "a && p(y, S)", "(a || corridorShadows) && p(y, S)")
+    script = replace_once(
+        script,
+        "a && p(y, S)",
+        "(a || corridorShadows) && (p(y, S), i.shadowMap.needsUpdate = true)",
+    )
     script = replace_once(
         script,
         "a ? (v(), s.render()) : i.render(e, n)",

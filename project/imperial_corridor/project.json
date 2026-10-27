@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "imperial_corridor",
+  "title": "Imperial Corridor",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.200473,
+      "latitude": 51.506427,
+      "height_m": 0,
+      "vertical_datum": "Inherited exported lane elevation; original survey datum unknown"
+    },
+    "bounds_m": {
+      "min": [-5000, -5000, -100],
+      "max": [5000, 5000, 500]
+    }
+  },
+  "inputs": [],
+  "default_view": "am_peak"
+}

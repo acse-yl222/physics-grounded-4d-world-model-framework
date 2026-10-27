@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "imperial_corridor",
+  "title": "Experimental microscopic traffic: am_peak",
+  "time_alignment": "relative",
+  "runs": ["micro_v7_am_peak"],
+  "layers": [
+    {
+      "run_id": "micro_v7_am_peak",
+      "layer_id": "traffic",
+      "visible": true
+    }
+  ]
+}

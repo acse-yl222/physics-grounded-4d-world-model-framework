@@ -16,5 +16,7 @@
   "reproducible_original_simulation": false,
   "microscopic_solver": "SUMO 1.28.0",
   "reproducible_rebuilt_experiment": true,
-  "vehicle_dimensions": "nominal class dimensions; not measured fleet data"
+  "vehicle_dimensions": "nominal class dimensions; not measured fleet data",
+  "micro_url": "https://raw.githubusercontent.com/acse-yl222/physics-grounded-4d-world-model-framework/18f24a0201a5f2bc0f57b86d4a69829dd5abb843/project/imperial_corridor/runs/micro_v7",
+  "source_data_url": "https://raw.githubusercontent.com/acse-yl222/physics-grounded-4d-world-model-framework/e45d08934593fd3729f22dc0fd128acc3b519cac/project/imperial_corridor/input/export-v1/data"
 }
