@@ -1,0 +1,44 @@
+{
+  "collisions": 0,
+  "teleports": 0,
+  "source_route_selection": {
+    "source": 18476,
+    "not_sampled": 13845,
+    "discontinuous_source_route": 327,
+    "selected": 2819,
+    "outside_departure_window": 862,
+    "disconnected_route": 160,
+    "insufficient_departure_storage": 463
+  },
+  "vehicles_recorded": 2665,
+  "max_speed_m_s": 22.6486,
+  "final_summary": {
+    "time": "64799.400",
+    "loaded": "2819",
+    "inserted": "2810",
+    "running": "1566",
+    "waiting": "9",
+    "ended": "1244",
+    "arrived": "1244",
+    "collisions": "0",
+    "teleports": "0",
+    "halting": "1318",
+    "stopped": "0",
+    "meanWaitingTime": "0.2026",
+    "meanTravelTime": "163.4983",
+    "meanSpeed": "1.2499",
+    "meanSpeedRelative": "0.1326",
+    "discarded": "0",
+    "duration": "21"
+  },
+  "simulation_step_s": 0.1,
+  "recording_step_s": 0.5,
+  "limitations": [
+    "regenerated actuated signals; original timings unavailable",
+    "25% deterministic route sample by default, not count-calibrated",
+    "120-second empty-network warmup",
+    "bus routes without original service schedule; no timetable claims",
+    "no jam teleportation; retain congestion instead",
+    "exclusive junction reservations: experimental controller, not actual London signal operation"
+  ]
+}

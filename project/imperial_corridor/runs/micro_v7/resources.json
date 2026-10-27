@@ -1,0 +1,143 @@
+{
+  "scene_id": "imperial_corridor",
+  "version": "micro_v7",
+  "category": "runs",
+  "source_revision": "b997573",
+  "assets": [
+    {
+      "path": "am_peak/manifest.json",
+      "bytes": 10692,
+      "sha256": "5ab41ceccec6e4712e796fad3ecb151c8ce4ebd326c4b8e7ee490bf23aacca2a"
+    },
+    {
+      "path": "am_peak/network.net.xml.gz",
+      "bytes": 7340737,
+      "sha256": "24e2505f58d18404e9b690f48300535ef5303cc456c5e9286bbcdbfef92e45f6"
+    },
+    {
+      "path": "am_peak/source_snapshot.zip",
+      "bytes": 9365,
+      "sha256": "784a163754846643668b23978b3bac32f6d5460278de834bc8e1c7b9166b42e9"
+    },
+    {
+      "path": "am_peak/routes.rou.xml.gz",
+      "bytes": 196001,
+      "sha256": "5f820869c687184b1fbbc292a809432517cb2cc70090f8c87557406cfdee91d8"
+    },
+    {
+      "path": "am_peak/traffic.json",
+      "bytes": 118106,
+      "sha256": "ecf4ff165c9e9d4c4896fb181dd5fa24b5a735d67190469704b8db1d3ce80d3c"
+    },
+    {
+      "path": "am_peak/trajectories.json",
+      "bytes": 31297858,
+      "sha256": "d69e7552a6ef4391ef12abd65424b5305c5ab75579751d3f2a796913362b113a"
+    },
+    {
+      "path": "am_peak/validation.json",
+      "bytes": 1277,
+      "sha256": "2dc02e6b749c989e5bb0c24b557cc83c6c47b627bebec5b0ee6805af067cd32b"
+    },
+    {
+      "path": "am_peak/reproduce.json",
+      "bytes": 1301,
+      "sha256": "8dc50c15ad64641d6a9b13541c68396423d201318c402c9b33f9b68fc8bba6be"
+    },
+    {
+      "path": "am_peak/traffic.wasm",
+      "bytes": 41205452,
+      "sha256": "fe0754d0ac312ad776c1aa2950555caa30678b52df4725e75bcb2791e26b2641"
+    },
+    {
+      "path": "inter_peak/manifest.json",
+      "bytes": 10695,
+      "sha256": "2325082e207087a61151653336f8bceb1a53f31927d121135ae26b5e255d538e"
+    },
+    {
+      "path": "inter_peak/network.net.xml.gz",
+      "bytes": 7340737,
+      "sha256": "21ff344a15adcec11514ab4fa6b9a585682a34e57a242de4c5cdf3590073b7ce"
+    },
+    {
+      "path": "inter_peak/source_snapshot.zip",
+      "bytes": 9365,
+      "sha256": "784a163754846643668b23978b3bac32f6d5460278de834bc8e1c7b9166b42e9"
+    },
+    {
+      "path": "inter_peak/routes.rou.xml.gz",
+      "bytes": 186641,
+      "sha256": "b6f0530d9ed6059187dd4292b719fb9bead2bf6ccd49927e02ccb76f8847248a"
+    },
+    {
+      "path": "inter_peak/traffic.json",
+      "bytes": 117480,
+      "sha256": "15454158af2a57fb8091ab8acf9bbff78f5c442ca96d8f29334bc66217f62490"
+    },
+    {
+      "path": "inter_peak/trajectories.json",
+      "bytes": 29150846,
+      "sha256": "b388b56410c13d2886a5e36fae88e1d01935813184d6c00c721fe835f426db68"
+    },
+    {
+      "path": "inter_peak/validation.json",
+      "bytes": 1277,
+      "sha256": "b5f6f0a001f16e750945f9b3288592371018f207e8f99cdd28c99a14743b3d76"
+    },
+    {
+      "path": "inter_peak/reproduce.json",
+      "bytes": 1313,
+      "sha256": "6e121a51ebc57b32485e4a3bac30c4d6cc17af6e5b80ed4de7d9e125b923473f"
+    },
+    {
+      "path": "inter_peak/traffic.wasm",
+      "bytes": 38394308,
+      "sha256": "daff1e328f71e620eb409153f996bd8649ee0041d04e535094d3326e3dfb1914"
+    },
+    {
+      "path": "pm_peak/manifest.json",
+      "bytes": 10692,
+      "sha256": "a5ee0774d8429265a21cd7d9c821b3d15f2bb5434b3387e1a26e7fea196e9ba3"
+    },
+    {
+      "path": "pm_peak/network.net.xml.gz",
+      "bytes": 7340737,
+      "sha256": "24e2505f58d18404e9b690f48300535ef5303cc456c5e9286bbcdbfef92e45f6"
+    },
+    {
+      "path": "pm_peak/source_snapshot.zip",
+      "bytes": 9365,
+      "sha256": "784a163754846643668b23978b3bac32f6d5460278de834bc8e1c7b9166b42e9"
+    },
+    {
+      "path": "pm_peak/routes.rou.xml.gz",
+      "bytes": 194972,
+      "sha256": "6c9a353484ebf051f7d650379c9ece27f47aa4a216504b124d1291aa6b606e73"
+    },
+    {
+      "path": "pm_peak/traffic.json",
+      "bytes": 117457,
+      "sha256": "8a0b613045bbed83411addd60a266b99c98d4519ada78ea9b0d839728af72ac9"
+    },
+    {
+      "path": "pm_peak/trajectories.json",
+      "bytes": 31767574,
+      "sha256": "1023c7b611eb0e5d00460affd811b4966c0ee1752dbec0964d872fea88852217"
+    },
+    {
+      "path": "pm_peak/validation.json",
+      "bytes": 1276,
+      "sha256": "d03b0b549483b858f04c7012b92961e63d1c60aa4edd6275535dce09bbfd7b5b"
+    },
+    {
+      "path": "pm_peak/reproduce.json",
+      "bytes": 1301,
+      "sha256": "e5f6749ab038545cd39f410a2f9b357e982e8ef3a672a5c9a50d0126e208633c"
+    },
+    {
+      "path": "pm_peak/traffic.wasm",
+      "bytes": 41841692,
+      "sha256": "c681f888555b5992d1cfb48ed82c0d3e5feca399f225e7739d885a7736a3ca5d"
+    }
+  ]
+}
