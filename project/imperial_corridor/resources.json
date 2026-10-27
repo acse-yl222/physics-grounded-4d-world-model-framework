@@ -1,0 +1,21 @@
+{
+  "scene_id": "imperial_corridor",
+  "resources": [
+    {
+      "id": "imperial_corridor_input_export_v1",
+      "category": "input",
+      "version": "export-v1",
+      "representation": "legacy presentation",
+      "revision": "e45d08934593fd3729f22dc0fd128acc3b519cac",
+      "catalog_url": "https://raw.githubusercontent.com/acse-yl222/physics-grounded-4d-world-model-framework/e45d08934593fd3729f22dc0fd128acc3b519cac/project/imperial_corridor/input/export-v1/resources.json"
+    },
+    {
+      "id": "imperial_corridor_runs_micro_v7",
+      "category": "runs",
+      "version": "micro_v7",
+      "representation": "protocol-v1.1 microscopic experiment",
+      "revision": "18f24a0201a5f2bc0f57b86d4a69829dd5abb843",
+      "catalog_url": "https://raw.githubusercontent.com/acse-yl222/physics-grounded-4d-world-model-framework/18f24a0201a5f2bc0f57b86d4a69829dd5abb843/project/imperial_corridor/runs/micro_v7/resources.json"
+    }
+  ]
+}

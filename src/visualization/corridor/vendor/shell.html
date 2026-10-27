@@ -1,0 +1,323 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<meta charset="utf-8">
+<title>Imperial Corridor 3D (Copy)</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+  /* Layout: full-bleed 3D canvas with one floating control card (top-left) and an attribution strip. */
+  :root {
+    --bg: #dfe8ef;
+    --card: rgba(250, 251, 249, 0.92);
+    --fg: #1d2a33;
+    --muted: #5c6b73;
+    --line: #c9d4da;
+    --accent: #1f5f8b;
+    --accent-ink: #ffffff;
+    --track: #d6dfe4;
+    --display: 'Fraunces', Georgia, 'Times New Roman', serif;
+    --body: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0f171d; --card: rgba(20, 29, 36, 0.92); --fg: #e4ecf0; --muted: #9aabb4;
+      --line: #2c3c47; --accent: #6fb3e0; --accent-ink: #0b141a; --track: #25333c; color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0f171d; --card: rgba(20, 29, 36, 0.92); --fg: #e4ecf0; --muted: #9aabb4;
+    --line: #2c3c47; --accent: #6fb3e0; --accent-ink: #0b141a; --track: #25333c; color-scheme: dark;
+  }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--fg); font-family: var(--body); overflow: hidden; }
+  .stage { position: fixed; inset: 0; }
+  #view { display: block; width: 100%; height: 100%; touch-action: none; }
+  .card {
+    position: fixed;
+    top: calc(12px + env(safe-area-inset-top, 0px));
+    left: max(16px, env(safe-area-inset-left, 0px));
+    width: min(320px, calc(100vw - 32px));
+    max-height: calc(100% - 64px - env(safe-area-inset-top, 0px));
+    overflow: auto;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: grid;
+    gap: 12px;
+    backdrop-filter: blur(6px);
+  }
+  h1 { font-family: var(--display); font-weight: 600; font-size: 1.25rem; line-height: 1.15; margin: 0; text-wrap: balance; }
+  .sub { margin: 4px 0 0; color: var(--muted); font-size: 0.8rem; line-height: 1.4; }
+  .coords { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .label { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .places { display: flex; flex-wrap: wrap; gap: 6px; }
+  button, select {
+    font: inherit; font-size: 0.82rem; color: var(--fg); background: transparent;
+    border: 1px solid var(--line); border-radius: 6px; padding: 6px 10px; cursor: pointer;
+  }
+  button:hover, select:hover { border-color: var(--accent); }
+  button:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  select { width: 100%; }
+  .layers { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 10px; font-size: 0.82rem; }
+  .layers label { display: flex; align-items: center; gap: 6px; cursor: pointer; }
+  .layers label[hidden] { display: none; }
+  input[type="checkbox"] { accent-color: var(--accent); }
+  #progress { display: grid; gap: 6px; }
+  #progress[hidden] { display: none; }
+  .track { height: 6px; background: var(--track); border-radius: 3px; overflow: hidden; }
+  #bar { height: 100%; width: 0; background: var(--accent); transition: width 0.2s; }
+  #progress-label, #stats { font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .hint { font-size: 0.74rem; color: var(--muted); }
+  .search { position: relative; }
+  #search {
+    width: 100%; font: inherit; font-size: 0.9rem; color: var(--fg); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px;
+  }
+  #search:focus { border-color: var(--accent); outline: none; }
+  #results { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 1px; }
+  #results li {
+    display: flex; justify-content: space-between; gap: 8px; align-items: baseline;
+    padding: 6px 8px; border-radius: 5px; cursor: pointer; font-size: 0.84rem;
+  }
+  #results li[aria-selected="true"], #results li:hover { background: var(--track); }
+  #results .kind { font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+  #results .empty { cursor: default; color: var(--muted); }
+  .pin {
+    position: fixed; transform: translate(-50%, -100%); pointer-events: none;
+    background: var(--card); border: 1px solid var(--accent); color: var(--fg);
+    border-radius: 6px; padding: 3px 8px; font-size: 0.78rem; white-space: nowrap;
+  }
+  .pin[hidden] { display: none; }
+  .traffic { display: grid; gap: 8px; }
+  .traffic[hidden] { display: none; }
+  #t-slider { width: 100%; accent-color: var(--accent); }
+  #t-clock { font-family: var(--mono); font-size: 0.78rem; font-variant-numeric: tabular-nums; }
+  #t-play { min-width: 74px; }
+  .note { font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
+  .row { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; }
+  .credit {
+    position: fixed; bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+    right: max(16px, env(safe-area-inset-right, 0px));
+    font-size: 0.68rem; color: var(--muted); background: var(--card); padding: 3px 8px; border-radius: 4px;
+    max-width: calc(100vw - 32px);
+  }
+  .mobility {
+    left: auto; right: max(16px, env(safe-area-inset-right, 0px));
+    width: min(340px, calc(100vw - 32px));
+  }
+  .mobility[hidden] { display: none; }
+  .panel { display: grid; gap: 8px; }
+  [role="tabpanel"][hidden] { display: none !important; }
+  .seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+  .seg.two { grid-template-columns: 1fr 1fr; }
+  .seg button { padding: 6px 4px; font-size: 0.76rem; line-height: 1.2; }
+  .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .legend { display: grid; gap: 4px; font-size: 0.78rem; }
+  .legend-row { display: grid; grid-template-columns: 12px 1fr auto; gap: 8px; align-items: center; font-variant-numeric: tabular-nums; }
+  .sw { width: 12px; height: 12px; border-radius: 3px; }
+  .bar100 { display: flex; height: 8px; border-radius: 4px; overflow: hidden; background: var(--track); }
+  .tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--line); }
+  .tabs button { border: 0; border-bottom: 2px solid transparent; border-radius: 0; padding: 6px 8px; }
+  .tabs button[aria-selected="true"] { border-bottom-color: var(--accent); color: var(--accent); }
+  #route-filter { width: 100%; font: inherit; font-size: 0.84rem; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 6px 8px; }
+  #routes { list-style: none; margin: 0; padding: 0; max-height: 220px; overflow: auto; display: grid; gap: 1px; }
+  #routes li { display: grid; grid-template-columns: 52px 1fr auto; gap: 8px; align-items: center; padding: 5px 6px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; }
+  #routes li:hover, #routes li[aria-selected="true"] { background: var(--track); }
+  .route-no { font-weight: 500; font-family: var(--mono); }
+  .chip { font-size: 0.68rem; padding: 2px 6px; border-radius: 10px; color: #fff; white-space: nowrap; }
+  .tube-lines { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; max-height: 220px; overflow: auto; }
+  .tube-lines li { display: grid; grid-template-columns: 12px 1fr auto; gap: 8px; align-items: center; padding: 5px 6px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; }
+  .tube-lines li:hover { background: var(--track); }
+  .tube-lines .muted, .info .muted { color: var(--muted); }
+  .info { font-size: 0.8rem; line-height: 1.45; display: grid; gap: 6px; }
+  .info h2 { font-size: 0.95rem; margin: 0; font-weight: 500; }
+  .info table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; font-size: 0.76rem; }
+  .info th, .info td { text-align: right; padding: 2px 4px; border-bottom: 1px solid var(--line); }
+  .info th:first-child, .info td:first-child { text-align: left; }
+  .info .muted { color: var(--muted); }
+  @media (max-width: 900px) {
+    .mobility { top: auto; bottom: calc(28px + env(safe-area-inset-bottom, 0px)); max-height: 42%; }
+  }
+  @media (max-width: 520px) { .card { max-height: 46%; } }
+
+  /* Layout v2: left card (search, places, layers), right card (traffic & transit),
+     bottom dock (time period and playback, shared by traffic and trains). */
+  .card { gap: 10px; padding: 12px 14px; }
+  .card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; }
+  .card-head h1 { font-size: 1.05rem; }
+  .collapse { border: 0; padding: 2px 6px; font-size: 1rem; line-height: 1; color: var(--muted); }
+  .card[data-collapsed="true"] > :not(.card-head):not(.search):not(.tabs) { display: none !important; }
+  details { border-top: 1px solid var(--line); padding-top: 8px; }
+  details > summary { cursor: pointer; font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); list-style: none; display: flex; justify-content: space-between; }
+  details > summary::after { content: '+'; font-size: 0.9rem; letter-spacing: 0; }
+  details[open] > summary::after { content: '−'; }
+  details > summary::-webkit-details-marker { display: none; }
+  details > :not(summary) { margin-top: 8px; }
+  .card { max-height: calc(100% - 120px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px)); }
+  .dock {
+    position: fixed; left: 50%; transform: translateX(-50%);
+    bottom: calc(26px + env(safe-area-inset-bottom, 0px));
+    width: min(820px, calc(100vw - 32px));
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 8px 12px; display: grid; gap: 6px; backdrop-filter: blur(6px);
+  }
+  .dock[hidden] { display: none; }
+  .dock-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .dock .seg { flex: 0 0 auto; display: flex; gap: 4px; }
+  .dock .seg button { padding: 5px 8px; font-size: 0.74rem; white-space: nowrap; }
+  .dock #t-slider { flex: 1 1 160px; min-width: 120px; }
+  .dock #t-clock, .dock #tube-clock-dock { font-family: var(--mono); font-size: 0.74rem; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .dock .note { margin: 0; }
+  .mobility { top: calc(12px + env(safe-area-inset-top, 0px)); }
+  .sources { font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
+  @media (max-width: 900px) {
+    .card { left: max(12px, env(safe-area-inset-left, 0px)); width: calc(100vw - 24px); max-height: 44%; }
+    .mobility { top: auto; bottom: calc(128px + env(safe-area-inset-bottom, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); max-height: 36%; }
+    .dock { width: calc(100vw - 24px); bottom: calc(24px + env(safe-area-inset-bottom, 0px)); padding: 6px 8px; }
+    .dock .seg button { padding: 5px 6px; }
+    .dock #t-slider { order: 5; flex-basis: 100%; }
+    .dock #t-clock { margin-left: auto; }
+    .coords { display: none; }
+  }
+  /* "Hide panels": a clean full view; only the toggle and the data credit stay. */
+  .ui-toggle {
+    position: fixed; z-index: 5;
+    top: calc(12px + env(safe-area-inset-top, 0px)); left: 50%; transform: translateX(-50%);
+    background: var(--card); backdrop-filter: blur(6px);
+    display: flex; align-items: center; gap: 6px; padding: 7px 10px; font-size: 0.78rem;
+  }
+  .ui-toggle svg { width: 16px; height: 16px; }
+  body.ui-hidden .card, body.ui-hidden .dock, body.ui-hidden .pin { display: none !important; }
+  #ug-mode[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+  .tube-labels { position: fixed; inset: 0; pointer-events: none; }
+  .tube-label {
+    position: fixed; transform: translate(-50%, -100%); white-space: nowrap;
+    font-size: 0.72rem; color: #fff; background: rgba(20, 24, 28, 0.78); border-radius: 4px; padding: 2px 6px;
+  }
+  body.ui-hidden .tube-labels { display: none; }
+  .toast {
+    position: fixed; left: 50%; top: calc(56px + env(safe-area-inset-top, 0px)); transform: translateX(-50%);
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px;
+    font-size: 0.8rem; color: var(--fg); pointer-events: none; transition: opacity 0.4s; opacity: 0;
+  }
+  .toast.show { opacity: 1; }
+  @media (max-width: 900px) { .ui-toggle { left: auto; transform: none; right: max(12px, env(safe-area-inset-right, 0px)); } body:not(.ui-hidden) .ui-toggle { display: none; } }
+  @media (max-width: 520px) { .credit-extra { display: none; } .credit { font-size: 0.62rem; } }
+</style>
+<div class="stage"><canvas id="view" aria-label="3D city model"></canvas></div>
+<section class="card" id="main-card" aria-label="City model controls">
+  <div class="card-head">
+    <div>
+      <h1>Imperial College, South Kensington to White City</h1>
+      <p class="coords">8 × 8 km · lon −0.2582 … −0.1427 · lat 51.4705 … 51.5424</p>
+    </div>
+    <div style="display:flex;gap:2px">
+      <button class="collapse" type="button" id="ui-hide-mobile" aria-label="Hide all panels" title="Hide all panels">⤢</button>
+      <button class="collapse" type="button" data-collapse="main-card" aria-expanded="true" aria-label="Collapse panel">−</button>
+    </div>
+  </div>
+  <div class="search" role="search">
+    <label class="label" for="search">Search</label>
+    <input id="search" type="search" placeholder="Building, street, stop or station…" autocomplete="off"
+      role="combobox" aria-expanded="false" aria-controls="results" aria-autocomplete="list" disabled>
+    <ul id="results" role="listbox" aria-label="Search results"></ul>
+  </div>
+  <div id="progress"><div class="track"><div id="bar"></div></div><div id="progress-label">Starting…</div></div>
+  <div id="stats" class="note"></div>
+  <details open>
+    <summary>Go to</summary>
+    <div class="places">
+      <button id="go-south_ken" type="button">South Kensington</button>
+      <button id="go-white_city" type="button">White City</button>
+      <button id="go-overview" type="button">Whole area</button>
+    </div>
+    <select id="landmark" disabled aria-label="Landmark"><option value="">Choose a landmark…</option></select>
+  </details>
+  <details open>
+    <summary>Layers &amp; display</summary>
+    <div class="layers">
+      <label><input type="checkbox" id="layer-buildings" data-layer="buildings" checked>Buildings</label>
+      <label><input type="checkbox" id="layer-landmarks" data-layer="landmarks" checked>Landmarks</label>
+      <label><input type="checkbox" id="layer-ground" data-layer="ground" checked>Roads &amp; parks</label>
+      <label><input type="checkbox" id="layer-trees" data-layer="trees" checked>Trees</label>
+      <label><input type="checkbox" id="layer-furniture" data-layer="street_furniture" checked>Street furniture</label>
+      <label><input type="checkbox" id="layer-traffic" data-layer="traffic" checked>Vehicles</label>
+      <label><input type="checkbox" id="layer-mobility" data-layer="mobility">Road state &amp; stops</label>
+      <label id="layer-underground-row" hidden><input type="checkbox" id="layer-underground" data-layer="underground">Underground</label>
+      <label><input type="checkbox" id="water-anim" checked>Moving water</label>
+      <label title="Shadows, ambient occlusion and anti-aliasing; for a desktop GPU"><input type="checkbox" id="hq">High quality</label>
+    </div>
+  </details>
+  <details>
+    <summary>About this model</summary>
+    <p class="sources">Built live in the browser with three.js from Overture Maps and OpenStreetMap data, with 267 hand-modelled landmarks that load in detail as you approach. Traffic: SUMO calibrated to DfT counts; buses and Underground: BODS timetables. Estimates, not live data.</p>
+    <p class="hint">Drag to orbit, right-drag or two fingers to pan, scroll or pinch to zoom. Click roads, stops, stations or count points for details.</p>
+  </details>
+</section>
+<section class="card mobility" id="mobility" aria-label="Traffic and transit" hidden>
+  <div class="card-head">
+    <div class="tabs" role="tablist" style="flex:1">
+      <button type="button" role="tab" id="tab-roads" aria-selected="true" aria-controls="panel-roads">Roads</button>
+      <button type="button" role="tab" id="tab-buses" aria-selected="false" aria-controls="panel-buses">Buses</button>
+      <button type="button" role="tab" id="tab-tube" aria-selected="false" aria-controls="panel-tube" hidden>Underground</button>
+    </div>
+    <button class="collapse" type="button" data-collapse="mobility" aria-expanded="true" aria-label="Collapse panel">−</button>
+  </div>
+  <div id="panel-roads" role="tabpanel" aria-labelledby="tab-roads" class="legend">
+    <div class="seg two" role="radiogroup" aria-label="Road state source">
+      <button type="button" id="src-counts" aria-pressed="true">DfT counts (estimate)</button>
+      <button type="button" id="src-model" aria-pressed="false">SUMO model</button>
+    </div>
+    <div id="hour-row" class="row"><label for="hour" class="note" style="white-space:nowrap">Hour</label>
+      <input id="hour" type="range" min="7" max="18" step="1" value="8" style="flex:1;accent-color:var(--accent)">
+      <span id="hour-label" class="coords">08:00–09:00</span></div>
+    <div class="bar100" id="los-bar" aria-hidden="true"></div>
+    <div id="los-legend"></div>
+    <div class="note" id="roads-summary"></div>
+    <div class="layers">
+      <label><input type="checkbox" id="show-state" checked>Road state</label>
+      <label><input type="checkbox" id="show-counts" checked>DfT counts</label>
+    </div>
+  </div>
+  <div id="panel-buses" role="tabpanel" aria-labelledby="tab-buses" class="panel" hidden>
+    <div id="bus-summary" class="note" style="display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center"></div>
+    <input id="route-filter" type="search" placeholder="Filter routes, e.g. 9, 148, N" aria-label="Filter bus routes">
+    <ul id="routes" role="listbox" aria-label="Bus routes"></ul>
+    <div class="layers"><label><input type="checkbox" id="show-stops" checked>Bus stops</label></div>
+  </div>
+  <div id="panel-tube" role="tabpanel" aria-labelledby="tab-tube" class="panel" hidden>
+    <ul id="tube-lines" class="tube-lines" aria-label="Underground lines"></ul>
+    <div class="note" id="tube-clock"></div>
+    <div class="layers"><label><input type="checkbox" id="see-through">Underground view</label></div>
+  </div>
+  <div class="info" id="info" aria-live="polite"></div>
+  <details>
+    <summary>Sources &amp; caveats</summary>
+    <p class="sources" id="mobility-note"></p>
+    <p class="sources" id="t-note"></p>
+  </details>
+</section>
+<section class="dock" id="traffic" aria-label="Time and playback" hidden>
+  <div class="dock-row">
+    <div class="seg" id="periods" role="group" aria-label="Time period"></div>
+    <button id="t-play" type="button" aria-pressed="true">Pause</button>
+    <select id="t-speed" aria-label="Playback speed" style="width:auto">
+      <option value="1">1×</option><option value="4" selected>4×</option><option value="15">15×</option>
+    </select>
+    <input id="t-slider" type="range" min="0" max="1" step="0.1" value="0" aria-label="Simulation time">
+    <span id="t-clock"></span>
+    <button id="ug-mode" type="button" aria-pressed="false" hidden title="Look at the Underground below the streets">Underground view</button>
+  </div>
+</section>
+<button class="ui-toggle" id="ui-toggle" type="button" aria-pressed="false" title="Hide panels (H)">
+  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path id="ui-toggle-icon" d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg>
+  <span id="ui-toggle-label">Hide panels</span>
+</button>
+<div class="toast" id="toast" role="status"></div>
+<div class="pin" id="pin" hidden></div>
+<div class="credit">© OpenStreetMap contributors (ODbL)<span class="credit-extra"> via Overture Maps · DfT &amp; BODS data (OGL v3)</span></div>
+
+
+</body></html>

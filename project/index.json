@@ -36,6 +36,11 @@
         "imported_np4m_paper_lid",
         "imported_np4m_paper_opentop"
       ]
+    },
+    {
+      "scene_id": "imperial_corridor",
+      "title": "Imperial Corridor",
+      "views": ["am_peak", "inter_peak", "pm_peak"]
     }
   ]
 }

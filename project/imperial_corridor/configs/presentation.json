@@ -1,0 +1,22 @@
+{
+  "scene_id": "imperial_corridor",
+  "source_artifact": "https://claude.ai/artifact/2buLjZwhRFKRZfwHA2BEXD",
+  "source_html_sha256": "b950d8e029630730dee683832c499097fcb499e1da9a748acb5ec12e89880ac4",
+  "source_code_revision": "legacy-unrecorded",
+  "origin": {
+    "longitude": -0.200473,
+    "latitude": 51.506427
+  },
+  "frame": "ENU",
+  "web_axis_mapping": ["east", "up", "-north"],
+  "traffic_mode": "rebuilt-experimental-with-original-comparison",
+  "max_interpolated_speed_m_s": 55,
+  "utc_epoch": null,
+  "solar_default_london": "2026-06-25T13:00",
+  "reproducible_original_simulation": false,
+  "microscopic_solver": "SUMO 1.28.0",
+  "reproducible_rebuilt_experiment": true,
+  "vehicle_dimensions": "nominal class dimensions; not measured fleet data",
+  "micro_url": "https://raw.githubusercontent.com/acse-yl222/physics-grounded-4d-world-model-framework/18f24a0201a5f2bc0f57b86d4a69829dd5abb843/project/imperial_corridor/runs/micro_v7",
+  "source_data_url": "https://raw.githubusercontent.com/acse-yl222/physics-grounded-4d-world-model-framework/e45d08934593fd3729f22dc0fd128acc3b519cac/project/imperial_corridor/input/export-v1/data"
+}
