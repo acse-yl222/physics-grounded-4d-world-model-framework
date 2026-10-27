@@ -19,7 +19,16 @@ export function recordedSampler(frames, dt, maxSpeed = 55) {
         // An absent vehicle or a teleport is not a continuous trajectory.
         if (j === undefined) continue;
         const [nx, ny, nh] = second.xyh.slice(j * 3, j * 3 + 3);
-        if (Math.hypot(nx - x, ny - y) > maxSpeed * dt) continue;
+        const travel = Math.hypot(nx - x, ny - y);
+        if (travel > maxSpeed * dt) continue;
+        // Preserve gaps where exported lane joins disagree with simulated speed.
+        // A two-metre allowance accommodates lateral motion and front-bumper rotation.
+        if (
+          speed !== undefined &&
+          second.speed &&
+          travel > Math.max(speed, second.speed[j]) * dt + 2
+        )
+          continue;
         if (z !== undefined && second.z) z += (second.z[j] - z) * fraction;
         if (speed !== undefined && second.speed) speed += (second.speed[j] - speed) * fraction;
         x += (nx - x) * fraction;
