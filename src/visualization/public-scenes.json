@@ -3,6 +3,14 @@
   "resources_url": "https://acse-yl222.github.io/urban-world-model-models/",
   "scenes": [
     {
+      "scene_id": "imperial_corridor",
+      "title": "Imperial Corridor",
+      "tag": "City & sunlight",
+      "description": "Explore west London with geographic sunlight, building shadows and recorded SUMO traffic. Model estimates, not live traffic.",
+      "viewer_url": "scenes/imperial_corridor/",
+      "resource_ids": ["imperial_corridor_input_export_v1"]
+    },
+    {
       "scene_id": "south_ken",
       "title": "South Kensington",
       "tag": "Urban environment",

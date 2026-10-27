@@ -1,0 +1,17 @@
+{
+  "scene_id": "imperial_corridor",
+  "source_artifact": "https://claude.ai/artifact/2buLjZwhRFKRZfwHA2BEXD",
+  "source_html_sha256": "b950d8e029630730dee683832c499097fcb499e1da9a748acb5ec12e89880ac4",
+  "source_code_revision": "legacy-unrecorded",
+  "origin": {
+    "longitude": -0.200473,
+    "latitude": 51.506427
+  },
+  "frame": "ENU",
+  "web_axis_mapping": ["east", "up", "-north"],
+  "traffic_mode": "recorded",
+  "max_interpolated_speed_m_s": 55,
+  "utc_epoch": null,
+  "solar_default_london": "2026-06-25T13:00",
+  "reproducible_original_simulation": false
+}
