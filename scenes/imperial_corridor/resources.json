@@ -1,0 +1,153 @@
+{
+  "scene_id": "imperial_corridor",
+  "representation": "legacy presentation export; not a protocol simulation run",
+  "source": "Imperial Corridor 3D (Copy).zip, supplied by user",
+  "data_url": "https://raw.githubusercontent.com/acse-yl222/physics-grounded-4d-world-model-framework/e45d08934593fd3729f22dc0fd128acc3b519cac/project/imperial_corridor/input/export-v1/data",
+  "assets": [
+    {
+      "path": "data/buildings-0.json",
+      "bytes": 12999943,
+      "sha256": "8c5aff7ed5293de65beb451627ac1b044c86eacc36f25e650fe344da0a18fba2"
+    },
+    {
+      "path": "data/buildings-1.json",
+      "bytes": 12999962,
+      "sha256": "317b04902c1210238b75161849536bdf1df7bbe2f8198c4d7ed6e75241e1b900"
+    },
+    {
+      "path": "data/buildings-2.json",
+      "bytes": 6882323,
+      "sha256": "f4332932f60246dd1d576c364cfd84a99a1817bcc140d2cb290a59a51423168c"
+    },
+    {
+      "path": "data/bus_status.json",
+      "bytes": 940380,
+      "sha256": "c51f2a2caf10e2fc37fd66b58dfee560b60d5247ed512db732d306b641bf7606"
+    },
+    {
+      "path": "data/count_state.json",
+      "bytes": 467326,
+      "sha256": "e547943ecb2cc78df87949cbe37ce1f8bfb8b780a9fb204eae96bf418f779889"
+    },
+    {
+      "path": "data/road_network.json",
+      "bytes": 2994,
+      "sha256": "3e615d0d8c29daefa34224bf79e87b8080ff78bec813573020064c605b00613c"
+    },
+    {
+      "path": "data/road_network_0.json",
+      "bytes": 7891317,
+      "sha256": "76b5ec144442adb0de313f90f2522b8c29b846f7778b0b22422bdd07218fb261"
+    },
+    {
+      "path": "data/road_network_1.json",
+      "bytes": 8168454,
+      "sha256": "9022b4839d8c525425fdf37f76dc145563dfc2e687c2e50856ed2182048d45f9"
+    },
+    {
+      "path": "data/road_network_2.json",
+      "bytes": 8494185,
+      "sha256": "92756a51a8503e16674d1bea95e99cc1f9066a8e7bee801f2e4e4ff4a19dd5f9"
+    },
+    {
+      "path": "data/scene-meta.json",
+      "bytes": 13796267,
+      "sha256": "710aebe8a1d304f5871d54e8dd81f73a7086be0cddd839ab340c2a4aeec5c0b7"
+    },
+    {
+      "path": "data/search.json",
+      "bytes": 612153,
+      "sha256": "e88880a2680d92823c9b95c6866b3863629ef2656bfffe5d9c45aabb95432b4d"
+    },
+    {
+      "path": "data/terrain.json",
+      "bytes": 3595789,
+      "sha256": "8170b780f2ad7f9bada340e804c53acd0f30dbfe43204f98226b4fd41209677b"
+    },
+    {
+      "path": "data/traffic-am_peak.wasm",
+      "bytes": 11457088,
+      "sha256": "74d45a00093614b5da1f99f9908d2bd51205ab26b0acb572bf61ddd63f899d61"
+    },
+    {
+      "path": "data/traffic-frames.wasm",
+      "bytes": 13115472,
+      "sha256": "70a9a908ad62c9a372ba02b97213f6542c8d565c28ca7b40caa9c967a9c0b024"
+    },
+    {
+      "path": "data/traffic-inter_peak.wasm",
+      "bytes": 11467856,
+      "sha256": "05d683eabdeb7e26cfbd477f3e45db8ee52393611872d5de220fca9ed3dd2197"
+    },
+    {
+      "path": "data/traffic-pm_peak.wasm",
+      "bytes": 11471024,
+      "sha256": "3e97e4aecf264289e7161f2d14ecb5dd9c5786ab015686534a5c095be81bc222"
+    },
+    {
+      "path": "data/traffic.json",
+      "bytes": 51313,
+      "sha256": "cc6fa626adbdd6004dab127c8db34f7b82de6f300fc86de0c9768ea56d7c5b76"
+    },
+    {
+      "path": "data/traffic_am_peak.json",
+      "bytes": 100539,
+      "sha256": "27904e41f35081b354ff56278ef94dff12f201789dce8ebee6eb17b0ce164205"
+    },
+    {
+      "path": "data/traffic_inter_peak.json",
+      "bytes": 101851,
+      "sha256": "db4e216d98e443ff37fcaf008257f8a75a5dd9e2b1e48abf53b3fd01caf280a8"
+    },
+    {
+      "path": "data/traffic_pm_peak.json",
+      "bytes": 98782,
+      "sha256": "5b904c18a6f30d4a17382265cb9d6ad76e2d0abe762e5000fc822e3a43a5a5c0"
+    },
+    {
+      "path": "data/traffic_routes_am_peak.json",
+      "bytes": 10415912,
+      "sha256": "45b0717f4e699323b0dd37bf7df089d47f5f1d79f9d028989f42db2376db7b2f"
+    },
+    {
+      "path": "data/traffic_routes_inter_peak.json",
+      "bytes": 10279999,
+      "sha256": "f9b4e2d512f3f7a671131a10a36e5baba99a35afc1db1daa41af70382fa2b1b6"
+    },
+    {
+      "path": "data/traffic_routes_pm_peak.json",
+      "bytes": 10671647,
+      "sha256": "dd48ff6db91ee027f8006428582a697282a08a6e7152fbd170882bf6e2e18358"
+    },
+    {
+      "path": "data/traffic_state.json",
+      "bytes": 8288558,
+      "sha256": "f819be5138ce10e0cf9a0765bd88d8b770445ea5fb867bd62e587c14cc35e574"
+    },
+    {
+      "path": "data/underground.json",
+      "bytes": 617011,
+      "sha256": "dc543052d8ec7e5b366bade26a799a021a3f3c95640f6d873e3dd8663d402d12"
+    },
+    {
+      "path": "data/underground_status.json",
+      "bytes": 39909,
+      "sha256": "608793404387f6f01802b0e4de1d96a65941817487979ad6cc6e0823cb2bada8"
+    },
+    {
+      "path": "data/underground_trains_am_peak.json",
+      "bytes": 260163,
+      "sha256": "0ce2681a7e3c4b9c1baac0aa182d40f41bada31571bd2b58183b93964069cc64"
+    },
+    {
+      "path": "data/underground_trains_inter_peak.json",
+      "bytes": 238093,
+      "sha256": "6b352913834c8681e8c84dedd3c1834eae7efb12b3b86483e23e791858c263fe"
+    },
+    {
+      "path": "data/underground_trains_pm_peak.json",
+      "bytes": 260116,
+      "sha256": "da7a8c1e4500e67f5c7a08a5ad2febc45f7b0a019a92733e337aa79b4dac5c4d"
+    }
+  ]
+}

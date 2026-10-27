@@ -1,0 +1,19 @@
+{
+  "source_revision": "cc8cb4c",
+  "original_resource_revision": "e45d08934593fd3729f22dc0fd128acc3b519cac",
+  "micro_resource_revision": "18f24a0201a5f2bc0f57b86d4a69829dd5abb843",
+  "validation": {
+    "am_peak": {
+      "collisions": 0,
+      "teleports": 0
+    },
+    "inter_peak": {
+      "collisions": 0,
+      "teleports": 0
+    },
+    "pm_peak": {
+      "collisions": 0,
+      "teleports": 0
+    }
+  }
+}
