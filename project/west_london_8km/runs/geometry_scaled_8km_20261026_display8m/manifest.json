@@ -1,0 +1,137 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "west_london_8km",
+  "simulation": "geometry",
+  "run_id": "geometry_scaled_8km_20261026_display8m",
+  "status": "complete",
+  "created_at": "2026-10-29T07:55:54.538423+00:00",
+  "provenance": {
+    "code_revision": "4c4af09a2262ea0b9a9824444bf24914f5bd4edc",
+    "dirty": true,
+    "parameters": {
+      "source": "SCALED-Surrogate-Computational-Physics-Model/experiments/homepage_v1_8km_20261026 (copied to input/scaled_homepage_v1_8km_20261026)",
+      "bounds_bng": [
+        521904,
+        176904,
+        530096,
+        185096
+      ],
+      "shape_zyx": [
+        64,
+        2048,
+        2048
+      ],
+      "dx_m": 4.0,
+      "height_method": "EA native 1m composite DSM minus DTM, 75th percentile per4x4m cell, masked by archived OSM footprints",
+      "axis_order": "z, south-to-north y, west-to-east x",
+      "wind": "not included; SCALED V1 100-step rollout planned on Isambard, no local result",
+      "display_derivative": {
+        "from_run": "geometry_scaled_8km_20261026",
+        "from_manifest_sha256": "5d6d7d48fc91a79c8bd7214397dbfd48de3e0ea71055dceadc84efa4a975db26",
+        "method": "2 x 2 max of building height (4 m -> 8 m), float16; mask = no building in block"
+      }
+    },
+    "inputs": [
+      {
+        "id": "geometry.npy",
+        "sha256": "200dc049435cc51b1cc5d7f8bdc8651ef2e153f4a2173787d1e2153f6d3da480"
+      },
+      {
+        "id": "height.npy",
+        "sha256": "5885e0e4930dd437bac68382eb5d3166b81e98600580ba1ff84c00b3f30d09ab"
+      },
+      {
+        "id": "footprint.npy",
+        "sha256": "7f21991e408c2eb5995e4d6163bf911e299faec78987cbed4321f7c4b948fe55"
+      },
+      {
+        "id": "manifest.json",
+        "sha256": "74324383dd8482cd882e9abd394eab67b3006f897cfd8f60099181dc3f27313c"
+      }
+    ]
+  },
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.1855730065984154,
+      "latitude": 51.51388432196296,
+      "height_m": 0,
+      "vertical_datum": "Flat terrain; building height = EA DSM minus DTM (not ODN). Horizontal axes are British National Grid easting/northing, about 1.4 deg from true north at this longitude."
+    },
+    "bounds_m": {
+      "min": [
+        -4096.0,
+        -4096.0,
+        0
+      ],
+      "max": [
+        4096.0,
+        4096.0,
+        256.0
+      ]
+    }
+  },
+  "time": {
+    "unit": "s",
+    "samples": [
+      0
+    ]
+  },
+  "layers": [
+    {
+      "id": "building_height",
+      "kind": "scalar_field",
+      "format": "npy",
+      "sampling": "step",
+      "asset": "data/building_height.npy",
+      "field": {
+        "name": "building_height",
+        "unit": "m"
+      },
+      "encoding": {
+        "coordinate_frame": "ENU",
+        "dtype": "<f2",
+        "shape": [
+          1,
+          1024,
+          1024
+        ],
+        "axes": "TYX",
+        "origin_m": [
+          -4096.0,
+          -4096.0,
+          0.0
+        ],
+        "spacing_m": [
+          8.0,
+          8.0
+        ],
+        "sample_location": "cell_center",
+        "byte_order": "little",
+        "compression": "none",
+        "height_asset": "data/roof_height.npy",
+        "height_dtype": "<f2",
+        "mask_asset": "data/not_building.npy",
+        "mask_dtype": "|u1",
+        "mask_semantics": "invalid_nonzero"
+      },
+      "display": {
+        "widget": "scalar_field",
+        "capabilities": [
+          "pick",
+          "legend",
+          "opacity"
+        ]
+      }
+    }
+  ],
+  "artifacts": [
+    {
+      "id": "source_snapshot",
+      "asset": "source_snapshot.tar.gz",
+      "sha256": "6a259cf24dedf9387a0d7d84c89b07333b56c686d2aa2c98c198914797b95472",
+      "media_type": "application/gzip"
+    }
+  ]
+}

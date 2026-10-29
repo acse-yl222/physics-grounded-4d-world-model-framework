@@ -1,0 +1,16 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "west_london_8km",
+  "title": "Building heights (8.192 km, displayed at 8 m)",
+  "time_alignment": "relative",
+  "runs": [
+    "geometry_scaled_8km_20261026_display8m"
+  ],
+  "layers": [
+    {
+      "run_id": "geometry_scaled_8km_20261026_display8m",
+      "layer_id": "building_height",
+      "visible": true
+    }
+  ]
+}

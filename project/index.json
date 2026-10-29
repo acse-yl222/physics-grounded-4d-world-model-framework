@@ -1,0 +1,12 @@
+{
+  "default": null,
+  "scenes": [
+    {
+      "scene_id": "west_london_8km",
+      "title": "West-central London 8 km (South Kensington + White City)",
+      "views": [
+        "default"
+      ]
+    }
+  ]
+}

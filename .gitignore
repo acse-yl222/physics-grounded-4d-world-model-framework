@@ -77,3 +77,6 @@ agents/demo_rev02/assets/city.glb
 
 # Selected physics031 masks
 !scenes/tower_hamlets/physics031/masks/*.npy
+
+# 8 km west-central London display geometry
+!project/west_london_8km/runs/*/data/*.npy

@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.1.0",
+  "scene_id": "west_london_8km",
+  "title": "West-central London 8 km (South Kensington + White City)",
+  "spatial": {
+    "frame": "ENU",
+    "units": "m",
+    "origin": {
+      "longitude": -0.1855730065984154,
+      "latitude": 51.51388432196296,
+      "height_m": 0,
+      "vertical_datum": "Flat terrain; building height = EA DSM minus DTM (not ODN). Horizontal axes are British National Grid easting/northing, about 1.4 deg from true north at this longitude."
+    },
+    "bounds_m": {
+      "min": [
+        -4096.0,
+        -4096.0,
+        0
+      ],
+      "max": [
+        4096.0,
+        4096.0,
+        256.0
+      ]
+    }
+  },
+  "inputs": [
+    {
+      "id": "scaled_geometry",
+      "path": "input/scaled_homepage_v1_8km_20261026/geometry/geometry.npy",
+      "source": "EA 1 m LiDAR composite DSM/DTM + archived OpenStreetMap footprints, via SCALED homepage_v1_8km_20261026",
+      "sha256": "200dc049435cc51b1cc5d7f8bdc8651ef2e153f4a2173787d1e2153f6d3da480",
+      "license": "Environment Agency OGL; OpenStreetMap ODbL"
+    }
+  ],
+  "default_view": "default"
+}
