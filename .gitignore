@@ -80,3 +80,7 @@ agents/demo_rev02/assets/city.glb
 
 # 8 km west-central London display geometry
 !project/west_london_8km/runs/*/data/*.npy
+
+# West London 8 km city scene (buildings GLB and display masks)
+!scenes/west_london_8km/models/buildings.glb
+!scenes/west_london_8km/physics/masks/*.npy

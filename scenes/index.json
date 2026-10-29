@@ -15,6 +15,11 @@
       "id": "tower_hamlets",
       "title": "Canary Wharf \u00b7 city, traffic & UAVs",
       "short": "Canary Wharf"
+    },
+    {
+      "id": "west_london_8km",
+      "title": "West-central London 8 km \u00b7 South Kensington + White City",
+      "short": "West London 8 km"
     }
   ]
 }

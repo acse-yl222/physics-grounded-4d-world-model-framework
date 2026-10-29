@@ -81,6 +81,14 @@
         "version": "website_preview_full_20261009_v1",
         "descriptor": "https://raw.githubusercontent.com/acse-yl222/physics-grounded-4d-world-model-framework/13cf53180f9dc269e9dbee0aa1de09050306eb01/project/thapar_university/previews/website_preview_full_20261009_v1/scene.json"
       }
+    },
+    {
+      "scene_id": "west_london_8km",
+      "title": "West London 8 km",
+      "tag": "Urban environment",
+      "description": "8.192 km domain from Imperial South Kensington to White City: SCALED wind, temperature, sunlight, road tracer and design-storm flooding over 69,000 buildings.",
+      "viewer_url": "viewer/3d/?scene=west_london_8km",
+      "resource_ids": []
     }
   ],
   "published_site": "https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/"
