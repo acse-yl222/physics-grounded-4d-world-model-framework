@@ -17,11 +17,12 @@
   },
   "model": {
     "url": "models/buildings.glb",
-    "bytes": 16480580,
+    "bytes": 25359220,
     "building_ids_are_architecture": false,
     "non_occluding_site_ground": true,
     "plate_color": "#404b52",
-    "ground_color": "#737a77"
+    "ground_color": "#737a77",
+    "detail_tiles": "https://acse-yl222.github.io/urban-world-model-models/project/west_london_8km/geometry/detail_tiles_20261030/index.json"
   },
   "lite": {
     "footprint": "masks/lite_footprint.npy",
@@ -262,6 +263,7 @@
     "Frozen final SCALED 6 m horizontal wind; no vertical exchange, chemistry or deposition.",
     "Wind model step and tracer elapsed time are independent clocks.",
     "Flood: uniform 50 mm / 90 min design storm, 12 mm/h drainage, 20 mm/h infiltration on green cells; not the observed 2021 event.",
-    "Browser fields use declared 8-bit PNG/WebP quantization; complete scientific arrays remain in retained runs."
+    "Browser fields use declared 8-bit PNG/WebP quantization; complete scientific arrays remain in retained runs.",
+    "Close-up geometry streams 1 km detail tiles and high-detail landmarks from the Imperial Corridor presentation (resource west_london_8km_geometry_detail_tiles_20261030); overview uses the coarse extruded model."
   ]
 }

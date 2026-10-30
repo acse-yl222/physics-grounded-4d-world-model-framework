@@ -29,6 +29,7 @@ import {
 import { EXPANSION_BATCHES, installExpansion } from './expansion.js';
 import { createTransport } from './transport.js';
 import { createTraffic } from './traffic.js';
+import { createDetailTiles } from './detail-tiles.js';
 import { recordedFrame } from '../scene-run.js';
 
 // ------------------------------------------------------------------ scene (scenes/<id>/scene.json)
@@ -2100,8 +2101,14 @@ renderer.domElement.addEventListener('pointerleave', () => {
 // ------------------------------------------------------------------ render loop
 let last = performance.now(),
   lastTrafficStats = -Infinity;
+let detailTiles = null; // scene.model.detail_tiles: fine 1 km tiles stream in near the camera over the coarse model
 function animate(now) {
   requestAnimationFrame(animate);
+  if (!detailTiles && MODEL.detail_tiles && !LITE && model.children.length) {
+    detailTiles = createDetailTiles({ scene, camera, coarse: model, indexUrl: SCENE.url(MODEL.detail_tiles), onChange: invalidate });
+    window.cityDetailTiles = detailTiles;
+  }
+  detailTiles?.update(now);
   if (document.hidden) {
     last = now;
     return;
