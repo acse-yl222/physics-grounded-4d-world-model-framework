@@ -25,6 +25,11 @@
       "id": "imperial_corridor_8km",
       "title": "Imperial Corridor 8 km \u00b7 South Kensington + White City",
       "short": "Imperial Corridor 8 km"
+    },
+    {
+      "id": "imperial_corridor_8km_preview",
+      "title": "Imperial Corridor 8 km \u00b7 South Kensington + White City \u00b7 preview (16 m display grids, buffered playback)",
+      "short": "Imperial Corridor 8 km (preview)"
     }
   ]
 }

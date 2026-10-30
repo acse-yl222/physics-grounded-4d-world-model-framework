@@ -1,0 +1,44 @@
+/* Scene selection. Every scene lives in scenes/<id>/ with a scene.json that describes its grid, model, masks and field
+   layers (see scenes/README.md); scenes/index.json lists them. ?scene=<id> picks one, otherwise the index's default. */
+export const ROOT = new URL('../', import.meta.url).href; // repository root (viewer/../)
+
+export async function loadScene() {
+  const params = new URLSearchParams(location.search);
+  if (params.has('presentation')) {
+    const { loadPublishedScene } = await import('./scene-public.js');
+    return loadPublishedScene(params, new URL(ROOT));
+  }
+  if (params.has('run')) {
+    const { loadRunScene } = await import('./scene-run.js');
+    return loadRunScene(params, new URL(ROOT));
+  }
+
+  const index = await (await fetch(ROOT + 'scenes/index.json', { cache: 'no-cache' })).json();
+  const qs = new URLSearchParams(location.search);
+  let id = qs.get('scene') || index.default;
+  if (!index.scenes.some((s) => s.id === id)) {
+    console.warn('unknown scene', id, '- using', index.default);
+    id = index.default;
+  }
+  const entry = index.scenes.find((scene) => scene.id === id);
+  const base = entry.base_url ? new URL(entry.base_url, ROOT).href : ROOT + 'scenes/' + id + '/';
+  if (new URL(base).origin !== new URL(ROOT).origin)
+    throw new Error('Local scene assets must be same-origin');
+  const r = await fetch(base + 'scene.json', { cache: 'no-cache' });
+  if (!r.ok) throw new Error(`scene ${id}: ${base}scene.json is missing (HTTP ${r.status})`);
+  const scene = await r.json();
+  scene.id = id;
+  scene.base = base;
+  scene.physics = new URL(scene.physics_dir ?? 'physics/', base).href;
+  scene.index = index;
+  scene.url = (rel) => new URL(rel, base).href;
+  return scene;
+}
+
+/** URL of this page for another scene (keeps ?lite / ?tile style flags, drops view state). */
+export function sceneLink(id) {
+  const qs = new URLSearchParams(location.search);
+  for (const k of [...qs.keys()]) if (!['lite', 'tile', 'expansion'].includes(k)) qs.delete(k);
+  qs.set('scene', id);
+  return location.pathname + '?' + qs.toString();
+}
