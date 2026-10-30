@@ -211,7 +211,8 @@ def get_arrival_time_field(geo_data, origin, roost_centers, config, time=0.0):
         else int(time / config.scaled_dt)
     )
     key = (
-        hash(geo_data["geometry"].tobytes()),
+        # a precomputed "key" (integrator._routing_geometry) avoids re-hashing the grid every step
+        geo_data["key"] if "key" in geo_data else hash(geo_data["geometry"].tobytes()),
         tuple(tuple(c) for c in roost_centers),
         tuple(origin),
         config.v_max,

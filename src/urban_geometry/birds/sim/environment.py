@@ -10,6 +10,8 @@ import numpy as np
 def day_phase(time, config):
     # gives fraction through the current simulated day
     # 0 = midnight, 0.25 = dawn, 0.5 = noon, 0.75 = dusk (cycles every day_length)
+    if config.day_clock is not None:  # scene coupling: the scene's own sun clock
+        return config.day_clock.phase(time)
     day_len = (config.n_steps * config.dt) / max(config.n_days, 1e-6)
     return ((time / day_len) + config.day_phase_start) % 1.0
 
@@ -17,6 +19,8 @@ def day_phase(time, config):
 def day_fraction(time, config):
     # day light level = 0 (midnight) -> 1 (noon)
     # cosine should give smooth dawn/dusk
+    if config.day_clock is not None:  # scene coupling: light from the scene's sun altitude
+        return config.day_clock.light(time)
     frac = day_phase(time, config)
     return 0.5 * (1.0 - np.cos(2.0 * np.pi * frac))
 
@@ -174,4 +178,8 @@ def get_environment(positions, time, config):
             'light':     0–1
             'temperature': °C
     """
-    return {name: fn(positions, time, config) for name, fn in FIELD_SAMPLERS.items()}
+    external = config.external_fields or {}  # scene coupling: fields from the host simulation
+    return {
+        name: external[name](positions, time) if name in external else fn(positions, time, config)
+        for name, fn in FIELD_SAMPLERS.items()
+    }

@@ -278,9 +278,18 @@ def update_forage(
             cx, cy = field["center"][0], field["center"][1]
             half_w, half_h = field["size"][0] * 0.5, field["size"][1] * 0.5
 
-            # identify hops whose predicted landing point crosses each pair of walls
-            out_x = here & ((predicted_x < cx - half_w) | (predicted_x > cx + half_w))
-            out_y = here & ((predicted_y < cy - half_h) | (predicted_y > cy + half_h))
+            # identify hops whose predicted landing point crosses each pair of walls while moving
+            # outward; a bird already outside its rectangle (e.g. landed just past an edge) is then
+            # free to hop back in instead of having every inward hop flipped outward
+            cos_h, sin_h = np.cos(new_heading), np.sin(new_heading)
+            out_x = here & (
+                ((predicted_x < cx - half_w) & (cos_h < 0))
+                | ((predicted_x > cx + half_w) & (cos_h > 0))
+            )
+            out_y = here & (
+                ((predicted_y < cy - half_h) & (sin_h < 0))
+                | ((predicted_y > cy + half_h) & (sin_h > 0))
+            )
             new_heading[out_x] = np.pi - new_heading[out_x]  # reflect across the x wall
             new_heading[out_y] = -new_heading[out_y]  # reflect across the y wall
 

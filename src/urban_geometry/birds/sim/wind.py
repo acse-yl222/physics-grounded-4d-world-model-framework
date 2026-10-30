@@ -23,6 +23,10 @@ def get_wind(positions, time, config):
     N = positions.shape[0]
     mode = config.wind_mode
 
+    # scene coupling: wind supplied by the host simulation (urban_geometry.birds.scene)
+    if config.external_fields and "wind" in config.external_fields:
+        return np.asarray(config.external_fields["wind"](positions, time), dtype=float)
+
     # WIND MODES
     if mode == "none":
         # no wind

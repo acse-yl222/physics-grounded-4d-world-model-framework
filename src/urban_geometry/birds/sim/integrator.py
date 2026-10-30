@@ -65,6 +65,46 @@ def _load_geometry(config):
     return _geometry_cache[geo_src]
 
 
+_routing_cache = {}
+_column_cache = {}
+
+
+def _column_has_solid(geo):
+    """(ny, nx) map of columns with any solid voxel, computed once per geometry array."""
+    key = id(geo)
+    if key not in _column_cache:
+        _column_cache[key] = (geo, geo.any(axis=0))  # keep geo referenced so its id stays unique
+    return _column_cache[key][1]
+
+
+def _routing_geometry(config, geo_data):
+    """
+    Geometry used for wave routing: the collision geometry itself, or (config.route_cell_m) a
+    conservative block-max coarsening of it, so fine collision grids do not explode the routing graph
+    """
+    if geo_data is None or not config.route_cell_m:
+        return geo_data
+    block = float(config.route_block_fraction or 0.0)
+    key = (id(geo_data["geometry"]), float(config.route_cell_m), block)
+    if key not in _routing_cache:
+        fx = max(1, round(config.route_cell_m / geo_data["grid_spacing"]))
+        fz = max(1, round(config.route_cell_m / geo_data["grid_spacing_z"]))
+        g = geo_data["geometry"]
+        nz, ny, nx = (-(-s // f) for s, f in zip(g.shape, (fz, fx, fx)))
+        padded = np.zeros((nz * fz, ny * fx, nx * fx), dtype=bool)
+        padded[: g.shape[0], : g.shape[1], : g.shape[2]] = g
+        blocks = padded.reshape(nz, fz, ny, fx, nx, fx)
+        coarse = blocks.any(axis=(1, 3, 5)) if block <= 0 else blocks.mean(axis=(1, 3, 5)) >= block
+        _routing_cache[key] = {
+            "geometry": coarse,
+            "grid_spacing": geo_data["grid_spacing"] * fx,
+            "grid_spacing_z": geo_data["grid_spacing_z"] * fz,
+            "grid_origin": geo_data["grid_origin"],
+            "key": hash(coarse.tobytes()),  # routing cache key, computed once (not every step)
+        }
+    return _routing_cache[key]
+
+
 def init_state(config):
     """
     Make the initial simulation state
@@ -479,10 +519,11 @@ def step(state, config, predator=None):
 
     # WAVE ROUTING = steer down -grad T (first-arrival-time field) toward home (routing.py)
     # static field, cached, and obstacle avoidance is inherent (T never decreases into a wall)
-    if config.enable_wave_routing and geo_data is not None and config.world.get("roosts"):
+    route_geo = _routing_geometry(config, geo_data)  # == geo_data unless config.route_cell_m is set
+    if config.enable_wave_routing and route_geo is not None and config.world.get("roosts"):
         _T = get_arrival_time_field(
-            geo_data,
-            np.array(geo_data["grid_origin"]),
+            route_geo,
+            np.array(route_geo["grid_origin"]),
             [r["center"] for r in config.world["roosts"]],
             config,
             time,
@@ -490,9 +531,9 @@ def step(state, config, predator=None):
         wave_dir = compute_wave_guidance(
             pos,
             _T,
-            np.array(geo_data["grid_origin"]),
-            geo_data["grid_spacing"],
-            geo_data["grid_spacing_z"],
+            np.array(route_geo["grid_origin"]),
+            route_geo["grid_spacing"],
+            route_geo["grid_spacing_z"],
         )
 
         f_wave = WAVE_GUIDANCE_GAIN[bstate][:, np.newaxis] * wave_dir
@@ -501,8 +542,8 @@ def step(state, config, predator=None):
         forage_sites_pre = config.world.get("forage_sites", []) if config.world else []
         for forage_site_pre in forage_sites_pre:
             get_arrival_time_field(
-                geo_data,
-                np.array(geo_data["grid_origin"]),
+                route_geo,
+                np.array(route_geo["grid_origin"]),
                 [forage_site_pre["center"]],
                 config,
                 time,
@@ -512,14 +553,14 @@ def step(state, config, predator=None):
 
     # OUTBOUND WAVE ROUTING = birds heading out to forage use a wave field solved from their assigned forage site
     f_sites = config.world.get("forage_sites", []) if config.world else []
-    if f_sites and outbound.any() and geo_data is not None:
+    if f_sites and outbound.any() and route_geo is not None:
         for site_idx in range(len(f_sites)):
             site_mask = outbound & (forage_site == site_idx)
             if not site_mask.any():
                 continue
             arrival_time_field = get_arrival_time_field(
-                geo_data,
-                np.array(geo_data["grid_origin"]),
+                route_geo,
+                np.array(route_geo["grid_origin"]),
                 [f_sites[site_idx]["center"]],
                 config,
                 time,
@@ -527,9 +568,9 @@ def step(state, config, predator=None):
             forage_dir = compute_wave_guidance(
                 pos[site_mask],
                 arrival_time_field,
-                np.array(geo_data["grid_origin"]),
-                geo_data["grid_spacing"],
-                geo_data["grid_spacing_z"],
+                np.array(route_geo["grid_origin"]),
+                route_geo["grid_spacing"],
+                route_geo["grid_spacing_z"],
             )
             f_wave[site_mask] = WAVE_GUIDANCE_GAIN[bstate[site_mask]][:, np.newaxis] * forage_dir
 
@@ -845,9 +886,9 @@ def step(state, config, predator=None):
             gi_c = np.clip(gi, 0, geo.shape[2] - 1)
             gj_c = np.clip(gj, 0, geo.shape[1] - 1)
             solid_below = np.zeros(sub_pos.shape[0], dtype=bool)
-            solid_below[in_grid] = geo[:, gj_c[in_grid], gi_c[in_grid]].any(
-                axis=0
-            )  # any solid in column
+            solid_below[in_grid] = _column_has_solid(geo)[
+                gj_c[in_grid], gi_c[in_grid]
+            ]  # any solid in column
             no_ground = ~solid_below  # empty column (in-grid void OR outside grid)
         else:
             no_ground = np.ones(
@@ -875,42 +916,21 @@ def step(state, config, predator=None):
             inside = geo[gk, gj, gi]
 
             if np.any(inside):
+                # vectorised over the colliding birds (same per-bird rule as before): start from the old
+                # position and apply one axis at a time, keeping an axis only if it does not enter a solid cell
                 hit = np.where(inside)[0]
-
-                for idx in hit:
-                    # try each axis: revert axes that cause penetration
-                    # start from old position, add one axis at a time
-                    base = prev_pos[idx].copy()
-                    final = sub_pos[idx].copy()
-                    resolved = base.copy()
-
-                    for axis in range(3):
-                        test = resolved.copy()
-                        test[axis] = final[axis]
-
-                        if axis == 0:
-                            ti = int(np.clip((test[0] - _origin[0]) / _sp, 0, geo.shape[2] - 1))
-                            tj = int(np.clip((resolved[1] - _origin[1]) / _sp, 0, geo.shape[1] - 1))
-                            tk = int(
-                                np.clip((resolved[2] - _origin[2]) / _sp_z, 0, geo.shape[0] - 1)
-                            )
-                        elif axis == 1:
-                            ti = int(np.clip((resolved[0] - _origin[0]) / _sp, 0, geo.shape[2] - 1))
-                            tj = int(np.clip((test[1] - _origin[1]) / _sp, 0, geo.shape[1] - 1))
-                            tk = int(
-                                np.clip((resolved[2] - _origin[2]) / _sp_z, 0, geo.shape[0] - 1)
-                            )
-                        else:
-                            ti = int(np.clip((resolved[0] - _origin[0]) / _sp, 0, geo.shape[2] - 1))
-                            tj = int(np.clip((resolved[1] - _origin[1]) / _sp, 0, geo.shape[1] - 1))
-                            tk = int(np.clip((test[2] - _origin[2]) / _sp_z, 0, geo.shape[0] - 1))
-
-                        if not geo[tk, tj, ti]:
-                            resolved[axis] = final[axis]  # this axis is clear
-                        else:
-                            sub_vel[idx, axis] = 0.0  # blocked on this axis
-
-                    sub_pos[idx] = resolved
+                final = sub_pos[hit]
+                resolved = prev_pos[hit].copy()
+                lim = np.array([geo.shape[2] - 1, geo.shape[1] - 1, geo.shape[0] - 1])
+                scale = np.array([_sp, _sp, _sp_z])
+                for axis in range(3):
+                    test = resolved.copy()
+                    test[:, axis] = final[:, axis]
+                    cell = np.clip(((test - _origin) / scale).astype(int), 0, lim)
+                    blocked = geo[cell[:, 2], cell[:, 1], cell[:, 0]]
+                    resolved[~blocked, axis] = final[~blocked, axis]  # this axis is clear
+                    sub_vel[hit[blocked], axis] = 0.0  # blocked on this axis
+                sub_pos[hit] = resolved
 
     # copy sub-stepped results back to main state variables
     new_pos = sub_pos  # final positions after all sub-steps

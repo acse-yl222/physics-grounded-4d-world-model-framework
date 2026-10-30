@@ -11,6 +11,7 @@ import { createSignalLayerV2 } from '../../agents/demo_rev02/signals-v2.js';
 import { loadRandomUav } from './random-uav.mjs';
 import { createFollowCamera } from '../../agents/demo_rev02/follow-camera.js';
 import { createBirdLayer } from '../../agents/demo_rev02/birds.js';
+import { holdAtEnds, loadBirdReplay } from './bird-layer.js';
 
 export const DEMO = new URL('../../agents/demo_rev02/', import.meta.url).href;
 const SUMO_OX = 2912.594719173,
@@ -86,7 +87,8 @@ export async function createReplay({
     traffic = null,
     stations = [],
     parking = [],
-    birdLayer = null;
+    birdLayer = null,
+    birdManifest = null; // scene bird replay manifest (flocks, moments)
 
   onProgress('Reading stations and routes…');
   const routeConfigURL = new URL(
@@ -177,10 +179,30 @@ export async function createReplay({
   // birds: Akira's flock model (demo_rev02 v3 wrapper), same clock as the traffic; low-poly pigeons, instanced.
   // data/birds_southken/ = our run focused on South Kensington station (roost on the station roof); data/birds/ = the colleague's campus run.
   onProgress('Birds (flock model replay)…');
+  // birds: the scene replay (project/south_ken/configs/bird_visualization.json, urban_geometry.birds.scene) when
+  // present, held at its ends; otherwise the earlier demo_rev02 replays below.
+  try {
+    const sceneBirds = await loadBirdReplay('south_kensington');
+    if (sceneBirds) {
+      birdLayer = holdAtEnds(
+        await createBirdLayer({
+          scene: group,
+          ...sceneBirds,
+          modelURL: DEMO + 'actors/pigeon.glb',
+        }),
+        sceneBirds.manifest,
+      );
+      birdManifest = sceneBirds.manifest;
+      console.log('bird layer (scene replay):', birdLayer.stats);
+    }
+  } catch (e) {
+    console.error('scene bird replay failed; trying the demo replay', e);
+    birdLayer = null;
+  }
   try {
     let birdDir = DEMO + 'data/birds_southken/',
-      manifest = await readJSON(birdDir + 'bird_replay.json', true);
-    if (!manifest) {
+      manifest = birdLayer ? null : await readJSON(birdDir + 'bird_replay.json', true);
+    if (!manifest && !birdLayer) {
       birdDir = DEMO + 'data/birds/';
       manifest = await readJSON(birdDir + 'bird_replay.json', true);
     }
@@ -697,11 +719,7 @@ ${stateText(f.counts)}`;
         R.info = 'No bird replay in agents/demo_rev02/data/birds';
         return;
       }
-      trackBirds('flock', 'auto');
-      const f = flockSummary();
-      R.info = f
-        ? `Flock · ${f.n} birds · ${stateText(f.counts)}`
-        : 'No birds present at this time';
+      trackBirds(R.birdFollow, 'auto'); // one bird; a whole-flock centroid is often empty sky
     } else if (id === 'overview') {
       // sweep around the campus while descending, staying close to the Imperial buildings
       const orbit = { az0: -160, az1: -95, el0: 36, el1: 22, d0: 520, d1: 330 };
@@ -866,7 +884,9 @@ ${stateText(f.counts)}`;
   Object.defineProperties(R, {
     birds: { get: () => birdLayer },
     birdTarget: { get: () => birdTrack.target },
+    birdManifest: { get: () => birdManifest },
   }); // live getters (Object.assign would copy the values)
+  R.birdFollow = 0; // the bird the Birds view follows (main.js bird panel picks it)
   function shiftClock(elapsed, now) {
     if (Number.isFinite(R.shotUntil)) R.shotUntil += elapsed;
     if (R.orbit) R.orbit.t0 += elapsed;

@@ -474,3 +474,19 @@ class SimConfig:
     # OUTPUTS
     save_every: int = 1  # save a frame every N timesteps
     metrics_every: int = 20  # compute and print metrics every N timesteps
+
+    # SCENE COUPLING (urban_geometry.birds.scene): all off by default, so standalone runs are unchanged
+    # external_fields = {name: callable(positions, time) -> values} replacing the built-in samplers;
+    #   names: "wind" ((N, 3) m/s), "pollution", "noise", "light", "temperature" ((N,))
+    external_fields: dict = None
+    # day_clock = object with phase(time) (0 = midnight, 0.5 = solar noon) and light(time) (0-1);
+    #   replaces the n_days / day_phase_start cosine clock everywhere the sim reads it
+    day_clock: object = None
+    # route_cell_m = cell size (m) of a coarser grid used only for wave routing; None = route on the
+    #   collision geometry itself (routing cost grows with the cube of the resolution)
+    route_cell_m: float = None
+    # route_block_fraction = share of a coarse routing cell that must be solid for the cell to be blocked:
+    #   0 = any solid voxel blocks it (default; conservative, buildings grow by up to a cell, so a site right
+    #   beside a tower can become unreachable), 0.5 = at least half (sites beside towers stay reachable, routes
+    #   pass closer to walls)
+    route_block_fraction: float = 0.0
