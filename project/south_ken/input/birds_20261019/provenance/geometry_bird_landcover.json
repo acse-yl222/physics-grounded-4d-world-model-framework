@@ -1,0 +1,16 @@
+{
+  "file": "bird_landcover_2m.npz",
+  "cell_m": 2,
+  "primitives": {
+    "vegetation": 490,
+    "water": 20
+  },
+  "low_vegetation_fraction": 0.10200800214494977,
+  "tree_fraction": 0.0011057172502790178,
+  "water_fraction": 3.187997000558036e-05,
+  "rules": {
+    "vegetation": "prepare_glb canopy/grass classes, or the city viewer's tree material/node patterns",
+    "low_vegetation": "vegetation top within 1.5 m of the ground mesh, not under a roof",
+    "water": "material or node name containing 'water' (not rainwater/waterproof)"
+  }
+}

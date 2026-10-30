@@ -1,0 +1,59 @@
+{
+  "source": "/tmp/claude-0/-home-claude/95917147-c3dc-51c5-a056-eb3b814e7016/scratchpad/models/south_ken_baked.glb",
+  "source_sha256": "e0db06a8172e3f9fca67543644371d7f0c36767cd777ae3d6cbf1125230ca154",
+  "bounds_local_xyz_m": [
+    [
+      -1532.77734375,
+      -1455.37939453125,
+      -2.0525267124176025
+    ],
+    [
+      1960.4659423828125,
+      1500.028076171875,
+      87.55000305175781
+    ]
+  ],
+  "crop_local_m": null,
+  "source_region_origin_xyz_m": [
+    -1836.0,
+    -1772.0,
+    0.0
+  ],
+  "shape_zyx": [
+    64,
+    1792,
+    2048
+  ],
+  "spacing_xyz_m": [
+    2,
+    2,
+    2
+  ],
+  "axis_order": "zyx",
+  "gltf_to_local_xyz": "(x,-z,y)",
+  "horizontal_orientation": "assumed x east, -gltf_z north; not georeferenced",
+  "cell_centres": "local_xyz = origin + (index_xyz + 0.5) * 2 metres",
+  "max_building_z_m": 87.55000305175781,
+  "primitives_above_wind_domain": 0,
+  "footprint_fraction": 0.12098939078194755,
+  "classification_counts": {
+    "building": 33997,
+    "paving": 75,
+    "grass": 12,
+    "asphalt": 8,
+    "canopy": 1
+  },
+  "ground_mesh_range_m": [
+    0.0,
+    0.0
+  ],
+  "georeferenced": false,
+  "method": "2 m cell-centre barycentric triangle sampling; maximum roof; solid columns from z=0; excludes foliage and ground materials",
+  "limits": [
+    "Semantic classification inferred from names/materials; not supplied building labels.",
+    "Overhangs and bridges become solid columns; thin features may be missed.",
+    "Ground mesh is not a verified terrain elevation model.",
+    "Full geometry retained; wind workflow uses bottom 128 m."
+  ],
+  "seconds": 3.956998348236084
+}

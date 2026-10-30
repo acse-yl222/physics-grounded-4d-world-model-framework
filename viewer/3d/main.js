@@ -15,6 +15,7 @@ import { fetchCityModel } from '../model-source.js';
 import { buildProxyCity } from './proxy.js';
 import { batchStaticCity } from '../../agents/demo_rev02/static-batches.js';
 import { createUavLayer } from './uav-layer.js';
+import { createSceneBirdLayer, mountBirdControls, probeBirdConfig } from './bird-layer.js';
 import { createReplay, applyCityFilter, timeString } from './replay.js';
 import {
   TILE,
@@ -73,6 +74,10 @@ const TL = SCENE.timeline ?? { step_s: 25, steps: 100 },
 const FOCUS = SCENE.focus; // {box: [[x, z], [x, z]], orbit_m, label}
 const HAS_UAV_LAYER = SCENE.uav?.enabled ?? SCENE.id === 'white_city';
 const HAS_REPLAY = SCENE.replay === 'demo_rev02'; // the South Kensington traffic / UAV / bird replay
+// birds: a scene bird replay (project/<scene>/configs/bird_visualization.json). South Kensington loads it inside its
+// replay; other scenes get a stand-alone bird layer with its own clock and a "Birds" tour shot, like the UAV layer.
+const BIRD_CONFIG = HAS_REPLAY ? null : await probeBirdConfig(SCENE.id);
+const HAS_BIRD_LAYER = Boolean(BIRD_CONFIG);
 const MODEL = SCENE.model;
 const PHASE_ORDER = (
   SCENE.phase_order ?? ['wind', 'temp', 'solar', 'diurnal', 'poll', 'flood']
@@ -212,6 +217,7 @@ function setupSceneUI() {
     : [
         ['overview', 'Overview'],
         ...(HAS_UAV_LAYER ? [['uavs', 'UAVs']] : []),
+        ...(HAS_BIRD_LAYER ? [['birds', 'Birds']] : []),
         ...(SCENE.traffic ? [['trafficMap', 'Traffic map']] : []),
       ]; // the close-up traffic and transport orbits stay reachable by ?shot=traffic|transport
   tabs.replaceChildren(
@@ -248,10 +254,11 @@ function setupSceneUI() {
     $('solar-ghi-option').textContent = LAYERS.solar.ghi_label ?? 'Irradiance';
     $('solar-shadow-option').textContent = LAYERS.solar.shadow_label ?? 'Shadows';
   }
-  $('replay-ctl').style.display = HAS_REPLAY || HAS_UAV_LAYER ? '' : 'none';
-  if (HAS_UAV_LAYER)
-    for (const id of ['l-cars', 'l-signals', 'l-roads', 'l-map', 'l-birds'])
-      $(id).closest('label').style.display = 'none';
+  $('replay-ctl').style.display = HAS_REPLAY || HAS_UAV_LAYER || HAS_BIRD_LAYER ? '' : 'none';
+  if (!HAS_REPLAY && (HAS_UAV_LAYER || HAS_BIRD_LAYER))
+    for (const id of ['l-cars', 'l-signals', 'l-roads', 'l-map', 'l-birds', 'l-uavs', 'l-stations'])
+      if (!(id === 'l-birds' && HAS_BIRD_LAYER) && !(/uavs|stations/.test(id) && HAS_UAV_LAYER))
+        $(id).closest('label').style.display = 'none';
   if (SCENE.traffic) $('traffic-title').textContent = SCENE.traffic.label ?? 'Traffic';
   if (SCENE.transport) {
     $('transport-title').textContent = SCENE.transport.label ?? 'Transport';
@@ -279,6 +286,7 @@ const shotButtons = [...document.querySelectorAll('.shot[data-shot]')];
 const fieldButtons = [...document.querySelectorAll('.field[data-field]')];
 let section = 'campus'; // 'campus' (the site tour: replay shots, or the plain orbit) | 'fields' (overhead physics fields) | 'free'
 let uavLayer = null;
+let birdLayer = null; // stand-alone scene bird layer (scenes without the South Kensington replay)
 let replayLayer = null; // created after the city loads (South Kensington only)
 let transport = null; // TfL transport layer (transport.js), scenes with scene.transport
 let traffic = null; // SUMO traffic replay (traffic.js), scenes with scene.traffic
@@ -1266,14 +1274,19 @@ ui.play.addEventListener('click', () => {
   if (section === 'campus' && replayLayer) {
     replayLayer.playing = !replayLayer.playing;
     ui.play.textContent = replayLayer.playing ? '❚❚' : '▶';
-  } else if (section === 'campus' && (tour.active || uavLayer)) {
+  } else if (section === 'campus' && (tour.active || uavLayer || birdLayer)) {
     tour.paused = !tour.paused;
     if (traffic) traffic.playing = !tour.paused;
     if (uavLayer) uavLayer.playing = !tour.paused;
+    if (birdLayer) birdLayer.playing = !tour.paused;
     ui.play.textContent = tour.paused ? '▶' : '❚❚';
   } else setPlaying(!state.playing);
 });
 ui.rate.addEventListener('change', () => {
+  if (section === 'campus' && birdLayer && tour.shot === 'birds') {
+    birdLayer.speed = +ui.rate.value;
+    return;
+  }
   if (section === 'campus' && uavLayer && tour.shot === 'uavs') {
     uavLayer.speed = +ui.rate.value;
     return;
@@ -1283,6 +1296,11 @@ ui.rate.addEventListener('change', () => {
   else if (state.playing) setPlaying(true);
 });
 ui.step.addEventListener('input', () => {
+  if (section === 'campus' && birdLayer && tour.shot === 'birds') {
+    birdLayer.update(+ui.step.value);
+    invalidate();
+    return;
+  }
   if (section === 'campus' && uavLayer && tour.shot === 'uavs') {
     uavLayer.update(+ui.step.value);
     invalidate();
@@ -1465,6 +1483,7 @@ ui.tempMode.addEventListener('input', () => {
   repaint();
 });
 function applyReplayLayers() {
+  birdLayer?.setVisible(section !== 'fields' && ui.lBirds.checked);
   uavLayer?.applyLayers({
     uavs: ui.lUavs.checked,
     stations: ui.lStations.checked,
@@ -1508,22 +1527,26 @@ function setupBirdTracker() {
     ui.lBirds.closest('label').after(note);
     return;
   }
-  for (let i = 0; i < replayLayer.birds.stats.birds; i++) {
-    const o = document.createElement('option');
-    o.value = i;
-    o.textContent = `Bird ${String(i + 1).padStart(3, '0')}`;
-    birdUI.target.append(o);
-  }
+  // bird panel (bird-layer.js): "Bird #" 1..N, flock picker, "Jump to"; the camera follows that one bird
+  birdUI.target.style.display = 'none';
+  mountBirdControls({
+    box: birdUI.box,
+    manifest: replayLayer.birdManifest ?? { birds: replayLayer.birds.stats.birds },
+    until: replayLayer.duration || 3600, // the replay clock's end
+    onBird: (i) => {
+      replayLayer.birdFollow = i;
+      applyBirdTracking();
+    },
+    onJump: (t) => {
+      replayLayer.t = t;
+      replayLayer.update(t);
+      applyBirdTracking();
+    },
+  });
   birdUI.box.style.display = '';
 }
 function applyBirdTracking() {
   if (!replayLayer?.birds) return;
-  const v = birdUI.target.value;
-  if (v === '') {
-    replayLayer.trackBirds(null);
-    if (replayLayer.shot === 'birds') replayLayer.shotUntil = performance.now();
-    return;
-  }
   if (section !== 'campus') runCampus();
   replayLayer.stopShots();
   flight = null;
@@ -1532,11 +1555,12 @@ function applyBirdTracking() {
   replayLayer.shotUntil = Infinity;
   replayLayer.label = SHOTS_BIRDS_LABEL;
   setSectionUI();
-  replayLayer.trackBirds(v === 'flock' ? 'flock' : +v, birdUI.mode.value);
+  replayLayer.trackBirds(replayLayer.birdFollow ?? 0, birdUI.mode.value);
 }
 const SHOTS_BIRDS_LABEL = 'Birds · tracking (hold; pick another view to resume the tour)';
-birdUI.target.addEventListener('change', applyBirdTracking);
-birdUI.mode.addEventListener('change', applyBirdTracking);
+birdUI.mode.addEventListener('change', () => {
+  if (replayLayer?.shot === 'birds') applyBirdTracking();
+});
 ui.nPart.addEventListener('change', () => {
   buildParticles(+ui.nPart.value);
   applyLayers();
@@ -1618,6 +1642,17 @@ const TOUR_SHOTS = {
     time: () =>
       uavLayer ? `Flights ${timeString(uavLayer.t)} · ${uavLayer.speed}×` : 'Loading flights',
   },
+  birds: {
+    track: true, // orbit the flock (bird-layer.js focus), not the scene focus box
+    dist: 0.6, // scene-focus orbit used until the bird layer has loaded
+    elev: 28,
+    dur: 30000,
+    label: () => `${SCENE.title} · bird flock model · ${birdLayer?.stats ?? ''}`,
+    time: () =>
+      birdLayer
+        ? `Birds ${birdLayer.localTime()} local · ${birdLayer.speed}× · ${birdLayer.summary()}`
+        : 'Loading birds',
+  },
   overview: {
     dist: 1,
     elev: 32,
@@ -1651,6 +1686,7 @@ const TOUR_SHOTS = {
 const TOUR_ORDER = [
   'overview',
   ...(HAS_UAV_LAYER ? ['uavs'] : []),
+  ...(HAS_BIRD_LAYER ? ['birds'] : []),
   ...(SCENE.traffic ? ['trafficMap'] : []),
 ];
 const trafficTime = (s) => {
@@ -1669,6 +1705,18 @@ const tour = {
 function tourPose(az, shot = tour.shot) {
   const s = TOUR_SHOTS[shot];
   if (s.fixed) return s.fixed();
+  if (s.track && birdLayer) {
+    const { target, radius } = birdLayer.focus(),
+      elev = THREE.MathUtils.degToRad(s.elev);
+    return {
+      pos: new THREE.Vector3(
+        target.x + radius * Math.cos(elev) * Math.sin(az),
+        target.y + radius * Math.sin(elev),
+        target.z + radius * Math.cos(elev) * Math.cos(az),
+      ),
+      target: target.clone(),
+    };
+  }
   const dist = (FOCUS.orbit_m ?? 480) * s.dist,
     elev = THREE.MathUtils.degToRad(s.elev);
   return {
@@ -1702,6 +1750,13 @@ function startTour(shot = 'overview') {
       'Ground stations · 30 m vertical takeoff and landing · independent random flights · no scheduling';
     ui.stats.textContent = uavLayer?.stats ?? '';
   }
+  if (shot === 'birds') {
+    ui.info.textContent =
+      'Bird flock model · roost-to-roost day on the scene geometry, wind, pollution, temperature and sun · ' +
+      'sites from the scene land cover (parks, waterside, roofs)';
+    ui.stats.textContent = birdLayer?.stats ?? '';
+    if (birdLayer) setRateOptions('replay', birdLayer.speed);
+  }
   applyTrafficLayers();
   applyTransportLayers();
   if (shot === 'traffic') traffic?.highlightRoads(true);
@@ -1726,6 +1781,12 @@ function startTour(shot = 'overview') {
     ui.step.disabled = false;
     ui.rate.disabled = false;
   }
+  if (shot === 'birds' && birdLayer) {
+    ui.step.min = 0;
+    ui.step.max = birdLayer.duration;
+    ui.step.disabled = false;
+    ui.rate.disabled = false;
+  }
   setSectionUI();
 }
 function updateTour(now, dt) {
@@ -1737,7 +1798,10 @@ function updateTour(now, dt) {
   controls.target.copy(p.target);
   camera.lookAt(p.target);
   ui.timeLabel.textContent = TOUR_SHOTS[tour.shot].time();
-  if (uavLayer && tour.shot === 'uavs') {
+  if (birdLayer && tour.shot === 'birds') {
+    ui.step.value = birdLayer.t;
+    ui.stats.textContent = birdLayer.stats;
+  } else if (uavLayer && tour.shot === 'uavs') {
     ui.step.value = uavLayer.t;
     ui.stats.textContent = uavLayer.stats;
   } else if (traffic) {
@@ -1785,6 +1849,10 @@ function runCampus(shot = 'overview') {
     uavLayer.setVisible(true);
     uavLayer.playing = true;
   }
+  if (birdLayer) {
+    birdLayer.setVisible(ui.lBirds.checked);
+    birdLayer.playing = true;
+  }
   if (replayLayer) {
     replayLayer.setVisible(true);
     replayLayer.playing = true;
@@ -1809,6 +1877,12 @@ function runCampus(shot = 'overview') {
   } else if (uavLayer) {
     ui.step.min = 0;
     ui.step.max = uavLayer.duration;
+    ui.step.step = 0.1;
+    ui.step.disabled = false;
+    ui.rate.disabled = false;
+  } else if (birdLayer) {
+    ui.step.min = 0;
+    ui.step.max = birdLayer.duration;
     ui.step.step = 0.1;
     ui.step.disabled = false;
     ui.rate.disabled = false;
@@ -1982,7 +2056,10 @@ shotButtons.forEach((b) =>
     if (replayLayer) {
       if (section !== 'campus') runCampus();
       replayLayer.startShot(b.dataset.shot);
-    } else runCampus(b.dataset.shot);
+    } else {
+      tour.hold = false; // release a Birds view held by the flock picker
+      runCampus(b.dataset.shot);
+    }
     setSectionUI();
   }),
 );
@@ -2111,6 +2188,7 @@ function animate(now) {
   last = now;
   const moving = Boolean(
     (uavLayer?.group.visible && uavLayer.playing) ||
+    (birdLayer?.group.visible && birdLayer.playing) ||
     flight ||
     (section === 'campus' && (replayLayer ? replayLayer.playing : tour.active && !tour.paused)) ||
     (traffic && !replayLayer && section !== 'fields' && traffic.group.visible && traffic.playing),
@@ -2151,6 +2229,10 @@ function animate(now) {
   if (uavLayer) {
     uavLayer.setVisible(section !== 'fields' && !window.cityTools?.current);
     if (uavLayer.group.visible) uavLayer.tick(elapsed / 1000);
+  }
+  if (birdLayer) {
+    birdLayer.setVisible(section !== 'fields' && !window.cityTools?.current && ui.lBirds.checked);
+    if (birdLayer.group.visible) birdLayer.tick(elapsed / 1000);
   }
   updateFlight(now);
   if (controls.enabled) controls.update();
@@ -2574,6 +2656,44 @@ async function boot() {
     if (query.has('t')) uavLayer.update(+query.get('t'));
     applyReplayLayers();
   }
+  if (HAS_BIRD_LAYER) {
+    ui.pct.textContent = 'Birds…';
+    try {
+      birdLayer = await createSceneBirdLayer({ scene, sceneId: SCENE.id, probed: BIRD_CONFIG });
+      console.log('bird layer:', birdLayer.layer.stats);
+      // bird panel (bird-layer.js): "Bird #", flock picker, "Jump to"; picking holds the Birds view on that bird
+      const showBirds = () => {
+        if (section !== 'campus' || !tour.active || tour.shot !== 'birds') runCampus('birds');
+        tour.hold = true;
+      };
+      mountBirdControls({
+        box: birdUI.box,
+        manifest: birdLayer.manifest,
+        onBird: (i) => {
+          birdLayer.selectBird(i);
+          showBirds();
+        },
+        onJump: (t) => {
+          birdLayer.jump(t);
+          showBirds();
+        },
+      });
+      birdUI.target.parentElement.style.display = 'none'; // the South Kensington replay's tracker menus
+      birdUI.box.style.display = '';
+      const query = new URLSearchParams(location.search);
+      if (query.has('t')) birdLayer.update(+query.get('t'));
+    } catch (e) {
+      console.error('bird layer failed', e);
+      birdLayer = null;
+      const button = document.querySelector('[data-shot="birds"]');
+      if (button) {
+        button.disabled = true;
+        button.textContent = 'Birds unavailable';
+        button.title = String(e);
+      }
+    }
+    applyReplayLayers();
+  }
   if (SCENE.traffic) {
     // loads in the background (34 MB of vehicle records): the page opens without it and the layer appears when ready
     tfUI.box.style.display = '';
@@ -2670,6 +2790,7 @@ async function boot() {
     }
     if (qs.get('play') === '0') {
       if (uavLayer) uavLayer.playing = false;
+      if (birdLayer) birdLayer.playing = false;
       if (replayLayer) replayLayer.playing = false;
       if (traffic) traffic.playing = false;
       tour.paused = true;
@@ -2729,6 +2850,9 @@ window.viewer = {
   LG,
   get uavs() {
     return uavLayer;
+  },
+  get birds() {
+    return birdLayer ?? replayLayer?.birds ?? null;
   },
   get replay() {
     return replayLayer;
