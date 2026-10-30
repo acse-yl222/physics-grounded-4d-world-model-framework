@@ -89,6 +89,14 @@
       "description": "8.192 km domain from Imperial South Kensington to White City: SCALED wind, temperature, sunlight, road tracer and design-storm flooding over 69,000 buildings.",
       "viewer_url": "viewer/3d/?scene=west_london_8km",
       "resource_ids": []
+    },
+    {
+      "scene_id": "imperial_corridor_8km",
+      "title": "Imperial Corridor 8 km",
+      "tag": "Urban environment",
+      "description": "8.192 km Imperial Corridor domain (true north), South Kensington to White City: 300-step SCALED wind every 25 s, temperature, sunlight every 10 min, road tracer and design-storm flooding every minute, with detailed landmark geometry near the camera.",
+      "viewer_url": "viewer/3d/?scene=imperial_corridor_8km",
+      "resource_ids": []
     }
   ],
   "published_site": "https://acse-yl222.github.io/physics-grounded-4d-world-model-framework/"

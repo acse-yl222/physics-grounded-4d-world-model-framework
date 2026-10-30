@@ -84,3 +84,6 @@ agents/demo_rev02/assets/city.glb
 # West London 8 km city scene (buildings GLB and display masks)
 !scenes/west_london_8km/models/buildings.glb
 !scenes/west_london_8km/physics/masks/*.npy
+
+# Imperial Corridor 8 km city scene (buildings GLB; physics frames and detail tiles are in urban-world-model-models)
+!scenes/imperial_corridor_8km/models/buildings.glb

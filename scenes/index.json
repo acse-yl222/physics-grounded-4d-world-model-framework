@@ -20,6 +20,11 @@
       "id": "west_london_8km",
       "title": "West-central London 8 km \u00b7 South Kensington + White City",
       "short": "West London 8 km"
+    },
+    {
+      "id": "imperial_corridor_8km",
+      "title": "Imperial Corridor 8 km \u00b7 South Kensington + White City",
+      "short": "Imperial Corridor 8 km"
     }
   ]
 }
