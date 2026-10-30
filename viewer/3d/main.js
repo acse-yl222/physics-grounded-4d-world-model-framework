@@ -9,7 +9,7 @@ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { loadScene, sceneLink, ROOT } from '../scene.js';
 import { timelineTime, layerSpan } from '../recorded-clock.mjs';
 import { getFrame, f16, loadMask, npy, DATA, setDataBase } from '../npy.js';
-import { initFrames, hasLayer, layerMeta, getFrameF32, framesInfo } from '../frames.js';
+import { initFrames, hasLayer, layerMeta, getFrameF32, framesInfo, fetchFrameBytes, frameReady, layerNetFps, bufferLayer, bufferState, cancelBuffered, releaseBefore } from '../frames.js';
 import { ON_PAGES } from '../config.js';
 import { fetchCityModel } from '../model-source.js';
 import { buildProxyCity } from './proxy.js';
@@ -688,12 +688,23 @@ function paintFlood(vals) {
 // Sunlight: a lighting overlay rather than a heat map. Shade = 1 - GHI / open-sky GHI of the frame (99th percentile, roofs see the
 // open sky) is painted as a dark veil, sunlit cells get a faint warm tint, so the model's own streets show through the shadows.
 let solarOpen = 0;
+// p-quantile of a field from a 1024-bin histogram over its range: one pass, no copy, no 4-million-element sort per frame
+// (web frames are quantised to 1/255 of their range anyway)
+function percentile(vals, p) {
+  let lo = Infinity, hi = -Infinity;
+  for (let i = 0; i < vals.length; i++) { const v = vals[i]; if (v < lo) lo = v; if (v > hi) hi = v; }
+  if (!(hi > lo)) return lo;
+  const B = 1024, hist = new Uint32Array(B), s = (B - 1) / (hi - lo);
+  for (let i = 0; i < vals.length; i++) hist[((vals[i] - lo) * s) | 0]++;
+  let acc = 0, target = p * vals.length;
+  for (let b = 0; b < B; b++) { acc += hist[b]; if (acc >= target) return lo + (b + 0.5) / s; }
+  return hi;
+}
 function paintSolar(vals) {
   const g = LG.solar,
     d = solarPlane.data,
     n = g.w * g.h;
-  const sorted = Float32Array.from(vals).sort();
-  solarOpen = sorted[Math.floor(n * 0.99)];
+  solarOpen = percentile(vals, 0.99);
   const dusk = solarOpen < 15,
     inv = dusk ? 0 : 1 / solarOpen;
   for (let i = 0; i < n; i++) {
@@ -953,7 +964,7 @@ const solarDayLabel = () => LAYERS.solar?.dates?.[ui.solarDate.value]?.label ?? 
 // Decoded frame of a layer: the pre-rendered PNG (physics/web/, ~100 KB) when present, else the raw .npy Range read.
 // Both give the same array layout (wind: [u..., v..., w...]; shadow: Uint8Array 0/1, unpacked when the array stores packed bits).
 function frame(key, file, k, raw = false) {
-  if (hasLayer(key)) return getFrameF32(key, k);
+  if (hasLayer(key)) return getFrameF32(key, k, true);
   return getFrame(file, k).then((a) =>
     raw
       ? LAYERS.solar?.shadow_packed && /^shadow_/.test(key)
@@ -962,10 +973,69 @@ function frame(key, file, k, raw = false) {
       : f16(a),
   );
 }
-function prefetch(key, file, k) {
+// decode = true: decode into the frame cache (next frame or two); false: download the compressed bytes only (~1 MB a
+// frame instead of 12-17 MB decoded, so the 150 MB decoded cache is not thrashed)
+function prefetch(key, file, k, decode = true) {
   if (SCENE.protocol_display?.strict_time && (k === null || k === undefined)) return;
-  if (hasLayer(key)) getFrameF32(key, k);
-  else getFrame(file, k);
+  if (hasLayer(key)) decode ? getFrameF32(key, k) : fetchFrameBytes(key, k, { droppable: true });
+  else if (decode) getFrame(file, k);
+}
+const DECODE_AHEAD = 2;
+const fetchAhead = (rate) => Math.min(24, Math.max(6, Math.ceil(2.5 * rate)));   // ~2.5 s of playback held as bytes
+
+// ---------------------------------------------------------------- buffered playback of a sequence-mode layer
+// The layer that gates each step of the current phase; its frames are preloaded (compressed) in play order from the
+// current step to the end of the phase. Playback starts once a share of them is in (?buffer=all | half (default) | auto |
+// none | <fraction>), and never runs past the buffered frontier: when the next frame has not arrived the player holds
+// (the frame is the next download) and says so, instead of stop-and-go. 'auto' = the share after which the rest arrives
+// before the play head reaches it, 1 - (link frames/s) / (playback frames/s), from the measured link rate.
+const gateKey = () => (state.phase === 'solar' ? solarKey() : state.phase);
+const BUFFER_MODE = qs0.get('buffer') ?? 'half';
+const canBuffer = () => seqMode() && hasLayer(gateKey()) && !SCENE.protocol_display?.strict_time;
+const phaseRate = () => PHASES[state.phase].rate || +ui.rate.value;
+const phaseFrames = (step) => [frameIndex(step)[state.phase], frameIndex(PHASES[state.phase].end)[state.phase]];
+function bufferFraction() {
+  if (BUFFER_MODE === 'all') return 1;
+  if (BUFFER_MODE === 'none') return 0;
+  if (BUFFER_MODE === 'auto') { const f = layerNetFps(gateKey()); return Number.isFinite(f) ? Math.min(1, Math.max(0, 1 - f / phaseRate()) + 0.05) : 0.5; }
+  const x = parseFloat(BUFFER_MODE);
+  return Number.isFinite(x) ? Math.min(1, Math.max(0, x)) : 0.5;
+}
+/** (Re)start the preload of the current phase's layer from this step, in play order (called on phase change and seeks). */
+function bufferFrom(step) {
+  if (!canBuffer()) return;
+  cancelBuffered();
+  const [from, to] = phaseFrames(step);
+  if (Number.isInteger(from) && Number.isInteger(to)) bufferLayer(gateKey(), from, to);
+  // then the first half of the next two phases (a short phase such as temperature leaves little time for the one after),
+  // queued behind this one, so the following phases start without a buffering pause
+  for (let d = 1; d <= 2; d++) {
+    const next = PHASE_ORDER[(PHASE_ORDER.indexOf(state.phase) + d) % PHASE_ORDER.length],
+      nextKey = next === 'solar' ? solarKey() : next;
+    if (next === state.phase || !PHASES[next] || !hasLayer(nextKey)) continue;
+    const a = frameIndex(PHASES[next].start)[next], b = frameIndex(PHASES[next].end)[next];
+    if (Number.isInteger(a) && Number.isInteger(b)) bufferLayer(nextKey, a, a + Math.ceil((b - a + 1) / 2) - 1);
+  }
+}
+function bufferedEnough() {
+  if (!canBuffer()) return true;
+  const [from, to] = phaseFrames(state.step), b = bufferState(gateKey(), from, to);
+  return b.have >= Math.min(b.total, Math.ceil(bufferFraction() * b.total));
+}
+/** Progress line in the stage caption and a fill on the time slider up to the buffered frontier; null restores the caption. */
+function bufferUI(waiting) {
+  const ph = PHASES[state.phase];
+  if (!waiting) { ui.stage.textContent = `Sequence · ${ph.label}`; ui.step.style.backgroundImage = ''; return; }
+  const [from, to] = phaseFrames(state.step), b = bufferState(gateKey(), from, to), rate = phaseRate();
+  const need = waiting === 'frontier' ? 1 : Math.max(0, Math.ceil(bufferFraction() * b.total) - b.have);
+  const eta = Number.isFinite(b.fps) && b.fps > 0 ? ` · ~${Math.ceil(need / b.fps)} s` : '';
+  ui.stage.textContent =
+    (waiting === 'frontier' ? `Waiting for frame ${b.frontier + 2} · ` : 'Buffering · ') +
+    `${ph.label} · ${b.have} / ${b.total} frames ready · ${(b.heldBytes / 1048576).toFixed(0)} MB held` +
+    (Number.isFinite(b.fps) ? ` · link ${b.fps.toFixed(1)} frames/s vs ${rate} played` : '') + eta;
+  const lo = +ui.step.min, hi = +ui.step.max, frontierStep = Math.min(hi, state.step + b.have - 1);
+  const pct = hi > lo ? (100 * (frontierStep - lo)) / (hi - lo) : 100;
+  ui.step.style.backgroundImage = `linear-gradient(90deg, rgba(108,207,195,.35) ${pct.toFixed(1)}%, transparent ${pct.toFixed(1)}%)`;
 }
 const solarMeta = () => manifest?.arrays?.[solarFile()];
 function solarPhaseSetup() {
@@ -1179,23 +1249,29 @@ async function loadStepInner(step) {
           : '') +
         (has('temp') && step < PHASES.temp?.start ? ' · temperature run not started' : '') +
         (act.flood && LAYERS.flood?.max ? ' · flood layer = maximum depth of the event' : '');
-  for (let k = 1; k <= 4; k++) {
+  const rate = (seqMode() && ph.rate) || +ui.rate.value;
+  // overlay mode shows several layers at once: share the byte window between them
+  const nAct = Object.values(act).filter(Boolean).length || 1;
+  for (let k = 1; k <= Math.max(DECODE_AHEAD, Math.ceil(fetchAhead(rate) / nAct)); k++) {
     const n = step + k;
     if (n <= ph.end) {
-      const f = frameIndex(n);
-      if (act.wind) prefetch('wind', FILES.wind, f.wind);
-      if (act.poll) prefetch('poll', FILES.poll, f.poll);
-      if (act.temp) prefetch('temp', FILES.temp, f.temp);
-      if (act.flood && f.flood !== null) prefetch('flood', FILES.flood, f.flood);
-      if (act.solar) prefetch(solarKey(), solarFile(), f.solar);
-      if (act.diurnal) prefetch(dKey, diurnalArray(), f.diurnal);
+      const f = frameIndex(n), d = k <= DECODE_AHEAD;
+      if (act.wind) prefetch('wind', FILES.wind, f.wind, d);
+      if (act.poll) prefetch('poll', FILES.poll, f.poll, d);
+      if (act.temp) prefetch('temp', FILES.temp, f.temp, d);
+      if (act.flood && f.flood !== null) prefetch('flood', FILES.flood, f.flood, d);
+      if (act.solar) prefetch(solarKey(), solarFile(), f.solar, d);
+      if (act.diurnal) prefetch(dKey, diurnalArray(), f.diurnal, d);
     }
   }
+  if (canBuffer() && Number.isInteger(fi[state.phase])) releaseBefore(gateKey(), fi[state.phase]);   // played frames leave the buffer
 }
 function setStep(s) {
   const lo = seqMode() ? PHASES[state.phase].start : 1,
-    hi = seqMode() ? PHASES[state.phase].end : STEPS;
+    hi = seqMode() ? PHASES[state.phase].end : STEPS,
+    prev = state.step;
   state.step = Math.max(lo, Math.min(hi, s));
+  if (state.step !== prev + 1 || state.bufferKey !== gateKey()) { state.bufferKey = gateKey(); bufferFrom(state.step); }
   if (SCENE.protocol_display?.strict_time) applyLayers();
   ui.step.min = lo;
   ui.step.max = hi;
@@ -1214,7 +1290,17 @@ function setPhase(phase) {
 }
 function tick() {
   if (state.loading) return; // previous frame still loading: wait for it rather than cancelling it (that starved the painter)
-  if (state.step < (seqMode() ? PHASES[state.phase].end : STEPS)) {
+  const end = seqMode() ? PHASES[state.phase].end : STEPS;
+  if (canBuffer() && state.step < end) {
+    if (state.buffering) {
+      if (!bufferedEnough()) { bufferUI('fill'); return; }
+      state.buffering = false; bufferUI(null);
+    }
+    const next = frameIndex(state.step + 1)[state.phase];
+    if (!frameReady(gateKey(), next)) { state.heldAtFrontier = true; bufferUI('frontier'); return; }   // hold: that frame is the next download
+    if (state.heldAtFrontier) { state.heldAtFrontier = false; bufferUI(null); }
+  }
+  if (state.step < end) {
     setStep(state.step + 1);
     return;
   }
@@ -1229,6 +1315,7 @@ function tick() {
 }
 function setPlaying(p) {
   state.playing = p;
+  state.buffering = p && canBuffer() && !bufferedEnough();   // fill first; tick() releases the player when the share is in
   if (section !== 'campus') ui.play.textContent = p ? '❚❚' : '▶';
   clearInterval(state.timer);
   state.timer = null;
@@ -2243,7 +2330,7 @@ async function boot() {
       if (layerInvalid[key].length !== LG[key].w * LG[key].h)
         throw new Error(`Invalid ${key} mask dimensions`);
     }
-    await loadStepInner(Math.max(1, Math.round(STEPS * 0.6)));
+    if (!qs0.has('step')) await loadStepInner(Math.max(1, Math.round(STEPS * 0.6)));
   })().catch((e) => {
     dataError = e;
   });

@@ -73,7 +73,7 @@
   "layers": {
     "wind": {
       "file": "wind.npy",
-      "cell_m": 8.0,
+      "cell_m": 16.0,
       "frames": 301,
       "t0_s": 0.0,
       "step_s": 25.0,
@@ -81,8 +81,8 @@
       "overlay_frame": 300,
       "y": 6.0,
       "rate": 8,
-      "label": "Wind \u00b7 SCALED V1 fp32 \u00b7 6 m \u00b7 8 m display grid",
-      "title": "Wind \u00b7 SCALED V1 fp32 \u00b7 6 m \u00b7 8 m display grid",
+      "label": "Wind \u00b7 SCALED V1 fp32 \u00b7 6 m \u00b7 16 m display grid",
+      "title": "Wind \u00b7 SCALED V1 fp32 \u00b7 6 m \u00b7 16 m display grid",
       "range": [
         0.0,
         1.0
@@ -437,7 +437,7 @@
     },
     "solar": {
       "file": "solar_20260621.npy",
-      "cell_m": 4.0,
+      "cell_m": 16.0,
       "frames": 99,
       "t0_s": 17400.0,
       "step_s": 600.0,
@@ -445,8 +445,8 @@
       "overlay_frame": 98,
       "y": 0.2,
       "rate": 2,
-      "label": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
-      "title": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
+      "label": "Sunlight \u00b7 clear sky \u00b7 16 m grid",
+      "title": "Sunlight \u00b7 clear sky \u00b7 16 m grid",
       "range": [
         0.0,
         950.0
@@ -472,16 +472,16 @@
           "shadow": "shadow_20261221.npy"
         }
       },
-      "shadow_cell_m": 4,
+      "shadow_cell_m": 16,
       "shadow_packed": false,
       "ghi_rate": 2,
       "shadow_rate": 2,
-      "ghi_label": "Irradiance \u00b7 4 m",
-      "shadow_label": "Shadows \u00b7 4 m"
+      "ghi_label": "Irradiance \u00b7 16 m",
+      "shadow_label": "Shadows \u00b7 16 m"
     },
     "poll": {
       "file": "poll.npy",
-      "cell_m": 4.0,
+      "cell_m": 16.0,
       "frames": 21,
       "t0_s": 0.0,
       "step_s": 30.0,
@@ -489,27 +489,27 @@
       "overlay_frame": 20,
       "y": 6.0,
       "rate": 2,
-      "label": "Pollution \u00b7 planar road tracer \u00b7 6 m \u00b7 arbitrary units",
-      "title": "Pollution \u00b7 planar road tracer \u00b7 6 m \u00b7 arbitrary units",
+      "label": "Pollution \u00b7 planar road tracer \u00b7 6 m \u00b7 16 m grid \u00b7 arbitrary units",
+      "title": "Pollution \u00b7 planar road tracer \u00b7 6 m \u00b7 16 m grid \u00b7 arbitrary units",
       "range": [
         0.001,
-        65.94
+        33.81
       ],
       "legend": [
         "0.001",
         "a.u.",
-        "65.94"
+        "33.81"
       ],
       "web_range": [
         0.001,
-        65.94
+        33.81
       ],
       "web_encoding": "log1p",
       "web_scale": 0.001
     },
     "flood": {
       "file": "flood.npy",
-      "cell_m": 4.0,
+      "cell_m": 16.0,
       "frames": 181,
       "t0_s": 0.5,
       "step_s": 59.932,
@@ -517,8 +517,8 @@
       "overlay_frame": 180,
       "y": 0.2,
       "rate": 2,
-      "label": "Flooding \u00b7 12 July 2021-type design storm \u00b7 4 m grid",
-      "title": "Flooding \u00b7 12 July 2021-type design storm \u00b7 4 m grid",
+      "label": "Flooding \u00b7 12 July 2021-type design storm \u00b7 16 m grid",
+      "title": "Flooding \u00b7 12 July 2021-type design storm \u00b7 16 m grid",
       "range": [
         0.0,
         0.5
@@ -545,5 +545,5 @@
     "Flood: uniform 50 mm / 90 min design storm, 12 mm/h drainage, 20 mm/h infiltration on green cells; not the observed 2021 event.",
     "Browser fields use declared 8-bit PNG/WebP quantization; complete scientific arrays remain in retained runs."
   ],
-  "physics_dir": "https://acse-yl222.github.io/urban-world-model-models/project/imperial_corridor_8km/web/city_fields_8km_20261030/physics/"
+  "physics_dir": "https://acse-yl222.github.io/urban-world-model-models/project/imperial_corridor_8km/web/city_fields_8km_v2_20261030/physics/"
 }

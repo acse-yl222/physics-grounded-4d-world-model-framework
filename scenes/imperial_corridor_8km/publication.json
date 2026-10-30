@@ -1,7 +1,8 @@
 {
-  "source_run": "city_fields_8km_20261030",
-  "source_manifest_sha256": "36ace8585b881aef052460cf0bfa267cf4623eeb865d55e0241d462253a28b48",
+  "source_run": "city_fields_8km_v2_20261030",
+  "source_manifest_sha256": "0d80e2ed5b887355149d94a8005a5b33c1a47fcbfe5dae3f6c0d55b0e2254336",
   "browser_encoding": "png; value = lo + v/255*(hi-lo); rgb3 = (u,v,w); bit = mask",
+  "physics_url": "https://acse-yl222.github.io/urban-world-model-models/project/imperial_corridor_8km/web/city_fields_8km_v2_20261030/physics/",
   "assets": [
     {
       "path": "models/buildings.glb",
@@ -10,14 +11,8 @@
     },
     {
       "path": "scene.json",
-      "bytes": 28119,
-      "sha256": "ed3cd80bb567370c431b3ac9e25dc3822bd5e67c3b26d25dd7923158f59de03e"
+      "bytes": 28169,
+      "sha256": "4f7a57b1d72ac91e98427ac2dfec56862b2ebfc763297f0a418628e01b29129f"
     }
-  ],
-  "physics_url": "https://acse-yl222.github.io/urban-world-model-models/project/imperial_corridor_8km/web/city_fields_8km_20261030/physics/",
-  "detail_tiles_url": "https://acse-yl222.github.io/urban-world-model-models/project/imperial_corridor_8km/geometry/detail_tiles_enu_20261030/index.json",
-  "resources_registry": [
-    "imperial_corridor_8km_web_city_fields_8km_20261030",
-    "imperial_corridor_8km_geometry_detail_tiles_enu_20261030"
   ]
 }
