@@ -1,3 +1,4 @@
+import { installColorbars } from './field-colorbar.mjs';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
@@ -474,12 +475,15 @@ function unpackBits(packed, g) {
   return out;
 }
 
+let colorbars = null;
 const layerInvalid = {};
 const footprints = {}; // building footprint masks by cell size (metres): each layer is masked at its own resolution
 const fpFor = (g) => footprints[g.cell] ?? null;
 let solidWind = null,
   studyArea = null;
 function paintWind(uv) {
+  const count = LG.wind.w * LG.wind.h;
+  if (colorbars?.paint('wind', uv, windPlane, count, i => Math.hypot(uv[i],uv[count+i],uv[2*count+i]), i => !solidWind?.[i])) return;
   const g = LG.wind,
     d = windPlane.data,
     n = g.w * g.h,
@@ -652,6 +656,8 @@ function paintIsotherms(vals) {
   uploadIsotherms(n);
 }
 function paintTemperature(vals) {
+  const count = LG.temp.w * LG.temp.h;
+  if (colorbars?.paint('temp', vals, tempPlane, count, i => vals[i], i => !fpFor(LG.temp)?.[i] && (!studyArea || studyArea[i]))) return;
   const g = LG.temp,
     footprint = fpFor(g),
     d = tempPlane.data,
@@ -672,6 +678,8 @@ function paintTemperature(vals) {
   tempPlane.tex.needsUpdate = true;
 }
 function paintFlood(vals) {
+  const count = LG.flood.w * LG.flood.h;
+  if (colorbars?.paint('flood', vals, floodPlane, count, i => vals[i], i => !layerInvalid.flood?.[i] && !fpFor(LG.flood)?.[i])) return;
   const g = LG.flood,
     footprint = fpFor(g),
     d = floodPlane.data,
@@ -708,6 +716,8 @@ function percentile(vals, p) {
   return hi;
 }
 function paintSolar(vals) {
+  const count = LG.solar.w * LG.solar.h;
+  if (colorbars?.paint('solar', vals, solarPlane, count, i => vals[i], i => !layerInvalid.solar?.[i])) return;
   const g = LG.solar,
     d = solarPlane.data,
     n = g.w * g.h;
@@ -772,6 +782,8 @@ function paintDiurnal(vals) {
   diurnalPlane.tex.needsUpdate = true;
 }
 function paintPollution(vals) {
+  const count = LG.poll.w * LG.poll.h;
+  if (colorbars?.paint('poll', vals, pollPlane, count, i => vals[i], i => !layerInvalid.poll?.[i])) return;
   const g = LG.poll,
     d = pollPlane.data;
   const [lo, hi] = LAYERS.poll.range ?? [0.1, 1000];
@@ -1111,6 +1123,7 @@ function activeLayers() {
   return act;
 }
 function repaint() {
+  colorbars?.resetLegends();
   invalidate();
   const f = state.fields,
     act = activeLayers();
@@ -2838,6 +2851,7 @@ async function boot() {
   }
   playIntro(); // Do not let a delayed startup override the first user interaction.
 }
+if (SCENE.corridor_context) { colorbars = installColorbars({layers:LAYERS,repaint}); window.fieldColorbars=colorbars; }
 window.viewer = {
   performanceStats,
   THREE,

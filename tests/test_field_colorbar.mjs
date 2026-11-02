@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {normalized,fieldStats} from '../src/visualization/shared/field-colorbar.mjs';
+assert.equal(normalized(5,0,10,'linear'),.5);
+assert.equal(normalized(10,1,100,'log'),.5);
+assert.equal(normalized(-2,0,10,'linear'),0);
+assert.equal(normalized(22,0,10,'linear'),1);
+assert.ok(Number.isNaN(normalized(0,1,100,'log')));
+assert.ok(Number.isNaN(normalized(NaN,0,10,'linear')));
+const a=[NaN,0,2,100,Infinity,-3];
+assert.deepEqual(fieldStats(a.length,i=>a[i],i=>i!==3),{min:-3,max:2,positive:2,count:3,total:6});
+console.log('Colour mapping and masked range checks passed');
