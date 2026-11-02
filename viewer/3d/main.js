@@ -1011,7 +1011,14 @@ const fetchAhead = (rate) => Math.min(24, Math.max(6, Math.ceil(2.5 * rate)));  
 const gateKey = () => (state.phase === 'solar' ? solarKey() : state.phase);
 const BUFFER_MODE = qs0.get('buffer') ?? 'half';
 const canBuffer = () => seqMode() && hasLayer(gateKey()) && !SCENE.protocol_display?.strict_time;
-const phaseRate = () => PHASES[state.phase].rate || +ui.rate.value;
+const fieldRateOverrides = {};
+const phaseRate = () => fieldRateOverrides[state.phase] ?? PHASES[state.phase].rate ?? +ui.rate.value;
+function syncFieldRate() {
+  if (section !== 'fields' || !seqMode()) return;
+  const single = LAYERS[state.phase]?.frames === 1;
+  setRateOptions('fields', single ? 1 : phaseRate());
+  ui.rate.disabled = single;
+}
 const phaseFrames = (step) => [frameIndex(step)[state.phase], frameIndex(PHASES[state.phase].end)[state.phase]];
 function bufferFraction() {
   if (BUFFER_MODE === 'all') return 1;
@@ -1065,6 +1072,7 @@ function solarPhaseSetup() {
     shadow = ui.solarMode.value === 'shadow';
   PHASES.solar.end = meta?.shape?.[0] ?? layerMeta(solarKey())?.frames ?? PHASES.solar.end;
   PHASES.solar.rate = shadow ? (S.shadow_rate ?? 2) : (S.ghi_rate ?? 12);
+  syncFieldRate();
   PHASES.solar.label = `Sunlight · ${solarDayLabel()} · ${shadow ? (S.shadow_label ?? 'shadows') : (S.ghi_label ?? 'clear-sky irradiance')}`;
 }
 // the scene's sun follows the real sun position of the solar frame (azimuth 0 = north, clockwise; model north = -Z)
@@ -1278,7 +1286,7 @@ async function loadStepInner(step) {
         (has('temp') && step < PHASES.temp?.start ? ' · temperature run not started' : '') +
         (act.flood && LAYERS.flood?.max ? ' · flood layer = maximum depth of the event' : '');
 
-  const rate = (seqMode() && ph.rate) || +ui.rate.value;
+  const rate = seqMode() ? phaseRate() : +ui.rate.value;
   // overlay mode shows several layers at once: share the byte window between them
   const nAct = Object.values(act).filter(Boolean).length || 1;
   for (let k = 1; k <= Math.max(DECODE_AHEAD, Math.ceil(fetchAhead(rate) / nAct)); k++) {
@@ -1309,6 +1317,7 @@ function setStep(s) {
 }
 function setPhase(phase) {
   state.phase = phase;
+  syncFieldRate();
   ui.stage.textContent = seqMode() ? `Sequence · ${PHASES[phase].label}` : OVERLAY_LABEL;
   if (section === 'fields' && state.introDone && seqMode())
     ui.lGround.checked = SCENE.corridor_context ? true : (ui.lTrees.checked = phase === 'flood' || phase === 'solar'); // flood and sunlight read better with the streets and green areas under them; the other fields hide them
@@ -1350,7 +1359,8 @@ function setPlaying(p) {
   clearInterval(state.timer);
   state.timer = null;
   const rate =
-    section === 'campus' ? 12 : (seqMode() && PHASES[state.phase].rate) || +ui.rate.value;
+    section === 'campus' ? 12 : seqMode() ? phaseRate() : +ui.rate.value;
+  syncFieldRate();
   if (p && !document.hidden) state.timer = setInterval(tick, 1000 / rate);
 }
 const RATES = {
@@ -1362,11 +1372,12 @@ const RATES = {
     [10, '10×'],
   ],
   fields: [
-    [2, '2 steps/s'],
-    [4, '4 steps/s'],
-    [8, '8 steps/s'],
-    [12, '12 steps/s'],
-    [20, '20 steps/s'],
+    [1, '1 frame/s'],
+    [2, '2 frames/s'],
+    [4, '4 frames/s'],
+    [8, '8 frames/s'],
+    [12, '12 frames/s'],
+    [20, '20 frames/s'],
   ],
 };
 function setRateOptions(kind, value) {
@@ -1392,6 +1403,7 @@ ui.play.addEventListener('click', () => {
   } else setPlaying(!state.playing);
 });
 ui.rate.addEventListener('change', () => {
+  if (section === 'fields' && seqMode()) fieldRateOverrides[state.phase] = +ui.rate.value;
   if (section === 'campus' && uavLayer && tour.shot === 'uavs') {
     uavLayer.speed = +ui.rate.value;
     return;
@@ -2239,12 +2251,12 @@ function animate(now) {
       .then(value => {corridorContext=value; window.corridorContext=value; invalidate();})
       .catch(error => {console.error(error); document.querySelector('#corridor-traffic-time').textContent = 'Context failed: ' + error.message;});
   }
-  corridorContext?.tick(Math.min(0.25, Math.max(0, (now-last)/1000)));
   if (document.hidden) {
     last = now;
     return;
   }
   const elapsed = Math.max(0, now - last);
+  corridorContext?.tick(elapsed / 1000);
   const dt = Math.min(0.05, elapsed / 1000);
   last = now;
   const moving = Boolean(
@@ -2854,6 +2866,7 @@ async function boot() {
 if (SCENE.corridor_context) { colorbars = installColorbars({layers:LAYERS,repaint}); window.fieldColorbars=colorbars; }
 window.viewer = {
   performanceStats,
+  playbackRate: phaseRate,
   THREE,
   scene,
   camera,

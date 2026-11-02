@@ -141,7 +141,7 @@
       "own_clock": true,
       "overlay_frame": 98,
       "y": 0.2,
-      "rate": 2,
+      "rate": 8,
       "label": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
       "title": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
       "range": [
@@ -171,8 +171,8 @@
       },
       "shadow_cell_m": 4.0,
       "shadow_packed": false,
-      "ghi_rate": 2,
-      "shadow_rate": 2,
+      "ghi_rate": 8,
+      "shadow_rate": 8,
       "ghi_label": "Irradiance \u00b7 4 m",
       "shadow_label": "Shadows \u00b7 4 m"
     },
@@ -185,7 +185,7 @@
       "own_clock": true,
       "overlay_frame": 20,
       "y": 6.0,
-      "rate": 2,
+      "rate": 4,
       "label": "Pollution \u00b7 planar road tracer \u00b7 6 m \u00b7 4 m grid \u00b7 arbitrary units",
       "title": "Pollution \u00b7 planar road tracer \u00b7 6 m \u00b7 4 m grid \u00b7 arbitrary units",
       "range": [
@@ -213,7 +213,7 @@
       "own_clock": true,
       "overlay_frame": 180,
       "y": 0.2,
-      "rate": 2,
+      "rate": 8,
       "label": "Flooding \u00b7 12 July 2021-type design storm \u00b7 4 m grid",
       "title": "Flooding \u00b7 12 July 2021-type design storm \u00b7 4 m grid",
       "range": [
@@ -252,7 +252,7 @@
     "own_clock": true,
     "overlay_frame": 300,
     "y": 6.0,
-    "rate": 8,
+    "rate": 12,
     "label": "Wind \u00b7 8 m saved grid \u00b7 height 6 m",
     "title": "Wind \u00b7 8 m time series \u00b7 height 6 m",
     "range": [
@@ -4955,7 +4955,8 @@
       "Traffic is an existing selected SUMO subset; no missing vehicles or frames invented.",
       "Ground and traffic projected onto the flattened ENU building plane; bridge deck elevations are not represented."
     ],
-    "temperature_hidden": true
+    "temperature_hidden": true,
+    "traffic_speed": 4
   },
   "display_hidden_layers": [
     "temp"
