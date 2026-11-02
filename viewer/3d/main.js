@@ -69,7 +69,7 @@ const SPAN_X = W * CELL,
   SPAN_Z = H * CELL;
 const CX = X0 + SPAN_X / 2,
   CZ = ZS - SPAN_Z / 2; // plane centre
-const LAYERS = SCENE.layers,
+const LAYERS = Object.fromEntries(Object.entries(SCENE.layers).filter(([key]) => !(SCENE.display_hidden_layers ?? []).includes(key))),
   has = (k) => !!LAYERS[k];
 const gridOf = (cell) => ({ w: Math.round(SPAN_X / cell), h: Math.round(SPAN_Z / cell), cell });
 const LG = {}; // the grid of every layer (layers may be coarser or finer than the base grid)
