@@ -31,6 +31,7 @@ import { createTransport } from './transport.js';
 import { createTraffic } from './traffic.js';
 import { createDetailTiles } from './detail-tiles.js';
 import { createDetailTiles as createCompleteGeometry } from './complete-detail-tiles.js';
+import { createCorridorContext } from './corridor-context.js';
 import { recordedFrame } from '../scene-run.js';
 
 // ------------------------------------------------------------------ scene (scenes/<id>/scene.json)
@@ -38,6 +39,10 @@ import { recordedFrame } from '../scene-run.js';
 // the masks, the field layers (files, frame counts, clocks, display ranges) and the camera focus. South Kensington also
 // switches on the traffic / UAV / bird replay, the station tile, the OSM supplement and the building refinements.
 const SCENE = await loadScene();
+if (new URLSearchParams(location.search).get('wind_mode') === 'history' && SCENE.wind_history) {
+  SCENE.layers.wind = SCENE.wind_history;
+  SCENE.masks.solid_wind.file = 'masks/wind_history_invalid.npy';
+}
 setDataBase(SCENE.physics, SCENE.protocol_display?.npy_transport);
 document.title = `${SCENE.title} · 3D`;
 // Lite mode: phones, tablets and low-memory machines get a proxy city extruded from the voxel masks instead of the
@@ -67,7 +72,7 @@ const LAYERS = SCENE.layers,
   has = (k) => !!LAYERS[k];
 const gridOf = (cell) => ({ w: Math.round(SPAN_X / cell), h: Math.round(SPAN_Z / cell), cell });
 const LG = {}; // the grid of every layer (layers may be coarser or finer than the base grid)
-for (const k of Object.keys(LAYERS)) LG[k] = gridOf(LAYERS[k].cell_m ?? CELL);
+for (const k of Object.keys(LAYERS)) LG[k] = {...gridOf(LAYERS[k].cell_m ?? CELL), dx: LAYERS[k].offset_x_m ?? 0, dz: LAYERS[k].offset_z_m ?? 0};
 if (has('solar')) LG.shadow = gridOf(LAYERS.solar.shadow_cell_m ?? LAYERS.solar.cell_m ?? CELL);
 const TL = SCENE.timeline ?? { step_s: 25, steps: 100 },
   STEP_S = TL.step_s,
@@ -391,6 +396,7 @@ const model = new THREE.Group();
 scene.add(model);
 
 // ------------------------------------------------------------------ field planes (textures), one per layer on its own grid
+if (SCENE.corridor_context) {ui.oWind.value=.55;ui.oTemp.value=.55;ui.oSolar.value=.5;ui.oPoll.value=.6;ui.oFlood.value=.7;}
 const planes = {};
 function makePlane(key, g, y, opacity, renderOrder, magFilter = THREE.LinearFilter) {
   const data = new Uint8Array(g.w * g.h * 4);
@@ -408,7 +414,7 @@ function makePlane(key, g, y, opacity, renderOrder, magFilter = THREE.LinearFilt
   });
   const mesh = new THREE.Mesh(new THREE.PlaneGeometry(SPAN_X, SPAN_Z), mat);
   mesh.rotation.x = -Math.PI / 2;
-  mesh.position.set(CX, y, CZ);
+  mesh.position.set(CX + (g.dx ?? 0), y, CZ + (g.dz ?? 0));
   mesh.renderOrder = renderOrder;
   mesh.visible = false;
   scene.add(mesh);
@@ -888,12 +894,12 @@ function stepParticles(dtSec) {
         ay = wind.hist[h + k * 2 + 1],
         bx = wind.hist[h + (k + 1) * 2],
         by = wind.hist[h + (k + 1) * 2 + 1];
-      pos[s] = X0 + ax * WG.cell;
+      pos[s] = X0 + (WG.dx ?? 0) + ax * WG.cell;
       pos[s + 1] = LAYER_Y.particles;
-      pos[s + 2] = ZS - ay * WG.cell;
-      pos[s + 3] = X0 + bx * WG.cell;
+      pos[s + 2] = ZS + (WG.dz ?? 0) - ay * WG.cell;
+      pos[s + 3] = X0 + (WG.dx ?? 0) + bx * WG.cell;
       pos[s + 4] = LAYER_Y.particles;
-      pos[s + 5] = ZS - by * WG.cell;
+      pos[s + 5] = ZS + (WG.dz ?? 0) - by * WG.cell;
       const fa = 1 - k / (TAIL - 1),
         fb = 1 - (k + 1) / (TAIL - 1);
       col[s] = R * fa;
@@ -1292,7 +1298,7 @@ function setPhase(phase) {
   state.phase = phase;
   ui.stage.textContent = seqMode() ? `Sequence · ${PHASES[phase].label}` : OVERLAY_LABEL;
   if (section === 'fields' && state.introDone && seqMode())
-    ui.lGround.checked = ui.lTrees.checked = phase === 'flood' || phase === 'solar'; // flood and sunlight read better with the streets and green areas under them; the other fields hide them
+    ui.lGround.checked = SCENE.corridor_context ? true : (ui.lTrees.checked = phase === 'flood' || phase === 'solar'); // flood and sunlight read better with the streets and green areas under them; the other fields hide them
   applyLayers();
   setStep(PHASES[phase].start);
   if (state.playing) setPlaying(true); // phases can have their own rate (flood plays at 2 frames/s)
@@ -2055,7 +2061,7 @@ function runFields(phase = PHASE_ORDER[0]) {
   setSectionUI();
   // Apply the selection immediately; camera movement must not defer or overwrite it.
   state.introDone = true;
-  ui.lGround.checked = false;
+  ui.lGround.checked = Boolean(SCENE.corridor_context);
   ui.lTrees.checked = false;
   replayLayer?.setVisible(false);
   applyTransportLayers();
@@ -2094,8 +2100,8 @@ const ray = new THREE.Raycaster(),
   groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0),
   hit = new THREE.Vector3();
 const cellOf = (g) => {
-  const c = Math.floor((hit.x - X0) / g.cell),
-    r = Math.floor((ZS - hit.z) / g.cell);
+  const c = Math.floor((hit.x - X0 - (g.dx ?? 0)) / g.cell),
+    r = Math.floor((ZS + (g.dz ?? 0) - hit.z) / g.cell);
   return c < 0 || c >= g.w || r < 0 || r >= g.h ? -1 : r * g.w + c;
 };
 renderer.domElement.addEventListener('pointermove', (e) => {
@@ -2199,6 +2205,8 @@ renderer.domElement.addEventListener('pointerleave', () => {
 // ------------------------------------------------------------------ render loop
 let last = performance.now(),
   lastTrafficStats = -Infinity;
+let corridorContext = null;
+let contextStarted = false;
 let detailTiles = null; // scene.model.detail_tiles: fine 1 km tiles stream in near the camera over the coarse model
 function animate(now) {
   requestAnimationFrame(animate);
@@ -2211,6 +2219,13 @@ function animate(now) {
     }
   }
   detailTiles?.update(now);
+  if (!contextStarted && model.children.length && SCENE.corridor_context) {
+    contextStarted = true;
+    createCorridorContext({scene, config:SCENE.corridor_context, url:SCENE.url, onChange:invalidate})
+      .then(value => {corridorContext=value; window.corridorContext=value; invalidate();})
+      .catch(error => {console.error(error); document.querySelector('#corridor-traffic-time').textContent = 'Context failed: ' + error.message;});
+  }
+  corridorContext?.tick(Math.min(0.25, Math.max(0, (now-last)/1000)));
   if (document.hidden) {
     last = now;
     return;
@@ -2798,7 +2813,7 @@ async function boot() {
     controls.enabled = true;
     state.introDone = pose === 'overhead' || qs.get('fields') === '1';
     if (state.introDone) {
-      ui.lGround.checked = false;
+      ui.lGround.checked = Boolean(SCENE.corridor_context);
       ui.lTrees.checked = false;
     }
     if (qs.has('mode')) ui.mode.value = qs.get('mode');

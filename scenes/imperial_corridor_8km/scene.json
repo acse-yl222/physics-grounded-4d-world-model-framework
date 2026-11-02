@@ -74,16 +74,16 @@
   "layers": {
     "wind": {
       "file": "wind.npy",
-      "cell_m": 16.0,
-      "frames": 301,
-      "t0_s": 0.0,
-      "step_s": 25.0,
+      "cell_m": 4.0,
+      "frames": 1,
+      "t0_s": 7500,
+      "step_s": 25,
       "own_clock": true,
-      "overlay_frame": 300,
+      "overlay_frame": 0,
       "y": 6.0,
-      "rate": 8,
-      "label": "Wind \u00b7 SCALED V1 fp32 \u00b7 6 m \u00b7 16 m display grid",
-      "title": "Wind \u00b7 SCALED V1 fp32 \u00b7 6 m \u00b7 16 m display grid",
+      "rate": 1,
+      "label": "Wind \u00b7 4 m final snapshot \u00b7 height 6 m",
+      "title": "Wind \u00b7 4 m snapshot at model t = 7500 s",
       "range": [
         0.0,
         1.0
@@ -94,314 +94,10 @@
         "1"
       ],
       "web_range": [
-        -2.0,
-        2.0
+        0.0,
+        1.0
       ],
-      "particle_time_scale": 20,
-      "sample_labels": [
-        "Model step 0 / 300 \u00b7 t = 0 s (25 s per model step)",
-        "Model step 1 / 300 \u00b7 t = 25 s (25 s per model step)",
-        "Model step 2 / 300 \u00b7 t = 50 s (25 s per model step)",
-        "Model step 3 / 300 \u00b7 t = 75 s (25 s per model step)",
-        "Model step 4 / 300 \u00b7 t = 100 s (25 s per model step)",
-        "Model step 5 / 300 \u00b7 t = 125 s (25 s per model step)",
-        "Model step 6 / 300 \u00b7 t = 150 s (25 s per model step)",
-        "Model step 7 / 300 \u00b7 t = 175 s (25 s per model step)",
-        "Model step 8 / 300 \u00b7 t = 200 s (25 s per model step)",
-        "Model step 9 / 300 \u00b7 t = 225 s (25 s per model step)",
-        "Model step 10 / 300 \u00b7 t = 250 s (25 s per model step)",
-        "Model step 11 / 300 \u00b7 t = 275 s (25 s per model step)",
-        "Model step 12 / 300 \u00b7 t = 300 s (25 s per model step)",
-        "Model step 13 / 300 \u00b7 t = 325 s (25 s per model step)",
-        "Model step 14 / 300 \u00b7 t = 350 s (25 s per model step)",
-        "Model step 15 / 300 \u00b7 t = 375 s (25 s per model step)",
-        "Model step 16 / 300 \u00b7 t = 400 s (25 s per model step)",
-        "Model step 17 / 300 \u00b7 t = 425 s (25 s per model step)",
-        "Model step 18 / 300 \u00b7 t = 450 s (25 s per model step)",
-        "Model step 19 / 300 \u00b7 t = 475 s (25 s per model step)",
-        "Model step 20 / 300 \u00b7 t = 500 s (25 s per model step)",
-        "Model step 21 / 300 \u00b7 t = 525 s (25 s per model step)",
-        "Model step 22 / 300 \u00b7 t = 550 s (25 s per model step)",
-        "Model step 23 / 300 \u00b7 t = 575 s (25 s per model step)",
-        "Model step 24 / 300 \u00b7 t = 600 s (25 s per model step)",
-        "Model step 25 / 300 \u00b7 t = 625 s (25 s per model step)",
-        "Model step 26 / 300 \u00b7 t = 650 s (25 s per model step)",
-        "Model step 27 / 300 \u00b7 t = 675 s (25 s per model step)",
-        "Model step 28 / 300 \u00b7 t = 700 s (25 s per model step)",
-        "Model step 29 / 300 \u00b7 t = 725 s (25 s per model step)",
-        "Model step 30 / 300 \u00b7 t = 750 s (25 s per model step)",
-        "Model step 31 / 300 \u00b7 t = 775 s (25 s per model step)",
-        "Model step 32 / 300 \u00b7 t = 800 s (25 s per model step)",
-        "Model step 33 / 300 \u00b7 t = 825 s (25 s per model step)",
-        "Model step 34 / 300 \u00b7 t = 850 s (25 s per model step)",
-        "Model step 35 / 300 \u00b7 t = 875 s (25 s per model step)",
-        "Model step 36 / 300 \u00b7 t = 900 s (25 s per model step)",
-        "Model step 37 / 300 \u00b7 t = 925 s (25 s per model step)",
-        "Model step 38 / 300 \u00b7 t = 950 s (25 s per model step)",
-        "Model step 39 / 300 \u00b7 t = 975 s (25 s per model step)",
-        "Model step 40 / 300 \u00b7 t = 1000 s (25 s per model step)",
-        "Model step 41 / 300 \u00b7 t = 1025 s (25 s per model step)",
-        "Model step 42 / 300 \u00b7 t = 1050 s (25 s per model step)",
-        "Model step 43 / 300 \u00b7 t = 1075 s (25 s per model step)",
-        "Model step 44 / 300 \u00b7 t = 1100 s (25 s per model step)",
-        "Model step 45 / 300 \u00b7 t = 1125 s (25 s per model step)",
-        "Model step 46 / 300 \u00b7 t = 1150 s (25 s per model step)",
-        "Model step 47 / 300 \u00b7 t = 1175 s (25 s per model step)",
-        "Model step 48 / 300 \u00b7 t = 1200 s (25 s per model step)",
-        "Model step 49 / 300 \u00b7 t = 1225 s (25 s per model step)",
-        "Model step 50 / 300 \u00b7 t = 1250 s (25 s per model step)",
-        "Model step 51 / 300 \u00b7 t = 1275 s (25 s per model step)",
-        "Model step 52 / 300 \u00b7 t = 1300 s (25 s per model step)",
-        "Model step 53 / 300 \u00b7 t = 1325 s (25 s per model step)",
-        "Model step 54 / 300 \u00b7 t = 1350 s (25 s per model step)",
-        "Model step 55 / 300 \u00b7 t = 1375 s (25 s per model step)",
-        "Model step 56 / 300 \u00b7 t = 1400 s (25 s per model step)",
-        "Model step 57 / 300 \u00b7 t = 1425 s (25 s per model step)",
-        "Model step 58 / 300 \u00b7 t = 1450 s (25 s per model step)",
-        "Model step 59 / 300 \u00b7 t = 1475 s (25 s per model step)",
-        "Model step 60 / 300 \u00b7 t = 1500 s (25 s per model step)",
-        "Model step 61 / 300 \u00b7 t = 1525 s (25 s per model step)",
-        "Model step 62 / 300 \u00b7 t = 1550 s (25 s per model step)",
-        "Model step 63 / 300 \u00b7 t = 1575 s (25 s per model step)",
-        "Model step 64 / 300 \u00b7 t = 1600 s (25 s per model step)",
-        "Model step 65 / 300 \u00b7 t = 1625 s (25 s per model step)",
-        "Model step 66 / 300 \u00b7 t = 1650 s (25 s per model step)",
-        "Model step 67 / 300 \u00b7 t = 1675 s (25 s per model step)",
-        "Model step 68 / 300 \u00b7 t = 1700 s (25 s per model step)",
-        "Model step 69 / 300 \u00b7 t = 1725 s (25 s per model step)",
-        "Model step 70 / 300 \u00b7 t = 1750 s (25 s per model step)",
-        "Model step 71 / 300 \u00b7 t = 1775 s (25 s per model step)",
-        "Model step 72 / 300 \u00b7 t = 1800 s (25 s per model step)",
-        "Model step 73 / 300 \u00b7 t = 1825 s (25 s per model step)",
-        "Model step 74 / 300 \u00b7 t = 1850 s (25 s per model step)",
-        "Model step 75 / 300 \u00b7 t = 1875 s (25 s per model step)",
-        "Model step 76 / 300 \u00b7 t = 1900 s (25 s per model step)",
-        "Model step 77 / 300 \u00b7 t = 1925 s (25 s per model step)",
-        "Model step 78 / 300 \u00b7 t = 1950 s (25 s per model step)",
-        "Model step 79 / 300 \u00b7 t = 1975 s (25 s per model step)",
-        "Model step 80 / 300 \u00b7 t = 2000 s (25 s per model step)",
-        "Model step 81 / 300 \u00b7 t = 2025 s (25 s per model step)",
-        "Model step 82 / 300 \u00b7 t = 2050 s (25 s per model step)",
-        "Model step 83 / 300 \u00b7 t = 2075 s (25 s per model step)",
-        "Model step 84 / 300 \u00b7 t = 2100 s (25 s per model step)",
-        "Model step 85 / 300 \u00b7 t = 2125 s (25 s per model step)",
-        "Model step 86 / 300 \u00b7 t = 2150 s (25 s per model step)",
-        "Model step 87 / 300 \u00b7 t = 2175 s (25 s per model step)",
-        "Model step 88 / 300 \u00b7 t = 2200 s (25 s per model step)",
-        "Model step 89 / 300 \u00b7 t = 2225 s (25 s per model step)",
-        "Model step 90 / 300 \u00b7 t = 2250 s (25 s per model step)",
-        "Model step 91 / 300 \u00b7 t = 2275 s (25 s per model step)",
-        "Model step 92 / 300 \u00b7 t = 2300 s (25 s per model step)",
-        "Model step 93 / 300 \u00b7 t = 2325 s (25 s per model step)",
-        "Model step 94 / 300 \u00b7 t = 2350 s (25 s per model step)",
-        "Model step 95 / 300 \u00b7 t = 2375 s (25 s per model step)",
-        "Model step 96 / 300 \u00b7 t = 2400 s (25 s per model step)",
-        "Model step 97 / 300 \u00b7 t = 2425 s (25 s per model step)",
-        "Model step 98 / 300 \u00b7 t = 2450 s (25 s per model step)",
-        "Model step 99 / 300 \u00b7 t = 2475 s (25 s per model step)",
-        "Model step 100 / 300 \u00b7 t = 2500 s (25 s per model step)",
-        "Model step 101 / 300 \u00b7 t = 2525 s (25 s per model step)",
-        "Model step 102 / 300 \u00b7 t = 2550 s (25 s per model step)",
-        "Model step 103 / 300 \u00b7 t = 2575 s (25 s per model step)",
-        "Model step 104 / 300 \u00b7 t = 2600 s (25 s per model step)",
-        "Model step 105 / 300 \u00b7 t = 2625 s (25 s per model step)",
-        "Model step 106 / 300 \u00b7 t = 2650 s (25 s per model step)",
-        "Model step 107 / 300 \u00b7 t = 2675 s (25 s per model step)",
-        "Model step 108 / 300 \u00b7 t = 2700 s (25 s per model step)",
-        "Model step 109 / 300 \u00b7 t = 2725 s (25 s per model step)",
-        "Model step 110 / 300 \u00b7 t = 2750 s (25 s per model step)",
-        "Model step 111 / 300 \u00b7 t = 2775 s (25 s per model step)",
-        "Model step 112 / 300 \u00b7 t = 2800 s (25 s per model step)",
-        "Model step 113 / 300 \u00b7 t = 2825 s (25 s per model step)",
-        "Model step 114 / 300 \u00b7 t = 2850 s (25 s per model step)",
-        "Model step 115 / 300 \u00b7 t = 2875 s (25 s per model step)",
-        "Model step 116 / 300 \u00b7 t = 2900 s (25 s per model step)",
-        "Model step 117 / 300 \u00b7 t = 2925 s (25 s per model step)",
-        "Model step 118 / 300 \u00b7 t = 2950 s (25 s per model step)",
-        "Model step 119 / 300 \u00b7 t = 2975 s (25 s per model step)",
-        "Model step 120 / 300 \u00b7 t = 3000 s (25 s per model step)",
-        "Model step 121 / 300 \u00b7 t = 3025 s (25 s per model step)",
-        "Model step 122 / 300 \u00b7 t = 3050 s (25 s per model step)",
-        "Model step 123 / 300 \u00b7 t = 3075 s (25 s per model step)",
-        "Model step 124 / 300 \u00b7 t = 3100 s (25 s per model step)",
-        "Model step 125 / 300 \u00b7 t = 3125 s (25 s per model step)",
-        "Model step 126 / 300 \u00b7 t = 3150 s (25 s per model step)",
-        "Model step 127 / 300 \u00b7 t = 3175 s (25 s per model step)",
-        "Model step 128 / 300 \u00b7 t = 3200 s (25 s per model step)",
-        "Model step 129 / 300 \u00b7 t = 3225 s (25 s per model step)",
-        "Model step 130 / 300 \u00b7 t = 3250 s (25 s per model step)",
-        "Model step 131 / 300 \u00b7 t = 3275 s (25 s per model step)",
-        "Model step 132 / 300 \u00b7 t = 3300 s (25 s per model step)",
-        "Model step 133 / 300 \u00b7 t = 3325 s (25 s per model step)",
-        "Model step 134 / 300 \u00b7 t = 3350 s (25 s per model step)",
-        "Model step 135 / 300 \u00b7 t = 3375 s (25 s per model step)",
-        "Model step 136 / 300 \u00b7 t = 3400 s (25 s per model step)",
-        "Model step 137 / 300 \u00b7 t = 3425 s (25 s per model step)",
-        "Model step 138 / 300 \u00b7 t = 3450 s (25 s per model step)",
-        "Model step 139 / 300 \u00b7 t = 3475 s (25 s per model step)",
-        "Model step 140 / 300 \u00b7 t = 3500 s (25 s per model step)",
-        "Model step 141 / 300 \u00b7 t = 3525 s (25 s per model step)",
-        "Model step 142 / 300 \u00b7 t = 3550 s (25 s per model step)",
-        "Model step 143 / 300 \u00b7 t = 3575 s (25 s per model step)",
-        "Model step 144 / 300 \u00b7 t = 3600 s (25 s per model step)",
-        "Model step 145 / 300 \u00b7 t = 3625 s (25 s per model step)",
-        "Model step 146 / 300 \u00b7 t = 3650 s (25 s per model step)",
-        "Model step 147 / 300 \u00b7 t = 3675 s (25 s per model step)",
-        "Model step 148 / 300 \u00b7 t = 3700 s (25 s per model step)",
-        "Model step 149 / 300 \u00b7 t = 3725 s (25 s per model step)",
-        "Model step 150 / 300 \u00b7 t = 3750 s (25 s per model step)",
-        "Model step 151 / 300 \u00b7 t = 3775 s (25 s per model step)",
-        "Model step 152 / 300 \u00b7 t = 3800 s (25 s per model step)",
-        "Model step 153 / 300 \u00b7 t = 3825 s (25 s per model step)",
-        "Model step 154 / 300 \u00b7 t = 3850 s (25 s per model step)",
-        "Model step 155 / 300 \u00b7 t = 3875 s (25 s per model step)",
-        "Model step 156 / 300 \u00b7 t = 3900 s (25 s per model step)",
-        "Model step 157 / 300 \u00b7 t = 3925 s (25 s per model step)",
-        "Model step 158 / 300 \u00b7 t = 3950 s (25 s per model step)",
-        "Model step 159 / 300 \u00b7 t = 3975 s (25 s per model step)",
-        "Model step 160 / 300 \u00b7 t = 4000 s (25 s per model step)",
-        "Model step 161 / 300 \u00b7 t = 4025 s (25 s per model step)",
-        "Model step 162 / 300 \u00b7 t = 4050 s (25 s per model step)",
-        "Model step 163 / 300 \u00b7 t = 4075 s (25 s per model step)",
-        "Model step 164 / 300 \u00b7 t = 4100 s (25 s per model step)",
-        "Model step 165 / 300 \u00b7 t = 4125 s (25 s per model step)",
-        "Model step 166 / 300 \u00b7 t = 4150 s (25 s per model step)",
-        "Model step 167 / 300 \u00b7 t = 4175 s (25 s per model step)",
-        "Model step 168 / 300 \u00b7 t = 4200 s (25 s per model step)",
-        "Model step 169 / 300 \u00b7 t = 4225 s (25 s per model step)",
-        "Model step 170 / 300 \u00b7 t = 4250 s (25 s per model step)",
-        "Model step 171 / 300 \u00b7 t = 4275 s (25 s per model step)",
-        "Model step 172 / 300 \u00b7 t = 4300 s (25 s per model step)",
-        "Model step 173 / 300 \u00b7 t = 4325 s (25 s per model step)",
-        "Model step 174 / 300 \u00b7 t = 4350 s (25 s per model step)",
-        "Model step 175 / 300 \u00b7 t = 4375 s (25 s per model step)",
-        "Model step 176 / 300 \u00b7 t = 4400 s (25 s per model step)",
-        "Model step 177 / 300 \u00b7 t = 4425 s (25 s per model step)",
-        "Model step 178 / 300 \u00b7 t = 4450 s (25 s per model step)",
-        "Model step 179 / 300 \u00b7 t = 4475 s (25 s per model step)",
-        "Model step 180 / 300 \u00b7 t = 4500 s (25 s per model step)",
-        "Model step 181 / 300 \u00b7 t = 4525 s (25 s per model step)",
-        "Model step 182 / 300 \u00b7 t = 4550 s (25 s per model step)",
-        "Model step 183 / 300 \u00b7 t = 4575 s (25 s per model step)",
-        "Model step 184 / 300 \u00b7 t = 4600 s (25 s per model step)",
-        "Model step 185 / 300 \u00b7 t = 4625 s (25 s per model step)",
-        "Model step 186 / 300 \u00b7 t = 4650 s (25 s per model step)",
-        "Model step 187 / 300 \u00b7 t = 4675 s (25 s per model step)",
-        "Model step 188 / 300 \u00b7 t = 4700 s (25 s per model step)",
-        "Model step 189 / 300 \u00b7 t = 4725 s (25 s per model step)",
-        "Model step 190 / 300 \u00b7 t = 4750 s (25 s per model step)",
-        "Model step 191 / 300 \u00b7 t = 4775 s (25 s per model step)",
-        "Model step 192 / 300 \u00b7 t = 4800 s (25 s per model step)",
-        "Model step 193 / 300 \u00b7 t = 4825 s (25 s per model step)",
-        "Model step 194 / 300 \u00b7 t = 4850 s (25 s per model step)",
-        "Model step 195 / 300 \u00b7 t = 4875 s (25 s per model step)",
-        "Model step 196 / 300 \u00b7 t = 4900 s (25 s per model step)",
-        "Model step 197 / 300 \u00b7 t = 4925 s (25 s per model step)",
-        "Model step 198 / 300 \u00b7 t = 4950 s (25 s per model step)",
-        "Model step 199 / 300 \u00b7 t = 4975 s (25 s per model step)",
-        "Model step 200 / 300 \u00b7 t = 5000 s (25 s per model step)",
-        "Model step 201 / 300 \u00b7 t = 5025 s (25 s per model step)",
-        "Model step 202 / 300 \u00b7 t = 5050 s (25 s per model step)",
-        "Model step 203 / 300 \u00b7 t = 5075 s (25 s per model step)",
-        "Model step 204 / 300 \u00b7 t = 5100 s (25 s per model step)",
-        "Model step 205 / 300 \u00b7 t = 5125 s (25 s per model step)",
-        "Model step 206 / 300 \u00b7 t = 5150 s (25 s per model step)",
-        "Model step 207 / 300 \u00b7 t = 5175 s (25 s per model step)",
-        "Model step 208 / 300 \u00b7 t = 5200 s (25 s per model step)",
-        "Model step 209 / 300 \u00b7 t = 5225 s (25 s per model step)",
-        "Model step 210 / 300 \u00b7 t = 5250 s (25 s per model step)",
-        "Model step 211 / 300 \u00b7 t = 5275 s (25 s per model step)",
-        "Model step 212 / 300 \u00b7 t = 5300 s (25 s per model step)",
-        "Model step 213 / 300 \u00b7 t = 5325 s (25 s per model step)",
-        "Model step 214 / 300 \u00b7 t = 5350 s (25 s per model step)",
-        "Model step 215 / 300 \u00b7 t = 5375 s (25 s per model step)",
-        "Model step 216 / 300 \u00b7 t = 5400 s (25 s per model step)",
-        "Model step 217 / 300 \u00b7 t = 5425 s (25 s per model step)",
-        "Model step 218 / 300 \u00b7 t = 5450 s (25 s per model step)",
-        "Model step 219 / 300 \u00b7 t = 5475 s (25 s per model step)",
-        "Model step 220 / 300 \u00b7 t = 5500 s (25 s per model step)",
-        "Model step 221 / 300 \u00b7 t = 5525 s (25 s per model step)",
-        "Model step 222 / 300 \u00b7 t = 5550 s (25 s per model step)",
-        "Model step 223 / 300 \u00b7 t = 5575 s (25 s per model step)",
-        "Model step 224 / 300 \u00b7 t = 5600 s (25 s per model step)",
-        "Model step 225 / 300 \u00b7 t = 5625 s (25 s per model step)",
-        "Model step 226 / 300 \u00b7 t = 5650 s (25 s per model step)",
-        "Model step 227 / 300 \u00b7 t = 5675 s (25 s per model step)",
-        "Model step 228 / 300 \u00b7 t = 5700 s (25 s per model step)",
-        "Model step 229 / 300 \u00b7 t = 5725 s (25 s per model step)",
-        "Model step 230 / 300 \u00b7 t = 5750 s (25 s per model step)",
-        "Model step 231 / 300 \u00b7 t = 5775 s (25 s per model step)",
-        "Model step 232 / 300 \u00b7 t = 5800 s (25 s per model step)",
-        "Model step 233 / 300 \u00b7 t = 5825 s (25 s per model step)",
-        "Model step 234 / 300 \u00b7 t = 5850 s (25 s per model step)",
-        "Model step 235 / 300 \u00b7 t = 5875 s (25 s per model step)",
-        "Model step 236 / 300 \u00b7 t = 5900 s (25 s per model step)",
-        "Model step 237 / 300 \u00b7 t = 5925 s (25 s per model step)",
-        "Model step 238 / 300 \u00b7 t = 5950 s (25 s per model step)",
-        "Model step 239 / 300 \u00b7 t = 5975 s (25 s per model step)",
-        "Model step 240 / 300 \u00b7 t = 6000 s (25 s per model step)",
-        "Model step 241 / 300 \u00b7 t = 6025 s (25 s per model step)",
-        "Model step 242 / 300 \u00b7 t = 6050 s (25 s per model step)",
-        "Model step 243 / 300 \u00b7 t = 6075 s (25 s per model step)",
-        "Model step 244 / 300 \u00b7 t = 6100 s (25 s per model step)",
-        "Model step 245 / 300 \u00b7 t = 6125 s (25 s per model step)",
-        "Model step 246 / 300 \u00b7 t = 6150 s (25 s per model step)",
-        "Model step 247 / 300 \u00b7 t = 6175 s (25 s per model step)",
-        "Model step 248 / 300 \u00b7 t = 6200 s (25 s per model step)",
-        "Model step 249 / 300 \u00b7 t = 6225 s (25 s per model step)",
-        "Model step 250 / 300 \u00b7 t = 6250 s (25 s per model step)",
-        "Model step 251 / 300 \u00b7 t = 6275 s (25 s per model step)",
-        "Model step 252 / 300 \u00b7 t = 6300 s (25 s per model step)",
-        "Model step 253 / 300 \u00b7 t = 6325 s (25 s per model step)",
-        "Model step 254 / 300 \u00b7 t = 6350 s (25 s per model step)",
-        "Model step 255 / 300 \u00b7 t = 6375 s (25 s per model step)",
-        "Model step 256 / 300 \u00b7 t = 6400 s (25 s per model step)",
-        "Model step 257 / 300 \u00b7 t = 6425 s (25 s per model step)",
-        "Model step 258 / 300 \u00b7 t = 6450 s (25 s per model step)",
-        "Model step 259 / 300 \u00b7 t = 6475 s (25 s per model step)",
-        "Model step 260 / 300 \u00b7 t = 6500 s (25 s per model step)",
-        "Model step 261 / 300 \u00b7 t = 6525 s (25 s per model step)",
-        "Model step 262 / 300 \u00b7 t = 6550 s (25 s per model step)",
-        "Model step 263 / 300 \u00b7 t = 6575 s (25 s per model step)",
-        "Model step 264 / 300 \u00b7 t = 6600 s (25 s per model step)",
-        "Model step 265 / 300 \u00b7 t = 6625 s (25 s per model step)",
-        "Model step 266 / 300 \u00b7 t = 6650 s (25 s per model step)",
-        "Model step 267 / 300 \u00b7 t = 6675 s (25 s per model step)",
-        "Model step 268 / 300 \u00b7 t = 6700 s (25 s per model step)",
-        "Model step 269 / 300 \u00b7 t = 6725 s (25 s per model step)",
-        "Model step 270 / 300 \u00b7 t = 6750 s (25 s per model step)",
-        "Model step 271 / 300 \u00b7 t = 6775 s (25 s per model step)",
-        "Model step 272 / 300 \u00b7 t = 6800 s (25 s per model step)",
-        "Model step 273 / 300 \u00b7 t = 6825 s (25 s per model step)",
-        "Model step 274 / 300 \u00b7 t = 6850 s (25 s per model step)",
-        "Model step 275 / 300 \u00b7 t = 6875 s (25 s per model step)",
-        "Model step 276 / 300 \u00b7 t = 6900 s (25 s per model step)",
-        "Model step 277 / 300 \u00b7 t = 6925 s (25 s per model step)",
-        "Model step 278 / 300 \u00b7 t = 6950 s (25 s per model step)",
-        "Model step 279 / 300 \u00b7 t = 6975 s (25 s per model step)",
-        "Model step 280 / 300 \u00b7 t = 7000 s (25 s per model step)",
-        "Model step 281 / 300 \u00b7 t = 7025 s (25 s per model step)",
-        "Model step 282 / 300 \u00b7 t = 7050 s (25 s per model step)",
-        "Model step 283 / 300 \u00b7 t = 7075 s (25 s per model step)",
-        "Model step 284 / 300 \u00b7 t = 7100 s (25 s per model step)",
-        "Model step 285 / 300 \u00b7 t = 7125 s (25 s per model step)",
-        "Model step 286 / 300 \u00b7 t = 7150 s (25 s per model step)",
-        "Model step 287 / 300 \u00b7 t = 7175 s (25 s per model step)",
-        "Model step 288 / 300 \u00b7 t = 7200 s (25 s per model step)",
-        "Model step 289 / 300 \u00b7 t = 7225 s (25 s per model step)",
-        "Model step 290 / 300 \u00b7 t = 7250 s (25 s per model step)",
-        "Model step 291 / 300 \u00b7 t = 7275 s (25 s per model step)",
-        "Model step 292 / 300 \u00b7 t = 7300 s (25 s per model step)",
-        "Model step 293 / 300 \u00b7 t = 7325 s (25 s per model step)",
-        "Model step 294 / 300 \u00b7 t = 7350 s (25 s per model step)",
-        "Model step 295 / 300 \u00b7 t = 7375 s (25 s per model step)",
-        "Model step 296 / 300 \u00b7 t = 7400 s (25 s per model step)",
-        "Model step 297 / 300 \u00b7 t = 7425 s (25 s per model step)",
-        "Model step 298 / 300 \u00b7 t = 7450 s (25 s per model step)",
-        "Model step 299 / 300 \u00b7 t = 7475 s (25 s per model step)",
-        "Model step 300 / 300 \u00b7 t = 7500 s (25 s per model step)"
-      ],
-      "web_format": "webp"
+      "particle_time_scale": 20
     },
     "temp": {
       "file": "temp.npy",
@@ -413,8 +109,8 @@
       "overlay_frame": 10,
       "y": 8.0,
       "rate": 2,
-      "label": "Air temperature \u00b7 8 m \u00b7 32 m grid",
-      "title": "Air temperature \u00b7 8 m \u00b7 32 m grid",
+      "label": "Air temperature \u00b7 grid 32 m \u00b7 height 8 m",
+      "title": "Air temperature \u00b7 grid 32 m \u00b7 height 8 m",
       "range": [
         20.0,
         45.0
@@ -438,7 +134,7 @@
     },
     "solar": {
       "file": "solar_20260621.npy",
-      "cell_m": 16.0,
+      "cell_m": 4.0,
       "frames": 99,
       "t0_s": 17400.0,
       "step_s": 600.0,
@@ -446,8 +142,8 @@
       "overlay_frame": 98,
       "y": 0.2,
       "rate": 2,
-      "label": "Sunlight \u00b7 clear sky \u00b7 16 m grid",
-      "title": "Sunlight \u00b7 clear sky \u00b7 16 m grid",
+      "label": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
+      "title": "Sunlight \u00b7 clear sky \u00b7 4 m grid",
       "range": [
         0.0,
         950.0
@@ -473,16 +169,16 @@
           "shadow": "shadow_20261221.npy"
         }
       },
-      "shadow_cell_m": 16,
+      "shadow_cell_m": 4.0,
       "shadow_packed": false,
       "ghi_rate": 2,
       "shadow_rate": 2,
-      "ghi_label": "Irradiance \u00b7 16 m",
-      "shadow_label": "Shadows \u00b7 16 m"
+      "ghi_label": "Irradiance \u00b7 4 m",
+      "shadow_label": "Shadows \u00b7 4 m"
     },
     "poll": {
       "file": "poll.npy",
-      "cell_m": 16.0,
+      "cell_m": 4.0,
       "frames": 21,
       "t0_s": 0.0,
       "step_s": 30.0,
@@ -490,8 +186,8 @@
       "overlay_frame": 20,
       "y": 6.0,
       "rate": 2,
-      "label": "Pollution \u00b7 planar road tracer \u00b7 6 m \u00b7 16 m grid \u00b7 arbitrary units",
-      "title": "Pollution \u00b7 planar road tracer \u00b7 6 m \u00b7 16 m grid \u00b7 arbitrary units",
+      "label": "Pollution \u00b7 planar road tracer \u00b7 6 m \u00b7 4 m grid \u00b7 arbitrary units",
+      "title": "Pollution \u00b7 planar road tracer \u00b7 6 m \u00b7 4 m grid \u00b7 arbitrary units",
       "range": [
         0.001,
         33.81
@@ -510,7 +206,7 @@
     },
     "flood": {
       "file": "flood.npy",
-      "cell_m": 16.0,
+      "cell_m": 4.0,
       "frames": 181,
       "t0_s": 0.5,
       "step_s": 59.932,
@@ -518,8 +214,8 @@
       "overlay_frame": 180,
       "y": 0.2,
       "rate": 2,
-      "label": "Flooding \u00b7 12 July 2021-type design storm \u00b7 16 m grid",
-      "title": "Flooding \u00b7 12 July 2021-type design storm \u00b7 16 m grid",
+      "label": "Flooding \u00b7 12 July 2021-type design storm \u00b7 4 m grid",
+      "title": "Flooding \u00b7 12 July 2021-type design storm \u00b7 4 m grid",
       "range": [
         0.0,
         0.5
@@ -544,8 +240,4720 @@
     "Frozen final SCALED 6 m horizontal wind; no vertical exchange, chemistry or deposition.",
     "Wind model step and tracer elapsed time are independent clocks.",
     "Flood: uniform 50 mm / 90 min design storm, 12 mm/h drainage, 20 mm/h infiltration on green cells; not the observed 2021 event.",
-    "Browser fields use declared 8-bit PNG/WebP quantization; complete scientific arrays remain in retained runs.",
-    "Full geometry mode retains all 64 source tiles and 267 landmarks without distance simplification; terrain-normalized ENU transform remains unchanged."
+    "Lossless gzip transport of original stored arrays: wind final 4 m, wind history 8 m, solar/tracer/flood 4 m, thermal 32 m. No spatial interpolation. Ground is a flat map aligned with terrain-normalized buildings; traffic uses its independent recorded clock."
   ],
-  "physics_dir": "https://acse-yl222.github.io/urban-world-model-models/project/imperial_corridor_8km/web/city_fields_8km_v2_20261030/physics/"
+  "physics_dir": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1/project/imperial_corridor_8km/runs/native_display_20261102/physics/",
+  "wind_history": {
+    "file": "wind_history.npy",
+    "cell_m": 8.0,
+    "frames": 301,
+    "t0_s": 0.0,
+    "step_s": 25.0,
+    "own_clock": true,
+    "overlay_frame": 300,
+    "y": 6.0,
+    "rate": 8,
+    "label": "Wind \u00b7 8 m saved grid \u00b7 height 6 m",
+    "title": "Wind \u00b7 8 m time series \u00b7 height 6 m",
+    "range": [
+      0.0,
+      1.0
+    ],
+    "legend": [
+      "0",
+      "|V| m/s",
+      "1"
+    ],
+    "web_range": [
+      0.0,
+      1.0
+    ],
+    "particle_time_scale": 20,
+    "sample_labels": [
+      "Model step 0 / 300 \u00b7 t = 0 s (25 s per model step)",
+      "Model step 1 / 300 \u00b7 t = 25 s (25 s per model step)",
+      "Model step 2 / 300 \u00b7 t = 50 s (25 s per model step)",
+      "Model step 3 / 300 \u00b7 t = 75 s (25 s per model step)",
+      "Model step 4 / 300 \u00b7 t = 100 s (25 s per model step)",
+      "Model step 5 / 300 \u00b7 t = 125 s (25 s per model step)",
+      "Model step 6 / 300 \u00b7 t = 150 s (25 s per model step)",
+      "Model step 7 / 300 \u00b7 t = 175 s (25 s per model step)",
+      "Model step 8 / 300 \u00b7 t = 200 s (25 s per model step)",
+      "Model step 9 / 300 \u00b7 t = 225 s (25 s per model step)",
+      "Model step 10 / 300 \u00b7 t = 250 s (25 s per model step)",
+      "Model step 11 / 300 \u00b7 t = 275 s (25 s per model step)",
+      "Model step 12 / 300 \u00b7 t = 300 s (25 s per model step)",
+      "Model step 13 / 300 \u00b7 t = 325 s (25 s per model step)",
+      "Model step 14 / 300 \u00b7 t = 350 s (25 s per model step)",
+      "Model step 15 / 300 \u00b7 t = 375 s (25 s per model step)",
+      "Model step 16 / 300 \u00b7 t = 400 s (25 s per model step)",
+      "Model step 17 / 300 \u00b7 t = 425 s (25 s per model step)",
+      "Model step 18 / 300 \u00b7 t = 450 s (25 s per model step)",
+      "Model step 19 / 300 \u00b7 t = 475 s (25 s per model step)",
+      "Model step 20 / 300 \u00b7 t = 500 s (25 s per model step)",
+      "Model step 21 / 300 \u00b7 t = 525 s (25 s per model step)",
+      "Model step 22 / 300 \u00b7 t = 550 s (25 s per model step)",
+      "Model step 23 / 300 \u00b7 t = 575 s (25 s per model step)",
+      "Model step 24 / 300 \u00b7 t = 600 s (25 s per model step)",
+      "Model step 25 / 300 \u00b7 t = 625 s (25 s per model step)",
+      "Model step 26 / 300 \u00b7 t = 650 s (25 s per model step)",
+      "Model step 27 / 300 \u00b7 t = 675 s (25 s per model step)",
+      "Model step 28 / 300 \u00b7 t = 700 s (25 s per model step)",
+      "Model step 29 / 300 \u00b7 t = 725 s (25 s per model step)",
+      "Model step 30 / 300 \u00b7 t = 750 s (25 s per model step)",
+      "Model step 31 / 300 \u00b7 t = 775 s (25 s per model step)",
+      "Model step 32 / 300 \u00b7 t = 800 s (25 s per model step)",
+      "Model step 33 / 300 \u00b7 t = 825 s (25 s per model step)",
+      "Model step 34 / 300 \u00b7 t = 850 s (25 s per model step)",
+      "Model step 35 / 300 \u00b7 t = 875 s (25 s per model step)",
+      "Model step 36 / 300 \u00b7 t = 900 s (25 s per model step)",
+      "Model step 37 / 300 \u00b7 t = 925 s (25 s per model step)",
+      "Model step 38 / 300 \u00b7 t = 950 s (25 s per model step)",
+      "Model step 39 / 300 \u00b7 t = 975 s (25 s per model step)",
+      "Model step 40 / 300 \u00b7 t = 1000 s (25 s per model step)",
+      "Model step 41 / 300 \u00b7 t = 1025 s (25 s per model step)",
+      "Model step 42 / 300 \u00b7 t = 1050 s (25 s per model step)",
+      "Model step 43 / 300 \u00b7 t = 1075 s (25 s per model step)",
+      "Model step 44 / 300 \u00b7 t = 1100 s (25 s per model step)",
+      "Model step 45 / 300 \u00b7 t = 1125 s (25 s per model step)",
+      "Model step 46 / 300 \u00b7 t = 1150 s (25 s per model step)",
+      "Model step 47 / 300 \u00b7 t = 1175 s (25 s per model step)",
+      "Model step 48 / 300 \u00b7 t = 1200 s (25 s per model step)",
+      "Model step 49 / 300 \u00b7 t = 1225 s (25 s per model step)",
+      "Model step 50 / 300 \u00b7 t = 1250 s (25 s per model step)",
+      "Model step 51 / 300 \u00b7 t = 1275 s (25 s per model step)",
+      "Model step 52 / 300 \u00b7 t = 1300 s (25 s per model step)",
+      "Model step 53 / 300 \u00b7 t = 1325 s (25 s per model step)",
+      "Model step 54 / 300 \u00b7 t = 1350 s (25 s per model step)",
+      "Model step 55 / 300 \u00b7 t = 1375 s (25 s per model step)",
+      "Model step 56 / 300 \u00b7 t = 1400 s (25 s per model step)",
+      "Model step 57 / 300 \u00b7 t = 1425 s (25 s per model step)",
+      "Model step 58 / 300 \u00b7 t = 1450 s (25 s per model step)",
+      "Model step 59 / 300 \u00b7 t = 1475 s (25 s per model step)",
+      "Model step 60 / 300 \u00b7 t = 1500 s (25 s per model step)",
+      "Model step 61 / 300 \u00b7 t = 1525 s (25 s per model step)",
+      "Model step 62 / 300 \u00b7 t = 1550 s (25 s per model step)",
+      "Model step 63 / 300 \u00b7 t = 1575 s (25 s per model step)",
+      "Model step 64 / 300 \u00b7 t = 1600 s (25 s per model step)",
+      "Model step 65 / 300 \u00b7 t = 1625 s (25 s per model step)",
+      "Model step 66 / 300 \u00b7 t = 1650 s (25 s per model step)",
+      "Model step 67 / 300 \u00b7 t = 1675 s (25 s per model step)",
+      "Model step 68 / 300 \u00b7 t = 1700 s (25 s per model step)",
+      "Model step 69 / 300 \u00b7 t = 1725 s (25 s per model step)",
+      "Model step 70 / 300 \u00b7 t = 1750 s (25 s per model step)",
+      "Model step 71 / 300 \u00b7 t = 1775 s (25 s per model step)",
+      "Model step 72 / 300 \u00b7 t = 1800 s (25 s per model step)",
+      "Model step 73 / 300 \u00b7 t = 1825 s (25 s per model step)",
+      "Model step 74 / 300 \u00b7 t = 1850 s (25 s per model step)",
+      "Model step 75 / 300 \u00b7 t = 1875 s (25 s per model step)",
+      "Model step 76 / 300 \u00b7 t = 1900 s (25 s per model step)",
+      "Model step 77 / 300 \u00b7 t = 1925 s (25 s per model step)",
+      "Model step 78 / 300 \u00b7 t = 1950 s (25 s per model step)",
+      "Model step 79 / 300 \u00b7 t = 1975 s (25 s per model step)",
+      "Model step 80 / 300 \u00b7 t = 2000 s (25 s per model step)",
+      "Model step 81 / 300 \u00b7 t = 2025 s (25 s per model step)",
+      "Model step 82 / 300 \u00b7 t = 2050 s (25 s per model step)",
+      "Model step 83 / 300 \u00b7 t = 2075 s (25 s per model step)",
+      "Model step 84 / 300 \u00b7 t = 2100 s (25 s per model step)",
+      "Model step 85 / 300 \u00b7 t = 2125 s (25 s per model step)",
+      "Model step 86 / 300 \u00b7 t = 2150 s (25 s per model step)",
+      "Model step 87 / 300 \u00b7 t = 2175 s (25 s per model step)",
+      "Model step 88 / 300 \u00b7 t = 2200 s (25 s per model step)",
+      "Model step 89 / 300 \u00b7 t = 2225 s (25 s per model step)",
+      "Model step 90 / 300 \u00b7 t = 2250 s (25 s per model step)",
+      "Model step 91 / 300 \u00b7 t = 2275 s (25 s per model step)",
+      "Model step 92 / 300 \u00b7 t = 2300 s (25 s per model step)",
+      "Model step 93 / 300 \u00b7 t = 2325 s (25 s per model step)",
+      "Model step 94 / 300 \u00b7 t = 2350 s (25 s per model step)",
+      "Model step 95 / 300 \u00b7 t = 2375 s (25 s per model step)",
+      "Model step 96 / 300 \u00b7 t = 2400 s (25 s per model step)",
+      "Model step 97 / 300 \u00b7 t = 2425 s (25 s per model step)",
+      "Model step 98 / 300 \u00b7 t = 2450 s (25 s per model step)",
+      "Model step 99 / 300 \u00b7 t = 2475 s (25 s per model step)",
+      "Model step 100 / 300 \u00b7 t = 2500 s (25 s per model step)",
+      "Model step 101 / 300 \u00b7 t = 2525 s (25 s per model step)",
+      "Model step 102 / 300 \u00b7 t = 2550 s (25 s per model step)",
+      "Model step 103 / 300 \u00b7 t = 2575 s (25 s per model step)",
+      "Model step 104 / 300 \u00b7 t = 2600 s (25 s per model step)",
+      "Model step 105 / 300 \u00b7 t = 2625 s (25 s per model step)",
+      "Model step 106 / 300 \u00b7 t = 2650 s (25 s per model step)",
+      "Model step 107 / 300 \u00b7 t = 2675 s (25 s per model step)",
+      "Model step 108 / 300 \u00b7 t = 2700 s (25 s per model step)",
+      "Model step 109 / 300 \u00b7 t = 2725 s (25 s per model step)",
+      "Model step 110 / 300 \u00b7 t = 2750 s (25 s per model step)",
+      "Model step 111 / 300 \u00b7 t = 2775 s (25 s per model step)",
+      "Model step 112 / 300 \u00b7 t = 2800 s (25 s per model step)",
+      "Model step 113 / 300 \u00b7 t = 2825 s (25 s per model step)",
+      "Model step 114 / 300 \u00b7 t = 2850 s (25 s per model step)",
+      "Model step 115 / 300 \u00b7 t = 2875 s (25 s per model step)",
+      "Model step 116 / 300 \u00b7 t = 2900 s (25 s per model step)",
+      "Model step 117 / 300 \u00b7 t = 2925 s (25 s per model step)",
+      "Model step 118 / 300 \u00b7 t = 2950 s (25 s per model step)",
+      "Model step 119 / 300 \u00b7 t = 2975 s (25 s per model step)",
+      "Model step 120 / 300 \u00b7 t = 3000 s (25 s per model step)",
+      "Model step 121 / 300 \u00b7 t = 3025 s (25 s per model step)",
+      "Model step 122 / 300 \u00b7 t = 3050 s (25 s per model step)",
+      "Model step 123 / 300 \u00b7 t = 3075 s (25 s per model step)",
+      "Model step 124 / 300 \u00b7 t = 3100 s (25 s per model step)",
+      "Model step 125 / 300 \u00b7 t = 3125 s (25 s per model step)",
+      "Model step 126 / 300 \u00b7 t = 3150 s (25 s per model step)",
+      "Model step 127 / 300 \u00b7 t = 3175 s (25 s per model step)",
+      "Model step 128 / 300 \u00b7 t = 3200 s (25 s per model step)",
+      "Model step 129 / 300 \u00b7 t = 3225 s (25 s per model step)",
+      "Model step 130 / 300 \u00b7 t = 3250 s (25 s per model step)",
+      "Model step 131 / 300 \u00b7 t = 3275 s (25 s per model step)",
+      "Model step 132 / 300 \u00b7 t = 3300 s (25 s per model step)",
+      "Model step 133 / 300 \u00b7 t = 3325 s (25 s per model step)",
+      "Model step 134 / 300 \u00b7 t = 3350 s (25 s per model step)",
+      "Model step 135 / 300 \u00b7 t = 3375 s (25 s per model step)",
+      "Model step 136 / 300 \u00b7 t = 3400 s (25 s per model step)",
+      "Model step 137 / 300 \u00b7 t = 3425 s (25 s per model step)",
+      "Model step 138 / 300 \u00b7 t = 3450 s (25 s per model step)",
+      "Model step 139 / 300 \u00b7 t = 3475 s (25 s per model step)",
+      "Model step 140 / 300 \u00b7 t = 3500 s (25 s per model step)",
+      "Model step 141 / 300 \u00b7 t = 3525 s (25 s per model step)",
+      "Model step 142 / 300 \u00b7 t = 3550 s (25 s per model step)",
+      "Model step 143 / 300 \u00b7 t = 3575 s (25 s per model step)",
+      "Model step 144 / 300 \u00b7 t = 3600 s (25 s per model step)",
+      "Model step 145 / 300 \u00b7 t = 3625 s (25 s per model step)",
+      "Model step 146 / 300 \u00b7 t = 3650 s (25 s per model step)",
+      "Model step 147 / 300 \u00b7 t = 3675 s (25 s per model step)",
+      "Model step 148 / 300 \u00b7 t = 3700 s (25 s per model step)",
+      "Model step 149 / 300 \u00b7 t = 3725 s (25 s per model step)",
+      "Model step 150 / 300 \u00b7 t = 3750 s (25 s per model step)",
+      "Model step 151 / 300 \u00b7 t = 3775 s (25 s per model step)",
+      "Model step 152 / 300 \u00b7 t = 3800 s (25 s per model step)",
+      "Model step 153 / 300 \u00b7 t = 3825 s (25 s per model step)",
+      "Model step 154 / 300 \u00b7 t = 3850 s (25 s per model step)",
+      "Model step 155 / 300 \u00b7 t = 3875 s (25 s per model step)",
+      "Model step 156 / 300 \u00b7 t = 3900 s (25 s per model step)",
+      "Model step 157 / 300 \u00b7 t = 3925 s (25 s per model step)",
+      "Model step 158 / 300 \u00b7 t = 3950 s (25 s per model step)",
+      "Model step 159 / 300 \u00b7 t = 3975 s (25 s per model step)",
+      "Model step 160 / 300 \u00b7 t = 4000 s (25 s per model step)",
+      "Model step 161 / 300 \u00b7 t = 4025 s (25 s per model step)",
+      "Model step 162 / 300 \u00b7 t = 4050 s (25 s per model step)",
+      "Model step 163 / 300 \u00b7 t = 4075 s (25 s per model step)",
+      "Model step 164 / 300 \u00b7 t = 4100 s (25 s per model step)",
+      "Model step 165 / 300 \u00b7 t = 4125 s (25 s per model step)",
+      "Model step 166 / 300 \u00b7 t = 4150 s (25 s per model step)",
+      "Model step 167 / 300 \u00b7 t = 4175 s (25 s per model step)",
+      "Model step 168 / 300 \u00b7 t = 4200 s (25 s per model step)",
+      "Model step 169 / 300 \u00b7 t = 4225 s (25 s per model step)",
+      "Model step 170 / 300 \u00b7 t = 4250 s (25 s per model step)",
+      "Model step 171 / 300 \u00b7 t = 4275 s (25 s per model step)",
+      "Model step 172 / 300 \u00b7 t = 4300 s (25 s per model step)",
+      "Model step 173 / 300 \u00b7 t = 4325 s (25 s per model step)",
+      "Model step 174 / 300 \u00b7 t = 4350 s (25 s per model step)",
+      "Model step 175 / 300 \u00b7 t = 4375 s (25 s per model step)",
+      "Model step 176 / 300 \u00b7 t = 4400 s (25 s per model step)",
+      "Model step 177 / 300 \u00b7 t = 4425 s (25 s per model step)",
+      "Model step 178 / 300 \u00b7 t = 4450 s (25 s per model step)",
+      "Model step 179 / 300 \u00b7 t = 4475 s (25 s per model step)",
+      "Model step 180 / 300 \u00b7 t = 4500 s (25 s per model step)",
+      "Model step 181 / 300 \u00b7 t = 4525 s (25 s per model step)",
+      "Model step 182 / 300 \u00b7 t = 4550 s (25 s per model step)",
+      "Model step 183 / 300 \u00b7 t = 4575 s (25 s per model step)",
+      "Model step 184 / 300 \u00b7 t = 4600 s (25 s per model step)",
+      "Model step 185 / 300 \u00b7 t = 4625 s (25 s per model step)",
+      "Model step 186 / 300 \u00b7 t = 4650 s (25 s per model step)",
+      "Model step 187 / 300 \u00b7 t = 4675 s (25 s per model step)",
+      "Model step 188 / 300 \u00b7 t = 4700 s (25 s per model step)",
+      "Model step 189 / 300 \u00b7 t = 4725 s (25 s per model step)",
+      "Model step 190 / 300 \u00b7 t = 4750 s (25 s per model step)",
+      "Model step 191 / 300 \u00b7 t = 4775 s (25 s per model step)",
+      "Model step 192 / 300 \u00b7 t = 4800 s (25 s per model step)",
+      "Model step 193 / 300 \u00b7 t = 4825 s (25 s per model step)",
+      "Model step 194 / 300 \u00b7 t = 4850 s (25 s per model step)",
+      "Model step 195 / 300 \u00b7 t = 4875 s (25 s per model step)",
+      "Model step 196 / 300 \u00b7 t = 4900 s (25 s per model step)",
+      "Model step 197 / 300 \u00b7 t = 4925 s (25 s per model step)",
+      "Model step 198 / 300 \u00b7 t = 4950 s (25 s per model step)",
+      "Model step 199 / 300 \u00b7 t = 4975 s (25 s per model step)",
+      "Model step 200 / 300 \u00b7 t = 5000 s (25 s per model step)",
+      "Model step 201 / 300 \u00b7 t = 5025 s (25 s per model step)",
+      "Model step 202 / 300 \u00b7 t = 5050 s (25 s per model step)",
+      "Model step 203 / 300 \u00b7 t = 5075 s (25 s per model step)",
+      "Model step 204 / 300 \u00b7 t = 5100 s (25 s per model step)",
+      "Model step 205 / 300 \u00b7 t = 5125 s (25 s per model step)",
+      "Model step 206 / 300 \u00b7 t = 5150 s (25 s per model step)",
+      "Model step 207 / 300 \u00b7 t = 5175 s (25 s per model step)",
+      "Model step 208 / 300 \u00b7 t = 5200 s (25 s per model step)",
+      "Model step 209 / 300 \u00b7 t = 5225 s (25 s per model step)",
+      "Model step 210 / 300 \u00b7 t = 5250 s (25 s per model step)",
+      "Model step 211 / 300 \u00b7 t = 5275 s (25 s per model step)",
+      "Model step 212 / 300 \u00b7 t = 5300 s (25 s per model step)",
+      "Model step 213 / 300 \u00b7 t = 5325 s (25 s per model step)",
+      "Model step 214 / 300 \u00b7 t = 5350 s (25 s per model step)",
+      "Model step 215 / 300 \u00b7 t = 5375 s (25 s per model step)",
+      "Model step 216 / 300 \u00b7 t = 5400 s (25 s per model step)",
+      "Model step 217 / 300 \u00b7 t = 5425 s (25 s per model step)",
+      "Model step 218 / 300 \u00b7 t = 5450 s (25 s per model step)",
+      "Model step 219 / 300 \u00b7 t = 5475 s (25 s per model step)",
+      "Model step 220 / 300 \u00b7 t = 5500 s (25 s per model step)",
+      "Model step 221 / 300 \u00b7 t = 5525 s (25 s per model step)",
+      "Model step 222 / 300 \u00b7 t = 5550 s (25 s per model step)",
+      "Model step 223 / 300 \u00b7 t = 5575 s (25 s per model step)",
+      "Model step 224 / 300 \u00b7 t = 5600 s (25 s per model step)",
+      "Model step 225 / 300 \u00b7 t = 5625 s (25 s per model step)",
+      "Model step 226 / 300 \u00b7 t = 5650 s (25 s per model step)",
+      "Model step 227 / 300 \u00b7 t = 5675 s (25 s per model step)",
+      "Model step 228 / 300 \u00b7 t = 5700 s (25 s per model step)",
+      "Model step 229 / 300 \u00b7 t = 5725 s (25 s per model step)",
+      "Model step 230 / 300 \u00b7 t = 5750 s (25 s per model step)",
+      "Model step 231 / 300 \u00b7 t = 5775 s (25 s per model step)",
+      "Model step 232 / 300 \u00b7 t = 5800 s (25 s per model step)",
+      "Model step 233 / 300 \u00b7 t = 5825 s (25 s per model step)",
+      "Model step 234 / 300 \u00b7 t = 5850 s (25 s per model step)",
+      "Model step 235 / 300 \u00b7 t = 5875 s (25 s per model step)",
+      "Model step 236 / 300 \u00b7 t = 5900 s (25 s per model step)",
+      "Model step 237 / 300 \u00b7 t = 5925 s (25 s per model step)",
+      "Model step 238 / 300 \u00b7 t = 5950 s (25 s per model step)",
+      "Model step 239 / 300 \u00b7 t = 5975 s (25 s per model step)",
+      "Model step 240 / 300 \u00b7 t = 6000 s (25 s per model step)",
+      "Model step 241 / 300 \u00b7 t = 6025 s (25 s per model step)",
+      "Model step 242 / 300 \u00b7 t = 6050 s (25 s per model step)",
+      "Model step 243 / 300 \u00b7 t = 6075 s (25 s per model step)",
+      "Model step 244 / 300 \u00b7 t = 6100 s (25 s per model step)",
+      "Model step 245 / 300 \u00b7 t = 6125 s (25 s per model step)",
+      "Model step 246 / 300 \u00b7 t = 6150 s (25 s per model step)",
+      "Model step 247 / 300 \u00b7 t = 6175 s (25 s per model step)",
+      "Model step 248 / 300 \u00b7 t = 6200 s (25 s per model step)",
+      "Model step 249 / 300 \u00b7 t = 6225 s (25 s per model step)",
+      "Model step 250 / 300 \u00b7 t = 6250 s (25 s per model step)",
+      "Model step 251 / 300 \u00b7 t = 6275 s (25 s per model step)",
+      "Model step 252 / 300 \u00b7 t = 6300 s (25 s per model step)",
+      "Model step 253 / 300 \u00b7 t = 6325 s (25 s per model step)",
+      "Model step 254 / 300 \u00b7 t = 6350 s (25 s per model step)",
+      "Model step 255 / 300 \u00b7 t = 6375 s (25 s per model step)",
+      "Model step 256 / 300 \u00b7 t = 6400 s (25 s per model step)",
+      "Model step 257 / 300 \u00b7 t = 6425 s (25 s per model step)",
+      "Model step 258 / 300 \u00b7 t = 6450 s (25 s per model step)",
+      "Model step 259 / 300 \u00b7 t = 6475 s (25 s per model step)",
+      "Model step 260 / 300 \u00b7 t = 6500 s (25 s per model step)",
+      "Model step 261 / 300 \u00b7 t = 6525 s (25 s per model step)",
+      "Model step 262 / 300 \u00b7 t = 6550 s (25 s per model step)",
+      "Model step 263 / 300 \u00b7 t = 6575 s (25 s per model step)",
+      "Model step 264 / 300 \u00b7 t = 6600 s (25 s per model step)",
+      "Model step 265 / 300 \u00b7 t = 6625 s (25 s per model step)",
+      "Model step 266 / 300 \u00b7 t = 6650 s (25 s per model step)",
+      "Model step 267 / 300 \u00b7 t = 6675 s (25 s per model step)",
+      "Model step 268 / 300 \u00b7 t = 6700 s (25 s per model step)",
+      "Model step 269 / 300 \u00b7 t = 6725 s (25 s per model step)",
+      "Model step 270 / 300 \u00b7 t = 6750 s (25 s per model step)",
+      "Model step 271 / 300 \u00b7 t = 6775 s (25 s per model step)",
+      "Model step 272 / 300 \u00b7 t = 6800 s (25 s per model step)",
+      "Model step 273 / 300 \u00b7 t = 6825 s (25 s per model step)",
+      "Model step 274 / 300 \u00b7 t = 6850 s (25 s per model step)",
+      "Model step 275 / 300 \u00b7 t = 6875 s (25 s per model step)",
+      "Model step 276 / 300 \u00b7 t = 6900 s (25 s per model step)",
+      "Model step 277 / 300 \u00b7 t = 6925 s (25 s per model step)",
+      "Model step 278 / 300 \u00b7 t = 6950 s (25 s per model step)",
+      "Model step 279 / 300 \u00b7 t = 6975 s (25 s per model step)",
+      "Model step 280 / 300 \u00b7 t = 7000 s (25 s per model step)",
+      "Model step 281 / 300 \u00b7 t = 7025 s (25 s per model step)",
+      "Model step 282 / 300 \u00b7 t = 7050 s (25 s per model step)",
+      "Model step 283 / 300 \u00b7 t = 7075 s (25 s per model step)",
+      "Model step 284 / 300 \u00b7 t = 7100 s (25 s per model step)",
+      "Model step 285 / 300 \u00b7 t = 7125 s (25 s per model step)",
+      "Model step 286 / 300 \u00b7 t = 7150 s (25 s per model step)",
+      "Model step 287 / 300 \u00b7 t = 7175 s (25 s per model step)",
+      "Model step 288 / 300 \u00b7 t = 7200 s (25 s per model step)",
+      "Model step 289 / 300 \u00b7 t = 7225 s (25 s per model step)",
+      "Model step 290 / 300 \u00b7 t = 7250 s (25 s per model step)",
+      "Model step 291 / 300 \u00b7 t = 7275 s (25 s per model step)",
+      "Model step 292 / 300 \u00b7 t = 7300 s (25 s per model step)",
+      "Model step 293 / 300 \u00b7 t = 7325 s (25 s per model step)",
+      "Model step 294 / 300 \u00b7 t = 7350 s (25 s per model step)",
+      "Model step 295 / 300 \u00b7 t = 7375 s (25 s per model step)",
+      "Model step 296 / 300 \u00b7 t = 7400 s (25 s per model step)",
+      "Model step 297 / 300 \u00b7 t = 7425 s (25 s per model step)",
+      "Model step 298 / 300 \u00b7 t = 7450 s (25 s per model step)",
+      "Model step 299 / 300 \u00b7 t = 7475 s (25 s per model step)",
+      "Model step 300 / 300 \u00b7 t = 7500 s (25 s per model step)"
+    ],
+    "offset_x_m": -2,
+    "offset_z_m": 2
+  },
+  "protocol_display": {
+    "npy_transport": {
+      "solar_20260621.npy": {
+        "meta": {
+          "descr": "<f2",
+          "shape": [
+            99,
+            2048,
+            2048
+          ],
+          "itemsize": 2,
+          "offset": 0,
+          "block": 4194304
+        },
+        "total_bytes": 830472192,
+        "parts": [
+          {
+            "file": "chunks/solar_20260621/0000.gz",
+            "offset": 0,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0001.gz",
+            "offset": 8388608,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0002.gz",
+            "offset": 16777216,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0003.gz",
+            "offset": 25165824,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0004.gz",
+            "offset": 33554432,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0005.gz",
+            "offset": 41943040,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0006.gz",
+            "offset": 50331648,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0007.gz",
+            "offset": 58720256,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0008.gz",
+            "offset": 67108864,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0009.gz",
+            "offset": 75497472,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0010.gz",
+            "offset": 83886080,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0011.gz",
+            "offset": 92274688,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0012.gz",
+            "offset": 100663296,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0013.gz",
+            "offset": 109051904,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0014.gz",
+            "offset": 117440512,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0015.gz",
+            "offset": 125829120,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0016.gz",
+            "offset": 134217728,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0017.gz",
+            "offset": 142606336,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0018.gz",
+            "offset": 150994944,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0019.gz",
+            "offset": 159383552,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0020.gz",
+            "offset": 167772160,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0021.gz",
+            "offset": 176160768,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0022.gz",
+            "offset": 184549376,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0023.gz",
+            "offset": 192937984,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0024.gz",
+            "offset": 201326592,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0025.gz",
+            "offset": 209715200,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0026.gz",
+            "offset": 218103808,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0027.gz",
+            "offset": 226492416,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0028.gz",
+            "offset": 234881024,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0029.gz",
+            "offset": 243269632,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0030.gz",
+            "offset": 251658240,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0031.gz",
+            "offset": 260046848,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0032.gz",
+            "offset": 268435456,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0033.gz",
+            "offset": 276824064,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0034.gz",
+            "offset": 285212672,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0035.gz",
+            "offset": 293601280,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0036.gz",
+            "offset": 301989888,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0037.gz",
+            "offset": 310378496,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0038.gz",
+            "offset": 318767104,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0039.gz",
+            "offset": 327155712,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0040.gz",
+            "offset": 335544320,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0041.gz",
+            "offset": 343932928,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0042.gz",
+            "offset": 352321536,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0043.gz",
+            "offset": 360710144,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0044.gz",
+            "offset": 369098752,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0045.gz",
+            "offset": 377487360,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0046.gz",
+            "offset": 385875968,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0047.gz",
+            "offset": 394264576,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0048.gz",
+            "offset": 402653184,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0049.gz",
+            "offset": 411041792,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0050.gz",
+            "offset": 419430400,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0051.gz",
+            "offset": 427819008,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0052.gz",
+            "offset": 436207616,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0053.gz",
+            "offset": 444596224,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0054.gz",
+            "offset": 452984832,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0055.gz",
+            "offset": 461373440,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0056.gz",
+            "offset": 469762048,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0057.gz",
+            "offset": 478150656,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0058.gz",
+            "offset": 486539264,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0059.gz",
+            "offset": 494927872,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0060.gz",
+            "offset": 503316480,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0061.gz",
+            "offset": 511705088,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0062.gz",
+            "offset": 520093696,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0063.gz",
+            "offset": 528482304,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0064.gz",
+            "offset": 536870912,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0065.gz",
+            "offset": 545259520,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0066.gz",
+            "offset": 553648128,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0067.gz",
+            "offset": 562036736,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0068.gz",
+            "offset": 570425344,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0069.gz",
+            "offset": 578813952,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0070.gz",
+            "offset": 587202560,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0071.gz",
+            "offset": 595591168,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0072.gz",
+            "offset": 603979776,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0073.gz",
+            "offset": 612368384,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0074.gz",
+            "offset": 620756992,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0075.gz",
+            "offset": 629145600,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0076.gz",
+            "offset": 637534208,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0077.gz",
+            "offset": 645922816,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0078.gz",
+            "offset": 654311424,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0079.gz",
+            "offset": 662700032,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0080.gz",
+            "offset": 671088640,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0081.gz",
+            "offset": 679477248,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0082.gz",
+            "offset": 687865856,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0083.gz",
+            "offset": 696254464,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0084.gz",
+            "offset": 704643072,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0085.gz",
+            "offset": 713031680,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0086.gz",
+            "offset": 721420288,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0087.gz",
+            "offset": 729808896,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0088.gz",
+            "offset": 738197504,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0089.gz",
+            "offset": 746586112,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0090.gz",
+            "offset": 754974720,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0091.gz",
+            "offset": 763363328,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0092.gz",
+            "offset": 771751936,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0093.gz",
+            "offset": 780140544,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0094.gz",
+            "offset": 788529152,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0095.gz",
+            "offset": 796917760,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0096.gz",
+            "offset": 805306368,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0097.gz",
+            "offset": 813694976,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20260621/0098.gz",
+            "offset": 822083584,
+            "bytes": 8388608
+          }
+        ]
+      },
+      "shadow_20260621.npy": {
+        "meta": {
+          "descr": "|u1",
+          "shape": [
+            99,
+            2048,
+            2048
+          ],
+          "itemsize": 1,
+          "offset": 0,
+          "block": 4194304
+        },
+        "total_bytes": 415236096,
+        "parts": [
+          {
+            "file": "chunks/shadow_20260621/0000.gz",
+            "offset": 0,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0001.gz",
+            "offset": 4194304,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0002.gz",
+            "offset": 8388608,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0003.gz",
+            "offset": 12582912,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0004.gz",
+            "offset": 16777216,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0005.gz",
+            "offset": 20971520,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0006.gz",
+            "offset": 25165824,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0007.gz",
+            "offset": 29360128,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0008.gz",
+            "offset": 33554432,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0009.gz",
+            "offset": 37748736,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0010.gz",
+            "offset": 41943040,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0011.gz",
+            "offset": 46137344,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0012.gz",
+            "offset": 50331648,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0013.gz",
+            "offset": 54525952,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0014.gz",
+            "offset": 58720256,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0015.gz",
+            "offset": 62914560,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0016.gz",
+            "offset": 67108864,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0017.gz",
+            "offset": 71303168,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0018.gz",
+            "offset": 75497472,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0019.gz",
+            "offset": 79691776,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0020.gz",
+            "offset": 83886080,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0021.gz",
+            "offset": 88080384,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0022.gz",
+            "offset": 92274688,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0023.gz",
+            "offset": 96468992,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0024.gz",
+            "offset": 100663296,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0025.gz",
+            "offset": 104857600,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0026.gz",
+            "offset": 109051904,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0027.gz",
+            "offset": 113246208,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0028.gz",
+            "offset": 117440512,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0029.gz",
+            "offset": 121634816,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0030.gz",
+            "offset": 125829120,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0031.gz",
+            "offset": 130023424,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0032.gz",
+            "offset": 134217728,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0033.gz",
+            "offset": 138412032,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0034.gz",
+            "offset": 142606336,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0035.gz",
+            "offset": 146800640,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0036.gz",
+            "offset": 150994944,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0037.gz",
+            "offset": 155189248,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0038.gz",
+            "offset": 159383552,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0039.gz",
+            "offset": 163577856,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0040.gz",
+            "offset": 167772160,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0041.gz",
+            "offset": 171966464,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0042.gz",
+            "offset": 176160768,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0043.gz",
+            "offset": 180355072,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0044.gz",
+            "offset": 184549376,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0045.gz",
+            "offset": 188743680,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0046.gz",
+            "offset": 192937984,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0047.gz",
+            "offset": 197132288,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0048.gz",
+            "offset": 201326592,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0049.gz",
+            "offset": 205520896,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0050.gz",
+            "offset": 209715200,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0051.gz",
+            "offset": 213909504,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0052.gz",
+            "offset": 218103808,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0053.gz",
+            "offset": 222298112,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0054.gz",
+            "offset": 226492416,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0055.gz",
+            "offset": 230686720,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0056.gz",
+            "offset": 234881024,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0057.gz",
+            "offset": 239075328,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0058.gz",
+            "offset": 243269632,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0059.gz",
+            "offset": 247463936,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0060.gz",
+            "offset": 251658240,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0061.gz",
+            "offset": 255852544,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0062.gz",
+            "offset": 260046848,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0063.gz",
+            "offset": 264241152,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0064.gz",
+            "offset": 268435456,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0065.gz",
+            "offset": 272629760,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0066.gz",
+            "offset": 276824064,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0067.gz",
+            "offset": 281018368,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0068.gz",
+            "offset": 285212672,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0069.gz",
+            "offset": 289406976,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0070.gz",
+            "offset": 293601280,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0071.gz",
+            "offset": 297795584,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0072.gz",
+            "offset": 301989888,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0073.gz",
+            "offset": 306184192,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0074.gz",
+            "offset": 310378496,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0075.gz",
+            "offset": 314572800,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0076.gz",
+            "offset": 318767104,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0077.gz",
+            "offset": 322961408,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0078.gz",
+            "offset": 327155712,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0079.gz",
+            "offset": 331350016,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0080.gz",
+            "offset": 335544320,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0081.gz",
+            "offset": 339738624,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0082.gz",
+            "offset": 343932928,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0083.gz",
+            "offset": 348127232,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0084.gz",
+            "offset": 352321536,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0085.gz",
+            "offset": 356515840,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0086.gz",
+            "offset": 360710144,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0087.gz",
+            "offset": 364904448,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0088.gz",
+            "offset": 369098752,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0089.gz",
+            "offset": 373293056,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0090.gz",
+            "offset": 377487360,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0091.gz",
+            "offset": 381681664,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0092.gz",
+            "offset": 385875968,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0093.gz",
+            "offset": 390070272,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0094.gz",
+            "offset": 394264576,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0095.gz",
+            "offset": 398458880,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0096.gz",
+            "offset": 402653184,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0097.gz",
+            "offset": 406847488,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20260621/0098.gz",
+            "offset": 411041792,
+            "bytes": 4194304
+          }
+        ]
+      },
+      "solar_20261221.npy": {
+        "meta": {
+          "descr": "<f2",
+          "shape": [
+            47,
+            2048,
+            2048
+          ],
+          "itemsize": 2,
+          "offset": 0,
+          "block": 4194304
+        },
+        "total_bytes": 394264576,
+        "parts": [
+          {
+            "file": "chunks/solar_20261221/0000.gz",
+            "offset": 0,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0001.gz",
+            "offset": 8388608,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0002.gz",
+            "offset": 16777216,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0003.gz",
+            "offset": 25165824,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0004.gz",
+            "offset": 33554432,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0005.gz",
+            "offset": 41943040,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0006.gz",
+            "offset": 50331648,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0007.gz",
+            "offset": 58720256,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0008.gz",
+            "offset": 67108864,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0009.gz",
+            "offset": 75497472,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0010.gz",
+            "offset": 83886080,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0011.gz",
+            "offset": 92274688,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0012.gz",
+            "offset": 100663296,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0013.gz",
+            "offset": 109051904,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0014.gz",
+            "offset": 117440512,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0015.gz",
+            "offset": 125829120,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0016.gz",
+            "offset": 134217728,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0017.gz",
+            "offset": 142606336,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0018.gz",
+            "offset": 150994944,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0019.gz",
+            "offset": 159383552,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0020.gz",
+            "offset": 167772160,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0021.gz",
+            "offset": 176160768,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0022.gz",
+            "offset": 184549376,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0023.gz",
+            "offset": 192937984,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0024.gz",
+            "offset": 201326592,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0025.gz",
+            "offset": 209715200,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0026.gz",
+            "offset": 218103808,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0027.gz",
+            "offset": 226492416,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0028.gz",
+            "offset": 234881024,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0029.gz",
+            "offset": 243269632,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0030.gz",
+            "offset": 251658240,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0031.gz",
+            "offset": 260046848,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0032.gz",
+            "offset": 268435456,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0033.gz",
+            "offset": 276824064,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0034.gz",
+            "offset": 285212672,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0035.gz",
+            "offset": 293601280,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0036.gz",
+            "offset": 301989888,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0037.gz",
+            "offset": 310378496,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0038.gz",
+            "offset": 318767104,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0039.gz",
+            "offset": 327155712,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0040.gz",
+            "offset": 335544320,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0041.gz",
+            "offset": 343932928,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0042.gz",
+            "offset": 352321536,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0043.gz",
+            "offset": 360710144,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0044.gz",
+            "offset": 369098752,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0045.gz",
+            "offset": 377487360,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/solar_20261221/0046.gz",
+            "offset": 385875968,
+            "bytes": 8388608
+          }
+        ]
+      },
+      "shadow_20261221.npy": {
+        "meta": {
+          "descr": "|u1",
+          "shape": [
+            47,
+            2048,
+            2048
+          ],
+          "itemsize": 1,
+          "offset": 0,
+          "block": 4194304
+        },
+        "total_bytes": 197132288,
+        "parts": [
+          {
+            "file": "chunks/shadow_20261221/0000.gz",
+            "offset": 0,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0001.gz",
+            "offset": 4194304,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0002.gz",
+            "offset": 8388608,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0003.gz",
+            "offset": 12582912,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0004.gz",
+            "offset": 16777216,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0005.gz",
+            "offset": 20971520,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0006.gz",
+            "offset": 25165824,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0007.gz",
+            "offset": 29360128,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0008.gz",
+            "offset": 33554432,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0009.gz",
+            "offset": 37748736,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0010.gz",
+            "offset": 41943040,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0011.gz",
+            "offset": 46137344,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0012.gz",
+            "offset": 50331648,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0013.gz",
+            "offset": 54525952,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0014.gz",
+            "offset": 58720256,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0015.gz",
+            "offset": 62914560,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0016.gz",
+            "offset": 67108864,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0017.gz",
+            "offset": 71303168,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0018.gz",
+            "offset": 75497472,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0019.gz",
+            "offset": 79691776,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0020.gz",
+            "offset": 83886080,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0021.gz",
+            "offset": 88080384,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0022.gz",
+            "offset": 92274688,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0023.gz",
+            "offset": 96468992,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0024.gz",
+            "offset": 100663296,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0025.gz",
+            "offset": 104857600,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0026.gz",
+            "offset": 109051904,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0027.gz",
+            "offset": 113246208,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0028.gz",
+            "offset": 117440512,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0029.gz",
+            "offset": 121634816,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0030.gz",
+            "offset": 125829120,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0031.gz",
+            "offset": 130023424,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0032.gz",
+            "offset": 134217728,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0033.gz",
+            "offset": 138412032,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0034.gz",
+            "offset": 142606336,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0035.gz",
+            "offset": 146800640,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0036.gz",
+            "offset": 150994944,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0037.gz",
+            "offset": 155189248,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0038.gz",
+            "offset": 159383552,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0039.gz",
+            "offset": 163577856,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0040.gz",
+            "offset": 167772160,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0041.gz",
+            "offset": 171966464,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0042.gz",
+            "offset": 176160768,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0043.gz",
+            "offset": 180355072,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0044.gz",
+            "offset": 184549376,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0045.gz",
+            "offset": 188743680,
+            "bytes": 4194304
+          },
+          {
+            "file": "chunks/shadow_20261221/0046.gz",
+            "offset": 192937984,
+            "bytes": 4194304
+          }
+        ]
+      },
+      "poll.npy": {
+        "meta": {
+          "descr": "<f4",
+          "shape": [
+            21,
+            2048,
+            2048
+          ],
+          "itemsize": 4,
+          "offset": 0,
+          "block": 4194304
+        },
+        "total_bytes": 352321536,
+        "parts": [
+          {
+            "file": "chunks/poll/0000.gz",
+            "offset": 0,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0001.gz",
+            "offset": 16777216,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0002.gz",
+            "offset": 33554432,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0003.gz",
+            "offset": 50331648,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0004.gz",
+            "offset": 67108864,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0005.gz",
+            "offset": 83886080,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0006.gz",
+            "offset": 100663296,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0007.gz",
+            "offset": 117440512,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0008.gz",
+            "offset": 134217728,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0009.gz",
+            "offset": 150994944,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0010.gz",
+            "offset": 167772160,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0011.gz",
+            "offset": 184549376,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0012.gz",
+            "offset": 201326592,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0013.gz",
+            "offset": 218103808,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0014.gz",
+            "offset": 234881024,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0015.gz",
+            "offset": 251658240,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0016.gz",
+            "offset": 268435456,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0017.gz",
+            "offset": 285212672,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0018.gz",
+            "offset": 301989888,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0019.gz",
+            "offset": 318767104,
+            "bytes": 16777216
+          },
+          {
+            "file": "chunks/poll/0020.gz",
+            "offset": 335544320,
+            "bytes": 16777216
+          }
+        ]
+      },
+      "flood.npy": {
+        "meta": {
+          "descr": "<f2",
+          "shape": [
+            181,
+            2048,
+            2048
+          ],
+          "itemsize": 2,
+          "offset": 0,
+          "block": 4194304
+        },
+        "total_bytes": 1518338048,
+        "parts": [
+          {
+            "file": "chunks/flood/0000.gz",
+            "offset": 0,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0001.gz",
+            "offset": 8388608,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0002.gz",
+            "offset": 16777216,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0003.gz",
+            "offset": 25165824,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0004.gz",
+            "offset": 33554432,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0005.gz",
+            "offset": 41943040,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0006.gz",
+            "offset": 50331648,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0007.gz",
+            "offset": 58720256,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0008.gz",
+            "offset": 67108864,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0009.gz",
+            "offset": 75497472,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0010.gz",
+            "offset": 83886080,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0011.gz",
+            "offset": 92274688,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0012.gz",
+            "offset": 100663296,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0013.gz",
+            "offset": 109051904,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0014.gz",
+            "offset": 117440512,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0015.gz",
+            "offset": 125829120,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0016.gz",
+            "offset": 134217728,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0017.gz",
+            "offset": 142606336,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0018.gz",
+            "offset": 150994944,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0019.gz",
+            "offset": 159383552,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0020.gz",
+            "offset": 167772160,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0021.gz",
+            "offset": 176160768,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0022.gz",
+            "offset": 184549376,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0023.gz",
+            "offset": 192937984,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0024.gz",
+            "offset": 201326592,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0025.gz",
+            "offset": 209715200,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0026.gz",
+            "offset": 218103808,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0027.gz",
+            "offset": 226492416,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0028.gz",
+            "offset": 234881024,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0029.gz",
+            "offset": 243269632,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0030.gz",
+            "offset": 251658240,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0031.gz",
+            "offset": 260046848,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0032.gz",
+            "offset": 268435456,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0033.gz",
+            "offset": 276824064,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0034.gz",
+            "offset": 285212672,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0035.gz",
+            "offset": 293601280,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0036.gz",
+            "offset": 301989888,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0037.gz",
+            "offset": 310378496,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0038.gz",
+            "offset": 318767104,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0039.gz",
+            "offset": 327155712,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0040.gz",
+            "offset": 335544320,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0041.gz",
+            "offset": 343932928,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0042.gz",
+            "offset": 352321536,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0043.gz",
+            "offset": 360710144,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0044.gz",
+            "offset": 369098752,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0045.gz",
+            "offset": 377487360,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0046.gz",
+            "offset": 385875968,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0047.gz",
+            "offset": 394264576,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0048.gz",
+            "offset": 402653184,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0049.gz",
+            "offset": 411041792,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0050.gz",
+            "offset": 419430400,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0051.gz",
+            "offset": 427819008,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0052.gz",
+            "offset": 436207616,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0053.gz",
+            "offset": 444596224,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0054.gz",
+            "offset": 452984832,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0055.gz",
+            "offset": 461373440,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0056.gz",
+            "offset": 469762048,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0057.gz",
+            "offset": 478150656,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0058.gz",
+            "offset": 486539264,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0059.gz",
+            "offset": 494927872,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0060.gz",
+            "offset": 503316480,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0061.gz",
+            "offset": 511705088,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0062.gz",
+            "offset": 520093696,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0063.gz",
+            "offset": 528482304,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0064.gz",
+            "offset": 536870912,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0065.gz",
+            "offset": 545259520,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0066.gz",
+            "offset": 553648128,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0067.gz",
+            "offset": 562036736,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0068.gz",
+            "offset": 570425344,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0069.gz",
+            "offset": 578813952,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0070.gz",
+            "offset": 587202560,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0071.gz",
+            "offset": 595591168,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0072.gz",
+            "offset": 603979776,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0073.gz",
+            "offset": 612368384,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0074.gz",
+            "offset": 620756992,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0075.gz",
+            "offset": 629145600,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0076.gz",
+            "offset": 637534208,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0077.gz",
+            "offset": 645922816,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0078.gz",
+            "offset": 654311424,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0079.gz",
+            "offset": 662700032,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0080.gz",
+            "offset": 671088640,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0081.gz",
+            "offset": 679477248,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0082.gz",
+            "offset": 687865856,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0083.gz",
+            "offset": 696254464,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0084.gz",
+            "offset": 704643072,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0085.gz",
+            "offset": 713031680,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0086.gz",
+            "offset": 721420288,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0087.gz",
+            "offset": 729808896,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0088.gz",
+            "offset": 738197504,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0089.gz",
+            "offset": 746586112,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0090.gz",
+            "offset": 754974720,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0091.gz",
+            "offset": 763363328,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0092.gz",
+            "offset": 771751936,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0093.gz",
+            "offset": 780140544,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0094.gz",
+            "offset": 788529152,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0095.gz",
+            "offset": 796917760,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0096.gz",
+            "offset": 805306368,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0097.gz",
+            "offset": 813694976,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0098.gz",
+            "offset": 822083584,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0099.gz",
+            "offset": 830472192,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0100.gz",
+            "offset": 838860800,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0101.gz",
+            "offset": 847249408,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0102.gz",
+            "offset": 855638016,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0103.gz",
+            "offset": 864026624,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0104.gz",
+            "offset": 872415232,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0105.gz",
+            "offset": 880803840,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0106.gz",
+            "offset": 889192448,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0107.gz",
+            "offset": 897581056,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0108.gz",
+            "offset": 905969664,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0109.gz",
+            "offset": 914358272,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0110.gz",
+            "offset": 922746880,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0111.gz",
+            "offset": 931135488,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0112.gz",
+            "offset": 939524096,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0113.gz",
+            "offset": 947912704,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0114.gz",
+            "offset": 956301312,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0115.gz",
+            "offset": 964689920,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0116.gz",
+            "offset": 973078528,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0117.gz",
+            "offset": 981467136,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0118.gz",
+            "offset": 989855744,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0119.gz",
+            "offset": 998244352,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0120.gz",
+            "offset": 1006632960,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0121.gz",
+            "offset": 1015021568,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0122.gz",
+            "offset": 1023410176,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0123.gz",
+            "offset": 1031798784,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0124.gz",
+            "offset": 1040187392,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0125.gz",
+            "offset": 1048576000,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0126.gz",
+            "offset": 1056964608,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0127.gz",
+            "offset": 1065353216,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0128.gz",
+            "offset": 1073741824,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0129.gz",
+            "offset": 1082130432,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0130.gz",
+            "offset": 1090519040,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0131.gz",
+            "offset": 1098907648,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0132.gz",
+            "offset": 1107296256,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0133.gz",
+            "offset": 1115684864,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0134.gz",
+            "offset": 1124073472,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0135.gz",
+            "offset": 1132462080,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0136.gz",
+            "offset": 1140850688,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0137.gz",
+            "offset": 1149239296,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0138.gz",
+            "offset": 1157627904,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0139.gz",
+            "offset": 1166016512,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0140.gz",
+            "offset": 1174405120,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0141.gz",
+            "offset": 1182793728,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0142.gz",
+            "offset": 1191182336,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0143.gz",
+            "offset": 1199570944,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0144.gz",
+            "offset": 1207959552,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0145.gz",
+            "offset": 1216348160,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0146.gz",
+            "offset": 1224736768,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0147.gz",
+            "offset": 1233125376,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0148.gz",
+            "offset": 1241513984,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0149.gz",
+            "offset": 1249902592,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0150.gz",
+            "offset": 1258291200,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0151.gz",
+            "offset": 1266679808,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0152.gz",
+            "offset": 1275068416,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0153.gz",
+            "offset": 1283457024,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0154.gz",
+            "offset": 1291845632,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0155.gz",
+            "offset": 1300234240,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0156.gz",
+            "offset": 1308622848,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0157.gz",
+            "offset": 1317011456,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0158.gz",
+            "offset": 1325400064,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0159.gz",
+            "offset": 1333788672,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0160.gz",
+            "offset": 1342177280,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0161.gz",
+            "offset": 1350565888,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0162.gz",
+            "offset": 1358954496,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0163.gz",
+            "offset": 1367343104,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0164.gz",
+            "offset": 1375731712,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0165.gz",
+            "offset": 1384120320,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0166.gz",
+            "offset": 1392508928,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0167.gz",
+            "offset": 1400897536,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0168.gz",
+            "offset": 1409286144,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0169.gz",
+            "offset": 1417674752,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0170.gz",
+            "offset": 1426063360,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0171.gz",
+            "offset": 1434451968,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0172.gz",
+            "offset": 1442840576,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0173.gz",
+            "offset": 1451229184,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0174.gz",
+            "offset": 1459617792,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0175.gz",
+            "offset": 1468006400,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0176.gz",
+            "offset": 1476395008,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0177.gz",
+            "offset": 1484783616,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0178.gz",
+            "offset": 1493172224,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0179.gz",
+            "offset": 1501560832,
+            "bytes": 8388608
+          },
+          {
+            "file": "chunks/flood/0180.gz",
+            "offset": 1509949440,
+            "bytes": 8388608
+          }
+        ]
+      },
+      "temp.npy": {
+        "meta": {
+          "descr": "<f2",
+          "shape": [
+            11,
+            256,
+            256
+          ],
+          "itemsize": 2,
+          "offset": 0,
+          "block": 65536
+        },
+        "total_bytes": 1441792,
+        "parts": [
+          {
+            "file": "chunks/temp/0000.gz",
+            "offset": 0,
+            "bytes": 131072
+          },
+          {
+            "file": "chunks/temp/0001.gz",
+            "offset": 131072,
+            "bytes": 131072
+          },
+          {
+            "file": "chunks/temp/0002.gz",
+            "offset": 262144,
+            "bytes": 131072
+          },
+          {
+            "file": "chunks/temp/0003.gz",
+            "offset": 393216,
+            "bytes": 131072
+          },
+          {
+            "file": "chunks/temp/0004.gz",
+            "offset": 524288,
+            "bytes": 131072
+          },
+          {
+            "file": "chunks/temp/0005.gz",
+            "offset": 655360,
+            "bytes": 131072
+          },
+          {
+            "file": "chunks/temp/0006.gz",
+            "offset": 786432,
+            "bytes": 131072
+          },
+          {
+            "file": "chunks/temp/0007.gz",
+            "offset": 917504,
+            "bytes": 131072
+          },
+          {
+            "file": "chunks/temp/0008.gz",
+            "offset": 1048576,
+            "bytes": 131072
+          },
+          {
+            "file": "chunks/temp/0009.gz",
+            "offset": 1179648,
+            "bytes": 131072
+          },
+          {
+            "file": "chunks/temp/0010.gz",
+            "offset": 1310720,
+            "bytes": 131072
+          }
+        ]
+      },
+      "wind.npy": {
+        "meta": {
+          "descr": "<f4",
+          "shape": [
+            1,
+            3,
+            2048,
+            2048
+          ],
+          "itemsize": 4,
+          "offset": 0,
+          "block": 12582912
+        },
+        "total_bytes": 50331648,
+        "parts": [
+          {
+            "file": "chunks/wind/0000.gz",
+            "offset": 0,
+            "bytes": 50331648
+          }
+        ]
+      },
+      "wind_history.npy": {
+        "meta": {
+          "descr": "<f4",
+          "shape": [
+            301,
+            3,
+            1024,
+            1024
+          ],
+          "itemsize": 4,
+          "offset": 0,
+          "block": 3145728
+        },
+        "total_bytes": 3787456512,
+        "parts": [
+          {
+            "file": "chunks/wind_history/0000.gz",
+            "offset": 0,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0001.gz",
+            "offset": 12582912,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0002.gz",
+            "offset": 25165824,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0003.gz",
+            "offset": 37748736,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0004.gz",
+            "offset": 50331648,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0005.gz",
+            "offset": 62914560,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0006.gz",
+            "offset": 75497472,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0007.gz",
+            "offset": 88080384,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0008.gz",
+            "offset": 100663296,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0009.gz",
+            "offset": 113246208,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0010.gz",
+            "offset": 125829120,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0011.gz",
+            "offset": 138412032,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0012.gz",
+            "offset": 150994944,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0013.gz",
+            "offset": 163577856,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0014.gz",
+            "offset": 176160768,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0015.gz",
+            "offset": 188743680,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0016.gz",
+            "offset": 201326592,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0017.gz",
+            "offset": 213909504,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0018.gz",
+            "offset": 226492416,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0019.gz",
+            "offset": 239075328,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0020.gz",
+            "offset": 251658240,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0021.gz",
+            "offset": 264241152,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0022.gz",
+            "offset": 276824064,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0023.gz",
+            "offset": 289406976,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0024.gz",
+            "offset": 301989888,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0025.gz",
+            "offset": 314572800,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0026.gz",
+            "offset": 327155712,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0027.gz",
+            "offset": 339738624,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0028.gz",
+            "offset": 352321536,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0029.gz",
+            "offset": 364904448,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0030.gz",
+            "offset": 377487360,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0031.gz",
+            "offset": 390070272,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0032.gz",
+            "offset": 402653184,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0033.gz",
+            "offset": 415236096,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0034.gz",
+            "offset": 427819008,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0035.gz",
+            "offset": 440401920,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0036.gz",
+            "offset": 452984832,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0037.gz",
+            "offset": 465567744,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0038.gz",
+            "offset": 478150656,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0039.gz",
+            "offset": 490733568,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0040.gz",
+            "offset": 503316480,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0041.gz",
+            "offset": 515899392,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0042.gz",
+            "offset": 528482304,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0043.gz",
+            "offset": 541065216,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0044.gz",
+            "offset": 553648128,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0045.gz",
+            "offset": 566231040,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0046.gz",
+            "offset": 578813952,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0047.gz",
+            "offset": 591396864,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0048.gz",
+            "offset": 603979776,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0049.gz",
+            "offset": 616562688,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0050.gz",
+            "offset": 629145600,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0051.gz",
+            "offset": 641728512,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0052.gz",
+            "offset": 654311424,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0053.gz",
+            "offset": 666894336,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0054.gz",
+            "offset": 679477248,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0055.gz",
+            "offset": 692060160,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0056.gz",
+            "offset": 704643072,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0057.gz",
+            "offset": 717225984,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0058.gz",
+            "offset": 729808896,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0059.gz",
+            "offset": 742391808,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0060.gz",
+            "offset": 754974720,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0061.gz",
+            "offset": 767557632,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0062.gz",
+            "offset": 780140544,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0063.gz",
+            "offset": 792723456,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0064.gz",
+            "offset": 805306368,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0065.gz",
+            "offset": 817889280,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0066.gz",
+            "offset": 830472192,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0067.gz",
+            "offset": 843055104,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0068.gz",
+            "offset": 855638016,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0069.gz",
+            "offset": 868220928,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0070.gz",
+            "offset": 880803840,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0071.gz",
+            "offset": 893386752,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0072.gz",
+            "offset": 905969664,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0073.gz",
+            "offset": 918552576,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0074.gz",
+            "offset": 931135488,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0075.gz",
+            "offset": 943718400,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0076.gz",
+            "offset": 956301312,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0077.gz",
+            "offset": 968884224,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0078.gz",
+            "offset": 981467136,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0079.gz",
+            "offset": 994050048,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0080.gz",
+            "offset": 1006632960,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0081.gz",
+            "offset": 1019215872,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0082.gz",
+            "offset": 1031798784,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0083.gz",
+            "offset": 1044381696,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0084.gz",
+            "offset": 1056964608,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0085.gz",
+            "offset": 1069547520,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0086.gz",
+            "offset": 1082130432,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0087.gz",
+            "offset": 1094713344,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0088.gz",
+            "offset": 1107296256,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0089.gz",
+            "offset": 1119879168,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0090.gz",
+            "offset": 1132462080,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0091.gz",
+            "offset": 1145044992,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0092.gz",
+            "offset": 1157627904,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0093.gz",
+            "offset": 1170210816,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0094.gz",
+            "offset": 1182793728,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0095.gz",
+            "offset": 1195376640,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0096.gz",
+            "offset": 1207959552,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0097.gz",
+            "offset": 1220542464,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0098.gz",
+            "offset": 1233125376,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0099.gz",
+            "offset": 1245708288,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0100.gz",
+            "offset": 1258291200,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0101.gz",
+            "offset": 1270874112,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0102.gz",
+            "offset": 1283457024,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0103.gz",
+            "offset": 1296039936,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0104.gz",
+            "offset": 1308622848,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0105.gz",
+            "offset": 1321205760,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0106.gz",
+            "offset": 1333788672,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0107.gz",
+            "offset": 1346371584,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0108.gz",
+            "offset": 1358954496,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0109.gz",
+            "offset": 1371537408,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0110.gz",
+            "offset": 1384120320,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0111.gz",
+            "offset": 1396703232,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0112.gz",
+            "offset": 1409286144,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0113.gz",
+            "offset": 1421869056,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0114.gz",
+            "offset": 1434451968,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0115.gz",
+            "offset": 1447034880,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0116.gz",
+            "offset": 1459617792,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0117.gz",
+            "offset": 1472200704,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0118.gz",
+            "offset": 1484783616,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0119.gz",
+            "offset": 1497366528,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0120.gz",
+            "offset": 1509949440,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0121.gz",
+            "offset": 1522532352,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0122.gz",
+            "offset": 1535115264,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0123.gz",
+            "offset": 1547698176,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0124.gz",
+            "offset": 1560281088,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0125.gz",
+            "offset": 1572864000,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0126.gz",
+            "offset": 1585446912,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0127.gz",
+            "offset": 1598029824,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0128.gz",
+            "offset": 1610612736,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0129.gz",
+            "offset": 1623195648,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0130.gz",
+            "offset": 1635778560,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0131.gz",
+            "offset": 1648361472,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0132.gz",
+            "offset": 1660944384,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0133.gz",
+            "offset": 1673527296,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0134.gz",
+            "offset": 1686110208,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0135.gz",
+            "offset": 1698693120,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0136.gz",
+            "offset": 1711276032,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0137.gz",
+            "offset": 1723858944,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0138.gz",
+            "offset": 1736441856,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0139.gz",
+            "offset": 1749024768,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0140.gz",
+            "offset": 1761607680,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0141.gz",
+            "offset": 1774190592,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0142.gz",
+            "offset": 1786773504,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0143.gz",
+            "offset": 1799356416,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0144.gz",
+            "offset": 1811939328,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0145.gz",
+            "offset": 1824522240,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0146.gz",
+            "offset": 1837105152,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0147.gz",
+            "offset": 1849688064,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0148.gz",
+            "offset": 1862270976,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0149.gz",
+            "offset": 1874853888,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0150.gz",
+            "offset": 1887436800,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0151.gz",
+            "offset": 1900019712,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0152.gz",
+            "offset": 1912602624,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0153.gz",
+            "offset": 1925185536,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0154.gz",
+            "offset": 1937768448,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0155.gz",
+            "offset": 1950351360,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0156.gz",
+            "offset": 1962934272,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0157.gz",
+            "offset": 1975517184,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0158.gz",
+            "offset": 1988100096,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0159.gz",
+            "offset": 2000683008,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0160.gz",
+            "offset": 2013265920,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0161.gz",
+            "offset": 2025848832,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0162.gz",
+            "offset": 2038431744,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0163.gz",
+            "offset": 2051014656,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0164.gz",
+            "offset": 2063597568,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0165.gz",
+            "offset": 2076180480,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0166.gz",
+            "offset": 2088763392,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0167.gz",
+            "offset": 2101346304,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0168.gz",
+            "offset": 2113929216,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0169.gz",
+            "offset": 2126512128,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0170.gz",
+            "offset": 2139095040,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0171.gz",
+            "offset": 2151677952,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0172.gz",
+            "offset": 2164260864,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0173.gz",
+            "offset": 2176843776,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0174.gz",
+            "offset": 2189426688,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0175.gz",
+            "offset": 2202009600,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0176.gz",
+            "offset": 2214592512,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0177.gz",
+            "offset": 2227175424,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0178.gz",
+            "offset": 2239758336,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0179.gz",
+            "offset": 2252341248,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0180.gz",
+            "offset": 2264924160,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0181.gz",
+            "offset": 2277507072,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0182.gz",
+            "offset": 2290089984,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0183.gz",
+            "offset": 2302672896,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0184.gz",
+            "offset": 2315255808,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0185.gz",
+            "offset": 2327838720,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0186.gz",
+            "offset": 2340421632,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0187.gz",
+            "offset": 2353004544,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0188.gz",
+            "offset": 2365587456,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0189.gz",
+            "offset": 2378170368,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0190.gz",
+            "offset": 2390753280,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0191.gz",
+            "offset": 2403336192,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0192.gz",
+            "offset": 2415919104,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0193.gz",
+            "offset": 2428502016,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0194.gz",
+            "offset": 2441084928,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0195.gz",
+            "offset": 2453667840,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0196.gz",
+            "offset": 2466250752,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0197.gz",
+            "offset": 2478833664,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0198.gz",
+            "offset": 2491416576,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0199.gz",
+            "offset": 2503999488,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0200.gz",
+            "offset": 2516582400,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0201.gz",
+            "offset": 2529165312,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0202.gz",
+            "offset": 2541748224,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0203.gz",
+            "offset": 2554331136,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0204.gz",
+            "offset": 2566914048,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0205.gz",
+            "offset": 2579496960,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0206.gz",
+            "offset": 2592079872,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0207.gz",
+            "offset": 2604662784,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0208.gz",
+            "offset": 2617245696,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0209.gz",
+            "offset": 2629828608,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0210.gz",
+            "offset": 2642411520,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0211.gz",
+            "offset": 2654994432,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0212.gz",
+            "offset": 2667577344,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0213.gz",
+            "offset": 2680160256,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0214.gz",
+            "offset": 2692743168,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0215.gz",
+            "offset": 2705326080,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0216.gz",
+            "offset": 2717908992,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0217.gz",
+            "offset": 2730491904,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0218.gz",
+            "offset": 2743074816,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0219.gz",
+            "offset": 2755657728,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0220.gz",
+            "offset": 2768240640,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0221.gz",
+            "offset": 2780823552,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0222.gz",
+            "offset": 2793406464,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0223.gz",
+            "offset": 2805989376,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0224.gz",
+            "offset": 2818572288,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0225.gz",
+            "offset": 2831155200,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0226.gz",
+            "offset": 2843738112,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0227.gz",
+            "offset": 2856321024,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0228.gz",
+            "offset": 2868903936,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0229.gz",
+            "offset": 2881486848,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0230.gz",
+            "offset": 2894069760,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0231.gz",
+            "offset": 2906652672,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0232.gz",
+            "offset": 2919235584,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0233.gz",
+            "offset": 2931818496,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0234.gz",
+            "offset": 2944401408,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0235.gz",
+            "offset": 2956984320,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0236.gz",
+            "offset": 2969567232,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0237.gz",
+            "offset": 2982150144,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0238.gz",
+            "offset": 2994733056,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0239.gz",
+            "offset": 3007315968,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0240.gz",
+            "offset": 3019898880,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0241.gz",
+            "offset": 3032481792,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0242.gz",
+            "offset": 3045064704,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0243.gz",
+            "offset": 3057647616,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0244.gz",
+            "offset": 3070230528,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0245.gz",
+            "offset": 3082813440,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0246.gz",
+            "offset": 3095396352,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0247.gz",
+            "offset": 3107979264,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0248.gz",
+            "offset": 3120562176,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0249.gz",
+            "offset": 3133145088,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0250.gz",
+            "offset": 3145728000,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0251.gz",
+            "offset": 3158310912,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0252.gz",
+            "offset": 3170893824,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0253.gz",
+            "offset": 3183476736,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0254.gz",
+            "offset": 3196059648,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0255.gz",
+            "offset": 3208642560,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0256.gz",
+            "offset": 3221225472,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0257.gz",
+            "offset": 3233808384,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0258.gz",
+            "offset": 3246391296,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0259.gz",
+            "offset": 3258974208,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0260.gz",
+            "offset": 3271557120,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0261.gz",
+            "offset": 3284140032,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0262.gz",
+            "offset": 3296722944,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0263.gz",
+            "offset": 3309305856,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0264.gz",
+            "offset": 3321888768,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0265.gz",
+            "offset": 3334471680,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0266.gz",
+            "offset": 3347054592,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0267.gz",
+            "offset": 3359637504,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0268.gz",
+            "offset": 3372220416,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0269.gz",
+            "offset": 3384803328,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0270.gz",
+            "offset": 3397386240,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0271.gz",
+            "offset": 3409969152,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0272.gz",
+            "offset": 3422552064,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0273.gz",
+            "offset": 3435134976,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0274.gz",
+            "offset": 3447717888,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0275.gz",
+            "offset": 3460300800,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0276.gz",
+            "offset": 3472883712,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0277.gz",
+            "offset": 3485466624,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0278.gz",
+            "offset": 3498049536,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0279.gz",
+            "offset": 3510632448,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0280.gz",
+            "offset": 3523215360,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0281.gz",
+            "offset": 3535798272,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0282.gz",
+            "offset": 3548381184,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0283.gz",
+            "offset": 3560964096,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0284.gz",
+            "offset": 3573547008,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0285.gz",
+            "offset": 3586129920,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0286.gz",
+            "offset": 3598712832,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0287.gz",
+            "offset": 3611295744,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0288.gz",
+            "offset": 3623878656,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0289.gz",
+            "offset": 3636461568,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0290.gz",
+            "offset": 3649044480,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0291.gz",
+            "offset": 3661627392,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0292.gz",
+            "offset": 3674210304,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0293.gz",
+            "offset": 3686793216,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0294.gz",
+            "offset": 3699376128,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0295.gz",
+            "offset": 3711959040,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0296.gz",
+            "offset": 3724541952,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0297.gz",
+            "offset": 3737124864,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0298.gz",
+            "offset": 3749707776,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0299.gz",
+            "offset": 3762290688,
+            "bytes": 12582912
+          },
+          {
+            "file": "chunks/wind_history/0300.gz",
+            "offset": 3774873600,
+            "bytes": 12582912
+          }
+        ]
+      },
+      "masks/wind_invalid_zyx.npy": {
+        "meta": {
+          "descr": "|u1",
+          "shape": [
+            1,
+            2048,
+            2048
+          ],
+          "itemsize": 1,
+          "offset": 0,
+          "block": 4194304
+        },
+        "total_bytes": 4194304,
+        "parts": [
+          {
+            "file": "chunks/masks/wind_invalid_zyx/0000.gz",
+            "offset": 0,
+            "bytes": 4194304
+          }
+        ]
+      },
+      "masks/wind_history_invalid.npy": {
+        "meta": {
+          "descr": "|u1",
+          "shape": [
+            1,
+            1024,
+            1024
+          ],
+          "itemsize": 1,
+          "offset": 0,
+          "block": 1048576
+        },
+        "total_bytes": 1048576,
+        "parts": [
+          {
+            "file": "chunks/masks/wind_history_invalid/0000.gz",
+            "offset": 0,
+            "bytes": 1048576
+          }
+        ]
+      },
+      "masks/poll_invalid.npy": {
+        "meta": {
+          "descr": "|u1",
+          "shape": [
+            2048,
+            2048
+          ],
+          "itemsize": 1,
+          "offset": 0,
+          "block": 2048
+        },
+        "total_bytes": 4194304,
+        "parts": [
+          {
+            "file": "chunks/masks/poll_invalid/0000.gz",
+            "offset": 0,
+            "bytes": 4194304
+          }
+        ]
+      },
+      "masks/solar_invalid.npy": {
+        "meta": {
+          "descr": "|u1",
+          "shape": [
+            2048,
+            2048
+          ],
+          "itemsize": 1,
+          "offset": 0,
+          "block": 2048
+        },
+        "total_bytes": 4194304,
+        "parts": [
+          {
+            "file": "chunks/masks/solar_invalid/0000.gz",
+            "offset": 0,
+            "bytes": 4194304
+          }
+        ]
+      },
+      "masks/shadow_invalid.npy": {
+        "meta": {
+          "descr": "|u1",
+          "shape": [
+            2048,
+            2048
+          ],
+          "itemsize": 1,
+          "offset": 0,
+          "block": 2048
+        },
+        "total_bytes": 4194304,
+        "parts": [
+          {
+            "file": "chunks/masks/shadow_invalid/0000.gz",
+            "offset": 0,
+            "bytes": 4194304
+          }
+        ]
+      },
+      "masks/flood_invalid.npy": {
+        "meta": {
+          "descr": "|u1",
+          "shape": [
+            2048,
+            2048
+          ],
+          "itemsize": 1,
+          "offset": 0,
+          "block": 2048
+        },
+        "total_bytes": 4194304,
+        "parts": [
+          {
+            "file": "chunks/masks/flood_invalid/0000.gz",
+            "offset": 0,
+            "bytes": 4194304
+          }
+        ]
+      },
+      "masks/temp_invalid.npy": {
+        "meta": {
+          "descr": "|u1",
+          "shape": [
+            256,
+            256
+          ],
+          "itemsize": 1,
+          "offset": 0,
+          "block": 256
+        },
+        "total_bytes": 65536,
+        "parts": [
+          {
+            "file": "chunks/masks/temp_invalid/0000.gz",
+            "offset": 0,
+            "bytes": 65536
+          }
+        ]
+      },
+      "masks/lite_footprint.npy": {
+        "meta": {
+          "descr": "|b1",
+          "shape": [
+            1024,
+            1024
+          ],
+          "itemsize": 1,
+          "offset": 0,
+          "block": 1024
+        },
+        "total_bytes": 1048576,
+        "parts": [
+          {
+            "file": "chunks/masks/lite_footprint/0000.gz",
+            "offset": 0,
+            "bytes": 1048576
+          }
+        ]
+      },
+      "masks/lite_height.npy": {
+        "meta": {
+          "descr": "<f4",
+          "shape": [
+            1024,
+            1024
+          ],
+          "itemsize": 4,
+          "offset": 0,
+          "block": 1024
+        },
+        "total_bytes": 4194304,
+        "parts": [
+          {
+            "file": "chunks/masks/lite_height/0000.gz",
+            "offset": 0,
+            "bytes": 4194304
+          }
+        ]
+      }
+    }
+  },
+  "corridor_context": {
+    "surface": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1/project/imperial_corridor_8km/runs/native_display_20261102/context/surface.png",
+    "elevation": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1/project/imperial_corridor_8km/runs/native_display_20261102/context/elevation.png",
+    "elevation_label": "EA terrain elevation 1.2\u201356.2 m ODN (1\u201399% colour range); flat projection",
+    "traffic_meta": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1/project/imperial_corridor_8km/runs/native_display_20261102/context/traffic-am.json",
+    "traffic_binary": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1/project/imperial_corridor_8km/runs/native_display_20261102/context/traffic-am.bin",
+    "roads": 70076,
+    "ground_cell_m": 4,
+    "limits": [
+      "Surface colours: existing green/water masks and SUMO lane raster. Unsurveyed remaining land uses neutral colour.",
+      "Traffic is an existing selected SUMO subset; no missing vehicles or frames invented.",
+      "Ground and traffic projected onto the flattened ENU building plane; bridge deck elevations are not represented."
+    ]
+  }
 }

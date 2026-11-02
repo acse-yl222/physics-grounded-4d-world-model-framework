@@ -1,8 +1,8 @@
 {
   "source_run": "city_fields_8km_v2_20261030",
   "source_manifest_sha256": "0d80e2ed5b887355149d94a8005a5b33c1a47fcbfe5dae3f6c0d55b0e2254336",
-  "browser_encoding": "png; value = lo + v/255*(hi-lo); rgb3 = (u,v,w); bit = mask",
-  "physics_url": "https://acse-yl222.github.io/urban-world-model-models/project/imperial_corridor_8km/web/city_fields_8km_v2_20261030/physics/",
+  "browser_encoding": "lossless gzip of source float16/float32 and uint8 arrays; no spatial aggregation or display image quantization",
+  "physics_url": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1/project/imperial_corridor_8km/runs/native_display_20261102/physics/",
   "assets": [
     {
       "path": "models/buildings.glb",
@@ -11,8 +11,8 @@
     },
     {
       "path": "scene.json",
-      "bytes": 28357,
-      "sha256": "e47c278ec74ed19b1b109f7db66b1daac43f6f3a787b77acd62d5e780b7b84b2"
+      "bytes": 147516,
+      "sha256": "d78691a425ae4d2d55cb3503063a058c06b07cc8ff360b2e73c463ab4eaf4740"
     }
   ],
   "geometry_update": {
@@ -4244,5 +4244,13 @@
       }
     ],
     "note": "All detailed geometry bytes verified against the existing public resource repository. Display physics retains its declared 8-bit web encoding."
+  },
+  "native_grid_update": {
+    "resource_revision": "6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1",
+    "resource_catalog": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1/resources.json",
+    "field_transport": "lossless gzip; 4 m surface fields and final wind, 8 m recorded wind history, 32 m thermal",
+    "traffic": "600 recorded SUMO subset frames, 08:50\u201309:00, independent clock",
+    "ground": "4 m surface raster and terrain colour, flattened ENU projection",
+    "validation": "8 native field combinations sampled exactly against saved arrays; 8 m wind samples and offset checked; 600 traffic frames parsed; 1200/1200 first-frame vehicle positions within 1 raster cell of source road lanes"
   }
 }
