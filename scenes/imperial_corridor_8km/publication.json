@@ -11,8 +11,4238 @@
     },
     {
       "path": "scene.json",
-      "bytes": 28169,
-      "sha256": "4f7a57b1d72ac91e98427ac2dfec56862b2ebfc763297f0a418628e01b29129f"
+      "bytes": 28357,
+      "sha256": "e47c278ec74ed19b1b109f7db66b1daac43f6f3a787b77acd62d5e780b7b84b2"
     }
-  ]
+  ],
+  "geometry_update": {
+    "mode": "complete",
+    "tiles": 64,
+    "landmarks": 267,
+    "triangles": 11613551,
+    "resource_tree": "daecfd4e44b96530f7959ef392589ede599cd058",
+    "assets": [
+      {
+        "path": "index.json",
+        "bytes": 84628,
+        "sha256": "de2ffaca4f4c4d2beb37d8de6fc1c012a499e7055228ba01e4e0077072ac4a6a"
+      },
+      {
+        "path": "landmarks/abdus_salam_library.glb",
+        "bytes": 304144,
+        "sha256": "2e2c25d94ffc4ff0034302e552b9bef0743d3b45dc0198a19edf68b334ce4d71"
+      },
+      {
+        "path": "landmarks/albert_bridge.glb",
+        "bytes": 1448636,
+        "sha256": "956cdf14d28a8ff0b2900ab525c16d3da576cdf969b52a37923a5b4e7cca91a7"
+      },
+      {
+        "path": "landmarks/albert_court.glb",
+        "bytes": 4197760,
+        "sha256": "9e80d2c7eabe91a6b0bf5ecc115d535512cd27456f7f8955c0e8cddcccd0a810"
+      },
+      {
+        "path": "landmarks/albert_hall_mansions.glb",
+        "bytes": 5079372,
+        "sha256": "ec8935fe9ba87936a9879839b5affb3411a35ee8f0a706c661c3be635c63c352"
+      },
+      {
+        "path": "landmarks/albert_memorial.glb",
+        "bytes": 1508672,
+        "sha256": "e78d3620a4ae42c695a8b653b3bf6f0a187216e5a34c9a3a3ec212c3bfdf0877"
+      },
+      {
+        "path": "landmarks/alexandra_court.glb",
+        "bytes": 2588992,
+        "sha256": "bb39c59fd5280534bbe7cfec5faf572ce56d681c04bea1bb7220bb7c300eb4ad"
+      },
+      {
+        "path": "landmarks/animals_in_war_memorial.glb",
+        "bytes": 86920,
+        "sha256": "5245f809b9d82b3c401e3b0be6a3693371cc7cf60e4364a91cfd790cf88fd2a1"
+      },
+      {
+        "path": "landmarks/apsley_house.glb",
+        "bytes": 5027368,
+        "sha256": "3115056c09654c913afbb8cfaa0060667f35ed21d7cd0a9fe324af66257a9e48"
+      },
+      {
+        "path": "landmarks/baden_powell_house.glb",
+        "bytes": 518344,
+        "sha256": "fbebad608b3db07b7e7bc99945da0f69228217beff4ad5f9b9b140484584a4aa"
+      },
+      {
+        "path": "landmarks/barkers_building.glb",
+        "bytes": 2741848,
+        "sha256": "72ebb742fb70a24c5f6b5678c74309e69d0583573eb3f29a528faed7103b0bd4"
+      },
+      {
+        "path": "landmarks/battersea_bridge.glb",
+        "bytes": 767856,
+        "sha256": "ab8de9212738d02fd590d9581901bb6a8ae0ce26d4c6b45db2d3be154823e9db"
+      },
+      {
+        "path": "landmarks/battersea_power_station.glb",
+        "bytes": 10232440,
+        "sha256": "40fc4befc06364083661daaa37577ca2ce8c2da6260375ed9790beaced817839"
+      },
+      {
+        "path": "landmarks/bbc_broadcasting_house.glb",
+        "bytes": 3828500,
+        "sha256": "eb6df6441f277bd28a2782318ef47e85dacdf82d46fc14995e0d49899ec77312"
+      },
+      {
+        "path": "landmarks/bbc_studios_stage_6.glb",
+        "bytes": 525256,
+        "sha256": "9834c91d8a31de5ad1018e0d307a09419f7190ce01f74c6bda66266251d0e163"
+      },
+      {
+        "path": "landmarks/bbc_television_centre.glb",
+        "bytes": 5314012,
+        "sha256": "723d21704651a5a1ef41fda13e0719f1489906abbd0f790f06b734d2c836f555"
+      },
+      {
+        "path": "landmarks/beit_quad.glb",
+        "bytes": 2938200,
+        "sha256": "5a165ba0c9afc81c02c7c047664094083a6126805098b91594c8dc06d0d21986"
+      },
+      {
+        "path": "landmarks/belgrave_square_terraces.glb",
+        "bytes": 4950856,
+        "sha256": "c536486a56e9124e3de46e164aef6b023346450c979e11ad434b9043625a4941"
+      },
+      {
+        "path": "landmarks/blackett_laboratory.glb",
+        "bytes": 1855412,
+        "sha256": "a8f55f7111f54e7396657628e03903ce8bd91182767753e9106e1a617331a001"
+      },
+      {
+        "path": "landmarks/bone_building.glb",
+        "bytes": 1097044,
+        "sha256": "0cea31c6f08639d2d6471b72938dc826df865994bf9f8f7e80508d5307887ec3"
+      },
+      {
+        "path": "landmarks/broadcast_centre.glb",
+        "bytes": 1220252,
+        "sha256": "d4c468066e23a6ff7ffc0b108164b5f2ae07c545b459bdc618e77c3971e86f4c"
+      },
+      {
+        "path": "landmarks/brompton_cemetery.glb",
+        "bytes": 4614616,
+        "sha256": "8613b44a0c3cd2eb0b7e8aa8d9f2e1d4ff2a136ef456ccf15f00047286535a00"
+      },
+      {
+        "path": "landmarks/brompton_oratory.glb",
+        "bytes": 1662380,
+        "sha256": "a27124b3348d3a886826c1929c592a88c6390d97f71f0edc1f07f5cab8ee63e0"
+      },
+      {
+        "path": "landmarks/buckingham_palace.glb",
+        "bytes": 9740716,
+        "sha256": "86bd2bcea08d984c705c89587b0bfbf5a23279e1be4860e631fc77c4bc022a3b"
+      },
+      {
+        "path": "landmarks/bush_theatre.glb",
+        "bytes": 207464,
+        "sha256": "ffd3cf3b7a5ef270cb238e4062fa9192522f7cbcc60b08bf928f29941c31c72e"
+      },
+      {
+        "path": "landmarks/cadogan_hall.glb",
+        "bytes": 468476,
+        "sha256": "063d5824eb7f331a7e5f81e5c281364ee680a86c58693d472bd440b424fc0ed4"
+      },
+      {
+        "path": "landmarks/campden_hill_towers.glb",
+        "bytes": 2264664,
+        "sha256": "9076b2789c4d90c5579ea70ce60acebb478bc7114a93e394e687c575c936f86a"
+      },
+      {
+        "path": "landmarks/cassini_tower.glb",
+        "bytes": 3072752,
+        "sha256": "753290335bcd43e7100597b5ac680c7fe60e75c026a13288322ed5dfb8178341"
+      },
+      {
+        "path": "landmarks/catherine_lewis_centre.glb",
+        "bytes": 171080,
+        "sha256": "917f8513021df50372f9162d9ac94d069b2208e337b99798d2b8c7f59761b8fb"
+      },
+      {
+        "path": "landmarks/charing_cross_hospital.glb",
+        "bytes": 4289584,
+        "sha256": "4d978805a276d235d0182541e1e16f5aabd7c2883c8d4fe7354338300630beba"
+      },
+      {
+        "path": "landmarks/chelsea_academy.glb",
+        "bytes": 1386080,
+        "sha256": "74d5b11389c1689728efbbcf72741f11577c3630dde42de2ae71663ad7e334c2"
+      },
+      {
+        "path": "landmarks/chelsea_bridge.glb",
+        "bytes": 962268,
+        "sha256": "1f4e3dd95749acd3a7354adaf885afe64c1e75007a7d20d711371b91531ef72d"
+      },
+      {
+        "path": "landmarks/chelsea_harbour_belvedere.glb",
+        "bytes": 3048928,
+        "sha256": "456a77a9ccfddef82cc043ade18dfd11323b9a4e22e8d1ec4fcc16fefb564f23"
+      },
+      {
+        "path": "landmarks/chelsea_westminster_hospital.glb",
+        "bytes": 3971128,
+        "sha256": "94b1580fc3ce3cca7c5110fdd26d1c9a8624075fbadeaf141e1e68b38662d08a"
+      },
+      {
+        "path": "landmarks/cheval_hyde_park_gate.glb",
+        "bytes": 1194480,
+        "sha256": "9416bd8aed3e5c350e1ca93342ff646e140e698747af395fbd1cbf0b2f706730"
+      },
+      {
+        "path": "landmarks/christ_church_lancaster_gate.glb",
+        "bytes": 2268508,
+        "sha256": "2ed439d5034d504438e5dbb04550484c0ed9eedb39c67128cc9e98b21993eac5"
+      },
+      {
+        "path": "landmarks/city_guilds_building.glb",
+        "bytes": 1465956,
+        "sha256": "13a4125e5ed3c50c07988689d83d3456b0abb98433674c155982fe3bbe4a8544"
+      },
+      {
+        "path": "landmarks/consulate_general_of_france.glb",
+        "bytes": 839612,
+        "sha256": "10baeb04962081cb8d872ba1a42d004bfc60002f67eadcba48bdd8d06e68934e"
+      },
+      {
+        "path": "landmarks/coronet_theatre.glb",
+        "bytes": 557752,
+        "sha256": "062ac169b2d90252b8807fefb391f1e501d8976a9a9743d6a98e813ab2ca4b6d"
+      },
+      {
+        "path": "landmarks/craven_cottage.glb",
+        "bytes": 722020,
+        "sha256": "67628a09b888acfd4b3a9decf00c797529461b5b300fc3b745c9967b00f6d052"
+      },
+      {
+        "path": "landmarks/craven_cottage_riverside_stand.glb",
+        "bytes": 1122120,
+        "sha256": "97d76fbcaf06c5ea44c7bb101b28cba4e34ed3eb034c2c71817247ad702c7d1a"
+      },
+      {
+        "path": "landmarks/cumberland_lodge.glb",
+        "bytes": 60940,
+        "sha256": "9d9b53084e90226323e061d1205a7dfcc4499c923ff8bac5a6d318666dcf4283"
+      },
+      {
+        "path": "landmarks/czech_slovak_embassies.glb",
+        "bytes": 118556,
+        "sha256": "0ec0d2f2785b06056e67915d8195fe5e1875a938021e98c909fa9997412d2bff"
+      },
+      {
+        "path": "landmarks/dana_research_centre.glb",
+        "bytes": 468160,
+        "sha256": "329171c4f12dfc6b7a84d39f0cacbdeec46fde85761095b24837c08f47715062"
+      },
+      {
+        "path": "landmarks/derry_and_toms.glb",
+        "bytes": 3803040,
+        "sha256": "e0c25b514f042886c249c6310e9d0a02ec2b26579993c6c4fcc662c10070fba4"
+      },
+      {
+        "path": "landmarks/design_museum.glb",
+        "bytes": 908840,
+        "sha256": "133a5df617cfd40b259c4235af3abf2a4a3c2e110eca019445e5028d0f37b50b"
+      },
+      {
+        "path": "landmarks/diana_memorial_fountain.glb",
+        "bytes": 323880,
+        "sha256": "002bb40d51b8ebf83de1af2c28b56aa14768870f8ea6ee7e0ef01c2a266b8e7b"
+      },
+      {
+        "path": "landmarks/dormition_cathedral.glb",
+        "bytes": 545328,
+        "sha256": "6c392ab2ad17368c387f95cce00282b36ce9bbf9b0d5b50137717eafa71ec8ce"
+      },
+      {
+        "path": "landmarks/earls_court_station.glb",
+        "bytes": 511520,
+        "sha256": "2dc11243d09009b13c2460896cf46146dd141ddd684c17cb98d26feb76fa6405"
+      },
+      {
+        "path": "landmarks/eighty_eight_wood_lane.glb",
+        "bytes": 1878064,
+        "sha256": "9a5bedd31b32dc8a90a359d7a6459cdf3e374c68fb911c8be32ea97922740bf8"
+      },
+      {
+        "path": "landmarks/electric_cinema.glb",
+        "bytes": 82340,
+        "sha256": "0e08c267ba41663c26234b5d9985dc49c84a913f337c7d3d02e2ad04e2179247"
+      },
+      {
+        "path": "landmarks/electrical_engineering_building.glb",
+        "bytes": 988056,
+        "sha256": "9935a82dcf02aea8f0aea6b7ea1c75196e67ba7615edd950c503a8e2e7e88d37"
+      },
+      {
+        "path": "landmarks/embassy_of_oman.glb",
+        "bytes": 901140,
+        "sha256": "bbea958d3de92ba65acfc115d1fddbf0819066ffa0f7970cf032c4c1bfe97748"
+      },
+      {
+        "path": "landmarks/empress_state_building.glb",
+        "bytes": 1738568,
+        "sha256": "028337aff7a78867dcd94ad36ebfbe2677958aaa3250660040f10282b0c2eb23"
+      },
+      {
+        "path": "landmarks/exhibition_white_city.glb",
+        "bytes": 693192,
+        "sha256": "94ec6d072d4c2b2a8877e29949ebc780d12e8344a797f865382c67957b9ea8c5"
+      },
+      {
+        "path": "landmarks/faculty_building.glb",
+        "bytes": 200040,
+        "sha256": "59aae3e79f44a7534b98265b3e2ee61554c4f0f9a0b240a08efef553f9d86438"
+      },
+      {
+        "path": "landmarks/five_merchant_square.glb",
+        "bytes": 206736,
+        "sha256": "4e47a1e28f97e887485353c4bb67502afa8ee66081f5749e99c919d69435c5de"
+      },
+      {
+        "path": "landmarks/fulham_broadway_centre.glb",
+        "bytes": 234528,
+        "sha256": "82894f9cdd3eb94c193e98a17c13cc4a30601166d54b2da86d37b1e0667dac41"
+      },
+      {
+        "path": "landmarks/fulham_broadway_station.glb",
+        "bytes": 258108,
+        "sha256": "c1b54d6cfe0be9043a177e174a9d1afb009fc5129d70b5d32ed289f59d2e535d"
+      },
+      {
+        "path": "landmarks/fulham_palace.glb",
+        "bytes": 1120688,
+        "sha256": "6a91a229cf464fa2bfd627460ac38caae5cdd7d7e9c9fed690387e63686f0e53"
+      },
+      {
+        "path": "landmarks/fulham_town_hall.glb",
+        "bytes": 979276,
+        "sha256": "314caf2c361e287b50271072ed44a4356e3eead188525228757a342c5fee99fe"
+      },
+      {
+        "path": "landmarks/garry_weston_centre.glb",
+        "bytes": 186788,
+        "sha256": "3ee7f37abedd1749f805b25983a9ef8c758f26698b8a8e06b8b9ec238a112dbd"
+      },
+      {
+        "path": "landmarks/gateway_central.glb",
+        "bytes": 1010604,
+        "sha256": "f9ec082d0b38b1e60ae6faf974a39297c2ba81289e2b5efe09f111b200b7acde"
+      },
+      {
+        "path": "landmarks/gateway_west.glb",
+        "bytes": 445120,
+        "sha256": "24dc493241d81b844253f5ac1709435683db2adb0cebca964b3fbaa596fb88fa"
+      },
+      {
+        "path": "landmarks/goethe_institut_london.glb",
+        "bytes": 716092,
+        "sha256": "517afd1fb0e33e36d9008f9b626b4e9f5806063e4ef37b1f8dbfe66a0b8fe0ed"
+      },
+      {
+        "path": "landmarks/grosvenor_bridge.glb",
+        "bytes": 1553124,
+        "sha256": "141d080cbe6a11ed096ffc0494bf88b8b2a855ea0e2caf268bd83fc3d130e512"
+      },
+      {
+        "path": "landmarks/grosvenor_hotel_victoria.glb",
+        "bytes": 3933812,
+        "sha256": "55bf02f5a6cf78e646d992fc72492f3c496a2c0b4c903f540bacbca826e0d955"
+      },
+      {
+        "path": "landmarks/hammersmith_administration_blocks.glb",
+        "bytes": 829068,
+        "sha256": "3eb9cc9c9ecbcfb209fea48fa3b2c8e250aca707107ee7d9a78f1390c6e9a652"
+      },
+      {
+        "path": "landmarks/hammersmith_apollo.glb",
+        "bytes": 623392,
+        "sha256": "c9f3b6009c5bfc28e55bc2d2b7bab0e7f4fdc6dddf3fc4a8e8185bf8d73468b8"
+      },
+      {
+        "path": "landmarks/hammersmith_block_a.glb",
+        "bytes": 1466792,
+        "sha256": "88a9b70aac2729666c5f7c197b4976ada9abc7463d4088f6cc8176e4224a17ad"
+      },
+      {
+        "path": "landmarks/hammersmith_bridge.glb",
+        "bytes": 2172332,
+        "sha256": "338f2aa2fe0a87e77dae2b5bc1ed34a986eaf884e6acf7ecc8b4d6f1ecbc2084"
+      },
+      {
+        "path": "landmarks/hammersmith_broadway_centre.glb",
+        "bytes": 1522572,
+        "sha256": "5a7f6a9e5b5b857081f1c5bf70afbc89089f78f312cff744ee814b8763c34112"
+      },
+      {
+        "path": "landmarks/hammersmith_campus.glb",
+        "bytes": 2148120,
+        "sha256": "7917e557394cf8d8a74f53967d41e17bdbd1b7c17caa804f5c3ed007cc828805"
+      },
+      {
+        "path": "landmarks/hammersmith_hc_station.glb",
+        "bytes": 403560,
+        "sha256": "e8caf9d66d1f58c11f6042358ca2515742efe15a7b99643f70d15d541a63fc39"
+      },
+      {
+        "path": "landmarks/hammersmith_house.glb",
+        "bytes": 486240,
+        "sha256": "b7da1947e8b156e41d53db1e968ed9cadcecc928bc86a30a4d7e3f4d17919f4e"
+      },
+      {
+        "path": "landmarks/hammersmith_infirmary_wards_east.glb",
+        "bytes": 1510436,
+        "sha256": "a6a6efe6519b84ac954ca7f73cb301a77c52b702a6f0e730db5355e5d9d3bb35"
+      },
+      {
+        "path": "landmarks/hammersmith_infirmary_wards_west.glb",
+        "bytes": 3632268,
+        "sha256": "f869bd33dbad383570a02403fde227e92fd2f84278fd4b16e4188a33acc4f178"
+      },
+      {
+        "path": "landmarks/hammersmith_renal_building.glb",
+        "bytes": 576580,
+        "sha256": "63535129d960566535dd1983cb213256d6feea28152bd295c88bd0e37195aab4"
+      },
+      {
+        "path": "landmarks/hammersmith_town_hall.glb",
+        "bytes": 2475556,
+        "sha256": "fb95b93a77b04a286839d4a9608a715ed2d615afa6d39bb211f89e7288055f71"
+      },
+      {
+        "path": "landmarks/harrods.glb",
+        "bytes": 3837340,
+        "sha256": "17fbc3193ff129abb45b0ac8abb225fdc2b96db5646e90b67cf8e3266ac7f06e"
+      },
+      {
+        "path": "landmarks/harvey_nichols.glb",
+        "bytes": 1538168,
+        "sha256": "b70d9adc575f13e91134e78445ed973359186be012614c9f524f53d7ffbe7c1d"
+      },
+      {
+        "path": "landmarks/hilton_london_metropole.glb",
+        "bytes": 1121764,
+        "sha256": "6aab0b679a2d46d776fcd75c5c2de104270ca1ce3ae654e74984dfcdfb99712a"
+      },
+      {
+        "path": "landmarks/holland_house.glb",
+        "bytes": 495600,
+        "sha256": "a2adee49d66815ded27c44616a13aff513ea6c277966f5bb86e3f16dd83a5ae1"
+      },
+      {
+        "path": "landmarks/holland_park_school.glb",
+        "bytes": 238324,
+        "sha256": "81447399d5e22d7acc2677aeae0a8fabe25dd882d547de503217298ddbb7f794"
+      },
+      {
+        "path": "landmarks/holy_trinity_brompton.glb",
+        "bytes": 936668,
+        "sha256": "c0eca5d29e2ffc62ae392fbda25ad7cc31aeaf0565dceabd5246885ce1a8fdc0"
+      },
+      {
+        "path": "landmarks/holy_trinity_church_house.glb",
+        "bytes": 426360,
+        "sha256": "4767fe2aa969e9205e80685f47c18cccf9f3f1a1c86b4a68a2749e631f48d4ca"
+      },
+      {
+        "path": "landmarks/holy_trinity_prince_consort_road.glb",
+        "bytes": 173576,
+        "sha256": "6070352fd1592608f43122f2a0363a739e2ee669e88c1170771c1d8f741b6ad6"
+      },
+      {
+        "path": "landmarks/holy_trinity_sloane_street.glb",
+        "bytes": 421048,
+        "sha256": "d5feb8aa42f02a11a5b20871c189c3ea2544fd576407c4bcac89e3b9e9a2138a"
+      },
+      {
+        "path": "landmarks/huxley_building.glb",
+        "bytes": 2622088,
+        "sha256": "abe15be2227b9c945de829066f9991e803e3f14b42c95043a858e149d14f5785"
+      },
+      {
+        "path": "landmarks/hyde_park_bandstand.glb",
+        "bytes": 357732,
+        "sha256": "49882521e095df4724186fbcacc75940c62c066392f63af7b7ffd26aa4640cc7"
+      },
+      {
+        "path": "landmarks/hyde_park_barracks.glb",
+        "bytes": 2263448,
+        "sha256": "0a2599d79237f95f96f3e45e2df27c677b7bea6ca8311f62dfa6bdc52213c6f9"
+      },
+      {
+        "path": "landmarks/hyde_park_chapel.glb",
+        "bytes": 357464,
+        "sha256": "302d5f67ea27e8a75c1f76939d657788112fe3373f1b9abaf079ca8cb90e7d3b"
+      },
+      {
+        "path": "landmarks/hyde_park_connaught_squares.glb",
+        "bytes": 2461740,
+        "sha256": "f048badd89e0ac3d0d5de74cc01a9ab44e35c14d0c55e532181c6e04e7b98f48"
+      },
+      {
+        "path": "landmarks/hyde_park_police_station.glb",
+        "bytes": 662044,
+        "sha256": "1d83ab173ec81a7fe40e47450b6204b1a94840ad5d5f75709c323f334700d785"
+      },
+      {
+        "path": "landmarks/imperial_170_queens_gate.glb",
+        "bytes": 1005948,
+        "sha256": "c4c8430ddf18155e5ca71b4013ea849bc852793afdc1ebdbfa672ff00122a052"
+      },
+      {
+        "path": "landmarks/imperial_business_school.glb",
+        "bytes": 626192,
+        "sha256": "7c86fbd32e946f5a80a25d9a8ac54f0f440cb7637a8acfdf1fea40112b877f8f"
+      },
+      {
+        "path": "landmarks/imperial_campus_service_buildings.glb",
+        "bytes": 201972,
+        "sha256": "7914ec2cc27256d13e2c9c5326683744044685f013e26cf3db8397d8b64c95df"
+      },
+      {
+        "path": "landmarks/imperial_chemistry_building.glb",
+        "bytes": 735520,
+        "sha256": "38f0cdc9cf67c9fd54d80764724fb0b148f26fb58d05c7250d9f95f53e794c0a"
+      },
+      {
+        "path": "landmarks/imperial_chemistry_rcs1.glb",
+        "bytes": 1501640,
+        "sha256": "418c0f280270f83f6f7f717dc6c493ca084d1ee0cd5e5688d9aae0e626ebdd27"
+      },
+      {
+        "path": "landmarks/imperial_dyson_building.glb",
+        "bytes": 1943600,
+        "sha256": "b20512310072c00722f40ff0da4fa09f6f8ae078dc6cefb77e8a4e79b9441e06"
+      },
+      {
+        "path": "landmarks/imperial_early_years_centre.glb",
+        "bytes": 283832,
+        "sha256": "f28797d88c631086660324c2bd1073e1beda8bbcbdd80fbff09f5e5aeb2ed698"
+      },
+      {
+        "path": "landmarks/imperial_ethos.glb",
+        "bytes": 619504,
+        "sha256": "c4b32b0bcd062eddcdbbe253d4c999749767a22f41d913aedadf5ef7cbc959e3"
+      },
+      {
+        "path": "landmarks/imperial_flowers_building.glb",
+        "bytes": 745324,
+        "sha256": "b5045faaea8edc32cfdc4bb79bb1f379abf5180a61e9d69c29506f2d85523a36"
+      },
+      {
+        "path": "landmarks/imperial_i_hub.glb",
+        "bytes": 1174420,
+        "sha256": "a298ff81d577296c646aee0ea59ce189cf73dd89de0ac2e6bdef293594253102"
+      },
+      {
+        "path": "landmarks/imperial_msrh.glb",
+        "bytes": 848496,
+        "sha256": "ddacfc470de17e98ed6d6dde8b27b914407cf21b964ea03d98bb5bedf9cace24"
+      },
+      {
+        "path": "landmarks/imperial_school_of_public_health.glb",
+        "bytes": 1177904,
+        "sha256": "e150af2055d3ef0a9ea7b0cf66be2be294b84e2252531e2bd3415826d42bd469"
+      },
+      {
+        "path": "landmarks/imperial_sir_ernst_chain.glb",
+        "bytes": 2274016,
+        "sha256": "39e7465abe38f849a136c0e523becdc65eebaf7127cbd282b7854dd2d757bdf9"
+      },
+      {
+        "path": "landmarks/imperial_south_building.glb",
+        "bytes": 177964,
+        "sha256": "f0bb3fd33338af47b54a3215d2e751dc23508892751b0e2f5c6984cfb6cb0dfb"
+      },
+      {
+        "path": "landmarks/institut_francais.glb",
+        "bytes": 512440,
+        "sha256": "c426fce5a5bf74ba57c46016411fce04657b298d837be03077129d26e9df7df9"
+      },
+      {
+        "path": "landmarks/ismaili_centre.glb",
+        "bytes": 2158680,
+        "sha256": "358745903fdd0de5859fbd228a50920ae3cde0d829ce9a48726f8061b7be1039"
+      },
+      {
+        "path": "landmarks/italian_gardens.glb",
+        "bytes": 1447948,
+        "sha256": "2de523d728fc0207cbb388853add4a077b7cdfd75693d75131bb370198543b94"
+      },
+      {
+        "path": "landmarks/jamaican_high_commission.glb",
+        "bytes": 348112,
+        "sha256": "ccabefa712b97ba85dfa307bbb700986d04fbc9982695444918313e60e2f6e96"
+      },
+      {
+        "path": "landmarks/joy_of_life_fountain.glb",
+        "bytes": 97348,
+        "sha256": "bde7b89d92731afec664e3285aa56b6f9c7a51869602af815bb08f814278ff49"
+      },
+      {
+        "path": "landmarks/kensal_green_anglican_chapel.glb",
+        "bytes": 1123468,
+        "sha256": "3a7c51e887dae2784cf8c715ad7f59123a99df5411d67756493e294e01d7bbb1"
+      },
+      {
+        "path": "landmarks/kensington_aldridge_academy.glb",
+        "bytes": 815724,
+        "sha256": "62a908600e5aa5d941ef2ef2088aa9381b50eacebe4b2c90fb7681fb76b7f0ea"
+      },
+      {
+        "path": "landmarks/kensington_central_library.glb",
+        "bytes": 758440,
+        "sha256": "e3a3d93323d66645ac8e9579b897ac463f507811612442afdf9b092878feb781"
+      },
+      {
+        "path": "landmarks/kensington_gardens_bandstand.glb",
+        "bytes": 194624,
+        "sha256": "1b6522a3bf12dcbd28130f0f89c6b63b3af7010f991df28ba2b57a2c87d63d02"
+      },
+      {
+        "path": "landmarks/kensington_leisure_centre.glb",
+        "bytes": 252572,
+        "sha256": "c9de4e4e2f3edf70a92db73a6631311bb1cade4c2d6a96dd784da769704754ca"
+      },
+      {
+        "path": "landmarks/kensington_olympia_station.glb",
+        "bytes": 228292,
+        "sha256": "447fb04e04a13a93e724ab0d5be842910339981a81befd88b68aacaaf6e7581b"
+      },
+      {
+        "path": "landmarks/kensington_palace.glb",
+        "bytes": 4602096,
+        "sha256": "9442ed35c8a6f1f3a3814c0e3fac21e81593f1df237d689cd105f870826f7f7d"
+      },
+      {
+        "path": "landmarks/kensington_temple.glb",
+        "bytes": 527392,
+        "sha256": "ad518b3814777c20fb371dcbe770ee476e06bce93acb7344c3dc339401884b8b"
+      },
+      {
+        "path": "landmarks/kensington_town_hall.glb",
+        "bytes": 1283308,
+        "sha256": "2b1862bca37ac54d72fa147920a8348f6ee89be2bddb775dc6105ab046897db7"
+      },
+      {
+        "path": "landmarks/kingdom_street_offices.glb",
+        "bytes": 975928,
+        "sha256": "3cdb0d92d422e811ee987da671ca8bedacf860a066a2ef628a2cf77d42a12b18"
+      },
+      {
+        "path": "landmarks/lancaster_gate_terraces.glb",
+        "bytes": 5593200,
+        "sha256": "22e332e12bd6c1407bb7436af304935228b13936fa388f6fc8949908340d537b"
+      },
+      {
+        "path": "landmarks/latymer_upper_school.glb",
+        "bytes": 1939372,
+        "sha256": "d177e46995ff841ea611b5e0b37ad75fd1156775897bdca876e9bd9e80f29cf8"
+      },
+      {
+        "path": "landmarks/leighton_house.glb",
+        "bytes": 460228,
+        "sha256": "90fb9bf066b781dfad3bfd41cc5ae8016117a03e0d6cc68df15e206ee5b839d1"
+      },
+      {
+        "path": "landmarks/leinster_gardens_fake_houses.glb",
+        "bytes": 137388,
+        "sha256": "d10142196c32e225081a5aaa269380cc7f81958f10e470f199981680799afb35"
+      },
+      {
+        "path": "landmarks/linford_christie_stadium.glb",
+        "bytes": 666652,
+        "sha256": "2b6936246dfed21c4497bf55e6c312c8f9c90e5c80b172f0a5309139b30b80ba"
+      },
+      {
+        "path": "landmarks/linley_sambourne_house.glb",
+        "bytes": 142368,
+        "sha256": "82c2ef21c5c4056b9857cff997b1ad574482595e72d7c7cffb94e73371e4f092"
+      },
+      {
+        "path": "landmarks/livat_hammersmith.glb",
+        "bytes": 3900512,
+        "sha256": "18a7b9c36ecc19b4f840f9d04e0c3edc7e52f7c4e33970c38050f1196d91cfed"
+      },
+      {
+        "path": "landmarks/loftus_road.glb",
+        "bytes": 2507228,
+        "sha256": "6e2ffdb147079111f01fb4810f0ae3d61dd9174c0fa59aaee2509d3a3fe40efa"
+      },
+      {
+        "path": "landmarks/lots_road_power_station.glb",
+        "bytes": 2564348,
+        "sha256": "07cbb39b1258e0de6fa09e78b184b927c2ec024c767178f6cba73cc1fc9eb81e"
+      },
+      {
+        "path": "landmarks/lycee_francais_charles_de_gaulle.glb",
+        "bytes": 4830836,
+        "sha256": "b721db80b087fa09a26db1819e259be11b577ad0bd4bd19f5b8ac0f4151dc091"
+      },
+      {
+        "path": "landmarks/mandarin_oriental_hyde_park.glb",
+        "bytes": 2250176,
+        "sha256": "2060d96b0ab050307dff29ecd8c34c3d101d6af9a52c3be2bb3b2a2e2d0bc76e"
+      },
+      {
+        "path": "landmarks/marble_arch.glb",
+        "bytes": 2017080,
+        "sha256": "51b0b4495520ab0d79f7a47fff3f83352714f562c8c0a1f1b64366926c0468c6"
+      },
+      {
+        "path": "landmarks/marble_arch_place.glb",
+        "bytes": 1692400,
+        "sha256": "1546a1fb5b42976e294786c6a00cb523c79c727fbb6917b3c4cc35c2ed4ba82f"
+      },
+      {
+        "path": "landmarks/merchant_square_3_4.glb",
+        "bytes": 355868,
+        "sha256": "00b784bee57e46b085b1146fb7ba563908d6dc0bac80627144c8920097b9f841"
+      },
+      {
+        "path": "landmarks/metrogate_house.glb",
+        "bytes": 491936,
+        "sha256": "9c659e900a4a9e869bd58a086a6c99b49a68c37c1bfa9b4456dc61a1e4fc02fe"
+      },
+      {
+        "path": "landmarks/michelin_house.glb",
+        "bytes": 1409748,
+        "sha256": "f45adf35322bea7a6f6d0096a46da8ca7b12fdc2a3de457ad2acd5af781d0eb2"
+      },
+      {
+        "path": "landmarks/montrose_court.glb",
+        "bytes": 2966088,
+        "sha256": "9f73e7289e42a9031f76e71f86f8cafe548c0f0b9bacd8d5abe8f6d1800b5866"
+      },
+      {
+        "path": "landmarks/more_house.glb",
+        "bytes": 781140,
+        "sha256": "3f64372aefd567eaa9b054ecae7736a82ae417c6130990a07a733065ae8d4579"
+      },
+      {
+        "path": "landmarks/mrc_clinical_sciences_centre.glb",
+        "bytes": 329900,
+        "sha256": "41ab7290ae6669eb0ebbd49df3b725eeb19f00a08f1abc4d545b2545dedc682f"
+      },
+      {
+        "path": "landmarks/mrc_lms_hammersmith.glb",
+        "bytes": 328080,
+        "sha256": "86dee1f8c8a1356ef3afa5ea0e7ee7fe85ad143e12b003cc3bbfbac512b4e4a4"
+      },
+      {
+        "path": "landmarks/national_army_museum.glb",
+        "bytes": 614444,
+        "sha256": "c6feee16952f3b8f1a1fa15bfad453f0700943cea8e75fd00806516694d2cb27"
+      },
+      {
+        "path": "landmarks/natural_history_museum.glb",
+        "bytes": 7481676,
+        "sha256": "eabf0359e2d4d5a6770f27db573f9a7fd724c8c7a96509ff62b4b911e8f3633a"
+      },
+      {
+        "path": "landmarks/newcombe_house.glb",
+        "bytes": 624092,
+        "sha256": "61ca11db912e4893f4d00f0373191a823997b45f117983a7a6e79f8964d941f8"
+      },
+      {
+        "path": "landmarks/norland_house.glb",
+        "bytes": 337960,
+        "sha256": "bfe65d9b1e1ab3eb7b05b12956a82f7a5cdb9cb7ca425745a90bf3ee187b702e"
+      },
+      {
+        "path": "landmarks/novotel_london_west.glb",
+        "bytes": 1432956,
+        "sha256": "fdf3c81fd5415f793ab677ed49fd41b843be10a2beebcec064d2cb760afc945c"
+      },
+      {
+        "path": "landmarks/olympia_london.glb",
+        "bytes": 3849056,
+        "sha256": "795cf1a27b30eb60962bbdf52500ce5370c2adfee1543a634a0f70558440829b"
+      },
+      {
+        "path": "landmarks/one_hyde_park.glb",
+        "bytes": 849552,
+        "sha256": "710f68f5e4685955ebb6891fbd62037156248963e7cfaff8a130a766f6ce1200"
+      },
+      {
+        "path": "landmarks/one_wood_crescent.glb",
+        "bytes": 251576,
+        "sha256": "c53f8151214884d383e1935513a006a5493018153ed196d770e14bdd142f07d1"
+      },
+      {
+        "path": "landmarks/paddington_station.glb",
+        "bytes": 9540412,
+        "sha256": "9543dd4c056aabda3eaa026d6f40aaeb22b9154f77cda39905cebaf8fdbbcf59"
+      },
+      {
+        "path": "landmarks/pepperdine_princes_gate.glb",
+        "bytes": 476952,
+        "sha256": "da9272bc3b26da13edb4603ef0cb45708b16b3007b0e5d3440f448fbbc4bae4e"
+      },
+      {
+        "path": "landmarks/peter_jones.glb",
+        "bytes": 464352,
+        "sha256": "95be263d5d57475e5140959cf873886c0ae52b64686d1bbcca15018fb96dd37f"
+      },
+      {
+        "path": "landmarks/peter_pan_statue.glb",
+        "bytes": 79492,
+        "sha256": "0dc44f2c63b3a012f1ea5e55f08cddfd40651fe7932fcf39bca40c49975195bb"
+      },
+      {
+        "path": "landmarks/phoenix_brewery.glb",
+        "bytes": 2700952,
+        "sha256": "16ac5126b02880be057cb4ec2bee071f566b65c23e28fae78944bf8ac565df21"
+      },
+      {
+        "path": "landmarks/physical_energy_statue.glb",
+        "bytes": 64480,
+        "sha256": "782da26060795ad8b69a538bce16e353c0ac812edfa02e3ed668ae92eca92c7e"
+      },
+      {
+        "path": "landmarks/porchester_hall.glb",
+        "bytes": 840644,
+        "sha256": "b3885271f0d38e8e216048e86eb48b79eb5320934343efc61c4276637a452de9"
+      },
+      {
+        "path": "landmarks/poynter_house.glb",
+        "bytes": 337956,
+        "sha256": "2b8e58c30a0c29701e3e7a11b99d221cf2c2e31cbf5a958603a7da8f778d8204"
+      },
+      {
+        "path": "landmarks/princes_gardens_eastside.glb",
+        "bytes": 3221004,
+        "sha256": "3957a25b17f8d4061b6f5826a30be4042f2b074ef135ad0c196f63fed85e5a8d"
+      },
+      {
+        "path": "landmarks/princes_gardens_north_terrace.glb",
+        "bytes": 722904,
+        "sha256": "cf8467791010246c110f3f8d18d27db5ee005dc65a764b8303705edc27efb333"
+      },
+      {
+        "path": "landmarks/princes_gardens_southside.glb",
+        "bytes": 2430756,
+        "sha256": "b59fad75099f5f901596f41ccf12e86bd5f4c0340de7068e92128278195d2350"
+      },
+      {
+        "path": "landmarks/princes_gate_51_55.glb",
+        "bytes": 599532,
+        "sha256": "a7ce3cf2bb9b441711ed50bde3ef9b3b041139573d6a7bb74b895ecb7606e4a7"
+      },
+      {
+        "path": "landmarks/princes_gate_59_63.glb",
+        "bytes": 2058388,
+        "sha256": "8e878f552e06c143a8dd8677af62bf5ffc8516138fe85c8c25deb86f1df486d7"
+      },
+      {
+        "path": "landmarks/princes_gate_exhibition_road_north.glb",
+        "bytes": 860068,
+        "sha256": "4774709260300007eb9ef1d08260b939ef14b43c296da07f947a3cdf967534ee"
+      },
+      {
+        "path": "landmarks/queen_alexandras_house.glb",
+        "bytes": 2750140,
+        "sha256": "d6ab2bd000c143505c5c7263211725b78821ea7a52d0c76e141d09d7fb126d2a"
+      },
+      {
+        "path": "landmarks/queen_annes_alcove.glb",
+        "bytes": 62012,
+        "sha256": "44c56ad18b9277a6ac13876adc094d400dc435c31cac005122c8d2b4ef300e45"
+      },
+      {
+        "path": "landmarks/queen_carolines_temple.glb",
+        "bytes": 85248,
+        "sha256": "579e1d230ec12005f402c601338775b25710ef07047b9e5ecc2bd9898da25213"
+      },
+      {
+        "path": "landmarks/queen_charlottes_chelsea_hospital.glb",
+        "bytes": 388824,
+        "sha256": "31bff2d2616bc98a726c2147ea44b8bb3f46600051ea577eb265ca161fc82833"
+      },
+      {
+        "path": "landmarks/queens_gate_east_houses.glb",
+        "bytes": 482224,
+        "sha256": "3a0fae4422e029ba97d8fc027c5db00c455cc03540d8716595f644e962a2eda8"
+      },
+      {
+        "path": "landmarks/queens_gate_hotel.glb",
+        "bytes": 577152,
+        "sha256": "e1206a409bd05db7c73e78ffe06ccef579f43a1283218fb056e6e8dc6de22dd7"
+      },
+      {
+        "path": "landmarks/queens_gate_west_terrace.glb",
+        "bytes": 977096,
+        "sha256": "8beb9af6ef05d89ab0caa3d19ec8fc73aec7ec3bc6de32e5397470db1bf60d10"
+      },
+      {
+        "path": "landmarks/queens_tower.glb",
+        "bytes": 2152584,
+        "sha256": "3cf1344cbe60f9fc66789cf0f6575fe9cc1414c88109c1adbcb6e33ea03a69b6"
+      },
+      {
+        "path": "landmarks/ravenscourt_park_station.glb",
+        "bytes": 132800,
+        "sha256": "e7055d97df511759afc8faa739dfaf5ec6a98ef656b18a719eedaa339911175d"
+      },
+      {
+        "path": "landmarks/rca_darwin_building.glb",
+        "bytes": 1596252,
+        "sha256": "be929b7adfbffe384d895e19a50fe76772a83ddf486fec244bfa1b009e89205e"
+      },
+      {
+        "path": "landmarks/rca_frayling_building.glb",
+        "bytes": 486884,
+        "sha256": "676eb1d47de35846f5e284381cda510b509573ad466fa309b6b5394bbabb5884"
+      },
+      {
+        "path": "landmarks/rca_stevens_building.glb",
+        "bytes": 723848,
+        "sha256": "456b78b2958728c4e656ee4eef4bb2d3254edfb82114871e49b99b813eec62fd"
+      },
+      {
+        "path": "landmarks/rca_white_city.glb",
+        "bytes": 218004,
+        "sha256": "d52763947c738fbd41d9865385a210558b81b8d3da5a7f38d900658ee10af4e0"
+      },
+      {
+        "path": "landmarks/ribbon_w10.glb",
+        "bytes": 453208,
+        "sha256": "2f3d284aa689a9206921c5c49e70af963c08f3992b9da00bb9488660160e6de9"
+      },
+      {
+        "path": "landmarks/riverside_studios.glb",
+        "bytes": 2156324,
+        "sha256": "a8dfe87b755146c1a3b21277ac998f5b06910c9684247f68b620a5f5168bcb1e"
+      },
+      {
+        "path": "landmarks/roderic_hill_ace.glb",
+        "bytes": 4824072,
+        "sha256": "2caa034545477f2d6f21d933af9e217141053c71d4f372dafd236dd9aa5b1113"
+      },
+      {
+        "path": "landmarks/royal_albert_hall.glb",
+        "bytes": 5081820,
+        "sha256": "7f119203d89ee02dcfe88883f6a0fcad5774ba4823b174bc3102588642a6eaa5"
+      },
+      {
+        "path": "landmarks/royal_brompton_hospital.glb",
+        "bytes": 2308492,
+        "sha256": "658b2810de93cb9955fe0a74f27bb00ba5fec1b32d943f0809ee2d6177a34a4a"
+      },
+      {
+        "path": "landmarks/royal_college_of_music.glb",
+        "bytes": 1025280,
+        "sha256": "9ececb1281119d7866cfbe57ae9d23bb83b0f6fb33aece4b85f092883fcf0a08"
+      },
+      {
+        "path": "landmarks/royal_college_of_organists.glb",
+        "bytes": 532396,
+        "sha256": "e8d77570284d95ef3eaa3f10e841b46139307258add7885dbb87d14adb6e2da9"
+      },
+      {
+        "path": "landmarks/royal_court_theatre.glb",
+        "bytes": 230100,
+        "sha256": "2a33bdea3df0d2704bf185fad945eafefd1aa84446826e4b91739d7a182f5336"
+      },
+      {
+        "path": "landmarks/royal_garden_hotel.glb",
+        "bytes": 418560,
+        "sha256": "5c3ed478384d0449fa42699e69697f6d64f7825719eda281c406fa8d62b18a8a"
+      },
+      {
+        "path": "landmarks/royal_geographical_society.glb",
+        "bytes": 1875780,
+        "sha256": "111e06821e1aab31d70d359b734cc082da0b9474ab6462b5e410017d3a2f4e4c"
+      },
+      {
+        "path": "landmarks/royal_hospital_chelsea.glb",
+        "bytes": 3869612,
+        "sha256": "2cb83fd7470cd34698efae7a84d36d59b38f136b646cd53983b73106b229678f"
+      },
+      {
+        "path": "landmarks/royal_lancaster_london.glb",
+        "bytes": 251924,
+        "sha256": "412f71ce20ba084efe3e47a6315ed7207193cd3788f146c77a88d794867b05e7"
+      },
+      {
+        "path": "landmarks/royal_marsden_hospital.glb",
+        "bytes": 3892384,
+        "sha256": "2b0bb889c3fc9cfdf285f929d3d2fa40609716050539008f4ddf0b599dc2668c"
+      },
+      {
+        "path": "landmarks/royal_school_of_mines.glb",
+        "bytes": 4203716,
+        "sha256": "f10b5577c95397de1601c75903aadb08c10f915a39128418e3238b9dbd8eb61b"
+      },
+      {
+        "path": "landmarks/royal_thai_embassy.glb",
+        "bytes": 544100,
+        "sha256": "7bb54780ae0de69e9a404f838562690b6883639bae4767933a40239720627e3a"
+      },
+      {
+        "path": "landmarks/russian_embassy.glb",
+        "bytes": 1184132,
+        "sha256": "6dbe763a5df9b7b7adcb77d800ac79729af50a4b1d9e2001d4886a92b292e51e"
+      },
+      {
+        "path": "landmarks/saatchi_gallery.glb",
+        "bytes": 1071132,
+        "sha256": "f06c61a2a59597988e5b7e240f1c9b420b06d65afac3288b625cfcce2d9554be"
+      },
+      {
+        "path": "landmarks/sainsbury_wing_hammersmith.glb",
+        "bytes": 218180,
+        "sha256": "ba1137ff8aed577c1ef8be54b4f45338a998dc6484a6bf0b6845cdb8bdbd8e62"
+      },
+      {
+        "path": "landmarks/scale_space.glb",
+        "bytes": 2109980,
+        "sha256": "45b412c29d0e04570041f22b51908e76d778b5df33e8dfa5b14e3024faefc179"
+      },
+      {
+        "path": "landmarks/science_museum.glb",
+        "bytes": 1097100,
+        "sha256": "c4ad9a779cc0a6e2188cfb4daf5a67235259c133d350bd4cf54e0a4f62e9a46a"
+      },
+      {
+        "path": "landmarks/selfridges.glb",
+        "bytes": 4589188,
+        "sha256": "ff46486400de1ca39df71d6fb36b77a24e32ed3576e79032b81fdd77c7869308"
+      },
+      {
+        "path": "landmarks/serpentine_bar_kitchen.glb",
+        "bytes": 116472,
+        "sha256": "0fc94f1c2e00a1d1563c784c9245e933f19f04b8fe3659cf390fe4d31d9c75f0"
+      },
+      {
+        "path": "landmarks/serpentine_boathouses.glb",
+        "bytes": 189140,
+        "sha256": "ea2bd82d3e8edc7128b68aec9c1c7f8125c967cb5d4a017680a0a5384b54f17b"
+      },
+      {
+        "path": "landmarks/serpentine_bridge.glb",
+        "bytes": 753620,
+        "sha256": "795da0d92df5e913cea5c60724ff4424206b1ee21d4b420e74f86d2586571164"
+      },
+      {
+        "path": "landmarks/serpentine_lido.glb",
+        "bytes": 578316,
+        "sha256": "6169b0ca4a828b12effb71780d9cec4753113239016651e57718b5816890916b"
+      },
+      {
+        "path": "landmarks/serpentine_north.glb",
+        "bytes": 602096,
+        "sha256": "2c651f0d44db9260299e1565c0ecd9380bef445b55bfad3bafd683d0299456cb"
+      },
+      {
+        "path": "landmarks/serpentine_south.glb",
+        "bytes": 666640,
+        "sha256": "12f36ad62f52bfa965c961ac4c65948dd5e9736a61656b5732c131978f203f28"
+      },
+      {
+        "path": "landmarks/sheldon_square.glb",
+        "bytes": 2307380,
+        "sha256": "b87926f03d18b500674400c72d0dcb004b1b4234460df91e5cc07e276c54814b"
+      },
+      {
+        "path": "landmarks/shepherds_bush_empire.glb",
+        "bytes": 807016,
+        "sha256": "fd37458d937238686199c3338f39411ce068af15c9afe5cd0ec02f6455cbe5a1"
+      },
+      {
+        "path": "landmarks/shepherds_bush_market.glb",
+        "bytes": 653504,
+        "sha256": "f20b55b0b0714f320f245dfc5d2b6f31cb886290117c576af6f43e7fbbe068e7"
+      },
+      {
+        "path": "landmarks/shepherds_bush_stations.glb",
+        "bytes": 413680,
+        "sha256": "b5d98e0fd5f5cd928f4df644fa94e401d3981b59c19248b5d4cbab80569c050d"
+      },
+      {
+        "path": "landmarks/sherfield_building.glb",
+        "bytes": 923956,
+        "sha256": "63f872a12236c092237b68baefdfde65b5ffec8c2c238e995ee8d79b641febc0"
+      },
+      {
+        "path": "landmarks/silchester_towers.glb",
+        "bytes": 3343516,
+        "sha256": "309eb0255ed8184e50a63381004955ac43b4fec511619d7b51de37a91443a71c"
+      },
+      {
+        "path": "landmarks/sir_alexander_fleming_building.glb",
+        "bytes": 996376,
+        "sha256": "01cb9dfc3c47d16fcc7f9925ab408f9cd1fcf72aacb40c91a98dd843bb2ffaff"
+      },
+      {
+        "path": "landmarks/sir_michael_uren_hub.glb",
+        "bytes": 1341228,
+        "sha256": "1a61f155673aa8a697ad8bc12c135cc1bbf189c98157190617b6798bbad02b30"
+      },
+      {
+        "path": "landmarks/skempton_building.glb",
+        "bytes": 3678188,
+        "sha256": "9eeea4358507a06577d49c78b0bf05856b135cdfae4610be573b813667b4fa7e"
+      },
+      {
+        "path": "landmarks/sorbonne_house.glb",
+        "bytes": 555188,
+        "sha256": "dc06b3ecbe1f990c35fd9f29675cebf947b643f06b63b7aa38eefc8ca3e656e9"
+      },
+      {
+        "path": "landmarks/south_kensington_station.glb",
+        "bytes": 539644,
+        "sha256": "cfd64a68502f3be91cae48ede152a3b0d312807496f35a0b49814b7a98449285"
+      },
+      {
+        "path": "landmarks/st_augustines_queens_gate.glb",
+        "bytes": 379748,
+        "sha256": "c57ab85c046606b974aec5ad2aea369275b0dff16df156a160f3954bcf2928c7"
+      },
+      {
+        "path": "landmarks/st_cuthberts_philbeach_gardens.glb",
+        "bytes": 419300,
+        "sha256": "53f7a23af79b79078385e7b5801ab96f9de0f670d87e5bdd9a73b3205dacf017"
+      },
+      {
+        "path": "landmarks/st_james_sussex_gardens.glb",
+        "bytes": 403228,
+        "sha256": "6b45745c418873c26f1074d87a13f6873f21e99a1baf73cfd42eaa64520e6be8"
+      },
+      {
+        "path": "landmarks/st_johns_notting_hill.glb",
+        "bytes": 489796,
+        "sha256": "1658877a3e416d57de5fd8dfd843807c411f4042ff4bd64982b0a3f6357776f8"
+      },
+      {
+        "path": "landmarks/st_johns_walham_green.glb",
+        "bytes": 246904,
+        "sha256": "a4926bc39a2a45d0715aa405576a82dd3b517c6517427777bcab18d5f2381400"
+      },
+      {
+        "path": "landmarks/st_lukes_redcliffe_square.glb",
+        "bytes": 401728,
+        "sha256": "b53407b377adaaaf1b84cd6100298b224e2d864bb85af88f7e140d5c1739d968"
+      },
+      {
+        "path": "landmarks/st_mary_abbots.glb",
+        "bytes": 692332,
+        "sha256": "f78b4f5093da3710f4386b980dafde6d188f174bb919e5c0d4c5c3f343a33bde"
+      },
+      {
+        "path": "landmarks/st_mary_the_boltons.glb",
+        "bytes": 267380,
+        "sha256": "4f312daf2b499e344cb04b845e710f7beaa30c5c91902316ed6a6ee627aa41eb"
+      },
+      {
+        "path": "landmarks/st_marys_cambridge_wing.glb",
+        "bytes": 1215064,
+        "sha256": "af61e9363f1c6f13ccc631537446ce97b25000d23e2ca34b1530c35608d5dde5"
+      },
+      {
+        "path": "landmarks/st_marys_clarence_memorial_wing.glb",
+        "bytes": 1522768,
+        "sha256": "231c290a8f1f214bf474551e1f9661d6c7d0cefced46274dc401302e5fdfe756"
+      },
+      {
+        "path": "landmarks/st_marys_lindo_wing.glb",
+        "bytes": 860924,
+        "sha256": "b8572ad6544074abbab65662df867c5b005033d97c4669708d2ee1071963c28f"
+      },
+      {
+        "path": "landmarks/st_marys_medical_school.glb",
+        "bytes": 2507272,
+        "sha256": "e8f41028ef111c469ebe6490e6bf8ec9dde5fb3c6b04d71f5e4285b451d2b3de"
+      },
+      {
+        "path": "landmarks/st_marys_mint_wing.glb",
+        "bytes": 3065036,
+        "sha256": "63d199847f1c1e1116e82d148f4a7e905d390b7f403c590235d1d824f234db7b"
+      },
+      {
+        "path": "landmarks/st_marys_paterson_centre.glb",
+        "bytes": 222080,
+        "sha256": "ce465be6ac1b8e32793c100851dbdc24a5a174757381213c6a960000bb141130"
+      },
+      {
+        "path": "landmarks/st_marys_queen_mother_wing.glb",
+        "bytes": 1050732,
+        "sha256": "8c0c7f23888858464690c42722feb4029dadf49d6fd57a83c391452b17b04d82"
+      },
+      {
+        "path": "landmarks/st_marys_salton_house.glb",
+        "bytes": 448620,
+        "sha256": "82826044d39c89dc1c969bfdc699d9f2f434973689656a31a80692cc21573173"
+      },
+      {
+        "path": "landmarks/st_matthews_bayswater.glb",
+        "bytes": 519824,
+        "sha256": "3a3b018a4ebc081e7647a9ad65b1d84b4fea3800c7f721b8c3bbb54ae163a012"
+      },
+      {
+        "path": "landmarks/st_pauls_hammersmith.glb",
+        "bytes": 1102724,
+        "sha256": "61f48e885640d570b4993e4df44d2cea7f16cb2dedd66c9fd727fff471fd92cc"
+      },
+      {
+        "path": "landmarks/st_pauls_knightsbridge.glb",
+        "bytes": 325476,
+        "sha256": "84dc0a7decafc7467f10f792527c46877c6713f33b7ea029384df649e932f163"
+      },
+      {
+        "path": "landmarks/st_peters_eaton_square.glb",
+        "bytes": 547156,
+        "sha256": "d47bedab23cea2fc370b69f682076fe9dd05b3d994e1c3423bdc8a8bac180685"
+      },
+      {
+        "path": "landmarks/st_sophia_cathedral_bayswater.glb",
+        "bytes": 461652,
+        "sha256": "717273862b8af00bd6e00e5424253c8def3cefad7ddbae155ad36e9f16daab9c"
+      },
+      {
+        "path": "landmarks/stadium_house.glb",
+        "bytes": 537520,
+        "sha256": "ed065961db5593f934142fbfdb12c5b63ab9a9d64f83c3b392403364b6a69e7d"
+      },
+      {
+        "path": "landmarks/stamford_bridge.glb",
+        "bytes": 1870752,
+        "sha256": "14b1383e26beb299bbc86b8d535c304f5c7308afaf6cfdff45ab2126d466fdfe"
+      },
+      {
+        "path": "landmarks/stebbing_house.glb",
+        "bytes": 338460,
+        "sha256": "4e7acd4e1678e396d521add07c82584050fea643c01d33b38fe3eb471935f618"
+      },
+      {
+        "path": "landmarks/the_ark.glb",
+        "bytes": 1090384,
+        "sha256": "4227409c40befc9280c7bf351bcb8503aa0d514447fbf0d8cfd60a4c4a9f83a5"
+      },
+      {
+        "path": "landmarks/the_lanesborough.glb",
+        "bytes": 1453296,
+        "sha256": "c2579ce843441cedc650d1de7d66ab0c183d8709a036402a734cde0961e30fcc"
+      },
+      {
+        "path": "landmarks/the_mediaworks.glb",
+        "bytes": 1535432,
+        "sha256": "8016e073815bf580fca66c37454dd2aa2d1fdeb14897487fac95c104778c06d3"
+      },
+      {
+        "path": "landmarks/the_point_paddington.glb",
+        "bytes": 497988,
+        "sha256": "5b85f1d909568867a154762cbf953296ff4f9914acaf7c0a60c9332315923342"
+      },
+      {
+        "path": "landmarks/the_studio_building.glb",
+        "bytes": 764728,
+        "sha256": "93ebf6c8a6eea542103e25c11be547556e4e6aa613d30c2f6f543042a7ef3172"
+      },
+      {
+        "path": "landmarks/the_westworks.glb",
+        "bytes": 1014160,
+        "sha256": "3ab942dc4c7c7068cb2ace8f6540a8a02c50ae20d9998e08192f20c4b842d106"
+      },
+      {
+        "path": "landmarks/the_white_building.glb",
+        "bytes": 368476,
+        "sha256": "209798bfe0a0438e2bb9dec77d1147d4cd99bdb3d0b84a2c8139feecd8fa4848"
+      },
+      {
+        "path": "landmarks/the_yellow_building.glb",
+        "bytes": 245964,
+        "sha256": "60ae93ac5b71b725338e76354c51431fcd904da9197d2ad9787bf65a75d15eb8"
+      },
+      {
+        "path": "landmarks/trellick_tower.glb",
+        "bytes": 3673980,
+        "sha256": "c46eff8e29594cd5d2dcc03dc51e243a7a13976c81e355d89cb66c94614b1d6b"
+      },
+      {
+        "path": "landmarks/victoria_and_albert_museum.glb",
+        "bytes": 5296216,
+        "sha256": "1904e7af17576eb76e44bf0eb880806edea7ff1044b9566694218ac359dffce1"
+      },
+      {
+        "path": "landmarks/victoria_coach_station.glb",
+        "bytes": 1257364,
+        "sha256": "0cacbb23ce6547a87529f407695b2ae14785a9811e0b53397c6a9905b927d2b5"
+      },
+      {
+        "path": "landmarks/victoria_gate_lodge.glb",
+        "bytes": 195608,
+        "sha256": "c8065e2eb4b68603347f6478ee8bc9d52707944fae2af99111ff8ebdd1a1461f"
+      },
+      {
+        "path": "landmarks/victoria_station.glb",
+        "bytes": 3123532,
+        "sha256": "6db0ccdba127f4cef60aa5b16bbeb32162220cfe3816da2ecfc70ae263dbb769"
+      },
+      {
+        "path": "landmarks/water_gardens_estate.glb",
+        "bytes": 2742824,
+        "sha256": "cdebc9f837181f054947070eaac1fb65b249571892eefb2a9a4251e7313d4d7e"
+      },
+      {
+        "path": "landmarks/waterside_house_paddington.glb",
+        "bytes": 283848,
+        "sha256": "1f8a252c72fdbca08d8016eac96b7aebfa07a4e681c54baf1c478277cf72860d"
+      },
+      {
+        "path": "landmarks/weeks_hall.glb",
+        "bytes": 220452,
+        "sha256": "9019e89b18864883a83d608eb9d2247b5f3fa61b03150d7f496b19858bfff57e"
+      },
+      {
+        "path": "landmarks/wellington_arch.glb",
+        "bytes": 2778132,
+        "sha256": "1750f890c36d9901f6973b7c2161c23f5ddeb4a68c5b217c8273b4aa5a461ee9"
+      },
+      {
+        "path": "landmarks/west_12_shopping_centre.glb",
+        "bytes": 382300,
+        "sha256": "ab2ef64f561a74cef94b37c924a59b44dd1b6717ad181a9afd7bf5d9d3b71c3f"
+      },
+      {
+        "path": "landmarks/west_brompton_station.glb",
+        "bytes": 268664,
+        "sha256": "f05ffb8b05f4379fea7b7bb5b1123ee9eca12a9ec9fc66851e3305289f3fc28d"
+      },
+      {
+        "path": "landmarks/westfield_london.glb",
+        "bytes": 6408160,
+        "sha256": "667ecd613597e09a7446bfd29631a8629c3f662365d78bdcebc5eace2f9cd388"
+      },
+      {
+        "path": "landmarks/westway_sports_centre.glb",
+        "bytes": 91632,
+        "sha256": "41c9011473a844a0a60275523e367b54c60fa70819a5749cbd35e9b3a2931b04"
+      },
+      {
+        "path": "landmarks/white_city_energy_centre.glb",
+        "bytes": 803552,
+        "sha256": "e32e221439c4ccd0d9eb28f45c5387bef9f119e88a094521d1c72c04198f2ad0"
+      },
+      {
+        "path": "landmarks/white_city_station.glb",
+        "bytes": 753620,
+        "sha256": "e37ccf54a875f94e5d0299ad02e01aad6ec3aeec2f41711e3a74015478cd942e"
+      },
+      {
+        "path": "landmarks/whiteleys.glb",
+        "bytes": 1983960,
+        "sha256": "56aa9fac80ce263a21e4b8e515cb277f335da31e0c0ac23bddb55a987009da81"
+      },
+      {
+        "path": "landmarks/william_penney_laboratory.glb",
+        "bytes": 194056,
+        "sha256": "e47a367393e079672bcbf4bf72da94661b403296a79d6369e4b0713eee952097"
+      },
+      {
+        "path": "landmarks/wood_lane_station.glb",
+        "bytes": 388720,
+        "sha256": "27eab5980c27e8ed175924052fadee605c0ade0ca36b4df2260b6fce8536875e"
+      },
+      {
+        "path": "landmarks/wood_lane_studios.glb",
+        "bytes": 3752012,
+        "sha256": "62458dcd42fd89614480c78b92271232ea7ecca0f55c732e1125a130887104b6"
+      },
+      {
+        "path": "landmarks/wormwood_scrubs_gatehouse.glb",
+        "bytes": 761920,
+        "sha256": "34949c3682f55944bdf21b81db8c505a5b4ffe44845616f96a55d1b46e3a4f52"
+      },
+      {
+        "path": "textures/000568f802a87e10fc91.png",
+        "bytes": 8112,
+        "sha256": "000568f802a87e10fc91544ef11d92562b635ee8697d3f43849cc1e78e6043d2"
+      },
+      {
+        "path": "textures/006d84555cca565d131d.png",
+        "bytes": 41308,
+        "sha256": "006d84555cca565d131d89330b8975008bd120ad3a2eb6efb67fb75ea830b7f7"
+      },
+      {
+        "path": "textures/00d2897c70ac06cc470c.png",
+        "bytes": 9116,
+        "sha256": "00d2897c70ac06cc470c5603146079c7b3e8c26532bee10aef475881b52adb6d"
+      },
+      {
+        "path": "textures/010104fa0ba6515e0d1c.png",
+        "bytes": 9004,
+        "sha256": "010104fa0ba6515e0d1c585e4d23adb8cec319fad04a8e58fe8634ba6fa1c71a"
+      },
+      {
+        "path": "textures/014901449f81239992d1.png",
+        "bytes": 9948,
+        "sha256": "014901449f81239992d114b0f045519fc6d1129b0d00467cc995b3835729fdde"
+      },
+      {
+        "path": "textures/018fa4b134d3668364be.png",
+        "bytes": 125884,
+        "sha256": "018fa4b134d3668364be42c6895208f5995ff88fa3a6b7ea6cc937c8472f02d4"
+      },
+      {
+        "path": "textures/01fb87509f0ef7c84f7b.png",
+        "bytes": 42040,
+        "sha256": "01fb87509f0ef7c84f7b00f6eeab4cb7f138cd707dcdefd4a8053209035fb9fb"
+      },
+      {
+        "path": "textures/026fe2f2d569855399c5.png",
+        "bytes": 17556,
+        "sha256": "026fe2f2d569855399c5831d09976f2cc750c320573d041eb71391c845158f23"
+      },
+      {
+        "path": "textures/0270ee6dc9130b13add6.png",
+        "bytes": 17908,
+        "sha256": "0270ee6dc9130b13add6a951830548d9110937d09e653e56964cf6e0a7e8e153"
+      },
+      {
+        "path": "textures/02a21744d5f78aa9cd12.png",
+        "bytes": 34436,
+        "sha256": "02a21744d5f78aa9cd127093fa3f8bf9fa154e310935712a215f267eeb51a87d"
+      },
+      {
+        "path": "textures/0359983ad68802ba595b.png",
+        "bytes": 11432,
+        "sha256": "0359983ad68802ba595ba7dbb52c916e0569c4446e9a97f3e78e861dfe0490db"
+      },
+      {
+        "path": "textures/044c1002cc62fa5cd593.png",
+        "bytes": 20828,
+        "sha256": "044c1002cc62fa5cd593c374fb2e74eb853b1590e5fe7c7813842520d2293108"
+      },
+      {
+        "path": "textures/06ac872195fc2d913e94.png",
+        "bytes": 7072,
+        "sha256": "06ac872195fc2d913e94be3a64963c859b08be247b8d0a4b2e2596cdf7d08b59"
+      },
+      {
+        "path": "textures/06b6d953b76857d32ed0.png",
+        "bytes": 26168,
+        "sha256": "06b6d953b76857d32ed0f4c90d4fba995ef3bb48165ad87ab935afa8d7004b86"
+      },
+      {
+        "path": "textures/070de83b8f57752f9053.png",
+        "bytes": 1812,
+        "sha256": "070de83b8f57752f9053d7d28b3d145aaef431e33cb37380cd0315c79c557ca0"
+      },
+      {
+        "path": "textures/07e820517606eb94ba1c.png",
+        "bytes": 5096,
+        "sha256": "07e820517606eb94ba1c381f1f51eef92e578ad685e35e9708467dae32310a23"
+      },
+      {
+        "path": "textures/07f1eca0bb57cfb8a349.png",
+        "bytes": 8568,
+        "sha256": "07f1eca0bb57cfb8a349414f4846fb662f55ffef09a856b9b4e5d8c8b74bd3f4"
+      },
+      {
+        "path": "textures/080fc836fc01bd641f40.png",
+        "bytes": 632,
+        "sha256": "080fc836fc01bd641f40fadf5c1ed12d6b4afe39afc0ee3c13fb4d4c17e4f7ed"
+      },
+      {
+        "path": "textures/08723dd63ab95966d9cf.png",
+        "bytes": 4728,
+        "sha256": "08723dd63ab95966d9cfdac0bf30d2fe27fe6cb499a6489cbf6b96071c101e62"
+      },
+      {
+        "path": "textures/08e6a49dbfec3f936108.png",
+        "bytes": 20580,
+        "sha256": "08e6a49dbfec3f93610824a37f67846491a436fa99b1a739fdb5988b31e04788"
+      },
+      {
+        "path": "textures/09eae79a4a24c5132848.png",
+        "bytes": 83404,
+        "sha256": "09eae79a4a24c5132848ceb9541785a4a63fded99fa00053fb7ecb24584a1a2d"
+      },
+      {
+        "path": "textures/09f3bcdf555ddc789091.png",
+        "bytes": 57392,
+        "sha256": "09f3bcdf555ddc78909147c94cbd41b72a9e82ced89f469105c82aa13fa617d1"
+      },
+      {
+        "path": "textures/0a6ad88413efae7aeff6.png",
+        "bytes": 22748,
+        "sha256": "0a6ad88413efae7aeff6137ffb9db43e040799534b073e59113b3d0207c2f598"
+      },
+      {
+        "path": "textures/0b469207934ae0bd36b4.png",
+        "bytes": 26316,
+        "sha256": "0b469207934ae0bd36b4a9cd563604ebc27b2daa25ed217ae05beb2d9cb98ad7"
+      },
+      {
+        "path": "textures/0bbc9c9873698e37e0cd.png",
+        "bytes": 19172,
+        "sha256": "0bbc9c9873698e37e0cdd93f9905407554cce9d7980b30688ceb10fcb65c85b0"
+      },
+      {
+        "path": "textures/0bef23ed609752eefa8f.png",
+        "bytes": 24580,
+        "sha256": "0bef23ed609752eefa8f264e7d079d3fe5334ac2b1accf28f638804fd9a81f6d"
+      },
+      {
+        "path": "textures/0d34836ae0cf94590558.png",
+        "bytes": 7776,
+        "sha256": "0d34836ae0cf945905588c5a65709dd10f6158e6d53eaba2d3fea1da1746078f"
+      },
+      {
+        "path": "textures/0d5cadeb0099cfc5a282.png",
+        "bytes": 1052,
+        "sha256": "0d5cadeb0099cfc5a28216f99a489bf90021d71b4a8bad2149a05e871b701540"
+      },
+      {
+        "path": "textures/0deaaa700f3ec764448f.png",
+        "bytes": 21740,
+        "sha256": "0deaaa700f3ec764448f0b919d430ae113a9b0f3c37fee73c1e7b3922b0f78df"
+      },
+      {
+        "path": "textures/0e12a5ff7693a28fdcab.png",
+        "bytes": 40528,
+        "sha256": "0e12a5ff7693a28fdcabc4212364388fe4accaee0240adc7cc9bab30de23b829"
+      },
+      {
+        "path": "textures/0e76c14ae49245a29c70.png",
+        "bytes": 7076,
+        "sha256": "0e76c14ae49245a29c704edde77ccccb4b7b5a5d58cbdaf20640159d0d24675c"
+      },
+      {
+        "path": "textures/0e7a81f5c7f4a1316538.png",
+        "bytes": 87984,
+        "sha256": "0e7a81f5c7f4a1316538de96203dfabf28b8b115e07e921ad1ccc23430175e57"
+      },
+      {
+        "path": "textures/0e8bf866afc36a5993ec.png",
+        "bytes": 968,
+        "sha256": "0e8bf866afc36a5993ec18f20798d67af4f429cfd672ebd2ce49a15cc01440b1"
+      },
+      {
+        "path": "textures/0eb492da1379e3574114.png",
+        "bytes": 76696,
+        "sha256": "0eb492da1379e35741147aee9096509e7e2776e5c29f7ddc011986da6f8f8cf5"
+      },
+      {
+        "path": "textures/0ef889849556bc1202b7.png",
+        "bytes": 864,
+        "sha256": "0ef889849556bc1202b729011ca2fb4837a994d8c327e2c09f4efe10c94f02d3"
+      },
+      {
+        "path": "textures/0f09d36fe63b38dd6598.png",
+        "bytes": 43484,
+        "sha256": "0f09d36fe63b38dd6598f9705e6e8c6d2a2651ce527f313d2d6029dfcd4ab791"
+      },
+      {
+        "path": "textures/0f264ed15f5277c9d430.png",
+        "bytes": 3692,
+        "sha256": "0f264ed15f5277c9d430e3f37b5c02f68c3d2367bad99b57481445a31a652ad5"
+      },
+      {
+        "path": "textures/0fd1a3e83e81bc4cc2b1.png",
+        "bytes": 42684,
+        "sha256": "0fd1a3e83e81bc4cc2b1c82bdf5933e939e7b2280dfe96baa8876fb78e7caf39"
+      },
+      {
+        "path": "textures/10d8eb27b0f471172ff6.png",
+        "bytes": 8308,
+        "sha256": "10d8eb27b0f471172ff68a0c427bad310f21c937b502bc0a232de9a71816ac4f"
+      },
+      {
+        "path": "textures/10e64d661a6802c9c90d.png",
+        "bytes": 5052,
+        "sha256": "10e64d661a6802c9c90d31c5eb1b87dc0e0b619b12a321ec8e0cc9290cff5bf4"
+      },
+      {
+        "path": "textures/10f4b45c93d3104cd88b.png",
+        "bytes": 8332,
+        "sha256": "10f4b45c93d3104cd88b55d7686a26c0e56ccc93f8e46586772157a1f03ed905"
+      },
+      {
+        "path": "textures/12a0ce87e5d102fd4bb5.png",
+        "bytes": 19620,
+        "sha256": "12a0ce87e5d102fd4bb589e6e8dc7df4b8656620751b4f63777f98f621933879"
+      },
+      {
+        "path": "textures/132055cf1711d8037da9.png",
+        "bytes": 16160,
+        "sha256": "132055cf1711d8037da9f32146072ff28ec9b320a923472a8d6194ce50569bf0"
+      },
+      {
+        "path": "textures/1342c26c91f8de359504.png",
+        "bytes": 12368,
+        "sha256": "1342c26c91f8de35950455c2763660a71128e994992de05f141b3fd51efeb0e7"
+      },
+      {
+        "path": "textures/136ea6b86da66633f689.png",
+        "bytes": 8448,
+        "sha256": "136ea6b86da66633f689589eca1a07111a4ac94d972e7f64e6adb9315605b3d5"
+      },
+      {
+        "path": "textures/1394c6fcebdfd45247d3.png",
+        "bytes": 1220,
+        "sha256": "1394c6fcebdfd45247d353afbfea1cb4a8455ba4f0579ac43358474ef67014e3"
+      },
+      {
+        "path": "textures/13ae2260c6495f6c771b.png",
+        "bytes": 10020,
+        "sha256": "13ae2260c6495f6c771b36b856eeff4387ce39f7d571da69d87d0e5081279e82"
+      },
+      {
+        "path": "textures/145d6bee8d827c99872b.png",
+        "bytes": 14996,
+        "sha256": "145d6bee8d827c99872bb2dfc3becf50be59c18cbb603cf7d92c780c93d7bde5"
+      },
+      {
+        "path": "textures/14851495467d5b33fe8f.png",
+        "bytes": 43572,
+        "sha256": "14851495467d5b33fe8faebefbe70f23a01370238eab59b2383d0bb74947c2bf"
+      },
+      {
+        "path": "textures/15a3fb35a93f0b387688.png",
+        "bytes": 3416,
+        "sha256": "15a3fb35a93f0b387688da4986c019f465524dccf6697d8c4c3fee6e00704d6e"
+      },
+      {
+        "path": "textures/15f152a2e4984d7091a3.png",
+        "bytes": 11104,
+        "sha256": "15f152a2e4984d7091a30c291370d9c4ac40b126e7198a8495fc7dc39e25ca05"
+      },
+      {
+        "path": "textures/1621f68dfadbdb10f2e9.png",
+        "bytes": 7948,
+        "sha256": "1621f68dfadbdb10f2e97019073f888c57b204fa7bffbab7ffe6117ffe00cc51"
+      },
+      {
+        "path": "textures/162e02cecdea8c72c4eb.png",
+        "bytes": 10668,
+        "sha256": "162e02cecdea8c72c4ebbb2d7fe6d08bcc7f98dd31a037688d21cbe34d656752"
+      },
+      {
+        "path": "textures/16d8b0b7daa704e7bc8d.png",
+        "bytes": 8772,
+        "sha256": "16d8b0b7daa704e7bc8d92958f8a1a56c9844423bc6b9c151979d7ba58663efc"
+      },
+      {
+        "path": "textures/16e914d8905b673674b7.png",
+        "bytes": 38920,
+        "sha256": "16e914d8905b673674b7407fe5c21355c62cc7ce668643fa14732d7e0fa06dc2"
+      },
+      {
+        "path": "textures/1796d806b1864d6ee25b.png",
+        "bytes": 2592,
+        "sha256": "1796d806b1864d6ee25b1fa705d62bebe90d0c11c5808ea2122d7ed8a90a3213"
+      },
+      {
+        "path": "textures/1abc99a29527bf306885.png",
+        "bytes": 80916,
+        "sha256": "1abc99a29527bf306885bb38e98ba76295cc5849d80bf1ce85b03055dd64dca7"
+      },
+      {
+        "path": "textures/1b027be8768ffeeed2bd.png",
+        "bytes": 3364,
+        "sha256": "1b027be8768ffeeed2bd762bf343d50da459e207fb73959248f5346d457ec62a"
+      },
+      {
+        "path": "textures/1b1a73a0e54bb63f13a6.png",
+        "bytes": 37756,
+        "sha256": "1b1a73a0e54bb63f13a628182ccbaed2931caf5dfb2cd7ea2329bfdb459e8775"
+      },
+      {
+        "path": "textures/1b57a597840d2316147e.png",
+        "bytes": 8296,
+        "sha256": "1b57a597840d2316147e3fd182aa05c6a6137993af5bb34ff43d36836360f36c"
+      },
+      {
+        "path": "textures/1cb0ba37567afa748476.png",
+        "bytes": 30224,
+        "sha256": "1cb0ba37567afa748476d08acf8e8a7fadc2ab7aa4d03a4ba2d9d59b320ec9b9"
+      },
+      {
+        "path": "textures/1ce6ea4b082117cc4c56.png",
+        "bytes": 4004,
+        "sha256": "1ce6ea4b082117cc4c56c1efaf0fce8936f0786afbf7a2301ece958678368956"
+      },
+      {
+        "path": "textures/1e644f6ed2d627986b80.png",
+        "bytes": 11924,
+        "sha256": "1e644f6ed2d627986b80d8b534caa59c1cea6eaafc6c27c835db0b1ef7f621b2"
+      },
+      {
+        "path": "textures/1f50418c07862e489189.png",
+        "bytes": 6676,
+        "sha256": "1f50418c07862e4891898940962ece672c6e4a4819264cdbc0988a3775a2210c"
+      },
+      {
+        "path": "textures/1f6750ead17a8bfd6876.png",
+        "bytes": 30724,
+        "sha256": "1f6750ead17a8bfd6876986aa3fc7c947164b2872fba9dd044d26474b419413e"
+      },
+      {
+        "path": "textures/214216fab20d22b497f8.png",
+        "bytes": 38148,
+        "sha256": "214216fab20d22b497f81c9ab9f8b2f07f09aae748375f23af6b6839102a3d03"
+      },
+      {
+        "path": "textures/2181447701a2e6b4e526.png",
+        "bytes": 20532,
+        "sha256": "2181447701a2e6b4e52602c0b8139db5c23ca81942f18221248a756694b7fcd2"
+      },
+      {
+        "path": "textures/21d00d5af66da526677f.png",
+        "bytes": 3328,
+        "sha256": "21d00d5af66da526677f17859f964c298b11d3093a78c97a26e4eace5f644c55"
+      },
+      {
+        "path": "textures/21e4b68b5320c3c48a22.png",
+        "bytes": 10568,
+        "sha256": "21e4b68b5320c3c48a227b0e2a6f47c58f47a37e93d527bb66b3ddb748ceddcf"
+      },
+      {
+        "path": "textures/221a6789ed2efdce1301.png",
+        "bytes": 4208,
+        "sha256": "221a6789ed2efdce1301965fa57a97333bdf16ea2c4586feac15be67f5fffc1d"
+      },
+      {
+        "path": "textures/224729c6428bac81f531.png",
+        "bytes": 14452,
+        "sha256": "224729c6428bac81f5315ab01cf582186019d577592d3765ea2ea182a714ed68"
+      },
+      {
+        "path": "textures/22f06d449c5e0bbc6bc3.png",
+        "bytes": 20632,
+        "sha256": "22f06d449c5e0bbc6bc3c1f34a70aef87c0af40fa007e9d493967b706e969700"
+      },
+      {
+        "path": "textures/23644a0b73b342f4a6df.png",
+        "bytes": 548,
+        "sha256": "23644a0b73b342f4a6df9d498b823e1674d7423491c1be19d4b1fb5a9e3f783c"
+      },
+      {
+        "path": "textures/23d3e24dd1713ca41cd0.png",
+        "bytes": 8568,
+        "sha256": "23d3e24dd1713ca41cd08235129add069db656315c9855870c44cc2c7632ba2d"
+      },
+      {
+        "path": "textures/24fe6a084524ffb883d2.png",
+        "bytes": 79872,
+        "sha256": "24fe6a084524ffb883d2de6a3ed0b79366176bd3b3859ae3f6f8e85f54d213f1"
+      },
+      {
+        "path": "textures/250f09bc3e203cc85e15.png",
+        "bytes": 11888,
+        "sha256": "250f09bc3e203cc85e150aab2e5d79d3e58025d006a0f3723de7cf87273a572a"
+      },
+      {
+        "path": "textures/25544a3cf8965447bc94.png",
+        "bytes": 56088,
+        "sha256": "25544a3cf8965447bc94916ce4deb36e5ca568bb1374800a0bd885351d84868b"
+      },
+      {
+        "path": "textures/262f72be9eae676de767.png",
+        "bytes": 836,
+        "sha256": "262f72be9eae676de767bcff535bc17ac1cde61ff3704eec01d46ca9734a7a67"
+      },
+      {
+        "path": "textures/26450cabbd3af9a9a9d1.png",
+        "bytes": 10028,
+        "sha256": "26450cabbd3af9a9a9d101e9669a3a4ca56e9d6e76d1de990c6141dcee8dd0d5"
+      },
+      {
+        "path": "textures/26569a149ce84faa6a84.png",
+        "bytes": 60684,
+        "sha256": "26569a149ce84faa6a8497ea588989fd2110c67b00b74060288ea68db142dee8"
+      },
+      {
+        "path": "textures/28abd2040f09521e9cfe.png",
+        "bytes": 25116,
+        "sha256": "28abd2040f09521e9cfe585ec30b14f6bdf78936166719d4003c2e557ac853a8"
+      },
+      {
+        "path": "textures/2abcd01ecfe22fb9697a.png",
+        "bytes": 19808,
+        "sha256": "2abcd01ecfe22fb9697aab43d0cace9a8cef99b07219d1177452e1a1a37edfc6"
+      },
+      {
+        "path": "textures/2bc16c4446c971222d01.png",
+        "bytes": 2592,
+        "sha256": "2bc16c4446c971222d01279ca19dbcd71dc7aeb1a7d6870dcdc45de72fbafae9"
+      },
+      {
+        "path": "textures/2c6961f7d9b87f70bbf3.png",
+        "bytes": 6288,
+        "sha256": "2c6961f7d9b87f70bbf35e495fb063bb62ba99923d75df5daa591a37468c93fb"
+      },
+      {
+        "path": "textures/2cf4fd196b47015c9f79.png",
+        "bytes": 7640,
+        "sha256": "2cf4fd196b47015c9f79791ac8b10a0c1725cc64f527df7a95d51b2722ad4eaa"
+      },
+      {
+        "path": "textures/2d8f2dc1815f826d06df.png",
+        "bytes": 20440,
+        "sha256": "2d8f2dc1815f826d06df34365e11fe94d0c1be8d2f800c9eb73ea36a4d93abfd"
+      },
+      {
+        "path": "textures/2d95869cc9e3a3fe9bd2.png",
+        "bytes": 544,
+        "sha256": "2d95869cc9e3a3fe9bd22e6b471928da0dd2a46683500b18ea876cb75506ce46"
+      },
+      {
+        "path": "textures/2dada806e27d717d2011.png",
+        "bytes": 92264,
+        "sha256": "2dada806e27d717d2011c4b5bac0c33fcec8d1361625514d54fcbf797397d167"
+      },
+      {
+        "path": "textures/2db6d0115339e150f2fe.png",
+        "bytes": 21836,
+        "sha256": "2db6d0115339e150f2fe2f435d0724728dec0c0fc8720660c77d0873e63879ad"
+      },
+      {
+        "path": "textures/2de768d095ba6f9ac0a6.png",
+        "bytes": 3000,
+        "sha256": "2de768d095ba6f9ac0a64337d6b365dc80118164eecb5f67c5e5424c30c20c7d"
+      },
+      {
+        "path": "textures/2dff4d72527a2bbe507a.png",
+        "bytes": 92260,
+        "sha256": "2dff4d72527a2bbe507aef58e07cd6b1099f57f85148109ec7589a1632db80cb"
+      },
+      {
+        "path": "textures/2f5b97aeb716922aa88a.png",
+        "bytes": 8528,
+        "sha256": "2f5b97aeb716922aa88a62fd01d90bd5b682c5c419b9bee657d4a6e055c3aedf"
+      },
+      {
+        "path": "textures/302db337d3d3b57f7125.png",
+        "bytes": 6892,
+        "sha256": "302db337d3d3b57f712513f559c0fc651afc5d6ade14be458b5431c987d8dbc7"
+      },
+      {
+        "path": "textures/320701046881615dba02.png",
+        "bytes": 18392,
+        "sha256": "320701046881615dba026b6f51b4cc956bc7bef7ecb1e3c3ae0412d739f4df96"
+      },
+      {
+        "path": "textures/323b943e3f4fb23e7805.png",
+        "bytes": 2212,
+        "sha256": "323b943e3f4fb23e78054f7511d101820d8ff0c9b7510046c14352dde0601f25"
+      },
+      {
+        "path": "textures/32a89a2614895edf16c7.png",
+        "bytes": 5940,
+        "sha256": "32a89a2614895edf16c729d70199c74d517ae6c5fe8b0165542f6fb2fd69e17c"
+      },
+      {
+        "path": "textures/33928d033f5cc8efe1f9.png",
+        "bytes": 5840,
+        "sha256": "33928d033f5cc8efe1f905b2d28ca6fa60ecae217a280c31542b8aa8c331022f"
+      },
+      {
+        "path": "textures/33c7f64e4b5f903f8fb3.png",
+        "bytes": 15020,
+        "sha256": "33c7f64e4b5f903f8fb3cd932769c933588836b8a37fa5c4563bf14b97db0392"
+      },
+      {
+        "path": "textures/33f840de9af450d5b631.png",
+        "bytes": 3892,
+        "sha256": "33f840de9af450d5b6317df0ae630e27d27f3194d1015d040a94e59b3ed86541"
+      },
+      {
+        "path": "textures/3452fd6394f6afcfbc49.png",
+        "bytes": 42316,
+        "sha256": "3452fd6394f6afcfbc49f5462299190aba9bf82c0f8e8d83243fc6b14a2a45d1"
+      },
+      {
+        "path": "textures/348fd21ac5a8f55d6f26.png",
+        "bytes": 1008,
+        "sha256": "348fd21ac5a8f55d6f26d6a7aecb79c8c13ee3791e92f06a1d3d6e50a6119ae0"
+      },
+      {
+        "path": "textures/34b8ff0d2e9b7cd7fca6.png",
+        "bytes": 40700,
+        "sha256": "34b8ff0d2e9b7cd7fca6b89db04e34e031c1303d984c61201df40a137833ea68"
+      },
+      {
+        "path": "textures/34c256e27610a2b27d3c.png",
+        "bytes": 6912,
+        "sha256": "34c256e27610a2b27d3c1bdc5f2b8acd376b0d8faa47ff2f7aa1d69f69dfd058"
+      },
+      {
+        "path": "textures/350b6616f5830d37876d.png",
+        "bytes": 10164,
+        "sha256": "350b6616f5830d37876dd6e81db2ee64532a0325b782d3f669c6f4d88e5c1031"
+      },
+      {
+        "path": "textures/3536328090f8cbe0cc77.png",
+        "bytes": 16872,
+        "sha256": "3536328090f8cbe0cc778a5af1cd183767113c5b0b304f542110a702cf126233"
+      },
+      {
+        "path": "textures/3582c26f2dbd5efbf099.png",
+        "bytes": 4784,
+        "sha256": "3582c26f2dbd5efbf09921bc32dafbf78c106c59dae8066d7fbcf4fdae75c29b"
+      },
+      {
+        "path": "textures/359e54c94f6d09dedf3c.png",
+        "bytes": 10332,
+        "sha256": "359e54c94f6d09dedf3c3061cc5bd45c4adbf081aaed42d4dc00ea70a2045150"
+      },
+      {
+        "path": "textures/35bc37102341a7b8afd5.png",
+        "bytes": 7912,
+        "sha256": "35bc37102341a7b8afd577575461cf81d882d94c81c27af0cf69d22465be18fa"
+      },
+      {
+        "path": "textures/36a45ec5d7067ef1e0dd.png",
+        "bytes": 9036,
+        "sha256": "36a45ec5d7067ef1e0ddf15988e5c37a72e88c7bb4998acb432248f098ee4cd6"
+      },
+      {
+        "path": "textures/38a999755231a7246083.png",
+        "bytes": 12272,
+        "sha256": "38a999755231a7246083d2d1f44dc59d8b76e7ebc9b5650f1c4938ef49b5b65a"
+      },
+      {
+        "path": "textures/39f002c8db1b5cfbf5af.png",
+        "bytes": 1052,
+        "sha256": "39f002c8db1b5cfbf5afdfbe1f6ba1f9f53c48d95912644bc9920a9078271db0"
+      },
+      {
+        "path": "textures/3a399bef7df3a438e68c.png",
+        "bytes": 37072,
+        "sha256": "3a399bef7df3a438e68cf24b08713c4ef175aee76adcadc6e213752f8217490b"
+      },
+      {
+        "path": "textures/3a9107fdb1b63f155a99.png",
+        "bytes": 37068,
+        "sha256": "3a9107fdb1b63f155a998a2023a0b75e7c0e2a940113efc6385accacd80319e8"
+      },
+      {
+        "path": "textures/3a98e7ce60440bb7d4bd.png",
+        "bytes": 752,
+        "sha256": "3a98e7ce60440bb7d4bd5154e8a116f18ae28af3cfe6d0553f2215c5d515426b"
+      },
+      {
+        "path": "textures/3aea94bb48156e333071.png",
+        "bytes": 7432,
+        "sha256": "3aea94bb48156e333071d767920cf431d8726379f23daa432692fbb402d413e0"
+      },
+      {
+        "path": "textures/3bcb0fe556ffd89d2621.png",
+        "bytes": 6136,
+        "sha256": "3bcb0fe556ffd89d262163e41750c1937f9e91b8941d223c032fe5b7dfeffadc"
+      },
+      {
+        "path": "textures/3ca020a1421458737695.png",
+        "bytes": 2640,
+        "sha256": "3ca020a142145873769532410fad0d693b4ebe2382c8d4fe35c0d4578cd29da8"
+      },
+      {
+        "path": "textures/3cc408cfed62f5519a7e.png",
+        "bytes": 9968,
+        "sha256": "3cc408cfed62f5519a7e8ad164854d11b752b2a44649df93d4dafe9e21f337b3"
+      },
+      {
+        "path": "textures/3cd17ca0c8ffc8014d87.png",
+        "bytes": 7784,
+        "sha256": "3cd17ca0c8ffc8014d87b88024ca52b4b5932aa3ee3a3197aa836761316c426f"
+      },
+      {
+        "path": "textures/3d89495bebf370702d4d.png",
+        "bytes": 20700,
+        "sha256": "3d89495bebf370702d4d714b25ff6c7ace89f284c849b2bf7bf2523a06f9f3bb"
+      },
+      {
+        "path": "textures/3de56a7f5d03e91a5882.png",
+        "bytes": 7456,
+        "sha256": "3de56a7f5d03e91a5882bcb797f6310b3c072ce57634d69785419cfd48304dbd"
+      },
+      {
+        "path": "textures/3e93a934587574d42ab2.png",
+        "bytes": 6464,
+        "sha256": "3e93a934587574d42ab22ada316026d5469ae1b6b35c33b77c6233c66fab47cb"
+      },
+      {
+        "path": "textures/3f044b6d9b6ad2222a26.png",
+        "bytes": 4132,
+        "sha256": "3f044b6d9b6ad2222a263d5a8f9caca12e475ea7f070fa97d7f38c3c603fc43d"
+      },
+      {
+        "path": "textures/3ff20c98f5c544c42d88.png",
+        "bytes": 71524,
+        "sha256": "3ff20c98f5c544c42d8844a31365000be83aeb2d510aa9d0d51eb07e78c89b5f"
+      },
+      {
+        "path": "textures/4026e470b2e16958d887.png",
+        "bytes": 2860,
+        "sha256": "4026e470b2e16958d887f7e55e91c5494ac6465160126cc4e3224245d58c28fd"
+      },
+      {
+        "path": "textures/40c95bbae0c9a1a7266f.png",
+        "bytes": 5724,
+        "sha256": "40c95bbae0c9a1a7266f4a965e29e5d30d0d20d8365f36fe0251c038f2a920fd"
+      },
+      {
+        "path": "textures/40cacc5e91e69967e207.png",
+        "bytes": 77296,
+        "sha256": "40cacc5e91e69967e207d2b16c555381bd7895d9035a5adf7aea0f5538e1a913"
+      },
+      {
+        "path": "textures/410abcfe15f5a78bedc6.png",
+        "bytes": 248,
+        "sha256": "410abcfe15f5a78bedc6c41d6cad2694aaa4f92b16bdda2066155ad8e874aee5"
+      },
+      {
+        "path": "textures/4143b0d3ad0b3cb6a9ac.png",
+        "bytes": 82332,
+        "sha256": "4143b0d3ad0b3cb6a9ac07d07d691c169ca9ab2aec97145fbfe03fd0824f17d1"
+      },
+      {
+        "path": "textures/41a496210e7f8169c71b.png",
+        "bytes": 7192,
+        "sha256": "41a496210e7f8169c71bec99d62c014b75c19ba07b4b3161b1ebc81f6895629b"
+      },
+      {
+        "path": "textures/41e883b13c49e55ea8cc.png",
+        "bytes": 7644,
+        "sha256": "41e883b13c49e55ea8cc98f83d077f3c39684bab7ef3b09976ca3c80568fdc5e"
+      },
+      {
+        "path": "textures/41f181838f1cdc867f57.png",
+        "bytes": 6676,
+        "sha256": "41f181838f1cdc867f570946e371ca16531abddcf2ba62985819688260e43ad5"
+      },
+      {
+        "path": "textures/423300de31e24afeb8a5.png",
+        "bytes": 16708,
+        "sha256": "423300de31e24afeb8a5aee5c45b88cd6b1584d982d233750d8fd3b529cd6f6a"
+      },
+      {
+        "path": "textures/42a103e5bf5f3de4e84f.png",
+        "bytes": 64552,
+        "sha256": "42a103e5bf5f3de4e84f28d13f79a3a937ea281a4030d36d062a8fcff9b56fdb"
+      },
+      {
+        "path": "textures/43e643bd13444d997d59.png",
+        "bytes": 24096,
+        "sha256": "43e643bd13444d997d5922c0a0343a3a730683461a491341ff2cc721e2fc9dbc"
+      },
+      {
+        "path": "textures/44143d0f6c7383621a8d.png",
+        "bytes": 400,
+        "sha256": "44143d0f6c7383621a8d17273a5df3387a0670cc5345a09de4b159afb0407e80"
+      },
+      {
+        "path": "textures/45d783e5c4daf0687d0f.png",
+        "bytes": 19704,
+        "sha256": "45d783e5c4daf0687d0fdd0caa2dcdfee9acae6e95cdd46e22990dcf8526665d"
+      },
+      {
+        "path": "textures/463a2483289a7ca611a2.png",
+        "bytes": 43824,
+        "sha256": "463a2483289a7ca611a269db5d685b9fdf80aecea981bb56951c8bf16a55965f"
+      },
+      {
+        "path": "textures/464ff399c02aaf9c56e2.png",
+        "bytes": 88424,
+        "sha256": "464ff399c02aaf9c56e2686383582b42f3fc76b456260b74b30a65ceb6197e6e"
+      },
+      {
+        "path": "textures/4800f2686c873f2aab58.png",
+        "bytes": 31076,
+        "sha256": "4800f2686c873f2aab583149c05311be966d4ca9ea0c5eab83ddc64e3318cd60"
+      },
+      {
+        "path": "textures/4840be9028f3d8d79377.png",
+        "bytes": 8816,
+        "sha256": "4840be9028f3d8d793777f42c79a0430d277efd36621d2c9bfe3520fe65814cf"
+      },
+      {
+        "path": "textures/4859f23bf1b43df33091.png",
+        "bytes": 12128,
+        "sha256": "4859f23bf1b43df33091d57ab4af7cbe1578c8f54b4c08d6fe86bcf2bf3a5e8b"
+      },
+      {
+        "path": "textures/48631c2ea2375a180536.png",
+        "bytes": 41092,
+        "sha256": "48631c2ea2375a180536a18291b08ab2899145c87f7b63cf3c091cf219bb576c"
+      },
+      {
+        "path": "textures/487b4066e266a6dafc98.png",
+        "bytes": 8108,
+        "sha256": "487b4066e266a6dafc985b5f40c017e8939eec1877b3ab4945551edd65933a8f"
+      },
+      {
+        "path": "textures/4890457cbbec6569f7de.png",
+        "bytes": 2940,
+        "sha256": "4890457cbbec6569f7ded1636831ef06b6d0ce18a41df9237ca0164731fd74cf"
+      },
+      {
+        "path": "textures/48b85bea3127791f0e01.png",
+        "bytes": 3364,
+        "sha256": "48b85bea3127791f0e01ffd1046c17f075e89726f2c8c791715145ee4f04eb87"
+      },
+      {
+        "path": "textures/496af170f36c13392614.png",
+        "bytes": 7764,
+        "sha256": "496af170f36c133926146c62a8743145b917a3809530bbe606bf0e5e1568f544"
+      },
+      {
+        "path": "textures/498a18225d5f7e147cfe.png",
+        "bytes": 48996,
+        "sha256": "498a18225d5f7e147cfeccf24967289a59f16cc1656eee3eeb1ffd3a1e929aa8"
+      },
+      {
+        "path": "textures/49d4f2b7f1e1cdc82fca.png",
+        "bytes": 35012,
+        "sha256": "49d4f2b7f1e1cdc82fcaa995f31c2b04cd5dc79625dde4d275e3c9f5f85371a3"
+      },
+      {
+        "path": "textures/4a45b3ed8c65024bf0a9.png",
+        "bytes": 3136,
+        "sha256": "4a45b3ed8c65024bf0a9bf197e51324a4ab665788862048a41b3c2f7fe1bd24b"
+      },
+      {
+        "path": "textures/4a659f1665a0536a661a.png",
+        "bytes": 2524,
+        "sha256": "4a659f1665a0536a661aba8bb214decbdd655ccfecb0264c016aceebb277a3af"
+      },
+      {
+        "path": "textures/4add7e7a5a9fe6dfd661.png",
+        "bytes": 4084,
+        "sha256": "4add7e7a5a9fe6dfd661b7bdda558b18a3f478f14522d6d68329d3a9cf864d9d"
+      },
+      {
+        "path": "textures/4c01c260ab2e4321724d.png",
+        "bytes": 59372,
+        "sha256": "4c01c260ab2e4321724d2e9489653152485c30d19c2957b6d7846d6fb5722473"
+      },
+      {
+        "path": "textures/4dbb8225ddf4fd2a5ec9.png",
+        "bytes": 8084,
+        "sha256": "4dbb8225ddf4fd2a5ec9b27dd41f7ed836c939270c9f799162395b3e0def43f0"
+      },
+      {
+        "path": "textures/4dcac7044a70a735accb.png",
+        "bytes": 5788,
+        "sha256": "4dcac7044a70a735accbcb22a4f6f998e1c29e787d5b8bb0fb26fc53a5a5b040"
+      },
+      {
+        "path": "textures/4df051d807a6350aa381.png",
+        "bytes": 6264,
+        "sha256": "4df051d807a6350aa381d2d1762ceeaa8e7b4f15ad307c346be0330b3ba2f6ab"
+      },
+      {
+        "path": "textures/4ececf4715294ab85850.png",
+        "bytes": 111664,
+        "sha256": "4ececf4715294ab85850848a69698457cc7367a045ab3b54a432c2a1709d6440"
+      },
+      {
+        "path": "textures/4fc2fef1bc51fe316d57.png",
+        "bytes": 1212,
+        "sha256": "4fc2fef1bc51fe316d5795facb893596efe3b6f8d95a4f1b6b012b7c52775721"
+      },
+      {
+        "path": "textures/4fef62bd9aad2d79e7e6.png",
+        "bytes": 9800,
+        "sha256": "4fef62bd9aad2d79e7e6ca96cbd16cb549b4ad16d512374dbf6f325e9f0be962"
+      },
+      {
+        "path": "textures/50a3c07d0ac787cb56ba.png",
+        "bytes": 75784,
+        "sha256": "50a3c07d0ac787cb56ba97338e942d5c4e703068d4870e5d3cda13c8df58d09f"
+      },
+      {
+        "path": "textures/512b56d15df54597b2ec.png",
+        "bytes": 43752,
+        "sha256": "512b56d15df54597b2ec17d038a869b68dd3bbb740f51aeae4a43548eeadf7b8"
+      },
+      {
+        "path": "textures/535821fbbcd11826233c.png",
+        "bytes": 18740,
+        "sha256": "535821fbbcd11826233c3c9ce33bd556c9b0cdf66ceb3eb4a60b15dfbb2489c0"
+      },
+      {
+        "path": "textures/53c6d2d3d4aa47687bdb.png",
+        "bytes": 20356,
+        "sha256": "53c6d2d3d4aa47687bdb35e92589724f437e755f3739fc177858903e4f0f3322"
+      },
+      {
+        "path": "textures/53ee89992a8ac5e3570b.png",
+        "bytes": 39568,
+        "sha256": "53ee89992a8ac5e3570bba06551c7a0a88a907e7f3e45a28753cd9c487975b92"
+      },
+      {
+        "path": "textures/53f8a27bab20f39ac201.png",
+        "bytes": 4760,
+        "sha256": "53f8a27bab20f39ac2010704d225fae47cea269732ffe34e76b833bc54267a1e"
+      },
+      {
+        "path": "textures/5459d96ab67bd2fe1484.png",
+        "bytes": 58868,
+        "sha256": "5459d96ab67bd2fe14844809fdf46141f8704edae4444c93d3be37eba94cd6c9"
+      },
+      {
+        "path": "textures/545a983e17f61c4cdc7b.png",
+        "bytes": 5236,
+        "sha256": "545a983e17f61c4cdc7b0266618af70ce34382455d799e34414c376b6061c60e"
+      },
+      {
+        "path": "textures/5464d18f14c0302c916c.png",
+        "bytes": 5152,
+        "sha256": "5464d18f14c0302c916c87c19e856f867fd08f36515125fc082cdff1e37dc139"
+      },
+      {
+        "path": "textures/54765e17ba88fd8f13ca.png",
+        "bytes": 39712,
+        "sha256": "54765e17ba88fd8f13caa2985b96aff799c3c6a82b8a1642211e8630f1098d35"
+      },
+      {
+        "path": "textures/554e83f3c0f354666b4a.png",
+        "bytes": 16400,
+        "sha256": "554e83f3c0f354666b4afb0f8c918052efdc3b12c485fe69c41f257c5c848e00"
+      },
+      {
+        "path": "textures/557d1e3538698421d522.png",
+        "bytes": 30240,
+        "sha256": "557d1e3538698421d522abc152e8540609558060b8d054f063f2757b97a3e438"
+      },
+      {
+        "path": "textures/558dc061e8625d84f989.png",
+        "bytes": 11440,
+        "sha256": "558dc061e8625d84f98976c59582c39cdca14732c885ea8032f448eb5f0800ea"
+      },
+      {
+        "path": "textures/55ae6d40d3728e13f466.png",
+        "bytes": 41136,
+        "sha256": "55ae6d40d3728e13f466f6e823a086d781c3c775f413caa177b5acfefafb7136"
+      },
+      {
+        "path": "textures/56aba7501185ae32f389.png",
+        "bytes": 2516,
+        "sha256": "56aba7501185ae32f389a0c7567c2194828268b63603083960c19cbae179b673"
+      },
+      {
+        "path": "textures/56f3f70ee6283faa40d7.png",
+        "bytes": 10616,
+        "sha256": "56f3f70ee6283faa40d7d01bf70eaa8b86896f5a85be324061b2572016dcdb77"
+      },
+      {
+        "path": "textures/5707d01c0e63050fedde.png",
+        "bytes": 12532,
+        "sha256": "5707d01c0e63050fedde51da2e46d83149ff1f8219b278ce2ebcd42b346cddf0"
+      },
+      {
+        "path": "textures/573a9792bb9fc909319e.png",
+        "bytes": 3540,
+        "sha256": "573a9792bb9fc909319efb610466c6ffe9853ba0c2968abc2537092c7b5b53ad"
+      },
+      {
+        "path": "textures/5741a8c71d1d2b7a4716.png",
+        "bytes": 22872,
+        "sha256": "5741a8c71d1d2b7a471697adc64a6bfba384744e7e5b3d663aa169a30b86639e"
+      },
+      {
+        "path": "textures/5772ffb986176621f0fc.png",
+        "bytes": 7604,
+        "sha256": "5772ffb986176621f0fc70b3265451cec30dc92bdbc453801664ae4dcc4dda5e"
+      },
+      {
+        "path": "textures/579c63f1d8945b923f09.png",
+        "bytes": 2688,
+        "sha256": "579c63f1d8945b923f099060eb04e0cf481c135f9b0ce8bc1bb12b6a159c4f28"
+      },
+      {
+        "path": "textures/57d68ec013b3364d4a89.png",
+        "bytes": 23412,
+        "sha256": "57d68ec013b3364d4a89f0bd8efea70dfdfc1eaa223f038522bee2eaf7d76471"
+      },
+      {
+        "path": "textures/581ab1b0cb5ca7383c8b.png",
+        "bytes": 5648,
+        "sha256": "581ab1b0cb5ca7383c8b735e88cc5a3819ea0285019d47bf065316543749902e"
+      },
+      {
+        "path": "textures/58313e8fd3b3a0db366b.png",
+        "bytes": 2468,
+        "sha256": "58313e8fd3b3a0db366b4b399ceeab0ba415ed7272c2c7b5719cbfbb376d8333"
+      },
+      {
+        "path": "textures/5839bc152e4cd2378795.png",
+        "bytes": 1404,
+        "sha256": "5839bc152e4cd2378795f0c16c68a546b1158856686eb7bb34af285eab10b350"
+      },
+      {
+        "path": "textures/585073a9c83f30b2a90b.png",
+        "bytes": 6252,
+        "sha256": "585073a9c83f30b2a90bb494cd506aa2135367fc3c951ddcbb481cda883ec6ab"
+      },
+      {
+        "path": "textures/58735e6afbfc20e144f6.png",
+        "bytes": 3448,
+        "sha256": "58735e6afbfc20e144f6a13559a7474d5e93ad32f7b8b3e2b84b2693b9bfe0b0"
+      },
+      {
+        "path": "textures/5884cee81771921b9bc1.png",
+        "bytes": 37220,
+        "sha256": "5884cee81771921b9bc1a9eccee78da50be67df5fcdb8ffcb9a677b87808ca2a"
+      },
+      {
+        "path": "textures/5950ac3de9225029ffb3.png",
+        "bytes": 7152,
+        "sha256": "5950ac3de9225029ffb374aa753ba7233a5308f14dde9104c2eefa69d0241cc4"
+      },
+      {
+        "path": "textures/5a054822f8470d7850b8.png",
+        "bytes": 5076,
+        "sha256": "5a054822f8470d7850b86b5418f6bf8410a6336a74a82391d4de3afe1b8bb3a7"
+      },
+      {
+        "path": "textures/5b882e7578b6fccc3813.png",
+        "bytes": 8552,
+        "sha256": "5b882e7578b6fccc3813d14ec395aa333ba378b4793aea57d563e993d7a9b233"
+      },
+      {
+        "path": "textures/5bebf61473aed70a12c0.png",
+        "bytes": 41896,
+        "sha256": "5bebf61473aed70a12c006e60087a0975af4fe969e62d7cabfcc2fc9b8b47c3d"
+      },
+      {
+        "path": "textures/5c1f29ad44ba9a888f56.png",
+        "bytes": 9500,
+        "sha256": "5c1f29ad44ba9a888f56010a32203c478a3a31f3796253272ef05b8cd4474de7"
+      },
+      {
+        "path": "textures/5c80fc7a0ddba2585974.png",
+        "bytes": 8796,
+        "sha256": "5c80fc7a0ddba2585974732c7f0017d38f76517ee1f82f1179393af04361e238"
+      },
+      {
+        "path": "textures/5d3dc3b3a495b0527b98.png",
+        "bytes": 5076,
+        "sha256": "5d3dc3b3a495b0527b98b6467d59e31682fbcaf827809fa660b653a4f00c24f8"
+      },
+      {
+        "path": "textures/5dcb7a278544928e64a2.png",
+        "bytes": 22076,
+        "sha256": "5dcb7a278544928e64a270323a8fc1df8d5054a08aa0a0f08b600628142f5599"
+      },
+      {
+        "path": "textures/5de4083ccf18d31c4e2a.png",
+        "bytes": 27488,
+        "sha256": "5de4083ccf18d31c4e2a5e7c12434cb30464fc6a1d85a75fa0c5afe13e85d322"
+      },
+      {
+        "path": "textures/5e4f62a1cc78eb8ab081.png",
+        "bytes": 29688,
+        "sha256": "5e4f62a1cc78eb8ab0816ac7f38db281a4adce9ca54fad3451f72297c1b72c88"
+      },
+      {
+        "path": "textures/5ec69cf471270c67429e.png",
+        "bytes": 6860,
+        "sha256": "5ec69cf471270c67429e7cc4b5c01b3764673a636cefe56a3db5c05adf790f7f"
+      },
+      {
+        "path": "textures/5f2b624b2c19aebdf476.png",
+        "bytes": 2808,
+        "sha256": "5f2b624b2c19aebdf4765c12d11cf3b35e660a16b886a318b8ba39064740ed80"
+      },
+      {
+        "path": "textures/5fc502d39e8bb344eef0.png",
+        "bytes": 7764,
+        "sha256": "5fc502d39e8bb344eef0bfe026587ab1cfb7e3858781fe41d04e07bcb2f1cdc8"
+      },
+      {
+        "path": "textures/60ec81765f1f1838971f.png",
+        "bytes": 37564,
+        "sha256": "60ec81765f1f1838971f8a5f5129259f9e060efc7800b1ce897e72d67056aefd"
+      },
+      {
+        "path": "textures/61f7a6f0ddaa58852349.png",
+        "bytes": 868,
+        "sha256": "61f7a6f0ddaa588523497a9df74c557bf5963d5700d33e8aa831ea798041b3ff"
+      },
+      {
+        "path": "textures/6245cf7528e32683234a.png",
+        "bytes": 144924,
+        "sha256": "6245cf7528e32683234a7103e9dd92a64414f020bbcef5e0379111a9341426dc"
+      },
+      {
+        "path": "textures/625dd2c4af0102180740.png",
+        "bytes": 19940,
+        "sha256": "625dd2c4af010218074057367ca2215e1f979ae5e14c92edff1470c9bc046112"
+      },
+      {
+        "path": "textures/6311119a1e2e55a6c3af.png",
+        "bytes": 8256,
+        "sha256": "6311119a1e2e55a6c3af2a92df231bd581a7dfceecefc2f9d3bf3129563e2ce6"
+      },
+      {
+        "path": "textures/64959dc4c0bed29df82a.png",
+        "bytes": 4480,
+        "sha256": "64959dc4c0bed29df82aa2405aaec4fb89e70354840639e0cc7f7f77900424ec"
+      },
+      {
+        "path": "textures/65d88757b2aee42f4212.png",
+        "bytes": 31052,
+        "sha256": "65d88757b2aee42f4212d996cd963ccc80bf05d96604509a0e5b107f73b1105a"
+      },
+      {
+        "path": "textures/662e72cd91602ad4a8dd.png",
+        "bytes": 28884,
+        "sha256": "662e72cd91602ad4a8dde0c901a8c677c04b5392f4d82c9fac7e9c7ffec126fc"
+      },
+      {
+        "path": "textures/6651f4bb2d671a500347.png",
+        "bytes": 14872,
+        "sha256": "6651f4bb2d671a50034753d1aae197ee1d62d56343b8e137ba87c628f6e03564"
+      },
+      {
+        "path": "textures/669d5cd36704029914ad.png",
+        "bytes": 7512,
+        "sha256": "669d5cd36704029914ad9b0351c72d475d64d277185917b33dd6a1421dc31b7b"
+      },
+      {
+        "path": "textures/67061e319738effbce13.png",
+        "bytes": 1108,
+        "sha256": "67061e319738effbce13a19872131744b50187cd060217b32d1fae80c9d040b3"
+      },
+      {
+        "path": "textures/678a76cf176760ddba59.png",
+        "bytes": 5392,
+        "sha256": "678a76cf176760ddba591ab80bf9d003384589679ce54ba5787855fd6b263214"
+      },
+      {
+        "path": "textures/67ab1dca97de8bfdcbbb.png",
+        "bytes": 40276,
+        "sha256": "67ab1dca97de8bfdcbbb0057541d640beedd482ac657bbe7003bc9b648930e8a"
+      },
+      {
+        "path": "textures/67b29d7967a66a615007.png",
+        "bytes": 9024,
+        "sha256": "67b29d7967a66a615007583b0e0208efa711a059ab0c9d5f83d40fe40ef62122"
+      },
+      {
+        "path": "textures/67bc25af225e351b0d25.png",
+        "bytes": 868,
+        "sha256": "67bc25af225e351b0d25a443edddf9782862b77cb4b7e4edc2d3d4f354de2701"
+      },
+      {
+        "path": "textures/680b9e8806890c521c02.png",
+        "bytes": 11340,
+        "sha256": "680b9e8806890c521c029750dc6d699405d8d8ce764533cbab82102776f3dcc4"
+      },
+      {
+        "path": "textures/68b49ecc2ab350b85443.png",
+        "bytes": 2516,
+        "sha256": "68b49ecc2ab350b85443d520edc3141e690668179704be12f37bdf19da17f522"
+      },
+      {
+        "path": "textures/6aaa464637dd5440af74.png",
+        "bytes": 8228,
+        "sha256": "6aaa464637dd5440af74999f96b3e7b29d9479071d6c4eb287e1618ceedb8792"
+      },
+      {
+        "path": "textures/6ae6f4eb6d67120de49e.png",
+        "bytes": 10608,
+        "sha256": "6ae6f4eb6d67120de49edb7732c9b50459c5962a96d4681ebd472ee36c16510d"
+      },
+      {
+        "path": "textures/6b0eb185ef1cdf20862c.png",
+        "bytes": 6044,
+        "sha256": "6b0eb185ef1cdf20862cb348e6c14a4e582c7d676bc0bfc5807096afd1fb3cdc"
+      },
+      {
+        "path": "textures/6c35fcf25d2df4599e8f.png",
+        "bytes": 17980,
+        "sha256": "6c35fcf25d2df4599e8f99213026decaec0e998eee18c30d7595be1f64bb6293"
+      },
+      {
+        "path": "textures/6c4fbdfa7adeb5ff2852.png",
+        "bytes": 38412,
+        "sha256": "6c4fbdfa7adeb5ff28521fe45508887b9c929975ddd401267028ef4c28e82710"
+      },
+      {
+        "path": "textures/6cfa339dfd8c1aa90396.png",
+        "bytes": 1912,
+        "sha256": "6cfa339dfd8c1aa9039686c3e307702e78bb3ec35aec0192d31ce7c8f10f3f2f"
+      },
+      {
+        "path": "textures/6df0f098fa5537357211.png",
+        "bytes": 42436,
+        "sha256": "6df0f098fa5537357211091d28a759e49b9ff01e4684aad80adb8c9b300f0596"
+      },
+      {
+        "path": "textures/6e64bcba11565e7c3578.png",
+        "bytes": 13224,
+        "sha256": "6e64bcba11565e7c35784a020258d8e6a5845e0fc4c1fbd0ad4286ba6e8688c2"
+      },
+      {
+        "path": "textures/6f6be7e094f1c65e7656.png",
+        "bytes": 3308,
+        "sha256": "6f6be7e094f1c65e765631f1ed1c3f350a0a1f4ca8b12d30029b216b7b0b5fc9"
+      },
+      {
+        "path": "textures/6f77815daff0936e2584.png",
+        "bytes": 5480,
+        "sha256": "6f77815daff0936e25847c9a48dfbd374c8825c04b0b2079d2cdc7e8ae7e5160"
+      },
+      {
+        "path": "textures/6f9d603f004d2b627edb.png",
+        "bytes": 864,
+        "sha256": "6f9d603f004d2b627edba2c773bacc00c875eeeb57efe2f1394accdfe0d22506"
+      },
+      {
+        "path": "textures/70761e240944ec82734d.png",
+        "bytes": 37568,
+        "sha256": "70761e240944ec82734d32fca8fa1934a4b29a94105609bc0bd000d5b08b0247"
+      },
+      {
+        "path": "textures/70e568b947dc51260dfd.png",
+        "bytes": 852,
+        "sha256": "70e568b947dc51260dfd8d07d0e584d40b347378772a79ef39b8a16d7b0b058c"
+      },
+      {
+        "path": "textures/70e6e8a6184775b17539.png",
+        "bytes": 5836,
+        "sha256": "70e6e8a6184775b17539c524b84e7d423b3aef61e4afb5ed65397685e312bfd7"
+      },
+      {
+        "path": "textures/7139903c75efe42509a7.png",
+        "bytes": 8824,
+        "sha256": "7139903c75efe42509a7ec7912b3ffb7cd08e8ed86a87984f9dc56a2b22f38bd"
+      },
+      {
+        "path": "textures/71bc61942f4c8a7bea42.png",
+        "bytes": 2772,
+        "sha256": "71bc61942f4c8a7bea425bb16a48816305d26e0c7a36dbf34ae588e3f0254104"
+      },
+      {
+        "path": "textures/7218966ff431b9f12da6.png",
+        "bytes": 94136,
+        "sha256": "7218966ff431b9f12da62458688cba0129c3dc0332483f33a542007c50fbb8b0"
+      },
+      {
+        "path": "textures/72234087d85905c92f5c.png",
+        "bytes": 32240,
+        "sha256": "72234087d85905c92f5cd61738e6e5c41a3751b65dd1f9950e1463467672ebac"
+      },
+      {
+        "path": "textures/722c6e9d446226aac2ca.png",
+        "bytes": 6980,
+        "sha256": "722c6e9d446226aac2ca9f3aba3bb61e96800565b433f6bce99d7e3ebcfd9fcc"
+      },
+      {
+        "path": "textures/72fc38d1e40492ebdf3c.png",
+        "bytes": 3476,
+        "sha256": "72fc38d1e40492ebdf3c6fde1f8ee393fa06c5d32ec051d4cd77363eefa3940b"
+      },
+      {
+        "path": "textures/731be67d74bd82a5c683.png",
+        "bytes": 8880,
+        "sha256": "731be67d74bd82a5c6836063c9cac09645a8c64748d55ae38f878469d302b447"
+      },
+      {
+        "path": "textures/739a5b76f31210b559b1.png",
+        "bytes": 2480,
+        "sha256": "739a5b76f31210b559b104e761de7b09929075bf34bac07ac38970070bfec3cd"
+      },
+      {
+        "path": "textures/74656e6fe06340e4bd96.png",
+        "bytes": 304,
+        "sha256": "74656e6fe06340e4bd96f18b39bcdec820630beb70e06afaf65359aea427cf42"
+      },
+      {
+        "path": "textures/74afd03cbe467c53f280.png",
+        "bytes": 6584,
+        "sha256": "74afd03cbe467c53f2809c315668acca2dbafac4b28fccb0673d33e5ef473318"
+      },
+      {
+        "path": "textures/74ff028ef9368617def3.png",
+        "bytes": 30636,
+        "sha256": "74ff028ef9368617def38beb9e7649ae2dfd47ffa761c7ae7e20b902439359a9"
+      },
+      {
+        "path": "textures/753b9bd9af68c928b197.png",
+        "bytes": 3312,
+        "sha256": "753b9bd9af68c928b19786a10a4c0329fa6b32e29365d2fe433c5b912cd78d39"
+      },
+      {
+        "path": "textures/7549ae320814779f9e6a.png",
+        "bytes": 8980,
+        "sha256": "7549ae320814779f9e6a7c4d03783557764b73c80117df744e386d39ffe9c428"
+      },
+      {
+        "path": "textures/76de9579f90a586b8eca.png",
+        "bytes": 7816,
+        "sha256": "76de9579f90a586b8eca4787e82f12a84dfc337f7069065b51b79ca5644ac197"
+      },
+      {
+        "path": "textures/779a0672174c74cb1616.png",
+        "bytes": 6004,
+        "sha256": "779a0672174c74cb161641142492e7211ce4e2794ffffaa8ed83254e187130c8"
+      },
+      {
+        "path": "textures/783bc4d25e160c597fab.png",
+        "bytes": 7852,
+        "sha256": "783bc4d25e160c597fabd0c4d5ed9dff94184def7093f6dba95aab2fab266dce"
+      },
+      {
+        "path": "textures/787b326d4403351c1f05.png",
+        "bytes": 4712,
+        "sha256": "787b326d4403351c1f0539019bc05401e50b5c063346f7dc3254c3e4bb8760a3"
+      },
+      {
+        "path": "textures/78b19fbc40a2df7a932b.png",
+        "bytes": 8312,
+        "sha256": "78b19fbc40a2df7a932b970cae3c986939d2ab66ba322418eea1810c050df279"
+      },
+      {
+        "path": "textures/7b32af8ccb56d4bfe7b2.png",
+        "bytes": 7104,
+        "sha256": "7b32af8ccb56d4bfe7b201289fba58dce4767105aa30b3ea257ee2f5e424c2e2"
+      },
+      {
+        "path": "textures/7d13d6eb26f4e11d03fd.png",
+        "bytes": 7032,
+        "sha256": "7d13d6eb26f4e11d03fdf5689d10cb58bf9af647fbae373ea54dcd360145724a"
+      },
+      {
+        "path": "textures/7df290be2742f4a42674.png",
+        "bytes": 7352,
+        "sha256": "7df290be2742f4a4267411bf3dd57d0f66352e543c537947419ad26ae0382c71"
+      },
+      {
+        "path": "textures/7e91f5bea7786f25dedb.png",
+        "bytes": 7892,
+        "sha256": "7e91f5bea7786f25dedb4ec4b0f85742358cafa4b63f24000386ae599c3a5c30"
+      },
+      {
+        "path": "textures/7ec62292141ad02438a4.png",
+        "bytes": 57424,
+        "sha256": "7ec62292141ad02438a4dd93e0f8a9ec0bb93834da6b858a06a8b36637c894ca"
+      },
+      {
+        "path": "textures/7ed765eb0884df1f1b29.png",
+        "bytes": 6368,
+        "sha256": "7ed765eb0884df1f1b293003c0f306bc3067d9f9f93d4197bd1bd877fd81091c"
+      },
+      {
+        "path": "textures/7f58788674e28c2a8362.png",
+        "bytes": 31484,
+        "sha256": "7f58788674e28c2a8362121530cab550414ac39cdd9c35fbebc343415a68e577"
+      },
+      {
+        "path": "textures/7f9cbbb8be9f1d8d231c.png",
+        "bytes": 58496,
+        "sha256": "7f9cbbb8be9f1d8d231c08a083e1ff604e9aed908de86a48cd1553c17e50e45a"
+      },
+      {
+        "path": "textures/7fb7b362c73383ffbe26.png",
+        "bytes": 39992,
+        "sha256": "7fb7b362c73383ffbe26e7991ead3795c8ec969c6cd5d2f2b170dc1a0658ba8f"
+      },
+      {
+        "path": "textures/8182589bc277f36b7b4b.png",
+        "bytes": 19296,
+        "sha256": "8182589bc277f36b7b4b01da2f545c4eefe63395143740b8f21f230c91ddcfe0"
+      },
+      {
+        "path": "textures/820fce8c54863ca06cc5.png",
+        "bytes": 3036,
+        "sha256": "820fce8c54863ca06cc507c02a57a13823fab7b11dd04a9e21de98d588104d3f"
+      },
+      {
+        "path": "textures/8309ae5a5c53dd37267c.png",
+        "bytes": 40368,
+        "sha256": "8309ae5a5c53dd37267c7630a50446f2620fba2b483863dcf9b841ddc0b99aed"
+      },
+      {
+        "path": "textures/84b8d396f629d6877c4a.png",
+        "bytes": 7068,
+        "sha256": "84b8d396f629d6877c4adc4ca937299668bb9a67aabc27008fde2778e1014ba8"
+      },
+      {
+        "path": "textures/84ec32cbadb7c2c39f1a.png",
+        "bytes": 9308,
+        "sha256": "84ec32cbadb7c2c39f1a7b90a146eb777d21d4c75a12b75971f7c285d5915a04"
+      },
+      {
+        "path": "textures/860d67e2914d7599b27f.png",
+        "bytes": 8680,
+        "sha256": "860d67e2914d7599b27fccaa0034e76c09c44caba2d965a19ac3189b645cd8f7"
+      },
+      {
+        "path": "textures/87384554a80a97209793.png",
+        "bytes": 7208,
+        "sha256": "87384554a80a9720979329a2fccf57f8033f226db161c434472634d277f4e23b"
+      },
+      {
+        "path": "textures/87584f65f3284f446c68.png",
+        "bytes": 14604,
+        "sha256": "87584f65f3284f446c685e2c3e477a3204dba114feaa489c06656643738351bd"
+      },
+      {
+        "path": "textures/8918d4137fa63eddf3e2.png",
+        "bytes": 42140,
+        "sha256": "8918d4137fa63eddf3e2eb4b3e8c5842ac8ee973b3a481c66e970ef99c5d8f0c"
+      },
+      {
+        "path": "textures/8a2187c32b5c29b8b360.png",
+        "bytes": 40840,
+        "sha256": "8a2187c32b5c29b8b360e87253187df2b88b7e30b4ebf467f1676e9ff1a61122"
+      },
+      {
+        "path": "textures/8adf009e68ce2c93c16e.png",
+        "bytes": 6564,
+        "sha256": "8adf009e68ce2c93c16e3944f7403fea3e9982dc42675d84023a6f9109be9e1d"
+      },
+      {
+        "path": "textures/8adface92c8713525f71.png",
+        "bytes": 7500,
+        "sha256": "8adface92c8713525f71a7e0bb1ec7586096b4853708b1416231fb1d46581b9e"
+      },
+      {
+        "path": "textures/8b96b144ba6fc975e2fa.png",
+        "bytes": 38388,
+        "sha256": "8b96b144ba6fc975e2fa18469723ebaf85cd88e43d778decc597ae5017e9ae0d"
+      },
+      {
+        "path": "textures/8bba853a3107c5b87f9e.png",
+        "bytes": 2304,
+        "sha256": "8bba853a3107c5b87f9e90f65906513c2d56ef91580f947c5d032c7467aad17e"
+      },
+      {
+        "path": "textures/8c8d333b964202ace114.png",
+        "bytes": 7188,
+        "sha256": "8c8d333b964202ace114024c3dc91b00f3f5f40f8f5991b671c4c8dc105a7dc4"
+      },
+      {
+        "path": "textures/8cf2f75ab56c76470402.png",
+        "bytes": 2040,
+        "sha256": "8cf2f75ab56c76470402c9288dfa3b915baed292bec9b3fcd829b6219932dabc"
+      },
+      {
+        "path": "textures/8cf76bcfb2e6683a9375.png",
+        "bytes": 39836,
+        "sha256": "8cf76bcfb2e6683a9375db2d2f57121e898d0e1543e2f9e1fb62149abacb75dd"
+      },
+      {
+        "path": "textures/8d54a7224328cb6d041b.png",
+        "bytes": 11224,
+        "sha256": "8d54a7224328cb6d041b3e92d88af1b7b4aca84a3cbe0069a2f7e9fb235daab8"
+      },
+      {
+        "path": "textures/8e3ceb4bee9fbfef362f.png",
+        "bytes": 4084,
+        "sha256": "8e3ceb4bee9fbfef362f471aef60b4ddfc9ca5c2d58b44671c5d5b2e6dd5f326"
+      },
+      {
+        "path": "textures/8e65d0daa00536ad4967.png",
+        "bytes": 17508,
+        "sha256": "8e65d0daa00536ad49670571845bf1211a934d61c5318a059cbacc4507053d28"
+      },
+      {
+        "path": "textures/8fc8da38c840274687d6.png",
+        "bytes": 332,
+        "sha256": "8fc8da38c840274687d6bbd79f04685dd01c7790ea0b81d794e30a27aab5b8c1"
+      },
+      {
+        "path": "textures/904132a38197e6cbc7e5.png",
+        "bytes": 9824,
+        "sha256": "904132a38197e6cbc7e5d7bd37d2143a7c3c8602c3a55dfbdca7541ac812a722"
+      },
+      {
+        "path": "textures/909744b805f8efccbc7d.png",
+        "bytes": 31724,
+        "sha256": "909744b805f8efccbc7de0005baa2d864de540f594b43551a6073081802bdf00"
+      },
+      {
+        "path": "textures/90ab5f0106677e9bce19.png",
+        "bytes": 3144,
+        "sha256": "90ab5f0106677e9bce19f1ce4feb752879159196b736e5d51c3305889cc1eb9f"
+      },
+      {
+        "path": "textures/90c6154a78954a1a92aa.png",
+        "bytes": 7924,
+        "sha256": "90c6154a78954a1a92aa04ef11d1de8a1008427fd15dd67251723d1998a602c5"
+      },
+      {
+        "path": "textures/90cb56e356d9a28fc800.png",
+        "bytes": 19376,
+        "sha256": "90cb56e356d9a28fc800cd3e9241b1d8a4a757a4348539851372d5a78d907ee1"
+      },
+      {
+        "path": "textures/9177507a87bf2f8a4c17.png",
+        "bytes": 14788,
+        "sha256": "9177507a87bf2f8a4c17513cf218db1622f4cf12c6113ff3dcf3c57d4c2a8890"
+      },
+      {
+        "path": "textures/91b2cd9d0cde98c70432.png",
+        "bytes": 6804,
+        "sha256": "91b2cd9d0cde98c70432d2bcc335f8282a9f5a249697693701a63c3a386481e1"
+      },
+      {
+        "path": "textures/91e2c7f10616fb172430.png",
+        "bytes": 92464,
+        "sha256": "91e2c7f10616fb1724303ab911a1e8477fda7f0432eca19510a321e625a1e152"
+      },
+      {
+        "path": "textures/93c1c4551bf6b94e57ed.png",
+        "bytes": 2576,
+        "sha256": "93c1c4551bf6b94e57ed753f61fcc62c3669a02cee82a8612c48322373b75292"
+      },
+      {
+        "path": "textures/944794a3ee0d312cd45f.png",
+        "bytes": 2456,
+        "sha256": "944794a3ee0d312cd45fdff52a004fa2e2bc32721705bcd86a7ae37fc70a7a70"
+      },
+      {
+        "path": "textures/94ba461fe4f0cb797dd8.png",
+        "bytes": 15888,
+        "sha256": "94ba461fe4f0cb797dd866c8583dfb87c85a269b257978d136cd11cfc90837d2"
+      },
+      {
+        "path": "textures/95c2f4daf76fb0f1fc98.png",
+        "bytes": 62768,
+        "sha256": "95c2f4daf76fb0f1fc9851bbe6753e815be90356cfebc4313718014f205116b7"
+      },
+      {
+        "path": "textures/960e1efacf72696330c3.png",
+        "bytes": 11580,
+        "sha256": "960e1efacf72696330c3896ce3b1f04f8ad5a5f8cbbcb05f6b0f1e6b9e74a794"
+      },
+      {
+        "path": "textures/96b3a5ba96728815793d.png",
+        "bytes": 2380,
+        "sha256": "96b3a5ba96728815793d204de0696c6df8507f3896e97374255c76cdcf665303"
+      },
+      {
+        "path": "textures/96c318d3c8f4b2d3bff7.png",
+        "bytes": 4900,
+        "sha256": "96c318d3c8f4b2d3bff76f9b9197ab290e5568ea21f5769884985e5b88faa5f6"
+      },
+      {
+        "path": "textures/973ecad17faac2f4068f.png",
+        "bytes": 17580,
+        "sha256": "973ecad17faac2f4068f1996cbd0bebee05273a3a54cdc6cbc7fe5b5f6144bdf"
+      },
+      {
+        "path": "textures/97ae761ff298e8e1a878.png",
+        "bytes": 3608,
+        "sha256": "97ae761ff298e8e1a87893123441eba8415129a8de44d412ad9af7929984278b"
+      },
+      {
+        "path": "textures/97bde9cff51403f02a61.png",
+        "bytes": 40084,
+        "sha256": "97bde9cff51403f02a61a974c568d072b6d120cd46e2db869715e208b6008cf4"
+      },
+      {
+        "path": "textures/98711c51991196d1dbe0.png",
+        "bytes": 3648,
+        "sha256": "98711c51991196d1dbe00a8bdb7bb8f8166e8004741d5aba7810b35191960806"
+      },
+      {
+        "path": "textures/9918bebf819c78fbf609.png",
+        "bytes": 19268,
+        "sha256": "9918bebf819c78fbf609da39df73f1b2043c5958d4937ce8ac65f43abaaf369e"
+      },
+      {
+        "path": "textures/997ab22ced4a3cceda4d.png",
+        "bytes": 7976,
+        "sha256": "997ab22ced4a3cceda4d0fd164072c63cef641fe006604bfbf6419487656407e"
+      },
+      {
+        "path": "textures/99d7dc118bd18128b81c.png",
+        "bytes": 24520,
+        "sha256": "99d7dc118bd18128b81c25578195535ee18f669e53351d292d1f95e9e3f223a4"
+      },
+      {
+        "path": "textures/9a05082e4e5479ebbb77.png",
+        "bytes": 37948,
+        "sha256": "9a05082e4e5479ebbb77d8334ecab4176f1c1f55c757ceb39601a017e031ad73"
+      },
+      {
+        "path": "textures/9a5b5d7cb7871ca1fe6e.png",
+        "bytes": 141976,
+        "sha256": "9a5b5d7cb7871ca1fe6e8f8d806d8ddd100f741bd0aa11f35faa06b43d82f112"
+      },
+      {
+        "path": "textures/9ae86b401126db394001.png",
+        "bytes": 860,
+        "sha256": "9ae86b401126db39400105229f1cdf5acd6c68657828562737d0c32f001e02c4"
+      },
+      {
+        "path": "textures/9b106b2402ab099f076d.png",
+        "bytes": 43836,
+        "sha256": "9b106b2402ab099f076d522b11c3c21935461c50cf3d70dd42e776865fb71cde"
+      },
+      {
+        "path": "textures/9ba26646d9e2115e7f57.png",
+        "bytes": 1352,
+        "sha256": "9ba26646d9e2115e7f57283b0de9da4cd937febc990317e0bebb67d3dda4aa8f"
+      },
+      {
+        "path": "textures/9c9485a1fcbd0dac2958.png",
+        "bytes": 6668,
+        "sha256": "9c9485a1fcbd0dac2958d54bc9851c66d30e9ec714c174aa0e8f8581cc03da64"
+      },
+      {
+        "path": "textures/9ecd7ecae5975e7f0035.png",
+        "bytes": 29932,
+        "sha256": "9ecd7ecae5975e7f0035efd013c7a8ec41b759bd285da7ffee6384520c3f258c"
+      },
+      {
+        "path": "textures/9ecfc8fbf06be9fb825c.png",
+        "bytes": 14632,
+        "sha256": "9ecfc8fbf06be9fb825cef4fae3b8aeda3fd391eb07ded20b9110f15f0f7290a"
+      },
+      {
+        "path": "textures/9f477214ce421eb0685b.png",
+        "bytes": 11776,
+        "sha256": "9f477214ce421eb0685b5ab1a97e14b8974c1de1fcce06277a303428debf671c"
+      },
+      {
+        "path": "textures/a173a7b8939f5fe68fd9.png",
+        "bytes": 30224,
+        "sha256": "a173a7b8939f5fe68fd93bf6c98b19845ac2aa94650b0b901d758aaf4ab53b9d"
+      },
+      {
+        "path": "textures/a1cb6c384bf692b16cf9.png",
+        "bytes": 28436,
+        "sha256": "a1cb6c384bf692b16cf90ceff98dff1a344d10c57794eb6c9d6564da0e3d3947"
+      },
+      {
+        "path": "textures/a1d0e05849961f267ccd.png",
+        "bytes": 4848,
+        "sha256": "a1d0e05849961f267ccd328964c7e5f058c5afd0128221ae14890848f345b838"
+      },
+      {
+        "path": "textures/a2b99e48b27380149b96.png",
+        "bytes": 10848,
+        "sha256": "a2b99e48b27380149b96c098205b8e9285a62bbacc6b23bb26df492413aa7a0e"
+      },
+      {
+        "path": "textures/a32e558634fa6e5c16b4.png",
+        "bytes": 5176,
+        "sha256": "a32e558634fa6e5c16b4c43507caeb82899ff9dc58bed6c375335cf78d8e8e22"
+      },
+      {
+        "path": "textures/a39a9fdef14f71e674ee.png",
+        "bytes": 35980,
+        "sha256": "a39a9fdef14f71e674ee130741be948a8525d93d675b521ca82c4023bebddce9"
+      },
+      {
+        "path": "textures/a439fdb7fc7e0f2d6a8e.png",
+        "bytes": 79204,
+        "sha256": "a439fdb7fc7e0f2d6a8ebee72559a34f9960261a8eab52fb4774335fbf6dfb6a"
+      },
+      {
+        "path": "textures/a46689b905c17b0b07ea.png",
+        "bytes": 5652,
+        "sha256": "a46689b905c17b0b07eaba642eaf00efcce88f18baaf7611cb3eb254fdfd8869"
+      },
+      {
+        "path": "textures/a48be0b0208eb061023a.png",
+        "bytes": 3148,
+        "sha256": "a48be0b0208eb061023a5047d5eb23a989b452500d08cd8f690a14f9d94150db"
+      },
+      {
+        "path": "textures/a5294a5183305a8346e7.png",
+        "bytes": 4868,
+        "sha256": "a5294a5183305a8346e74ab984fe2bef85369e59e0b2a14487cfed2595c46d8c"
+      },
+      {
+        "path": "textures/a5850db6b7ab77d10b9b.png",
+        "bytes": 38456,
+        "sha256": "a5850db6b7ab77d10b9b8e0862caa5efaf81adb8bc7459643881e1faae5b6c08"
+      },
+      {
+        "path": "textures/a5a422d726e3602da10c.png",
+        "bytes": 2748,
+        "sha256": "a5a422d726e3602da10c8b12d064aceb73831abfaa9a71763754b17eb154d105"
+      },
+      {
+        "path": "textures/a5a6bb02d6924c29a2f6.png",
+        "bytes": 18076,
+        "sha256": "a5a6bb02d6924c29a2f6090c8e3fef980124918b5abc329a73559f5a3355c547"
+      },
+      {
+        "path": "textures/a5d553f9651df934635a.png",
+        "bytes": 77992,
+        "sha256": "a5d553f9651df934635aca57499ea3b369b9a38b81e6b2b558f22814c3799a4d"
+      },
+      {
+        "path": "textures/a623bbb92d421c391656.png",
+        "bytes": 86064,
+        "sha256": "a623bbb92d421c39165629f915a5da6f13f494204eea522645883103e4ba20bf"
+      },
+      {
+        "path": "textures/a66de77fafb64564bf9f.png",
+        "bytes": 24868,
+        "sha256": "a66de77fafb64564bf9f1d80bcb7a8ca26f33bf65b9e169e1b38d0e6619b3bd4"
+      },
+      {
+        "path": "textures/a67edb1894a28e442e5b.png",
+        "bytes": 12948,
+        "sha256": "a67edb1894a28e442e5b294e56e0d6bcbbea2d430adc9a61ac681f7e88ad35a7"
+      },
+      {
+        "path": "textures/a6c5355131a350c8ede7.png",
+        "bytes": 6404,
+        "sha256": "a6c5355131a350c8ede75d448decd26d31ae452ee30738236dd733327b2c39ff"
+      },
+      {
+        "path": "textures/a7033237c9552a665a9d.png",
+        "bytes": 3292,
+        "sha256": "a7033237c9552a665a9d71390e25214feba42e1a3dea03b4a0598688ea4376d5"
+      },
+      {
+        "path": "textures/a738b451161ea90ada42.png",
+        "bytes": 2712,
+        "sha256": "a738b451161ea90ada42fffd1f66a4c6d65c8a022af9bbe803588aec998ee138"
+      },
+      {
+        "path": "textures/a767eb3f43e88f84c71e.png",
+        "bytes": 6640,
+        "sha256": "a767eb3f43e88f84c71e944ee2329f10ae6c8d3a89e9163957a8f41ed6ea9e25"
+      },
+      {
+        "path": "textures/a9483ab9cdefb05591da.png",
+        "bytes": 9464,
+        "sha256": "a9483ab9cdefb05591dab6aab5c5729c7002b9620329df45bb1168f7f3f6c87d"
+      },
+      {
+        "path": "textures/a99da79a298cca2b01ed.png",
+        "bytes": 4516,
+        "sha256": "a99da79a298cca2b01eda5d069866867d98b53b35d770f70b47ee02db94bb2c2"
+      },
+      {
+        "path": "textures/a9d9529f52945440cead.png",
+        "bytes": 2284,
+        "sha256": "a9d9529f52945440cead2bc890fa102aa604d1fec42e4b8b7b42844455f9822e"
+      },
+      {
+        "path": "textures/aa3ac0cd3828a7400da4.png",
+        "bytes": 81120,
+        "sha256": "aa3ac0cd3828a7400da45b742294b1e49528b51dfd0fc47a632824938a25e215"
+      },
+      {
+        "path": "textures/aac63fc4bbf78e7b4c2d.png",
+        "bytes": 7188,
+        "sha256": "aac63fc4bbf78e7b4c2d29cf99106b9af08e4097726d8fb1cffe76b344facc60"
+      },
+      {
+        "path": "textures/ab997f7d469751b2a406.png",
+        "bytes": 41556,
+        "sha256": "ab997f7d469751b2a40609bfd40093f5e46e8bceb8a16688a76e759d5b526aa8"
+      },
+      {
+        "path": "textures/ac745c10cc9b1d3094f6.png",
+        "bytes": 37856,
+        "sha256": "ac745c10cc9b1d3094f6463bf37db9b4fb8e7ccfa103cbe77828451c402ebf64"
+      },
+      {
+        "path": "textures/ac8bf5b5b6950a3d806f.png",
+        "bytes": 3472,
+        "sha256": "ac8bf5b5b6950a3d806fa77572af47db4f1061d0087d80f2fd49b889fc4f2bab"
+      },
+      {
+        "path": "textures/acad549e3e74d3418fbb.png",
+        "bytes": 8316,
+        "sha256": "acad549e3e74d3418fbbf6b528486bacdff1cd1b9a8c45e0a104415b49301023"
+      },
+      {
+        "path": "textures/acc29ed87dd63e0bc3b2.png",
+        "bytes": 7716,
+        "sha256": "acc29ed87dd63e0bc3b2acbcafa54db68425addf4b56e8b93a3e03318710671e"
+      },
+      {
+        "path": "textures/ad814732adf196615b78.png",
+        "bytes": 868,
+        "sha256": "ad814732adf196615b781568f83ccd40f8b71a701d7077f9496b8a396f51cff9"
+      },
+      {
+        "path": "textures/adb68f77f229713bac8b.png",
+        "bytes": 22956,
+        "sha256": "adb68f77f229713bac8babc3b1eba7043396ae1abc93c229801f5575c9fbac8b"
+      },
+      {
+        "path": "textures/ade42a42c1d0490ae479.png",
+        "bytes": 83248,
+        "sha256": "ade42a42c1d0490ae479867580addb0ee9837ccde7f31c92ccfbf398d96e010f"
+      },
+      {
+        "path": "textures/adf8d47b1c86f6fad79c.png",
+        "bytes": 7832,
+        "sha256": "adf8d47b1c86f6fad79cf1bc2da860e3d065baedf9d5e5a5c84d6a1f4963af30"
+      },
+      {
+        "path": "textures/af12b7e2a00e4b3e587f.png",
+        "bytes": 24584,
+        "sha256": "af12b7e2a00e4b3e587f5e61a7ebf008e80b8e233e8d678e9e5426a3f2e202bc"
+      },
+      {
+        "path": "textures/af62adcf87adfbeeb275.png",
+        "bytes": 79084,
+        "sha256": "af62adcf87adfbeeb275892878496164c02abcc1c92a668d5a60b78db2548949"
+      },
+      {
+        "path": "textures/b063dc97991b649b7e9b.png",
+        "bytes": 3264,
+        "sha256": "b063dc97991b649b7e9bf670495e6491d141c765626a386fd0745f5c71f96157"
+      },
+      {
+        "path": "textures/b06a71043d610e65c4b0.png",
+        "bytes": 39224,
+        "sha256": "b06a71043d610e65c4b0b118258e3d0f54004eb49caf9a3e53d6269bd43fda8f"
+      },
+      {
+        "path": "textures/b08f2349c7d91d46d54f.png",
+        "bytes": 3420,
+        "sha256": "b08f2349c7d91d46d54fd1cc08acc2fab69dc383f99efe628be4ddf006708bc1"
+      },
+      {
+        "path": "textures/b0a7673493f58a127885.png",
+        "bytes": 27824,
+        "sha256": "b0a7673493f58a127885d54348ec3d8700a149c91babd5e9e4670716cedd7ee1"
+      },
+      {
+        "path": "textures/b10f433d09730912ea93.png",
+        "bytes": 19908,
+        "sha256": "b10f433d09730912ea93d379538b113d8c66244edf3d66bf7f8ef51f1bc1b1d0"
+      },
+      {
+        "path": "textures/b1632b7fd6278fb35dcb.png",
+        "bytes": 9256,
+        "sha256": "b1632b7fd6278fb35dcb61746982afc2acb62a32a5848a9d4596868fe6095491"
+      },
+      {
+        "path": "textures/b18d49a8108d8b45e19a.png",
+        "bytes": 4868,
+        "sha256": "b18d49a8108d8b45e19a6a96e4f33409b2a7a2efcbd092bf8c4db4dd8ffb3181"
+      },
+      {
+        "path": "textures/b194648d88c873793711.png",
+        "bytes": 3204,
+        "sha256": "b194648d88c873793711c542efe426a7768abefc7270047b437161d42007c8ad"
+      },
+      {
+        "path": "textures/b19adae5fd2992a07159.png",
+        "bytes": 39900,
+        "sha256": "b19adae5fd2992a07159cb1b7d4d0a3a5de8bcda9ef9638a8cf6270ba82fdada"
+      },
+      {
+        "path": "textures/b1bf9e993c44df288041.png",
+        "bytes": 16864,
+        "sha256": "b1bf9e993c44df288041c7ddcf9e823dec361c9ad5fa627e3b0015f548803473"
+      },
+      {
+        "path": "textures/b1f540fff8b23db763ef.png",
+        "bytes": 19164,
+        "sha256": "b1f540fff8b23db763ef0ba3b4a8f8747f61228b608371477c8e0a45084eeeb2"
+      },
+      {
+        "path": "textures/b2bcd3d74dbb5a342e32.png",
+        "bytes": 3364,
+        "sha256": "b2bcd3d74dbb5a342e3238dd2ddd5c4f6a81ec3a640f1da1705e58ab92efe44b"
+      },
+      {
+        "path": "textures/b323dc4abe2241cd7501.png",
+        "bytes": 14676,
+        "sha256": "b323dc4abe2241cd7501561e38838b61e4f9aafabcd6e8aa1f5cf9a3ada7a621"
+      },
+      {
+        "path": "textures/b3246e6579fce0948049.png",
+        "bytes": 5332,
+        "sha256": "b3246e6579fce094804960e89521e7b07413d9241a65c4331abe02aa6e87c3ef"
+      },
+      {
+        "path": "textures/b38ecc61251e417966ca.png",
+        "bytes": 16628,
+        "sha256": "b38ecc61251e417966caca1955ce8bd1b620824ae5f7eda358217607424d1557"
+      },
+      {
+        "path": "textures/b39e08a3e129bd42b7c1.png",
+        "bytes": 40028,
+        "sha256": "b39e08a3e129bd42b7c1e8171ceb139909171ed06f83f645a74161b06effe70d"
+      },
+      {
+        "path": "textures/b3b6fca57b2f5a881382.png",
+        "bytes": 90232,
+        "sha256": "b3b6fca57b2f5a8813822f663501f61da93a8c74a467839f325a6ff971467ebf"
+      },
+      {
+        "path": "textures/b499b210e28e544b898b.png",
+        "bytes": 10184,
+        "sha256": "b499b210e28e544b898b75b2a6138fe980695cb620f5646fd8b29dbebffa9766"
+      },
+      {
+        "path": "textures/b4ce4150c0d4ec197578.png",
+        "bytes": 2064,
+        "sha256": "b4ce4150c0d4ec19757823545676c20f97a5bb6f10ec2ad174cb1ff9b65b0988"
+      },
+      {
+        "path": "textures/b54d4154d639390a24c8.png",
+        "bytes": 7408,
+        "sha256": "b54d4154d639390a24c88e78c09f6523af34a8671295909a18965756b703e4b5"
+      },
+      {
+        "path": "textures/b5b440e2427de59ded67.png",
+        "bytes": 3488,
+        "sha256": "b5b440e2427de59ded6771a4df5b09c4fb9c81ffb398f199ca9e32bc71750a43"
+      },
+      {
+        "path": "textures/b63a3ce2f6104c30a5b2.png",
+        "bytes": 41012,
+        "sha256": "b63a3ce2f6104c30a5b200cfe94c1ed58e0958e21c7f8106f330afe06141ac31"
+      },
+      {
+        "path": "textures/b720230937c37affcf52.png",
+        "bytes": 29400,
+        "sha256": "b720230937c37affcf52f377b940dd3966515aad9623a7d44b35f05791e9c017"
+      },
+      {
+        "path": "textures/b8308e216810ccb5f4ba.png",
+        "bytes": 77728,
+        "sha256": "b8308e216810ccb5f4ba378ba77ca4bf7c49778c964a0b9df714363869a7f35e"
+      },
+      {
+        "path": "textures/b8555685618dde702e98.png",
+        "bytes": 17264,
+        "sha256": "b8555685618dde702e98f58857e3b0daf74ca2ed5bc96d613e04d668b2b99622"
+      },
+      {
+        "path": "textures/b8908bf8db834de60140.png",
+        "bytes": 31416,
+        "sha256": "b8908bf8db834de6014072ba7639cdba50a30e027790b2a75fcce1c93d21a38b"
+      },
+      {
+        "path": "textures/b909283514f62126063b.png",
+        "bytes": 1416,
+        "sha256": "b909283514f62126063b32972301317129637df24e4fbec14403017515e54b52"
+      },
+      {
+        "path": "textures/b90bf3b650829170add3.png",
+        "bytes": 81888,
+        "sha256": "b90bf3b650829170add381e254dd93b8c358d8f5ec2f789da7bdd5a7822f3271"
+      },
+      {
+        "path": "textures/b9759b659445d5d90b97.png",
+        "bytes": 30568,
+        "sha256": "b9759b659445d5d90b971e2029c4ddc3b18a65323733e7f48a773d21c61adb8a"
+      },
+      {
+        "path": "textures/ba2894a0b759c42810c0.png",
+        "bytes": 25224,
+        "sha256": "ba2894a0b759c42810c07e48058d9ea01bb5d0403e6a91fd35e6b401c9758e22"
+      },
+      {
+        "path": "textures/ba2c40b23324dcc9deed.png",
+        "bytes": 5896,
+        "sha256": "ba2c40b23324dcc9deedd619406474c79f63560321f06d949c30801d7da78ab0"
+      },
+      {
+        "path": "textures/baca65f0b4b692572486.png",
+        "bytes": 1456,
+        "sha256": "baca65f0b4b6925724867f00664ba9265e1cb256245341f1935e5aab01559588"
+      },
+      {
+        "path": "textures/bb442977e6f7a997d41f.png",
+        "bytes": 5204,
+        "sha256": "bb442977e6f7a997d41fe3e20ae8faeb1055504cf2ed4287036b1b9c4cd500fe"
+      },
+      {
+        "path": "textures/bb5bc3e0d8c16309e1ee.png",
+        "bytes": 3868,
+        "sha256": "bb5bc3e0d8c16309e1eee9c4193915795ced669890c93ab8a4e4b8a2d71ee55b"
+      },
+      {
+        "path": "textures/bbc007b230f8218a873d.png",
+        "bytes": 592,
+        "sha256": "bbc007b230f8218a873db88ef554f862387a677dbb740419f4bb529abd374d9a"
+      },
+      {
+        "path": "textures/bbc7470914f8b6b60a97.png",
+        "bytes": 21176,
+        "sha256": "bbc7470914f8b6b60a9786b3a715bc738c24c63a487d8bcd6a47188abd7b8ff9"
+      },
+      {
+        "path": "textures/bc00118ed68e2bf8ff8f.png",
+        "bytes": 7228,
+        "sha256": "bc00118ed68e2bf8ff8fded64d12c1035bf7f2242eda2c3642798285b869ed57"
+      },
+      {
+        "path": "textures/bc765dc1d3eb1c200c04.png",
+        "bytes": 24728,
+        "sha256": "bc765dc1d3eb1c200c04bbc15364736ebaba2a0e5cca18935ceec9fd2450c5f7"
+      },
+      {
+        "path": "textures/bd243bb54abe9ad084b1.png",
+        "bytes": 14864,
+        "sha256": "bd243bb54abe9ad084b1cd53614397357534cbd9424be120557d3ef011ef9c31"
+      },
+      {
+        "path": "textures/bd6e1f79708e9205ea48.png",
+        "bytes": 25384,
+        "sha256": "bd6e1f79708e9205ea48a7a95aa9b7ba38163d63ff413764e5ac0053794eff4d"
+      },
+      {
+        "path": "textures/be355a42e2de7fc706f4.png",
+        "bytes": 5588,
+        "sha256": "be355a42e2de7fc706f464bf32f11da2d19174bd7df822820117c8c3d2b36054"
+      },
+      {
+        "path": "textures/be384d0dd442845efb8a.png",
+        "bytes": 8324,
+        "sha256": "be384d0dd442845efb8aa4662ba1ae444de7de8730b4a70bcaae0a36baa4de8f"
+      },
+      {
+        "path": "textures/bebaac9441ae253e1002.png",
+        "bytes": 6504,
+        "sha256": "bebaac9441ae253e100227c07d74ba413cef1de8f39649f2c4f45fd95a6192a8"
+      },
+      {
+        "path": "textures/bebe4468a7c59d56c2e3.png",
+        "bytes": 7528,
+        "sha256": "bebe4468a7c59d56c2e3b879c707423b0d12d9c16f6b4b6204ad112ef8dfb67a"
+      },
+      {
+        "path": "textures/bf47037b3d043269a6d0.png",
+        "bytes": 2752,
+        "sha256": "bf47037b3d043269a6d0570b7fd8aaf49735d0f9f195ea935a67ff9b1684f2a4"
+      },
+      {
+        "path": "textures/bfb8ce9df21f33e9d930.png",
+        "bytes": 19464,
+        "sha256": "bfb8ce9df21f33e9d930237b41f9ac40fae790848066ab9b0497a9b0317343e8"
+      },
+      {
+        "path": "textures/bfff8d94de03404b1f56.png",
+        "bytes": 9332,
+        "sha256": "bfff8d94de03404b1f56a03804f811e22c2071859da744696efcb3ac68688f7f"
+      },
+      {
+        "path": "textures/c069e14552902cd19ab3.png",
+        "bytes": 14400,
+        "sha256": "c069e14552902cd19ab314cc198e61b845d7ec629a2233054cefd61d388e207b"
+      },
+      {
+        "path": "textures/c0d8d7d3394a4c013bf8.png",
+        "bytes": 7896,
+        "sha256": "c0d8d7d3394a4c013bf8aea963619b8b27d757a741f1aaf46f672f6d607b2121"
+      },
+      {
+        "path": "textures/c15ff4c3ee0bd32d42a8.png",
+        "bytes": 98960,
+        "sha256": "c15ff4c3ee0bd32d42a8b84c1ae61de849e5f05b57a410ea13fccdaa9d32ca44"
+      },
+      {
+        "path": "textures/c215695f69d13fa04df1.png",
+        "bytes": 75160,
+        "sha256": "c215695f69d13fa04df1fd7f04110241b89b1415d8261a4b4c406dfaf5b598c7"
+      },
+      {
+        "path": "textures/c25fbd2b2f51453a47ec.png",
+        "bytes": 10456,
+        "sha256": "c25fbd2b2f51453a47ec350b198fee741c161412cfa5cbf8310c5289fe5a084c"
+      },
+      {
+        "path": "textures/c36ee265db072b8d4136.png",
+        "bytes": 5288,
+        "sha256": "c36ee265db072b8d4136a17bb6bf531a11e996991e0b1fc34ce77a59c5ad8541"
+      },
+      {
+        "path": "textures/c42284b0efbe502af443.png",
+        "bytes": 7372,
+        "sha256": "c42284b0efbe502af44352726b0ef57a91e6dcfcc98fc260ab220418560b5445"
+      },
+      {
+        "path": "textures/c42d2b025d8113710b70.png",
+        "bytes": 412,
+        "sha256": "c42d2b025d8113710b701c1706de5d3abeb7d8c23ea24418bd905d0176fda49d"
+      },
+      {
+        "path": "textures/c497d543f7682ff7b0a0.png",
+        "bytes": 5204,
+        "sha256": "c497d543f7682ff7b0a01d05b83c9a712dd891f8933927e48d10a7a0cff5572f"
+      },
+      {
+        "path": "textures/c4ba5c749d0807591f7e.png",
+        "bytes": 31436,
+        "sha256": "c4ba5c749d0807591f7e7729087866564cfe9e00c3f67598e5b1073b658067c4"
+      },
+      {
+        "path": "textures/c4e50608a4bd4dce39f5.png",
+        "bytes": 38280,
+        "sha256": "c4e50608a4bd4dce39f5417ff975f6da6618be2cc253e6d928b99e16caebfb6f"
+      },
+      {
+        "path": "textures/c586a8795a4392cc36c6.png",
+        "bytes": 312,
+        "sha256": "c586a8795a4392cc36c6472bcc10ec3633af8bc707c52022b1c1635fefaeb7ee"
+      },
+      {
+        "path": "textures/c68edab636a03b1978fb.png",
+        "bytes": 42388,
+        "sha256": "c68edab636a03b1978fb6a4e2064495408dad0872b918e0e916b2061935de14f"
+      },
+      {
+        "path": "textures/c6fc810898fe74d69292.png",
+        "bytes": 3072,
+        "sha256": "c6fc810898fe74d69292c0e62bc437f20a268f66df391d65bbe20a9c270f26c5"
+      },
+      {
+        "path": "textures/c701745aabb7d30ac81c.png",
+        "bytes": 80108,
+        "sha256": "c701745aabb7d30ac81cbe3552944411511ccefdda997c0ff57c462e4e37a078"
+      },
+      {
+        "path": "textures/c7616ab993d15e401497.png",
+        "bytes": 10724,
+        "sha256": "c7616ab993d15e4014977ec4ad1fc3a12402bd56a325adb4403ecb9a7f15324a"
+      },
+      {
+        "path": "textures/c76daa35d5a18abb6b5b.png",
+        "bytes": 4980,
+        "sha256": "c76daa35d5a18abb6b5be32fb1db71da7ae5479b5db424bf1f224a86afeb3365"
+      },
+      {
+        "path": "textures/c81438ed4c0c747a8bb7.png",
+        "bytes": 3268,
+        "sha256": "c81438ed4c0c747a8bb70b5ea3220182281edfa4e8fa9f95fade91ebd298cc12"
+      },
+      {
+        "path": "textures/c8533c66e7b458fa871e.png",
+        "bytes": 7120,
+        "sha256": "c8533c66e7b458fa871ead8c292357e0e11c2897d71f81b341768cd62a148102"
+      },
+      {
+        "path": "textures/c8707a229c9aa1d22f33.png",
+        "bytes": 1356,
+        "sha256": "c8707a229c9aa1d22f3340079ad5f481ccd9da265789c8b626d8c18a0bbbeeb1"
+      },
+      {
+        "path": "textures/c87ecb663c2343144542.png",
+        "bytes": 41044,
+        "sha256": "c87ecb663c234314454259421ca2937b2fb281dccf58b53fef5d976a7d6db7bc"
+      },
+      {
+        "path": "textures/c91b9e7875e2119c099b.png",
+        "bytes": 800,
+        "sha256": "c91b9e7875e2119c099bcf7ee89e41b8a506e9a64ea00080a0eb6fece709bc76"
+      },
+      {
+        "path": "textures/cd4051c26350e58b9127.png",
+        "bytes": 8972,
+        "sha256": "cd4051c26350e58b9127bd2106902d714e28c9f4c35de793c10b13ef9d896067"
+      },
+      {
+        "path": "textures/cd8d4a6210aa58db10cd.png",
+        "bytes": 18824,
+        "sha256": "cd8d4a6210aa58db10cdc9a2953aae3d8b583cec867b1a9030ea775aa850fa21"
+      },
+      {
+        "path": "textures/cdaa17cbd906e11857b1.png",
+        "bytes": 6396,
+        "sha256": "cdaa17cbd906e11857b1c280d8f5c96b7cf1a9edb37c5fea4b3c387cee4513ed"
+      },
+      {
+        "path": "textures/ce0623858af0b58f0db4.png",
+        "bytes": 25832,
+        "sha256": "ce0623858af0b58f0db407d949d736d7697d9d133ad3306284c1499ffd8a2b4c"
+      },
+      {
+        "path": "textures/ced1cb2c39956bf87bdd.png",
+        "bytes": 8840,
+        "sha256": "ced1cb2c39956bf87bddf4fb24c7ec4016f8f62758fb7f0552b3929dd577edd1"
+      },
+      {
+        "path": "textures/cf2f287390c71265f042.png",
+        "bytes": 15088,
+        "sha256": "cf2f287390c71265f042ba2fd6c724defa6fb38b65185961caec8c67a8e15f9b"
+      },
+      {
+        "path": "textures/cfaf661eae07111f7988.png",
+        "bytes": 3216,
+        "sha256": "cfaf661eae07111f79882e4c5308d049f4bb38a53c2d34c2b75a414c6e4d092e"
+      },
+      {
+        "path": "textures/d02b2b0ab48eef69c226.png",
+        "bytes": 8644,
+        "sha256": "d02b2b0ab48eef69c2264c6a14e4c6d0a5a4f059b206f020f3c06db6474f6584"
+      },
+      {
+        "path": "textures/d02d2f52943b3497388c.png",
+        "bytes": 5360,
+        "sha256": "d02d2f52943b3497388cc2ea2e3255cdd26888c1db52c5810194bd29f09591f1"
+      },
+      {
+        "path": "textures/d0c1584d52a9a749dd18.png",
+        "bytes": 37640,
+        "sha256": "d0c1584d52a9a749dd18ee3f0f613bf68096843c19bc03796b990b585a9de37e"
+      },
+      {
+        "path": "textures/d131e648c1ce221c96da.png",
+        "bytes": 1756,
+        "sha256": "d131e648c1ce221c96da8aa1601c9bcee6039e1769d22dac848a5fb86964cb0f"
+      },
+      {
+        "path": "textures/d15432aaa6cfc4e24cf9.png",
+        "bytes": 18672,
+        "sha256": "d15432aaa6cfc4e24cf93c56d778e9ed0dff9c1df21155a39b20f618b0d32e54"
+      },
+      {
+        "path": "textures/d1854df3b5d448388424.png",
+        "bytes": 29428,
+        "sha256": "d1854df3b5d448388424fecd99c8d54b281477437da42de1fb71c1ea96c07244"
+      },
+      {
+        "path": "textures/d1e174cec651a254ab32.png",
+        "bytes": 952,
+        "sha256": "d1e174cec651a254ab320993f32f351079cf107829dec325d36e0c9f552da67b"
+      },
+      {
+        "path": "textures/d24de37dea25dcf9d4bf.png",
+        "bytes": 1532,
+        "sha256": "d24de37dea25dcf9d4bf3ea36e0f8baf13e39cb59b4961bb9825c6ac5d7f93c5"
+      },
+      {
+        "path": "textures/d2cce4ecc9709c75640a.png",
+        "bytes": 912,
+        "sha256": "d2cce4ecc9709c75640afea2d82f7e993c9a77db7aed84515cbe09c2644456c8"
+      },
+      {
+        "path": "textures/d3c40b3bf9d0cead6ccb.png",
+        "bytes": 4244,
+        "sha256": "d3c40b3bf9d0cead6ccbcf7ea48d7af2e06b38e768b6484f06b842dc9edcd92e"
+      },
+      {
+        "path": "textures/d554bb570da4fe7a4050.png",
+        "bytes": 5876,
+        "sha256": "d554bb570da4fe7a40501c40e5e6c6fde57f811abfc0c6a49b3fc928541f56a9"
+      },
+      {
+        "path": "textures/d5637ff09be6d34e12ff.png",
+        "bytes": 5936,
+        "sha256": "d5637ff09be6d34e12ff6bde3db367d94a1d44a83a2eb8962458a42603ee01c5"
+      },
+      {
+        "path": "textures/d649cfc5ddac9f3acca3.png",
+        "bytes": 12016,
+        "sha256": "d649cfc5ddac9f3acca3f50922ad385a0589a5a1241305bb25b94f98c90b28b7"
+      },
+      {
+        "path": "textures/d6f2eeda46e95f683adf.png",
+        "bytes": 18948,
+        "sha256": "d6f2eeda46e95f683adff91728ff2d4beeadb1299fd3495d3ada937cdf16797d"
+      },
+      {
+        "path": "textures/d79cae4b2b6cf0add201.png",
+        "bytes": 36364,
+        "sha256": "d79cae4b2b6cf0add2011e80589c1a5d3e2a1117a48cfee01a0702658ed65a2f"
+      },
+      {
+        "path": "textures/d818d946cc07ec8e53c2.png",
+        "bytes": 6916,
+        "sha256": "d818d946cc07ec8e53c29c281b497ee66266e953d03345a3696660a893d8efda"
+      },
+      {
+        "path": "textures/d8855989454cf1b1429a.png",
+        "bytes": 39784,
+        "sha256": "d8855989454cf1b1429a75eb7380e256fc46eb7869dfbc66da6de2db6ea9d74e"
+      },
+      {
+        "path": "textures/db2d6f016714f351c4e6.png",
+        "bytes": 92796,
+        "sha256": "db2d6f016714f351c4e6718080335d019243f246502fb50c6125ed2520264ca1"
+      },
+      {
+        "path": "textures/db7a71c207e605136971.png",
+        "bytes": 8676,
+        "sha256": "db7a71c207e605136971c2b72cc7a913d59276f7478996d6e781f20d22ed3f61"
+      },
+      {
+        "path": "textures/dc1859671d4ff4fcdddf.png",
+        "bytes": 57988,
+        "sha256": "dc1859671d4ff4fcdddfa5972933a690153e5f7cfbe4dc7bee0d37208634e40b"
+      },
+      {
+        "path": "textures/dca154a9daaaa72ec24b.png",
+        "bytes": 34036,
+        "sha256": "dca154a9daaaa72ec24b7448485f8ea86a3aa72edcf567a5e197ba48da94b90f"
+      },
+      {
+        "path": "textures/dced9094af634356d9f4.png",
+        "bytes": 25168,
+        "sha256": "dced9094af634356d9f4f879621fc42f843ee35c1df67030cc1b9e3c41c88a3f"
+      },
+      {
+        "path": "textures/dde0ce712d848a3ffc6c.png",
+        "bytes": 10140,
+        "sha256": "dde0ce712d848a3ffc6c9cfbf7b347651e6947df845f9949b0cc4da0b3901df8"
+      },
+      {
+        "path": "textures/de03c39c3d18489fae47.png",
+        "bytes": 6692,
+        "sha256": "de03c39c3d18489fae472504753cba1767d16fe8521fd55f66052aeab601e14a"
+      },
+      {
+        "path": "textures/dfb601f3a071365604d6.png",
+        "bytes": 9696,
+        "sha256": "dfb601f3a071365604d6a0df97ba5e714c510c1eb365ac12db12f158731eaa27"
+      },
+      {
+        "path": "textures/dffafdbe44d4f955c36d.png",
+        "bytes": 20724,
+        "sha256": "dffafdbe44d4f955c36dfff7bcab8702ce4499b3638de78224cfa55c0c3d9cd5"
+      },
+      {
+        "path": "textures/e0d6d13f8eb2bedbc8a9.png",
+        "bytes": 13852,
+        "sha256": "e0d6d13f8eb2bedbc8a90470e60d8edf9b02dcfa42ac26f5cc06841aa166826f"
+      },
+      {
+        "path": "textures/e148e348e1bb954c6070.png",
+        "bytes": 8820,
+        "sha256": "e148e348e1bb954c60704d0eb3326f0e739ccbc98b3dc3d76f598dbc7d0699fd"
+      },
+      {
+        "path": "textures/e1913b725f556d84020c.png",
+        "bytes": 552,
+        "sha256": "e1913b725f556d84020cc0f397d7d67536f442ee047ebd918c9e32cad65d556e"
+      },
+      {
+        "path": "textures/e1d28fdb0b8c71cbb0b0.png",
+        "bytes": 532,
+        "sha256": "e1d28fdb0b8c71cbb0b07cd5bfc2e7828aa516efcce9b52fa8a538b332e9bd01"
+      },
+      {
+        "path": "textures/e1f161d8c04a3e3ea251.png",
+        "bytes": 40076,
+        "sha256": "e1f161d8c04a3e3ea251fa654837ee0dd168ee451b633d0aa5b54f7bc226009f"
+      },
+      {
+        "path": "textures/e2d08c0ebdfef4b48808.png",
+        "bytes": 5856,
+        "sha256": "e2d08c0ebdfef4b48808c7eb713a9b64174fd954e359938e350ce4645063d888"
+      },
+      {
+        "path": "textures/e3a0e469d578cca9bedd.png",
+        "bytes": 2944,
+        "sha256": "e3a0e469d578cca9beddc9900729514b851331ba6b2acd7e1cc2869e391fee3e"
+      },
+      {
+        "path": "textures/e41e8431dc09ae5a65ec.png",
+        "bytes": 3736,
+        "sha256": "e41e8431dc09ae5a65ec331483f450db56e3402b8ed2a820d2076ba6b8c68491"
+      },
+      {
+        "path": "textures/e47016e329a45d842149.png",
+        "bytes": 5900,
+        "sha256": "e47016e329a45d8421498e07f31406313354a9da57c19b1f4a1389db60964fdf"
+      },
+      {
+        "path": "textures/e47f76a3fe95e1178e96.png",
+        "bytes": 11056,
+        "sha256": "e47f76a3fe95e1178e96d3295e657abc62ef70b40a4a12cde36caaf87b8bb8d9"
+      },
+      {
+        "path": "textures/e4b28297cf86f09c11ba.png",
+        "bytes": 34016,
+        "sha256": "e4b28297cf86f09c11ba20a4753a92987c15b5e63d575e8d53e66403905d4a1b"
+      },
+      {
+        "path": "textures/e4d4a660701e8bb647bd.png",
+        "bytes": 21304,
+        "sha256": "e4d4a660701e8bb647bd1647fef9b42b14bbaf819a9022e35e5c9496877ba6e4"
+      },
+      {
+        "path": "textures/e4fd83e1d53c904981a8.png",
+        "bytes": 2876,
+        "sha256": "e4fd83e1d53c904981a8936aea1a6bd2cbcd6e55cee03437194d84208b4fdf4b"
+      },
+      {
+        "path": "textures/e552c1cd44069ad8f5f3.png",
+        "bytes": 1560,
+        "sha256": "e552c1cd44069ad8f5f3d387ee9561aa2de0d26e7c031aee07563af9bc8cb4b1"
+      },
+      {
+        "path": "textures/e5a3ec48ed08c3ab27f3.png",
+        "bytes": 916,
+        "sha256": "e5a3ec48ed08c3ab27f30dfc4e62a630298b3a0a63b9d72baeeea78a69f2e28b"
+      },
+      {
+        "path": "textures/e5c522c1f2e25e924081.png",
+        "bytes": 5088,
+        "sha256": "e5c522c1f2e25e924081af1dacf20269e0c30a1c9410af83b872ac400c32428d"
+      },
+      {
+        "path": "textures/e5f71e954742ca116474.png",
+        "bytes": 7292,
+        "sha256": "e5f71e954742ca1164744d3770447ff02b62bd799a31a5fdf6694b0b46ce14d5"
+      },
+      {
+        "path": "textures/e6d619e95a236c71570d.png",
+        "bytes": 99316,
+        "sha256": "e6d619e95a236c71570d735a1fdb632920b94b94d4ee230189758982aab6b270"
+      },
+      {
+        "path": "textures/e77b2f72a4b15423cb2f.png",
+        "bytes": 3248,
+        "sha256": "e77b2f72a4b15423cb2ff8238ac18ec94b5556d1cae082b637d8bac431133781"
+      },
+      {
+        "path": "textures/e7a6071fa70320ab5532.png",
+        "bytes": 5420,
+        "sha256": "e7a6071fa70320ab5532630fcd80fb8377ec2db4eb63420353af22c8ead4ea68"
+      },
+      {
+        "path": "textures/e7bac16b5a73af6e6c4c.png",
+        "bytes": 5012,
+        "sha256": "e7bac16b5a73af6e6c4c75502d0403082aaac8e19f60a97b69e53935e22b69db"
+      },
+      {
+        "path": "textures/e8274feaaf85d3b00471.png",
+        "bytes": 1288,
+        "sha256": "e8274feaaf85d3b004717e7a73c4a78d3514442c9707e5c4e5ea84c95d612c62"
+      },
+      {
+        "path": "textures/e86d45058a98d454bddb.png",
+        "bytes": 5872,
+        "sha256": "e86d45058a98d454bddb305c7465f5012e7b2f8a75e62fe9e1a76cb65febb5b8"
+      },
+      {
+        "path": "textures/ea02ddf2a1a881fd7ec3.png",
+        "bytes": 308,
+        "sha256": "ea02ddf2a1a881fd7ec3965cf4eaa3ea3acfe1a5444cb46b6c9c392a5cf2780d"
+      },
+      {
+        "path": "textures/ecc9e4e6fd42ad4e437c.png",
+        "bytes": 80924,
+        "sha256": "ecc9e4e6fd42ad4e437c00e527ffa1b46102ef02e4e4e5fba76175cf91e15d81"
+      },
+      {
+        "path": "textures/ed04606c181ee0950693.png",
+        "bytes": 73644,
+        "sha256": "ed04606c181ee095069334ef4160c68139930814a75a0a2d930b90db74d4108b"
+      },
+      {
+        "path": "textures/ef32dc015f6aacdd775b.png",
+        "bytes": 19820,
+        "sha256": "ef32dc015f6aacdd775be7da9bb607d17ddc86bf4309d9b3bd76a9b498205108"
+      },
+      {
+        "path": "textures/efb33396e7d9dd001ff0.png",
+        "bytes": 24876,
+        "sha256": "efb33396e7d9dd001ff01cd0f171cc9faaa7c2c71e8ba30b1293509ddcdd0fdc"
+      },
+      {
+        "path": "textures/f0cee983ffc4f003eaf2.png",
+        "bytes": 94700,
+        "sha256": "f0cee983ffc4f003eaf29962cd855995bfa7d9dfc8d2ca822ef61a0629968c04"
+      },
+      {
+        "path": "textures/f0dd27368be1794800e2.png",
+        "bytes": 26028,
+        "sha256": "f0dd27368be1794800e2624cbeb63e10c8308fc2edbd8911b236b87faa4039d8"
+      },
+      {
+        "path": "textures/f16601503d1856e1e8f9.png",
+        "bytes": 2152,
+        "sha256": "f16601503d1856e1e8f9cd7862bd9eae071da11750e843e503f1d009098719db"
+      },
+      {
+        "path": "textures/f1e9dde5e1af7c773247.png",
+        "bytes": 49792,
+        "sha256": "f1e9dde5e1af7c7732473752b96f721faf3234330ce8c8f88ab11c1667e79443"
+      },
+      {
+        "path": "textures/f1ec3972222fd98bcfa7.png",
+        "bytes": 16384,
+        "sha256": "f1ec3972222fd98bcfa70935ed491e62132a7d46220b069ab8113a1960e6a573"
+      },
+      {
+        "path": "textures/f1f6d588bc7e6735e57d.png",
+        "bytes": 2576,
+        "sha256": "f1f6d588bc7e6735e57d3c1a2ca970c7da670b5ffa6fd692e9e079e4980012fc"
+      },
+      {
+        "path": "textures/f26d9782b6ea588f846b.png",
+        "bytes": 2592,
+        "sha256": "f26d9782b6ea588f846bd2d9268885d4bcd25ec2791f1b126b1e3b6473e3a1dd"
+      },
+      {
+        "path": "textures/f2c569f67361bbf20c58.png",
+        "bytes": 11272,
+        "sha256": "f2c569f67361bbf20c58663c265c7578c9b57cbe78e1b5da044fc12eafaa160d"
+      },
+      {
+        "path": "textures/f339bb2eadf1f8439230.png",
+        "bytes": 1540,
+        "sha256": "f339bb2eadf1f8439230d9cc84cfdb5e210b1182e65822bf6adb757c50d55057"
+      },
+      {
+        "path": "textures/f38dbe94a074aef7c3cd.png",
+        "bytes": 5400,
+        "sha256": "f38dbe94a074aef7c3cdfc2e63ecef911d26bfa7dac13a81cd9afd669bf7d449"
+      },
+      {
+        "path": "textures/f3e6b6ab1ac60888c9c4.png",
+        "bytes": 51712,
+        "sha256": "f3e6b6ab1ac60888c9c466deeb89572562b7d8060dff8d2d38349aefdf249785"
+      },
+      {
+        "path": "textures/f477f3372b69de515a51.png",
+        "bytes": 90192,
+        "sha256": "f477f3372b69de515a5116d094f4d8e7952ecf4f5b100822d487d4254176d933"
+      },
+      {
+        "path": "textures/f5a9c7c067c740a45967.png",
+        "bytes": 53732,
+        "sha256": "f5a9c7c067c740a4596792ef917c5ae6b4d0fb6a9aeeba7320857e38c0f05cd3"
+      },
+      {
+        "path": "textures/f5cec3f2bbcafacc985f.png",
+        "bytes": 3620,
+        "sha256": "f5cec3f2bbcafacc985f552d0783f3ca878d6513c296cfefbf1218c0c3c157c1"
+      },
+      {
+        "path": "textures/f6d5e743bbbf3e3f3fb5.png",
+        "bytes": 8080,
+        "sha256": "f6d5e743bbbf3e3f3fb5949982641c912d61df393d8c24d7b30db97e22c0b864"
+      },
+      {
+        "path": "textures/f7e436c1bac2af979917.png",
+        "bytes": 2856,
+        "sha256": "f7e436c1bac2af979917e8b52dc759a65554b9ab1175c77edc23c074ca1f6ffa"
+      },
+      {
+        "path": "textures/f7edd3036a7203588084.png",
+        "bytes": 2708,
+        "sha256": "f7edd3036a72035880840acef67d67655897ee0c0a5f46c91a6e7fa126ef6f13"
+      },
+      {
+        "path": "textures/f813b0d25ac5046a15c4.png",
+        "bytes": 31808,
+        "sha256": "f813b0d25ac5046a15c414bdb465cbaa46ede63386d0eb2099fbf09df4d33daf"
+      },
+      {
+        "path": "textures/f827b8ac1e58f8c72d6c.png",
+        "bytes": 13848,
+        "sha256": "f827b8ac1e58f8c72d6c04c7b7ff3fe261653b624f5d86be12d8cbe1ce3f3e94"
+      },
+      {
+        "path": "textures/f89ec45a3635f198913b.png",
+        "bytes": 39272,
+        "sha256": "f89ec45a3635f198913b7a38de048132715944b14fdf270efc2d338e60f16e6f"
+      },
+      {
+        "path": "textures/f8d7b92f2faa820d4f34.png",
+        "bytes": 10976,
+        "sha256": "f8d7b92f2faa820d4f347a96f9576d9eb1c101c3842ea12c6d2fe1a3b9825d1a"
+      },
+      {
+        "path": "textures/f8de87a557ddd9aa9da3.png",
+        "bytes": 7112,
+        "sha256": "f8de87a557ddd9aa9da37821b1a871f14ca93bfa795be91694316b680cc5238c"
+      },
+      {
+        "path": "textures/f9e83d98ec6abd88d453.png",
+        "bytes": 1924,
+        "sha256": "f9e83d98ec6abd88d4539881a588255d2aa19694f1df47fe4a0120a0456b34bb"
+      },
+      {
+        "path": "textures/fa4e89f8ae60c49e083f.png",
+        "bytes": 18068,
+        "sha256": "fa4e89f8ae60c49e083f0b705feafdd43d313d8f6d17e7bc7da314be820e45ec"
+      },
+      {
+        "path": "textures/faffc10407cc550ed4ec.png",
+        "bytes": 14728,
+        "sha256": "faffc10407cc550ed4ec16df79aeee1e727e269d88690504d4ffa444fd357fd6"
+      },
+      {
+        "path": "textures/fb1c351734ba82a00dd2.png",
+        "bytes": 15952,
+        "sha256": "fb1c351734ba82a00dd24e381ff0a05c0e1e781ebd5633d51fa7c10b62d6ced9"
+      },
+      {
+        "path": "textures/fbe55e85c3d9b838b29e.png",
+        "bytes": 39432,
+        "sha256": "fbe55e85c3d9b838b29e5d2602d232b671bd038229c75d1fa94abe67e110e716"
+      },
+      {
+        "path": "textures/fc3037c9947d5569f140.png",
+        "bytes": 804,
+        "sha256": "fc3037c9947d5569f1404e2b3ca7aaebfb8b3080232122d86e437dfc0c2f43b2"
+      },
+      {
+        "path": "textures/fda227774f508e02efc1.png",
+        "bytes": 21684,
+        "sha256": "fda227774f508e02efc1bbbb4fe2fc00a9d959bb5a2e1463760d24b06cb0ec89"
+      },
+      {
+        "path": "textures/fe1e11ed6daff8fb1a87.png",
+        "bytes": 41296,
+        "sha256": "fe1e11ed6daff8fb1a87ec851cb2b8e33e2efafea8e993eb94a1178469b038ac"
+      },
+      {
+        "path": "textures/fe1f6c91040d940006fb.png",
+        "bytes": 13080,
+        "sha256": "fe1f6c91040d940006fb364dc40ff76cc7a1e30c0050516ce218e7564798cdd8"
+      },
+      {
+        "path": "textures/fe6fcd8f1b2122b12547.png",
+        "bytes": 3656,
+        "sha256": "fe6fcd8f1b2122b12547fb375dd3a8321084a3d4d8c78eccf365008a84a3b9e6"
+      },
+      {
+        "path": "textures/febd699d4545d5d0f3ee.png",
+        "bytes": 5416,
+        "sha256": "febd699d4545d5d0f3ee638fcab48ee95b27d356c711bb73dba283c11373a901"
+      },
+      {
+        "path": "textures/ff2d71fcefd67947143b.png",
+        "bytes": 24556,
+        "sha256": "ff2d71fcefd67947143bc7423dda68a686f8b85252f06218e5a3279c2e3ff548"
+      },
+      {
+        "path": "textures/ff56cc6e388c55ad2ad2.png",
+        "bytes": 2920,
+        "sha256": "ff56cc6e388c55ad2ad26891ff1b05a570fce4930f098ce40f15b5921547a355"
+      },
+      {
+        "path": "tiles/b_0_0.glb",
+        "bytes": 3088536,
+        "sha256": "24b97dcf530545a93f79f08e223986235efcac9be40d79cba47ea3e06cec124e"
+      },
+      {
+        "path": "tiles/b_0_1.glb",
+        "bytes": 799668,
+        "sha256": "f86600327e200e3a855a10fdd933d00178bd8d7b8224880f0a82b7f8f46cda83"
+      },
+      {
+        "path": "tiles/b_0_2.glb",
+        "bytes": 1646820,
+        "sha256": "a9cd17dd86fa3eec305bdb6fe2008b4f0fd4bf1309ff0cc18ccf66f88973f700"
+      },
+      {
+        "path": "tiles/b_0_3.glb",
+        "bytes": 2635696,
+        "sha256": "8f2b2f5d61bbc06bffff51921b61a7e9a9062cddd180e69ee6748c3d397faef1"
+      },
+      {
+        "path": "tiles/b_0_4.glb",
+        "bytes": 1161152,
+        "sha256": "b79b455f0cca57b2588cddd30d0f36cf55e1fb30129d02f6d0db2845f3bb6454"
+      },
+      {
+        "path": "tiles/b_0_5.glb",
+        "bytes": 1252924,
+        "sha256": "84e9929ac490c774406016c32bd552e5ef306a178ccc52b93b0910f0b11bb170"
+      },
+      {
+        "path": "tiles/b_0_6.glb",
+        "bytes": 755332,
+        "sha256": "a359a85fa23b65ceb2e984387a95c19a018e0b13848c92557f4dfabc040f5573"
+      },
+      {
+        "path": "tiles/b_0_7.glb",
+        "bytes": 2038068,
+        "sha256": "64067f2ebc0af60d36aa365b1f754d26c3efbdbbfb5510b10f51aaa0700e86d5"
+      },
+      {
+        "path": "tiles/b_1_0.glb",
+        "bytes": 2230052,
+        "sha256": "9bbdfdb5cc6d98f3e34f4465438d010b3962f942e203126f326287b1262d8055"
+      },
+      {
+        "path": "tiles/b_1_1.glb",
+        "bytes": 4275436,
+        "sha256": "50c9d59a1a4af087106af1ddc7ec79f7787028674ea9a2aaf9048ed98c0a7fe7"
+      },
+      {
+        "path": "tiles/b_1_2.glb",
+        "bytes": 1644444,
+        "sha256": "1c2cfce8c2a536b5d4bdcd77f8ba6f987ed1fb1972450623b2e45bf3925c03f9"
+      },
+      {
+        "path": "tiles/b_1_3.glb",
+        "bytes": 3280160,
+        "sha256": "8ab56d0f96dcd9a39bb008ae5b7604ec9af00596808866a44e165fc6f401df88"
+      },
+      {
+        "path": "tiles/b_1_4.glb",
+        "bytes": 1734520,
+        "sha256": "22b93be6e7bac73b3b7e7cc85e2d33c6862eb0345bbdfa2ecad089bd55c953cb"
+      },
+      {
+        "path": "tiles/b_1_5.glb",
+        "bytes": 338312,
+        "sha256": "7eaa41de7f1970edbf214c080f1e1c93a54fae892bf200672182bbf0cef7c013"
+      },
+      {
+        "path": "tiles/b_1_6.glb",
+        "bytes": 1431512,
+        "sha256": "3c6ce1bcb45d6ddd79d656c3af7ea085c77de1ac2ec563fec1c22cbfa0d6bb0d"
+      },
+      {
+        "path": "tiles/b_1_7.glb",
+        "bytes": 2970956,
+        "sha256": "b3a46b202840dab59e713f310c5a3f7a365ccaf8f3e1d46b8d88dbdac8896344"
+      },
+      {
+        "path": "tiles/b_2_0.glb",
+        "bytes": 455576,
+        "sha256": "5fc018963a0fd5ae87fd14b26c1521284f5ec194a11bc42e6ceeaf77b17b14ae"
+      },
+      {
+        "path": "tiles/b_2_1.glb",
+        "bytes": 1327388,
+        "sha256": "4d4ba84362ecfb7b93fb36505a154b123b7fb4f2d6e2f0634d4475577efc892e"
+      },
+      {
+        "path": "tiles/b_2_2.glb",
+        "bytes": 1589836,
+        "sha256": "9e6ff3bad5477d411c256a0a533134d844df8ce9eefd72a557c69899abb521a2"
+      },
+      {
+        "path": "tiles/b_2_3.glb",
+        "bytes": 2458860,
+        "sha256": "c252624a563f42ba31cc637fd87f4bd27bf9bc607dbbb2511d435c05277e08d0"
+      },
+      {
+        "path": "tiles/b_2_4.glb",
+        "bytes": 807064,
+        "sha256": "c130aac2225ed7ef290291a31a152509255a5f4b10fe2f31fbdf77be2da28d6a"
+      },
+      {
+        "path": "tiles/b_2_5.glb",
+        "bytes": 1442012,
+        "sha256": "57f25140a45af2fb26a9eed27a1e0834862313eb43db980dd368724c85352717"
+      },
+      {
+        "path": "tiles/b_2_6.glb",
+        "bytes": 3881304,
+        "sha256": "5b8e7ef6987803d2c9702b845318fb7bc85981b847baf130004c6c89c1467c6b"
+      },
+      {
+        "path": "tiles/b_2_7.glb",
+        "bytes": 4742752,
+        "sha256": "e8af6d87fdcd9fee9fef1014a5421d5c3be17d3a6f8580bd3dbfd58924693a17"
+      },
+      {
+        "path": "tiles/b_3_0.glb",
+        "bytes": 3046968,
+        "sha256": "1cdf354ba498fcf505e234b9160d1a3f87bd6d589f3cd9293350fd509f153b43"
+      },
+      {
+        "path": "tiles/b_3_1.glb",
+        "bytes": 3129348,
+        "sha256": "1cddb2c43b575b43c67b02454773b1d2a9c9e00d46bd932b6def6d391382d7b7"
+      },
+      {
+        "path": "tiles/b_3_2.glb",
+        "bytes": 2353424,
+        "sha256": "e0c7a0bcbd8260977d7d856a17ad2c84cd57f382e6688ae6d4f5877ded00e1f7"
+      },
+      {
+        "path": "tiles/b_3_3.glb",
+        "bytes": 1890104,
+        "sha256": "cbad1252928baf7ade404d9bd56b77c63dc6e497abf47ec8fc0cc6d1e2840784"
+      },
+      {
+        "path": "tiles/b_3_4.glb",
+        "bytes": 2934668,
+        "sha256": "e33a53f3371ade92290aae925bbc36d4b0722b8006306d1b1a822ee3ab6d06fa"
+      },
+      {
+        "path": "tiles/b_3_5.glb",
+        "bytes": 2102660,
+        "sha256": "dab345e29530101498196ee63ad8ed973f06c65c7fe217c68606f28b1a4db24c"
+      },
+      {
+        "path": "tiles/b_3_6.glb",
+        "bytes": 5755384,
+        "sha256": "8c65fab6a2e31cab945cfec717c7873592cfdf6c9a03be7199d3f7775b3c554e"
+      },
+      {
+        "path": "tiles/b_3_7.glb",
+        "bytes": 3986932,
+        "sha256": "865166680669a6c43035fa5c739c85ac6c14db6a902ac18e0eb7b5a6ee1d7aee"
+      },
+      {
+        "path": "tiles/b_4_0.glb",
+        "bytes": 2416464,
+        "sha256": "cd4450650c1c65c652cddcf285a556a0e07562693988a82b943df51e960d5728"
+      },
+      {
+        "path": "tiles/b_4_1.glb",
+        "bytes": 2002924,
+        "sha256": "43f2982eca00852008f46898c772eb5d420d08e8183deca10bc96bfd109d9fd4"
+      },
+      {
+        "path": "tiles/b_4_2.glb",
+        "bytes": 2648308,
+        "sha256": "39454469108f587e8bb4ae1a851c8eb40121454bb9615b93d083cbc0db0794f0"
+      },
+      {
+        "path": "tiles/b_4_3.glb",
+        "bytes": 2825496,
+        "sha256": "a702ec50a27447254774ebd2802c9d50f24ad39dfb4276bfe92f680e89321a1b"
+      },
+      {
+        "path": "tiles/b_4_4.glb",
+        "bytes": 3421956,
+        "sha256": "503ff0a089a4c422d7237d69230379261fa40e687632570623ce87d67e627247"
+      },
+      {
+        "path": "tiles/b_4_5.glb",
+        "bytes": 2127688,
+        "sha256": "23fcf5a9eb785bc705e20f75f2d87a2d8f66fe5a343dfa6b58a2f99e9761d11f"
+      },
+      {
+        "path": "tiles/b_4_6.glb",
+        "bytes": 2607444,
+        "sha256": "36602cf2d291410718485562e3fb5b90d1c94449dff1e84c7515c235423e2c81"
+      },
+      {
+        "path": "tiles/b_4_7.glb",
+        "bytes": 2696576,
+        "sha256": "77bc4484a775e8b36c0cb339976f0ac6b3213a52515b693266dc24e551d561d1"
+      },
+      {
+        "path": "tiles/b_5_0.glb",
+        "bytes": 1073040,
+        "sha256": "a1d9f56a6806ba7b524ce0f863e146528f0b895d304d7172ae50f879821e8b79"
+      },
+      {
+        "path": "tiles/b_5_1.glb",
+        "bytes": 3788256,
+        "sha256": "47a8afc615bd4bb4ad358c27a3d4b43406e082a896a20f806bb1f2ecdbcc3f6d"
+      },
+      {
+        "path": "tiles/b_5_2.glb",
+        "bytes": 2527828,
+        "sha256": "6f6a19f93bc28a49f5c3731a66c47df4110cbc1b3078dfedc8d0738c4309ce3f"
+      },
+      {
+        "path": "tiles/b_5_3.glb",
+        "bytes": 1158640,
+        "sha256": "7c755abf135dbd2087a1b4998b276880caf8950494fc4ca91a91703c8442da9c"
+      },
+      {
+        "path": "tiles/b_5_4.glb",
+        "bytes": 1823260,
+        "sha256": "81e87aa0322f100c99f8c0e35f183a3194c25f649d5a16687df25210d4015b02"
+      },
+      {
+        "path": "tiles/b_5_5.glb",
+        "bytes": 1643396,
+        "sha256": "b27dbc1d853534fb4230d1a56c40c8a5f0843fc587c6fb2d17a9a4580e7e7285"
+      },
+      {
+        "path": "tiles/b_5_6.glb",
+        "bytes": 2675152,
+        "sha256": "43ccff5d0ec50f4db7cd63b8fb4e901d30124954fa41abc0e2580ac8e9e7f5d3"
+      },
+      {
+        "path": "tiles/b_5_7.glb",
+        "bytes": 2774208,
+        "sha256": "1c93d69b4b785c7faeb91d60a1dadac2953ec40281d940d12e482aceaa38e0b9"
+      },
+      {
+        "path": "tiles/b_6_0.glb",
+        "bytes": 1518576,
+        "sha256": "d77f10dd0fea869f9a3789a2de04a6e02f308f8168e2ebe795f057716e3763de"
+      },
+      {
+        "path": "tiles/b_6_1.glb",
+        "bytes": 1940448,
+        "sha256": "558cc30e50477e6f37df2040db87c583652041770c710346d80fcf1c3bf6035e"
+      },
+      {
+        "path": "tiles/b_6_2.glb",
+        "bytes": 3761296,
+        "sha256": "771ebeaef069d999c155e66c0b21e50acc66947e785edd67e97f0cc801069e1f"
+      },
+      {
+        "path": "tiles/b_6_3.glb",
+        "bytes": 2044392,
+        "sha256": "33389a8ca34e149a2c01ecc4d6b672809f270ebeec0deab951c811a9acddf30f"
+      },
+      {
+        "path": "tiles/b_6_4.glb",
+        "bytes": 1129876,
+        "sha256": "56f4be31e9e5473cef98405b4e9d9462b3930f346c64464b267239b5901c1bd4"
+      },
+      {
+        "path": "tiles/b_6_5.glb",
+        "bytes": 2778940,
+        "sha256": "7e1d4d6ed318c0edc1150b6cde1dae8f7e02c0281da5378a81ae3ca4264e0937"
+      },
+      {
+        "path": "tiles/b_6_6.glb",
+        "bytes": 807036,
+        "sha256": "a5139e0bfda4529553213de01eb84d10d410a559b0f510f801d173c78d1dc7cc"
+      },
+      {
+        "path": "tiles/b_6_7.glb",
+        "bytes": 1502300,
+        "sha256": "a6038b2f1eb2cb85b9c183a490f39875b2c896f85a29e4372d3659eda4c497b4"
+      },
+      {
+        "path": "tiles/b_7_0.glb",
+        "bytes": 897788,
+        "sha256": "53eca1f70df12edf551864e634194da10c2de4d9e60e6d3d2342c4379e260af4"
+      },
+      {
+        "path": "tiles/b_7_1.glb",
+        "bytes": 356812,
+        "sha256": "b4600e209347a992445c7a2eec67672d602ff62f104717d29be4987dbd83eeed"
+      },
+      {
+        "path": "tiles/b_7_2.glb",
+        "bytes": 1923112,
+        "sha256": "d9594e7a1a4a70766acd25038fa9d1b2651ea0e9c50b58d698a6259c48777e87"
+      },
+      {
+        "path": "tiles/b_7_3.glb",
+        "bytes": 1281856,
+        "sha256": "6a39ea583cbda6a6eae50d9d3800f87aa4ab9f003ae227796cb85188c2576187"
+      },
+      {
+        "path": "tiles/b_7_4.glb",
+        "bytes": 1916528,
+        "sha256": "0dc2088982f8c0c121c860e4651814e7f25b9ec09b545cfc32c2392459bf0ef2"
+      },
+      {
+        "path": "tiles/b_7_5.glb",
+        "bytes": 2379860,
+        "sha256": "2735f9d6bc3fcf3c7e3518b4696a5bd266724423144c9e5323f2b1089ad29352"
+      },
+      {
+        "path": "tiles/b_7_6.glb",
+        "bytes": 388264,
+        "sha256": "016f7b1b91f6aa6873b9d8746682bc0c625990853b30492a5f8ec5e985650f58"
+      },
+      {
+        "path": "tiles/b_7_7.glb",
+        "bytes": 1840572,
+        "sha256": "b88784168ad098ee104747ec847bfddf17a5737c0c27dcd4ebe14afa8b0b831b"
+      }
+    ],
+    "note": "All detailed geometry bytes verified against the existing public resource repository. Display physics retains its declared 8-bit web encoding."
+  }
 }

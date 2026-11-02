@@ -22,7 +22,8 @@
     "non_occluding_site_ground": true,
     "plate_color": "#404b52",
     "ground_color": "#737a77",
-    "detail_tiles": "https://acse-yl222.github.io/urban-world-model-models/project/imperial_corridor_8km/geometry/detail_tiles_enu_20261030/index.json"
+    "detail_tiles": "https://acse-yl222.github.io/urban-world-model-models/project/imperial_corridor_8km/geometry/detail_tiles_enu_20261030/index.json",
+    "complete_geometry": true
   },
   "lite": {
     "footprint": "masks/lite_footprint.npy",
@@ -543,7 +544,8 @@
     "Frozen final SCALED 6 m horizontal wind; no vertical exchange, chemistry or deposition.",
     "Wind model step and tracer elapsed time are independent clocks.",
     "Flood: uniform 50 mm / 90 min design storm, 12 mm/h drainage, 20 mm/h infiltration on green cells; not the observed 2021 event.",
-    "Browser fields use declared 8-bit PNG/WebP quantization; complete scientific arrays remain in retained runs."
+    "Browser fields use declared 8-bit PNG/WebP quantization; complete scientific arrays remain in retained runs.",
+    "Full geometry mode retains all 64 source tiles and 267 landmarks without distance simplification; terrain-normalized ENU transform remains unchanged."
   ],
   "physics_dir": "https://acse-yl222.github.io/urban-world-model-models/project/imperial_corridor_8km/web/city_fields_8km_v2_20261030/physics/"
 }

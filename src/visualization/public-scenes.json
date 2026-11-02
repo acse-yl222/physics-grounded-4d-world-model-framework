@@ -95,7 +95,7 @@
       "title": "Imperial Corridor 8 km",
       "tag": "Urban environment",
       "description": "8.192 km Imperial Corridor domain (true north), South Kensington to White City: 300-step SCALED wind every 25 s, temperature, sunlight every 10 min, road tracer and design-storm flooding every minute, with detailed landmark geometry near the camera.",
-      "viewer_url": "viewer/3d/?scene=imperial_corridor_8km",
+      "viewer_url": "viewer/3d/?scene=imperial_corridor_8km&lite=0",
       "resource_ids": []
     }
   ],

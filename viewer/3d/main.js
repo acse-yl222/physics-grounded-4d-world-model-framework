@@ -30,6 +30,7 @@ import { EXPANSION_BATCHES, installExpansion } from './expansion.js';
 import { createTransport } from './transport.js';
 import { createTraffic } from './traffic.js';
 import { createDetailTiles } from './detail-tiles.js';
+import { createDetailTiles as createCompleteGeometry } from './complete-detail-tiles.js';
 import { recordedFrame } from '../scene-run.js';
 
 // ------------------------------------------------------------------ scene (scenes/<id>/scene.json)
@@ -1243,12 +1244,21 @@ async function loadStepInner(step) {
   } else
     ui.timeLabel.textContent = seqMode()
       ? `${ph.label} · frame ${fi[state.phase] + 1} / ${LAYERS[state.phase].frames} · t = ${timelineTime(TL, step)} s`
+      : MODEL.complete_geometry ? 'Independent snapshots · ' + Object.entries(act)
+          .filter(([key, visible]) => visible && fi[key] !== undefined)
+          .map(([key]) => {
+            const k = fi[key], L = LAYERS[key];
+            if (key === 'solar') return `${solarDayLabel()} ${solarMeta()?.time_local?.[k] ?? ''} London`;
+            const seconds = key === 'flood' ? floodMeta?.time_s?.[k] : L.t0_s + k * L.step_s;
+            return `${TAB_NAME[key] ?? key}: ${seconds ?? '?'} s${key === 'wind' ? ' model clock' : ''}`;
+          }).join(' · ')
       : `Step ${step} · t = ${timelineTime(TL, step)} s` +
         (SCENE.protocol_display?.strict_time && has('temp') && fi.temp === null
           ? ' · temperature: no data at this time'
           : '') +
         (has('temp') && step < PHASES.temp?.start ? ' · temperature run not started' : '') +
         (act.flood && LAYERS.flood?.max ? ' · flood layer = maximum depth of the event' : '');
+
   const rate = (seqMode() && ph.rate) || +ui.rate.value;
   // overlay mode shows several layers at once: share the byte window between them
   const nAct = Object.values(act).filter(Boolean).length || 1;
@@ -1452,7 +1462,8 @@ function applyLayers() {
   if (solarPlane) solarPlane.target = on && act.solar && ui.solarMode.value !== 'shadow' ? 1 : 0;
   if (shadowPlane) shadowPlane.target = on && act.solar && ui.solarMode.value === 'shadow' ? 1 : 0;
   if (diurnalPlane) diurnalPlane.target = on && act.diurnal ? 1 : 0;
-  model.visible = ui.lModel.checked;
+  model.visible = ui.lModel.checked && (LITE || !MODEL.complete_geometry);
+  if (MODEL.complete_geometry) window.cityDetailTiles?.setEnabled(ui.lModel.checked);
   if (supplementBatches) supplementBatches.visible = $('l-supplement').checked;
   for (const expansion of expansions) expansion.setEnabled($('l-expansion').checked);
   base.visible = ui.lGround.checked;
@@ -2192,8 +2203,12 @@ let detailTiles = null; // scene.model.detail_tiles: fine 1 km tiles stream in n
 function animate(now) {
   requestAnimationFrame(animate);
   if (!detailTiles && MODEL.detail_tiles && !LITE && model.children.length) {
-    detailTiles = createDetailTiles({ scene, camera, coarse: model, indexUrl: SCENE.url(MODEL.detail_tiles), onChange: invalidate });
+    detailTiles = (MODEL.complete_geometry ? createCompleteGeometry : createDetailTiles)({ scene, camera, coarse: model, indexUrl: SCENE.url(MODEL.detail_tiles), onChange: invalidate });
     window.cityDetailTiles = detailTiles;
+    if (MODEL.complete_geometry) {
+      detailTiles.setEnabled(ui.lModel.checked);
+      document.querySelector('#geometry-quality option[value=full]').textContent = 'Complete geometry';
+    }
   }
   detailTiles?.update(now);
   if (document.hidden) {
