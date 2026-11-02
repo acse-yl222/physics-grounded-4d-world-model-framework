@@ -24,6 +24,7 @@ s=s.replace('detailTiles?.update(now);', '''detailTiles?.update(now);
       .catch(error => {console.error(error); document.querySelector('#corridor-traffic-time').textContent = 'Context failed: ' + error.message;});
   }
   corridorContext?.tick(Math.min(0.25, Math.max(0, (now-last)/1000)));''')
+s=s.replace('function setPlaying(p) {', 'function setPlaying(p) {\n  if (SCENE.corridor_context && seqMode() && LAYERS[state.phase]?.frames === 1) p = false;')
 f.write_text(s)
 f=out/'viewer/3d/index.html';s=f.read_text()
 # Lower field opacities expose the new ground map without changing field values.

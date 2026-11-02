@@ -1330,6 +1330,7 @@ function tick() {
   } else setStep(1);
 }
 function setPlaying(p) {
+  if (SCENE.corridor_context && seqMode() && LAYERS[state.phase]?.frames === 1) p = false;
   state.playing = p;
   state.buffering = p && canBuffer() && !bufferedEnough();   // fill first; tick() releases the player when the share is in
   if (section !== 'campus') ui.play.textContent = p ? '❚❚' : '▶';

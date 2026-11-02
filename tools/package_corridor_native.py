@@ -1,7 +1,7 @@
 """Package native-resolution offline presentation as four standard ZIP files."""
 from pathlib import Path
 import argparse,hashlib,json,zipfile
-p=argparse.ArgumentParser(description=__doc__);p.add_argument('source',type=Path);p.add_argument('destination',type=Path);a=p.parse_args();a.destination.mkdir(parents=True,exist_ok=True)
+p=argparse.ArgumentParser(description=__doc__);p.add_argument('source',type=Path);p.add_argument('destination',type=Path);p.add_argument('--only-viewer',action='store_true');a=p.parse_args();a.destination.mkdir(parents=True,exist_ok=True)
 root='imperial-corridor-native';names=['01-viewer-and-geometry.zip','02-fields-4m.zip','03-wind-history-a.zip','04-wind-history-b.zip'];groups=[[] for _ in names]
 selected={'agents','scenes','src','tiles','vendor','viewer','serve.py','start_windows.bat','start_linux.sh','start_mac.command'}
 for f in sorted(a.source.rglob('*')):
@@ -38,6 +38,9 @@ Ground & recorded traffic 面板可切换 8 m 风场时间序列（需 03+04）�
 assets=[]
 for name,files in zip(names,groups):
  target=a.destination/name;records=[]
+ if a.only_viewer and name!=names[0]:
+  with target.open('rb') as h:sha=hashlib.file_digest(h,'sha256').hexdigest()
+  assets.append({'name':name,'bytes':target.stat().st_size,'sha256':sha});continue
  with zipfile.ZipFile(target,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=1,allowZip64=True) as z:
   for f,rel in files:
    z.write(f,root+'/'+rel,compress_type=zipfile.ZIP_STORED if f.suffix in ['.gz','.png','.webp'] else zipfile.ZIP_DEFLATED)
