@@ -1,0 +1,5 @@
+# Versions used for vector_roads_20261103; build-time only.
+shapely==2.2.0
+mapbox-earcut==2.1.0
+numpy>=1.26,<3
+Pillow>=10

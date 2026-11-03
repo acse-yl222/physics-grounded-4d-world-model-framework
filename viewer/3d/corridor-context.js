@@ -1,17 +1,26 @@
 // Ground and exact recorded SUMO frames in the scene's flattened ENU frame.
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 export async function createCorridorContext({scene, config, url, onChange}) {
   const group = new THREE.Group(); group.name='corridor_context'; scene.add(group);
   const panel=document.createElement('details'); panel.open=true;
   panel.style.cssText='padding:10px;border-top:1px solid #567;color:inherit;font:12px sans-serif';
-  panel.innerHTML=`<summary style="cursor:pointer;font-weight:bold">Ground & recorded traffic</summary><p>Ground projected to the buildings’ flat ENU plane.</p><label>Ground <select id="corridor-ground"><option value="surface">Roads / green / water</option><option value="elevation">Terrain elevation colour</option></select></label><p id="corridor-ground-key">Grey roads · green vegetation · blue water</p><label><input id="corridor-traffic-visible" type="checkbox" checked> SUMO AM peak · saved subset</label><p><button id="corridor-traffic-play">Play traffic</button> <select id="corridor-traffic-rate" aria-label="Traffic playback speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option><option value="8">8×</option><option value="10">10×</option></select> <span id="corridor-traffic-time">Loading…</span></p><input id="corridor-traffic-step" type="range" min="0" value="0" style="width:100%"><p>Independent traffic clock · exact 1 s saved frames · not observed traffic.</p><p>Wind speed animation · 8 m grid · 301 saved frames · 25 s between frames.</p>${config.temperature_hidden?'':'<p>Temperature: 32 m grid, sampled 8 m above ground.</p>'}`;
+  panel.innerHTML=`<summary style="cursor:pointer;font-weight:bold">Ground & recorded traffic</summary><p>Ground projected to the buildings’ flat ENU plane.</p><label>Ground <select id="corridor-ground"><option value="surface">Roads / green / water</option><option value="elevation">Terrain elevation colour</option></select></label><p id="corridor-ground-key">Grey roads · green vegetation · blue water</p>${config.roads_mesh?'<p><label><input id="corridor-roads-visible" type="checkbox" checked> Vector road surfaces</label></p><p><label><input id="corridor-lane-boundaries" type="checkbox"> Lane-width boundaries (schematic)</label></p><p id="corridor-roads-status">Loading vector roads…</p>':''}<label><input id="corridor-traffic-visible" type="checkbox" checked> SUMO AM peak · saved subset</label><p><button id="corridor-traffic-play">Play traffic</button> <select id="corridor-traffic-rate" aria-label="Traffic playback speed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option><option value="8">8×</option><option value="10">10×</option></select> <span id="corridor-traffic-time">Loading…</span></p><input id="corridor-traffic-step" type="range" min="0" value="0" style="width:100%"><p>Independent traffic clock · exact 1 s saved frames · not observed traffic.</p><p>Wind speed animation · 8 m grid · 301 saved frames · 25 s between frames.</p>${config.temperature_hidden?'':'<p>Temperature: 32 m grid, sampled 8 m above ground.</p>'}`;
   const container=document.querySelector('#l-ground').closest('aside, .panel, #panel') || document.querySelector('#geometry-quality').parentElement.parentElement;
   container.querySelector('.quality-note').after(panel);
   const loader=new THREE.TextureLoader();
-  const textures=await Promise.all([config.surface,config.elevation].map(p=>loader.loadAsync(url(p))));
+  const [textures,roadAsset]=await Promise.all([Promise.all([config.surface,config.elevation].map(p=>loader.loadAsync(url(p)))),config.roads_mesh?new GLTFLoader().loadAsync(url(config.roads_mesh)):Promise.resolve(null)]);
   for(const texture of textures){texture.colorSpace=THREE.SRGBColorSpace;texture.magFilter=THREE.NearestFilter;texture.generateMipmaps=false;texture.minFilter=THREE.LinearFilter;}
   const ground=new THREE.Mesh(new THREE.PlaneGeometry(8192,8192),new THREE.MeshBasicMaterial({map:textures[0],side:THREE.DoubleSide}));
   ground.rotation.x=-Math.PI/2;ground.position.y=-0.15;group.add(ground);
+  const roads=roadAsset?.scene ?? null, boundaries=[];
+  if(roads){roads.name='vector_road_network';group.add(roads);roads.traverse(o=>{if(o.isMesh&&o.name==='lane_boundaries'){boundaries.push(o);o.visible=false}});
+    panel.querySelector('#corridor-roads-status').textContent='70,076 source lanes · vector widths and junction outlines · flat ENU projection';
+    panel.querySelector('#corridor-lane-boundaries').onchange=e=>{for(const mesh of boundaries)mesh.visible=e.target.checked;onChange()};
+    panel.querySelector('#corridor-roads-visible').onchange=()=>syncGround();
+  }
+  function syncGround(){const visible=document.querySelector('#l-ground').checked,roadVisible=visible&&(panel.querySelector('#corridor-roads-visible')?.checked??true);if(ground.visible!==visible||roads&&roads.visible!==roadVisible)onChange();ground.visible=visible;if(roads)roads.visible=roadVisible;}
+  syncGround();
   panel.querySelector('#corridor-ground').onchange=e=>{ground.material.map=textures[e.target.value==='surface'?0:1];ground.material.needsUpdate=true;panel.querySelector('#corridor-ground-key').textContent=e.target.value==='surface'?'Grey roads · green vegetation · blue water':config.elevation_label;onChange()};
   const [meta,response]=await Promise.all([fetch(url(config.traffic_meta)).then(r=>{if(!r.ok)throw Error('Traffic metadata unavailable');return r.json()}),fetch(url(config.traffic_binary))]);
   if(!response.ok)throw Error('Traffic frames unavailable');
@@ -28,7 +37,7 @@ export async function createCorridorContext({scene, config, url, onChange}) {
   button.onclick=()=>{playing=!playing;if(playing&&frame===frames.length-1){elapsed=0;show(0)}button.textContent=playing?'Pause traffic':'Play traffic';};
   slider.oninput=()=>{elapsed=Number(slider.value)*meta.dt;show(Number(slider.value));};
   panel.querySelector('#corridor-traffic-visible').onchange=e=>{cars.visible=e.target.checked;onChange()};show(0);
-  return {group,ground,cars,meta,frames,get frame(){return frame},get playing(){return playing},show,
-    tick(dt){ground.visible=document.querySelector('#l-ground').checked;if(playing){elapsed=Math.min(elapsed+dt*Number(rate.value),(frames.length-1)*meta.dt);show(Math.floor(elapsed/meta.dt));if(frame===frames.length-1){playing=false;button.textContent='Play traffic'}}},
+  return {group,ground,roads,cars,meta,frames,get frame(){return frame},get playing(){return playing},show,
+    tick(dt){syncGround();if(playing){elapsed=Math.min(elapsed+dt*Number(rate.value),(frames.length-1)*meta.dt);show(Math.floor(elapsed/meta.dt));if(frame===frames.length-1){playing=false;button.textContent='Play traffic'}}},
   };
 }

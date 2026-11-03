@@ -4943,7 +4943,7 @@
     }
   },
   "corridor_context": {
-    "surface": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1/project/imperial_corridor_8km/runs/native_display_20261102/context/surface.png",
+    "surface": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/68a378a202e62139762695779286cbf06eba8121/project/imperial_corridor_8km/geometry/vector_roads_20261103/landcover.png",
     "elevation": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1/project/imperial_corridor_8km/runs/native_display_20261102/context/elevation.png",
     "elevation_label": "EA terrain elevation 1.2\u201356.2 m ODN (1\u201399% colour range); flat projection",
     "traffic_meta": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/6fd95948dcfd8f6ca3baf3f79d6cd8f6d3363fd1/project/imperial_corridor_8km/runs/native_display_20261102/context/traffic-am.json",
@@ -4951,12 +4951,15 @@
     "roads": 70076,
     "ground_cell_m": 4,
     "limits": [
-      "Surface colours: existing green/water masks and SUMO lane raster. Unsurveyed remaining land uses neutral colour.",
       "Traffic is an existing selected SUMO subset; no missing vehicles or frames invented.",
-      "Ground and traffic projected onto the flattened ENU building plane; bridge deck elevations are not represented."
+      "Ground and traffic projected onto the flattened ENU building plane; bridge deck elevations are not represented.",
+      "Roads use native lane-width polygons and junction outlines; green/water remain existing 4 m masks.",
+      "Source motor-road network excludes pedestrian-, bicycle- and rail-only lanes. Lane boundaries are schematic, not observed markings."
     ],
     "temperature_hidden": true,
-    "traffic_speed": 4
+    "traffic_speed": 4,
+    "roads_mesh": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/68a378a202e62139762695779286cbf06eba8121/project/imperial_corridor_8km/geometry/vector_roads_20261103/roads.glb",
+    "roads_audit": "https://raw.githubusercontent.com/acse-yl222/urban-world-model-models/68a378a202e62139762695779286cbf06eba8121/project/imperial_corridor_8km/geometry/vector_roads_20261103/roads-audit.json"
   },
   "display_hidden_layers": [
     "temp"
