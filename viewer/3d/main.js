@@ -40,7 +40,7 @@ import { recordedFrame } from '../scene-run.js';
 // the masks, the field layers (files, frame counts, clocks, display ranges) and the camera focus. South Kensington also
 // switches on the traffic / UAV / bird replay, the station tile, the OSM supplement and the building refinements.
 const SCENE = await loadScene();
-if (new URLSearchParams(location.search).get('wind_mode') === 'history' && SCENE.wind_history) {
+if (SCENE.wind_history) {
   SCENE.layers.wind = SCENE.wind_history;
   SCENE.masks.solid_wind.file = 'masks/wind_history_invalid.npy';
 }
@@ -1320,7 +1320,7 @@ function setPhase(phase) {
   syncFieldRate();
   ui.stage.textContent = seqMode() ? `Sequence · ${PHASES[phase].label}` : OVERLAY_LABEL;
   if (section === 'fields' && state.introDone && seqMode())
-    ui.lGround.checked = SCENE.corridor_context ? true : (ui.lTrees.checked = phase === 'flood' || phase === 'solar'); // flood and sunlight read better with the streets and green areas under them; the other fields hide them
+    ui.lGround.checked = SCENE.corridor_context ? false : (ui.lTrees.checked = phase === 'flood' || phase === 'solar'); // flood and sunlight read better with the streets and green areas under them; the other fields hide them
   applyLayers();
   setStep(PHASES[phase].start);
   if (state.playing) setPlaying(true); // phases can have their own rate (flood plays at 2 frames/s)
@@ -2087,7 +2087,7 @@ function runFields(phase = PHASE_ORDER[0]) {
   setSectionUI();
   // Apply the selection immediately; camera movement must not defer or overwrite it.
   state.introDone = true;
-  ui.lGround.checked = Boolean(SCENE.corridor_context);
+  ui.lGround.checked = false;
   ui.lTrees.checked = false;
   replayLayer?.setVisible(false);
   applyTransportLayers();
@@ -2839,7 +2839,7 @@ async function boot() {
     controls.enabled = true;
     state.introDone = pose === 'overhead' || qs.get('fields') === '1';
     if (state.introDone) {
-      ui.lGround.checked = Boolean(SCENE.corridor_context);
+      ui.lGround.checked = false;
       ui.lTrees.checked = false;
     }
     if (qs.has('mode')) ui.mode.value = qs.get('mode');
@@ -2848,8 +2848,10 @@ async function boot() {
     if (qs.has('day')) ui.solarDate.value = qs.get('day'); // ?day=20260621|20261221
     if (qs.has('diurnal')) ui.diurnalMode.value = qs.get('diurnal'); // ?diurnal=ground|air0|air12
     solarPhaseSetup();
-    if (state.introDone && seqMode() && (state.phase === 'flood' || state.phase === 'solar'))
-      ui.lGround.checked = ui.lTrees.checked = true;
+    if (state.introDone && seqMode() && (state.phase === 'flood' || state.phase === 'solar')) {
+      ui.lGround.checked = !SCENE.corridor_context;
+      ui.lTrees.checked = true;
+    }
     applyLayers();
     for (const L of Object.values(planes)) L.fade = L.target;
     updateFades(0);
